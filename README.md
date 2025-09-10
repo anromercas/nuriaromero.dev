@@ -1,27 +1,39 @@
-# 👨🏻‍💻 Porfolio para programadores y desarrolladores
+# 🌐 Portfolio personal – Nuria Romero
 
-<div align="center">
-<a href="https://porfolio.dev/">
-<img src="./public/porfolio.webp">
-</a>
-<p></p>
-</div>
+[![Astro](https://img.shields.io/badge/Astro-FF5D01?logo=astro&logoColor=fff)](https://astro.build)  
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=fff)](https://tailwindcss.com)  
+[![Formspree](https://img.shields.io/badge/Formspree-FF4A4A?logo=maildotru&logoColor=fff)](https://formspree.io)  
 
-<div align="center">
+Portfolio personal desarrollado en **Astro** y **Tailwind CSS** para la web [nuriaromero.dev](https://nuriaromero.dev).  
+Un sitio moderno, rápido y responsive para mostrar proyectos, experiencia y facilitar el contacto profesional.
 
-![Astro Badge](https://img.shields.io/badge/Astro-FF3E00?logo=astro&logoColor=fff&style=flat)
-![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=fff&style=flat)
-![GitHub stars](https://img.shields.io/github/stars/midudev/porfolio.dev)
-![GitHub PRs](https://img.shields.io/github/issues-pr/midudev/porfolio.dev)
-![GitHub forks](https://img.shields.io/github/forks/midudev/porfolio.dev)
-![GitHub issues](https://img.shields.io/github/issues/midudev/porfolio.dev)
+---
 
-</div>
+## ✨ Características
 
-## 🫂 Contribuidores
+- 📂 **Sección de proyectos** con capturas y enlaces.  
+- 🎨 **Diseño responsive** y dark mode con Tailwind.  
+- 📬 **Formulario de contacto** integrado con Formspree.  
+- ⚡ **Alto rendimiento** gracias a Astro.  
+- 🔒 Sin dependencias innecesarias ni variables de entorno.  
 
-<a href="https://github.com/midudev/porfolio.dev/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=midudev/porfolio.dev" />
-</a>
+---
 
-<p></p>
+## 🛠️ Tecnologías utilizadas
+
+- [Astro](https://astro.build) – framework web estático.  
+- [Tailwind CSS](https://tailwindcss.com) – estilos rápidos y reutilizables.  
+- [Formspree](https://formspree.io) – gestión de formularios.  
+
+---
+
+## 📁 Estructura del proyecto
+
+```bash
+src/
+ ├── components/   # Componentes reutilizables (ej: ContactForm, ProjectCard)
+ ├── layouts/      # Layouts generales
+ └── pages/        # Páginas principales (index, about, projects, etc.)
+```
+
+

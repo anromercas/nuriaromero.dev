@@ -10,6 +10,7 @@ import Projects from "@/components/Projects.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
 import Hero from "@/components/Hero.astro"
 import TitleSection from "@/components/TitleSection.astro"
+import ContactForm from '../components/ContactForm.astro';
 ---
 
 <Layout
@@ -45,6 +46,17 @@ import TitleSection from "@/components/TitleSection.astro"
         Sobre mí
       </TitleSection>
       <AboutMe />
+    </SectionContainer>
+
+    <SectionContainer id="contacto">
+      <TitleSection>
+        <ProfileCheck class="size-8" />
+        Contacto
+      </TitleSection>
+      <ContactForm 
+          title="Contáctame" 
+          description="¿Tienes alguna pregunta? Envíame un mensaje y me pondré en contacto contigo."
+        />
     </SectionContainer>
   </div>
   </main>
