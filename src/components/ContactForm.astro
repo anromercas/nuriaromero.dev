@@ -1,5 +1,5 @@
 ---
-/* ContactForm.astro – envío con fetch (sin redirección) */
+/* ContactForm.astro – envío con fetch tipado (sin redirección) */
 
 interface Props {
   title?: string;
@@ -10,9 +10,6 @@ const {
   // title = 'Contáctame',
   description = '¿Tienes alguna pregunta o quieres trabajar conmigo? Envíame un mensaje y me pondré en contacto contigo lo antes posible.',
 } = Astro.props;
-
-// Endpoint de Formspree (sustituye si cambias el formulario)
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mdklbyaz';
 ---
 
 <div class="w-full max-w-2xl mx-auto space-y-6">
@@ -25,10 +22,9 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mdklbyaz';
     )}
   </div>
 
-  <!-- Importante: sin action/method para evitar la navegación -->
   <form id="contact-form" class="space-y-6" novalidate>
     <div class="space-y-4">
-      <!-- Honeypot (antispam): esconder via CSS -->
+      <!-- Honeypot (antispam) -->
       <div class="hidden">
         <label>
           No rellenar este campo
@@ -116,96 +112,86 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mdklbyaz';
   input:focus, textarea:focus { outline: none; }
 </style>
 
-<script>
+<script is:inline>
+  const ENDPOINT = 'https://formspree.io/f/mdklbyaz';
+
   const form = document.getElementById('contact-form');
   const statusEl = document.getElementById('form-status');
   const submitBtn = document.getElementById('submit-btn');
-  const ENDPOINT = 'https://formspree.io/f/mdklbyaz';
 
-  function setStatus(msg, type = 'info') {
-    statusEl.textContent = msg;
-    statusEl.classList.remove('text-red-600','text-green-600','text-gray-600','dark:text-gray-300');
-    if (type === 'success') statusEl.classList.add('text-green-600');
-    else if (type === 'error') statusEl.classList.add('text-red-600');
-    else statusEl.classList.add('text-gray-600','dark:text-gray-300');
-  }
-
-  async function postFormData() {
-    const data = new FormData(form);
-    const res = await fetch(ENDPOINT, {
-      method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    });
-    return res;
-  }
-
-  async function postJSON() {
-    const formData = new FormData(form);
-    const payload = Object.fromEntries(formData.entries());
-    const res = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
-    return res;
-  }
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (submitBtn.disabled) return;
-
-    if (!form.checkValidity()) {
-      setStatus('Por favor, completa los campos requeridos.', 'error');
-      form.reportValidity?.();
-      return;
+  if (!form || !statusEl || !submitBtn) {
+    console.warn('[ContactForm] Elementos no encontrados en el DOM.');
+  } else {
+    function setStatus(msg, type = 'info') {
+      statusEl.textContent = msg;
+      statusEl.classList.remove('text-red-600','text-green-600','text-gray-600','dark:text-gray-300');
+      if (type === 'success') statusEl.classList.add('text-green-600');
+      else if (type === 'error') statusEl.classList.add('text-red-600');
+      else statusEl.classList.add('text-gray-600','dark:text-gray-300');
     }
 
-    submitBtn.disabled = true;
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Enviando…';
-    setStatus('');
+    async function postFormData() {
+      const data = new FormData(form);
+      return fetch(ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+    }
 
-    try {
-      let res;
-      // 1º intento: FormData (evita preflight CORS)
+    async function postJSON() {
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+      return fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    }
+
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+
+      if (submitBtn.disabled) return;
+
+      if (!form.checkValidity()) {
+        setStatus('Por favor, completa los campos requeridos.', 'error');
+        if (form.reportValidity) form.reportValidity();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      const originalText = submitBtn.textContent || 'Enviar mensaje';
+      submitBtn.textContent = 'Enviando…';
+      setStatus('');
+
       try {
-        res = await postFormData();
-      } catch (e) {
-        // Si la red bloquea (bloqueador o CORS duro), intentamos JSON
-        console.warn('FormData fetch failed, trying JSON', e);
-        res = await postJSON();
-      }
+        let res;
+        try { res = await postFormData(); }
+        catch { res = await postJSON(); }
 
-      if (res.ok) {
-        setStatus('✅ ¡Mensaje enviado correctamente! Te responderé en breve.', 'success');
-        form.reset();
-      } else {
-        let msg = `❌ Error ${res.status}`;
-        try {
-          const json = await res.json();
-          if (json?.errors?.length) {
-            msg += ' · ' + json.errors.map(e => e.message).join(' ');
-          } else if (json?.message) {
-            msg += ' · ' + json.message;
+        if (res.ok) {
+          setStatus('✅ ¡Mensaje enviado correctamente! Te responderé en breve.', 'success');
+          form.reset();
+        } else {
+          let msg = `❌ Error ${res.status}`;
+          try {
+            const json = await res.json();
+            if (Array.isArray(json?.errors) && json.errors.length) {
+              msg += ' · ' + json.errors.map((e) => e?.message || '').join(' ');
+            } else if (json?.message) {
+              msg += ' · ' + json.message;
+            }
+          } catch {
+            const text = await res.text().catch(() => '');
+            if (text) msg += ' · ' + text.slice(0, 200);
           }
-        } catch (parseErr) {
-          const text = await res.text().catch(() => '');
-          if (text) msg += ' · ' + text.slice(0, 200);
+          setStatus(msg, 'error');
         }
-        console.error('Formspree error response:', res);
-        setStatus(msg, 'error');
+      } catch (err) {
+        console.error('[ContactForm] Error de red/JS:', err);
+        setStatus('⚠️ Error de conexión. Inténtalo de nuevo en unos minutos.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
       }
-    } catch (err) {
-      console.error('Network/JS error sending form:', err);
-      setStatus('⚠️ Error de conexión (posible CORS o bloqueador).', 'error');
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
-    }
-  });
+    });
+  }
 </script>
 

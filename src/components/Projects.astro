@@ -7,6 +7,7 @@ import AstroIcon from "./icons/Astro.astro";
 import React from "./icons/React.astro";
 import Link from "./icons/Link.astro";
 import LinkButton from "./LinkButton.astro";
+import Wordpress from "./icons/Wordpress.astro";
 
 const TAGS = {
   NEXT: {
@@ -18,6 +19,11 @@ const TAGS = {
     name: "Vite",
     class: "bg-black text-white",
     icon: Vite,
+  },
+  WORDPRESS: {
+    name: "Wordpress",
+    class: "bg-black text-white",
+    icon: Wordpress,
   },
   ASTRO: {
     name: "Astro",
@@ -40,11 +46,21 @@ const PROJECTS = [
     title:
       "Arkady Celebraciones - Web de reservas para local de celebraciones en Sevilla",
     description:
-      "Web para empresa de celebraciones en el barrio del Cerro del Águila, Sevilla.Creado desde cero con Vite, React y Tailwind CSS.",
+      "Web para empresa de celebraciones en el barrio del Cerro del Águila, Sevilla. Creado desde cero con Vite, React y Tailwind CSS.",
     link: "https://arkadycelebraciones.es/",
     github: "https://github.com/anromercas/arkady-vite",
     image: "/projects/arkady.webp",
     tags: [TAGS.VITE, TAGS.REACT, TAGS.TAILWIND],
+  },
+  {
+    title:
+      "Adf Sevilla - Web de administración de fincas en Sevilla",
+    description:
+      `Web para empresa de administración de fincas en el barrio del Cerro del Águila, Sevilla. 
+      Creado desde cero con Wordpress. Optimizada para SEO Local con palabras clave como "administradores de fincas en sevilla" o "gestión de fincas en sevilla"`,
+    link: "https://adfsevilla.com/",
+    image: "/projects/adfsevilla.webp",
+    tags: [TAGS.WORDPRESS],
   },
   {
     title: "nuriaromero.dev - Portfolio personal",
@@ -64,10 +80,13 @@ const PROJECTS = [
         <div class="w-full md:w-1/2">
           <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
             <img
-              alt="Recién llegado vs 5 años en Nueva Zelanda"
+              alt={title}
               class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105"
-              loading="lazy"
               src={image}
+              width="400"
+              height="224"
+              decoding="async"
+              style="display: block;"
             />
           </div>
         </div>
