@@ -18,6 +18,15 @@ export const SITE = {
     region: "Andalucía",
     country: "ES",
   },
+  // Datos fiscales: SOLO se usan en las páginas legales (aviso legal y
+  // privacidad). No se muestran en el footer, la web ni el JSON-LD.
+  // ⚠️ Falta el NIF: sustituir {NIF} por el real antes de publicar.
+  legal: {
+    titular: "Nuria Romero Castillo",
+    nif: "{NIF}",
+    domicilio: "Camino Andalucía 426, 41309 La Rinconada, Sevilla",
+    actividad: "Diseño y desarrollo de páginas web, software y servicios digitales",
+  },
   geo: { lat: 37.3826, lng: -5.9963 },
   sameAs: [
     "https://linkedin.com/in/nuria-romero-castillo",

@@ -1,0 +1,44 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import Schema from "@/components/seo/Schema.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import Breadcrumbs from "@/components/Breadcrumbs.astro"
+import { breadcrumbSchema } from "@/lib/schema"
+
+interface Props {
+  title: string
+  description: string
+  slug: string
+  breadcrumbName: string
+  updated: string
+}
+
+const { title, description, slug, breadcrumbName, updated } = Astro.props
+
+const breadcrumbs = [
+  { name: "Inicio", url: "/" },
+  { name: breadcrumbName, url: slug },
+]
+---
+
+<Layout title={title} description={description}>
+  <Schema slot="head" schema={breadcrumbSchema(breadcrumbs)} />
+  <main class="px-4 pt-24">
+    <SectionContainer>
+      <Breadcrumbs items={breadcrumbs} />
+      <h1
+        class="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl dark:text-white mb-2"
+      >
+        {breadcrumbName}
+      </h1>
+      <p class="mb-10 text-sm text-gray-600 dark:text-gray-500">
+        Última actualización: {updated}
+      </p>
+      <div
+        class="prose prose-lg max-w-none dark:prose-invert prose-headings:text-gray-800 dark:prose-headings:text-white prose-a:text-blue-600 dark:prose-a:text-blue-400"
+      >
+        <slot />
+      </div>
+    </SectionContainer>
+  </main>
+</Layout>

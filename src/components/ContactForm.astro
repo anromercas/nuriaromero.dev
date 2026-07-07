@@ -88,6 +88,22 @@ const {
           placeholder="¿En qué puedo ayudarte?"
         ></textarea>
       </div>
+
+      <div class="flex items-start gap-2">
+        <input
+          type="checkbox"
+          id="privacy"
+          name="privacy"
+          required
+          class="mt-1 size-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800"
+        />
+        <label for="privacy" class="text-sm text-gray-600 dark:text-gray-300">
+          He leído y acepto la
+          <a href="/privacidad" class="text-blue-600 underline dark:text-blue-400">
+            política de privacidad
+          </a>. <span class="text-red-500">*</span>
+        </label>
+      </div>
     </div>
 
     <div class="flex items-center justify-end gap-3">

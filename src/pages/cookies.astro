@@ -1,0 +1,56 @@
+---
+import LegalLayout from "@/layouts/LegalLayout.astro"
+import { SITE } from "@/data/site"
+---
+
+<LegalLayout
+  title="Política de cookies | nuriaromero.dev"
+  description="Información sobre el uso de cookies y almacenamiento local en nuriaromero.dev."
+  slug="/cookies"
+  breadcrumbName="Política de cookies"
+  updated="julio de 2026"
+>
+  <h2>1. Qué son las cookies</h2>
+  <p>
+    Las cookies son pequeños archivos que un sitio web almacena en tu navegador
+    para recordar información sobre tu visita. Existen cookies técnicas
+    (necesarias para el funcionamiento) y cookies de análisis o publicidad (que
+    requieren tu consentimiento).
+  </p>
+
+  <h2>2. Cookies que utiliza este sitio</h2>
+  <p>
+    Este sitio web <strong>no utiliza cookies de análisis, seguimiento ni
+    publicidad</strong>, por lo que no se muestra un banner de consentimiento de
+    cookies.
+  </p>
+  <p>
+    Únicamente se emplea almacenamiento técnico en tu propio navegador
+    (<em>localStorage</em>) para recordar tu preferencia de tema claro u oscuro.
+    Esta información se guarda solo en tu dispositivo, no se envía a ningún
+    servidor y no permite identificarte.
+  </p>
+
+  <h2>3. Cookies de terceros</h2>
+  <p>
+    Los proveedores que hacen funcionar el sitio (Formspree, para el formulario
+    de contacto, y Netlify, para el alojamiento) pueden instalar cookies
+    estrictamente técnicas necesarias para prestar su servicio y garantizar la
+    seguridad. Estas cookies no se utilizan con fines de seguimiento.
+  </p>
+
+  <h2>4. Cómo gestionar las cookies</h2>
+  <p>
+    Puedes borrar o bloquear el almacenamiento de cookies y datos locales desde
+    la configuración de tu navegador. Si lo haces, es posible que no se recuerde
+    tu preferencia de tema.
+  </p>
+
+  <h2>5. Cambios en esta política</h2>
+  <p>
+    Si en el futuro se incorporan cookies de análisis o de terceros con fines de
+    seguimiento, se actualizará esta política y se habilitará el sistema de
+    consentimiento correspondiente. Para cualquier duda, escribe a
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+  </p>
+</LegalLayout>
