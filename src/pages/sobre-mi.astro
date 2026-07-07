@@ -1,0 +1,46 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import Schema from "@/components/seo/Schema.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import Hero from "@/components/Hero.astro"
+import AboutMe from "@/components/AboutMe.astro"
+import Experience from "@/components/Experience.astro"
+import Briefcase from "@/components/icons/Briefcase.astro"
+import ProfileCheck from "@/components/icons/ProfileCheck.astro"
+import { personSchema, breadcrumbSchema } from "@/lib/schema"
+
+const breadcrumbs = [
+  { name: "Inicio", url: "/" },
+  { name: "Sobre mí", url: "/sobre-mi" },
+]
+---
+
+<Layout
+  title="Sobre mí — Nuria Romero, desarrolladora web en Sevilla"
+  description="Soy Nuria Romero, desarrolladora de software en Sevilla con más de 10 años de experiencia. Creo webs, software a medida y automatizaciones para negocios."
+>
+  <Schema slot="head" schema={[personSchema(), breadcrumbSchema(breadcrumbs)]} />
+  <main class="px-4 pt-24">
+    <SectionContainer class="py-8 md:py-16">
+      <Hero />
+    </SectionContainer>
+    <div class="space-y-24">
+      <SectionContainer id="sobre-mi">
+        <TitleSection>
+          <ProfileCheck class="size-8" />
+          Sobre mí
+        </TitleSection>
+        <AboutMe />
+      </SectionContainer>
+
+      <SectionContainer id="experiencia">
+        <TitleSection>
+          <Briefcase class="size-8" />
+          Experiencia laboral
+        </TitleSection>
+        <Experience />
+      </SectionContainer>
+    </div>
+  </main>
+</Layout>

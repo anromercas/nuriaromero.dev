@@ -1,0 +1,94 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import Schema from "@/components/seo/Schema.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import Breadcrumbs from "@/components/Breadcrumbs.astro"
+import ServiceHero from "@/components/services/ServiceHero.astro"
+import BenefitsGrid from "@/components/services/BenefitsGrid.astro"
+import ProcessSteps from "@/components/services/ProcessSteps.astro"
+import PricingCard from "@/components/services/PricingCard.astro"
+import FAQ from "@/components/services/FAQ.astro"
+import CTASection from "@/components/services/CTASection.astro"
+import CodeIcon from "@/components/icons/Code.astro"
+import Briefcase from "@/components/icons/Briefcase.astro"
+import ProfileCheck from "@/components/icons/ProfileCheck.astro"
+import { serviceSchema, faqSchema, breadcrumbSchema } from "@/lib/schema"
+import type { ServicePageData } from "@/data/types"
+
+interface Props {
+  page: ServicePageData
+}
+
+const { page } = Astro.props
+
+const breadcrumbs = [
+  { name: "Inicio", url: "/" },
+  { name: page.breadcrumbName, url: page.slug },
+]
+---
+
+<Layout title={page.seo.title} description={page.seo.description}>
+  <Schema
+    slot="head"
+    schema={[
+      serviceSchema({
+        name: page.hero.h1,
+        description: page.seo.description,
+        url: page.slug,
+      }),
+      faqSchema(page.faqs),
+      breadcrumbSchema(breadcrumbs),
+    ]}
+  />
+  <main class="px-4 pt-24">
+    <SectionContainer>
+      <Breadcrumbs items={breadcrumbs} />
+      <ServiceHero h1={page.hero.h1} subtitle={page.hero.subtitle} />
+    </SectionContainer>
+
+    <div class="space-y-24 mt-8">
+      <SectionContainer>
+        <TitleSection>
+          <ProfileCheck class="size-8" />
+          Qué vas a conseguir
+        </TitleSection>
+        <BenefitsGrid benefits={page.benefits} />
+      </SectionContainer>
+
+      <SectionContainer>
+        <TitleSection>
+          <Briefcase class="size-8" />
+          Cómo trabajo
+        </TitleSection>
+        <ProcessSteps steps={page.process} />
+      </SectionContainer>
+
+      <SectionContainer>
+        <TitleSection>
+          <CodeIcon class="size-7" />
+          Precio orientativo
+        </TitleSection>
+        <PricingCard
+          from={page.pricing.from}
+          includes={page.pricing.includes}
+          note={page.pricing.note}
+        />
+      </SectionContainer>
+
+      <slot />
+
+      <SectionContainer>
+        <TitleSection>
+          <ProfileCheck class="size-8" />
+          Preguntas frecuentes
+        </TitleSection>
+        <FAQ faqs={page.faqs} />
+      </SectionContainer>
+
+      <SectionContainer>
+        <CTASection />
+      </SectionContainer>
+    </div>
+  </main>
+</Layout>

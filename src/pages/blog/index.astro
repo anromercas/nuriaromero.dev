@@ -1,0 +1,71 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import Schema from "@/components/seo/Schema.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import Breadcrumbs from "@/components/Breadcrumbs.astro"
+import { breadcrumbSchema } from "@/lib/schema"
+import { getCollection } from "astro:content"
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+)
+
+const breadcrumbs = [
+  { name: "Inicio", url: "/" },
+  { name: "Blog", url: "/blog" },
+]
+---
+
+<Layout
+  title="Blog — Webs, SEO local y automatización para negocios de Sevilla"
+  description="Guías prácticas para dueños de negocio: cuánto cuesta una web, cómo salir en Google Maps, automatizaciones que ahorran tiempo y más."
+>
+  <Schema slot="head" schema={breadcrumbSchema(breadcrumbs)} />
+  <main class="px-4 pt-24">
+    <SectionContainer>
+      <Breadcrumbs items={breadcrumbs} />
+      <h1
+        class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white mb-6"
+      >
+        Blog
+      </h1>
+      <p class="text-xl text-gray-800 dark:text-gray-300 max-w-2xl mb-12">
+        Guías prácticas, sin tecnicismos, para que tu negocio saque partido a
+        internet: precios reales, SEO local y automatización.
+      </p>
+
+      <ul class="space-y-8">
+        {
+          posts.map((post) => (
+            <li>
+              <a
+                href={`/blog/${post.slug}`}
+                class="block rounded-xl border border-gray-300 bg-gray-100/50 p-6 transition hover:border-blue-500 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800/50 dark:hover:border-blue-500"
+              >
+                <time
+                  datetime={post.data.pubDate.toISOString()}
+                  class="text-sm text-gray-600 dark:text-gray-500"
+                >
+                  {post.data.pubDate.toLocaleDateString("es-ES", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </time>
+                <h2 class="mt-1 mb-2 text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                  {post.data.title}
+                </h2>
+                <p class="text-gray-700 dark:text-gray-400">
+                  {post.data.description}
+                </p>
+                <span class="mt-4 inline-block font-medium text-blue-600 dark:text-blue-400">
+                  Leer artículo →
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </SectionContainer>
+  </main>
+</Layout>

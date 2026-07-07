@@ -1,0 +1,40 @@
+---
+import SocialPill from "@/components/SocialPill.astro"
+import WhatsAppIcon from "@/components/icons/WhatsApp.astro"
+import MailIcon from "@/components/icons/Mail.astro"
+import { whatsappUrl } from "@/data/site"
+
+interface Props {
+  title?: string
+  text?: string
+}
+
+const {
+  title = "¿Hablamos de tu proyecto?",
+  text = "Cuéntame qué necesita tu negocio y te respondo con una propuesta clara, sin compromiso y sin tecnicismos.",
+} = Astro.props
+---
+
+<div
+  class="rounded-xl border border-gray-300 bg-gray-100/50 p-8 text-center dark:border-gray-700 dark:bg-gray-800/50"
+>
+  <h2 class="mb-3 text-2xl font-semibold text-black/80 dark:text-white">
+    {title}
+  </h2>
+  <p class="mx-auto mb-6 max-w-xl text-gray-700 dark:text-gray-400">{text}</p>
+  <nav class="flex flex-wrap justify-center gap-4">
+    <a
+      href={whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center justify-center gap-2 px-4 py-1 text-white transition bg-green-600 border border-green-700 rounded-full text-md hover:bg-green-500 max-w-fit focus:outline-none focus-visible:ring focus-visible:ring-green-500/80 focus-visible:ring-offset-2"
+    >
+      <WhatsAppIcon class="size-4" />
+      Escríbeme por WhatsApp
+    </a>
+    <SocialPill href="/contacto">
+      <MailIcon class="size-4" />
+      Formulario de contacto
+    </SocialPill>
+  </nav>
+</div>

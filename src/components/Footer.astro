@@ -1,28 +1,114 @@
 ---
+import { SITE, whatsappUrl } from "@/data/site";
+import { services } from "@/data/services";
+import { niches } from "@/data/niches";
+
 const currentYear = new Date().getFullYear();
 ---
 
 <footer
-  class="opacity-80 m-4 min-[375px]:pl-4 md:pl-0 mt-16 w-full mx-auto container lg:max-w-4xl md:max-w-2xl mb-10 flex justify-center"
+  class="opacity-80 m-4 min-[375px]:pl-4 md:pl-0 mt-16 w-full mx-auto container lg:max-w-4xl md:max-w-2xl mb-10"
 >
-  <div
-    class="rounded-lg w-full max-w-screen-xl mx-auto md:flex md:items-center md:justify-between py-4"
-  >
-    <span class="text-sm sm:text-center text-zinc-800/90 dark:text-zinc-200/90"
+  <div class="grid gap-8 border-t border-gray-300 pt-8 dark:border-gray-700 sm:grid-cols-3">
+    <div>
+      <h2 class="mb-3 text-sm font-semibold text-zinc-800 dark:text-zinc-100">
+        Servicios
+      </h2>
+      <ul class="space-y-1.5 text-sm text-zinc-800/90 dark:text-zinc-200/90">
+        {
+          services.map((service) => (
+            <li>
+              <a href={service.slug} class="hover:text-blue-500 hover:underline">
+                {service.breadcrumbName}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="mb-3 text-sm font-semibold text-zinc-800 dark:text-zinc-100">
+        Webs por sector
+      </h2>
+      <ul class="space-y-1.5 text-sm text-zinc-800/90 dark:text-zinc-200/90">
+        {
+          niches.map((niche) => (
+            <li>
+              <a href={niche.slug} class="hover:text-blue-500 hover:underline">
+                {niche.breadcrumbName}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="mb-3 text-sm font-semibold text-zinc-800 dark:text-zinc-100">
+        {SITE.shortName}
+      </h2>
+      <address
+        class="space-y-1.5 text-sm not-italic text-zinc-800/90 dark:text-zinc-200/90"
+      >
+        <p>{SITE.address.locality}, España</p>
+        <p>
+          <a href={`mailto:${SITE.email}`} class="hover:text-blue-500 hover:underline">
+            {SITE.email}
+          </a>
+        </p>
+        <p>
+          <a href={`tel:+${SITE.whatsapp}`} class="hover:text-blue-500 hover:underline">
+            {SITE.phone}
+          </a>
+        </p>
+        <p>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-blue-500 hover:underline"
+          >
+            WhatsApp
+          </a>
+          ·
+          <a
+            href={SITE.sameAs[0]}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-blue-500 hover:underline"
+          >
+            LinkedIn
+          </a>
+          ·
+          <a
+            href={SITE.sameAs[1]}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-blue-500 hover:underline"
+          >
+            GitHub
+          </a>
+        </p>
+      </address>
+    </div>
+  </div>
+
+  <div class="mt-8 flex flex-wrap items-center justify-between gap-2">
+    <span class="text-sm text-zinc-800/90 dark:text-zinc-200/90"
       >&copy; {currentYear}
       Nuria Romero. Todos los derechos reservados
     </span>
-    <!-- <ul
-      class="flex flex-wrap items-center mt-3 text-sm font-medium dark:text-white/90 sm:mt-0"
-    >
+    <ul class="flex flex-wrap items-center gap-4 text-sm text-zinc-800/90 dark:text-zinc-200/90">
       <li>
-        <a href="/#sobre-mi" class="hover:underline me-4 md:me-6">Sobre mí</a>
+        <a href="/sobre-mi" class="hover:underline">Sobre mí</a>
       </li>
       <li>
-        <a id="contacto" href="mailto:miduga@gmail.com" class="hover:underline"
-          >Contacto</a
-        >
+        <a href="/blog" class="hover:underline">Blog</a>
       </li>
-    </ul> -->
+      <li>
+        <a href="/contacto" class="hover:underline">Contacto</a>
+      </li>
+    </ul>
   </div>
 </footer>

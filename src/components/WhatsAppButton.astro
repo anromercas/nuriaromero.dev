@@ -1,0 +1,15 @@
+---
+import WhatsAppIcon from "@/components/icons/WhatsApp.astro"
+import { whatsappUrl } from "@/data/site"
+---
+
+<a
+  href={whatsappUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Escríbeme por WhatsApp"
+  title="Escríbeme por WhatsApp"
+  class="fixed bottom-5 right-5 z-40 flex size-14 items-center justify-center rounded-full bg-green-600 text-white shadow-lg transition hover:scale-110 hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700"
+>
+  <WhatsAppIcon class="size-8" />
+</a>

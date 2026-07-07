@@ -1,29 +1,54 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
+import { services } from "@/data/services";
+import { niches } from "@/data/niches";
 
 const navItems = [
   {
-    title: "Experiencia",
-    label: "experiencia",
-    url: "/#experiencia",
+    title: "Inicio",
+    label: "inicio",
+    url: "/",
   },
   {
-    title: "Proyectos",
-    label: "proyectos",
-    url: "/#proyectos",
+    title: "Servicios",
+    label: "servicios",
+    url: "/servicios/",
+  },
+  {
+    title: "Portfolio",
+    label: "portfolio",
+    url: "/portfolio",
+  },
+  {
+    title: "Blog",
+    label: "blog",
+    url: "/blog",
   },
   {
     title: "Sobre mí",
     label: "sobre-mi",
-    url: "/#sobre-mi",
+    url: "/sobre-mi",
   },
   {
     title: "Contacto",
     label: "contacto",
-    url: "/#contacto",
-    // url: "mailto:miduga@gmail.com",
+    url: "/contacto",
   },
 ];
+
+const normalize = (path: string) => path.replace(/\/+$/, "") || "/";
+const currentPath = normalize(Astro.url.pathname);
+
+const isActive = (url: string) => {
+  const target = normalize(url);
+  if (target === "/") return currentPath === "/";
+  return currentPath === target || currentPath.startsWith(`${target}/`);
+};
+
+const dropdownItems = [...services, ...niches].map((page) => ({
+  title: page.breadcrumbName,
+  url: page.slug,
+}));
 ---
 
 <header
@@ -33,61 +58,53 @@ const navItems = [
     class="flex px-3 text-sm font-medium rounded-full text-gray-600 dark:text-gray-200 justify-center items-center"
   >
     {
-      navItems.map((link) => (
-        <a
-          class="relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500"
-          aria-label={link.label}
-          href={link.url}
-        >
-          {link.title}
-        </a>
-      ))
+      navItems.map((link) =>
+        link.label === "servicios" ? (
+          <div class="relative group">
+            <a
+              class:list={[
+                "relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500",
+                { "text-blue-500": isActive(link.url) },
+              ]}
+              aria-label={link.label}
+              aria-current={isActive(link.url) ? "page" : undefined}
+              href={link.url}
+            >
+              {link.title}
+            </a>
+            <div class="absolute left-1/2 hidden -translate-x-1/2 pt-2 group-hover:block group-focus-within:block">
+              <ul class="min-w-56 rounded-xl border border-gray-300 bg-white/95 py-2 shadow-lg backdrop-blur dark:border-gray-700 dark:bg-gray-800/95">
+                {dropdownItems.map((item) => (
+                  <li>
+                    <a
+                      href={item.url}
+                      class="block px-4 py-1.5 hover:text-blue-500"
+                    >
+                      {item.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <a
+            class:list={[
+              "relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500",
+              { "text-blue-500": isActive(link.url) },
+            ]}
+            aria-label={link.label}
+            aria-current={isActive(link.url) ? "page" : undefined}
+            href={link.url}
+          >
+            {link.title}
+          </a>
+        )
+      )
     }
     <ThemeToggle />
   </nav>
 </header>
-
-<script>
-  document.addEventListener("astro:page-load", () => {
-    const sections = document.querySelectorAll("section");
-    const navItems = document.querySelectorAll("header nav a");
-
-    const callback = (entries: any[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          navItems.forEach((item) => {
-            if (item.getAttribute("aria-label") == entry.target.id) {
-              item.classList.add("text-blue-500");
-            } else {
-              item.classList.remove("text-blue-500");
-            }
-          });
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(callback, {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.3,
-    });
-
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-
-    // Cleanup function
-    document.onvisibilitychange = () => {
-      if (document.visibilityState === "hidden") {
-        observer.disconnect();
-      } else {
-        sections.forEach((section) => {
-          observer.observe(section);
-        });
-      }
-    };
-  });
-</script>
 
 <style>
   nav {
@@ -106,6 +123,15 @@ const navItems = [
     }
     to {
       @apply shadow-lg ring-1 backdrop-blur ring-white/10;
+    }
+  }
+
+  @media (max-width: 640px) {
+    nav {
+      @apply text-xs;
+    }
+    nav a {
+      @apply px-1.5;
     }
   }
 </style>

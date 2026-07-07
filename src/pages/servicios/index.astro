@@ -1,0 +1,96 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import Schema from "@/components/seo/Schema.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import Breadcrumbs from "@/components/Breadcrumbs.astro"
+import CTASection from "@/components/services/CTASection.astro"
+import Briefcase from "@/components/icons/Briefcase.astro"
+import { breadcrumbSchema } from "@/lib/schema"
+import { services } from "@/data/services"
+import { niches } from "@/data/niches"
+
+const breadcrumbs = [
+  { name: "Inicio", url: "/" },
+  { name: "Servicios", url: "/servicios/" },
+]
+---
+
+<Layout
+  title="Servicios de desarrollo web, software y automatización en Sevilla"
+  description="Diseño web, software a medida, automatizaciones e inteligencia artificial para negocios en Sevilla. Servicios con precios claros y trato directo."
+>
+  <Schema slot="head" schema={breadcrumbSchema(breadcrumbs)} />
+  <main class="px-4 pt-24">
+    <SectionContainer>
+      <Breadcrumbs items={breadcrumbs} />
+      <h1
+        class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white mb-6"
+      >
+        Servicios para tu negocio
+      </h1>
+      <p class="text-xl text-gray-800 dark:text-gray-300 max-w-2xl mb-12">
+        Todo lo que tu negocio necesita para funcionar mejor en internet:
+        desde la página web que te trae clientes hasta las automatizaciones
+        que te devuelven horas de trabajo.
+      </p>
+
+      <ul class="grid gap-6 sm:grid-cols-2">
+        {
+          services.map((service) => (
+            <li>
+              <a
+                href={service.slug}
+                class="block h-full rounded-xl border border-gray-300 bg-gray-100/50 p-6 transition hover:border-blue-500 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800/50 dark:hover:border-blue-500"
+              >
+                <h2 class="mb-2 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                  {service.breadcrumbName}
+                </h2>
+                <p class="text-gray-700 dark:text-gray-400">
+                  {service.hero.subtitle.slice(0, 140)}…
+                </p>
+                <span class="mt-4 inline-block font-medium text-blue-600 dark:text-blue-400">
+                  Ver servicio →
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </SectionContainer>
+
+    <div class="space-y-24 mt-24">
+      <SectionContainer>
+        <TitleSection>
+          <Briefcase class="size-8" />
+          Soluciones por sector
+        </TitleSection>
+        <p class="mb-6 text-gray-700 dark:text-gray-400 max-w-2xl">
+          Cada negocio tiene sus propias necesidades. Estas páginas explican
+          qué incluye una web pensada para tu sector:
+        </p>
+        <ul class="grid gap-4 sm:grid-cols-2">
+          {
+            niches.map((niche) => (
+              <li>
+                <a
+                  href={niche.slug}
+                  class="block rounded-xl border border-gray-300 bg-gray-100/50 p-4 font-medium text-gray-800 transition hover:border-blue-500 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-100 dark:hover:border-blue-500"
+                >
+                  {niche.breadcrumbName} en Sevilla →
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </SectionContainer>
+
+      <SectionContainer>
+        <CTASection
+          title="¿No sabes qué necesita tu negocio?"
+          text="Cuéntamelo con tus palabras y te digo qué opción encaja mejor, sin compromiso y sin venderte nada que no necesites."
+        />
+      </SectionContainer>
+    </div>
+  </main>
+</Layout>

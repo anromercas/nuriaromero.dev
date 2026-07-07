@@ -1,0 +1,105 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import Schema from "@/components/seo/Schema.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import Breadcrumbs from "@/components/Breadcrumbs.astro"
+import ContactForm from "@/components/ContactForm.astro"
+import WhatsAppIcon from "@/components/icons/WhatsApp.astro"
+import MailIcon from "@/components/icons/Mail.astro"
+import LinkedInIcon from "@/components/icons/LinkedIn.astro"
+import { breadcrumbSchema } from "@/lib/schema"
+import { SITE, whatsappUrl } from "@/data/site"
+
+const breadcrumbs = [
+  { name: "Inicio", url: "/" },
+  { name: "Contacto", url: "/contacto" },
+]
+---
+
+<Layout
+  title="Contacto — Pide presupuesto para tu web en Sevilla"
+  description="Cuéntame qué necesita tu negocio: te respondo con una propuesta clara y sin compromiso. WhatsApp, teléfono o formulario, como prefieras."
+>
+  <Schema slot="head" schema={breadcrumbSchema(breadcrumbs)} />
+  <main class="px-4 pt-24">
+    <SectionContainer>
+      <Breadcrumbs items={breadcrumbs} />
+      <h1
+        class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white mb-6"
+      >
+        Hablemos de tu proyecto
+      </h1>
+      <p class="text-xl text-gray-800 dark:text-gray-300 max-w-2xl mb-12">
+        Cuéntame qué necesita tu negocio con tus palabras: yo me encargo de
+        traducirlo a una propuesta clara, con precio y plazos cerrados. Sin
+        compromiso.
+      </p>
+
+      <div class="grid gap-12 md:grid-cols-2">
+        <div>
+          <ContactForm
+            title="Escríbeme"
+            description="Rellena el formulario y te respondo en menos de 24 horas laborables."
+          />
+        </div>
+
+        <div class="space-y-6">
+          <h2 class="text-2xl font-semibold text-black/80 dark:text-white">
+            Otras formas de contacto
+          </h2>
+          <ul class="space-y-4 text-gray-800 dark:text-gray-300">
+            <li>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-x-3 hover:text-blue-500"
+              >
+                <WhatsAppIcon class="size-5" />
+                WhatsApp: {SITE.phone}
+              </a>
+            </li>
+            <li>
+              <a
+                href={`tel:+${SITE.whatsapp}`}
+                class="flex items-center gap-x-3 hover:text-blue-500"
+              >
+                <MailIcon class="size-5" />
+                Teléfono: {SITE.phone}
+              </a>
+            </li>
+            <li>
+              <a
+                href={SITE.sameAs[0]}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-x-3 hover:text-blue-500"
+              >
+                <LinkedInIcon class="size-5" />
+                LinkedIn
+              </a>
+            </li>
+          </ul>
+
+          <div
+            class="rounded-xl border border-gray-300 bg-gray-100/50 p-5 dark:border-gray-700 dark:bg-gray-800/50"
+          >
+            <h3 class="mb-2 font-semibold text-gray-800 dark:text-gray-100">
+              {SITE.shortName}
+            </h3>
+            <address class="not-italic text-gray-700 dark:text-gray-400">
+              {SITE.address.locality}, España<br />
+              <a href={`mailto:${SITE.email}`} class="hover:text-blue-500 hover:underline">
+                {SITE.email}
+              </a>
+            </address>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-500">
+              Trabajo con negocios de Sevilla y su área metropolitana, y en
+              remoto para el resto de España.
+            </p>
+          </div>
+        </div>
+      </div>
+    </SectionContainer>
+  </main>
+</Layout>

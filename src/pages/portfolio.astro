@@ -1,0 +1,44 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import Schema from "@/components/seo/Schema.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import Breadcrumbs from "@/components/Breadcrumbs.astro"
+import Projects from "@/components/Projects.astro"
+import CTASection from "@/components/services/CTASection.astro"
+import CodeIcon from "@/components/icons/Code.astro"
+import { breadcrumbSchema } from "@/lib/schema"
+
+const breadcrumbs = [
+  { name: "Inicio", url: "/" },
+  { name: "Portfolio", url: "/portfolio" },
+]
+---
+
+<Layout
+  title="Portfolio — Webs y proyectos para negocios en Sevilla"
+  description="Proyectos reales de Nuria Romero: webs para negocios de Sevilla optimizadas para SEO local, aplicaciones a medida y más."
+>
+  <Schema slot="head" schema={breadcrumbSchema(breadcrumbs)} />
+  <main class="px-4 pt-24">
+    <SectionContainer>
+      <Breadcrumbs items={breadcrumbs} />
+      <TitleSection>
+        <CodeIcon class="size-7" />
+        Portfolio
+      </TitleSection>
+      <p class="mb-12 text-gray-700 dark:text-gray-400 max-w-2xl">
+        Una selección de proyectos reales: webs para negocios locales de
+        Sevilla, optimizadas para aparecer en Google, y proyectos propios.
+      </p>
+      <Projects />
+    </SectionContainer>
+
+    <SectionContainer class="mt-24">
+      <CTASection
+        title="¿Quieres que tu negocio sea el siguiente?"
+        text="Cuéntame tu proyecto y te enseño cómo podría ser tu web."
+      />
+    </SectionContainer>
+  </main>
+</Layout>

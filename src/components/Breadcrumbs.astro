@@ -1,0 +1,28 @@
+---
+interface Props {
+  items: { name: string; url: string }[]
+}
+
+const { items } = Astro.props
+---
+
+<nav aria-label="Miga de pan" class="mb-6 text-sm text-gray-600 dark:text-gray-400">
+  <ol class="flex flex-wrap items-center gap-x-2">
+    {
+      items.map((item, i) => (
+        <li class="flex items-center gap-x-2">
+          {i > 0 && <span aria-hidden="true">/</span>}
+          {i === items.length - 1 ? (
+            <span aria-current="page" class="text-gray-800 dark:text-gray-200">
+              {item.name}
+            </span>
+          ) : (
+            <a href={item.url} class="hover:text-blue-500 hover:underline">
+              {item.name}
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
