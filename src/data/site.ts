@@ -23,7 +23,7 @@ export const SITE = {
   // ⚠️ Falta el NIF: sustituir {NIF} por el real antes de publicar.
   legal: {
     titular: "Nuria Romero Castillo",
-    nif: "{NIF}",
+    nif: "28843406A",
     domicilio: "Camino Andalucía 426, 41309 La Rinconada, Sevilla",
     actividad: "Diseño y desarrollo de páginas web, software y servicios digitales",
   },
