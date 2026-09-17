@@ -1,0 +1,25 @@
+# Nuria Romero
+
+> Desarrolladora freelance en Sevilla especializada en diseño web, software a medida, automatizaciones e inteligencia artificial para negocios locales. Precios claros y trato directo. Contacto: +34 611 812 431 / nuriaromero.dev@gmail.com.
+
+## Servicios
+- [Diseño web en Sevilla](https://nuriaromero.dev/servicios/diseno-web-sevilla): Páginas web rápidas y optimizadas para SEO local, pensadas para conseguir clientes. Desde 149 € (landing) o 399 € (web de hasta 5 páginas).
+- [Desarrollo de software a medida](https://nuriaromero.dev/servicios/desarrollo-software-medida): Aplicaciones web para empresas en Sevilla: gestión interna, reservas, presupuestos, portales de cliente.
+- [Automatizaciones](https://nuriaromero.dev/servicios/automatizaciones): Automatización de tareas repetitivas (facturas, correos, citas, informes) con n8n y Make.
+- [Inteligencia artificial](https://nuriaromero.dev/servicios/inteligencia-artificial): Chatbots y asistentes con IA integrados en los procesos de tu negocio.
+- [Todos los servicios](https://nuriaromero.dev/servicios): Índice de servicios de desarrollo web, software y automatización en Sevilla.
+
+## Sectores
+- [Web para restaurantes en Sevilla](https://nuriaromero.dev/web-para-restaurantes-sevilla): Carta digital, reservas por WhatsApp y SEO local para salir en Google Maps.
+- [Web para clínicas en Sevilla](https://nuriaromero.dev/web-para-clinicas-sevilla): Webs para dentistas, fisioterapeutas, psicólogos y centros de estética con cita online y SEO local.
+- [Web para comercios en Sevilla](https://nuriaromero.dev/web-para-comercios-sevilla): Catálogo de productos, venta online y SEO local para tiendas de barrio.
+- [Web para abogados y gestorías en Sevilla](https://nuriaromero.dev/web-para-abogados-gestorias-sevilla): Webs para despachos profesionales con SEO local por especialidad y captación de consultas.
+
+## Más
+- [Portfolio](https://nuriaromero.dev/portfolio): Proyectos reales de webs y aplicaciones a medida para negocios de Sevilla.
+- [Blog](https://nuriaromero.dev/blog): Guías sobre precios de páginas web, SEO local y automatización para negocios.
+- [Sobre mí](https://nuriaromero.dev/sobre-mi): Presentación de Nuria Romero, desarrolladora de software en Sevilla con más de 10 años de experiencia.
+- [Contacto](https://nuriaromero.dev/contacto): Formulario de contacto y datos para pedir presupuesto (WhatsApp, teléfono o email).
+
+## Sitemap
+- [Sitemap](https://nuriaromero.dev/sitemap-index.xml)
