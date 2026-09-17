@@ -5,6 +5,7 @@ import SectionContainer from "@/components/SectionContainer.astro"
 import TitleSection from "@/components/TitleSection.astro"
 import Projects from "@/components/Projects.astro"
 import FAQ from "@/components/services/FAQ.astro"
+import ProcessSteps from "@/components/services/ProcessSteps.astro"
 import CTASection from "@/components/services/CTASection.astro"
 import SocialPill from "@/components/SocialPill.astro"
 import Badge from "@/components/Badge.astro"
@@ -18,22 +19,53 @@ import { services } from "@/data/services"
 import { niches } from "@/data/niches"
 import { whatsappUrl } from "@/data/site"
 
+// Proceso genérico de trabajo, resumido a partir del patrón que ya se repite
+// en las páginas de /servicios/* (contacto -> presupuesto cerrado -> diseño y
+// desarrollo -> revisión -> lanzamiento y soporte). Sin plazos ni cifras que
+// no estén ya declarados en el resto del sitio.
+const homeProcess = [
+  {
+    title: "Cuéntame tu proyecto",
+    text: "Escríbeme por WhatsApp o por el formulario contándome qué negocio tienes y qué necesitas. Respondo en menos de 24 horas laborables.",
+  },
+  {
+    title: "Propuesta con presupuesto cerrado",
+    text: "Tras conocer tu caso te envío una propuesta con precio y plazos por escrito: sabes el coste exacto antes de empezar, sin sorpresas después.",
+  },
+  {
+    title: "Diseño y desarrollo",
+    text: "Trabajo compartiendo avances por el camino, no solo al final del proyecto: puedes ver cómo va tomando forma y dar tu opinión mientras se construye.",
+  },
+  {
+    title: "Revisión y ajustes",
+    text: "Antes de darlo por terminado revisamos juntas el resultado y afino lo que haga falta, para que el resultado final responda a lo que necesitabas.",
+  },
+  {
+    title: "Lanzamiento y soporte",
+    text: "Publico o entrego el proyecto, te enseño a manejarlo y quedo disponible después del lanzamiento para resolver dudas y hacer ajustes.",
+  },
+]
+
 const homeFaqs = [
   {
     q: "¿Cuánto cuesta una página web para un negocio en Sevilla?",
-    a: "Una web completa de hasta 5 páginas parte de 399 €, con diseño a medida, SEO local, dominio y hosting el primer año incluidos. Si solo necesitas una landing de una página optimizada para SEO y GEO, desde 149 €. Siempre trabajo con presupuesto cerrado: sabes el precio exacto antes de empezar.",
+    a: "Una web completa de hasta 5 páginas parte de 399 €, e incluye diseño a medida adaptado a móvil, SEO local trabajado desde el código, dominio y hosting el primer año, botón de WhatsApp y formulario de contacto, alta en Google y Google Maps, y un mes de soporte tras el lanzamiento. Si solo necesitas una landing de una página optimizada para SEO y GEO, el precio de salida es de 149 €. En ambos casos trabajo siempre con presupuesto cerrado: te envío una propuesta por escrito con el precio y los plazos antes de empezar, así que sabes el coste exacto desde el primer momento y no hay sorpresas después. El presupuesto final se ajusta al alcance real de tu proyecto, pero ese ajuste también queda por escrito antes de que empecemos a trabajar. Si más adelante quieres automatizar tareas o añadir un chatbot con inteligencia artificial, esos servicios parten de 149 € y 399 € respectivamente.",
   },
   {
     q: "¿Qué diferencia hay entre tu trabajo y una web de plantilla?",
-    a: "Soy desarrolladora de software con más de 10 años de experiencia, no solo monto plantillas. Mis webs cargan en menos de 2 segundos, pasan los Core Web Vitals de Google y llevan el SEO local trabajado desde el código. Esa base técnica es la que hace que Google te ponga por delante de tu competencia.",
+    a: "Soy desarrolladora de software con más de 10 años de experiencia, no una plantilla montada en un día: he trabajado en proyectos para industria, salud y medioambiente, y como consultora en NTT DATA, antes de dedicarme a webs para negocios locales. Esa base técnica se traduce en resultados medibles: mis webs cargan en menos de 2 segundos, pasan los Core Web Vitals de Google y llevan el SEO local trabajado desde el código, con estructura, velocidad y datos estructurados pensados desde el primer día, no añadidos después con un plugin. Una plantilla genérica suele arrastrar código innecesario que ralentiza la carga y complica el posicionamiento, y te deja atada a las limitaciones del constructor. Con tu web, el dominio y el hosting quedan a tu nombre desde el primer año, sin cuotas ocultas ni depender de una plataforma cerrada si el día de mañana quieres moverla. Esa diferencia técnica es la que hace que Google te posicione por delante de negocios con webs de plantilla.",
   },
   {
     q: "¿Trabajas solo el diseño web?",
-    a: "No: también desarrollo software a medida, automatizaciones con n8n y Make, y soluciones con inteligencia artificial como chatbots de atención al cliente. Muchos clientes empiezan con la web y luego automatizan otras partes de su negocio.",
+    a: "No: además del diseño web también desarrollo software a medida, automatizaciones con n8n y Make, y soluciones con inteligencia artificial como chatbots de atención al cliente. El software a medida, desde 999 €, sustituye a los Excels y programas genéricos que se quedan cortos, con herramientas de gestión de pedidos, reservas o facturación pensadas para tu negocio y no al revés. Las automatizaciones, desde 149 €, conectan las aplicaciones que ya usas (correo, WhatsApp, hojas de cálculo, facturación) para que tareas repetitivas como confirmar citas o generar facturas se hagan solas, sin errores. Y los chatbots con inteligencia artificial, desde 399 €, atienden a tus clientes fuera de horario, entrenados únicamente con la información de tu negocio. Muchos clientes empiezan pidiendo la web y, una vez ven cómo trabajo, deciden automatizar otras partes de su negocio en un segundo proyecto. Todos estos servicios siguen el mismo proceso de trabajo y el mismo presupuesto cerrado que la web.",
   },
   {
     q: "¿Cómo empiezo?",
-    a: "Escríbeme por WhatsApp o por el formulario contándome qué negocio tienes y qué necesitas. Te respondo en menos de 24 horas laborables con los siguientes pasos y, tras una llamada breve, recibes una propuesta con precio y plazos cerrados.",
+    a: "Escríbeme por WhatsApp o por el formulario de contacto contándome qué negocio tienes y qué necesitas, con tus propias palabras y sin tecnicismos. Te respondo en menos de 24 horas laborables con los siguientes pasos y, tras conocer tu caso, recibes una propuesta por escrito con el precio y los plazos cerrados: sabes el coste exacto antes de que empecemos, sin sorpresas después. Si la aceptas, empezamos el diseño y desarrollo compartiendo avances por el camino y no solo al final, para que puedas ver cómo va tomando forma y dar tu opinión mientras se construye. Antes de darlo por terminado revisamos juntas el resultado y ajusto lo que haga falta. Por último, publico o entrego el proyecto, te enseño a manejarlo y quedo disponible después del lanzamiento para resolver dudas y hacer ajustes. Puedes escribirme por WhatsApp, por teléfono, por email o por LinkedIn, lo que te resulte más cómodo.",
+  },
+  {
+    q: "¿Trabajar con una freelance en vez de una agencia es un riesgo?",
+    a: "Es una objeción razonable, y prefiero responderte con sinceridad en vez de venderte algo que no puedo garantizar al cien por cien: cualquier profesional, freelance o de agencia, puede dejar de estar disponible en algún momento. Lo que sí controlas trabajando conmigo es que no dependes técnicamente de mí. El dominio y el hosting de tu web quedan a tu nombre desde el primer año, y en software a medida y automatizaciones te lo dejo explícito por escrito: el código y la documentación son tuyos, y si algún día quieres que lo continúe otro profesional, podrá hacerlo sin problema. Además, cada proyecto incluye soporte tras el lanzamiento (un mes en el caso de las webs) y varias formas de contactarme: WhatsApp, teléfono, email o LinkedIn. Y llevo más de 10 años trabajando en desarrollo de software, con experiencia en consultoras como NTT DATA además de con negocios locales. No es la misma estructura que una agencia, pero tampoco te deja atada de manos.",
   },
 ]
 ---
@@ -98,7 +130,7 @@ const homeFaqs = [
                     {service.breadcrumbName}
                   </h3>
                   <p class="text-gray-700 dark:text-gray-400">
-                    {service.seo.description}
+                    {service.hero.subtitle}
                   </p>
                   <span class="mt-4 inline-block font-medium text-blue-600 dark:text-blue-400">
                     Ver servicio →
@@ -128,6 +160,56 @@ const homeFaqs = [
         </ul>
       </SectionContainer>
 
+      <SectionContainer id="precios">
+        <TitleSection>
+          <CodeIcon class="size-7" />
+          Precios claros, sin sorpresas
+        </TitleSection>
+        <p class="mb-8 text-gray-700 dark:text-gray-400 max-w-2xl">
+          Este es el precio de salida de cada servicio, visible sin tener que
+          abrir nada: siempre trabajo con presupuesto cerrado, así que sabes
+          el importe exacto antes de que empecemos.
+        </p>
+        <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            services.map((service) => (
+              <li class="flex h-full flex-col rounded-xl border border-gray-300 bg-gray-100/50 p-6 dark:border-gray-700 dark:bg-gray-800/50">
+                <h3 class="text-sm font-semibold text-gray-600 dark:text-gray-400">
+                  {service.breadcrumbName}
+                </h3>
+                <p class="mt-2 text-3xl font-bold text-gray-800 dark:text-white">
+                  Desde <span class="whitespace-nowrap">{service.pricing.from}</span>
+                </p>
+                <a
+                  href={service.slug}
+                  class="mt-4 text-sm font-medium text-blue-600 dark:text-blue-400"
+                >
+                  Ver qué incluye →
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-6 text-sm text-gray-600 dark:text-gray-500">
+          Precio de entrada para el alcance más habitual: el presupuesto
+          final se ajusta a tu caso concreto. Más detalle en la
+          <a href="#faq" class="underline hover:text-blue-500">
+            pregunta frecuente sobre precios
+          </a>.
+        </p>
+      </SectionContainer>
+
+      <SectionContainer id="proceso">
+        <TitleSection>
+          <Briefcase class="size-8" />
+          Cómo trabajo
+        </TitleSection>
+        <p class="mb-8 text-gray-700 dark:text-gray-400 max-w-2xl">
+          El mismo proceso, sea cual sea el servicio, adaptado a tu proyecto:
+        </p>
+        <ProcessSteps steps={homeProcess} />
+      </SectionContainer>
+
       <SectionContainer id="casos">
         <TitleSection>
           <CodeIcon class="size-7" />
@@ -135,7 +217,11 @@ const homeFaqs = [
         </TitleSection>
         <p class="mb-12 text-gray-700 dark:text-gray-400 max-w-2xl">
           Webs de negocios de Sevilla que ya están funcionando y posicionando
-          en Google:
+          en Google. Cada proyecto está en producción con su propio dominio,
+          así que puedes visitarlo y comprobar la velocidad de carga y el
+          diseño con tus propios ojos. Trabajo con distintas tecnologías
+          (Wordpress, Astro, Vite y React) según lo que mejor encaje con cada
+          negocio.
         </p>
         <Projects />
       </SectionContainer>
