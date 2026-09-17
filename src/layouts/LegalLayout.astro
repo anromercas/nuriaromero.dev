@@ -3,6 +3,7 @@ import Layout from "@/layouts/Layout.astro"
 import Schema from "@/components/seo/Schema.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
 import Breadcrumbs from "@/components/Breadcrumbs.astro"
+import EntryContentStyles from "@/components/EntryContentStyles.astro"
 import { breadcrumbSchema } from "@/lib/schema"
 
 interface Props {
@@ -34,9 +35,8 @@ const breadcrumbs = [
       <p class="mb-10 text-sm text-gray-600 dark:text-gray-500">
         Última actualización: {updated}
       </p>
-      <div
-        class="prose prose-lg max-w-none dark:prose-invert prose-headings:text-gray-800 dark:prose-headings:text-white prose-a:text-blue-600 dark:prose-a:text-blue-400"
-      >
+      <EntryContentStyles />
+      <div class="entry-content">
         <slot />
       </div>
     </SectionContainer>

@@ -1,0 +1,82 @@
+---
+// Reemplazo manual de la clase `.prose` de @tailwindcss/typography.
+//
+// Solo lo usan LegalLayout.astro y BlogPostLayout.astro para el contenido
+// largo (aviso legal, privacidad, cookies y posts del blog). Se declara
+// como componente con `<style is:global>` (en vez de un `.css` suelto
+// importado desde el frontmatter, que Astro/Vite no llegó a incluir en el
+// build estático) para que caiga en el chunk CSS de esas páginas y no en
+// el bundle de Tailwind que comparten todas las páginas del sitio.
+//
+// Cada regla usa `@apply` con utilidades normales de Tailwind, replicando
+// solo las etiquetas HTML que aparecen en el contenido legal/blog: h2, h3,
+// p, ul, ol, li, a, strong, em, hr y table.
+---
+
+<style is:global>
+  .entry-content {
+    max-width: none;
+  }
+
+  .entry-content > :first-child {
+    margin-top: 0;
+  }
+
+  .entry-content > :last-child {
+    margin-bottom: 0;
+  }
+
+  .entry-content h2 {
+    @apply mt-10 mb-4 text-2xl font-bold tracking-tight text-gray-800 dark:text-white;
+  }
+
+  .entry-content h3 {
+    @apply mt-8 mb-3 text-xl font-bold tracking-tight text-gray-800 dark:text-white;
+  }
+
+  .entry-content p {
+    @apply mb-6 leading-7 text-gray-700 dark:text-gray-300;
+  }
+
+  .entry-content ul {
+    @apply mb-6 ml-6 list-disc space-y-2 text-gray-700 dark:text-gray-300;
+  }
+
+  .entry-content ol {
+    @apply mb-6 ml-6 list-decimal space-y-2 text-gray-700 dark:text-gray-300;
+  }
+
+  .entry-content li > ul,
+  .entry-content li > ol {
+    @apply mt-2 mb-0;
+  }
+
+  .entry-content a {
+    @apply text-blue-600 underline hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300;
+  }
+
+  .entry-content strong {
+    @apply font-semibold text-gray-800 dark:text-white;
+  }
+
+  .entry-content em {
+    @apply italic;
+  }
+
+  .entry-content hr {
+    @apply my-10 border-gray-200 dark:border-gray-700;
+  }
+
+  .entry-content table {
+    @apply mb-6 w-full border-collapse text-left text-sm;
+  }
+
+  .entry-content th,
+  .entry-content td {
+    @apply border border-gray-200 px-3 py-2 dark:border-gray-700;
+  }
+
+  .entry-content th {
+    @apply bg-gray-50 font-semibold text-gray-800 dark:bg-gray-900 dark:text-white;
+  }
+</style>
