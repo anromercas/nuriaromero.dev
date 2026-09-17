@@ -1,5 +1,7 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
+import Menu from "./icons/Menu.astro";
+import X from "./icons/X.astro";
 import { services } from "@/data/services";
 import { niches } from "@/data/niches";
 
@@ -49,62 +51,237 @@ const dropdownItems = [...services, ...niches].map((page) => ({
   title: page.breadcrumbName,
   url: page.slug,
 }));
+
+// Área táctil mínima recomendada (WCAG 2.5.5 / Material): 44x44px.
+const navLinkClass =
+  "relative flex min-h-11 items-center whitespace-nowrap px-3 transition hover:text-blue-500 dark:hover:text-blue-500";
 ---
 
 <header
-  class="fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2"
+  class="fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2 px-3"
 >
   <nav
-    class="flex px-3 text-sm font-medium rounded-full text-gray-600 dark:text-gray-200 justify-center items-center"
+    class="relative flex px-2 text-sm font-medium rounded-full text-gray-600 dark:text-gray-200 justify-center items-center"
   >
+    <ul class="hidden md:flex items-center">
+      {
+        navItems.map((link) =>
+          link.label === "servicios" ? (
+            <li class="relative group">
+              <a
+                class:list={[navLinkClass, { "text-blue-500": isActive(link.url) }]}
+                aria-label={link.label}
+                aria-current={isActive(link.url) ? "page" : undefined}
+                href={link.url}
+              >
+                {link.title}
+              </a>
+              <div class="absolute left-1/2 hidden -translate-x-1/2 pt-2 group-hover:block group-focus-within:block">
+                <ul class="min-w-56 rounded-xl border border-gray-300 bg-white/95 py-2 shadow-lg backdrop-blur dark:border-gray-700 dark:bg-gray-800/95">
+                  {dropdownItems.map((item) => (
+                    <li>
+                      <a
+                        href={item.url}
+                        class="block px-4 py-2.5 hover:text-blue-500"
+                      >
+                        {item.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ) : (
+            <li>
+              <a
+                class:list={[navLinkClass, { "text-blue-500": isActive(link.url) }]}
+                aria-label={link.label}
+                aria-current={isActive(link.url) ? "page" : undefined}
+                href={link.url}
+              >
+                {link.title}
+              </a>
+            </li>
+          )
+        )
+      }
+    </ul>
+
+    <button
+      id="mobile-menu-btn"
+      type="button"
+      class="md:hidden relative flex min-h-11 min-w-11 items-center justify-center"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Abrir menú de navegación"
+    >
+      <Menu class="icon-menu size-5" />
+      <X class="icon-close size-5" />
+    </button>
+
+    <ThemeToggle />
+  </nav>
+</header>
+
+<div
+  id="mobile-menu-overlay"
+  class="fixed inset-0 z-40 bg-black/50 md:hidden"
+  aria-hidden="true"
+>
+</div>
+
+<div
+  id="mobile-menu"
+  class="fixed top-0 right-0 z-50 flex w-[min(320px,80vw)] flex-col overflow-y-auto overscroll-contain border-l border-gray-300 bg-white/95 py-3 shadow-lg backdrop-blur dark:border-gray-700 dark:bg-gray-800/95 md:hidden"
+>
+  <ul class="flex flex-1 flex-col gap-0.5 px-3">
     {
       navItems.map((link) =>
         link.label === "servicios" ? (
-          <div class="relative group">
+          <li>
+            <div class="flex items-stretch">
+              <a
+                class:list={[
+                  "flex min-h-11 flex-1 items-center px-4 py-2.5 leading-[1.375rem]",
+                  "hover:text-blue-500 dark:hover:text-blue-500",
+                  { "text-blue-500": isActive(link.url) },
+                ]}
+                aria-current={isActive(link.url) ? "page" : undefined}
+                href={link.url}
+              >
+                {link.title}
+              </a>
+              <button
+                type="button"
+                class="mobile-accordion-btn flex min-h-11 min-w-11 items-center justify-center text-gray-500 transition hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-500"
+                aria-expanded="false"
+                aria-controls="mobile-submenu-servicios"
+                aria-label="Mostrar submenú de Servicios"
+              >
+                <svg
+                  class="mobile-accordion-chevron size-4 transition-transform duration-200"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+            </div>
+            <ul
+              id="mobile-submenu-servicios"
+              class="mobile-accordion-panel ml-3 border-l border-gray-200 dark:border-gray-700"
+            >
+              {dropdownItems.map((item) => (
+                <li>
+                  <a
+                    href={item.url}
+                    class="flex min-h-11 items-center px-4 py-2 text-[0.8125rem] text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-500"
+                  >
+                    {item.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ) : (
+          <li>
             <a
               class:list={[
-                "relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500",
+                "block min-h-11 px-4 py-2.5 leading-[1.375rem] flex items-center",
+                "hover:text-blue-500 dark:hover:text-blue-500",
                 { "text-blue-500": isActive(link.url) },
               ]}
-              aria-label={link.label}
               aria-current={isActive(link.url) ? "page" : undefined}
               href={link.url}
             >
               {link.title}
             </a>
-            <div class="absolute left-1/2 hidden -translate-x-1/2 pt-2 group-hover:block group-focus-within:block">
-              <ul class="min-w-56 rounded-xl border border-gray-300 bg-white/95 py-2 shadow-lg backdrop-blur dark:border-gray-700 dark:bg-gray-800/95">
-                {dropdownItems.map((item) => (
-                  <li>
-                    <a
-                      href={item.url}
-                      class="block px-4 py-1.5 hover:text-blue-500"
-                    >
-                      {item.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ) : (
-          <a
-            class:list={[
-              "relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500",
-              { "text-blue-500": isActive(link.url) },
-            ]}
-            aria-label={link.label}
-            aria-current={isActive(link.url) ? "page" : undefined}
-            href={link.url}
-          >
-            {link.title}
-          </a>
+          </li>
         )
       )
     }
-    <ThemeToggle />
-  </nav>
-</header>
+  </ul>
+</div>
+
+<script is:inline>
+  function setAccordion(panel, btn, open) {
+    if (!panel || !btn) return;
+    btn.setAttribute("aria-expanded", String(open));
+    if (open) {
+      panel.classList.add("open");
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } else {
+      panel.style.maxHeight = "0px";
+      panel.classList.remove("open");
+    }
+  }
+
+  function closeAllAccordions() {
+    document
+      .querySelectorAll("#mobile-menu .mobile-accordion-btn")
+      .forEach((btn) => {
+        const panelId = btn.getAttribute("aria-controls");
+        const panel = panelId ? document.getElementById(panelId) : null;
+        setAccordion(panel, btn, false);
+      });
+  }
+
+  function setMobileMenu(open) {
+    const menu = document.getElementById("mobile-menu");
+    const overlay = document.getElementById("mobile-menu-overlay");
+    const btn = document.getElementById("mobile-menu-btn");
+    if (!menu || !btn) return;
+    menu.classList.toggle("open", open);
+    overlay?.classList.toggle("open", open);
+    btn.setAttribute("aria-expanded", String(open));
+    // Bloquea el scroll de fondo mientras el drawer está abierto para que
+    // hacer scroll dentro del menú no arrastre también la página de fondo.
+    document.documentElement.classList.toggle("overflow-hidden", open);
+    document.body.classList.toggle("overflow-hidden", open);
+    if (!open) closeAllAccordions();
+  }
+
+  if (!window.__mobileMenuInit) {
+    window.__mobileMenuInit = true;
+
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const menu = document.getElementById("mobile-menu");
+      if (!menu) return;
+
+      if (target.closest("#mobile-menu-btn")) {
+        setMobileMenu(!menu.classList.contains("open"));
+        return;
+      }
+
+      const accordionBtn = target.closest(".mobile-accordion-btn");
+      if (accordionBtn && menu.contains(accordionBtn)) {
+        const panelId = accordionBtn.getAttribute("aria-controls");
+        const panel = panelId ? document.getElementById(panelId) : null;
+        const isOpen = accordionBtn.getAttribute("aria-expanded") === "true";
+        setAccordion(panel, accordionBtn, !isOpen);
+        return;
+      }
+
+      if (!target.closest("#mobile-menu") && menu.classList.contains("open")) {
+        setMobileMenu(false);
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setMobileMenu(false);
+    });
+
+    document.addEventListener("astro:after-swap", () => setMobileMenu(false));
+  }
+</script>
 
 <style>
   nav {
@@ -119,19 +296,81 @@ const dropdownItems = [...services, ...niches].map((page) => ({
 
   @keyframes nav-shadown {
     0% {
-      @apply dark:bg-gray-800/0 bg-white/0;
+      background-color: transparent;
     }
     to {
       @apply shadow-lg ring-1 backdrop-blur ring-white/10;
     }
   }
 
+  #mobile-menu {
+    /* Fallback para navegadores sin soporte de unidades dinámicas; 100dvh
+       evita que la barra de direcciones móvil recorte o desplace el drawer. */
+    height: 100vh;
+    height: 100dvh;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition:
+      transform 0.3s ease,
+      visibility 0s linear 0.3s;
+  }
+
+  #mobile-menu.open {
+    visibility: visible;
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+  }
+
+  #mobile-menu-overlay {
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.3s ease,
+      visibility 0s linear 0.3s;
+    visibility: hidden;
+  }
+
+  #mobile-menu-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-accordion-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+
+  .mobile-accordion-btn[aria-expanded="true"] .mobile-accordion-chevron {
+    transform: rotate(180deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #mobile-menu,
+    #mobile-menu-overlay,
+    .mobile-accordion-panel,
+    .mobile-accordion-chevron {
+      transition: none !important;
+    }
+  }
+
+  #mobile-menu-btn .icon-close {
+    display: none;
+  }
+
+  #mobile-menu-btn[aria-expanded="true"] .icon-menu {
+    display: none;
+  }
+
+  #mobile-menu-btn[aria-expanded="true"] .icon-close {
+    display: block;
+  }
+
   @media (max-width: 640px) {
     nav {
       @apply text-xs;
-    }
-    nav a {
-      @apply px-1.5;
     }
   }
 </style>

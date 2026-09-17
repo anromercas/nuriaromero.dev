@@ -6,7 +6,7 @@ import Footer from "../components/Footer.astro"
 import WhatsAppButton from "../components/WhatsAppButton.astro"
 import SEO from "../components/seo/SEO.astro"
 import Schema from "../components/seo/Schema.astro"
-import { localBusinessSchema } from "@/lib/schema"
+import { localBusinessSchema, websiteSchema } from "@/lib/schema"
 import { ViewTransitions } from "astro:transitions"
 
 interface Props {
@@ -25,7 +25,7 @@ const { title, description, canonical, ogImage, ogType, noindex } = Astro.props
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <SEO
@@ -36,7 +36,7 @@ const { title, description, canonical, ogImage, ogType, noindex } = Astro.props
       ogType={ogType}
       noindex={noindex}
     />
-    <Schema schema={localBusinessSchema()} />
+    <Schema schema={[localBusinessSchema(), websiteSchema()]} />
     <slot name="head" />
     <ViewTransitions />
   </head>
