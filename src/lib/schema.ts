@@ -4,6 +4,7 @@ import { SITE } from "@/data/site"
 
 const BUSINESS_ID = `${SITE.url}/#business`
 const PERSON_ID = `${SITE.url}/#person`
+const WEBSITE_ID = `${SITE.url}/#website`
 
 export function localBusinessSchema() {
   return {
@@ -69,18 +70,43 @@ export function serviceSchema(service: {
   name: string
   description: string
   url: string
+  serviceType: string
+  // Precio de salida tal cual se muestra en la página (p. ej. "399 €"),
+  // definido en src/data/services.ts o src/data/niches.ts.
+  price: string
 }) {
+  const priceValue = service.price.replace(/[^\d,.]/g, "").replace(",", ".")
+  const serviceUrl = new URL(service.url, SITE.url).href
+
   return {
     "@context": "https://schema.org",
     "@type": "Service",
     name: service.name,
     description: service.description,
-    url: new URL(service.url, SITE.url).href,
+    url: serviceUrl,
+    serviceType: service.serviceType,
     provider: { "@id": BUSINESS_ID },
     areaServed: {
       "@type": "City",
       name: "Sevilla",
     },
+    offers: {
+      "@type": "Offer",
+      url: serviceUrl,
+      price: priceValue,
+      priceCurrency: "EUR",
+    },
+  }
+}
+
+export function websiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": WEBSITE_ID,
+    url: SITE.url,
+    name: SITE.name,
+    publisher: { "@id": BUSINESS_ID },
   }
 }
 

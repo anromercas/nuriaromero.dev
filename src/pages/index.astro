@@ -13,7 +13,7 @@ import MailIcon from "@/components/icons/Mail.astro"
 import CodeIcon from "@/components/icons/Code.astro"
 import Briefcase from "@/components/icons/Briefcase.astro"
 import ProfileCheck from "@/components/icons/ProfileCheck.astro"
-import { faqSchema } from "@/lib/schema"
+import { faqSchema, personSchema } from "@/lib/schema"
 import { services } from "@/data/services"
 import { niches } from "@/data/niches"
 import { whatsappUrl } from "@/data/site"
@@ -42,7 +42,7 @@ const homeFaqs = [
   title="Diseño de páginas web para negocios en Sevilla | Nuria Romero"
   description="Creo páginas web para negocios en Sevilla que aparecen en Google y traen clientes. También software a medida, automatizaciones e IA. Precios claros y trato directo."
 >
-  <Schema slot="head" schema={faqSchema(homeFaqs)} />
+  <Schema slot="head" schema={[personSchema(), faqSchema(homeFaqs)]} />
   <main class="px-4">
     <SectionContainer class="py-24 md:py-32">
       <div class="flex flex-col items-start">
