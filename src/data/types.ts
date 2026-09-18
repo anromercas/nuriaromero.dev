@@ -26,4 +26,8 @@ export interface ServicePageData {
     q: string
     a: string
   }[]
+  cta?: {
+    title: string
+    text: string
+  }
 }

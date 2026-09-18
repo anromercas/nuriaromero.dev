@@ -13,7 +13,7 @@ export const restaurantes: ServicePageData = {
   hero: {
     h1: "Página web para restaurantes y bares en Sevilla",
     subtitle:
-      "Cuando alguien busca dónde comer en Sevilla, decide en segundos: mira fotos, carta y reseñas desde el móvil. Creo webs para restaurantes que aparecen en esa búsqueda y convierten miradas en mesas ocupadas.",
+      "Cuando alguien busca dónde comer en Sevilla, decide en segundos: mira fotos, carta y reseñas desde el móvil. Creo webs para restaurantes pensadas para aparecer en esa búsqueda y ayudarte a convertir esas miradas en mesas ocupadas.",
   },
   benefits: [
     {
@@ -30,7 +30,7 @@ export const restaurantes: ServicePageData = {
     },
     {
       title: "Rápida aunque el bar esté lleno",
-      text: "Tus clientes la abren desde el móvil con la cobertura justa. Mis webs cargan en menos de 2 segundos, también con 3G.",
+      text: "Tus clientes la abren desde el móvil con la cobertura justa. Optimizo cada web para que cargue rápido incluso con conexión débil, sin vídeos pesados ni plugins innecesarios.",
     },
   ],
   process: [
@@ -80,6 +80,10 @@ export const restaurantes: ServicePageData = {
       a: "Sí: configuro tu ficha de Google Business, genero el enlace directo para pedir reseñas a tus clientes y puedo automatizar recordatorios o incluso respuestas con IA.",
     },
   ],
+  cta: {
+    title: "¿Hablamos de la web de tu restaurante o bar?",
+    text: "Cuéntame tu carta, tu zona y cómo gestionas las reservas ahora, y te preparo una propuesta con precio cerrado.",
+  },
 }
 
 export const clinicas: ServicePageData = {
@@ -93,7 +97,7 @@ export const clinicas: ServicePageData = {
   hero: {
     h1: "Página web para clínicas y consultas en Sevilla",
     subtitle:
-      "Un paciente nuevo te busca en Google antes de llamar: compara webs, reseñas y cercanía. Creo webs para clínicas que transmiten la confianza de tu consulta y convierten búsquedas como «dentista en Sevilla este» en citas reservadas.",
+      "Un paciente nuevo te busca en Google antes de llamar: compara webs, reseñas y cercanía. Creo webs para clínicas que transmiten la confianza de tu consulta y ayudan a convertir búsquedas como «dentista en Sevilla este» en citas reservadas.",
   },
   benefits: [
     {
@@ -105,12 +109,12 @@ export const clinicas: ServicePageData = {
       text: "Botón de cita por WhatsApp o integración con tu sistema de citas (Doctoralia, tu software de gestión…): el paciente reserva cuando le viene bien.",
     },
     {
-      title: "Primera en tu especialidad y tu zona",
-      text: "SEO local por especialidad: «fisioterapeuta en Nervión», «psicólogo infantil Sevilla», «clínica dental cerca de mí». Ahí es donde se decide qué consulta llena su agenda.",
+      title: "Visibilidad por especialidad y zona",
+      text: "SEO local por especialidad: «fisioterapeuta en Nervión», «psicólogo infantil Sevilla», «clínica dental cerca de mí». Trabajo esas búsquedas para que tu consulta tenga más opciones de aparecer cuando alguien busca en tu zona.",
     },
     {
-      title: "Cumplimiento y privacidad",
-      text: "Textos legales, consentimiento de datos y formularios configurados pensando en el RGPD, especialmente sensible en salud.",
+      title: "Privacidad pensada para tu paciente",
+      text: "Textos legales, consentimiento de datos y formularios preparados conforme a las buenas prácticas del RGPD, especialmente importante en el sector salud.",
     },
   ],
   process: [
@@ -157,9 +161,13 @@ export const clinicas: ServicePageData = {
     },
     {
       q: "¿Cómo tratáis los datos de los pacientes?",
-      a: "Los formularios se configuran con consentimiento explícito, aviso de privacidad y envío cifrado, y te entrego la documentación de qué datos se recogen y dónde se almacenan para tu registro de tratamientos RGPD.",
+      a: "Los formularios se configuran con consentimiento explícito, aviso de privacidad y conexión segura (HTTPS), y te entrego un resumen de qué datos se recogen y dónde se almacenan como apoyo para tu registro de actividades de tratamiento. La validación legal completa la debe revisar tu asesoría o tu DPO.",
     },
   ],
+  cta: {
+    title: "¿Hablamos de la web de tu consulta?",
+    text: "Cuéntame tus tratamientos, tu sistema de citas actual y qué búsquedas te interesa ganar en tu zona, y te preparo una propuesta con precio cerrado.",
+  },
 }
 
 export const comercios: ServicePageData = {
@@ -185,8 +193,8 @@ export const comercios: ServicePageData = {
       text: "Catálogo de productos con fotos y precios: el cliente comprueba que tienes lo que busca antes de acercarse, o te lo encarga por WhatsApp.",
     },
     {
-      title: "Venta online sin comisiones",
-      text: "Si quieres dar el salto, tienda online propia (WooCommerce o similar) donde no pagas comisión por venta como en los marketplaces.",
+      title: "Venta online sin comisión de marketplace",
+      text: "Si quieres dar el salto, tienda online propia (WooCommerce o similar): no pagas comisión por venta a un marketplace, aunque sí la comisión habitual de la pasarela de pago que elijas (Stripe, Redsys...).",
     },
     {
       title: "Gestión sencilla",
@@ -237,9 +245,13 @@ export const comercios: ServicePageData = {
     },
     {
       q: "¿Y si vendo en Amazon o Wallapop, para qué quiero web?",
-      a: "Los marketplaces te cobran comisión y se quedan con los datos de tus clientes. Tu web vende sin comisiones, fideliza a tu clientela y además refuerza tu posicionamiento local para atraer al cliente del barrio, que sigue siendo el que más compra.",
+      a: "Los marketplaces te cobran comisión por venta y se quedan con los datos de tus clientes. Tu propia tienda solo paga la comisión estándar de la pasarela de pago, no la del marketplace, fideliza a tu clientela y refuerza tu posicionamiento local para el cliente del barrio.",
     },
   ],
+  cta: {
+    title: "¿Hablamos de la web de tu comercio?",
+    text: "Cuéntame qué vendes, si buscas solo presencia local o también venta online, y te preparo una propuesta con precio cerrado.",
+  },
 }
 
 export const profesionales: ServicePageData = {
@@ -253,7 +265,7 @@ export const profesionales: ServicePageData = {
   hero: {
     h1: "Página web para abogados, gestorías y asesorías en Sevilla",
     subtitle:
-      "Quien necesita un abogado o una gestoría busca en Google y compara: experiencia, especialidad y confianza. Creo webs para despachos que transmiten solvencia y convierten búsquedas como «abogado laboralista Sevilla» en consultas.",
+      "Quien necesita un abogado o una gestoría busca en Google y compara: experiencia, especialidad y confianza. Creo webs para despachos que transmiten solvencia y ayudan a convertir búsquedas como «abogado laboralista Sevilla» en consultas.",
   },
   benefits: [
     {
@@ -262,11 +274,11 @@ export const profesionales: ServicePageData = {
     },
     {
       title: "Posiciona por tu especialidad",
-      text: "Página por área de práctica: laboral, civil, herencias, extranjería, autónomos… Cada especialidad captura sus propias búsquedas en Sevilla.",
+      text: "Página por área de práctica: laboral, civil, herencias, extranjería, autónomos… cada una optimizada para captar las búsquedas de esa especialidad en Sevilla.",
     },
     {
       title: "Contenido que demuestra autoridad",
-      text: "Blog con artículos que responden las dudas típicas de tus clientes. Es lo que mejor posiciona en Google y lo que citan las IAs cuando alguien les pregunta.",
+      text: "Blog con artículos que responden las dudas típicas de tus clientes: contenido que ayuda a posicionar en Google y que los buscadores con IA suelen citar cuando responden ese tipo de preguntas.",
     },
     {
       title: "Consultas filtradas",
@@ -280,7 +292,7 @@ export const profesionales: ServicePageData = {
     },
     {
       title: "Propuesta cerrada",
-      text: "Estructura, precio y plazos por escrito. Discreción absoluta desde el primer contacto.",
+      text: "Estructura, precio y plazos por escrito. Confidencialidad desde el primer contacto.",
     },
     {
       title: "Redacción especializada",
@@ -317,9 +329,13 @@ export const profesionales: ServicePageData = {
     },
     {
       q: "¿Merece la pena un blog jurídico?",
-      a: "Es de lo más rentable en este sector: artículos que responden dudas frecuentes («cuánto tarda una herencia», «qué hacer ante un despido») posicionan en Google, demuestran autoridad y son el contenido que las IAs citan al responder esas preguntas. Puedo dejarte la estructura y un plan de contenidos.",
+      a: "Suele ser rentable en este sector: artículos que responden dudas frecuentes («cuánto tarda una herencia», «qué hacer ante un despido») ayudan a posicionar en Google, demuestran autoridad y son el tipo de contenido que los buscadores con IA suelen citar al responder esas preguntas. Puedo dejarte la estructura y un plan de contenidos.",
     },
   ],
+  cta: {
+    title: "¿Hablamos de la web de tu despacho?",
+    text: "Cuéntame tus áreas de práctica y qué búsquedas te interesa ganar en tu zona, y te preparo una propuesta con precio cerrado.",
+  },
 }
 
 export const niches = [restaurantes, clinicas, comercios, profesionales]
