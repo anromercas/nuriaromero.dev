@@ -2,7 +2,6 @@
 import Layout from "@/layouts/Layout.astro"
 import Schema from "@/components/seo/Schema.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
-import TitleSection from "@/components/TitleSection.astro"
 import Breadcrumbs from "@/components/Breadcrumbs.astro"
 import Projects from "@/components/Projects.astro"
 import CTASection from "@/components/services/CTASection.astro"
@@ -23,10 +22,10 @@ const breadcrumbs = [
   <main class="px-4 pt-24">
     <SectionContainer>
       <Breadcrumbs items={breadcrumbs} />
-      <TitleSection>
+      <h1 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
         <CodeIcon class="size-7" />
-        Portfolio
-      </TitleSection>
+        Proyectos web para negocios de Sevilla
+      </h1>
       <p class="mb-12 text-gray-700 dark:text-gray-400 max-w-2xl">
         Una selección de proyectos reales: webs para negocios locales de
         Sevilla, optimizadas para aparecer en Google, y proyectos propios.
