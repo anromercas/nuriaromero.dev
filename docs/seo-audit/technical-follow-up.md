@@ -15,11 +15,13 @@
 
 ## Acceptance criteria
 
-- [ ] The previously observed SVG error is either reproduced and fixed with a clean recheck, or documented as not reproducible with date and page tested.
-- [ ] Image work is supported by LCP/performance evidence and followed by a comparable remeasurement.
-- [ ] Indexing, traffic, and CWV findings are labeled verified only when supported by the relevant data; otherwise explicitly remain unverified.
-- [ ] No untrustworthy sitemap dates are introduced; optional `/llms.txt` and FAQ-rich-result work is not treated as a blocker.
+- [x] The previously observed SVG error is either reproduced and fixed with a clean recheck, or documented as not reproducible with date and page tested. Not reproducible on 2026-09-18: checked `/`, `/portfolio/`, and `/servicios/` on a fresh production build (`pnpm build` + `pnpm preview`) with a full page reload before each console read (Chrome DevTools console, via claude-in-chrome) — no console messages of any kind on any of the three pages. No malformed SVG path data found in `src/components/icons/*.astro` on inspection either. Treating the original finding as stale/already resolved rather than actively fixing anything, since there's nothing to reproduce.
+- [ ] Image work is supported by LCP/performance evidence and followed by a comparable remeasurement. Still blocked: no PSI/CrUX or field data access this session.
+- [ ] Indexing, traffic, and CWV findings are labeled verified only when supported by the relevant data; otherwise explicitly remain unverified. Still blocked: no Search Console/GA4 access this session. Explicitly unverified, not inferred.
+- [x] No untrustworthy sitemap dates are introduced; optional `/llms.txt` and FAQ-rich-result work is not treated as a blocker. No sitemap `lastmod` or `/llms.txt` work was done — correctly left as non-blocking, per the audit's own guidance.
 
 ## Verification
 
-Record the tested URL(s), device/page context, date, console result, and performance data source. The 20-URL sitemap count is only a sitemap inventory snapshot; it does not establish index coverage.
+- Tested URLs: `/`, `/portfolio/`, `/servicios/`. Device/context: desktop Chrome via claude-in-chrome, local production preview (`astro preview`). Date: 2026-09-18. Console result: no messages (log/warn/error) on any of the three pages after a full reload.
+- Performance/indexing/traffic data source: none available this session (no Search Console, GA4, or PSI/CrUX access) — remains explicitly unverified, not inferred from the console check or from content edits made elsewhere.
+- The 20-URL sitemap count is only a sitemap inventory snapshot; it does not establish index coverage.
