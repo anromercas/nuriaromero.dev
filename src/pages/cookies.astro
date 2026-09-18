@@ -18,17 +18,31 @@ import { SITE } from "@/data/site"
     requieren tu consentimiento).
   </p>
 
-  <h2>2. Cookies que utiliza este sitio</h2>
-  <p>
-    Este sitio web <strong>no utiliza cookies de análisis, seguimiento ni
-    publicidad</strong>, por lo que no se muestra un banner de consentimiento de
-    cookies.
-  </p>
+  <h2>2. Cookies y tecnologías utilizadas</h2>
   <p>
     Únicamente se emplea almacenamiento técnico en tu propio navegador
     (<em>localStorage</em>) para recordar tu preferencia de tema claro u oscuro.
-    Esta información se guarda solo en tu dispositivo, no se envía a ningún
-    servidor y no permite identificarte.
+    También se guarda en <em>localStorage</em> tu decisión sobre analítica
+    (aceptada o rechazada) para no volver a mostrar el aviso en cada visita.
+  </p>
+  <p>
+    Si aceptas expresamente la analítica, se carga Google Analytics 4 (Google
+    Ireland Limited; los datos pueden ser tratados por Google LLC según sus
+    condiciones). Google Analytics puede utilizar cookies propias como
+    <code>_ga</code> y <code>_ga_*</code> para distinguir navegadores/sesiones y
+    medir el uso del sitio. La finalidad es obtener estadísticas agregadas de
+    uso y navegación. La duración y disponibilidad de estas cookies puede
+    depender de la configuración de Google Analytics y del navegador.
+    No se habilitan funciones de publicidad ni se otorga consentimiento para
+    almacenamiento publicitario.
+  </p>
+  <p>
+    Google Analytics no se carga ni se envían datos de analítica antes de que
+    pulses «Aceptar analítica». Si rechazas, no se carga. Puedes cambiar o
+    retirar tu decisión en cualquier momento mediante el enlace «Configuración
+    de cookies» del pie de página; al retirar el consentimiento se detienen los
+    eventos posteriores. La retirada no afecta al tratamiento realizado antes
+    de ella.
   </p>
 
   <h2>3. Cookies de terceros</h2>
@@ -43,14 +57,14 @@ import { SITE } from "@/data/site"
   <p>
     Puedes borrar o bloquear el almacenamiento de cookies y datos locales desde
     la configuración de tu navegador. Si lo haces, es posible que no se recuerde
-    tu preferencia de tema.
+    tu preferencia de tema o decisión de consentimiento.
   </p>
 
   <h2>5. Cambios en esta política</h2>
   <p>
-    Si en el futuro se incorporan cookies de análisis o de terceros con fines de
-    seguimiento, se actualizará esta política y se habilitará el sistema de
-    consentimiento correspondiente. Para cualquier duda, escribe a
+    Esta información describe la configuración actual del sitio y puede
+    actualizarse si cambian las herramientas utilizadas. Para cualquier duda,
+    escribe a
     <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
   </p>
 </LegalLayout>

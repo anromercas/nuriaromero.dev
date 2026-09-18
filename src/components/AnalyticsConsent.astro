@@ -1,0 +1,90 @@
+<aside id="analytics-consent" class="consent-panel" role="dialog" aria-labelledby="consent-title" aria-describedby="consent-description" hidden>
+  <div>
+    <h2 id="consent-title">Tu privacidad importa</h2>
+    <p id="consent-description">Usamos Google Analytics solo si lo aceptas para entender cómo se utiliza esta web. Puedes rechazarlo sin que ello afecte a la navegación. <a href="/cookies">Más información</a>.</p>
+    <div id="consent-settings" hidden>
+      <label><input id="analytics-toggle" type="checkbox" /> Permitir analítica (Google Analytics)</label>
+    </div>
+  </div>
+  <div class="consent-actions">
+    <button id="consent-accept" type="button">Aceptar analítica</button>
+    <button id="consent-reject" type="button">Rechazar analítica</button>
+    <button id="consent-customize" type="button" aria-expanded="false">Configurar</button>
+    <button id="consent-save" type="button" hidden>Guardar preferencias</button>
+  </div>
+</aside>
+
+<script>
+  import { createConsentController } from "../scripts/analytics-consent.js"
+
+  const panel = document.querySelector<HTMLElement>("#analytics-consent")!
+  const settings = document.querySelector<HTMLElement>("#consent-settings")!
+  const toggle = document.querySelector<HTMLInputElement>("#analytics-toggle")!
+  const customize = document.querySelector<HTMLButtonElement>("#consent-customize")!
+  const save = document.querySelector<HTMLButtonElement>("#consent-save")!
+  const accept = document.querySelector<HTMLButtonElement>("#consent-accept")!
+  const reject = document.querySelector<HTMLButtonElement>("#consent-reject")!
+  const gtag = (...args: unknown[]) => {
+    const win = window as Window & { dataLayer?: unknown[][] }
+    win.dataLayer = win.dataLayer || []
+    win.dataLayer.push(args)
+  }
+  const controller = createConsentController({
+    storage: window.localStorage,
+    gtag,
+    appendScript: (src: string) => {
+      const script = document.createElement("script")
+      script.async = true
+      script.src = src
+      document.head.append(script)
+    },
+    measurementId: "G-NCV98R3HW7",
+  })
+
+  const storedChoice = window.localStorage.getItem("site-analytics-consent")
+  controller.initialize()
+  if (!storedChoice) panel.hidden = false
+
+  accept.addEventListener("click", () => {
+    controller.accept()
+    panel.hidden = true
+  })
+  reject.addEventListener("click", () => {
+    controller.reject()
+    panel.hidden = true
+  })
+  customize.addEventListener("click", () => {
+    settings.hidden = !settings.hidden
+    save.hidden = !settings.hidden
+    customize.setAttribute("aria-expanded", String(!settings.hidden))
+  })
+  save.addEventListener("click", () => {
+    if (toggle.checked) controller.accept()
+    else controller.reject()
+    panel.hidden = true
+  })
+  document.addEventListener("click", (event) => {
+    if ((event.target as HTMLElement).closest("#cookie-settings")) {
+      panel.hidden = false
+      settings.hidden = false
+      toggle.checked = window.localStorage.getItem("site-analytics-consent") === "accepted"
+      save.hidden = false
+      customize.setAttribute("aria-expanded", "true")
+    }
+  })
+  document.addEventListener("astro:page-load", () => controller.trackPageView())
+</script>
+
+<style>
+  .consent-panel { position: fixed; z-index: 100; inset: auto 1rem 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; max-width: 64rem; margin-inline: auto; padding: 1.25rem; border: 1px solid #9ca3af; border-radius: .75rem; background: #fff; color: #111827; box-shadow: 0 10px 30px #0003; }
+  .consent-panel[hidden] { display: none; }
+  .consent-panel h2 { margin: 0 0 .35rem; font-size: 1.1rem; }
+  .consent-panel p { max-width: 42rem; margin: 0; font-size: .95rem; }
+  .consent-panel a { text-decoration: underline; }
+  .consent-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .consent-actions button { min-height: 2.75rem; padding: .6rem .9rem; border: 1px solid #111827; border-radius: .4rem; background: #fff; color: #111827; font: inherit; font-weight: 600; cursor: pointer; }
+  #consent-accept { background: #111827; color: #fff; }
+  #consent-save[hidden] { display: none; }
+  #consent-settings { flex-basis: 100%; padding-top: .5rem; }
+  @media (max-width: 600px) { .consent-panel { inset-inline: .5rem; align-items: stretch; } .consent-actions { display: grid; grid-template-columns: 1fr 1fr; } }
+</style>
