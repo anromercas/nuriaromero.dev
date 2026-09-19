@@ -110,9 +110,22 @@ correcto, redirects correctos, cero enlaces internos rotos a `/servicios/`.
 ## Próximo paso tras el despliegue (fuera del checklist de código)
 - [x] Redirect 301 verificado en producción por el usuario (2026-09-19):
   `/servicios/diseno-web-sevilla` → `/diseno-web-sevilla` funciona.
-- [ ] Enviar el sitemap actualizado en Search Console y vigilar que las 5
-  URLs antiguas pasen a "Página con redirección" (no a error 404) en las
-  semanas siguientes — todavía pendiente.
+- [x] Search Console (2026-09-19): el sitemap (`sitemap-0.xml`, referenciado
+  desde `sitemap-index.xml` y desde `robots.txt`) ya estaba registrado y
+  en estado "Correcto" (última lectura 3 días antes del deploy) — Google
+  ya lo recrawlea solo, no depende de un reenvío manual. Intenté reenviar
+  `sitemap-index.xml` manualmente y la UI de GSC lo rechazó con "Dirección
+  de sitemap no válida" de forma consistente (probado 3 veces, con y sin
+  URL absoluta) pese a que el archivo es válido y accesible — no bloqueante,
+  queda como fricción de UI de Google, no del sitio. En su lugar, hice la
+  acción de mayor impacto real: **Inspección de URLs → Solicitar indexación**
+  para `https://nuriaromero.dev/diseno-web-sevilla/` (todavía no indexada
+  por ser nueva) — confirmado "Se ha solicitado la indexación", añadida a
+  cola de rastreo prioritaria.
+- [ ] Vigilar en las próximas semanas (Search Console → Páginas): que las
+  5 URLs antiguas de `/servicios/*` pasen a "Página con redirección" (no
+  a error 404), y que `/diseno-web-sevilla/` pase a indexada. Sin acción
+  de código pendiente, solo revisión periódica.
 
 ## Estado
 **Completo (T1-T7).** Ejecutado en un solo commit de trabajo en `develop`
