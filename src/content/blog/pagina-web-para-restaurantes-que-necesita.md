@@ -1,48 +1,48 @@
 ---
 title: "Página web para tu restaurante: qué necesita de verdad (y qué no)"
-description: "Qué debe tener la web de un restaurante o bar en Sevilla para llenar mesas: carta digital, reservas por WhatsApp, SEO local y fotos. Y en qué no gastar."
+description: "Qué puede aportar la web de un restaurante o bar en Sevilla: carta digital, opciones de reserva, información local y fotos; y qué conviene priorizar."
 pubDate: 2026-06-24
 tags: ["restaurantes", "diseño web", "sevilla"]
 ---
 
-El 90 % de tus clientes potenciales mira el móvil antes de elegir dónde comer: fotos, carta, precios y reseñas. Si tu restaurante no aparece en esa búsqueda —o aparece con una web lenta y una carta en PDF que no se puede leer— la mesa se la lleva otro. Esta es la lista honesta de lo que la web de un restaurante necesita de verdad.
+Muchos comensales consultan información online antes de elegir dónde comer, pero el peso de cada canal depende del público y del restaurante. Una web clara y fácil de usar puede ayudar a mostrar la carta, los horarios y las opciones de contacto; no garantiza más reservas por sí sola.
 
 ## Lo imprescindible
 
 ### 1. Carta digital que se lea bien en el móvil
 
-Nada de PDF escaneados que hay que ampliar con los dedos. La carta debe ser una página web normal: rápida, legible y **actualizable por ti** en un minuto cuando cambies un plato o un precio. Con un QR en las mesas, además, te ahorras reimprimir cartas.
+Nada de PDF escaneados que hay que ampliar con los dedos. La carta debe ser una página web normal: rápida, legible y **fácil de actualizar** cuando cambies un plato o un precio. Un QR en las mesas permite enlazar a esa versión digital; valora también ofrecer una alternativa impresa.
 
 ### 2. Reservas sin coger el teléfono
 
-En plena hora de servicio nadie puede atender llamadas. Un **botón de reserva por WhatsApp** resuelve el 90 % de los casos con coste cero: el cliente escribe cuando quiere y tú confirmas cuando puedes. Si tu volumen lo justifica, el siguiente paso es un sistema de reservas automático con confirmación.
+En hora punta puede ser difícil atender llamadas. Un **enlace para consultar o reservar por WhatsApp** permite que el cliente escriba cuando le resulte cómodo, aunque alguien tendrá que responder y confirmar la disponibilidad. Si necesitas confirmar reservas automáticamente o gestionar muchas solicitudes, compara un sistema especializado con el canal directo.
 
-### 3. SEO local: aparecer cuando buscan dónde comer
+### 3. Información local útil para quienes buscan dónde comer
 
-Las búsquedas que llenan mesas son locales: "restaurante en Triana", "dónde comer cerca de la Alameda", "arroz en Sevilla". Para ganarlas, tu web necesita:
+Algunas búsquedas de restaurantes incluyen una zona o un tipo de comida, por ejemplo "restaurante en Triana" o "arroz en Sevilla". Para ayudar a posibles clientes a entender tu oferta, puedes incluir:
 
 - Textos que mencionen tu zona y tu especialidad de forma natural
-- Datos estructurados de restaurante (el código que permite a Google mostrar tu cocina, precio medio y horario directamente en los resultados)
+- Datos estructurados de negocio local que describan correctamente la información visible, como dirección y horario. Pueden ayudar a Google a entender la página, pero no garantizan que esos datos aparezcan en los resultados ([documentación de LocalBusiness](https://developers.google.com/search/docs/appearance/structured-data/local-business) y [políticas de Google](https://developers.google.com/search/docs/appearance/structured-data/sd-policies))
 - Conexión con tu ficha de Google Maps — aquí tienes [la guía completa de Google Business Profile](/blog/como-aparecer-en-google-maps-negocio-sevilla)
 
 ### 4. Fotos que abran el apetito
 
-Es la decisión más emocional que existe: se elige restaurante con los ojos. Merece la pena invertir medio día en fotos buenas de tus 8-10 platos estrella y del local. Unas fotos malas de plato con flash pueden costarte más clientes que cualquier otro error de la web.
+Las fotos ayudan a mostrar los platos y el ambiente del local. Prioriza imágenes claras y representativas; la cantidad necesaria depende de la carta y de los recursos disponibles.
 
 ### 5. La información que todo el mundo busca
 
-Horario actualizado (con festivos), dirección con mapa, teléfono pulsable, si tienes terraza, si admites grupos, opciones para alérgenos. Cada dato que falta es una llamada que tienes que atender o un cliente que no viene.
+Horario actualizado (con festivos), dirección con mapa, teléfono pulsable, si tienes terraza, si admites grupos, opciones para alérgenos. Una ficha completa reduce dudas y facilita que cada persona decida si el restaurante se ajusta a lo que busca.
 
 ## En qué NO gastar
 
-- **Vídeos de fondo y animaciones espectaculares**: hacen la web lenta, y una web lenta pierde clientes con hambre y poca paciencia.
+- **Vídeos de fondo y animaciones innecesarias**: pueden añadir peso y distraer; comprueba el rendimiento antes de publicarlas.
 - **Música automática**: no. Nunca.
 - **Pedidos online propios desde el día uno**: si no tienes volumen de delivery, es pagar por mantener algo que no se usa. Empieza con carta + reservas y amplía cuando los números lo pidan.
-- **Traducciones a cinco idiomas mal hechas**: si tu clientela es de barrio, el inglés automático de mala calidad resta más que suma. Hazlo bien o no lo hagas (en zonas turísticas de Sevilla, sí compensa hacerlo bien).
+- **Traducciones automáticas sin revisar**: si recibes clientes de otros idiomas, ofrece traducciones correctas; si no, prioriza el idioma que use tu público.
 
-## El error más caro: depender solo de terceros
+## Combinar la web con plataformas externas
 
-TripAdvisor, TheFork, Google Maps… están bien como escaparates, pero cobran comisión, muestran a tu competencia al lado y los datos del cliente se los quedan ellos. Tu web es el único canal donde el cliente reserva **directamente contigo**, sin comisiones. El equilibrio sano: ficha de Google impecable + web propia rápida + presencia en plataformas como refuerzo.
+TripAdvisor, TheFork y otros directorios pueden aportar visibilidad, pero sus condiciones, funciones y posibles comisiones varían según el servicio y el acuerdo. En tu propia web puedes explicar cómo contactar o reservar directamente; combinarla con perfiles y plataformas externas depende de dónde te encuentre tu público y del coste de cada canal.
 
 ## Qué incluyo yo en una web de restaurante
 
