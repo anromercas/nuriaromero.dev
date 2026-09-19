@@ -23,3 +23,7 @@ bun.*
 
 package-lock.json
 pnpm-lock.yaml
+# Local Netlify folder
+.netlify
+# Local AI runtime state
+.atl/
