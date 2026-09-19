@@ -9,8 +9,14 @@ encabezado propio, y el miedo a "quedar atada" a una agencia resuelto de
 forma explícita.
 
 ## Estado
-**Plan generado, NO ejecutar todavía.** El usuario pidió el plan "para
-atacarlo cuando proceda" — queda a la espera de luz verde para empezar T1.
+**Completo (T1-T8, T10-T14).** Ejecutado en 2 commits de trabajo en
+`develop` tras `servicios-a-raiz` (infraestructura compartida, luego
+contenido + secciones nuevas). Verificado con Playwright: build limpio,
+0 errores de consola, jerarquía completa, 2 tiers de precio, 10 FAQ,
+case studies correctos, sin regresión en las otras 3 páginas de servicio.
+Decisiones tomadas al ejecutar sin bloquear: H1 opción A (default ya
+fijado en el plan), blurb de Adf Sevilla resuelto con el dato real
+("administración de fincas", ya existía en `Projects.astro`).
 
 ## Problema / por qué
 La jerarquía actual usa títulos de sección genéricos y compartidos por las
@@ -300,12 +306,29 @@ cambiaron.
   distinto de diferenciadores/precios/proceso que sí mantienen tarjeta.
   Ruta: inline. Check: build pasa, revisión de clases aplicadas.
 
-- [ ] **T14 — Verificación final end-to-end**: `pnpm build` limpio,
-  revisión visual completa en `pnpm dev`/`preview` de la jerarquía
-  H1→H2→H3, en móvil y desktop, modo claro y oscuro, y confirmación de que
-  las otras 3 páginas de servicio no sufrieron regresión visual por los
-  cambios compartidos de T1/T2/T10/T11.
-  Check: comandos y resultado documentados en este archivo al ejecutar.
+- [x] **T14 — Verificación final end-to-end**: hecha con Playwright sobre
+  `pnpm preview` (puerto 4324, los anteriores estaban ocupados).
+  - `/diseno-web-sevilla/`: jerarquía H1→H2→H3 completa presente y en el
+    orden acordado (verificado con accessibility snapshot), hero con los 3
+    CTA (WhatsApp, contacto, "Ver precios" → `#precios`), 2 tiers de precio
+    con badge "Recomendado", 10 FAQ en acordeón, case studies con Arkady y
+    Adf Sevilla (0 apariciones del proyecto de portfolio personal, filtro
+    correcto). Capturas en desktop y móvil (390×844): secciones sin
+    tarjeta se distinguen visualmente de las que sí la tienen. 0 mensajes
+    de consola (errores o warnings).
+  - Nav "Servicios": confirmado que el click no navega (sigue en la misma
+    URL) — es solo disparador del dropdown, como se decidió.
+  - `/desarrollo-software-medida/` (una de las otras 3 páginas de
+    servicio, en modo oscuro): sin regresión — 1 solo tier de precio, sin
+    badge "Recomendado", sin CTA secundario en el hero, títulos de sección
+    genéricos intactos. 0 mensajes de consola.
+  - `/servicios/` y `/servicios/diseno-web-sevilla/` devuelven 404 en
+    local — **esperado**: `astro preview` no interpreta `public/_redirects`
+    (es un mecanismo de Netlify a nivel de servidor/CDN). El 301 real solo
+    se puede verificar tras el despliegue; queda anotado como verificación
+    pendiente post-deploy, no como fallo de esta tarea.
+  Ruta: inline. Check: capturas y accessibility snapshots revisados
+  arriba; sin código nuevo, solo verificación.
 
 ## Entrega
 Rama: `develop` (no es la rama por defecto). Estrategia: PR único
