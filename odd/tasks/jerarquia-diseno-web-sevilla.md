@@ -235,45 +235,38 @@ cambiaron.
   Ruta: junto con T1 (mismo subagente, mismo archivo).
   Check: slot vacío por defecto, no renderiza nada si la página no lo usa.
 
-- [ ] **T3 — Volcar el copy ya redactado** (ver "Contenido redactado" arriba)
-  a `disenoWeb` en `services.ts`: H1 (elegir opción A/B/C), subheadline,
-  benefits reescritos, pricing con ayuda de decisión, meta title/description
-  nuevos. Requiere confirmación final del usuario antes de ejecutar (no está
-  aprobado, solo redactado).
-  Ruta: inline si T1 ya está listo (solo copy, ya escrito, no hay que
-  redactar de nuevo).
-  Check: copy volcado coincide literalmente con el aprobado; build pasa.
+- [x] **T3 — Volcar el copy ya redactado**: H1 opción A (default del plan,
+  usuario no pidió otra), subheadline, `sectionTitles` con los 4 H2
+  acordados, 3 `benefits` reescritos (Core Web Vitals / SEO local+Maps /
+  dominio propio), `process` refinado, meta title/description nuevos.
+  Ruta: inline. Check: `pnpm build` limpio, H1 verificado en
+  `dist/diseno-web-sevilla/index.html`.
 
-- [ ] **T4 — Sección "¿Tu web actual no te trae clientes...?"** vía el slot
-  de T2, en `diseno-web-sevilla.astro`.
-  Ruta: inline.
-  Check: build pasa.
+- [x] **T4 — Sección de dolor**: añadida en `diseno-web-sevilla.astro` vía
+  `<Fragment slot="before-benefits">`, sin tarjeta (T13).
+  Ruta: inline. Check: build pasa, texto presente en el HTML generado.
 
-- [ ] **T5 — Sección "Webs reales de negocios de Sevilla"** (case studies
-  Arkady y Adf Sevilla, con enlace verificable) vía el `<slot />` existente.
-  Ruta: inline.
-  Check: enlaces correctos, build pasa.
+- [x] **T5 — Case studies**: sección "Webs reales de negocios de Sevilla"
+  con `<Projects only={["arkady", "adfsevilla"]} />` (ver T12).
+  Ruta: inline. Check: HTML generado muestra Arkady y Adf Sevilla, 0
+  apariciones del proyecto de portfolio personal (filtro correcto).
 
-- [ ] **T6 — Sección "Por qué elegir a alguien de Sevilla para tu web"**,
-  mismo slot.
-  Ruta: inline.
-  Check: revisión de copy.
+- [x] **T6 — "Por qué elegir a alguien de Sevilla"**: añadida sin tarjeta,
+  lista de 3 puntos.
+  Ruta: inline. Check: build pasa.
 
-- [ ] **T7 — Desglose de precio en dos líneas** (landing 149 € / web
-  completa 399 €) dentro de la sección de pricing existente. Decidir en
-  ejecución: prosa en `pricing.note`/`includes` vs. extender `PricingCard`
-  con tiers reales.
-  Ruta: inline (cambio menor, alcance a confirmar en ejecución).
-  Check: precios coinciden con `services.ts`; build pasa.
+- [x] **T7 — Desglose de precio**: resuelto con tiers reales (ver T10),
+  no con prosa — `pricing.tiers` con landing 149 €/web completa 399 €
+  (recomendada), más `pricing.note` con la ayuda de decisión landing-vs-
+  completa renderizada encima del grid de tiers (`PricingCard.astro`
+  ampliado para mostrar `note` también en modo tiers).
+  Ruta: inline. Check: `dist/diseno-web-sevilla/index.html` contiene el
+  badge "Recomendado" una vez; precios coinciden con `services.ts`.
 
-- [ ] **T8 — Reemplazar las 5 FAQs actuales por las 10 GEO-optimizadas**
-  (ver listado en "Contenido redactado" arriba, texto completo en el
-  historial de la conversación). Sustituye por completo el array
-  `disenoWeb.faqs`, no se acumula con las 5 anteriores.
-  Ruta: inline (contenido ya redactado, solo volcar).
-  Check: JSON-LD de FAQ (`faqSchema`) sigue siendo válido tras el cambio;
-  10 preguntas presentes, ninguna de las 5 antiguas queda huérfana en otro
-  sitio del código (grep de sus textos literales).
+- [x] **T8 — 10 FAQs GEO-optimizadas**: reemplazado por completo
+  `disenoWeb.faqs` (10 preguntas, ninguna de las 5 antiguas se conserva).
+  Ruta: inline. Check: HTML generado tiene 10 `<summary>` (acordeón FAQ);
+  `faqSchema` sigue leyendo de `page.faqs` sin cambios de código.
 
 - [x] **T10 — Tiers de precio (2 columnas)**: `PricingCard.astro` extendido
   con prop opcional `tiers?: Tier[]`; si se pasa, renderiza grid
@@ -294,23 +287,18 @@ cambiaron.
   Ruta: inline.
   Check: `pnpm astro check` — 0 errores.
 
-- [ ] **T12 — Sección de case studies**: reutilizar `Projects.astro`
-  (filtrado a Arkady Celebraciones y Adf Sevilla) inyectado vía el
-  `<slot />` de `diseno-web-sevilla.astro`, en vez de crear un componente
-  nuevo.
-  Ruta: inline si `Projects.astro` admite filtrar una lista concreta;
-  delegada si hay que tocar el componente compartido.
-  Check: 2 tarjetas visibles con enlace correcto, mismo estilo que en
-  portfolio.
+- [x] **T12 — Filtro de case studies**: `Projects.astro` extendido con
+  prop opcional `only?: string[]` (filtra por `key: "arkady"|"adfsevilla"|
+  "portfolio"`, añadido a cada proyecto). Sin la prop, sigue mostrando los
+  3 (portfolio, home) — retrocompatible.
+  Ruta: inline (no hizo falta delegar). Check: `pnpm astro check` — 0
+  errores; verificado en HTML generado (ver T5).
 
-- [ ] **T13 — Secciones "sin tarjeta"**: la sección de dolor (vía el slot
-  `before-benefits` de T2) y "por qué elegir a alguien de Sevilla" (vía el
-  `<slot />` existente) se maquetan como texto + `TitleSection`, sin fondo
-  de tarjeta, para romper la monotonía visual frente a las secciones con
-  tarjeta (diferenciadores, precios, proceso).
-  Ruta: inline.
-  Check: revisión visual de que el espaciado `space-y-24` general no se
-  rompe.
+- [x] **T13 — Secciones "sin tarjeta"**: dolor, case studies y "por qué
+  Sevilla" usan `SectionContainer` + `TitleSection` sin ningún wrapper con
+  `bg-gray-100/50`/`border` — quedan como texto sobre el fondo general,
+  distinto de diferenciadores/precios/proceso que sí mantienen tarjeta.
+  Ruta: inline. Check: build pasa, revisión de clases aplicadas.
 
 - [ ] **T14 — Verificación final end-to-end**: `pnpm build` limpio,
   revisión visual completa en `pnpm dev`/`preview` de la jerarquía

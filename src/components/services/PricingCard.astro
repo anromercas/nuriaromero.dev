@@ -22,7 +22,11 @@ const { from, includes, note, tiers } = Astro.props
 
 {
   tiers ? (
-    <div class="grid gap-6 sm:grid-cols-2">
+    <div>
+      {note && (
+        <p class="mb-6 text-gray-700 dark:text-gray-400">{note}</p>
+      )}
+      <div class="grid gap-6 sm:grid-cols-2">
       {tiers.map((tier) => (
         <div
           class:list={[
@@ -65,6 +69,7 @@ const { from, includes, note, tiers } = Astro.props
           </LinkButton>
         </div>
       ))}
+      </div>
     </div>
   ) : (
     <div class="rounded-xl border border-gray-300 bg-gray-100/50 p-6 dark:border-gray-700 dark:bg-gray-800/50 md:max-w-lg">
