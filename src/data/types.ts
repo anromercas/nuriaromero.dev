@@ -8,6 +8,10 @@ export interface ServicePageData {
   hero: {
     h1: string
     subtitle: string
+    secondaryCta?: {
+      label: string
+      href: string
+    }
   }
   benefits: {
     title: string
@@ -19,8 +23,15 @@ export interface ServicePageData {
   }[]
   pricing: {
     from: string
-    includes: string[]
+    includes?: string[]
     note?: string
+    tiers?: {
+      name: string
+      from: string
+      includes: string[]
+      note?: string
+      recommended?: boolean
+    }[]
   }
   faqs: {
     q: string
@@ -29,5 +40,11 @@ export interface ServicePageData {
   cta?: {
     title: string
     text: string
+  }
+  sectionTitles?: {
+    benefits?: string
+    process?: string
+    pricing?: string
+    faq?: string
   }
 }

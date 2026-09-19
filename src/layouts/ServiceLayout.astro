@@ -46,14 +46,20 @@ const breadcrumbs = [
   <main class="px-4 pt-24">
     <SectionContainer>
       <Breadcrumbs items={breadcrumbs} />
-      <ServiceHero h1={page.hero.h1} subtitle={page.hero.subtitle} />
+      <ServiceHero
+        h1={page.hero.h1}
+        subtitle={page.hero.subtitle}
+        secondaryCta={page.hero.secondaryCta}
+      />
     </SectionContainer>
 
     <div class="space-y-24 mt-8">
+      <slot name="before-benefits" />
+
       <SectionContainer>
         <TitleSection>
           <ProfileCheck class="size-8" />
-          Qué vas a conseguir
+          {page.sectionTitles?.benefits ?? "Qué vas a conseguir"}
         </TitleSection>
         <BenefitsGrid benefits={page.benefits} />
       </SectionContainer>
@@ -61,20 +67,21 @@ const breadcrumbs = [
       <SectionContainer>
         <TitleSection>
           <Briefcase class="size-8" />
-          Cómo trabajo
+          {page.sectionTitles?.process ?? "Cómo trabajo"}
         </TitleSection>
         <ProcessSteps steps={page.process} />
       </SectionContainer>
 
-      <SectionContainer>
+      <SectionContainer id="precios">
         <TitleSection>
           <CodeIcon class="size-7" />
-          Precio orientativo
+          {page.sectionTitles?.pricing ?? "Precio orientativo"}
         </TitleSection>
         <PricingCard
           from={page.pricing.from}
           includes={page.pricing.includes}
           note={page.pricing.note}
+          tiers={page.pricing.tiers}
         />
       </SectionContainer>
 
@@ -83,7 +90,7 @@ const breadcrumbs = [
       <SectionContainer>
         <TitleSection>
           <ProfileCheck class="size-8" />
-          Preguntas frecuentes
+          {page.sectionTitles?.faq ?? "Preguntas frecuentes"}
         </TitleSection>
         <FAQ faqs={page.faqs} />
       </SectionContainer>

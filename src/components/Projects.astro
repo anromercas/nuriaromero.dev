@@ -43,6 +43,7 @@ const TAGS = {
   },
 };
 type Project = {
+  key: string;
   title: string;
   description: string;
   link: string;
@@ -50,6 +51,15 @@ type Project = {
   tags: (typeof TAGS)[keyof typeof TAGS][];
   github?: string;
 };
+
+interface Props {
+  // Si se pasa, solo se muestran los proyectos cuyo `key` esté en la lista
+  // (mismo orden que PROJECTS, no el de la lista). Sin esta prop se
+  // muestran todos, igual que hasta ahora.
+  only?: string[];
+}
+
+const { only } = Astro.props;
 
 // Las imágenes viven en src/assets/ para que astro:assets (<Image>) pueda
 // optimizarlas (resize + reencode) en build time. Como las rutas están en un
@@ -72,6 +82,7 @@ function getProjectImage(filename: string) {
 
 const PROJECTS: Project[] = [
   {
+    key: "arkady",
     title:
       "Arkady Celebraciones - Web de reservas para local de celebraciones en Sevilla",
     description:
@@ -81,6 +92,7 @@ const PROJECTS: Project[] = [
     tags: [TAGS.VITE, TAGS.REACT, TAGS.TAILWIND],
   },
   {
+    key: "adfsevilla",
     title:
       "Adf Sevilla - Web de administración de fincas en Sevilla",
     description:
@@ -91,6 +103,7 @@ const PROJECTS: Project[] = [
     tags: [TAGS.WORDPRESS],
   },
   {
+    key: "portfolio",
     title: "nuriaromero.dev - Portfolio personal",
     description:
       "Portfolio personal con información sobre mi trayectoria profesional y proyectos personales. Creada desde cero con Astro y Tailwind CSS.",
@@ -103,7 +116,8 @@ const PROJECTS: Project[] = [
 
 <div class="flex flex-col gap-y-16">
   {
-    PROJECTS.map(({ image, title, description, tags, link, github }) => (
+    PROJECTS.filter((project) => !only || only.includes(project.key)).map(
+      ({ image, title, description, tags, link, github }) => (
       <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
         <div class="w-full md:w-1/2">
           <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">

@@ -7,9 +7,13 @@ import { whatsappUrl } from "@/data/site"
 interface Props {
   h1: string
   subtitle: string
+  secondaryCta?: {
+    label: string
+    href: string
+  }
 }
 
-const { h1, subtitle } = Astro.props
+const { h1, subtitle, secondaryCta } = Astro.props
 ---
 
 <div class="py-10 md:py-16">
@@ -35,5 +39,15 @@ const { h1, subtitle } = Astro.props
       <MailIcon class="size-4" />
       Pide presupuesto sin compromiso
     </SocialPill>
+    {
+      secondaryCta && (
+        <a
+          href={secondaryCta.href}
+          class="inline-flex items-center justify-center gap-2 px-4 py-1 text-gray-700 transition rounded-full text-md hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-500 max-w-fit underline underline-offset-4"
+        >
+          {secondaryCta.label}
+        </a>
+      )
+    }
   </nav>
 </div>
