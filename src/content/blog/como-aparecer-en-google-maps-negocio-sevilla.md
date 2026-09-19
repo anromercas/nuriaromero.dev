@@ -45,7 +45,7 @@ La ficha y la web se refuerzan mutuamente. Para que Google confíe:
 - Enlaza la web desde la ficha y la ficha desde la web
 - Si tu web tiene los **datos estructurados de negocio local** (un código invisible que le dice a Google quién eres, dónde estás y qué haces), sumas puntos frente a competidores que no lo tienen
 
-Este último punto es donde una web bien hecha marca la diferencia: [así las construyo yo](/servicios/diseno-web-sevilla).
+Este último punto es donde una web bien hecha marca la diferencia: [así las construyo yo](/diseno-web-sevilla).
 
 ## Paso 5: mantenla viva
 

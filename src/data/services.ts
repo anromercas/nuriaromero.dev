@@ -4,7 +4,7 @@
 import type { ServicePageData } from "@/data/types"
 
 export const disenoWeb: ServicePageData = {
-  slug: "/servicios/diseno-web-sevilla",
+  slug: "/diseno-web-sevilla",
   breadcrumbName: "Diseño web en Sevilla",
   seo: {
     title: "Diseño web en Sevilla para negocios | Webs que salen en Google",
@@ -90,7 +90,7 @@ export const disenoWeb: ServicePageData = {
 }
 
 export const desarrolloSoftware: ServicePageData = {
-  slug: "/servicios/desarrollo-software-medida",
+  slug: "/desarrollo-software-medida",
   breadcrumbName: "Software a medida",
   seo: {
     title: "Desarrollo de software a medida en Sevilla | Aplicaciones web",
@@ -170,7 +170,7 @@ export const desarrolloSoftware: ServicePageData = {
 }
 
 export const automatizaciones: ServicePageData = {
-  slug: "/servicios/automatizaciones",
+  slug: "/automatizaciones",
   breadcrumbName: "Automatizaciones",
   seo: {
     title: "Automatización de procesos para negocios en Sevilla | n8n y Make",
@@ -250,7 +250,7 @@ export const automatizaciones: ServicePageData = {
 }
 
 export const inteligenciaArtificial: ServicePageData = {
-  slug: "/servicios/inteligencia-artificial",
+  slug: "/inteligencia-artificial",
   breadcrumbName: "Inteligencia artificial",
   seo: {
     title: "IA para negocios en Sevilla | Chatbots y asistentes con IA",

@@ -3,11 +3,10 @@
 > Desarrolladora freelance en Sevilla especializada en diseño web, software a medida, automatizaciones e inteligencia artificial para negocios locales. Precios claros y trato directo. Contacto: +34 611 812 431 / nuriaromero.dev@gmail.com.
 
 ## Servicios
-- [Diseño web en Sevilla](https://nuriaromero.dev/servicios/diseno-web-sevilla): Páginas web rápidas y optimizadas para SEO local, pensadas para conseguir clientes. Desde 149 € (landing) o 399 € (web de hasta 5 páginas).
-- [Desarrollo de software a medida](https://nuriaromero.dev/servicios/desarrollo-software-medida): Aplicaciones web para empresas en Sevilla: gestión interna, reservas, presupuestos, portales de cliente.
-- [Automatizaciones](https://nuriaromero.dev/servicios/automatizaciones): Automatización de tareas repetitivas (facturas, correos, citas, informes) con n8n y Make.
-- [Inteligencia artificial](https://nuriaromero.dev/servicios/inteligencia-artificial): Chatbots y asistentes con IA integrados en los procesos de tu negocio.
-- [Todos los servicios](https://nuriaromero.dev/servicios): Índice de servicios de desarrollo web, software y automatización en Sevilla.
+- [Diseño web en Sevilla](https://nuriaromero.dev/diseno-web-sevilla): Páginas web rápidas y optimizadas para SEO local, pensadas para conseguir clientes. Desde 149 € (landing) o 399 € (web de hasta 5 páginas).
+- [Desarrollo de software a medida](https://nuriaromero.dev/desarrollo-software-medida): Aplicaciones web para empresas en Sevilla: gestión interna, reservas, presupuestos, portales de cliente.
+- [Automatizaciones](https://nuriaromero.dev/automatizaciones): Automatización de tareas repetitivas (facturas, correos, citas, informes) con n8n y Make.
+- [Inteligencia artificial](https://nuriaromero.dev/inteligencia-artificial): Chatbots y asistentes con IA integrados en los procesos de tu negocio.
 
 ## Sectores
 - [Web para restaurantes en Sevilla](https://nuriaromero.dev/web-para-restaurantes-sevilla): Carta digital, reservas por WhatsApp y SEO local para salir en Google Maps.

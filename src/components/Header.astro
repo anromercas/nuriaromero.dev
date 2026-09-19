@@ -14,7 +14,7 @@ const navItems = [
   {
     title: "Servicios",
     label: "servicios",
-    url: "/servicios/",
+    url: null,
   },
   {
     title: "Portfolio",
@@ -41,7 +41,8 @@ const navItems = [
 const normalize = (path: string) => path.replace(/\/+$/, "") || "/";
 const currentPath = normalize(Astro.url.pathname);
 
-const isActive = (url: string) => {
+const isActive = (url: string | null) => {
+  if (!url) return false;
   const target = normalize(url);
   if (target === "/") return currentPath === "/";
   return currentPath === target || currentPath.startsWith(`${target}/`);
@@ -51,6 +52,8 @@ const dropdownItems = [...services, ...niches].map((page) => ({
   title: page.breadcrumbName,
   url: page.slug,
 }));
+
+const isServiciosActive = dropdownItems.some((item) => isActive(item.url));
 
 // Área táctil mínima recomendada (WCAG 2.5.5 / Material): 44x44px.
 const navLinkClass =
@@ -68,14 +71,15 @@ const navLinkClass =
         navItems.map((link) =>
           link.label === "servicios" ? (
             <li class="relative group">
-              <a
-                class:list={[navLinkClass, { "text-blue-500": isActive(link.url) }]}
+              <button
+                type="button"
+                class:list={[navLinkClass, { "text-blue-500": isServiciosActive }]}
                 aria-label={link.label}
-                aria-current={isActive(link.url) ? "page" : undefined}
-                href={link.url}
+                aria-haspopup="true"
+                aria-current={isServiciosActive ? "page" : undefined}
               >
                 {link.title}
-              </a>
+              </button>
               <div class="absolute left-1/2 hidden -translate-x-1/2 pt-2 group-hover:block group-focus-within:block">
                 <ul class="min-w-56 rounded-xl border border-gray-300 bg-white/95 py-2 shadow-lg backdrop-blur dark:border-gray-700 dark:bg-gray-800/95">
                   {dropdownItems.map((item) => (
@@ -97,7 +101,7 @@ const navLinkClass =
                 class:list={[navLinkClass, { "text-blue-500": isActive(link.url) }]}
                 aria-label={link.label}
                 aria-current={isActive(link.url) ? "page" : undefined}
-                href={link.url}
+                href={link.url ?? undefined}
               >
                 {link.title}
               </a>
@@ -140,17 +144,15 @@ const navLinkClass =
         link.label === "servicios" ? (
           <li>
             <div class="flex items-stretch">
-              <a
+              <span
                 class:list={[
                   "flex min-h-11 flex-1 items-center px-4 py-2.5 leading-[1.375rem]",
-                  "hover:text-blue-500 dark:hover:text-blue-500",
-                  { "text-blue-500": isActive(link.url) },
+                  { "text-blue-500": isServiciosActive },
                 ]}
-                aria-current={isActive(link.url) ? "page" : undefined}
-                href={link.url}
+                aria-current={isServiciosActive ? "page" : undefined}
               >
                 {link.title}
-              </a>
+              </span>
               <button
                 type="button"
                 class="mobile-accordion-btn flex min-h-11 min-w-11 items-center justify-center text-gray-500 transition hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-500"
@@ -197,7 +199,7 @@ const navLinkClass =
                 { "text-blue-500": isActive(link.url) },
               ]}
               aria-current={isActive(link.url) ? "page" : undefined}
-              href={link.url}
+              href={link.url ?? undefined}
             >
               {link.title}
             </a>

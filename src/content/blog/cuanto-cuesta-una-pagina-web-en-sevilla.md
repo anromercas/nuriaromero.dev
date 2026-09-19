@@ -55,4 +55,4 @@ Si alguien no puede responderte con claridad a estas cinco, sigue buscando.
 
 Soy [desarrolladora de software con más de 10 años de experiencia](/sobre-mi), no solo diseñadora: mis webs cargan en menos de 2 segundos y llevan el SEO local trabajado desde el código. Trabajo con presupuesto cerrado (sabes el precio exacto antes de empezar) e incluyo dominio, hosting el primer año y un mes de soporte.
 
-Puedes ver [mis precios y qué incluyen aquí](/servicios/diseno-web-sevilla), o [escribirme directamente](/contacto) contándome tu caso: te respondo con una propuesta clara en menos de 24 horas laborables.
+Puedes ver [mis precios y qué incluyen aquí](/diseno-web-sevilla), o [escribirme directamente](/contacto) contándome tu caso: te respondo con una propuesta clara en menos de 24 horas laborables.

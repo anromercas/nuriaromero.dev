@@ -1,5 +1,11 @@
 # Technical and measurement follow-up
 
+> **Note (2026-09-19):** service pages moved from `/servicios/<slug>` to
+> root `/<slug>` (see `odd/tasks/servicios-a-raiz.md`), with 301 redirects
+> in place. References to `/servicios/` below are historical — they were
+> accurate on the date each check was run and are left as-is to preserve
+> the audit trail.
+
 **Priority:** Medium for the observed SVG errors; low for optional metadata; measurement work is data-dependent.
 **Evidence:** Malformed SVG path errors were observed in the browser console. The audit could not access Search Console/GA4, PSI/CrUX, or verify indexing and field Core Web Vitals. Sitemap contains 20 URLs.
 **Dependencies:** Reproduce console errors on current pages; authorized access to Google Search Console/Analytics and/or PSI/CrUX data for measurement checks.
