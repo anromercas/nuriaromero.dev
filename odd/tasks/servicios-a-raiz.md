@@ -108,9 +108,11 @@ correcto, redirects correctos, cero enlaces internos rotos a `/servicios/`.
   Ruta: inline. Check: salidas de `pnpm build` y `grep` verificadas arriba.
 
 ## Próximo paso tras el despliegue (fuera del checklist de código)
-Una vez en producción: enviar el sitemap actualizado en Search Console y
-vigilar la cobertura de las 5 URLs antiguas (deben pasar a "Página con
-redirección", no a error 404) durante las semanas siguientes.
+- [x] Redirect 301 verificado en producción por el usuario (2026-09-19):
+  `/servicios/diseno-web-sevilla` → `/diseno-web-sevilla` funciona.
+- [ ] Enviar el sitemap actualizado en Search Console y vigilar que las 5
+  URLs antiguas pasen a "Página con redirección" (no a error 404) en las
+  semanas siguientes — todavía pendiente.
 
 ## Estado
 **Completo (T1-T7).** Ejecutado en un solo commit de trabajo en `develop`
