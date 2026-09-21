@@ -15,7 +15,9 @@
     "check:seo-06": "npm run build && node scripts/check-seo-06.mjs",
     "check:seo-06:dist": "node scripts/check-seo-06.mjs",
     "check:seo-07": "npm run build && node scripts/check-seo-07.mjs",
-    "check:seo-07:dist": "node scripts/check-seo-07.mjs"
+    "check:seo-07:dist": "node scripts/check-seo-07.mjs",
+    "check:seo-08": "npm run build && node scripts/check-seo-08.mjs",
+    "check:seo-08:dist": "node scripts/check-seo-08.mjs"
   },
   "dependencies": {
     "@astrojs/check": "0.5.6",

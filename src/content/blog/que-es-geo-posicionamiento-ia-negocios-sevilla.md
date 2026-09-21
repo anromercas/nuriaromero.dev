@@ -5,17 +5,30 @@ pubDate: 2026-09-21
 tags: ["seo local", "geo", "sevilla"]
 ---
 
-Si tienes un negocio en Sevilla seguramente ya has oído hablar de "SEO local". Lo que es más nuevo es el GEO: optimizar tu negocio no solo para Google, sino también para los asistentes de inteligencia artificial que cada vez más gente usa para buscar. Aquí van los dos conceptos explicados sin dar por hecho que sabes qué es un dato estructurado o un LLM.
+## Respuesta corta
+
+El SEO local ayuda a que tu negocio aparezca en búsquedas de Google relacionadas con una zona; el GEO organiza esa información para que los asistentes de inteligencia artificial puedan entenderla y citarla. Ninguna de las dos disciplinas garantiza una posición o una mención concreta, pero ambas mejoran la claridad de la información disponible sobre tu negocio.
+
+En el resto de la guía encontrarás las definiciones, los límites de cada concepto y cuatro acciones concretas para empezar sin inventar datos ni prometer resultados.
 
 ## Qué es el SEO local
 
-El SEO local es el trabajo que hace que tu negocio aparezca cuando alguien busca en Google algo de tu sector y tu zona: "pastelería en Nervión", "fontanero cerca de mí", "clínica dental Triana". No depende de un solo factor, sino de varias cosas a la vez: tu ficha de Google Business Profile bien completada, tu web, las reseñas de clientes y que la información de tu negocio (nombre, dirección, teléfono) sea la misma en todos los sitios donde aparece.
+El SEO local es el trabajo para mejorar la presencia de tu negocio cuando alguien busca en Google algo de tu sector y tu zona: "pastelería en Nervión", "fontanero cerca de mí" o "clínica dental Triana".
+
+No depende de un solo factor. Suele apoyarse en varios elementos:
+
+- una ficha de Google Business Profile completa;
+- una web con información clara;
+- reseñas de clientes reales; y
+- el mismo nombre, dirección y teléfono en los sitios donde aparece tu negocio.
 
 Nadie puede garantizarte una posición concreta en Google —quien lo prometa no está siendo del todo honesto contigo—, pero sí se puede trabajar para que tu negocio tenga toda la información necesaria para aparecer cuando corresponde.
 
 ## Qué es el GEO: lo mismo, pero para la inteligencia artificial
 
-GEO son las siglas de Generative Engine Optimization, un término todavía poco conocido en español que se podría traducir como "optimización para buscadores generativos". En la práctica significa esto: cuando alguien le pregunta a un asistente de inteligencia artificial —ChatGPT, Perplexity, o el "modo IA" que Google ya muestra en algunas búsquedas— "qué panadería sin gluten hay cerca de la Alameda", ese asistente redacta una respuesta en vez de mostrar una lista de diez enlaces azules. El GEO es el trabajo para que tu negocio tenga información clara y accesible para que esa respuesta pueda mencionarte a ti.
+GEO son las siglas de Generative Engine Optimization, un término que se puede traducir como "optimización para buscadores generativos".
+
+En la práctica, el GEO consiste en presentar información clara y accesible para que un asistente pueda entenderla y, si corresponde, mencionarte cuando alguien pregunta qué negocio elegir en una zona concreta. No garantiza que un asistente vaya a citarte.
 
 Un asistente de inteligencia artificial, en términos sencillos, es un programa al que le escribes una pregunta como si hablaras con una persona y que te contesta con una respuesta ya redactada, en vez de darte enlaces para que busques tú mismo la información. Para poder citarte, necesita encontrar en algún sitio (tu web, tu ficha de Google) información clara sobre quién eres, qué ofreces y dónde estás.
 
@@ -27,11 +40,11 @@ Lo relevante para tu negocio es más sencillo: si esa persona pregunta por tu se
 
 ## Cuatro cosas que puedes hacer ya
 
-1. **Completa tu ficha de Google Business Profile al 100 %**: categoría correcta, horario real, fotos, descripción de tus servicios y tu zona. Es la base tanto del SEO local como del GEO.
-2. **Ten preguntas frecuentes (FAQs) claras en tu web**, redactadas como las preguntas reales que te hacen tus clientes ("¿tenéis aparcamiento?", "¿hacéis envíos a toda Sevilla?"). Son justo el tipo de contenido que un asistente de IA puede citar directamente.
-3. **Añade datos estructurados básicos a tu web**: es un tipo de código, invisible para el visitante, que le explica a Google y a la IA de forma directa qué es tu negocio, dónde está y qué ofreces. No garantiza un resultado concreto, pero facilita que te entiendan bien.
-4. **Mantén la información coherente en todas partes**: el mismo nombre, dirección y teléfono en tu web, tu ficha de Google y tus redes sociales. Las inconsistencias generan dudas tanto a Google como a los asistentes de IA.
+1. **Completa tu ficha de Google Business Profile** con la categoría, el horario real, las fotos, la descripción de tus servicios y tu zona.
+2. **Redacta preguntas frecuentes claras** con las dudas reales de tus clientes, como "¿tenéis aparcamiento?" o "¿hacéis envíos a toda Sevilla?".
+3. **Añade datos estructurados básicos**: es código invisible para el visitante que describe qué es tu negocio, dónde está y qué ofreces.
+4. **Mantén la información coherente** en tu web, tu ficha de Google y tus redes sociales: mismo nombre, dirección y teléfono.
 
 ## Si quieres que te lo monte alguien
 
-Ninguno de estos cuatro puntos requiere que contrates a nadie, pero si prefieres no ocuparte tú del detalle técnico, es justo lo que trabajo en [mi servicio de SEO local y GEO en Sevilla](/seo-local-sevilla/): ficha de Google, datos estructurados y FAQs pensadas también para buscadores con IA. Si todavía no tienes web propia donde apoyar todo esto, primero hace falta [una web bien construida](/diseno-web-sevilla/) — es la base sobre la que se sostiene todo lo demás.
+Ninguno de estos cuatro puntos requiere que contrates a nadie, pero si prefieres no ocuparte tú del detalle técnico, es justo lo que trabajo en [mi servicio de SEO local y GEO en Sevilla](https://nuriaromero.dev/seo-local-sevilla/): ficha de Google, datos estructurados y FAQs pensadas también para buscadores con IA. Si todavía no tienes web propia donde apoyar todo esto, primero hace falta [una web bien construida](https://nuriaromero.dev/diseno-web-sevilla/) — es la base sobre la que se sostiene todo lo demás.
