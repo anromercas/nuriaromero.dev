@@ -10,6 +10,8 @@ import ProcessSteps from "@/components/services/ProcessSteps.astro"
 import PricingCard from "@/components/services/PricingCard.astro"
 import FAQ from "@/components/services/FAQ.astro"
 import CTASection from "@/components/services/CTASection.astro"
+import InternalLinks from "@/components/InternalLinks.astro"
+import { internalLinksBySource } from "@/data/internal-links"
 import CodeIcon from "@/components/icons/Code.astro"
 import Briefcase from "@/components/icons/Briefcase.astro"
 import ProfileCheck from "@/components/icons/ProfileCheck.astro"
@@ -94,6 +96,10 @@ const breadcrumbs = [
           {page.sectionTitles?.faq ?? "Preguntas frecuentes"}
         </TitleSection>
         <FAQ faqs={page.faqs} />
+      </SectionContainer>
+
+      <SectionContainer>
+        <InternalLinks links={internalLinksBySource[page.slug] ?? []} />
       </SectionContainer>
 
       <SectionContainer>

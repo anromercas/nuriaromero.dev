@@ -30,7 +30,7 @@ The user explicitly authorized implementation of the complete audit backlog in b
 - [x] SEO-03 Exclude components page — removed only the standalone `src/pages/components.astro` demo page; the gallery is intentionally unavailable in development and shared components remain available to public pages. See `docs/seo-audit/full-audit-2026-09-21/tasks/03-excluir-components.md`.
 - [ ] SEO-04 Validate CWV and LCP — **Estado: parcial**; baseline local documentada, pero la medición real de CWV/LCP sigue pendiente por tooling/acceso faltante. Ver `docs/seo-audit/full-audit-2026-09-21/tasks/04-validar-cwv-y-lcp.md`.
 - [ ] SEO-05 Diversify niche pages — **Estado: parcial**; se hicieron visibles títulos sectoriales de beneficios y proceso en las cuatro páginas sin añadir claims, casos, imágenes ni testimonios. Quedan bloqueados los ejemplos y la prueba de experiencia por autorizaciones humanas. Ver `docs/seo-audit/full-audit-2026-09-21/tasks/05-diversificar-paginas-nicho.md`.
-- [ ] SEO-06 Improve internal linking — `docs/seo-audit/full-audit-2026-09-21/tasks/06-arquitectura-enlazado-interno.md`
+- [ ] SEO-06 Improve internal linking — **Estado: parcial**; mapa hub/spoke y enlaces contextuales implementados y comprobados localmente; queda pendiente la aprobación comercial/editorial de las relaciones abiertas. Ver `docs/seo-audit/full-audit-2026-09-21/tasks/06-arquitectura-enlazado-interno.md`.
 - [ ] SEO-07 Resolve cannibalization — `docs/seo-audit/full-audit-2026-09-21/tasks/07-resolver-canibalizacion.md`
 - [ ] SEO-08 Improve citability and readability — `docs/seo-audit/full-audit-2026-09-21/tasks/08-mejorar-citabilidad-y-legibilidad.md`
 - [ ] SEO-09 Add authorship and llms.txt improvements — `docs/seo-audit/full-audit-2026-09-21/tasks/09-autoría-y-llms.md`
@@ -71,3 +71,7 @@ The user explicitly authorized implementation of the complete audit backlog in b
 
 ## Next step
 Continue with SEO-05; mantener SEO-04 en estado parcial hasta disponer de PSI/CrUX/GA4 o Lighthouse/Playwright para medir CWV/LCP de forma reproducible.
+
+- SEO-06 local implementation (partial): added `src/data/internal-links.ts` as the explicit hub/spoke map for home, six service pages, four niche pages, and four blog posts; `src/components/InternalLinks.astro` renders contextual versus conversion links. `src/layouts/ServiceLayout.astro`, `src/layouts/BlogPostLayout.astro`, and `src/pages/index.astro` consume the map without linking to unpublished routes.
+- SEO-06 focused verification: `npm run check:seo-06` completed the Astro build and `node scripts/check-seo-06.mjs`; 22 rendered pages, 0 errors, 0 warnings, 1 preexisting hint in `src/components/seo/Schema.astro`, 15 mapped origins and all mapped destinations checked. `git diff --check` is clean.
+- SEO-06 pending human decision: the map's commercial relationship between `/diseno-web-sevilla/`, `/seo-local-sevilla/`, `/tienda-online-sevilla/`, and `/web-para-comercios-sevilla/` still needs editorial/business approval coordinated with SEO-02 and SEO-07. No external authority or ranking claims were added.

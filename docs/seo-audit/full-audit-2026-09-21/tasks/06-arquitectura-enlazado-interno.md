@@ -31,3 +31,30 @@ Decidir qué página será hub principal para cada intención y qué relación c
 
 ## No hacer
 No enlazar todas las páginas con todos los anchors, no crear páginas puente sin contenido, no usar exact-match de forma mecánica y no confundir más enlaces con mejor arquitectura.
+
+## Implementación local (2026-09-21)
+
+**Estado: parcial, pendiente de aprobación comercial/editorial.** Se implementó un mapa explícito y verificable para el enlazado contextual. La relación entre las páginas de servicio y nicho queda propuesta en código, pero la decisión comercial definitiva sobre `/diseno-web-sevilla/`, `/seo-local-sevilla/`, `/tienda-online-sevilla/` y `/web-para-comercios-sevilla/` debe confirmarse junto con SEO-02 y SEO-07 antes de considerarla aprobada.
+
+### Mapa aplicado
+
+- **Navegación:** `Header` y `Footer` mantienen el recorrido global hacia servicios, páginas de nicho, blog, portfolio, sobre mí y contacto.
+- **Hub home `/`:** enlaza contextualmente a las guías de GEO, Google Maps y precios; las tarjetas existentes enlazan a servicios y nichos. El bloque de precios conserva el recorrido de conversión hacia cada servicio.
+- **Hubs de servicio:** cada una de las seis páginas de servicio enlaza solo a servicios complementarios, contenido editorial relacionado y contacto como conversión:
+  - `/diseno-web-sevilla/` → SEO local, tienda online, guía de precios, contacto.
+  - `/desarrollo-software-medida/` → automatizaciones, IA, contacto.
+  - `/automatizaciones/` → software a medida, IA, contacto.
+  - `/inteligencia-artificial/` → automatizaciones, SEO local, contacto.
+  - `/seo-local-sevilla/` → diseño web, guías de Google Maps y GEO, contacto.
+  - `/tienda-online-sevilla/` → comercio, diseño web, SEO local, contacto.
+- **Spokes de nicho:** cada página de nicho enlaza a diseño web y SEO local; se añade la relación con tienda online para comercios/restaurantes y contacto cuando corresponde.
+- **Posts:** cada post enlaza a su servicio o nicho principal, a una guía complementaria cuando aporta contexto y a contacto como conversión. Los anchors son descriptivos y varían por contexto.
+
+El mapa fuente completo, incluyendo `kind: contextual|conversion`, está en `src/data/internal-links.ts`; `src/components/InternalLinks.astro` lo renderiza sin enlazar a rutas no publicadas.
+
+### Evidencia y pendientes
+
+- `npm run check:seo-06`: build Astro + checker interno; **22 páginas, 0 errores, 0 warnings y 1 hint preexistente** en `src/components/seo/Schema.astro`; checker: **15 orígenes mapeados y 22 HTML renderizados comprobados**.
+- `git diff --check`: correcto.
+- El checker valida que cada destino renderizado existe, que cada enlace del mapa aparece en su origen y que cada anchor descriptivo está presente; también recorre los enlaces internos con trailing slash del HTML generado para detectar destinos inexistentes.
+- Pendiente: revisión manual de contexto/accesibilidad y aprobación de las relaciones comerciales abiertas; no se inventan datos externos ni se declaran métricas de autoridad.

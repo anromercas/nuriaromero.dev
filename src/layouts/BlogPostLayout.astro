@@ -4,6 +4,8 @@ import Schema from "@/components/seo/Schema.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
 import Breadcrumbs from "@/components/Breadcrumbs.astro"
 import CTASection from "@/components/services/CTASection.astro"
+import InternalLinks from "@/components/InternalLinks.astro"
+import { internalLinksBySource } from "@/data/internal-links"
 import EntryContentStyles from "@/components/EntryContentStyles.astro"
 import { articleSchema, breadcrumbSchema } from "@/lib/schema"
 import type { CollectionEntry } from "astro:content"
@@ -60,6 +62,10 @@ const formattedDate = pubDate.toLocaleDateString("es-ES", {
           <slot />
         </div>
       </article>
+    </SectionContainer>
+
+    <SectionContainer class="mt-24">
+      <InternalLinks links={internalLinksBySource[`${url}/`] ?? []} />
     </SectionContainer>
 
     <SectionContainer class="mt-24">

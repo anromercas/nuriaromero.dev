@@ -8,6 +8,8 @@ import GoogleReviews from "@/components/GoogleReviews.astro"
 import FAQ from "@/components/services/FAQ.astro"
 import ProcessSteps from "@/components/services/ProcessSteps.astro"
 import CTASection from "@/components/services/CTASection.astro"
+import InternalLinks from "@/components/InternalLinks.astro"
+import { internalLinksBySource } from "@/data/internal-links"
 import SocialPill from "@/components/SocialPill.astro"
 import Badge from "@/components/Badge.astro"
 import WhatsAppIcon from "@/components/icons/WhatsApp.astro"
@@ -244,6 +246,10 @@ const homeFaqs = [
       </SectionContainer>
 
       <GoogleReviews />
+
+      <SectionContainer>
+        <InternalLinks links={internalLinksBySource["/"]} />
+      </SectionContainer>
 
       <SectionContainer id="faq">
         <TitleSection>
