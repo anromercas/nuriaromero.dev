@@ -5,13 +5,18 @@ import { SITE } from "@/data/site"
 const BUSINESS_ID = `${SITE.url}/#business`
 const PERSON_ID = `${SITE.url}/#person`
 const WEBSITE_ID = `${SITE.url}/#website`
+const SERVICE_AREA = [
+  { "@type": "City", name: "Sevilla" },
+  { "@type": "AdministrativeArea", name: "Área metropolitana de Sevilla" },
+]
 
 export function localBusinessSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
+    "@type": ["ProfessionalService", "Organization"],
     "@id": BUSINESS_ID,
     name: SITE.name,
+    alternateName: SITE.shortName,
     url: SITE.url,
     description: SITE.description,
     image: `${SITE.url}${SITE.defaultOgImage}`,
@@ -24,15 +29,7 @@ export function localBusinessSchema() {
       addressRegion: SITE.address.region,
       addressCountry: SITE.address.country,
     },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: SITE.geo.lat,
-      longitude: SITE.geo.lng,
-    },
-    areaServed: {
-      "@type": "City",
-      name: "Sevilla",
-    },
+    areaServed: SERVICE_AREA,
     sameAs: [...SITE.sameAs],
     founder: { "@id": PERSON_ID },
   }
@@ -43,7 +40,8 @@ export function personSchema() {
     "@context": "https://schema.org",
     "@type": "Person",
     "@id": PERSON_ID,
-    name: "Nuria Romero Castillo",
+    name: SITE.name,
+    alternateName: "Nuria Romero Castillo",
     url: `${SITE.url}/sobre-mi`,
     jobTitle: "Desarrolladora web freelance",
     worksFor: { "@id": BUSINESS_ID },
@@ -86,10 +84,7 @@ export function serviceSchema(service: {
     url: serviceUrl,
     serviceType: service.serviceType,
     provider: { "@id": BUSINESS_ID },
-    areaServed: {
-      "@type": "City",
-      name: "Sevilla",
-    },
+    areaServed: SERVICE_AREA,
     offers: {
       "@type": "Offer",
       url: serviceUrl,

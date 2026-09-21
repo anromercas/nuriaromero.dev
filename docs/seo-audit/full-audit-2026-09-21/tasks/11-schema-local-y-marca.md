@@ -1,7 +1,7 @@
 # Corregir schema local y resolver naming de marca
 - **ID:** SEO-11
 - **Prioridad:** P2
-- **Estado:** pendiente
+- **Estado:** parcial
 - **Fuente:** [local.md](../findings/local.md), sección 3; [technical.md](../findings/technical.md), sección 8; [geo.md](../findings/geo.md), sección 4
 - **Scope:** `ProfessionalService`/schema local, `openingHours`, `geo`, `areaServed`, `sameAs` y consistencia del nombre de marca en datos estructurados, metadata y copy.
 
@@ -31,3 +31,18 @@ Decisiones humanas obligatorias: naming oficial, horarios, área de servicio y p
 
 ## No hacer
 No afirmar que el schema por sí solo produce rich results, no poner horarios ficticios, no usar coordenadas aproximadas como si fueran exactas y no cambiar el naming comercial sin decisión humana.
+
+## Implementación local (2026-09-21)
+
+- Nombre público principal elegido para las superficies públicas: **Nuria Romero**.
+- Variantes permitidas y acotadas: `nuriaromero.dev` como dominio/marca digital y `Nuria Romero Castillo` únicamente cuando el contexto legal o la autoría verificable lo requiera.
+- `ProfessionalService` se expresa también como `Organization`, con `@id` estable, `alternateName`, `founder` y `sameAs` compartidos; `Person`, `WebSite` y `Service` referencian la misma entidad de negocio.
+- `areaServed` distingue `Sevilla` y `Área metropolitana de Sevilla`, reflejando el área ya comunicada públicamente sin inventar barrios, radio ni coordenadas.
+- Se retiraron del grafo las coordenadas existentes porque no hay evidencia humana aprobada de precisión suficiente para publicarlas. También siguen ausentes `openingHoursSpecification`, `aggregateRating` y `review` hasta disponer de datos verificables.
+- Footer, `og:site_name`, contacto y JSON-LD usan el nombre público principal; los enlaces `sameAs` se mantienen limitados a LinkedIn y GitHub ya declarados como perfiles oficiales.
+
+## Evidencia local y pendientes
+
+- `npm run check:seo-11` pasa con build Astro de 22 páginas y validación de 22 HTML/10 schemas `Service`; Astro informa 0 errores, 0 warnings y 1 hint preexistente en `src/components/seo/Schema.astro`.
+- Pendiente de decisión/datos humanos: horarios reales de atención, precisión geográfica aprobada, nombre exacto si se crea/reclama GBP, área comercial definitiva y cualquier nuevo perfil oficial para `sameAs`.
+- Pendiente de validación de producción: inspección del JSON-LD desplegado, Schema Markup Validator/Rich Results Test y comparativa con NAP/legal una vez aprobados los datos humanos.

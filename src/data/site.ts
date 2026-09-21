@@ -3,7 +3,9 @@
 // solo se publica la ciudad (Sevilla).
 
 export const SITE = {
-  name: "Nuria Romero — Diseño web y automatizaciones en Sevilla",
+  // Public brand: use this exact name for entity/schema/metadata surfaces.
+  // Allowed variants: the domain and the legal name below where context requires it.
+  name: "Nuria Romero",
   shortName: "nuriaromero.dev",
   url: "https://nuriaromero.dev",
   description:
@@ -27,7 +29,6 @@ export const SITE = {
     domicilio: "Camino Andalucía 426, 41309 La Rinconada, Sevilla",
     actividad: "Diseño y desarrollo de páginas web, software y servicios digitales",
   },
-  geo: { lat: 37.3826, lng: -5.9963 },
   sameAs: [
     "https://linkedin.com/in/nuria-romero-castillo",
     "https://github.com/anromercas",
