@@ -31,3 +31,13 @@ Decisiones humanas obligatorias: crear/reclamar GBP, categoría, área de servic
 
 ## No hacer
 No crear una ficha falsa, no comprar reseñas, no publicar testimonios sin permiso, no inventar resultados ni añadir un mapa/dirección que contradiga el modelo SAB.
+
+## Implementación local (2026-09-21)
+
+- La página `/seo-local-sevilla/` incluye un bloque visible de transparencia sobre la prueba social. Declara que la GBP propia está pendiente de decisión y que no se muestran reseñas, valoraciones, testimonios ni métricas sin activo, consentimiento y evidencia verificables.
+- `src/data/local-trust.ts` funciona como registro explícito para la futura GBP y las piezas de prueba social. Sus URLs, `placeId` y registros de testimonios están vacíos hasta que la propietaria aporte datos y trazabilidad; el área propuesta conserva el modelo SAB sin publicar domicilio.
+- `npm run check:seo-10` integra build y `scripts/check-seo-10.mjs`, que comprueba el estado pendiente renderizado y falla si aparecen ratings, reseñas o enlaces a Maps no verificados.
+
+## Estado
+
+**Parcial, no completada por defecto.** La base local y el guard de publicación están implementados, pero siguen pendientes las decisiones humanas de crear/reclamar la GBP, categoría, área, horarios y dirección de verificación, además de cualquier consentimiento de testimonios/casos. No se añade `sameAs`, mapa, dirección, reseña, valoración ni claim de resultado.

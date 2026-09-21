@@ -3,6 +3,7 @@ import ServiceLayout from "@/layouts/ServiceLayout.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
 import TitleSection from "@/components/TitleSection.astro"
 import Projects from "@/components/Projects.astro"
+import LocalTrustStatus from "@/components/LocalTrustStatus.astro"
 import { seoLocal } from "@/data/services"
 ---
 
@@ -43,6 +44,8 @@ import { seoLocal } from "@/data/services"
     </p>
     <Projects only={["arkady", "adfsevilla"]} />
   </SectionContainer>
+
+  <LocalTrustStatus />
 
   <SectionContainer>
     <TitleSection>Por qué elegir a alguien que programa, no solo "hace SEO"</TitleSection>

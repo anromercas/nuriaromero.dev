@@ -19,6 +19,7 @@
     "check:seo-08": "npm run build && node scripts/check-seo-08.mjs",
     "check:seo-08:dist": "node scripts/check-seo-08.mjs",
     "check:seo-09": "npm run build && node scripts/check-seo-09.mjs",
+    "check:seo-10": "npm run build && node scripts/check-seo-10.mjs",
     "check:seo-09:dist": "node scripts/check-seo-09.mjs"
   },
   "dependencies": {

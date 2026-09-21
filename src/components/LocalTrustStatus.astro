@@ -1,0 +1,33 @@
+---
+import SectionContainer from "@/components/SectionContainer.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import { localTrust } from "@/data/local-trust"
+
+const hasVerifiedProof = localTrust.socialProof.some((proof) => proof.status === "verified")
+const hasVerifiedGbp = localTrust.gbp.status === "verified" && Boolean(localTrust.gbp.profileUrl)
+---
+
+<SectionContainer id="prueba-social-verificable">
+  <TitleSection>Prueba social verificable</TitleSection>
+  <div class="max-w-3xl space-y-4 text-gray-700 dark:text-gray-400">
+    <p>
+      La <strong class="text-gray-900 dark:text-gray-100">GBP propia está pendiente de decisión</strong>.
+      No publico una dirección, un perfil de Google, reseñas ni resultados de clientes hasta tener el
+      activo real, el consentimiento correspondiente y una evidencia que se pueda revisar.
+    </p>
+    <p>
+      {hasVerifiedGbp
+        ? "La ficha verificada se enlazará aquí cuando la URL pública y los datos de servicio hayan sido revisados."
+        : "No se enlaza todavía ninguna ficha de Google Business Profile: crear o reclamarla como negocio de área de servicio requiere una decisión humana sobre categoría, área, horarios y dirección de verificación."}
+    </p>
+    <p>
+      {hasVerifiedProof
+        ? "Los casos autorizados se publicarán con su referencia de consentimiento y evidencia verificable."
+        : "No se muestran reseñas ni valoraciones, y no se publican testimonios ni métricas de clientes sin permiso explícito y trazabilidad."}
+    </p>
+    <ul class="list-disc space-y-2 pl-5 text-sm">
+      <li>El área de servicio propuesta es {localTrust.gbp.serviceArea}; no se muestra un domicilio particular.</li>
+      <li>La activación queda pendiente de revisar NAP, categoría, horarios, URL pública y políticas aplicables.</li>
+    </ul>
+  </div>
+</SectionContainer>
