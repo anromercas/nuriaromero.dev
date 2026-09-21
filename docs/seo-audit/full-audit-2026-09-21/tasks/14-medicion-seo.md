@@ -1,7 +1,7 @@
 # Establecer medición SEO y línea base
 - **ID:** SEO-14
 - **Prioridad:** P1
-- **Estado:** pendiente
+- **Estado:** parcial
 - **Fuente:** [technical.md](../findings/technical.md), introducción y sección 182; [backlinks.md](../findings/backlinks.md), limitaciones; [sitemap.md](../findings/sitemap.md), fuente; [sxo.md](../findings/sxo.md), limitaciones
 - **Scope:** Configuración y protocolo de GSC, GA4/consentimiento, CrUX/PSI cuando proceda, inspección de URLs, sitemap y registro de cambios.
 
@@ -32,3 +32,21 @@ Decisiones humanas: qué herramientas autorizar, objetivos de negocio, eventos d
 
 ## No hacer
 No guardar tokens ni datos personales en documentación pública, no usar posición como único KPI, no inventar datos faltantes y no prometer ranking como criterio de aceptación.
+
+## Implementación local SEO-14
+
+**Estado:** parcial. Se preparó el protocolo reproducible y la configuración local; la validación de propiedades, consentimiento real y recepción en producción sigue pendiente.
+
+- `docs/seo-audit/measurement-seo.md` documenta propiedades, permisos, límites, KPIs, ventana de 28 días, cadencia, anotaciones, eventos y protocolo de validación sin guardar credenciales ni inventar métricas.
+- `src/scripts/analytics-consent.js` aplica defaults de consentimiento denegado antes de cualquier carga, mantiene un allowlist de eventos y evita emitir eventos sin consentimiento.
+- `src/components/AnalyticsConsent.astro` acepta `PUBLIC_GA4_MEASUREMENT_ID` como override de despliegue y no habilita ningún container GTM.
+- `public/_headers` permite únicamente los endpoints de Analytics documentados, además de los ya necesarios para Formspree.
+- `scripts/check-seo-14.mjs` y `npm run check:seo-14` validan la base de medición local, la política de consentimiento, la taxonomía y los guards contra métricas inventadas.
+
+### Evidencia y pendientes
+
+- RED: `node scripts/check-seo-14.mjs` falló antes de la implementación por ausencia del protocolo, script npm, allowlist, configuración por entorno y endpoints CSP.
+- GREEN: `npm run check:seo-14` completó `astro check` + `astro build` (23 páginas, 0 errores, 0 warnings y 1 hint preexistente en `Schema.astro`) y el checker SEO-14 pasó; también pasó `git diff --check`.
+- Runtime unit check: el controlador de consentimiento se ejecutó con almacenamiento/dataLayer falsos; confirmó default denegado, no emisión antes de aceptar, allowlist de eventos y no emisión después de rechazar.
+- No se ejecutó acceso a Search Console, GA4, GTM, PSI o CrUX desde este worker; no se declara propiedad verificada, recepción de eventos, indexación ni ranking.
+- Quedan pendientes las decisiones humanas sobre herramientas autorizadas, objetivos/eventos de conversión, retención y frecuencia final, además de la validación desplegada con consentimiento.
