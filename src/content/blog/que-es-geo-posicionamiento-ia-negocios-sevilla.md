@@ -1,6 +1,6 @@
 ---
 title: "Qué es el GEO y por qué tu negocio en Sevilla debería prestarle atención"
-description: "SEO local y GEO explicados sin jerga: qué son, por qué cada vez más gente pregunta a la IA en vez de buscar en Google, y 4 pasos prácticos para tu negocio."
+description: "Guía práctica: SEO local y GEO explicados sin jerga, por qué cada vez más gente pregunta a la IA y 4 pasos para tu negocio en Sevilla."
 pubDate: 2026-09-21
 tags: ["seo local", "geo", "sevilla"]
 ---
