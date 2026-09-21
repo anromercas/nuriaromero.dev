@@ -8,6 +8,7 @@
 - [Desarrollo de software a medida](https://nuriaromero.dev/desarrollo-software-medida): Aplicaciones web para empresas en Sevilla: gestión interna, reservas, presupuestos, portales de cliente.
 - [Automatizaciones](https://nuriaromero.dev/automatizaciones): Automatización de tareas repetitivas (facturas, correos, citas, informes) con n8n y Make.
 - [Inteligencia artificial](https://nuriaromero.dev/inteligencia-artificial): Chatbots y asistentes con IA integrados en los procesos de tu negocio.
+- [Tienda online en Sevilla](https://nuriaromero.dev/tienda-online-sevilla): Ecommerce a medida con pasarela de pago propia, sin comisión de marketplace. Desde 399 € la web base; la tienda se presupuesta según el catálogo.
 
 ## Sectores
 - [Web para restaurantes en Sevilla](https://nuriaromero.dev/web-para-restaurantes-sevilla): Carta digital, reservas por WhatsApp y SEO local para salir en Google Maps.

@@ -147,6 +147,12 @@ export const desarrolloSoftware: ServicePageData = {
     subtitle:
       "Cuando el Excel se queda corto y los programas genéricos no encajan con tu forma de trabajar, una aplicación hecha a tu medida ahorra horas cada semana. Desarrollo herramientas que se adaptan a tu negocio, y no al revés.",
   },
+  sectionTitles: {
+    benefits: "Qué gana tu empresa con software a medida",
+    process: "Así es el proceso de desarrollar tu aplicación a medida",
+    pricing: "Cuánto cuesta el software a medida en Sevilla",
+    faq: "Preguntas frecuentes sobre software a medida en Sevilla",
+  },
   benefits: [
     {
       title: "Adiós a las tareas repetitivas",
@@ -197,19 +203,39 @@ export const desarrolloSoftware: ServicePageData = {
   faqs: [
     {
       q: "¿Qué es exactamente el software a medida?",
-      a: "Es una aplicación creada específicamente para tu negocio: una herramienta de gestión de pedidos, un sistema de reservas, un portal para tus clientes… A diferencia de un programa genérico, hace exactamente lo que tu empresa necesita, sin funciones sobrantes ni licencias mensuales por usuario.",
+      a: "El software a medida es una aplicación creada específicamente para la forma de trabajar de tu empresa: una herramienta de gestión de pedidos, un sistema de reservas, un portal para tus clientes, un control de presupuestos o partes de trabajo… A diferencia de un programa genérico o de una licencia estándar, no viene con funciones de sobra que nunca usas ni te obliga a adaptar tu proceso al programa. Se construye pensando en cómo trabajas hoy: qué datos manejas, quién los necesita ver y en qué momento. Es especialmente útil cuando ya usas Excel o varios programas sueltos que no se hablan entre sí, y quieres una sola herramienta que haga exactamente lo que tu negocio necesita, ni más ni menos.",
     },
     {
-      q: "¿Cuánto cuesta desarrollar software a medida?",
-      a: "Depende del alcance. Una herramienta interna sencilla parte de 999 €; sistemas más completos se presupuestan por fases para que empieces por lo esencial. Siempre sabes el precio total antes de empezar cada fase.",
+      q: "¿Cuánto cuesta desarrollar software a medida en Sevilla?",
+      a: "El desarrollo de software a medida parte de 999 € para una herramienta interna sencilla, y los proyectos más completos se presupuestan por fases: primero analizo tu caso, y después te doy un precio cerrado para cada fase antes de empezarla, nunca una cifra global a ciegas. Esto te permite empezar por la parte que más tiempo o dinero te está haciendo perder, comprobar el resultado, y decidir después si amplías con nuevas funciones. El coste final depende de cuántas pantallas, integraciones con otras herramientas y usuarios necesita tu proyecto, algo que se concreta en la primera reunión de análisis.",
     },
     {
       q: "¿No me vale con un Excel o un programa estándar?",
-      a: "A veces sí, y te lo diré. El software a medida compensa cuando pierdes horas semanales en tareas repetitivas, cuando varias personas necesitan trabajar con los mismos datos o cuando el programa estándar te obliga a cambiar tu forma de trabajar.",
+      a: "A veces sí, y te lo diré con sinceridad en la primera reunión: no todo negocio necesita software a medida. Compensa claramente cuando pierdes horas semanales copiando datos entre archivos, cuando varias personas necesitan trabajar a la vez con la misma información sin pisarse los cambios, o cuando el programa estándar que usas te obliga a cambiar tu forma de trabajar en vez de adaptarse a ella. Si tu caso se resuelve con una plantilla de Excel mejor organizada o una automatización sencilla, te lo propongo así, porque te sale más barato y más rápido que un desarrollo completo.",
     },
     {
-      q: "¿Qué pasa si en el futuro necesito cambios?",
-      a: "El software queda documentado y preparado para crecer. Puedo encargarme del mantenimiento y las mejoras, y si algún día quieres que lo continúe otro profesional, podrá hacerlo sin problema: el código y la documentación son tuyos.",
+      q: "¿Qué pasa si en el futuro necesito cambios o quiero ampliar la aplicación?",
+      a: "El software se entrega documentado y pensado para crecer por fases, no como un proyecto cerrado que se queda congelado el día de la entrega. Puedo encargarme yo misma del mantenimiento y de añadir nuevas funciones cuando las necesites, empezando siempre por lo que más impacto tenga en tu día a día. Y si en algún momento decides que continúe otro profesional, podrá hacerlo sin depender de mí: el código y la documentación son tuyos desde el primer día, sin cláusulas que te aten a que solo yo pueda tocar el proyecto.",
+    },
+    {
+      q: "¿Cuánto tiempo se tarda en desarrollar una aplicación a medida?",
+      a: "El plazo depende del alcance que definimos en la fase de análisis. Una herramienta sencilla, con una o dos funciones concretas (por ejemplo, un sistema de reservas o un control de pedidos), suele estar lista en unas pocas semanas. Un sistema más completo, con varios módulos y usuarios distintos, se desarrolla y entrega por fases, de forma que puedas empezar a usar cada parte según va estando terminada, en vez de esperar meses para ver el resultado. El plazo exacto de cada fase se cierra por escrito junto con el precio, antes de empezar a desarrollar esa fase.",
+    },
+    {
+      q: "¿Qué diferencia hay entre contratar software a medida y usar un programa SaaS con licencia mensual?",
+      a: "Un SaaS (un programa por el que pagas una cuota mensual, como muchos CRM o ERP genéricos) es rápido de empezar a usar, pero rara vez encaja al cien por cien con tu proceso, y la cuota se repite mes tras mes mientras sigas usándolo, subas o no de plan. El software a medida no tiene esa licencia mensual recurrente: pagas por el desarrollo, y a partir de ahí la aplicación es tuya, con mantenimiento solo si lo contratas cuando lo necesitas. A cambio, el desarrollo a medida requiere más tiempo inicial que darte de alta en un SaaS, porque primero se analiza y se construye para tu caso concreto.",
+    },
+    {
+      q: "¿Puedo empezar solo por una parte del proyecto en vez de contratarlo todo de golpe?",
+      a: "Sí, de hecho es como recomiendo empezar casi siempre. En la primera reunión detectamos juntas qué tarea te está haciendo perder más tiempo o dinero ahora mismo, y desarrollamos primero esa parte con precio y plazo cerrados. Una vez la estás usando y compruebas el resultado, decides si quieres ampliar con la siguiente fase o si con eso ya te vale. Esto reduce el riesgo de invertir en un proyecto grande antes de comprobar que la forma de trabajar propuesta encaja de verdad con tu negocio.",
+    },
+    {
+      q: "¿Qué pasa si a mitad de desarrollo cambian los requisitos de mi negocio?",
+      a: "Es algo que ocurre con frecuencia y está previsto en la forma de trabajar por fases: lo ya acordado y presupuestado para la fase en curso no cambia de precio a mitad de camino. Si surge una necesidad nueva o cambia algo importante de tu proceso, la valoramos juntas y, si afecta al alcance, se convierte en una fase adicional con su propio presupuesto cerrado, en vez de meterla sin avisar dentro de lo ya pactado. Así sabes en todo momento qué estás pagando y por qué, sin sorpresas en la factura final.",
+    },
+    {
+      q: "¿En qué tecnologías desarrollas las aplicaciones y me quedo atada a ti como proveedora?",
+      a: "Desarrollo aplicaciones web modernas, accesibles desde el navegador en cualquier dispositivo sin instalar nada, usando tecnologías estándar de la industria y no herramientas propietarias cerradas. El código queda documentado y organizado para que cualquier profesional con conocimientos pueda continuarlo si algún día decides cambiar de desarrollador o de proveedor. No hay dependencia forzada de un único formato o plataforma mía: la idea es que la herramienta sea tuya de verdad, igual que el dominio y el hosting de una web se contratan a tu nombre y no al mío.",
     },
   ],
 }
@@ -226,6 +252,12 @@ export const automatizaciones: ServicePageData = {
     h1: "Automatizaciones: que tu negocio trabaje solo",
     subtitle:
       "¿Cuántas horas pierdes a la semana copiando datos, enviando los mismos correos o pasando pedidos de un sitio a otro? Conecto las herramientas que ya usas (correo, Excel, WhatsApp, facturación…) para que esas tareas se hagan solas.",
+  },
+  sectionTitles: {
+    benefits: "Qué consigue tu negocio automatizando procesos con n8n y Make",
+    process: "Así es el proceso de automatizar tus tareas repetitivas",
+    pricing: "Cuánto cuesta automatizar un proceso",
+    faq: "Preguntas frecuentes sobre automatización de procesos",
   },
   benefits: [
     {
@@ -276,20 +308,40 @@ export const automatizaciones: ServicePageData = {
   },
   faqs: [
     {
-      q: "¿Qué tipo de tareas se pueden automatizar?",
-      a: "Casi cualquier tarea repetitiva entre programas: enviar recordatorios de cita por WhatsApp o email, generar facturas al cerrar un pedido, volcar formularios web a una hoja de cálculo, avisarte de reseñas nuevas en Google, crear informes semanales de ventas… Si lo haces igual cada vez, probablemente se puede automatizar.",
+      q: "¿Qué tipo de tareas se pueden automatizar en mi negocio?",
+      a: "Casi cualquier tarea repetitiva que hoy hagas igual cada vez entre distintos programas: enviar recordatorios de cita por WhatsApp o email, generar facturas al cerrar un pedido, volcar los formularios de tu web a una hoja de cálculo o a tu CRM, avisarte de reseñas nuevas en Google, crear informes semanales de ventas o gastos, o pasar datos de un pedido de tu tienda online a tu programa de facturación. La regla práctica es sencilla: si describes el proceso paso a paso y cada paso es siempre igual, casi seguro que se puede automatizar, liberándote de hacerlo a mano una y otra vez.",
     },
     {
-      q: "¿Qué son n8n y Make?",
-      a: "Son plataformas de automatización que conectan entre sí las aplicaciones que ya usas, sin programar desde cero. Son las herramientas líderes del sector y las uso a diario tanto en mis proyectos freelance como en empresas.",
+      q: "¿Qué son n8n y Make, y por qué se usan para automatizar en vez de programar desde cero?",
+      a: "n8n y Make son plataformas de automatización que conectan entre sí las aplicaciones que ya usas (Gmail, Google Sheets, WhatsApp, tu programa de facturación, tu web…) mediante flujos visuales, sin tener que programar una integración desde cero para cada herramienta. Son de las plataformas más usadas del sector, con conexiones ya preparadas para cientos de aplicaciones, lo que reduce mucho el tiempo de desarrollo frente a construir cada conexión a medida. Las uso a diario tanto en proyectos freelance como en entornos de empresa, y elijo una u otra según qué herramientas necesites conectar y qué tan compleja sea la lógica del proceso.",
     },
     {
-      q: "¿Necesito conocimientos técnicos para usarlas después?",
-      a: "No. Las automatizaciones funcionan solas y te entrego cada flujo documentado con instrucciones sencillas. Si algo falla, recibes un aviso y puedes contactarme para revisarlo.",
+      q: "¿Necesito conocimientos técnicos para usar las automatizaciones después de que las montes?",
+      a: "No. Una vez montada, la automatización funciona sola en segundo plano: no tienes que abrir ninguna plataforma ni tocar nada para que las tareas se sigan haciendo. Te entrego cada flujo documentado con instrucciones sencillas por si en algún momento quieres entender qué hace, y configuro avisos automáticos para que te enteres si algo falla, en vez de descubrirlo semanas después porque un pedido no llegó donde debía. Si algo necesita revisión, puedes contactarme directamente en lugar de intentar arreglarlo tú misma dentro de la plataforma.",
     },
     {
-      q: "¿Esto no es solo para empresas grandes?",
-      a: "Al contrario: donde más se nota es en negocios pequeños, donde cada hora cuenta. Una clínica que confirma citas automáticamente o una tienda que genera facturas solas recuperan la inversión en pocas semanas.",
+      q: "¿Automatizar procesos es solo para empresas grandes?",
+      a: "Al contrario: suele notarse más en negocios pequeños, precisamente porque ahí cada hora cuenta más y no hay un equipo dedicado a tareas administrativas. Una clínica que confirma citas automáticamente por WhatsApp, una tienda que genera facturas solas al cerrar cada pedido o un despacho que recibe ya ordenados los formularios de contacto en una hoja de cálculo, son casos típicos de negocios pequeños donde la automatización libera tiempo real cada semana. No hace falta tener un departamento técnico ni un volumen enorme de operaciones para que compense.",
+    },
+    {
+      q: "¿Cuánto cuesta automatizar un proceso de mi negocio?",
+      a: "El precio parte de 149 € por automatización, e incluye la auditoría de esa tarea concreta, el diseño e implementación del flujo, las pruebas con casos reales de tu negocio y la documentación. Si necesitas automatizar varias tareas a la vez, los packs de varias automatizaciones tienen descuento sobre el precio individual. El coste final de cada automatización depende de cuántas herramientas hay que conectar y de qué tan compleja sea la lógica del proceso (por ejemplo, si hay que tomar decisiones distintas según el caso), algo que se concreta después de la auditoría inicial.",
+    },
+    {
+      q: "¿Cuánto tiempo se tarda en tener lista una automatización?",
+      a: "Depende de cuántas herramientas conecta y de qué tan compleja sea la lógica del proceso. Una automatización sencilla, como enviar un recordatorio de cita o volcar un formulario a una hoja de cálculo, suele estar lista en pocos días desde que se aprueba la propuesta. Procesos con varios pasos condicionales o que conectan tres o cuatro herramientas distintas necesitan algo más de tiempo, porque incluyen una fase de pruebas con casos reales antes de dejarlas funcionando en tu día a día. El plazo se concreta en la propuesta priorizada, junto con el precio.",
+    },
+    {
+      q: "¿Qué pasa si una automatización falla o hay un error a mitad de proceso?",
+      a: "Cada flujo se configura con avisos automáticos si algo no sale como estaba previsto, por ejemplo si una herramienta externa deja de responder o llega un dato en un formato inesperado. En vez de que el error pase desapercibido, recibes una notificación para que puedas revisarlo o contactarme. Antes de dejar cualquier automatización funcionando en tu día a día, la pruebo con casos reales de tu negocio para detectar la mayoría de los problemas antes de que afecten a un pedido o a un cliente real.",
+    },
+    {
+      q: "¿Se pueden automatizar procesos que usan varias herramientas distintas a la vez, como WhatsApp, Excel y facturación?",
+      a: "Sí, de hecho es donde más valor aporta automatizar: cuantas más aplicaciones distintas intervienen en un proceso (por ejemplo, un pedido que llega por WhatsApp, se apunta en una hoja de cálculo y termina generando una factura), más tiempo se pierde copiando datos a mano entre ellas y más fácil es que se cuele un error humano. n8n y Make están pensados precisamente para conectar varias aplicaciones dentro de un mismo flujo, así que el proceso completo se puede automatizar de principio a fin, no solo un paso suelto.",
+    },
+    {
+      q: "¿Automatizar con n8n o Make tiene algún coste aparte de tu servicio?",
+      a: "Puede tenerlo, y te lo explico con transparencia antes de proponerte la herramienta: n8n y Make tienen sus propios planes de uso según el volumen de tareas que ejecutes al mes, y para negocios pequeños suele bastar con un plan económico o incluso gratuito. Mi honorario cubre la auditoría, el diseño, la implementación y la documentación del flujo; el coste de la plataforma en sí, si lo hay, depende del volumen de tu negocio y se evalúa juntas antes de decidir qué herramienta usar, para que no haya sorpresas en tu factura mensual.",
     },
   ],
 }
@@ -306,6 +358,12 @@ export const inteligenciaArtificial: ServicePageData = {
     h1: "Inteligencia artificial aplicada a tu negocio",
     subtitle:
       "La IA ya no es cosa de grandes empresas. Un chatbot que responde a tus clientes a las 11 de la noche, un asistente que redacta respuestas a reseñas o clasifica tus correos: soluciones concretas, con retorno medible y sin humo.",
+  },
+  sectionTitles: {
+    benefits: "Qué consigue tu negocio con IA aplicada, sin humo",
+    process: "Así es el proceso de implantar IA en tu negocio",
+    pricing: "Cuánto cuesta implementar IA en tu negocio",
+    faq: "Preguntas frecuentes sobre inteligencia artificial para negocios",
   },
   benefits: [
     {
@@ -357,19 +415,39 @@ export const inteligenciaArtificial: ServicePageData = {
   faqs: [
     {
       q: "¿Para qué puede usar la IA un negocio pequeño?",
-      a: "Los casos más rentables son: un chatbot que atiende dudas y recoge contactos en tu web o WhatsApp, asistentes que redactan respuestas a reseñas y correos, clasificación automática de mensajes, y extracción de datos de documentos como facturas o pedidos. Todo orientado a ahorrar horas de trabajo.",
+      a: "Los casos con mejor retorno para un negocio pequeño son: un chatbot que atiende dudas frecuentes y recoge datos de contacto en tu web o WhatsApp, asistentes que redactan respuestas a reseñas de Google o a correos habituales, clasificación automática de mensajes según su urgencia o tipo, y extracción de datos de documentos como facturas o pedidos para no teclearlos a mano. La clave para elegir bien no es usar IA porque esté de moda, sino identificar en qué tarea concreta de tu día a día te ahorra horas reales, algo que reviso contigo en la primera reunión antes de proponerte nada.",
     },
     {
-      q: "¿El chatbot va a decir cosas raras a mis clientes?",
-      a: "Se entrena únicamente con la información de tu negocio (servicios, precios, horarios, políticas) y se configura para que, ante dudas que no sabe resolver, tome el contacto y te avise en lugar de inventar. Antes de publicarlo lo pruebas tú misma.",
+      q: "¿El chatbot con IA va a decir cosas raras o inventadas a mis clientes?",
+      a: "El chatbot se entrena únicamente con la información real de tu negocio (servicios, precios, horarios, políticas de tu empresa) y se configura para que, ante una pregunta que no sabe responder con esa información, derive el contacto hacia ti en lugar de inventar una respuesta. Antes de publicarlo, lo pruebas tú misma con preguntas reales de tus clientes durante la fase de prueba piloto, así que nada llega a producción sin que lo hayas revisado antes. Esta configuración reduce mucho el riesgo de respuestas inventadas, aunque como con cualquier sistema de IA no existe una garantía absoluta del cien por cien.",
     },
     {
-      q: "¿Qué pasa con la privacidad y el RGPD?",
-      a: "Configuro cada solución definiendo qué datos se envían al proveedor de IA y con qué garantías, priorizando proveedores con acuerdos de tratamiento de datos europeos. Te lo dejo documentado para tu registro de tratamientos.",
+      q: "¿Qué pasa con la privacidad de mis clientes y el RGPD al usar IA?",
+      a: "Antes de poner en marcha cualquier solución, defino con claridad qué datos se envían al proveedor de IA, con qué finalidad y bajo qué garantías, priorizando proveedores que ofrecen acuerdos de tratamiento de datos conformes con la normativa europea. Te entrego esa configuración documentada para que puedas incorporarla a tu registro de actividades de tratamiento si lo necesitas. No configuro ninguna solución que envíe datos personales de tus clientes sin que sepas exactamente a dónde van y por qué, porque en sectores como salud o servicios profesionales esto es especialmente delicado.",
     },
     {
       q: "¿Cuánto cuesta implantar IA en mi negocio?",
-      a: "Un chatbot para web o WhatsApp parte de 399 €. Los proyectos que combinan IA con automatizaciones se presupuestan según el caso, siempre con una prueba piloto previa para que decidas con datos reales.",
+      a: "Un chatbot para web o WhatsApp parte de 399 €, incluyendo el análisis del caso de uso, la prueba piloto con tus datos reales, la integración con tu web o WhatsApp y la configuración respetuosa con el RGPD. Los proyectos que combinan IA con automatizaciones (por ejemplo, un chatbot que además genera un pedido o una cita automáticamente) se presupuestan según el caso concreto, porque el coste depende de cuántas herramientas hay que conectar. En todos los casos, la prueba piloto previa te permite ver cómo responde la IA con tu información real antes de decidir si sigues adelante.",
+    },
+    {
+      q: "¿Qué diferencia hay entre un chatbot con IA y los chatbots clásicos de \"elige una opción\"?",
+      a: "Un chatbot clásico solo puede seguir un guion cerrado de botones y respuestas predefinidas: si la pregunta del cliente no encaja exactamente en una de esas opciones, se queda bloqueado. Un chatbot con IA entiende preguntas escritas con lenguaje natural, como las escribiría un cliente real, y puede responder combinando la información de tu negocio aunque la pregunta no esté formulada exactamente igual que en su base de datos. Esto se traduce en menos clientes frustrados por no encontrar la opción correcta y más consultas resueltas sin que tengas que intervenir tú misma.",
+    },
+    {
+      q: "¿Cuánto tiempo se tarda en tener un chatbot con IA funcionando?",
+      a: "El proceso empieza con el análisis del caso de uso y sigue con una prueba piloto montada con la información real de tu negocio, algo que suele tardar entre una y dos semanas según cuánta información haya que preparar (servicios, precios, horarios, preguntas frecuentes). A partir de ahí, ajustamos las respuestas con casos reales antes de conectarlo a tu web o WhatsApp de forma definitiva. El plazo exacto depende de si la información de tu negocio ya está organizada o hay que recopilarla primero, algo que se aclara en la primera reunión.",
+    },
+    {
+      q: "¿Puedo probar el chatbot antes de decidir si lo contrato de verdad?",
+      a: "Sí, y es justo el paso que recomiendo antes de comprometerte con nada: monto una prueba piloto con la información real de tu negocio para que compruebes cómo responde a preguntas de verdad, no a un ejemplo genérico de demostración. Con esa prueba delante decides si el resultado te convence y quieres seguir adelante con la integración definitiva en tu web o WhatsApp, o si prefieres ajustar el enfoque antes de continuar. Esto reduce el riesgo de pagar por una solución de IA que luego no encaja con cómo hablan realmente tus clientes.",
+    },
+    {
+      q: "¿Necesito tener ya una web para poner un chatbot con IA en mi negocio?",
+      a: "No es imprescindible: un chatbot con IA se puede integrar directamente en WhatsApp Business, que es donde ya habla contigo la mayoría de tus clientes, sin depender de que tengas una web previa. Si además tienes o vas a tener una web, también se puede integrar ahí como un widget de chat visible en cualquier página. En la primera reunión analizamos por dónde te contactan más tus clientes hoy en día, para proponerte el canal donde realmente va a tener uso, en vez de añadirlo en un sitio donde nadie lo va a encontrar.",
+    },
+    {
+      q: "¿La IA sustituye a mi equipo o a mí atendiendo a los clientes?",
+      a: "No está pensada para eso, sino para quitarte de encima las consultas repetitivas (horarios, precios, disponibilidad, dudas frecuentes) y dejarte a ti el tiempo para lo que de verdad necesita trato personal: cerrar una venta importante, resolver un caso delicado o atender a un cliente habitual. El chatbot se configura para reconocer cuándo una consulta necesita intervención humana y derivarla, en lugar de intentar resolverlo todo por su cuenta. La IA funciona mejor como un filtro que se encarga de lo rutinario, no como un reemplazo de la atención personal que diferencia a un negocio pequeño de uno grande.",
     },
   ],
 }
@@ -524,10 +602,128 @@ export const seoLocal: ServicePageData = {
   },
 }
 
+export const tiendaOnline: ServicePageData = {
+  slug: "/tienda-online-sevilla",
+  breadcrumbName: "Tienda online en Sevilla",
+  seo: {
+    title: "Tienda online en Sevilla | Ecommerce con pasarela de pago",
+    description:
+      "Creo tiendas online en Sevilla con pasarela de pago propia, sin comisión de marketplace. Presupuesto cerrado según tu número de productos y necesidades.",
+  },
+  hero: {
+    h1: "Tienda online en Sevilla para negocios que quieren vender, no solo tener una web",
+    subtitle:
+      "Una tienda online no es una web más: necesitas pasarela de pago, gestión de productos y stock, y que te encuentren cuando alguien busca lo que vendes. Te la construyo a medida, sin comisión de marketplace y con precio cerrado antes de empezar.",
+    secondaryCta: {
+      label: "Ver cómo se presupuesta",
+      href: "#precios",
+    },
+  },
+  sectionTitles: {
+    benefits: "Tienda online en Sevilla hecha por una programadora, no con plantillas de marketplace",
+    process: "Así es el proceso de crear tu tienda online",
+    pricing: "Cuánto cuesta una tienda online en Sevilla",
+    faq: "Preguntas frecuentes sobre tiendas online en Sevilla",
+  },
+  benefits: [
+    {
+      title: "Tienda propia, sin comisión de marketplace",
+      text: "Vender en un marketplace o en una plataforma de terceros suele significar pagar una comisión por cada venta o una cuota mensual por seguir estando ahí. Con una tienda propia, el dominio y el hosting se contratan a tu nombre y no dependes de las reglas de una plataforma externa. Sí pagarás la comisión propia de la pasarela de pago que elijas (Stripe, PayPal, Redsys…), la misma que pagarías en cualquier tienda online, pero sin una comisión adicional por vender en un espacio que no es tuyo.",
+    },
+    {
+      title: "Gestión sencilla de tus productos, sin depender de mí para cada cambio",
+      text: "Te entrego un panel donde puedes añadir productos nuevos, cambiar precios, actualizar fotos o marcar algo como agotado tú misma, sin escribir código ni llamarme para cada actualización pequeña. Te enseño a usarlo en el lanzamiento. Para cambios más grandes, como reorganizar categorías o añadir una función nueva de venta, sí que suelo encargarme yo, pero el día a día de mantener tu catálogo actualizado queda en tus manos.",
+    },
+    {
+      title: "SEO para que te encuentren buscando tus productos, no solo tu marca",
+      text: "Cada ficha de producto y cada categoría se estructura y se redacta pensando en las búsquedas reales que hace alguien cuando quiere comprar lo que tú vendes, no solo cuando ya conoce el nombre de tu negocio. Aplico el mismo criterio técnico de SEO local que uso en el resto de mis proyectos: estructura correcta, datos técnicos cuidados y textos orientados a Google, para que tu tienda tenga una base sólida desde el primer día.",
+    },
+  ],
+  process: [
+    {
+      title: "Auditoría de qué necesitas vender",
+      text: "Hablamos de tu catálogo: cuántos productos tienes, si son físicos o digitales, si necesitas gestionar stock, variantes (talla, color…) o envíos, y qué pasarela de pago encaja mejor con tu negocio. De ahí sale el alcance real de tu proyecto.",
+    },
+    {
+      title: "Propuesta con presupuesto cerrado",
+      text: "Con el alcance claro, te envío una propuesta por escrito: qué incluye, plazos y precio cerrado antes de empezar. La apruebas y arrancamos, sin sorpresas a mitad de camino.",
+    },
+    {
+      title: "Desarrollo con pasarela de pago",
+      text: "Construyo tu tienda, integro la pasarela de pago elegida y pruebo todo el proceso de compra de principio a fin (desde que alguien añade un producto al carrito hasta que recibe la confirmación del pedido) antes de publicarla.",
+    },
+    {
+      title: "Lanzamiento y formación para gestionar productos",
+      text: "Publico la tienda y te enseño a añadir productos, gestionar pedidos y hacer los cambios básicos tú misma. El primer mes de soporte tras el lanzamiento va incluido.",
+    },
+  ],
+  pricing: {
+    from: "399 €",
+    includes: [
+      "Web completa con estructura de tienda: categorías y fichas de producto",
+      "Textos optimizados para que te encuentren buscando tus productos",
+      "Dominio y hosting el primer año",
+      "Un mes de soporte tras el lanzamiento",
+    ],
+    note: "399 € es el precio de partida de la web completa sobre la que se construye la tienda. La integración de la pasarela de pago, la gestión de stock, variantes o envíos se presupuestan aparte, según tu número de productos y necesidades concretas: no existe un precio único de tienda online, pero sí un presupuesto cerrado por escrito antes de empezar, sin cifras a ciegas.",
+  },
+  faqs: [
+    {
+      q: "¿Cuánto cuesta una tienda online en Sevilla?",
+      a: "No existe un precio único de tienda online, porque el coste depende directamente de cuántos productos vas a vender, si necesitas variantes (talla, color, modelo…), gestión de stock y qué pasarela de pago quieres usar. El punto de partida es la web completa desde 399 €, sobre la que se construye la estructura de categorías y fichas de producto; la integración de la pasarela de pago y las funciones específicas de venta online se presupuestan aparte, siempre con precio cerrado por escrito después de conocer tu catálogo, antes de que empieces a pagar nada.",
+    },
+    {
+      q: "¿Qué pasarelas de pago se pueden integrar en mi tienda online?",
+      a: "Las pasarelas más habituales para un negocio en España son Stripe, PayPal y Redsys (la pasarela de los bancos españoles, típica para pagos con tarjeta nacional). Cada una tiene su propia comisión por transacción, que pagas directamente a la pasarela y no a mí, igual que pagarías en cualquier tienda online del sector. En la fase de auditoría te ayudo a elegir la que mejor encaje con tu negocio según el tipo de cliente que tengas y si necesitas cobrar también con otros métodos, como transferencia o contrareembolso.",
+    },
+    {
+      q: "¿Qué diferencia hay entre una tienda online a medida y usar Shopify o Wix?",
+      a: "Shopify y Wix son plataformas SaaS: te dan una tienda funcionando rápido, pero pagas una cuota mensual mientras sigas usando la plataforma, y tu tienda vive dentro de su sistema, con las limitaciones de diseño y funciones que ellos deciden. Una tienda a medida se construye para tu caso concreto, con el dominio y el hosting a tu nombre, sin una cuota de plataforma mensual obligatoria (el mantenimiento, si lo quieres, lo contratas solo si lo necesitas). A cambio, requiere más tiempo de desarrollo inicial que darte de alta en una plataforma ya hecha, porque se construye para tu catálogo concreto en vez de partir de una plantilla genérica.",
+    },
+    {
+      q: "¿Necesito tener ya una web para montar la tienda online, o se puede hacer desde cero?",
+      a: "Se puede hacer de las dos formas. Si ya tienes una web, valoro en la auditoría si su base técnica permite añadir la tienda o si conviene construirla de nuevo para evitar arrastrar problemas de la web anterior. Si todavía no tienes ninguna web, la tienda se construye desde cero como una web completa con estructura de venta desde el primer día, sin tener que integrar después una tienda sobre una base que no se pensó para eso. En ambos casos, el punto de partida es conocer tu catálogo antes de decidir el enfoque técnico.",
+    },
+    {
+      q: "¿Puedo vender online si no tengo tienda física?",
+      a: "Sí, sin ningún problema: muchos de los negocios que montan una tienda online no tienen local físico o venden solo por internet. Lo importante para la tienda online es tener claro qué productos vas a vender, cómo los vas a gestionar (stock propio, bajo pedido, con proveedor externo…) y cómo vas a hacer llegar el pedido al cliente, no si tienes un local a pie de calle. Si además tienes tienda física y quieres combinar venta online con venta presencial, también se puede plantear la gestión de stock para que ambos canales estén coordinados.",
+    },
+    {
+      q: "¿Cuánto tiempo se tarda en tener la tienda online lista?",
+      a: "Una tienda online suele necesitar algo más de tiempo que una web informativa, porque hay que cargar y revisar cada ficha de producto además de construir la estructura general. El plazo concreto depende de cuántos productos tengas y de si tu catálogo ya está preparado (fotos, descripciones, precios) o hay que organizarlo primero. El plazo exacto, igual que el precio, se cierra por escrito en la propuesta inicial después de conocer el alcance de tu catálogo, así que lo sabes desde el primer día y no a mitad de proyecto.",
+    },
+    {
+      q: "¿Quién sube los productos a la tienda una vez está lista, tú o yo?",
+      a: "Después del lanzamiento, tú misma puedes añadir productos nuevos, cambiar precios, actualizar fotos o marcar algo como agotado desde un panel de gestión, sin necesidad de escribir código ni depender de mí para cada actualización. Te enseño a usarlo durante el lanzamiento, y el primer mes de soporte va incluido por si algo no te queda claro. Para la carga inicial del catálogo, si tienes muchos productos y prefieres que me encargue yo de subirlos la primera vez, también se puede acordar como parte del presupuesto cerrado.",
+    },
+    {
+      q: "¿Qué pasa con el IVA, la facturación y los aspectos legales de vender online?",
+      a: "La tienda se construye preparada para trabajar con los requisitos habituales de una venta online en España: aviso legal, política de cookies, condiciones de venta y proceso de compra transparente sobre precios e IVA. Dicho esto, no soy asesora fiscal ni gestoría, así que para decidir cómo declarar el IVA de tus ventas online o qué régimen fiscal te conviene, te recomiendo confirmarlo con tu gestoría o asesor fiscal antes de lanzar la tienda, para que la parte legal y la parte técnica estén alineadas desde el principio.",
+    },
+    {
+      q: "¿Puedo vender productos digitales, como cursos o ebooks, además de productos físicos?",
+      a: "Sí, es algo que se valora en la fase de auditoría inicial, porque los productos digitales tienen necesidades distintas a los físicos: no requieren gestión de stock ni envío, pero sí una entrega automática segura del archivo o del acceso al curso tras el pago. Si tu catálogo combina productos físicos y digitales, o si de momento solo quieres vender digitales, lo tengo en cuenta al plantear la estructura de la tienda y al elegir la pasarela de pago más adecuada para ese tipo de venta.",
+    },
+    {
+      q: "¿Qué pasa si más adelante quiero añadir más productos o nuevas funciones a la tienda?",
+      a: "La tienda se construye pensada para crecer: puedes seguir añadiendo productos tú misma sin límite desde el panel de gestión, y si más adelante quieres una función nueva (como descuentos automáticos, una zona de clientes registrados o integrarla con tu programa de facturación), se presupuesta como una ampliación aparte, con su propio precio cerrado. No hace falta acertar con todo el alcance desde el primer día: empiezas con lo esencial para vender y amplías según lo vaya pidiendo tu negocio.",
+    },
+    {
+      q: "¿La tienda gestiona el envío y el stock sola, o eso lo tengo que hacer yo?",
+      a: "La tienda lleva el control de qué productos tienes disponibles y puede avisar automáticamente cuando algo se queda sin stock, para que no vendas algo que ya no tienes. La logística del envío en sí (empaquetar, llevarlo a la agencia de transporte, elegir la mensajería) sigue siendo una gestión tuya o de tu proveedor logístico, porque es una parte operativa del negocio, no técnica de la web. Si usas un servicio externo de gestión de envíos, valoro en la auditoría si tiene sentido conectarlo con la tienda para automatizar ese paso también.",
+    },
+  ],
+  cta: {
+    title: "Empecemos con tu tienda online en Sevilla",
+    text: "Cuéntame qué quieres vender y cuántos productos tienes en mente. Te respondo con una propuesta clara y un presupuesto cerrado, sin compromiso.",
+  },
+}
+
 export const services = [
   seoLocal,
   disenoWeb,
   desarrolloSoftware,
   automatizaciones,
   inteligenciaArtificial,
+  tiendaOnline,
 ]
