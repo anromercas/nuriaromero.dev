@@ -11,7 +11,6 @@ import CTASection from "@/components/services/CTASection.astro"
 import SocialPill from "@/components/SocialPill.astro"
 import Badge from "@/components/Badge.astro"
 import WhatsAppIcon from "@/components/icons/WhatsApp.astro"
-import MailIcon from "@/components/icons/Mail.astro"
 import CodeIcon from "@/components/icons/Code.astro"
 import Briefcase from "@/components/icons/Briefcase.astro"
 import ProfileCheck from "@/components/icons/ProfileCheck.astro"
@@ -42,12 +41,16 @@ const homeProcess = [
     text: "Antes de darlo por terminado revisamos juntas el resultado y afino lo que haga falta, para que el resultado final responda a lo que necesitabas.",
   },
   {
-    title: "Lanzamiento y soporte",
-    text: "Publico o entrego el proyecto, te enseño a manejarlo y quedo disponible después del lanzamiento para resolver dudas y hacer ajustes.",
+    title: "Lanzamiento y mejora continua",
+    text: "Publico o entrego el proyecto y te enseño a manejarlo. Quedo disponible después del lanzamiento para resolver dudas y hacer ajustes, y si el servicio incluye trabajo recurrente (como el SEO local y el GEO), seguimos optimizando mes a mes.",
   },
 ]
 
 const homeFaqs = [
+  {
+    q: "¿Qué es el SEO local y el GEO, y en qué se diferencian de tener una web?",
+    a: "Es el trabajo que hace que tu negocio aparezca en Google y en Google Maps cuando alguien busca cerca de ti lo que ofreces — por ejemplo, cuando alguien escribe 'clínica dental Nervión' o 'restaurante cerca de mí'. Es lo mismo, pero para las nuevas formas de buscar: cuando alguien le pregunta a ChatGPT, al modo IA de Google o a otro asistente qué negocio de tu tipo hay en tu zona, trabajo para que el tuyo esté entre las respuestas que da. Tener una web es necesaria para que la gente te encuentre y pueda contactarte, pero no garantiza que aparezcas cuando alguien busca tu tipo de negocio: eso es precisamente el trabajo del SEO local y el GEO, que puedo hacer sobre la web que ya tengas.",
+  },
   {
     q: "¿Cuánto cuesta una página web para un negocio en Sevilla?",
     a: "Una web completa de hasta 5 páginas parte de 399 €, e incluye diseño a medida adaptado a móvil, SEO local trabajado desde el código, dominio y hosting el primer año, botón de WhatsApp y formulario de contacto, alta en Google y Google Maps, y un mes de soporte tras el lanzamiento. Si solo necesitas una landing de una página optimizada para SEO y GEO, el precio de salida es de 149 €. En ambos casos trabajo siempre con presupuesto cerrado: te envío una propuesta por escrito con el precio y los plazos antes de empezar, así que sabes el coste exacto desde el primer momento y no hay sorpresas después. El presupuesto final se ajusta al alcance real de tu proyecto, pero ese ajuste también queda por escrito antes de que empecemos a trabajar. Si más adelante quieres automatizar tareas o añadir un chatbot con inteligencia artificial, esos servicios parten de 149 € y 399 € respectivamente.",
@@ -72,8 +75,8 @@ const homeFaqs = [
 ---
 
 <Layout
-  title="Diseño de páginas web para negocios en Sevilla | Nuria Romero"
-  description="Creo páginas web para negocios en Sevilla que aparecen en Google y traen clientes. También software a medida, automatizaciones e IA. Precios claros y trato directo."
+  title="Nuria Romero | Visibilidad en Google y en búsquedas con IA para tu negocio"
+  description="Trabajo para que tu negocio aparezca en Google y en las nuevas búsquedas con inteligencia artificial. También diseño o mejoro tu web cuando hace falta. Precios claros y trato directo, sin intermediarios."
 >
   <Schema slot="head" schema={[personSchema(), faqSchema(homeFaqs)]} />
   <main class="px-4">
@@ -85,15 +88,24 @@ const homeFaqs = [
         <h1
           class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white mb-6"
         >
-          Diseño de páginas web para negocios en Sevilla
+          Más oportunidades para tu negocio en Google y en las búsquedas con
+          inteligencia artificial
         </h1>
+        <p class="text-xl text-gray-800 dark:text-gray-300 max-w-2xl">
+          Trabajo para que Google y las nuevas búsquedas con inteligencia
+          artificial recomienden tu negocio cuando alguien busca lo que
+          ofreces. Si tu web no ayuda a conseguirlo, también la diseño o la
+          mejoro.
+        </p>
         <p
-          class="text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300 max-w-2xl"
+          class="mt-4 text-lg text-gray-700 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-400 max-w-2xl"
         >
           Soy Nuria Romero, <strong>desarrolladora con más de 10 años de experiencia</strong>.
-          Creo webs rápidas que aparecen en Google cuando tus clientes buscan lo
-          que ofreces, y automatizo las tareas que te roban tiempo. Precios
-          claros y trato directo, sin intermediarios.
+          Trabajo el SEO local y el GEO (posicionamiento en las nuevas
+          búsquedas con inteligencia artificial) para que te encuentren donde
+          buscan tus clientes. Si además necesitas una web nueva o mejorar la
+          que ya tienes, también me ocupo de eso. Precios claros y trato
+          directo, sin intermediarios.
         </p>
         <nav class="flex flex-wrap gap-4 mt-8">
           <a
@@ -103,11 +115,11 @@ const homeFaqs = [
             class="inline-flex items-center justify-center gap-2 px-4 py-1 text-white transition bg-green-600 border border-green-700 rounded-full text-md hover:bg-green-500 max-w-fit focus:outline-none focus-visible:ring focus-visible:ring-green-500/80 focus-visible:ring-offset-2"
           >
             <WhatsAppIcon class="size-4" />
-            Escríbeme por WhatsApp
+            Cuéntame tu negocio por WhatsApp
           </a>
-          <SocialPill href="/contacto">
-            <MailIcon class="size-4" />
-            Pide presupuesto gratis
+          <SocialPill href="#servicios">
+            <Briefcase class="size-4" />
+            Ver qué puedo hacer por tu negocio
           </SocialPill>
         </nav>
       </div>
@@ -119,6 +131,10 @@ const homeFaqs = [
           <Briefcase class="size-8" />
           ¿Qué necesita tu negocio?
         </TitleSection>
+        <p class="mb-8 text-gray-700 dark:text-gray-400 max-w-2xl">
+          Así consigo esas oportunidades en la práctica: elige el servicio que
+          más se ajusta a lo que necesitas ahora mismo.
+        </p>
         <ul class="grid gap-6 sm:grid-cols-2">
           {
             services.map((service) => (
@@ -239,8 +255,8 @@ const homeFaqs = [
 
       <SectionContainer>
         <CTASection
-          title="Tu competencia ya está en Google"
-          text="Cada día sin web posicionada es un cliente que se lleva otro. Cuéntame tu caso y te digo cómo empezar, sin compromiso."
+          title="Hablemos de las oportunidades que te estás perdiendo"
+          text="Cuéntame qué negocio tienes y te digo, sin compromiso, qué puedo hacer para que Google y las búsquedas con inteligencia artificial te encuentren."
         />
       </SectionContainer>
     </div>
