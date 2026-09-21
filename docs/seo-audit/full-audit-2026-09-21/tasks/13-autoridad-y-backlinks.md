@@ -31,3 +31,20 @@ Decidir presupuesto, tiempo, canales, colaboraciones disponibles y si se habilit
 
 ## No hacer
 No hacer link building masivo, no usar PBNs, no pagar reseñas/enlaces de baja calidad y no afirmar autoridad o toxicidad sin datos observables.
+
+## Implementación local SEO-13
+
+**Estado:** parcial. La base de autoridad está implementada localmente; la confirmación de backlinks externos sigue pendiente.
+
+- Se publicó `/recursos/` como activo enlazable propio, con enlaces a `/sobre-mi/`, `/portfolio/`, `/blog/` y la guía GEO.
+- El activo incluye una política visible: no comprar enlaces, no intercambiarlos artificialmente y no publicar métricas, testimonios o colaboraciones sin evidencia.
+- Se añadió `docs/seo-audit/authority-backlink-register.md` como registro operativo con línea base fechada, propietario, evidencia esperada, criterios de descarte, guion de outreach y checklist de calidad.
+- `public/llms.txt` ahora incluye el hub de recursos para facilitar su descubrimiento como página pública.
+- `scripts/check-seo-13.mjs` valida el hub renderizado, los enlaces internos, la política de seguridad, el registro y la ausencia de métricas inventadas.
+
+### Evidencia y pendientes
+
+- Check local: `npm run check:seo-13` (build + checker) debe ejecutarse tras cada cambio de esta tarea.
+- `git diff --check` verifica la integridad del cambio.
+- No se ha ejecutado outreach ni se ha afirmado ningún backlink ganado.
+- Backlinks, dominios referentes, anchors, autoridad y toxicidad permanecen pendientes hasta disponer de una fuente externa autorizada y una fecha de captura reproducible.

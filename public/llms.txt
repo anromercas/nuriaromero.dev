@@ -21,6 +21,7 @@
 - [Web para abogados y gestorías en Sevilla](https://nuriaromero.dev/web-para-abogados-gestorias-sevilla/): Webs para despachos profesionales con SEO local por especialidad.
 
 ## Contenido editorial
+- [Recursos para citar y compartir](https://nuriaromero.dev/recursos/): Índice público de perfil, proyectos y guías que pueden enlazarse cuando aportan contexto.
 - [Blog](https://nuriaromero.dev/blog/): Guías sobre precios de páginas web, SEO local y automatización para negocios.
 - [Guía sobre GEO para negocios en Sevilla](https://nuriaromero.dev/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/): Definiciones y acciones prácticas, con límites explícitos sobre lo que el GEO puede garantizar.
 - [Portfolio](https://nuriaromero.dev/portfolio/): Proyectos publicados en el sitio.

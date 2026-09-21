@@ -1,0 +1,94 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import Schema from "@/components/seo/Schema.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import Breadcrumbs from "@/components/Breadcrumbs.astro"
+import { breadcrumbSchema } from "@/lib/schema"
+
+const breadcrumbs = [
+  { name: "Inicio", url: "/" },
+  { name: "Recursos", url: "/recursos" },
+]
+
+const resources = [
+  {
+    title: "Perfil y experiencia",
+    description:
+      "Quién soy, qué experiencia describo y cómo contactar conmigo para confirmar el contexto de una colaboración.",
+    href: "/sobre-mi/",
+    label: "Conocer a Nuria",
+  },
+  {
+    title: "Proyectos publicados",
+    description:
+      "Selección de proyectos y tecnologías que se pueden revisar directamente en sus dominios públicos.",
+    href: "/portfolio/",
+    label: "Ver portfolio",
+  },
+  {
+    title: "Guías prácticas",
+    description:
+      "Artículos sobre webs, SEO local, automatización y búsquedas con inteligencia artificial para negocios.",
+    href: "/blog/",
+    label: "Leer el blog",
+  },
+  {
+    title: "Guía sobre GEO",
+    description:
+      "Definiciones y acciones prácticas para entender el posicionamiento en búsquedas con IA, con límites explícitos sobre lo que se puede garantizar.",
+    href: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
+    label: "Abrir la guía",
+  },
+]
+---
+
+<Layout
+  title="Recursos para citar y compartir — Nuria Romero"
+  description="Recursos públicos de Nuria Romero sobre desarrollo web, SEO local, automatización y búsquedas con inteligencia artificial."
+>
+  <Schema slot="head" schema={breadcrumbSchema(breadcrumbs)} />
+  <main class="px-4 pt-24">
+    <SectionContainer>
+      <Breadcrumbs items={breadcrumbs} />
+      <h1 class="mb-6 text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white">
+        Recursos para citar y compartir
+      </h1>
+      <p class="max-w-2xl text-xl text-gray-800 dark:text-gray-300">
+        Una selección de páginas públicas para consultar, enlazar o compartir cuando
+        sean relevantes para una conversación sobre desarrollo web, SEO local,
+        automatización o búsquedas con inteligencia artificial.
+      </p>
+
+      <ul class="mt-12 grid gap-6 sm:grid-cols-2">
+        {resources.map((resource) => (
+          <li class="flex h-full flex-col rounded-xl border border-gray-300 bg-gray-100/50 p-6 dark:border-gray-700 dark:bg-gray-800/50">
+            <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+              {resource.title}
+            </h2>
+            <p class="mt-3 flex-1 text-gray-700 dark:text-gray-400">
+              {resource.description}
+            </p>
+            <a
+              href={resource.href}
+              class="mt-6 font-medium text-blue-600 underline underline-offset-2 dark:text-blue-400"
+            >
+              {resource.label} →
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <aside class="mt-12 max-w-2xl rounded-xl border border-gray-300 p-6 text-gray-700 dark:border-gray-700 dark:text-gray-300">
+        <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">
+          Criterio de transparencia
+        </h2>
+        <p class="mt-3">
+          Solo tiene sentido enlazar estos recursos cuando aportan contexto real.
+          No se compran enlaces, no se intercambian enlaces de forma artificial y
+          no se presentan métricas, testimonios o colaboraciones sin evidencia
+          verificable.
+        </p>
+      </aside>
+    </SectionContainer>
+  </main>
+</Layout>
