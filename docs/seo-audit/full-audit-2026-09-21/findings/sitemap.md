@@ -33,7 +33,7 @@ Verificación en vivo de las 22 URLs del sitemap (`curl -I`, 2026-09-21):
 | Errores (4xx/5xx) | 0 |
 
 - **robots.txt**: solo contiene reglas `Allow: /` para todos los user-agents (incluidos bots de IA). No hay ninguna regla `Disallow` que entre en conflicto con el sitemap. ✅ PASS
-- **noindex**: se revisó `src/pages/*.astro` en busca de la prop `noindex`. Solo `src/pages/components.astro:13` la activa, y esa página **no está** en el sitemap (excluida explícitamente vía `filter: (page) => !page.includes('/components')` en `astro.config.mjs:49`). Ninguna de las 22 URLs del sitemap tiene `noindex`. ✅ PASS
+- **noindex**: históricamente, `src/pages/components.astro:13` activaba `noindex` y la ruta quedaba fuera del sitemap por el filtro de `astro.config.mjs`. Desde el commit `689a5a1` (2026-09-21), `src/pages/components.astro` ya no existe y `/components/` ya no se genera en producción. Ninguna de las 22 URLs actuales del sitemap tiene `noindex`. ✅ PASS
 - Todas las URLs del sitemap usan barra final consistente, coincidiendo con las URLs canónicas reales (sin duplicados con/sin slash). ✅ PASS
 
 **Severidad: ninguna. Todos los checks de esta sección pasan.**
@@ -77,7 +77,7 @@ Comparación de `src/pages/*.astro` (excluyendo `blog/[slug].astro`, que es la p
 | `aviso-legal.astro` | ✅ |
 | `blog/index.astro` | ✅ |
 | `blog/[slug].astro` → 4 posts | ✅ (los 4) |
-| `components.astro` | ❌ (correcto, tiene `noindex`, excluido por `filter`) |
+| `components.astro` | — (ya no existe desde `689a5a1`; `/components/` ya no se genera) |
 | `contacto.astro` | ✅ |
 | `cookies.astro` | ✅ |
 | `desarrollo-software-medida.astro` | ✅ |
@@ -93,7 +93,7 @@ Comparación de `src/pages/*.astro` (excluyendo `blog/[slug].astro`, que es la p
 | `web-para-comercios-sevilla.astro` | ✅ |
 | `web-para-restaurantes-sevilla.astro` | ✅ |
 
-**Resultado: 0 páginas huérfanas.** Las 18 rutas estáticas indexables + 4 posts de blog = 22, coincide exactamente con el recuento del sitemap. La única página excluida (`components.astro`) lo está de forma intencional y correcta (design system interno, `noindex`).
+**Resultado: 0 páginas huérfanas.** Las 18 rutas estáticas indexables + 4 posts de blog = 22, coincide exactamente con el recuento del sitemap. El antiguo `components.astro` quedó fuera del conjunto actual al dejar de generarse desde `689a5a1`.
 
 **Severidad: ninguna.**
 

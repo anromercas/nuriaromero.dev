@@ -13,14 +13,14 @@ Limitaciones relevantes:
 - El perfil de backlinks es Tier 0: no hay fuente fiable para autoridad, toxicidad, anchors o recuento completo de dominios referentes.
 - La valoración visual se basa en capturas Playwright de 390×844 y 1440×900; no sustituye Lighthouse, axe ni pruebas con usuarios.
 - GBP, testimonios, naming, horarios, imágenes reales y perfiles externos requieren decisión y evidencia humana.
-- La verificación adicional actual es: `/servicios/diseno-web-sevilla` → 301 `/diseno-web-sevilla` → 301 `/diseno-web-sevilla/` → 200; `/components/`, robots y sitemap devuelven 200.
+- La verificación adicional actual es: `/servicios/diseno-web-sevilla` → 301 `/diseno-web-sevilla` → 301 `/diseno-web-sevilla/` → 200; robots y sitemap devuelven 200. La ruta `/components/` dejó de generarse en producción desde el commit `689a5a1`.
 
 ## Scorecards por área
 
 | Área | Score | Fuente | Lectura operativa |
 |---|---:|---|---|
 | Technical SEO | 78/100 | [technical.md](findings/technical.md) | Base sólida; prioridad inmediata en redirects y URLs internas. |
-| Sitemap / indexabilidad | 90/100 | [sitemap.md](findings/sitemap.md) | Sitemap y robots correctos; `/components/` requiere decisión de publicación. |
+| Sitemap / indexabilidad | 90/100 | [sitemap.md](findings/sitemap.md) | Sitemap y robots correctos; la exclusión de `/components/` está resuelta. |
 | Content Quality | 68/100 | [content.md](findings/content.md) | Calidad de copy razonable, pero boilerplate, E-E-A-T y legibilidad limitan el siguiente paso. |
 | GEO readiness | 78/100 | [geo.md](findings/geo.md) | Buena accesibilidad técnica; citabilidad, autoría y `llms.txt` mejorables. |
 | Local SEO | 42/100 | [local.md](findings/local.md) | Principal brecha: ausencia no verificada de GBP propia, reseñas y señales de confianza. |
@@ -37,7 +37,7 @@ Prioridades: **P0** = corregir primero por impacto técnico directo; **P1** = ri
 |---|---|---|---|
 | P0 | [01-redirects-servicios.md](tasks/01-redirects-servicios.md) | Un único 301 desde las cuatro rutas migradas a sus canónicas | Confirmar las cuatro reglas |
 | P0 | [02-normalizar-urls-internas.md](tasks/02-normalizar-urls-internas.md) | Enlaces, breadcrumbs y schema con trailing slash | SEO-01; decisión de normalización en origen |
-| P1 | [03-excluir-components.md](tasks/03-excluir-components.md) | `/components/` no se publica en producción | Decisión sobre previews/local |
+| P1 | [03-excluir-components.md](tasks/03-excluir-components.md) | ✅ Resuelta en `689a5a1`: `/components/` ya no se publica en producción | — |
 | P1 | [04-validar-cwv-y-lcp.md](tasks/04-validar-cwv-y-lcp.md) | Línea base de CWV y priorización LCP basada en evidencia | Acceso a PSI/CrUX/GSC/GA4 |
 | P1 | [05-diversificar-paginas-nicho.md](tasks/05-diversificar-paginas-nicho.md) | Contenido sectorial propio y no inventado | Casos, imágenes y claims autorizados |
 | P1 | [06-arquitectura-enlazado-interno.md](tasks/06-arquitectura-enlazado-interno.md) | Mapa hub-and-spoke implementable | Decisiones de hubs e intenciones |
@@ -58,7 +58,7 @@ Prioridades: **P0** = corregir primero por impacto técnico directo; **P1** = ri
 | Enlaces internos sin trailing slash | [SEO-02](tasks/02-normalizar-urls-internas.md) | [technical.md](findings/technical.md) §3 |
 | Breadcrumb visible sin trailing slash | [SEO-02](tasks/02-normalizar-urls-internas.md) | [technical.md](findings/technical.md) §3.1 |
 | `BreadcrumbList` sin trailing slash | [SEO-02](tasks/02-normalizar-urls-internas.md) | [technical.md](findings/technical.md) §3.2 |
-| `/components/` publicado con `noindex` | [SEO-03](tasks/03-excluir-components.md) | [technical.md](findings/technical.md) §2 y resumen |
+| `/components/` publicado con `noindex` (hallazgo histórico, resuelto en `689a5a1`) | [SEO-03](tasks/03-excluir-components.md) | [technical.md](findings/technical.md) §1 y resumen |
 | Falta de datos de campo LCP/INP/CLS | [SEO-04](tasks/04-validar-cwv-y-lcp.md) | [technical.md](findings/technical.md) §6 y limitaciones |
 | Riesgo no confirmado de `fetchpriority` en LCP | [SEO-04](tasks/04-validar-cwv-y-lcp.md) | [technical.md](findings/technical.md) §6 |
 | Boilerplate literal repetido en cuatro nichos | [SEO-05](tasks/05-diversificar-paginas-nicho.md) | [content.md](findings/content.md) §Hallazgo 1 |
@@ -101,7 +101,7 @@ Prioridades: **P0** = corregir primero por impacto técnico directo; **P1** = ri
 
 1. **Medición mínima primero:** ejecutar [SEO-14](tasks/14-medicion-seo.md) hasta dejar documentadas fuentes, accesos y baseline disponible; sin inventar datos faltantes.
 2. **Higiene técnica P0:** ejecutar [SEO-01](tasks/01-redirects-servicios.md) y después [SEO-02](tasks/02-normalizar-urls-internas.md), verificando cada unidad antes de avanzar.
-3. **Publicación e indexabilidad:** ejecutar [SEO-03](tasks/03-excluir-components.md) y volver a comprobar sitemap, robots y rutas públicas.
+3. **Publicación e indexabilidad:** [SEO-03](tasks/03-excluir-components.md) ya está resuelta en `689a5a1`; mantener la comprobación de sitemap, robots y rutas públicas en futuras verificaciones.
 4. **Conversión mobile y evidencia de rendimiento:** ejecutar [SEO-12](tasks/12-ux-mobile-y-prueba-visual.md) junto con [SEO-04](tasks/04-validar-cwv-y-lcp.md), manteniendo separadas UX visual y medición CWV.
 5. **Arquitectura antes de reescribir:** resolver decisiones y matriz de intención en [SEO-07](tasks/07-resolver-canibalizacion.md), aplicar el mapa de [SEO-06](tasks/06-arquitectura-enlazado-interno.md) y luego diversificar con [SEO-05](tasks/05-diversificar-paginas-nicho.md). Si el cambio de arquitectura altera el contenido, actualizar el alcance de las tareas antes de escribir.
 6. **Calidad editorial:** ejecutar [SEO-08](tasks/08-mejorar-citabilidad-y-legibilidad.md) y [SEO-09](tasks/09-autoría-y-llms.md) con las decisiones de naming de [SEO-11](tasks/11-schema-local-y-marca.md) coordinadas.

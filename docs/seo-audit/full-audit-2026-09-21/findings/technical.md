@@ -11,16 +11,12 @@ Justificación al final del documento.
 
 ## 1. Crawlability
 
-**Estado: PASS**, con 1 hallazgo Medium.
+**Estado: PASS**, sin hallazgo actual relativo a `/components/`.
 
 - `robots.txt`: permite todo, con reglas explícitas `Allow` para GPTBot, OAI-SearchBot, ClaudeBot, Claude-Web, anthropic-ai, PerplexityBot, Google-Extended (confirmado, generado por integración `astro-robots-txt` en `astro.config.mjs`). Correcto y alineado con buenas prácticas de gestión de crawlers de IA.
 - Sitemap: `sitemap-index.xml` → `sitemap-0.xml`, 22 URLs, todas con trailing slash consistente y coincidente con las URLs reales servidas (verificado con `curl` sobre las 22, ver sección 2).
 - `astro.config.mjs` filtra explícitamente `/components` del sitemap (`filter: (page) => !page.includes('/components')`) — correcto.
-
-**Hallazgo Medium — `/components/` accesible en producción con solo noindex, no bloqueado en robots.txt**
-- Evidencia: `GET https://nuriaromero.dev/components/` → `200 OK`, `<meta name="robots" content="noindex, nofollow">`. No aparece en el sitemap. `robots.txt` no tiene un `Disallow: /components` explícito.
-- No es un problema de indexación (el noindex funciona), pero es una página de desarrollo/showcase de componentes que no debería viajar al build de producción.
-- Recomendación: excluir `src/pages/components.astro` del build de producción (p. ej. condicionarlo a `import.meta.env.DEV`, o moverlo fuera de `src/pages` en producción) en vez de depender solo del meta noindex. Alternativa más ligera: añadir `Disallow: /components` en `astro-robots-txt` como capa adicional de defensa, aunque la corrección real es no publicarla.
+- **Hallazgo histórico SEO-03 (resuelto):** la auditoría del 2026-09-21 registró `/components/` accesible con `200 OK` y `noindex`. Desde el commit `689a5a1`, `src/pages/components.astro` fue eliminado y la ruta ya no se genera en producción. Se conserva aquí como contexto histórico; no requiere acción actual.
 
 ## 2. Indexabilidad — Códigos HTTP y Canonicals
 
@@ -134,7 +130,7 @@ Esto es una inconsistencia menor pero real: la URL declarada en el dato estructu
 
 ## 4. Seguridad
 
-**Estado: PASS.** Cabeceras verificadas en 6 páginas de tipos distintos (home, servicio migrado, nicho, blog index, legal, y `/components/`): `content-security-policy`, `strict-transport-security: max-age=31536000`, `x-content-type-options: nosniff`, `x-frame-options: DENY`, `referrer-policy: strict-origin-when-cross-origin`, `permissions-policy: camera=(), microphone=(), geolocation=()`. Idénticas y consistentes en todas las páginas comprobadas, incluida `/components/`.
+**Estado: PASS.** Cabeceras verificadas en 5 páginas actuales de tipos distintos (home, servicio migrado, nicho, blog index y legal): `content-security-policy`, `strict-transport-security: max-age=31536000`, `x-content-type-options: nosniff`, `x-frame-options: DENY`, `referrer-policy: strict-origin-when-cross-origin`, `permissions-policy: camera=(), microphone=(), geolocation=()`. Idénticas y consistentes en todas las páginas actuales comprobadas. La sexta comprobación histórica, realizada el 2026-09-21, incluyó `/components/`, que ya no es una ruta actual.
 
 Nota Low: la `strict-transport-security` no incluye `includeSubDomains` ni `preload`. No es un problema si no hay subdominios relevantes, pero si en algún momento se añaden (p. ej. `www.` o un subdominio de blog/app), conviene revisarlo. No degradado a Medium por falta de evidencia de subdominios activos.
 
@@ -197,8 +193,7 @@ Riesgos potenciales de CWV solo a nivel de código (sin datos de campo, por tant
 2. Los enlaces internos (menú de navegación `Header.astro`, `Footer.astro`, tarjetas de la home `index.astro`, y breadcrumb de `ServiceLayout.astro`) apuntan a las 8 páginas de servicio/nicho SIN barra final, generando un 301 innecesario en cada clic interno. Causa raíz: `slug` definido sin barra final en `src/data/services.ts` / `src/data/niches.ts`. Fix: normalizar los slugs en origen.
 
 **Medium**
-3. `/components/` sigue publicado en producción (200 + noindex) en vez de excluirse del build; higiene, no indexación.
-4. JSON-LD `BreadcrumbList` en las 8 páginas de servicio/nicho declara la URL del segundo nivel sin barra final, inconsistente con el canonical real (misma causa raíz que el hallazgo 2).
+3. JSON-LD `BreadcrumbList` en las 8 páginas de servicio/nicho declara la URL del segundo nivel sin barra final, inconsistente con el canonical real (misma causa raíz que el hallazgo 2).
 
 **Low**
 5. `Strict-Transport-Security` sin `includeSubDomains`/`preload` (revisar solo si hay/habrá subdominios).
@@ -211,4 +206,4 @@ Riesgos potenciales de CWV solo a nivel de código (sin datos de campo, por tant
 
 Se parte de una base técnica sólida: sitio 100% estático, cabeceras de seguridad completas y consistentes, sitemap y robots.txt bien configurados (incluyendo gestión explícita de crawlers de IA), canonicals correctos y sin overrides peligrosos, hreflang correctamente ausente, imágenes con buena implementación técnica (WebP, srcset, dimensiones explícitas, lazy loading), y renderizado sin dependencia de JS.
 
-Se penaliza con -15 puntos por el hallazgo Critical (cadena de doble redirect en 4 URLs de negocio importantes, exactamente lo que el negocio pidió verificar) y -5 puntos por el hallazgo High (la misma causa raíz contaminando la navegación interna de 8 páginas clave, con impacto en presupuesto de rastreo y experiencia de usuario). Se resta -2 puntos adicionales por los hallazgos Medium/Low acumulados (página `/components/` en producción, inconsistencia menor en datos estructurados, falta de IndexNow verificado). No se penaliza por Core Web Vitals de campo al no haber datos disponibles (Tier -1); la evaluación de laboratorio no muestra señales de alarma.
+Se penaliza con -15 puntos por el hallazgo Critical (cadena de doble redirect en 4 URLs de negocio importantes, exactamente lo que el negocio pidió verificar) y -5 puntos por el hallazgo High (la misma causa raíz contaminando la navegación interna de 8 páginas clave, con impacto en presupuesto de rastreo y experiencia de usuario). Se resta -2 puntos adicionales por los hallazgos Medium/Low acumulados (inconsistencia menor en datos estructurados y falta de IndexNow verificado). El hallazgo histórico de `/components/` no se mantiene como penalización del estado actual porque quedó resuelto en `689a5a1`. No se penaliza por Core Web Vitals de campo al no haber datos disponibles (Tier -1); la evaluación de laboratorio no muestra señales de alarma.
