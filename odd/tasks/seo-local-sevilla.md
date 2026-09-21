@@ -14,6 +14,9 @@ checklist ODD.
 la usuaria) y ejecutado en código: nuevo objeto `seoLocal` en
 `services.ts`, nueva página `seo-local-sevilla.astro`, línea en
 `llms.txt`, `pnpm astro check` y `pnpm build` pasando sin errores.
+Desplegado a producción (commit `025c944`, main). Indexación prioritaria
+solicitada en Search Console el 2026-09-21 ("Se ha solicitado la
+indexación"); pendiente de que Google la rastree (puede tardar horas/días).
 
 ## Problema / por qué
 El sitio no tiene ninguna página que ataque el clúster de SEO local en Sevilla,

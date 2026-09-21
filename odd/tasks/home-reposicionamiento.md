@@ -257,5 +257,6 @@ este repo.
 
 ## Estado
 **Completo (T1-T9).** Ejecutado en 2 tandas paralelas (agentes) más el
-reorden final del orquestador. Pendiente: verificación visual con
-Playwright conjunta con `seo-local-sevilla.md` antes del commit/deploy.
+reorden final del orquestador. Verificado con Playwright y desplegado a
+producción (commit `c8dfecb`, main). Re-indexación solicitada en Search
+Console el 2026-09-21 ("Se ha solicitado la indexación").
