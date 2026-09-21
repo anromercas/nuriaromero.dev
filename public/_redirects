@@ -1,8 +1,8 @@
 # Restructuración de URLs de servicios: de /servicios/<slug> a raíz /<slug>
 # Redirects 301 reales (servidor Netlify), no meta-refresh.
-/servicios/diseno-web-sevilla           /diseno-web-sevilla           301
-/servicios/desarrollo-software-medida   /desarrollo-software-medida   301
-/servicios/automatizaciones             /automatizaciones             301
-/servicios/inteligencia-artificial      /inteligencia-artificial      301
+/servicios/diseno-web-sevilla           /diseno-web-sevilla/          301
+/servicios/desarrollo-software-medida   /desarrollo-software-medida/  301
+/servicios/automatizaciones             /automatizaciones/            301
+/servicios/inteligencia-artificial      /inteligencia-artificial/     301
 /servicios/                             /                             301
 /servicios                              /                             301

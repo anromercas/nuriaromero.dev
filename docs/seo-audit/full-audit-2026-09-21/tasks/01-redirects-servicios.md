@@ -1,7 +1,7 @@
 # Resolver la doble redirección de servicios migrados
 - **ID:** SEO-01
 - **Prioridad:** P0
-- **Estado:** pendiente
+- **Estado:** completada
 - **Fuente:** [technical.md](../findings/technical.md), secciones 2.2 y resumen de severidad
 - **Scope:** Reglas de redirección de las cuatro rutas antiguas `/servicios/<slug>` y sus destinos canónicos con barra final. No incluye otras migraciones.
 
@@ -19,6 +19,13 @@ Hacer que cada URL antigua de servicio llegue directamente con un único 301 a s
 - No queda una respuesta intermedia 301 hacia la variante sin barra final.
 - Las reglas existentes no relacionadas permanecen sin cambios.
 - Se documentan las cuatro comprobaciones URL → código → Location en la evidencia de la tarea.
+
+## Evidencia
+
+- `/servicios/diseno-web-sevilla` → `301 Location: /diseno-web-sevilla/` → `200`
+- `/servicios/desarrollo-software-medida` → `301 Location: /desarrollo-software-medida/` → `200`
+- `/servicios/automatizaciones` → `301 Location: /automatizaciones/` → `200`
+- `/servicios/inteligencia-artificial` → `301 Location: /inteligencia-artificial/` → `200`
 
 ## Dependencias y decisiones abiertas
 No hay una decisión de producto abierta. Depende de conservar como canónicas las URLs con barra final y de identificar exactamente las cuatro reglas actuales antes de editar. Coordinar con SEO-02 para que los enlaces internos apunten al mismo destino final.

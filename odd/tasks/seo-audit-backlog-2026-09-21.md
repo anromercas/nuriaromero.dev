@@ -21,11 +21,11 @@ The user explicitly authorized implementation of the complete audit backlog in b
 - Mode: enabled by project instructions.
 - Source: session instructions.
 - Runner: project scripts (`pnpm run build`; existing JS tests where applicable).
-- For content/config-only changes without a practical automated RED test, record the limitation and use focused rendered/output checks.
+- SEO-01 updates Netlify redirect configuration only; no applicable unit-test target exists. The focused runtime check is `curl -I` against the four `/servicios/<slug>` URLs after a local server or deployed environment is available.
 
 ## Checklist
 
-- [ ] SEO-01 Fix service migration redirects — `docs/seo-audit/full-audit-2026-09-21/tasks/01-redirects-servicios.md`
+- [x] SEO-01 Fix service migration redirects — `docs/seo-audit/full-audit-2026-09-21/tasks/01-redirects-servicios.md`
 - [ ] SEO-02 Normalize internal URLs — `docs/seo-audit/full-audit-2026-09-21/tasks/02-normalizar-urls-internas.md`
 - [ ] SEO-03 Exclude components page — `docs/seo-audit/full-audit-2026-09-21/tasks/03-excluir-components.md`
 - [ ] SEO-04 Validate CWV and LCP — `docs/seo-audit/full-audit-2026-09-21/tasks/04-validar-cwv-y-lcp.md`
@@ -52,9 +52,12 @@ The user explicitly authorized implementation of the complete audit backlog in b
 
 - Branch at start: `develop`.
 - Audit backlog files exist under `docs/seo-audit/full-audit-2026-09-21/`.
-- Implementation commits: pending.
+- Implementation commit: this work unit (`fix(seo): avoid double redirects for migrated services`).
+- SEO-01 observed configuration evidence: the four `/servicios/<slug>` rules now target canonical root URLs with trailing slashes.
+- SEO-01 unit-test evidence: not applicable; `_redirects` is Netlify configuration and has no unit-test target.
+- SEO-01 focused runtime evidence (`BROWSER=none netlify dev --offline --no-open --dir dist --port 8888` + `curl -sSIL --max-redirs 2`): `/servicios/diseno-web-sevilla` → `301 Location: /diseno-web-sevilla/` → `200`; `/servicios/desarrollo-software-medida` → `301 Location: /desarrollo-software-medida/` → `200`; `/servicios/automatizaciones` → `301 Location: /automatizaciones/` → `200`; `/servicios/inteligencia-artificial` → `301 Location: /inteligencia-artificial/` → `200`.
 - Full local verification: pending.
 - Remote push authorization: destination branches are named by the user; credential/session to use must be confirmed before remote operation.
 
 ## Next step
-Commit the audit backlog documentation separately, then execute Batch 1 with one independent commit per task.
+Commit the verified SEO-01 work unit, then continue with SEO-02.
