@@ -83,8 +83,9 @@
   .consent-panel a { text-decoration: underline; }
   .consent-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
   .consent-actions button { min-height: 2.75rem; padding: .6rem .9rem; border: 1px solid #111827; border-radius: .4rem; background: #fff; color: #111827; font: inherit; font-weight: 600; cursor: pointer; }
+  .consent-actions button:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
   #consent-accept { background: #111827; color: #fff; }
   #consent-save[hidden] { display: none; }
   #consent-settings { flex-basis: 100%; padding-top: .5rem; }
-  @media (max-width: 600px) { .consent-panel { inset-inline: .5rem; align-items: stretch; } .consent-actions { display: grid; grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .consent-panel { inset: auto .5rem max(.5rem, env(safe-area-inset-bottom)); max-height: min(34vh, 18rem); overflow-y: auto; overscroll-behavior: contain; align-items: stretch; padding: .75rem; gap: .75rem; } .consent-panel p { font-size: .875rem; } .consent-actions { display: grid; grid-template-columns: 1fr 1fr; } }
 </style>

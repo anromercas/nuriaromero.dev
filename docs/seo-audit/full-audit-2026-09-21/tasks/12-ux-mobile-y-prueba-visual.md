@@ -1,7 +1,7 @@
 # Mejorar UX mobile above-the-fold y recopilar prueba visual
 - **ID:** SEO-12
 - **Prioridad:** P1
-- **Estado:** pendiente
+- **Estado:** parcial — implementación local completada; validación visual de navegador pendiente
 - **Fuente:** [visual.md](../findings/visual.md), secciones 1 y 3; [sxo.md](../findings/sxo.md), fricción de conversión
 - **Scope:** Hero mobile de la home, banner de cookies y posible proximidad del WhatsApp flotante al texto. No incluye rehacer el patrón FAQ que la auditoría considera correcto.
 
@@ -31,3 +31,16 @@ Decidir si se acorta/mueve el segundo párrafo, se ajusta tipografía/espaciado 
 
 ## No hacer
 No ocultar el banner para mejorar la captura, no eliminar consentimiento legal sin revisión, no sacrificar legibilidad del H1 ni asumir que un CTA visible garantiza conversión.
+
+
+## Implementación local y evidencia
+
+- Se compactó el hero de la home en mobile (`py-12`, tipografía/leading y separación responsive) para adelantar el CTA principal sin cambiar el contenido ni el CTA de desktop.
+- El banner de consentimiento conserva aceptar, rechazar, configurar, guardar y el enlace legal; en ≤600px limita su altura a `min(34vh, 18rem)`, permite scroll interno y mantiene controles de al menos 44px con foco visible.
+- El botón flotante de WhatsApp usa 48px en mobile y 56px desde `sm`, con offsets de 16/20px para reducir proximidad al contenido.
+- `npm run check:seo-12` pasa después de `astro check` + `astro build`: 22 páginas generadas, 0 errores, 0 warnings y 1 hint preexistente de `Schema.astro`. El checker confirma el hero/CTA, las restricciones del consentimiento y CTAs de contacto en las cuatro páginas de nicho.
+- No se ejecutó Playwright/CUA ni se generaron capturas nuevas: el entorno de navegador no estuvo disponible. Quedan pendientes las capturas y comprobaciones reales a 360/390/414/1440px, cookies nuevas/aceptadas/rechazadas, foco/teclado y solapes; no se presenta evidencia visual inventada.
+
+## Decisión
+
+Se priorizó una reducción conservadora del espacio vertical del hero y un banner compacto con scroll interno, en lugar de ocultar contenido o retirar el consentimiento legal.
