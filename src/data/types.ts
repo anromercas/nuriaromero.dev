@@ -25,6 +25,15 @@ export interface ServicePageData {
     from: string
     includes?: string[]
     note?: string
+    // Bloque independiente que se muestra ENCIMA del grid de `tiers`
+    // (p. ej. un proyecto inicial de pago único, separado del recurrente).
+    // Opcional y retrocompatible: si no se define, el comportamiento de
+    // `tiers` no cambia respecto a las páginas de servicio existentes.
+    initial?: {
+      from: string
+      includes?: string[]
+      note?: string
+    }
     tiers?: {
       name: string
       from: string

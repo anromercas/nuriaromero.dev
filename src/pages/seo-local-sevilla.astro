@@ -1,0 +1,68 @@
+---
+import ServiceLayout from "@/layouts/ServiceLayout.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import Projects from "@/components/Projects.astro"
+import { seoLocal } from "@/data/services"
+---
+
+<ServiceLayout page={seoLocal}>
+  <Fragment slot="before-benefits">
+    <SectionContainer>
+      <TitleSection>¿Sales en Google pero no te llaman, o todavía no apareces cuando te buscan?</TitleSection>
+      <div class="space-y-4 text-gray-700 dark:text-gray-400">
+        <p>
+          Aparecer en una búsqueda no es lo mismo que aparecer en las
+          búsquedas correctas para tu negocio y tu zona. Muchos negocios de
+          Sevilla ya están en Google Maps, pero con la ficha desactualizada,
+          sin ninguna reseña gestionada o con la categoría equivocada.
+        </p>
+        <p>
+          Y cada vez más gente ya no escribe una búsqueda clásica en Google:
+          le pregunta directamente a ChatGPT o al buscador con inteligencia
+          artificial de Google. Si tu negocio no está preparado para eso, no
+          apareces ni ahí, aunque tu SEO clásico esté en orden.
+        </p>
+        <p>
+          El resultado es el mismo en los dos casos: alguien busca justo lo
+          que ofreces, a pocos metros de tu negocio, y termina llamando a
+          otra persona.
+        </p>
+      </div>
+    </SectionContainer>
+  </Fragment>
+
+  <SectionContainer>
+    <TitleSection>Negocios de Sevilla en los que ya he trabajado el SEO local</TitleSection>
+    <p class="mb-8 text-gray-700 dark:text-gray-400">
+      No son casos de éxito de posicionamiento con cifras de ranking o
+      tráfico, porque este servicio es nuevo. Son negocios reales de Sevilla
+      a los que ya les di de alta y configuré su ficha de Google Business
+      Profile y su estructura semántica como parte del diseño de su web, algo
+      verificable hoy mismo.
+    </p>
+    <Projects only={["arkady", "adfsevilla"]} />
+  </SectionContainer>
+
+  <SectionContainer>
+    <TitleSection>Por qué elegir a alguien que programa, no solo "hace SEO"</TitleSection>
+    <p class="mb-4 text-gray-700 dark:text-gray-400">
+      El SEO local y el GEO se apoyan en decisiones técnicas reales, no solo
+      en texto. Vengo del desarrollo de software, y eso cambia el resultado:
+    </p>
+    <ul class="space-y-2 text-gray-700 dark:text-gray-400">
+      <li class="flex gap-x-2">
+        <span class="text-green-600 dark:text-green-400" aria-hidden="true">✓</span>
+        <span><strong class="text-gray-800 dark:text-white">Dato estructurado bien hecho</strong>: lo configuro a mano entendiendo qué necesita tu negocio, no con un plugin genérico que rellena campos al azar.</span>
+      </li>
+      <li class="flex gap-x-2">
+        <span class="text-green-600 dark:text-green-400" aria-hidden="true">✓</span>
+        <span><strong class="text-gray-800 dark:text-white">Precio cerrado en el proyecto inicial</strong>: sabes desde el primer día qué vas a pagar por la auditoría, la ficha de Google Business Profile y los datos estructurados.</span>
+      </li>
+      <li class="flex gap-x-2">
+        <span class="text-green-600 dark:text-green-400" aria-hidden="true">✓</span>
+        <span><strong class="text-gray-800 dark:text-white">Trato directo</strong>: hablas conmigo, quien hace el trabajo, no con una agencia con varios interlocutores entre tú y quien toca tu web.</span>
+      </li>
+    </ul>
+  </SectionContainer>
+</ServiceLayout>
