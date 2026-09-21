@@ -65,19 +65,35 @@ export const restaurantes: ServicePageData = {
   faqs: [
     {
       q: "¿Cuánto cuesta una página web para un restaurante?",
-      a: "Una web completa para restaurante con carta digital, reservas por WhatsApp y SEO local parte de 399 €, con dominio y hosting incluidos el primer año. Funcionalidades como reservas automáticas o pedidos online se presupuestan según el caso.",
+      a: "Una web completa para restaurante o bar, con carta digital editable, botón de reservas por WhatsApp y SEO local para tu zona, parte de 399 €, con dominio y hosting incluidos el primer año. Si solo necesitas algo más sencillo para arrancar, una landing de una página parte de 149 €. El precio se cierra por escrito antes de empezar, así que sabes exactamente cuánto vas a pagar sin sorpresas a mitad de proyecto. Funcionalidades adicionales, como reservas online con confirmación automática, pedidos para llevar o integración con TPV, se presupuestan aparte según lo que necesite tu local. En la primera conversación te digo qué encaja mejor con tu restaurante y con tu presupuesto, sin empujarte hacia la opción más cara si no la necesitas.",
     },
     {
       q: "¿Puedo actualizar la carta yo mismo?",
-      a: "Sí, ese es el objetivo: cambias platos, precios y menús del día desde un panel sencillo, en un minuto y sin conocimientos técnicos. Te enseño a hacerlo en la entrega.",
+      a: "Sí, ese es precisamente el objetivo de la carta digital: cambias platos, precios, menús del día o el menú de mediodía desde un panel sencillo, en un par de minutos y sin tocar código ni depender de mí para cada ajuste. Te enseño a hacerlo en el momento de la entrega, con instrucciones claras pensadas para alguien que no es informático. Además, la carta lleva un código QR para las mesas, así que cualquier cambio que hagas se refleja al instante también ahí, sin reimprimir nada en papel. Si en algún momento quieres añadir fotos nuevas, cambiar el idioma de la carta o reorganizar las secciones, también puedes hacerlo tú misma desde el mismo panel, sin esperar a que yo tenga hueco para hacerlo por ti.",
     },
     {
       q: "¿De verdad necesito web si ya estoy en Google Maps y TripAdvisor?",
-      a: "La ficha de Maps es imprescindible, pero es un escaparate compartido con tu competencia y con las comisiones de terceros. Tu web es el único sitio donde el cliente ve tu carta, tus fotos y reserva directamente contigo sin intermediarios. Además, web y ficha se refuerzan entre sí para posicionar mejor.",
+      a: "La ficha de Google Maps y estar en TripAdvisor son importantes, pero son escaparates compartidos: apareces junto a toda tu competencia y, en el caso de TripAdvisor, sujeto a sus normas y a comisiones si usas sus reservas. Tu propia web es el único sitio donde el cliente ve tu carta completa, tus fotos y reserva directamente contigo, sin intermediarios ni comisión por cliente. Además, web y ficha de Google se refuerzan entre sí: una web con buen SEO local ayuda a que tu ficha de Maps gane visibilidad, y al revés. No se trata de elegir entre una cosa u otra, sino de tener las dos trabajando juntas para que te encuentren más clientes cuando buscan dónde comer en tu zona de Sevilla.",
     },
     {
       q: "¿Me ayudas también con las reseñas de Google?",
-      a: "Sí: configuro tu ficha de Google Business, genero el enlace directo para pedir reseñas a tus clientes y puedo automatizar recordatorios o incluso respuestas con IA.",
+      a: "Sí. Como parte del lanzamiento configuro tu ficha de Google Business Profile y te genero un enlace directo para pedir reseñas a tus clientes, que puedes compartir por WhatsApp, imprimir en un cartel de mesa o incluir en el ticket. También puedo automatizar el envío de ese enlace tras la reserva o la visita, para que pedir reseñas no dependa de que te acuerdes en el momento. Las reseñas son uno de los factores que más pesan en cómo aparece tu restaurante en Google Maps frente a otros locales de tu zona, así que cuidarlas de forma constante suele notarse más que cualquier ajuste puntual. Lo que no puedo controlar es lo que opine cada cliente, solo facilitar que los contentos se animen a dejar su reseña.",
+    },
+    {
+      q: "¿Cómo consigo que mi restaurante aparezca cuando alguien busca «restaurante cerca de mí» o «dónde comer en mi barrio»?",
+      a: "Esa búsqueda depende sobre todo de tres cosas: que tu ficha de Google Business Profile esté completa y actualizada (horario, fotos, categoría correcta), que tu web tenga los datos estructurados que indican a Google dónde estás y qué ofreces, y que tengas reseñas recientes. La web que te entrego incluye esa base de SEO local para tu zona de Sevilla desde el primer día. Si además quieres un trabajo continuado cada mes (más contenido, seguimiento de tu ficha, ajustes según se mueve tu competencia), tengo un servicio aparte de SEO local que puedes consultar en /seo-local-sevilla. No es obligatorio contratarlo para tener una web bien optimizada: es una opción para quien quiere ir un paso más allá.",
+    },
+    {
+      q: "¿Tengo que indicar los alérgenos en la carta digital?",
+      a: "Sí: en España es obligatorio informar de los alérgenos de cada plato, tanto en la carta en papel como en la digital, según el reglamento europeo de información alimentaria y su desarrollo en España. En la carta digital que te construyo puedes marcar los alérgenos de cada plato de forma visible (iconos o texto claro) y actualizarlos tú misma cuando cambies un ingrediente o incorpores un plato nuevo, sin depender de reimprimir nada. Esto no es solo un requisito legal: cada vez más clientes con alergias o intolerancias consultan la carta online antes de decidir dónde comer, así que tenerlo bien resuelto también te ayuda a captar a ese cliente antes de que se vaya a otro sitio. La responsabilidad de que la información de alérgenos sea correcta es siempre tuya como titular del negocio; yo me encargo de que se muestre con claridad.",
+    },
+    {
+      q: "¿Puedo tener menú del día y carta normal en la misma web?",
+      a: "Sí, es habitual en restaurantes de Sevilla y la carta digital lo permite sin problema: puedes tener una sección de menú del día (que sueles actualizar más a menudo, incluso a diario) y otra de carta general, cada una con sus propios platos y precios. Cambias cualquiera de las dos por separado desde el mismo panel, así que actualizar el menú del día no te obliga a tocar el resto de la carta. Si tienes horarios distintos (menú solo entre semana, carta completa fines de semana, por ejemplo), también se puede reflejar en la web para que el cliente vea la información correcta según cuándo consulte. Cuantas más opciones muestres con claridad, más fácil es que el cliente decida venir en vez de seguir mirando otras opciones.",
+    },
+    {
+      q: "¿Necesito hacer fotos profesionales de los platos para la web?",
+      a: "Ayuda mucho, pero no es obligatorio para empezar. En restauración, las fotos son de los elementos que más influyen en la decisión de un cliente que compara varios sitios desde el móvil, así que si puedes encargar una sesión de fotos, aunque sea de los platos más representativos, se suele notar en cómo responde la web. Si de momento no tienes presupuesto para ello, podemos lanzar la web con las mejores fotos que tengas ahora (incluso hechas con el móvil, bien iluminadas) y sustituirlas más adelante sin rehacer nada, porque el panel te permite cambiar imágenes tú misma en cualquier momento. Lo que sí recomiendo evitar son fotos de banco de imágenes genéricas: los clientes notan cuando un plato no es real, y resta más confianza que no tener foto.",
     },
   ],
   cta: {
@@ -149,19 +165,35 @@ export const clinicas: ServicePageData = {
   faqs: [
     {
       q: "¿Por qué mi clínica necesita una página por cada tratamiento?",
-      a: "Porque los pacientes no buscan «clínica dental», buscan «implantes dentales Sevilla» u «ortodoncia invisible precio». Cada tratamiento con su propia página posiciona por esas búsquedas específicas, que son las que traen pacientes con intención real de reservar.",
+      a: "Porque los pacientes casi nunca buscan «clínica dental» a secas: buscan «implantes dentales Sevilla», «ortodoncia invisible precio» o «fisioterapia deportiva Nervión», es decir, el tratamiento concreto que necesitan en su zona. Una página específica para cada tratamiento o especialidad permite que Google entienda de qué trata cada una y la muestre cuando alguien hace esa búsqueda exacta, algo que una única página genérica sobre «todos nuestros servicios» no consigue igual de bien. Además, cada página te permite explicar en qué consiste el tratamiento, resolver dudas frecuentes del paciente y añadir una llamada a la acción clara para pedir cita, en vez de mezclar toda la información en un único bloque difícil de leer. Si tu clínica tiene muchas especialidades, no hace falta lanzarlas todas a la vez: podemos priorizar las que más consultas te traen.",
     },
     {
       q: "¿Cuánto cuesta la web de una clínica?",
-      a: "Una web de consulta con sus tratamientos, cita por WhatsApp y SEO local parte de 399 €. Clínicas grandes con muchos tratamientos o integración con software de gestión se presupuestan aparte, siempre con precio cerrado.",
+      a: "Una web de consulta con una página por tratamiento, botón de cita por WhatsApp o integración con tu sistema de citas y SEO local por especialidad parte de 399 €, con dominio y hosting incluidos el primer año. El precio se cierra por escrito antes de empezar, así que sabes exactamente en qué se traduce esa cifra. Clínicas con muchas especialidades, varios profesionales o integración con un software de gestión de citas más complejo se presupuestan aparte, siempre con precio cerrado y sin sorpresas a mitad de proyecto. En la primera conversación repasamos tus tratamientos actuales y te digo con sinceridad si te conviene empezar con una web más sencilla e ir ampliando página a página, o si merece la pena lanzar todo el catálogo de especialidades desde el principio.",
     },
     {
       q: "¿Puede integrarse con Doctoralia o mi programa de citas?",
-      a: "Sí. Puedo integrar tu sistema actual de citas en la web o, si prefieres no depender de plataformas con comisión, montar la reserva directa por WhatsApp o formulario.",
+      a: "Sí. Si ya usas Doctoralia, tu software de gestión de citas o cualquier otro sistema, puedo integrarlo en tu web para que el paciente reserve directamente desde ahí sin salir de la página. Si prefieres no depender de una plataforma externa que además suele cobrar comisión o posicionar mejor tu perfil que tu propia web, también puedo montar una reserva directa por WhatsApp o formulario, que tú controlas por completo. La decisión depende de cómo trabajes hoy: si tu equipo ya está acostumbrado a gestionar la agenda desde un sistema concreto, mantenerlo integrado suele ser lo más práctico; si quieres reducir dependencias externas y captar el contacto de forma directa, la reserva propia da más control. Te ayudo a valorar qué encaja mejor con tu consulta antes de decidir.",
     },
     {
       q: "¿Cómo tratáis los datos de los pacientes?",
-      a: "Los formularios se configuran con consentimiento explícito, aviso de privacidad y conexión segura (HTTPS), y te entrego un resumen de qué datos se recogen y dónde se almacenan como apoyo para tu registro de actividades de tratamiento. La validación legal completa la debe revisar tu asesoría o tu DPO.",
+      a: "Los formularios de contacto y cita se configuran con consentimiento explícito, aviso de privacidad y conexión segura (HTTPS), y te entrego un resumen claro de qué datos se recogen, dónde se almacenan y con qué finalidad, como apoyo para tu registro de actividades de tratamiento. En el sector salud esto es especialmente delicado porque a menudo se manejan datos de categoría especial, así que evito pedir en el formulario web más información de la estrictamente necesaria para gestionar la cita. Dicho esto, la validación legal completa del tratamiento de datos de tu clínica (textos legales específicos, análisis de riesgo, medidas técnicas concretas) debe revisarla tu asesoría o tu delegado de protección de datos: mi trabajo deja la base técnica bien montada, pero no sustituye ese asesoramiento legal especializado.",
+    },
+    {
+      q: "¿Cómo consigo que aparezca mi clínica cuando alguien busca mi especialidad cerca de su casa?",
+      a: "Depende sobre todo de tres cosas: que cada tratamiento tenga su propia página bien optimizada (en vez de mezclarlo todo en una sola), que tu ficha de Google Business Profile esté completa y con la categoría correcta, y que tengas reseñas de pacientes gestionadas con regularidad. La web que te entrego incluye esa base de SEO local por especialidad y zona desde el lanzamiento. Si además quieres un trabajo mensual continuado (más contenido, seguimiento de tu ficha, ajustes según se mueva la competencia en tu zona de Sevilla), tengo un servicio aparte de SEO local que puedes consultar en /seo-local-sevilla. No hace falta contratarlo para tener una web bien planteada: es una opción para quien quiere ir sumando visibilidad mes a mes.",
+    },
+    {
+      q: "¿Puedo mostrar reseñas de pacientes en la web de mi clínica?",
+      a: "Sí, mostrar reseñas de tu ficha de Google Business Profile en la web es habitual y ayuda a transmitir confianza a un paciente que todavía no te conoce. Lo que no se puede hacer, y aquí conviene tener cuidado, es mostrar testimonios que revelen datos de salud identificables del paciente sin su consentimiento explícito, ni publicar reseñas que impliquen resultados clínicos concretos que no puedas sostener. Si tienes pacientes que quieren aparecer con su nombre, te ayudo a redactar el testimonio para que hable de la experiencia (trato, tiempos de espera, claridad en la explicación) sin entrar en detalles clínicos sensibles. Para publicaciones que combinen imagen y testimonio, como en tratamientos estéticos, la normativa de tu colegio profesional puede tener requisitos adicionales que conviene revisar antes de publicar nada.",
+    },
+    {
+      q: "Tengo varios especialistas en mi clínica, ¿cómo se refleja eso en la web?",
+      a: "Se suele resolver con una página de equipo donde cada profesional tiene su propia ficha (formación, especialidad, número de colegiado si aplica) y, si tiene sentido para tu consulta, enlazando cada especialista con los tratamientos que realiza. Esto ayuda al paciente a elegir con quién quiere la cita si tiene preferencia, y también ayuda a Google a entender mejor la experiencia real detrás de cada tratamiento, algo que cada vez pesa más en cómo se valoran las páginas de salud. Si tu clínica crece y se incorporan nuevos especialistas más adelante, añadir su ficha es un cambio sencillo que puedes hacer tú misma desde el panel, sin depender de que yo edite el código cada vez que cambia el equipo.",
+    },
+    {
+      q: "¿Puedo tener un formulario para que el paciente cuente su caso antes de la primera cita?",
+      a: "Sí, y suele ser útil en clínicas con tratamientos más complejos o consultas que requieren cierta preparación: un formulario breve donde el paciente indica el motivo de consulta, si es primera visita o revisión, y algún dato relevante te permite llegar a la cita con más información y filtrar mejor los casos que no encajan con lo que ofreces. El formulario se diseña pidiendo solo la información estrictamente necesaria para agendar bien la cita, no un historial clínico completo, precisamente para evitar recoger datos de salud sensibles sin la base legal adecuada. Si tu clínica ya usa un sistema de historia clínica digital, el formulario web funciona como primer contacto, no como sustituto de ese sistema.",
     },
   ],
   cta: {
@@ -233,19 +265,35 @@ export const comercios: ServicePageData = {
   faqs: [
     {
       q: "¿Necesito una tienda online o me basta con un catálogo?",
-      a: "Depende de tu momento. Un catálogo con encargos por WhatsApp es más barato y suele ser el mejor primer paso: tus clientes ven lo que tienes y te lo reservan. Si ya tienes demanda fuera de tu barrio, la tienda online con pago y envío es el siguiente nivel. Te aconsejo con sinceridad según tu caso.",
+      a: "Depende de en qué momento esté tu negocio. Un catálogo con encargos por WhatsApp es más barato, se monta más rápido y suele ser el mejor primer paso si todavía no tienes mucha demanda fuera de tu barrio: el cliente ve lo que tienes, comprueba que hay disponibilidad y te lo reserva o encarga directamente. La tienda online completa, con pago y gestión de envíos, tiene sentido cuando ya tienes clientes que quieren comprar sin pasar por tu local, o cuando quieres vender fuera de tu zona habitual. No es una decisión que tengas que acertar a la primera: puedes empezar con catálogo y, si funciona bien, ampliar a tienda online más adelante sin tirar nada de lo que ya tienes montado. En la primera conversación te digo con sinceridad qué encaja mejor con tu comercio ahora mismo.",
     },
     {
       q: "¿Cuánto cuesta una tienda online?",
-      a: "Una web de catálogo parte de 399 € y una tienda online completa con pasarela de pago y gestión de envíos se presupuesta según el número de productos y necesidades. En ambos casos, con dominio y hosting incluidos el primer año.",
+      a: "Una web de catálogo (fotos, precios y encargos por WhatsApp) parte de 399 €, con dominio y hosting incluidos el primer año. Una tienda online completa con pasarela de pago y gestión de envíos se presupuesta aparte según el número de productos y las funciones que necesites (variantes de talla o color, descuentos, gestión de stock…), porque el trabajo cambia mucho entre un catálogo de 20 productos y uno de 500. En ambos casos el precio se cierra por escrito antes de empezar. Si no tienes claro cuántos productos vas a subir al principio, podemos arrancar con un catálogo reducido de los productos que más vendes e ir ampliándolo con el tiempo, en vez de intentar meterlo todo desde el primer día.",
     },
     {
       q: "¿Podré gestionar los productos yo mismo?",
-      a: "Sí. Te dejo un panel sencillo para subir productos, cambiar precios y marcar agotados, y una guía en vídeo para consultarla cuando quieras.",
+      a: "Sí. Te dejo un panel sencillo pensado para alguien sin conocimientos técnicos: subir un producto nuevo, cambiar un precio, marcar algo como agotado o quitarlo temporalmente se hace en un par de minutos, sin tocar código ni depender de mí para cada ajuste. Además de la formación en el momento de la entrega, dejo una guía en vídeo que puedes consultar cuando quieras repasar algún paso. Si en algún momento necesitas algo que el panel no permite hacer por tu cuenta (por ejemplo, cambiar la estructura de categorías o añadir una nueva forma de pago), ahí sí que suelo encargarme yo, pero el día a día de mantener el catálogo actualizado queda completamente en tus manos.",
     },
     {
       q: "¿Y si vendo en Amazon o Wallapop, para qué quiero web?",
-      a: "Los marketplaces te cobran comisión por venta y se quedan con los datos de tus clientes. Tu propia tienda solo paga la comisión estándar de la pasarela de pago, no la del marketplace, fideliza a tu clientela y refuerza tu posicionamiento local para el cliente del barrio.",
+      a: "Los marketplaces como Amazon o Wallapop te cobran una comisión por cada venta y, en muchos casos, se quedan con los datos de contacto de tu cliente, así que no puedes fidelizarlo directamente ni volver a venderle sin pasar otra vez por la plataforma. Tu propia tienda solo paga la comisión estándar de la pasarela de pago que elijas (Stripe, Redsys…), normalmente bastante menor, y el cliente queda vinculado a tu negocio, no al marketplace. Además, tu web con SEO local refuerza que te encuentren los clientes de tu barrio y de Sevilla cuando buscan lo que vendes, algo que un perfil de marketplace no consigue igual de bien porque compite dentro de la propia plataforma con miles de vendedores más. No se trata de elegir uno u otro: muchos negocios usan el marketplace como escaparate adicional y su web como canal principal.",
+    },
+    {
+      q: "¿Cómo consigo que me encuentren los clientes de mi barrio cuando buscan en Google?",
+      a: "Depende sobre todo de que tu ficha de Google Business Profile esté completa (dirección, horario, categoría y fotos correctas), de que tu web tenga los datos estructurados que indican a Google qué vendes y desde dónde, y de tener reseñas recientes de clientes reales. La web que te entrego incluye esa base de SEO local para tu barrio y tu ciudad desde el primer día. Si además quieres un trabajo mensual continuado (más contenido, seguimiento de tu ficha, ajustes según se mueva tu competencia en Sevilla), tengo un servicio aparte de SEO local que puedes consultar en /seo-local-sevilla. No es imprescindible contratarlo para tener una web bien optimizada: es una opción para quien quiere seguir ganando visibilidad mes a mes.",
+    },
+    {
+      q: "¿Qué pasarela de pago se usa en la tienda online y cuánto cobra?",
+      a: "La tienda online se integra con pasarelas de pago habituales como Stripe o Redsys, que son las que gestionan el cobro con tarjeta de forma segura. Cada pasarela cobra su propia comisión por transacción, que varía según el proveedor y el volumen, así que te oriento sobre las opciones cuando montamos la tienda. Esa comisión es la única que pagas: no hay ninguna comisión adicional por vender a través de tu propia web, a diferencia de lo que ocurre en un marketplace. También puedes ofrecer otras formas de pago si te interesa, como transferencia o pago contra reembolso, según cómo trabajes con tus clientes. Te explico las opciones disponibles y sus costes reales antes de decidir cuál montamos, para que elijas con esa información delante.",
+    },
+    {
+      q: "¿Puedo conectar mi tienda online con Instagram o Facebook Shop?",
+      a: "Sí, es una opción habitual para comercios que ya tienen actividad en redes sociales: se puede conectar el catálogo de tu tienda online con Instagram y Facebook Shop para que tus productos aparezcan etiquetados en las publicaciones y los clientes puedan verlos sin salir de la app, aunque la compra final suele completarse en tu propia web. Esto amplía dónde te ven tus productos sin duplicar el trabajo de mantener dos catálogos distintos: actualizas el producto una vez en tu tienda y se refleja también en redes. Si ya tienes una cuenta de Instagram o Facebook activa con seguidores, esta integración suele ser de las que más rápido se nota, porque aprovechas una audiencia que ya te sigue en vez de partir de cero.",
+    },
+    {
+      q: "¿Cómo se gestiona el stock si vendo también en tienda física?",
+      a: "Si vendes en tienda física y online a la vez, lo recomendable es llevar el stock desde un único sitio (normalmente el panel de la tienda online) para evitar vender algo que ya no tienes disponible en el local, o al revés. Si tu volumen de productos es manejable, actualizar el stock manualmente cuando algo se agota suele ser suficiente al principio. Si el volumen crece o vendes en varios canales a la vez, existen integraciones que sincronizan el stock automáticamente entre tu tienda online y tu sistema de punto de venta físico, aunque eso se valora caso por caso según qué programa uses en tienda. Te oriento sobre qué nivel de automatización tiene sentido para tu comercio en la primera conversación, sin venderte más complejidad de la que realmente necesitas.",
     },
   ],
   cta: {
@@ -317,19 +365,35 @@ export const profesionales: ServicePageData = {
   faqs: [
     {
       q: "¿Por qué necesita web mi despacho si los clientes llegan por recomendación?",
-      a: "Porque la recomendación hoy pasa por Google: cuando alguien recibe tu nombre, te busca antes de llamar. Si no encuentra nada (o encuentra algo pobre), la recomendación se enfría. Y las búsquedas directas como «gestoría cerca de mí» son clientes nuevos que hoy se lleva quien aparece primero.",
+      a: "Porque hoy la recomendación pasa casi siempre por Google antes de llegar a una llamada: cuando alguien recibe tu nombre de un conocido, lo primero que hace es buscarlo para confirmar que existe, ver qué áreas trabajas y comprobar que transmite seriedad. Si no encuentra nada, o encuentra una web pobre y desactualizada, la recomendación se enfría antes de convertirse en consulta. Además de reforzar la recomendación, una web te permite captar directamente búsquedas como «gestoría cerca de mí» o «abogado laboralista Sevilla», que son clientes nuevos sin ningún contacto previo contigo, y que hoy se lleva quien aparece primero con información clara. No se trata de sustituir el boca a boca, sino de no perder los casos que llegan por ahí y sumar los que llegan directamente por búsqueda.",
     },
     {
       q: "¿Cuánto cuesta la web de un despacho o gestoría?",
-      a: "Una web profesional con páginas por área de práctica, formulario de consulta y SEO local parte de 399 €, con dominio y hosting el primer año incluidos y presupuesto cerrado antes de empezar.",
+      a: "Una web profesional con páginas por área de práctica, formulario de consulta con filtrado previo y SEO local parte de 399 €, con dominio y hosting incluidos el primer año y presupuesto cerrado por escrito antes de empezar. Despachos con muchas áreas de práctica, varios socios con perfil propio o necesidades específicas (por ejemplo, un blog jurídico extenso desde el lanzamiento) se presupuestan aparte, siempre con precio fijo, no por horas. En la primera conversación repasamos tus áreas actuales y priorizamos cuáles conviene lanzar primero: no hace falta cubrir todas las especialidades del despacho desde el día uno, se puede empezar por las que más consultas os traen y ampliar más adelante sin rehacer la web entera.",
     },
     {
       q: "¿Quién escribe los textos legales de la web?",
-      a: "Yo redacto la base optimizada para Google y para que el cliente la entienda, y tú revisas el rigor jurídico. El aviso legal, privacidad y cookies de la propia web van incluidos.",
+      a: "Yo redacto la base de cada página pensando en dos cosas a la vez: que Google la entienda bien (estructura, palabras clave que usa realmente tu cliente) y que la lea alguien sin formación jurídica, sin perder rigor. Después, tú o tu equipo revisáis cada texto para confirmar que la terminología y los matices legales son correctos antes de publicar nada: yo no soy abogada ni gestora, y esa validación final siempre queda en tus manos. El aviso legal, la política de privacidad y el texto de cookies de la propia web van incluidos y adaptados a tu actividad, aunque también recomiendo que los revise tu propio criterio profesional antes del lanzamiento, especialmente si tu despacho tiene particularidades que conviene reflejar con precisión.",
     },
     {
       q: "¿Merece la pena un blog jurídico?",
-      a: "Suele ser rentable en este sector: artículos que responden dudas frecuentes («cuánto tarda una herencia», «qué hacer ante un despido») ayudan a posicionar en Google, demuestran autoridad y son el tipo de contenido que los buscadores con IA suelen citar al responder esas preguntas. Puedo dejarte la estructura y un plan de contenidos.",
+      a: "Suele ser rentable en este sector porque los clientes buscan respuestas concretas antes de decidir si necesitan un profesional: «cuánto tarda una herencia», «qué hacer ante un despido», «documentos para constituir una autónoma». Un blog que responde esas dudas con claridad ayuda a posicionar en Google a medio plazo y, además, es exactamente el tipo de contenido que los buscadores con inteligencia artificial (ChatGPT, Perplexity, los resúmenes con IA de Google) suelen citar cuando alguien les hace esa misma pregunta, porque da una respuesta directa y verificable. No hace falta publicar constantemente para que funcione: unos pocos artículos bien elegidos, sobre las dudas que más te repiten tus clientes, suelen aportar más que publicar mucho sin criterio. Puedo dejarte la estructura y un plan de contenidos inicial si quieres mantenerlo tú misma después.",
+    },
+    {
+      q: "¿Cómo consigo que me encuentren cuando alguien busca «abogado [especialidad] Sevilla» o «gestoría cerca de mí»?",
+      a: "Depende sobre todo de tres cosas: que cada área de práctica tenga su propia página bien optimizada en vez de mezclarlo todo en un único texto genérico, de que tu ficha de Google Business Profile esté completa y correctamente categorizada, y de tener reseñas de clientes gestionadas con regularidad. La web que te entrego incluye esa base de SEO local por especialidad y zona desde el lanzamiento. Si además quieres un trabajo mensual continuado (más contenido, seguimiento de tu ficha, ajustes según se mueva la competencia en tu zona de Sevilla), tengo un servicio aparte de SEO local que puedes consultar en /seo-local-sevilla. No es necesario contratarlo para tener una web bien planteada: es una opción para quien quiere sumar visibilidad de forma continuada.",
+    },
+    {
+      q: "¿Es seguro que un cliente rellene el formulario de consulta con datos de su caso?",
+      a: "El formulario se configura con conexión segura (HTTPS), consentimiento explícito antes de enviar los datos y un aviso claro de qué se hace con la información recibida, como corresponde al tratar datos personales y, en muchos casos, información sensible sobre un asunto legal. Aun así, para casos especialmente delicados donde el cliente prefiera no detallar nada por escrito, el formulario puede pedir solo lo mínimo (nombre, contacto y una descripción muy general del motivo) y dejar el detalle completo para la primera llamada o reunión, en vez de forzar a que todo se explique por escrito. La validación legal completa de cómo tratáis esos datos en el despacho, más allá de la base técnica del formulario, la debe confirmar tu propio criterio profesional o tu asesoría, especialmente si manejáis datos de categorías especiales.",
+    },
+    {
+      q: "¿Hay límites para la publicidad de un despacho de abogados?",
+      a: "Sí, los despachos de abogados suelen estar sujetos a las normas deontológicas de su colegio profesional, que en España limitan ciertas prácticas publicitarias, como comparar resultados con otros despachos, prometer un resultado concreto en un procedimiento o usar reclamos que puedan inducir a error sobre las posibilidades reales de un caso. Al redactar los textos evito ese tipo de afirmaciones: me centro en explicar con claridad qué áreas trabajas, tu experiencia y cómo es el proceso de trabajar contigo, sin prometer resultados que no dependen solo de ti. Dicho esto, cada colegio profesional puede tener matices propios en su código deontológico, así que si tienes dudas sobre algún texto concreto, lo ideal es que lo confirmes con tu colegio antes de publicarlo, especialmente si tu despacho hace publicidad activa más allá de la propia web.",
+    },
+    {
+      q: "Somos varios socios o áreas en el despacho, ¿cómo se organiza eso en la web?",
+      a: "Se suele resolver con una página de equipo donde cada socio o profesional tiene su propia ficha (formación, áreas en las que trabaja, años de experiencia si quieres incluirlo) y, si tiene sentido, enlazando cada socio con las áreas de práctica que lleva. Esto ayuda al cliente a elegir con quién quiere hablar si tiene preferencia, y también ayuda a que cada área de práctica tenga detrás una persona con nombre y experiencia visible, algo que transmite más confianza que un texto genérico sin firma. Si el despacho crece y se incorporan nuevos socios o colaboradores más adelante, añadir su ficha es un cambio sencillo que se hace desde el panel, sin depender de que yo edite el código cada vez que cambia el equipo.",
     },
   ],
   cta: {
