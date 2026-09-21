@@ -9,7 +9,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "check:seo-02": "npm run build && node scripts/check-seo-02.mjs",
-    "check:seo-02:dist": "node scripts/check-seo-02.mjs"
+    "check:seo-02:dist": "node scripts/check-seo-02.mjs",
+    "check:seo-05": "npm run build && node scripts/check-seo-05.mjs",
+    "check:seo-05:dist": "node scripts/check-seo-05.mjs"
   },
   "dependencies": {
     "@astrojs/check": "0.5.6",

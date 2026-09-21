@@ -15,6 +15,10 @@ export const restaurantes: ServicePageData = {
     subtitle:
       "Cuando alguien busca dónde comer en Sevilla, decide en segundos: mira fotos, carta y reseñas desde el móvil. Creo webs para restaurantes pensadas para aparecer en esa búsqueda y ayudarte a convertir esas miradas en mesas ocupadas.",
   },
+  sectionTitles: {
+    benefits: "Carta, reservas y decisiones desde el móvil",
+    process: "De la carta a una reserva clara",
+  },
   benefits: [
     {
       title: "Carta digital siempre actualizada",
@@ -114,6 +118,10 @@ export const clinicas: ServicePageData = {
     h1: "Página web para clínicas y consultas en Sevilla",
     subtitle:
       "Un paciente nuevo te busca en Google antes de llamar: compara webs, reseñas y cercanía. Creo webs para clínicas que transmiten la confianza de tu consulta y ayudan a convertir búsquedas como «dentista en Sevilla este» en citas reservadas.",
+  },
+  sectionTitles: {
+    benefits: "Información clara antes de pedir cita",
+    process: "Del primer contacto a una cita bien planteada",
   },
   benefits: [
     {
@@ -215,6 +223,10 @@ export const comercios: ServicePageData = {
     subtitle:
       "Tus clientes miran en Google antes de salir de casa: horarios, productos y si estás cerca. Creo webs para comercios que te ponen en ese mapa, y si quieres vender online, tiendas que compiten de verdad.",
   },
+  sectionTitles: {
+    benefits: "Un escaparate que empieza antes de entrar",
+    process: "Del catálogo local a la venta online",
+  },
   benefits: [
     {
       title: "Que te encuentren los del barrio",
@@ -314,6 +326,10 @@ export const profesionales: ServicePageData = {
     h1: "Página web para abogados, gestorías y asesorías en Sevilla",
     subtitle:
       "Quien necesita un abogado o una gestoría busca en Google y compara: experiencia, especialidad y confianza. Creo webs para despachos que transmiten solvencia y ayudan a convertir búsquedas como «abogado laboralista Sevilla» en consultas.",
+  },
+  sectionTitles: {
+    benefits: "Una web que explica tu especialidad con rigor",
+    process: "De la consulta inicial a una presencia profesional",
   },
   benefits: [
     {
