@@ -28,7 +28,7 @@ The user explicitly authorized implementation of the complete audit backlog in b
 - [x] SEO-01 Fix service migration redirects — `docs/seo-audit/full-audit-2026-09-21/tasks/01-redirects-servicios.md`
 - [x] SEO-02 Normalize internal URLs — five bare target-route links in authorized blog sources now use trailing slashes; fresh recursive verification is green. See `docs/seo-audit/full-audit-2026-09-21/tasks/02-normalizar-urls-internas.md`.
 - [x] SEO-03 Exclude components page — removed only the standalone `src/pages/components.astro` demo page; the gallery is intentionally unavailable in development and shared components remain available to public pages. See `docs/seo-audit/full-audit-2026-09-21/tasks/03-excluir-components.md`.
-- [ ] SEO-04 Validate CWV and LCP — `docs/seo-audit/full-audit-2026-09-21/tasks/04-validar-cwv-y-lcp.md`
+- [ ] SEO-04 Validate CWV and LCP — **Estado: parcial**; baseline local documentada, pero la medición real de CWV/LCP sigue pendiente por tooling/acceso faltante. Ver `docs/seo-audit/full-audit-2026-09-21/tasks/04-validar-cwv-y-lcp.md`.
 - [ ] SEO-05 Diversify niche pages — `docs/seo-audit/full-audit-2026-09-21/tasks/05-diversificar-paginas-nicho.md`
 - [ ] SEO-06 Improve internal linking — `docs/seo-audit/full-audit-2026-09-21/tasks/06-arquitectura-enlazado-interno.md`
 - [ ] SEO-07 Resolve cannibalization — `docs/seo-audit/full-audit-2026-09-21/tasks/07-resolver-canibalizacion.md`
@@ -62,8 +62,8 @@ The user explicitly authorized implementation of the complete audit backlog in b
 - SEO-02 public URL evidence (2026-09-21): executed `curl -sSIL --max-redirs 0` against all ten canonical URLs. Each returned exactly `HTTP/2 200`; none returned a `Location` header, so no redirect occurred: `/diseno-web-sevilla/`, `/desarrollo-software-medida/`, `/automatizaciones/`, `/inteligencia-artificial/`, `/seo-local-sevilla/`, `/tienda-online-sevilla/`, `/web-para-restaurantes-sevilla/`, `/web-para-clinicas-sevilla/`, `/web-para-comercios-sevilla/`, `/web-para-abogados-gestorias-sevilla/` on `https://nuriaromero.dev`.
 - SEO-03 decision: removed only `src/pages/components.astro`, the standalone demo page. No real use of `/components/` was found, so the gallery is eliminated rather than retained for development or preview; shared components remain untouched and available to public pages. `astro.config.mjs` and its existing sitemap filter remain unchanged.
 - SEO-03 focused verification: a fresh `npm run build` completed with Astro check reporting 0 errors, 0 warnings and 1 preexisting hint in `src/components/seo/Schema.astro`; Astro generated 22 pages. The resulting `dist/components/index.html` is absent, the generated HTML-route listing has no `/components/`, and neither `dist/sitemap-0.xml` nor `dist/sitemap-index.xml` contains a `/components/` URL. No remote deployment check was run.
-- Full local verification: pending.
+- SEO-04 baseline local (completado): `npm run build` OK (22 páginas, 0 errores, 0 warnings, 1 hint preexistente); `BROWSER=none netlify dev --offline --no-open --dir dist --port 8888` y `curl -sSIL --max-redirs 0 http://localhost:8888<ruta>` devolvieron `HTTP 200` para home + 10 plantillas. Host/puerto: `localhost:8888`; viewport/dispositivo/conexión: N/A; runtime harness: N/A porque no hay harness CWV y no se ejecutaron Lighthouse/Playwright/web-vitals. PSI/CrUX/GA4: N/A por falta de tooling/acceso. No se inventan métricas: LCP/INP/CLS y elemento LCP siguen pendientes; el hero es textual y no hay evidencia para `fetchpriority`/`eager`/`preload`.
 - Remote push authorization: destination branches are named by the user; credential/session to use must be confirmed before remote operation.
 
 ## Next step
-Continue with SEO-04.
+Continue with SEO-05; mantener SEO-04 en estado parcial hasta disponer de PSI/CrUX/GA4 o Lighthouse/Playwright para medir CWV/LCP de forma reproducible.
