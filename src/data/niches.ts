@@ -3,7 +3,7 @@
 import type { ServicePageData } from "@/data/types"
 
 export const restaurantes: ServicePageData = {
-  slug: "/web-para-restaurantes-sevilla",
+  slug: "/web-para-restaurantes-sevilla/",
   breadcrumbName: "Web para restaurantes",
   seo: {
     title: "Página web para restaurantes en Sevilla | Carta, reservas y Google",
@@ -103,7 +103,7 @@ export const restaurantes: ServicePageData = {
 }
 
 export const clinicas: ServicePageData = {
-  slug: "/web-para-clinicas-sevilla",
+  slug: "/web-para-clinicas-sevilla/",
   breadcrumbName: "Web para clínicas",
   seo: {
     title: "Página web para clínicas en Sevilla | Dentistas, fisios, psicólogos",
@@ -203,7 +203,7 @@ export const clinicas: ServicePageData = {
 }
 
 export const comercios: ServicePageData = {
-  slug: "/web-para-comercios-sevilla",
+  slug: "/web-para-comercios-sevilla/",
   breadcrumbName: "Web para comercios",
   seo: {
     title: "Página web para comercios y tiendas en Sevilla | Vende online",
@@ -303,7 +303,7 @@ export const comercios: ServicePageData = {
 }
 
 export const profesionales: ServicePageData = {
-  slug: "/web-para-abogados-gestorias-sevilla",
+  slug: "/web-para-abogados-gestorias-sevilla/",
   breadcrumbName: "Web para despachos y gestorías",
   seo: {
     title: "Página web para abogados y gestorías en Sevilla | Capta clientes",

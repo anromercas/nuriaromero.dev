@@ -44,4 +44,4 @@ Si alguien no puede responderte con claridad a estas cinco, sigue buscando.
 
 Soy [desarrolladora de software con más de 10 años de experiencia](/sobre-mi). En cada propuesta detallo el alcance, el trabajo de SEO técnico previsto, los costes recurrentes y el soporte incluido. El rendimiento final depende del contenido, los recursos y el entorno de uso; si la medición es importante para tu proyecto, podemos acordar cómo comprobarlo.
 
-Puedes consultar [mi servicio de diseño web y qué incluye](/diseno-web-sevilla), o [escribirme](/contacto) con los detalles de tu proyecto para valorar el alcance.
+Puedes consultar [mi servicio de diseño web y qué incluye](/diseno-web-sevilla/), o [escribirme](/contacto) con los detalles de tu proyecto para valorar el alcance.

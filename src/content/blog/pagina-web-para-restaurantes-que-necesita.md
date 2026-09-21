@@ -46,6 +46,6 @@ TripAdvisor, TheFork y otros directorios pueden aportar visibilidad, pero sus co
 
 ## Qué incluyo yo en una web de restaurante
 
-He preparado una página específica con todo lo que incluye [una web para restaurantes en Sevilla](/web-para-restaurantes-sevilla): carta digital editable con QR, reservas por WhatsApp, SEO local para tu zona y conexión con Google Maps, con precio orientativo.
+He preparado una página específica con todo lo que incluye [una web para restaurantes en Sevilla](/web-para-restaurantes-sevilla/): carta digital editable con QR, reservas por WhatsApp, SEO local para tu zona y conexión con Google Maps, con precio orientativo.
 
 ¿Tienes un bar o restaurante en Sevilla? [Escríbeme](/contacto) y te digo, viendo tu caso concreto, qué te conviene y qué no — aunque sea quitarte cosas del presupuesto.

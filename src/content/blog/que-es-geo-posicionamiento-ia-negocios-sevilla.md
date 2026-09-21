@@ -34,4 +34,4 @@ Lo relevante para tu negocio es más sencillo: si esa persona pregunta por tu se
 
 ## Si quieres que te lo monte alguien
 
-Ninguno de estos cuatro puntos requiere que contrates a nadie, pero si prefieres no ocuparte tú del detalle técnico, es justo lo que trabajo en [mi servicio de SEO local y GEO en Sevilla](/seo-local-sevilla): ficha de Google, datos estructurados y FAQs pensadas también para buscadores con IA. Si todavía no tienes web propia donde apoyar todo esto, primero hace falta [una web bien construida](/diseno-web-sevilla) — es la base sobre la que se sostiene todo lo demás.
+Ninguno de estos cuatro puntos requiere que contrates a nadie, pero si prefieres no ocuparte tú del detalle técnico, es justo lo que trabajo en [mi servicio de SEO local y GEO en Sevilla](/seo-local-sevilla/): ficha de Google, datos estructurados y FAQs pensadas también para buscadores con IA. Si todavía no tienes web propia donde apoyar todo esto, primero hace falta [una web bien construida](/diseno-web-sevilla/) — es la base sobre la que se sostiene todo lo demás.

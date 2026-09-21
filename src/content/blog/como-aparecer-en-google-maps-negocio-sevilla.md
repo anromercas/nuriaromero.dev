@@ -45,7 +45,7 @@ La ficha y la web se refuerzan mutuamente. Para que Google confíe:
 - Enlaza la web desde la ficha y la ficha desde la web
 - Los **datos estructurados de negocio local** describen información del negocio para Google; no garantizan una posición ni que se muestre un resultado enriquecido ([documentación de LocalBusiness](https://developers.google.com/search/docs/appearance/structured-data/local-business) y [políticas de datos estructurados](https://developers.google.com/search/docs/appearance/structured-data/sd-policies))
 
-Este último punto es donde una web bien hecha marca la diferencia: [así las construyo yo](/diseno-web-sevilla).
+Este último punto es donde una web bien hecha marca la diferencia: [así las construyo yo](/diseno-web-sevilla/).
 
 ## Paso 5: mantenla viva
 

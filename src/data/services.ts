@@ -4,7 +4,7 @@
 import type { ServicePageData } from "@/data/types"
 
 export const disenoWeb: ServicePageData = {
-  slug: "/diseno-web-sevilla",
+  slug: "/diseno-web-sevilla/",
   breadcrumbName: "Diseño web en Sevilla",
   seo: {
     title: "Diseño web en Sevilla | Precio cerrado desde 149 €",
@@ -135,7 +135,7 @@ export const disenoWeb: ServicePageData = {
 }
 
 export const desarrolloSoftware: ServicePageData = {
-  slug: "/desarrollo-software-medida",
+  slug: "/desarrollo-software-medida/",
   breadcrumbName: "Software a medida",
   seo: {
     title: "Desarrollo de software a medida en Sevilla | Aplicaciones web",
@@ -241,7 +241,7 @@ export const desarrolloSoftware: ServicePageData = {
 }
 
 export const automatizaciones: ServicePageData = {
-  slug: "/automatizaciones",
+  slug: "/automatizaciones/",
   breadcrumbName: "Automatizaciones",
   seo: {
     title: "Automatización de procesos para negocios en Sevilla | n8n y Make",
@@ -347,7 +347,7 @@ export const automatizaciones: ServicePageData = {
 }
 
 export const inteligenciaArtificial: ServicePageData = {
-  slug: "/inteligencia-artificial",
+  slug: "/inteligencia-artificial/",
   breadcrumbName: "Inteligencia artificial",
   seo: {
     title: "IA para negocios en Sevilla | Chatbots y asistentes con IA",
@@ -453,7 +453,7 @@ export const inteligenciaArtificial: ServicePageData = {
 }
 
 export const seoLocal: ServicePageData = {
-  slug: "/seo-local-sevilla",
+  slug: "/seo-local-sevilla/",
   breadcrumbName: "SEO local en Sevilla",
   seo: {
     title: "SEO local en Sevilla | Auditoría SEO/GEO desde 299 €",
@@ -603,7 +603,7 @@ export const seoLocal: ServicePageData = {
 }
 
 export const tiendaOnline: ServicePageData = {
-  slug: "/tienda-online-sevilla",
+  slug: "/tienda-online-sevilla/",
   breadcrumbName: "Tienda online en Sevilla",
   seo: {
     title: "Tienda online en Sevilla | Ecommerce con pasarela de pago",
