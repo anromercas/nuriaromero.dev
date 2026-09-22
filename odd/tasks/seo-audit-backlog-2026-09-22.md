@@ -32,7 +32,7 @@ User explicitly authorized executing the backlog "poco a poco" (one task at a ti
 - [x] SEO-23 Question-format H2s + short-answer blocks in 3 blog posts, GEO H2 rewrite, comparison tables in GEO post and `/seo-local-sevilla/` — `docs/seo-audit/full-audit-2026-09-22/tasks/23-estructura-geo-posts-blog.md`
 - [x] SEO-24 Reforzar "agencia" en `/seo-local-sevilla/` sin tocar el H1 de marca — `docs/seo-audit/full-audit-2026-09-22/tasks/24-reforzar-agencia-seo-local.md`
 - [x] SEO-25 Mejoras técnicas y de schema menores (parcial: `@graph` implementado; logo pendiente de asset; TTFB/HSTS/CSP investigados sin fix o pendientes de decisión; IndexNow explícitamente no implementado) — `docs/seo-audit/full-audit-2026-09-22/tasks/25-mejoras-tecnicas-schema-menores.md`
-- [ ] SEO-26 — pending, see `docs/seo-audit/full-audit-2026-09-22/tasks/`
+- [x] SEO-26 Unify service-area wording (footer vs. /contacto) — `docs/seo-audit/full-audit-2026-09-22/tasks/26-unificar-wording-area-servicio.md`
 
 ## Progress evidence
 (updated per task as completed)
@@ -135,5 +135,10 @@ User explicitly authorized executing the backlog "poco a poco" (one task at a ti
   **Verificación:** `astro check` (0 errores) + `npm run build` limpio → full `check:seo-02` a `check:seo-14` (11 checks) en `dist` fresco — todos en verde (`check-seo-02.mjs`, `check-seo-05.mjs` y `check-seo-11.mjs` tuvieron que extenderse para reconocer `@graph` al parsear JSON-LD; sin el fix, 02 y 05 fallaban en RED real tras la migración). `git diff --check` limpio. Scope real: `src/components/seo/Schema.astro`, `scripts/check-seo-02.mjs`, `scripts/check-seo-05.mjs`, `scripts/check-seo-11.mjs`, plus estos dos doc files — nota: se desvía del scope literal indicado por el usuario ("solo `src/lib/schema.ts`"), porque tras leer el código el punto de cambio correcto resultó ser `Schema.astro` (envoltorio de salida) más los checkers que asumían la forma anterior; `src/lib/schema.ts` queda sin cambios. SEO-26 untouched; unrelated untracked files (`research/`, `.seo-cache/`) left untouched.
   One commit on `develop`, not pushed.
 
+- **SEO-26 (2026-09-22):** Unified the "área de servicio" wording between `src/components/Footer.astro` and `src/pages/contacto.astro` — both had drifted: footer said "Sevilla y área metropolitana, España", `/contacto`'s address block says "Sevilla, España" (a separate locality+country line, out of scope — not a service-area sentence), and `/contacto`'s own service-area paragraph already said "Sevilla y su área metropolitana" (already the task doc's suggested canonical form). Since `/contacto` already had the canonical phrasing, the only edit needed was `Footer.astro:54`: `{SITE.address.locality} y área metropolitana, España` → `{SITE.address.locality} y su área metropolitana` (dropped the trailing ", España" to match exactly, per the acceptance criterion "exactamente la misma redacción"). `areaServed` in `src/lib/schema.ts` uses a separate `SERVICE_AREA` constant, confirmed independent of this visible-copy change — untouched, as required.
+  Small enough to be done inline rather than delegated (single file, one-line find-replace, no new logic).
+  **Verification:** `npm run build` (0 errors, 23 pages) → `node scripts/check-seo-11.mjs` (`schema checks passed for 23 pages and 10 services`) → full `check:seo-02` through `check:seo-14` sweep (11 checks) on fresh `dist` — all passed, no checker changes needed. `git diff --check` clean. Scope limited to `src/components/Footer.astro` plus these two doc files.
+  One commit on `develop`, no formal review-agent pass (trivial single-line content change, self-verified).
+
 ## Next step
-SEO-26 pending — see `docs/seo-audit/full-audit-2026-09-22/tasks/`.
+All 12 tasks (SEO-15 through SEO-26) from the 2026-09-22 audit backlog are complete and committed on `develop`, not pushed. Awaiting user decision on: push/PR, and whether to authorize follow-up work on the SEO-25 deferred items (CSP unsafe-inline migration, HSTS includeSubDomains) or other action-plan items beyond this bounded 12-task set.
