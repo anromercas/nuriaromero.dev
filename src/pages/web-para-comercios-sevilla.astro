@@ -1,6 +1,25 @@
 ---
 import ServiceLayout from "@/layouts/ServiceLayout.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import TitleSection from "@/components/TitleSection.astro"
 import { comercios } from "@/data/niches"
 ---
 
-<ServiceLayout page={comercios} />
+<ServiceLayout page={comercios}>
+  <Fragment slot="before-benefits">
+    <SectionContainer>
+      <TitleSection>¿Solo necesitas catálogo, o también quieres cobrar online?</TitleSection>
+      <div class="space-y-4 text-gray-700 dark:text-gray-400">
+        <p>
+          Esta página cubre el catálogo: que tus clientes vean qué vendes,
+          tus horarios y cómo contactarte por WhatsApp o pasando por tienda.
+        </p>
+        <p>
+          Si además quieres cobrar online, con pasarela de pago y gestión de
+          stock, mira la
+          <a href="/tienda-online-sevilla/" class="text-blue-600 underline-offset-4 hover:underline dark:text-blue-400">tienda online en Sevilla</a>.
+        </p>
+      </div>
+    </SectionContainer>
+  </Fragment>
+</ServiceLayout>

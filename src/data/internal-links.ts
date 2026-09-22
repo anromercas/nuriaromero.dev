@@ -15,6 +15,10 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
   "/diseno-web-sevilla/": [
     { path: "/seo-local-sevilla/", anchor: "SEO local y GEO para tu negocio", kind: "contextual" },
     { path: "/tienda-online-sevilla/", anchor: "tienda online para vender tus productos", kind: "contextual" },
+    { path: "/web-para-restaurantes-sevilla/", anchor: "web para restaurantes en Sevilla", kind: "contextual" },
+    { path: "/web-para-clinicas-sevilla/", anchor: "web para clínicas y consultas", kind: "contextual" },
+    { path: "/web-para-comercios-sevilla/", anchor: "web para comercios y tiendas", kind: "contextual" },
+    { path: "/web-para-abogados-gestorias-sevilla/", anchor: "web para despachos y gestorías", kind: "contextual" },
     { path: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/", anchor: "guía para entender el precio de una web", kind: "contextual" },
     { path: "/contacto", anchor: "cuéntame qué web necesitas", kind: "conversion" },
   ],
@@ -35,6 +39,10 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
   ],
   "/seo-local-sevilla/": [
     { path: "/diseno-web-sevilla/", anchor: "diseño web preparado para SEO local", kind: "contextual" },
+    { path: "/web-para-restaurantes-sevilla/", anchor: "SEO local para restaurantes en Sevilla", kind: "contextual" },
+    { path: "/web-para-clinicas-sevilla/", anchor: "SEO local para clínicas en Sevilla", kind: "contextual" },
+    { path: "/web-para-comercios-sevilla/", anchor: "SEO local para comercios en Sevilla", kind: "contextual" },
+    { path: "/web-para-abogados-gestorias-sevilla/", anchor: "SEO local para despachos y gestorías", kind: "contextual" },
     { path: "/blog/como-aparecer-en-google-maps-negocio-sevilla/", anchor: "guía para mejorar tu ficha de Google Maps", kind: "contextual" },
     { path: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/", anchor: "guía sobre SEO local y GEO", kind: "contextual" },
     { path: "/contacto", anchor: "cuéntame cómo aparece hoy tu negocio", kind: "conversion" },

@@ -106,4 +106,13 @@ export const reciprocalLinks = [
     sourceAnchor: "servicio de diseño web y su alcance",
     targetAnchor: "guía para entender el precio de una web",
   },
+  // Commercial-to-commercial bridge (SEO-21): the avatar doesn't know upfront
+  // whether they need a catalogue page or full checkout, so both adjacent
+  // commercial pages carry an explicit in-content pointer to the other.
+  {
+    source: "/tienda-online-sevilla/",
+    target: "/web-para-comercios-sevilla/",
+    sourceAnchor: "web para comercios",
+    targetAnchor: "tienda online en Sevilla",
+  },
 ]
