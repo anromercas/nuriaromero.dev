@@ -131,7 +131,13 @@ const parseBreadcrumbItems = (html) => {
   for (const block of getJsonLdBlocks(html)) {
     try {
       const schema = JSON.parse(block)
-      const schemas = Array.isArray(schema) ? schema : [schema]
+      // SEO-25: entities can now arrive wrapped as a single @graph document
+      // (canonical JSON-LD) instead of a bare array with per-entity @context.
+      const schemas = Array.isArray(schema)
+        ? schema
+        : Array.isArray(schema?.["@graph"])
+          ? schema["@graph"]
+          : [schema]
       for (const entry of schemas) {
         if (entry?.["@type"] !== "BreadcrumbList") continue
         for (const item of entry.itemListElement ?? []) {

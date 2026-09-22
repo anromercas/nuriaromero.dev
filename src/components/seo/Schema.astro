@@ -1,9 +1,24 @@
 ---
 interface Props {
-  schema: object | object[]
+  schema: Record<string, unknown> | Record<string, unknown>[]
 }
 
 const { schema } = Astro.props
+const entities = Array.isArray(schema) ? schema : [schema]
+
+// SEO-25: canonical @graph pattern. When a page emits more than one entity in
+// a single <Schema /> call, wrap them under one shared @context instead of
+// the previous "array with repeated @context per entity" pattern — this site
+// already cross-references entities by @id (founder, provider, publisher...),
+// so @graph is the more canonical shape. A lone entity is left as-is, with
+// its own @context, since there is nothing to group it with.
+const document =
+  entities.length > 1
+    ? {
+        "@context": "https://schema.org",
+        "@graph": entities.map(({ "@context": _omitted, ...entity }) => entity),
+      }
+    : entities[0]
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<script type="application/ld+json" set:html={JSON.stringify(document)} />

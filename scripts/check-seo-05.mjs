@@ -126,7 +126,11 @@ for (const page of pages) {
     const json = content
     try {
       const parsed = JSON.parse(json)
-      return Array.isArray(parsed) ? parsed : [parsed]
+      // SEO-25: entities can now arrive wrapped as a single @graph document
+      // (canonical JSON-LD) instead of a bare array with per-entity @context.
+      if (Array.isArray(parsed)) return parsed
+      if (Array.isArray(parsed?.["@graph"])) return parsed["@graph"]
+      return [parsed]
     } catch {
       return []
     }

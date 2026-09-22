@@ -40,7 +40,13 @@ let serviceCount = 0
 for (const path of pages) {
   const file = path.pathname.replace(`${distRoot.pathname}`, "dist/")
   const html = await readFile(path, "utf8")
-  const schemas = parseSchemas(html, file).flatMap((schema) => Array.isArray(schema) ? schema : [schema])
+  const schemas = parseSchemas(html, file).flatMap((schema) => {
+    // SEO-25: entities can now arrive wrapped as a single @graph document
+    // (canonical JSON-LD) instead of a bare array with per-entity @context.
+    if (Array.isArray(schema)) return schema
+    if (Array.isArray(schema["@graph"])) return schema["@graph"]
+    return [schema]
+  })
   const business = schemas.find((schema) => schema["@id"] === "https://nuriaromero.dev/#business")
   const person = schemas.find((schema) => schema["@id"] === "https://nuriaromero.dev/#person")
   if (!business) fail(`missing shared business entity in ${file}`)
