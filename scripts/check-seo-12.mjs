@@ -21,9 +21,9 @@ if (!existsSync(homePath)) {
 }
 
 const consentSource = readFileSync(consentPath, "utf8")
-requireText(consentSource, /max-height:\s*min\(34vh,\s*18rem\)/, "mobile consent panel needs a bounded height")
+requireText(consentSource, /max-height:\s*min\(35vh,\s*18\.5rem\)/, "mobile consent panel needs a bounded height")
 requireText(consentSource, /overflow-y:\s*auto/, "mobile consent panel needs internal scrolling")
-requireText(consentSource, /min-height:\s*2\.75rem/, "consent controls must retain touch-friendly targets")
+requireText(consentSource, /min-height:\s*3rem/, "consent controls must meet the 48px touch-target minimum")
 requireText(consentSource, /focus-visible/, "consent controls need visible keyboard focus")
 
 const nicheRoutes = [
