@@ -23,6 +23,9 @@
 ## Contenido editorial
 - [Recursos para citar y compartir](https://nuriaromero.dev/recursos/): Índice público de perfil, proyectos y guías que pueden enlazarse cuando aportan contexto.
 - [Blog](https://nuriaromero.dev/blog/): Guías sobre precios de páginas web, SEO local y automatización para negocios.
+- [Página web para restaurantes: qué necesita de verdad](https://nuriaromero.dev/blog/pagina-web-para-restaurantes-que-necesita/): Qué puede aportar la web de un restaurante o bar en Sevilla (carta digital, reservas, información local, fotos) y qué conviene priorizar.
+- [Cómo aparecer en Google Maps con un negocio en Sevilla](https://nuriaromero.dev/blog/como-aparecer-en-google-maps-negocio-sevilla/): Guía práctica para completar el Perfil de Empresa de Google, gestionar reseñas y conectar la ficha con la web, sin garantizar una posición concreta.
+- [¿Cuánto cuesta una página web en Sevilla?](https://nuriaromero.dev/blog/cuanto-cuesta-una-pagina-web-en-sevilla/): Qué factores influyen en el precio de una web para un negocio en Sevilla y qué revisar antes de comparar presupuestos.
 - [Guía sobre GEO para negocios en Sevilla](https://nuriaromero.dev/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/): Definiciones y acciones prácticas, con límites explícitos sobre lo que el GEO puede garantizar.
 - [Portfolio](https://nuriaromero.dev/portfolio/): Proyectos publicados en el sitio.
 
