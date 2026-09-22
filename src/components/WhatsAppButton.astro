@@ -31,9 +31,27 @@ import { whatsappUrl } from "@/data/site"
 </style>
 
 <script is:inline>
-  (function initWhatsAppFloatingButtonHeroGuard() {
+  // SEO-17 follow-up: this shared component's inline script is byte-identical
+  // across pages, so Astro's View Transitions does NOT re-run it on
+  // client-side navigation (only astro:page-load / astro:after-swap listeners
+  // re-run logic per navigation). Without this, clicking an internal link to
+  // the home page never (re)attaches the IntersectionObserver to the
+  // freshly-swapped DOM, reproducing the original overlap bug. We re-query
+  // the DOM and (re)initialize the guard on astro:page-load, which fires both
+  // on the initial hard load and after every subsequent swap (same event
+  // AnalyticsConsent.astro already relies on) — this guard isn't paint-
+  // critical like ThemeToggle's dark-mode/scroll fix (which must run before
+  // paint via astro:after-swap), so page-load's slightly later timing is fine.
+  var whatsAppHeroGuardObserver = null
+
+  function initWhatsAppFloatingButtonHeroGuard() {
     var floatingButton = document.getElementById("whatsapp-floating-button")
     var heroCta = document.querySelector("[data-seo12-primary-cta]")
+
+    if (whatsAppHeroGuardObserver) {
+      whatsAppHeroGuardObserver.disconnect()
+      whatsAppHeroGuardObserver = null
+    }
 
     if (!floatingButton || !heroCta || !("IntersectionObserver" in window)) return
 
@@ -43,7 +61,7 @@ import { whatsappUrl } from "@/data/site"
       floatingButton.classList.toggle("is-hero-cta-visible", hidden)
     }
 
-    var observer = new IntersectionObserver(
+    whatsAppHeroGuardObserver = new IntersectionObserver(
       function (entries) {
         var entry = entries[0]
         setHidden(mobileQuery.matches && entry.isIntersecting)
@@ -51,10 +69,12 @@ import { whatsappUrl } from "@/data/site"
       { threshold: 0 },
     )
 
-    observer.observe(heroCta)
+    whatsAppHeroGuardObserver.observe(heroCta)
 
     mobileQuery.addEventListener("change", function (event) {
       if (!event.matches) setHidden(false)
     })
-  })()
+  }
+
+  document.addEventListener("astro:page-load", initWhatsAppFloatingButtonHeroGuard)
 </script>
