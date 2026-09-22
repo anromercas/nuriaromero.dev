@@ -32,6 +32,59 @@ const withoutSlash = (url) => url.endsWith("/") ? url.slice(0, -1) : url
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 const getSections = (html, tag) => [...html.matchAll(new RegExp(`<${tag}\\b[^>]*>[\\s\\S]*?</${tag}>`, "gi"))].map((match) => match[0])
 const getHrefs = (html) => [...html.matchAll(/\bhref\s*=\s*(?:["']([^"']*)["']|([^\s>]+))/gi)].map((match) => match[1] ?? match[2])
+
+// SEO-15 follow-up: Header.astro's <header> element closes right after the
+// desktop <nav>; the mobile-menu drawer (#mobile-menu-overlay / #mobile-menu)
+// is a sibling <div> rendered immediately after </header>, not nested inside
+// it, and duplicates the same shared-nav links. A plain <header>...</header>
+// capture misses it entirely, which would let a mobile-only bare-href
+// regression pass undetected. Widen the "header" section to also span the
+// adjacent #mobile-menu drawer, located by ID and closed via balanced <div>
+// counting (not assumed strict nesting), bounded to a nearby window so it
+// can never swallow unrelated or footer content.
+const findMatchingDivClose = (html, fromIndex) => {
+  const tagPattern = /<div\b[^>]*>|<\/div\s*>/gi
+  tagPattern.lastIndex = fromIndex
+  let depth = 1
+  let match
+  while ((match = tagPattern.exec(html))) {
+    if (match[0].toLowerCase().startsWith("<div")) {
+      if (!match[0].endsWith("/>")) depth++
+    } else {
+      depth--
+      if (depth === 0) return match.index + match[0].length
+    }
+  }
+  return -1
+}
+
+const getHeaderSections = (html) => {
+  const headerPattern = /<header\b[^>]*>[\s\S]*?<\/header>/gi
+  const mobileMenuOpenPattern = /<div\b[^>]*\bid\s*=\s*["']mobile-menu["'][^>]*>/i
+  const searchWindowSize = 20000
+  const sections = []
+  let match
+
+  while ((match = headerPattern.exec(html))) {
+    const headerStart = match.index
+    const headerEnd = match.index + match[0].length
+    const window = html.slice(headerEnd, headerEnd + searchWindowSize)
+    const mobileMenuMatch = mobileMenuOpenPattern.exec(window)
+
+    if (mobileMenuMatch) {
+      const openTagEnd = headerEnd + mobileMenuMatch.index + mobileMenuMatch[0].length
+      const closeIdx = findMatchingDivClose(html, openTagEnd)
+      if (closeIdx !== -1) {
+        sections.push(html.slice(headerStart, closeIdx))
+        continue
+      }
+    }
+
+    sections.push(match[0])
+  }
+
+  return sections
+}
 const getJsonLdBlocks = (html) => [...html.matchAll(/<script\b[^>]*\btype\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)].map((match) => match[1])
 const failures = []
 const failureSet = new Set()
@@ -121,7 +174,7 @@ for (const file of htmlFiles) {
     }
   }
 
-  const navFooterSections = [...getSections(html, "header"), ...getSections(html, "footer")]
+  const navFooterSections = [...getHeaderSections(html), ...getSections(html, "footer")]
   for (const page of sharedNavPages) {
     const bareUrl = withoutSlash(page)
     if (navFooterSections.some((section) => getHrefs(section).some((href) => isBareTargetUrl(href, bareUrl)))) {
@@ -180,7 +233,7 @@ if (!home) {
   addFailure("/: missing dist/index.html")
 } else {
   const homeContent = getSections(home, "main").join("\n")
-  const header = getSections(home, "header").join("\n")
+  const header = getHeaderSections(home).join("\n")
   const footer = getSections(home, "footer").join("\n")
 
   for (const { url: page } of pages) {
