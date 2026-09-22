@@ -114,7 +114,11 @@ export function faqSchema(faqs: { q: string; a: string }[]) {
       name: faq.q,
       acceptedAnswer: {
         "@type": "Answer",
-        text: faq.a,
+        // Answers may use \n\n paragraph breaks for visual scannability
+        // (SEO-20, see FAQ.astro's splitAnswer). Collapse that whitespace
+        // convention here so structured-data text stays clean, continuous
+        // prose instead of leaking literal newlines (SEO-20 follow-up).
+        text: faq.a.replace(/\s+/g, " ").trim(),
       },
     })),
   }

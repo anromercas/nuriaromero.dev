@@ -37,3 +37,12 @@ No resumir hasta perder matices legales importantes (RGPD, deontología profesio
 - **Omitidas (prioridad baja, pendiente de una futura pasada):** el resto de FAQs de nicho/servicio (~58), incluida la FAQ de deontología de abogados ("¿Hay límites para la publicidad...?") y otras FAQs legales/técnicas no transaccionales. Siguen en un único bloque de 70-130 palabras; no se forzó su división para no arriesgar el alcance de esta tarea.
 - **Verificación de longitud:** script Node/tsx que reimplementa la lógica exacta de `splitAnswer()` sobre los datos reales confirma que los 20 bloques reestructurados quedan en ≤62 palabras por párrafo (la mayoría 20-60), frente a los 73-160 originales de un único bloque.
 - **Checks:** `npm run build` (0 errores) → `check:seo-08` (98 FAQs, mismo recuento que antes) → barrido completo `check:seo-02` a `check:seo-14` (11 checks) sobre `dist` fresco, todos en verde, incluyendo `check:seo-05` y `check:seo-07`. `git diff --check` limpio.
+
+## Follow-up (2026-09-22): fuga de `\n\n` en el schema FAQPage
+Una pasada `review-reliability` sobre el commit `cdb4726` (esta misma tarea SEO-20) detectó un bug no bloqueante: `faqSchema()` en `src/lib/schema.ts` construía `acceptedAnswer.text` directamente desde `faq.a`, sin pasar por `splitAnswer()`. Para las 20 FAQs reestructuradas, el `\n\n` literal se filtraba al JSON-LD (`\\n\\n` serializado), degradando el texto que ven buscadores/IA en la respuesta estructurada. Ningún `check-seo-*.mjs` valida el contenido de `acceptedAnswer.text`, así que no lo detectaba.
+
+**Fix:** `faqSchema()` ahora normaliza el texto con `faq.a.replace(/\s+/g, " ").trim()` antes de asignarlo a `acceptedAnswer.text`, colapsando `\n\n` y cualquier otro whitespace interno en una sola prosa continua. `FAQ.astro`/`splitAnswer()` no se tocan (siguen renderizando los párrafos visuales tal cual).
+
+**Evidencia RED/GREEN:** build + inspección del JSON-LD generado en `web-para-restaurantes-sevilla` para la FAQ de precio (niches.ts:72-ish, restaurantes). Antes del fix, `acceptedAnswer.text` contenía `\n\n` literal entre los 3 párrafos. Después del fix, el mismo campo es una única cadena de prosa continua, sin `\n` ni dobles espacios. FAQs no reestructuradas (ej. "¿Puedo actualizar la carta yo mismo?") quedan byte a byte idénticas al schema pre-`cdb4726`.
+
+**Checks:** `npm run build` → barrido `check:seo-02` a `check:seo-14` (11 checks) sobre `dist` fresco, todos en verde, incluyendo `check:seo-11` (validación de schema). `git diff --check` limpio.
