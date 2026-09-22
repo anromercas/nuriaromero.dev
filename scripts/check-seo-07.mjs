@@ -76,6 +76,50 @@ const isNearDuplicateQuestion = (a, b) => {
   return normalizedA === normalizedB
 }
 
+// Word-trigram Jaccard similarity, adapted from the niche-page copy check in
+// check-seo-05.mjs (see ngramSimilarity/wordNgrams/normalizedWords there).
+// The exact-match check above only catches wording that becomes byte-identical
+// after normalizeQuestion (lowercasing, punctuation/"en sevilla" stripping).
+// It misses wording variants — extra qualifiers, synonyms, reordering — such
+// as "¿Cuánto cuesta una tienda online completa?" against the real "¿Cuánto
+// cuesta una tienda online en Sevilla?" FAQ, which normalize to different
+// strings but are still a real cannibalization risk. This layer catches that
+// class of near-duplicate on top of (not instead of) the exact-match check.
+const normalizedWords = (text) =>
+  text
+    .toLocaleLowerCase("es")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .match(/[\p{L}\p{N}]+/gu) ?? []
+
+const wordNgrams = (words, size = 3) => {
+  const grams = new Set()
+  for (let index = 0; index <= words.length - size; index += 1) {
+    grams.add(words.slice(index, index + size).join(" "))
+  }
+  return grams
+}
+
+const ngramSimilarity = (left, right) => {
+  const leftGrams = wordNgrams(normalizedWords(left))
+  const rightGrams = wordNgrams(normalizedWords(right))
+  const intersection = [...leftGrams].filter((gram) => rightGrams.has(gram)).length
+  const union = new Set([...leftGrams, ...rightGrams]).size
+  return union === 0 ? 0 : intersection / union
+}
+
+// Calibrated against the real niche-vs-service FAQ corpus (60 service FAQs x
+// 33 niche FAQs): the highest real-content similarity found was 0.100
+// ("¿Cuánto cuesta una página web para un restaurante?" vs. "¿Cuánto cuesta
+// una tienda online en Sevilla?"), and the protected restaurantes/diseño-web
+// pair from the previous SEO-19 fix sits at 0.071. A plausible wording
+// variant of a real near-duplicate ("¿Cuánto cuesta una tienda online
+// completa?" vs. the real tienda-online FAQ) scores 0.5. 0.35 sits well
+// below that signal and with a wide (3.5x) margin above the highest
+// legitimate real-content score, so it flags wording variants without
+// false-flagging distinct FAQs that merely share an opening phrase.
+const NICHE_SERVICE_SIMILARITY_THRESHOLD = 0.35
+
 // Niche-vs-service near-duplicate check: the loop above only ever compares
 // niche routes against each other (intents.nicheRoutes), so a niche FAQ that
 // near-duplicates a *service* page's FAQ (different route family) was
@@ -86,6 +130,13 @@ for (const nicheFaq of nicheFaqs) {
     if (isNearDuplicateQuestion(nicheFaq.question, serviceFaq.question)) {
       errors.push(
         `niche FAQ near-duplicates a service FAQ: "${nicheFaq.question}" (${nicheFaq.route}) ~= "${serviceFaq.question}" (${serviceFaq.route})`,
+      )
+      continue
+    }
+    const similarity = ngramSimilarity(nicheFaq.question, serviceFaq.question)
+    if (similarity >= NICHE_SERVICE_SIMILARITY_THRESHOLD) {
+      errors.push(
+        `niche FAQ is a near-duplicate (${(similarity * 100).toFixed(1)}% word-trigram similarity) of a service FAQ: "${nicheFaq.question}" (${nicheFaq.route}) ~= "${serviceFaq.question}" (${serviceFaq.route})`,
       )
     }
   }
