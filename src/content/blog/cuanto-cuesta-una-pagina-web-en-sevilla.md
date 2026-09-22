@@ -7,11 +7,15 @@ tags: ["diseño web", "precios", "sevilla"]
 
 El precio de una página web puede variar mucho según el alcance, el contenido y el trabajo técnico incluido. Sin una muestra documentada de presupuestos locales no corresponde presentar cifras como si fueran un estudio del mercado sevillano. Estas son las partidas que conviene comparar antes de contratar.
 
-## Qué hace variar el presupuesto
+## Respuesta corta
+
+El precio de una web en Sevilla depende del alcance, el contenido y el trabajo técnico incluido; no existe una cifra única de mercado que se pueda dar como referencia fiable. Antes de comparar presupuestos conviene revisar qué incluye cada partida (rendimiento, SEO, contacto) y qué queda fuera.
+
+## ¿Qué hace variar el presupuesto de una web?
 
 Una web sencilla con una plantilla y contenido ya preparado no requiere el mismo trabajo que un proyecto con diseño a medida, tienda online, redacción, integraciones o soporte continuado. Dominio, alojamiento, mantenimiento y licencias también pueden cobrarse aparte; pide que cada partida y su renovación queden claras en la propuesta.
 
-## Qué revisar en una propuesta económica
+## ¿Qué debo revisar en una propuesta económica?
 
 El precio por sí solo no permite saber si una web resolverá las necesidades del negocio. Comprueba qué trabajo incluye y qué queda fuera antes de comparar propuestas.
 
@@ -19,7 +23,7 @@ El precio por sí solo no permite saber si una web resolverá las necesidades de
 2. **SEO técnico y contenido**: consulta si se incluyen estructura de encabezados, contenido útil, indexación y datos estructurados pertinentes. Ningún proveedor puede garantizar una posición concreta en Google.
 3. **Contacto**: revisa si el diseño facilita las acciones que necesita tu negocio, como llamar, escribir o pedir presupuesto.
 
-## Qué debe incluir una web profesional para un negocio local
+## ¿Qué debe incluir una web profesional para un negocio local?
 
 Cuando compares presupuestos, comprueba que incluyan:
 
@@ -30,7 +34,7 @@ Cuando compares presupuestos, comprueba que incluyan:
 - **Alta en Google**: Search Console, sitemap y ficha de Google Business Profile conectada
 - **Propiedad**: dominio y hosting a tu nombre, no del diseñador
 
-## Las 5 preguntas que debes hacer antes de contratar
+## ¿Qué preguntas debo hacer antes de contratar una web?
 
 1. ¿El dominio y el hosting quedan a mi nombre?
 2. ¿Puedo ver webs tuyas funcionando y cómo posicionan en Google?
@@ -40,7 +44,7 @@ Cuando compares presupuestos, comprueba que incluyan:
 
 Si alguien no puede responderte con claridad a estas cinco, sigue buscando.
 
-## Mi forma de trabajar
+## ¿Cómo trabajo en cada proyecto?
 
 Soy [desarrolladora de software con más de 10 años de experiencia](/sobre-mi). En cada propuesta detallo el alcance, el trabajo de SEO técnico previsto, los costes recurrentes y el soporte incluido. El rendimiento final depende del contenido, los recursos y el entorno de uso; si la medición es importante para tu proyecto, podemos acordar cómo comprobarlo.
 

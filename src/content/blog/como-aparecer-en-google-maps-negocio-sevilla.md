@@ -7,17 +7,21 @@ tags: ["seo local", "google maps", "sevilla"]
 
 Cuando alguien busca "cerrajero cerca de mí" o "cafetería en Nervión", Google puede mostrar resultados locales en Maps y en la Búsqueda. La posición depende de varios factores y no se puede garantizar; esta guía explica cómo mantener útil y completa la ficha de tu negocio.
 
-## Qué es Google Business Profile (y por qué es gratis)
+## Respuesta corta
+
+Para aparecer en Google Maps necesitas crear o reclamar tu ficha de Google Business Profile, completarla al 100 % con información real y coherente con tu web, y mantenerla activa con reseñas y novedades. Ninguna de estas acciones garantiza una posición concreta, pero sí mejora la información disponible sobre tu negocio.
+
+## ¿Qué es Google Business Profile y por qué es gratis?
 
 Google Business Profile (antes Google My Business) es la ficha de tu negocio en Google: la tarjeta con fotos, horario, reseñas y teléfono que puede aparecer en Maps y en las búsquedas. Mantenerla actualizada ayuda a que los clientes encuentren información práctica del negocio.
 
-## Paso 1: crea o reclama tu ficha
+## ¿Cómo creo o reclamo mi ficha de Google Business Profile?
 
 1. Entra en [google.com/business](https://www.google.com/business/) con una cuenta de Google.
 2. Busca tu negocio: puede que Google ya haya creado una ficha automática. Si existe, reclámala; si no, créala.
 3. Verifica la ficha con uno de los métodos que Google muestre para tu negocio; las opciones dependen del perfil y no siempre se pueden elegir ([métodos de verificación](https://support.google.com/business/answer/7107242?hl=es)).
 
-## Paso 2: complétala al 100 %
+## ¿Qué información debo completar en la ficha?
 
 La información completa y precisa puede ayudar a que el negocio aparezca en búsquedas locales relevantes. Google explica que los resultados dependen principalmente de relevancia, distancia y prominencia; ninguna mejora garantiza una posición concreta ([guía oficial de posicionamiento local](https://support.google.com/business/answer/7091?hl=es)).
 
@@ -28,7 +32,7 @@ La información completa y precisa puede ayudar a que el negocio aparezca en bú
 - **Fotos reales**: fachada, interior, equipo y productos ayudan a mostrar qué ofrece el negocio
 - **Servicios y productos** detallados, con precios si puedes
 
-## Paso 3: consigue reseñas (las que te diferencian)
+## ¿Cómo consigo reseñas que marquen la diferencia?
 
 Las reseñas pueden ayudar a que el negocio destaque y aportan información a posibles clientes. Google recomienda pedirlas sin incentivos y responderlas ([consejos oficiales para conseguir reseñas](https://support.google.com/business/answer/3474122?hl=es)).
 
@@ -37,7 +41,7 @@ Las reseñas pueden ayudar a que el negocio destaque y aportan información a po
 3. **Responde las reseñas** con información útil. Google recomienda responder para mostrar que valoras las opiniones ([consejos oficiales](https://support.google.com/business/answer/7091?hl=es)).
 4. No compres reseñas ni ofrezcas incentivos a cambio: infringe las políticas de Google.
 
-## Paso 4: conecta la ficha con tu página web
+## ¿Cómo conecto la ficha con mi página web?
 
 La ficha y la web se refuerzan mutuamente. Para que Google confíe:
 
@@ -47,7 +51,7 @@ La ficha y la web se refuerzan mutuamente. Para que Google confíe:
 
 Este último punto es donde una web bien hecha marca la diferencia: [así las construyo yo](/diseno-web-sevilla/).
 
-## Paso 5: mantenla viva
+## ¿Cómo mantengo la ficha actualizada?
 
 Mantén la información de la ficha al día:
 

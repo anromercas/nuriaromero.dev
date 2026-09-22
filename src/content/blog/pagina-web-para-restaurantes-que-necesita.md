@@ -7,7 +7,11 @@ tags: ["restaurantes", "diseño web", "sevilla"]
 
 Muchos comensales consultan información online antes de elegir dónde comer, pero el peso de cada canal depende del público y del restaurante. Una web clara y fácil de usar puede ayudar a mostrar la carta, los horarios y las opciones de contacto; no garantiza más reservas por sí sola.
 
-## Lo imprescindible
+## Respuesta corta
+
+Una web de restaurante en Sevilla necesita, como mínimo, una carta digital editable y legible en el móvil, un canal sencillo para reservar o consultar (como WhatsApp) y la información básica bien visible: horario, dirección y contacto. El resto —vídeos, pedidos online propios, animaciones— depende del volumen real del negocio, no es imprescindible desde el primer día.
+
+## ¿Qué es imprescindible en la web de un restaurante?
 
 ### 1. Carta digital que se lea bien en el móvil
 
@@ -33,18 +37,18 @@ Las fotos ayudan a mostrar los platos y el ambiente del local. Prioriza imágene
 
 Horario actualizado (con festivos), dirección con mapa, teléfono pulsable, si tienes terraza, si admites grupos, opciones para alérgenos. Una ficha completa reduce dudas y facilita que cada persona decida si el restaurante se ajusta a lo que busca.
 
-## En qué NO gastar
+## ¿En qué no merece la pena gastar el presupuesto?
 
 - **Vídeos de fondo y animaciones innecesarias**: pueden añadir peso y distraer; comprueba el rendimiento antes de publicarlas.
 - **Música automática**: no. Nunca.
 - **Pedidos online propios desde el día uno**: si no tienes volumen de delivery, es pagar por mantener algo que no se usa. Empieza con carta + reservas y amplía cuando los números lo pidan.
 - **Traducciones automáticas sin revisar**: si recibes clientes de otros idiomas, ofrece traducciones correctas; si no, prioriza el idioma que use tu público.
 
-## Combinar la web con plataformas externas
+## ¿Cómo combino mi web con plataformas externas como TripAdvisor?
 
 TripAdvisor, TheFork y otros directorios pueden aportar visibilidad, pero sus condiciones, funciones y posibles comisiones varían según el servicio y el acuerdo. En tu propia web puedes explicar cómo contactar o reservar directamente; combinarla con perfiles y plataformas externas depende de dónde te encuentre tu público y del coste de cada canal.
 
-## Qué incluyo yo en una web de restaurante
+## ¿Qué incluyo yo en una web para restaurantes?
 
 He preparado una página específica con todo lo que incluye [una web para restaurantes en Sevilla](/web-para-restaurantes-sevilla/): carta digital editable con QR, reservas por WhatsApp, SEO local para tu zona y conexión con Google Maps, con precio orientativo.
 

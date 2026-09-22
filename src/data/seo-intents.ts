@@ -20,7 +20,7 @@ export const intentMatrix: SeoIntentRow[] = [
     titleSignal: "Qué es el GEO",
     descriptionSignal: "Guía práctica",
     h1Signal: "Qué es el GEO",
-    contentSignals: ["Cuatro cosas que puedes hacer ya", "Si quieres que te lo monte alguien"],
+    contentSignals: ["Qué cuatro cosas puedes hacer ya", "Prefieres que te lo monte alguien"],
   },
   {
     url: "/seo-local-sevilla/",
@@ -40,7 +40,7 @@ export const intentMatrix: SeoIntentRow[] = [
     titleSignal: "¿Cuánto cuesta una página web",
     descriptionSignal: "Qué factores influyen en el precio",
     h1Signal: "¿Cuánto cuesta una página web",
-    contentSignals: ["Qué revisar en una propuesta económica", "Las 5 preguntas que debes hacer"],
+    contentSignals: ["Qué debo revisar en una propuesta económica", "Qué preguntas debo hacer antes de contratar"],
   },
   {
     url: "/diseno-web-sevilla/",
