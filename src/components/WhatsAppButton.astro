@@ -10,7 +10,51 @@ import { whatsappUrl } from "@/data/site"
   aria-label="Escríbeme por WhatsApp"
   title="Escríbeme por WhatsApp"
   data-seo12-whatsapp
+  id="whatsapp-floating-button"
   class="fixed bottom-4 right-4 z-40 flex size-12 items-center justify-center rounded-full bg-green-600 text-white shadow-lg transition hover:scale-110 hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 sm:bottom-5 sm:right-5 sm:size-14"
 >
   <WhatsAppIcon class="size-6 sm:size-8" />
 </a>
+
+<style>
+  /*
+   * SEO-17: en mobile, el botón flotante se solapaba geométricamente con el
+   * CTA "Ver qué puedo hacer por tu negocio" del hero de la home (que ya
+   * incluye su propio CTA de WhatsApp inline, por lo que el flotante es
+   * redundante ahí). Se saca del flujo/layout con display:none mientras ese
+   * CTA está en viewport, para eliminar también el solape geométrico
+   * (no solo el visual), sin quitarlo del resto de secciones del sitio.
+   */
+  #whatsapp-floating-button.is-hero-cta-visible {
+    display: none;
+  }
+</style>
+
+<script is:inline>
+  (function initWhatsAppFloatingButtonHeroGuard() {
+    var floatingButton = document.getElementById("whatsapp-floating-button")
+    var heroCta = document.querySelector("[data-seo12-primary-cta]")
+
+    if (!floatingButton || !heroCta || !("IntersectionObserver" in window)) return
+
+    var mobileQuery = window.matchMedia("(max-width: 767px)")
+
+    function setHidden(hidden) {
+      floatingButton.classList.toggle("is-hero-cta-visible", hidden)
+    }
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var entry = entries[0]
+        setHidden(mobileQuery.matches && entry.isIntersecting)
+      },
+      { threshold: 0 },
+    )
+
+    observer.observe(heroCta)
+
+    mobileQuery.addEventListener("change", function (event) {
+      if (!event.matches) setHidden(false)
+    })
+  })()
+</script>
