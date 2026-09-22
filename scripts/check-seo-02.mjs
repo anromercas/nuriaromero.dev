@@ -15,6 +15,19 @@ const pages = [
   { url: "/web-para-abogados-gestorias-sevilla/", breadcrumbName: "Web para despachos y gestorías" },
 ]
 
+// SEO-15: shared Header/Footer nav routes that must also carry a trailing
+// slash on every rendered page, not just the 10 canonical service/niche
+// pages checked above.
+const sharedNavPages = [
+  "/portfolio/",
+  "/blog/",
+  "/sobre-mi/",
+  "/contacto/",
+  "/aviso-legal/",
+  "/privacidad/",
+  "/cookies/",
+]
+
 const withoutSlash = (url) => url.endsWith("/") ? url.slice(0, -1) : url
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 const getSections = (html, tag) => [...html.matchAll(new RegExp(`<${tag}\\b[^>]*>[\\s\\S]*?</${tag}>`, "gi"))].map((match) => match[0])
@@ -105,6 +118,14 @@ for (const file of htmlFiles) {
     }
     if (breadcrumbs.some((breadcrumb) => new RegExp(`(?:["']|\\s)${escapeRegExp(bareUrl)}(?:["'<\\s?#]|$)`).test(breadcrumb))) {
       addFailure(`${relativeFile}: visible breadcrumb URL omits trailing slash (${bareUrl})`)
+    }
+  }
+
+  const navFooterSections = [...getSections(html, "header"), ...getSections(html, "footer")]
+  for (const page of sharedNavPages) {
+    const bareUrl = withoutSlash(page)
+    if (navFooterSections.some((section) => getHrefs(section).some((href) => isBareTargetUrl(href, bareUrl)))) {
+      addFailure(`${relativeFile}: shared nav/footer href omits trailing slash (${bareUrl})`)
     }
   }
 }
