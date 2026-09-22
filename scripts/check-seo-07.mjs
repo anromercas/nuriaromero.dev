@@ -31,13 +31,17 @@ for (const intent of intents.intentMatrix) {
   }
 }
 
-const nicheFaqs = []
-for (const route of intents.nicheRoutes) {
+const extractFaqs = async (route) => {
   const html = await readFile(routeFile(route), "utf8")
+  const faqs = []
   for (const [, question] of html.matchAll(/<summary[^>]*>([\s\S]*?)<\/summary>/g)) {
-    nicheFaqs.push({ route, question: stripHtml(question).trim() })
+    faqs.push({ route, question: stripHtml(question).trim() })
   }
+  return faqs
 }
+
+const nicheFaqs = (await Promise.all(intents.nicheRoutes.map(extractFaqs))).flat()
+
 const duplicateQuestions = new Map()
 for (const faq of nicheFaqs) {
   const routes = duplicateQuestions.get(faq.question) ?? []
@@ -46,6 +50,45 @@ for (const faq of nicheFaqs) {
 }
 for (const [question, routes] of duplicateQuestions) {
   if (new Set(routes).size > 1) errors.push(`niche FAQ is duplicated across routes: "${question}" (${routes.join(", ")})`)
+}
+
+// Near-duplicate FAQ question detection, normalizing away the "en Sevilla" /
+// punctuation noise that makes two otherwise-identical questions look distinct
+// as raw strings (e.g. "¿Cuánto cuesta una tienda online?" vs. "¿Cuánto cuesta
+// una tienda online en Sevilla?"). Two questions are near-duplicates only when
+// their normalized forms are exactly equal — a looser "one contains the other"
+// rule was tried and rejected because it false-flagged legitimately distinct
+// pairs that merely share a question prefix (e.g. "¿Cuánto cuesta una página
+// web para un restaurante?" vs. "¿Cuánto cuesta una página web en Sevilla?",
+// which diverge meaningfully after that shared opening).
+const normalizeQuestion = (question) =>
+  question
+    .toLowerCase()
+    .replace(/[¿?¡!]/g, "")
+    .replace(/\ben sevilla\b/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+
+const isNearDuplicateQuestion = (a, b) => {
+  const normalizedA = normalizeQuestion(a)
+  const normalizedB = normalizeQuestion(b)
+  if (!normalizedA || !normalizedB) return false
+  return normalizedA === normalizedB
+}
+
+// Niche-vs-service near-duplicate check: the loop above only ever compares
+// niche routes against each other (intents.nicheRoutes), so a niche FAQ that
+// near-duplicates a *service* page's FAQ (different route family) was
+// previously invisible to this checker.
+const serviceFaqs = (await Promise.all(intents.serviceRoutes.map(extractFaqs))).flat()
+for (const nicheFaq of nicheFaqs) {
+  for (const serviceFaq of serviceFaqs) {
+    if (isNearDuplicateQuestion(nicheFaq.question, serviceFaq.question)) {
+      errors.push(
+        `niche FAQ near-duplicates a service FAQ: "${nicheFaq.question}" (${nicheFaq.route}) ~= "${serviceFaq.question}" (${serviceFaq.route})`,
+      )
+    }
+  }
 }
 
 for (const linkCheck of intents.reciprocalLinks) {
@@ -65,4 +108,6 @@ if (errors.length) {
   process.exit(1)
 }
 
-console.log(`SEO-07 intent check passed: ${intents.intentMatrix.length} intent rows, ${nicheFaqs.length} niche FAQs and ${intents.reciprocalLinks.length} reciprocal link pairs checked`)
+console.log(
+  `SEO-07 intent check passed: ${intents.intentMatrix.length} intent rows, ${nicheFaqs.length} niche FAQs (incl. niche-vs-service near-duplicate check against ${serviceFaqs.length} service FAQs) and ${intents.reciprocalLinks.length} reciprocal link pairs checked`,
+)

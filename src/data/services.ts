@@ -23,7 +23,7 @@ export const disenoWeb: ServicePageData = {
   sectionTitles: {
     benefits: "Diseño web en Sevilla hecho por una programadora, no con plantillas",
     process: "Así es el proceso de crear tu página web",
-    pricing: "Cuánto cuesta una página web en Sevilla",
+    pricing: "Precio de una página web en Sevilla: desde 149 €",
     faq: "Preguntas frecuentes sobre diseño web en Sevilla",
   },
   benefits: [
@@ -88,8 +88,8 @@ export const disenoWeb: ServicePageData = {
   },
   faqs: [
     {
-      q: "¿Cuánto cuesta una página web en Sevilla?",
-      a: "Para un negocio local en Sevilla, una web profesional suele costar entre 500 y 3.000 €. Trabajo con precio cerrado desde el principio: una landing de una página parte de 149 €, y una web completa de hasta 5 páginas parte de 399 €. Ese precio incluye diseño a medida adaptado a móvil, textos optimizados para SEO local, dominio y hosting el primer año, y un mes de soporte tras el lanzamiento. Sabes exactamente cuánto vas a pagar antes de empezar: nada de letra pequeña ni cuotas que aparecen a mitad de proyecto.",
+      q: "¿Qué incluye el precio cerrado de una página web en Sevilla?",
+      a: "Trabajo siempre con precio cerrado, pactado por escrito antes de empezar: una landing de una página parte de 149 €, y una web completa de hasta 5 páginas parte de 399 €. Ese precio incluye diseño a medida adaptado a móvil, textos optimizados para SEO local, dominio y hosting el primer año, y un mes de soporte tras el lanzamiento. Para un negocio local en Sevilla, una web profesional suele costar entre 500 y 3.000 €, así que estos precios se mueven dentro de ese rango pero quedan cerrados desde el primer día: sabes exactamente cuánto vas a pagar, sin letra pequeña ni cuotas que aparecen a mitad de proyecto.",
     },
     {
       q: "¿Cuánto tiempo se tarda en tener la página web lista?",

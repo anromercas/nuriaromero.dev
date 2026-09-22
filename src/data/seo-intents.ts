@@ -81,6 +81,18 @@ export const nicheRoutes = [
   "/web-para-abogados-gestorias-sevilla/",
 ]
 
+// Service routes rendered from src/data/services.ts. Used to catch near-duplicate
+// FAQ questions between a niche page and a service page (e.g. comercios vs.
+// tienda-online-sevilla), not just niche-vs-niche.
+export const serviceRoutes = [
+  "/diseno-web-sevilla/",
+  "/desarrollo-software-medida/",
+  "/automatizaciones/",
+  "/inteligencia-artificial/",
+  "/seo-local-sevilla/",
+  "/tienda-online-sevilla/",
+]
+
 export const reciprocalLinks = [
   {
     source: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",

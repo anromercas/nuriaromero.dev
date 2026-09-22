@@ -25,7 +25,8 @@ User explicitly authorized executing the backlog "poco a poco" (one task at a ti
 - [x] SEO-16 Consent panel ARIA role, button size, overflow, Tab reachability — `docs/seo-audit/full-audit-2026-09-22/tasks/16-accesibilidad-panel-consentimiento.md`
 - [x] SEO-17 WhatsApp floating button overlap with hero CTA at 360px — `docs/seo-audit/full-audit-2026-09-22/tasks/17-solape-whatsapp-flotante.md`
 - [x] SEO-18 Rewrite templated niche-page FAQ closing — `docs/seo-audit/full-audit-2026-09-22/tasks/18-reescribir-faq-cierre-nicho.md`
-- [ ] SEO-19 through SEO-26 — pending, see `docs/seo-audit/full-audit-2026-09-22/tasks/`
+- [x] SEO-19 Differentiate near-duplicate price FAQ/H2 (comercios/tienda-online, diseño-web/blog) + extend check-seo-07 — `docs/seo-audit/full-audit-2026-09-22/tasks/19-diferenciar-faq-precio-duplicada.md`
+- [ ] SEO-20 through SEO-26 — pending, see `docs/seo-audit/full-audit-2026-09-22/tasks/`
 
 ## Progress evidence
 (updated per task as completed)
@@ -55,5 +56,12 @@ User explicitly authorized executing the backlog "poco a poco" (one task at a ti
   **Verification:** `npm run build` (0 errors) → `check:seo-05` (`4 rendered niche pages have sector headings, sufficiently distinct copy, no explicit guarded claims, and documented shared blocks`) and `check:seo-07` (`6 intent rows, 32 niche FAQs and 2 reciprocal link pairs checked`) both passed. Full available sweep `check:seo-02` through `check:seo-14` (project has 02, 05-14; no 03/04 exist) — all 11 checks passed on the same `dist`, no checker changes needed. `git diff --check -- src/data/niches.ts` clean. Scope confirmed limited to the 4 FAQ closings in `src/data/niches.ts` plus this doc and the task file — no other file touched.
   One commit on `develop`.
 
+- **SEO-19 (2026-09-22):** Two near-duplicate price FAQ/H2 pairs fixed, both structural/textual differentiation only (no ranking claims — that's SEO-14/GSC).
+  1. **Comercios ↔ tienda online (`src/data/niches.ts`):** FAQ `q: "¿Cuánto cuesta una tienda online?"` → `q: "Catálogo o tienda online completa: ¿qué precio tiene cada opción?"`; answer now opens with "Depende de cuál de las dos opciones elijas, porque son dos productos con alcance distinto." before the same unchanged prices (399 € catálogo; tienda online completa sin precio público, presupuesto por alcance). No info removed.
+  2. **Diseño web ↔ blog post (`src/data/services.ts`):** H2 `"Cuánto cuesta una página web en Sevilla"` → `"Precio de una página web en Sevilla: desde 149 €"` (transactional, non-interrogative). FAQ `q: "¿Cuánto cuesta una página web en Sevilla?"` → `q: "¿Qué incluye el precio cerrado de una página web en Sevilla?"`, reserving "¿Cuánto cuesta...? Qué influye en el precio" exclusively for `/blog/cuanto-cuesta-una-pagina-web-en-sevilla/` (already documented in `src/data/seo-intents.ts`'s intent matrix). Answer reordered (price + inclusions first, 500-3.000 € market range after) without removing any data.
+  3. **Extended `scripts/check-seo-07.mjs`:** added `serviceRoutes` to `src/data/seo-intents.ts` (the 6 service routes) and a niche-vs-service near-duplicate comparison, normalizing away "en Sevilla" and punctuation, flagging only exact matches after normalization (a looser "one contains the other" rule was tried first and rejected — it false-flagged the legitimately distinct restaurantes/diseño-web pair, which merely shares a question prefix). RED: run against the unfixed content, it correctly failed with `niche FAQ near-duplicates a service FAQ: "¿Cuánto cuesta una tienda online?" ~= "¿Cuánto cuesta una tienda online en Sevilla?"`. GREEN: after the rewrite, `npm run check:seo-07` passed (32 niche FAQs checked against 60 service FAQs, 0 errors).
+  **Regression:** `npm run build` (0 errors) + `check:seo-02` through `check:seo-14` (11 checks) on the fresh `dist` — all passed, no other checker needed changes (checked `check:seo-05` specifically for niche FAQ regressions, and `check:seo-02`/`check:seo-11` for `/diseno-web-sevilla/` H2/schema structure — none reference the changed H2/FAQ text). `git diff --check` clean. Scope limited to `src/data/niches.ts`, `src/data/services.ts`, `src/data/seo-intents.ts`, `scripts/check-seo-07.mjs` plus these two doc files.
+  One commit on `develop`.
+
 ## Next step
-Implement SEO-19 (see `docs/seo-audit/full-audit-2026-09-22/tasks/19-diferenciar-faq-precio-duplicada.md`). Note: SEO-19 (duplicated price FAQ) and SEO-20 (splitting long FAQ answers) are separate tasks from SEO-18 and were intentionally left untouched in this work unit.
+Implement SEO-20 (splitting long FAQ answers) — see `docs/seo-audit/full-audit-2026-09-22/tasks/20-dividir-faq-largas.md`.
