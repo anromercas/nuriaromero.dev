@@ -27,3 +27,9 @@ pnpm-lock.yaml
 .netlify
 # Local AI runtime state
 .atl/
+.playwright-mcp/
+.codex
+
+# seo-audits
+docs/seo-audit/full-audit-2026-09-21/screenshots/
+docs/seo-audit/keywords
