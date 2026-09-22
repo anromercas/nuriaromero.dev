@@ -85,7 +85,7 @@ export const restaurantes: ServicePageData = {
     },
     {
       q: "¿Cómo consigo que mi restaurante aparezca cuando alguien busca «restaurante cerca de mí» o «dónde comer en mi barrio»?",
-      a: "Esa búsqueda depende sobre todo de tres cosas: que tu ficha de Google Business Profile esté completa y actualizada (horario, fotos, categoría correcta), que tu web tenga los datos estructurados que indican a Google dónde estás y qué ofreces, y que tengas reseñas recientes. La web que te entrego incluye esa base de SEO local para tu zona de Sevilla desde el primer día. Si además quieres un trabajo continuado cada mes (más contenido, seguimiento de tu ficha, ajustes según se mueve tu competencia), tengo un servicio aparte de SEO local que puedes consultar en /seo-local-sevilla. No es obligatorio contratarlo para tener una web bien optimizada: es una opción para quien quiere ir un paso más allá.",
+      a: "Esa búsqueda depende sobre todo de tres cosas: que tu ficha de Google Business Profile esté completa y actualizada (horario, fotos, categoría correcta), que tu web tenga los datos estructurados que indican a Google dónde estás y qué ofreces, y que tengas reseñas recientes. Esa base ya viene incluida en la web que te entrego. Si el mes que viene prefieres no acordarte tú de revisarlo, en /seo-local-sevilla/ cuento cómo llevo ese seguimiento para restaurantes y bares.",
     },
     {
       q: "¿Tengo que indicar los alérgenos en la carta digital?",
@@ -189,7 +189,7 @@ export const clinicas: ServicePageData = {
     },
     {
       q: "¿Cómo consigo que aparezca mi clínica cuando alguien busca mi especialidad cerca de su casa?",
-      a: "Depende sobre todo de tres cosas: que cada tratamiento tenga su propia página bien optimizada (en vez de mezclarlo todo en una sola), que tu ficha de Google Business Profile esté completa y con la categoría correcta, y que tengas reseñas de pacientes gestionadas con regularidad. La web que te entrego incluye esa base de SEO local por especialidad y zona desde el lanzamiento. Si además quieres un trabajo mensual continuado (más contenido, seguimiento de tu ficha, ajustes según se mueva la competencia en tu zona de Sevilla), tengo un servicio aparte de SEO local que puedes consultar en /seo-local-sevilla. No hace falta contratarlo para tener una web bien planteada: es una opción para quien quiere ir sumando visibilidad mes a mes.",
+      a: "Depende sobre todo de tres cosas: que cada tratamiento tenga su propia página bien optimizada (en vez de mezclarlo todo en una sola), que tu ficha de Google Business Profile esté completa y con la categoría correcta, y que tengas reseñas de pacientes gestionadas con regularidad. La web que te entrego ya nace con esa base montada. Para las clínicas que buscan no depender de acordarse cada mes, en /seo-local-sevilla/ explico el seguimiento de SEO local que hago para consultas.",
     },
     {
       q: "¿Puedo mostrar reseñas de pacientes en la web de mi clínica?",
@@ -293,7 +293,7 @@ export const comercios: ServicePageData = {
     },
     {
       q: "¿Cómo consigo que me encuentren los clientes de mi barrio cuando buscan en Google?",
-      a: "Depende sobre todo de que tu ficha de Google Business Profile esté completa (dirección, horario, categoría y fotos correctas), de que tu web tenga los datos estructurados que indican a Google qué vendes y desde dónde, y de tener reseñas recientes de clientes reales. La web que te entrego incluye esa base de SEO local para tu barrio y tu ciudad desde el primer día. Si además quieres un trabajo mensual continuado (más contenido, seguimiento de tu ficha, ajustes según se mueva tu competencia en Sevilla), tengo un servicio aparte de SEO local que puedes consultar en /seo-local-sevilla. No es imprescindible contratarlo para tener una web bien optimizada: es una opción para quien quiere seguir ganando visibilidad mes a mes.",
+      a: "Depende sobre todo de que tu ficha de Google Business Profile esté completa (dirección, horario, categoría y fotos correctas), de que tu web tenga los datos estructurados que indican a Google qué vendes y desde dónde, y de tener reseñas recientes de clientes reales. Ya incluyo esa base en tu web desde el lanzamiento. Quien prefiera no estar pendiente de revisarlo mes a mes encuentra en /seo-local-sevilla/ cómo planteo ese seguimiento para comercios de barrio.",
     },
     {
       q: "¿Qué pasarela de pago se usa en la tienda online y cuánto cobra?",
@@ -397,7 +397,7 @@ export const profesionales: ServicePageData = {
     },
     {
       q: "¿Cómo consigo que me encuentren cuando alguien busca «abogado [especialidad] Sevilla» o «gestoría cerca de mí»?",
-      a: "Depende sobre todo de tres cosas: que cada área de práctica tenga su propia página bien optimizada en vez de mezclarlo todo en un único texto genérico, de que tu ficha de Google Business Profile esté completa y correctamente categorizada, y de tener reseñas de clientes gestionadas con regularidad. La web que te entrego incluye esa base de SEO local por especialidad y zona desde el lanzamiento. Si además quieres un trabajo mensual continuado (más contenido, seguimiento de tu ficha, ajustes según se mueva la competencia en tu zona de Sevilla), tengo un servicio aparte de SEO local que puedes consultar en /seo-local-sevilla. No es necesario contratarlo para tener una web bien planteada: es una opción para quien quiere sumar visibilidad de forma continuada.",
+      a: "Depende sobre todo de tres cosas: que cada área de práctica tenga su propia página bien optimizada en vez de mezclarlo todo en un único texto genérico, de que tu ficha de Google Business Profile esté completa y correctamente categorizada, y de tener reseñas de clientes gestionadas con regularidad. En la web ya queda resuelta esa base desde el primer día. Los despachos que buscan un seguimiento constante, en lugar de revisarlo ellos mismos, encuentran en /seo-local-sevilla/ cómo planteo ese trabajo mensual para despachos y gestorías.",
     },
     {
       q: "¿Es seguro que un cliente rellene el formulario de consulta con datos de su caso?",
