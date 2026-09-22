@@ -8,11 +8,15 @@ const { faqs } = Astro.props
 const splitAnswer = (answer: string) => {
   const match = answer.match(/^[\s\S]*?[.!?](?=\s|$)/)
 
-  if (!match) return { lead: answer, context: "" }
+  if (!match) return { lead: answer, context: [] as string[] }
+
+  const rest = answer.slice(match[0].length).trim()
 
   return {
     lead: match[0],
-    context: answer.slice(match[0].length).trim(),
+    // Context can contain one dense block or, when the data uses a blank-line
+    // separator, multiple shorter paragraphs for easier scanning (SEO-20).
+    context: rest ? rest.split(/\n\s*\n/).map((paragraph) => paragraph.trim()).filter(Boolean) : [],
   }
 }
 ---
@@ -29,7 +33,9 @@ const splitAnswer = (answer: string) => {
         </summary>
         <div class="mt-3 max-w-prose space-y-3 text-gray-700 dark:text-gray-400">
           <p><strong class="font-semibold text-gray-900 dark:text-gray-100">{splitAnswer(faq.a).lead}</strong></p>
-          {splitAnswer(faq.a).context && <p>{splitAnswer(faq.a).context}</p>}
+          {splitAnswer(faq.a).context.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
         </div>
       </details>
     ))

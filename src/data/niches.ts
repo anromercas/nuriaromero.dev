@@ -69,7 +69,7 @@ export const restaurantes: ServicePageData = {
   faqs: [
     {
       q: "¿Cuánto cuesta una página web para un restaurante?",
-      a: "Una web completa para restaurante o bar, con carta digital editable, botón de reservas por WhatsApp y SEO local para tu zona, parte de 399 €, con dominio y hosting incluidos el primer año. Si solo necesitas algo más sencillo para arrancar, una landing de una página parte de 149 €. El precio se cierra por escrito antes de empezar, así que sabes exactamente cuánto vas a pagar sin sorpresas a mitad de proyecto. Funcionalidades adicionales, como reservas online con confirmación automática, pedidos para llevar o integración con TPV, se presupuestan aparte según lo que necesite tu local. En la primera conversación te digo qué encaja mejor con tu restaurante y con tu presupuesto, sin empujarte hacia la opción más cara si no la necesitas.",
+      a: "Una web completa para restaurante o bar, con carta digital editable, botón de reservas por WhatsApp y SEO local para tu zona, parte de 399 €, con dominio y hosting incluidos el primer año.\n\nSi solo necesitas algo más sencillo para arrancar, una landing de una página parte de 149 €. El precio se cierra por escrito antes de empezar, así que sabes exactamente cuánto vas a pagar sin sorpresas a mitad de proyecto.\n\nFuncionalidades adicionales, como reservas online con confirmación automática, pedidos para llevar o integración con TPV, se presupuestan aparte según lo que necesite tu local. En la primera conversación te digo qué encaja mejor con tu restaurante y con tu presupuesto, sin empujarte hacia la opción más cara si no la necesitas.",
     },
     {
       q: "¿Puedo actualizar la carta yo mismo?",
@@ -81,7 +81,7 @@ export const restaurantes: ServicePageData = {
     },
     {
       q: "¿Me ayudas también con las reseñas de Google?",
-      a: "Sí. Como parte del lanzamiento configuro tu ficha de Google Business Profile y te genero un enlace directo para pedir reseñas a tus clientes, que puedes compartir por WhatsApp, imprimir en un cartel de mesa o incluir en el ticket. También puedo automatizar el envío de ese enlace tras la reserva o la visita, para que pedir reseñas no dependa de que te acuerdes en el momento. Las reseñas son uno de los factores que más pesan en cómo aparece tu restaurante en Google Maps frente a otros locales de tu zona, así que cuidarlas de forma constante suele notarse más que cualquier ajuste puntual. Lo que no puedo controlar es lo que opine cada cliente, solo facilitar que los contentos se animen a dejar su reseña.",
+      a: "Sí. Como parte del lanzamiento configuro tu ficha de Google Business Profile y te genero un enlace directo para pedir reseñas a tus clientes, que puedes compartir por WhatsApp, imprimir en un cartel de mesa o incluir en el ticket. También puedo automatizar el envío de ese enlace tras la reserva o la visita, para que pedir reseñas no dependa de que te acuerdes en el momento.\n\nLas reseñas son uno de los factores que más pesan en cómo aparece tu restaurante en Google Maps frente a otros locales de tu zona, así que cuidarlas de forma constante suele notarse más que cualquier ajuste puntual. Lo que no puedo controlar es lo que opine cada cliente, solo facilitar que los contentos se animen a dejar su reseña.",
     },
     {
       q: "¿Cómo consigo que mi restaurante aparezca cuando alguien busca «restaurante cerca de mí» o «dónde comer en mi barrio»?",
@@ -177,7 +177,7 @@ export const clinicas: ServicePageData = {
     },
     {
       q: "¿Cuánto cuesta la web de una clínica?",
-      a: "Una web de consulta con una página por tratamiento, botón de cita por WhatsApp o integración con tu sistema de citas y SEO local por especialidad parte de 399 €, con dominio y hosting incluidos el primer año. El precio se cierra por escrito antes de empezar, así que sabes exactamente en qué se traduce esa cifra. Clínicas con muchas especialidades, varios profesionales o integración con un software de gestión de citas más complejo se presupuestan aparte, siempre con precio cerrado y sin sorpresas a mitad de proyecto. En la primera conversación repasamos tus tratamientos actuales y te digo con sinceridad si te conviene empezar con una web más sencilla e ir ampliando página a página, o si merece la pena lanzar todo el catálogo de especialidades desde el principio.",
+      a: "Una web de consulta con una página por tratamiento, botón de cita por WhatsApp o integración con tu sistema de citas y SEO local por especialidad parte de 399 €, con dominio y hosting incluidos el primer año. El precio se cierra por escrito antes de empezar, así que sabes exactamente en qué se traduce esa cifra.\n\nClínicas con muchas especialidades, varios profesionales o integración con un software de gestión de citas más complejo se presupuestan aparte, siempre con precio cerrado y sin sorpresas a mitad de proyecto.\n\nEn la primera conversación repasamos tus tratamientos actuales y te digo con sinceridad si te conviene empezar con una web más sencilla e ir ampliando página a página, o si merece la pena lanzar todo el catálogo de especialidades desde el principio.",
     },
     {
       q: "¿Puede integrarse con Doctoralia o mi programa de citas?",
@@ -185,7 +185,7 @@ export const clinicas: ServicePageData = {
     },
     {
       q: "¿Cómo tratáis los datos de los pacientes?",
-      a: "Los formularios de contacto y cita se configuran con consentimiento explícito, aviso de privacidad y conexión segura (HTTPS), y te entrego un resumen claro de qué datos se recogen, dónde se almacenan y con qué finalidad, como apoyo para tu registro de actividades de tratamiento. En el sector salud esto es especialmente delicado porque a menudo se manejan datos de categoría especial, así que evito pedir en el formulario web más información de la estrictamente necesaria para gestionar la cita. Dicho esto, la validación legal completa del tratamiento de datos de tu clínica (textos legales específicos, análisis de riesgo, medidas técnicas concretas) debe revisarla tu asesoría o tu delegado de protección de datos: mi trabajo deja la base técnica bien montada, pero no sustituye ese asesoramiento legal especializado.",
+      a: "Los formularios de contacto y cita se configuran con consentimiento explícito, aviso de privacidad y conexión segura (HTTPS), y te entrego un resumen claro de qué datos se recogen, dónde se almacenan y con qué finalidad, como apoyo para tu registro de actividades de tratamiento. En el sector salud esto es especialmente delicado porque a menudo se manejan datos de categoría especial, así que evito pedir en el formulario web más información de la estrictamente necesaria para gestionar la cita.\n\nDicho esto, la validación legal completa del tratamiento de datos de tu clínica (textos legales específicos, análisis de riesgo, medidas técnicas concretas) debe revisarla tu asesoría o tu delegado de protección de datos: mi trabajo deja la base técnica bien montada, pero no sustituye ese asesoramiento legal especializado.",
     },
     {
       q: "¿Cómo consigo que aparezca mi clínica cuando alguien busca mi especialidad cerca de su casa?",
@@ -281,7 +281,7 @@ export const comercios: ServicePageData = {
     },
     {
       q: "Catálogo o tienda online completa: ¿qué precio tiene cada opción?",
-      a: "Depende de cuál de las dos opciones elijas, porque son dos productos con alcance distinto. Una web de catálogo (fotos, precios y encargos por WhatsApp) parte de 399 €, con dominio y hosting incluidos el primer año. Una tienda online completa con pasarela de pago y gestión de envíos se presupuesta aparte según el número de productos y las funciones que necesites (variantes de talla o color, descuentos, gestión de stock…), porque el trabajo cambia mucho entre un catálogo de 20 productos y uno de 500. En ambos casos el precio se cierra por escrito antes de empezar. Si no tienes claro cuántos productos vas a subir al principio, podemos arrancar con un catálogo reducido de los productos que más vendes e ir ampliándolo con el tiempo, en vez de intentar meterlo todo desde el primer día.",
+      a: "Depende de cuál de las dos opciones elijas, porque son dos productos con alcance distinto. Una web de catálogo (fotos, precios y encargos por WhatsApp) parte de 399 €, con dominio y hosting incluidos el primer año.\n\nUna tienda online completa con pasarela de pago y gestión de envíos se presupuesta aparte según el número de productos y las funciones que necesites (variantes de talla o color, descuentos, gestión de stock…), porque el trabajo cambia mucho entre un catálogo de 20 productos y uno de 500. En ambos casos el precio se cierra por escrito antes de empezar.\n\nSi no tienes claro cuántos productos vas a subir al principio, podemos arrancar con un catálogo reducido de los productos que más vendes e ir ampliándolo con el tiempo, en vez de intentar meterlo todo desde el primer día.",
     },
     {
       q: "¿Podré gestionar los productos yo mismo?",
@@ -385,7 +385,7 @@ export const profesionales: ServicePageData = {
     },
     {
       q: "¿Cuánto cuesta la web de un despacho o gestoría?",
-      a: "Una web profesional con páginas por área de práctica, formulario de consulta con filtrado previo y SEO local parte de 399 €, con dominio y hosting incluidos el primer año y presupuesto cerrado por escrito antes de empezar. Despachos con muchas áreas de práctica, varios socios con perfil propio o necesidades específicas (por ejemplo, un blog jurídico extenso desde el lanzamiento) se presupuestan aparte, siempre con precio fijo, no por horas. En la primera conversación repasamos tus áreas actuales y priorizamos cuáles conviene lanzar primero: no hace falta cubrir todas las especialidades del despacho desde el día uno, se puede empezar por las que más consultas os traen y ampliar más adelante sin rehacer la web entera.",
+      a: "Una web profesional con páginas por área de práctica, formulario de consulta con filtrado previo y SEO local parte de 399 €, con dominio y hosting incluidos el primer año y presupuesto cerrado por escrito antes de empezar.\n\nDespachos con muchas áreas de práctica, varios socios con perfil propio o necesidades específicas (por ejemplo, un blog jurídico extenso desde el lanzamiento) se presupuestan aparte, siempre con precio fijo, no por horas.\n\nEn la primera conversación repasamos tus áreas actuales y priorizamos cuáles conviene lanzar primero: no hace falta cubrir todas las especialidades del despacho desde el día uno, se puede empezar por las que más consultas os traen y ampliar más adelante sin rehacer la web entera.",
     },
     {
       q: "¿Quién escribe los textos legales de la web?",

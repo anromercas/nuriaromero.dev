@@ -89,11 +89,11 @@ export const disenoWeb: ServicePageData = {
   faqs: [
     {
       q: "¿Qué incluye el precio cerrado de una página web en Sevilla?",
-      a: "Trabajo siempre con precio cerrado, pactado por escrito antes de empezar: una landing de una página parte de 149 €, y una web completa de hasta 5 páginas parte de 399 €. Ese precio incluye diseño a medida adaptado a móvil, textos optimizados para SEO local, dominio y hosting el primer año, y un mes de soporte tras el lanzamiento. Para un negocio local en Sevilla, una web profesional suele costar entre 500 y 3.000 €, así que estos precios se mueven dentro de ese rango pero quedan cerrados desde el primer día: sabes exactamente cuánto vas a pagar, sin letra pequeña ni cuotas que aparecen a mitad de proyecto.",
+      a: "Trabajo siempre con precio cerrado, pactado por escrito antes de empezar: una landing de una página parte de 149 €, y una web completa de hasta 5 páginas parte de 399 €. Ese precio incluye diseño a medida adaptado a móvil, textos optimizados para SEO local, dominio y hosting el primer año, y un mes de soporte tras el lanzamiento.\n\nPara un negocio local en Sevilla, una web profesional suele costar entre 500 y 3.000 €, así que estos precios se mueven dentro de ese rango pero quedan cerrados desde el primer día: sabes exactamente cuánto vas a pagar, sin letra pequeña ni cuotas que aparecen a mitad de proyecto.",
     },
     {
       q: "¿Cuánto tiempo se tarda en tener la página web lista?",
-      a: "Una web de negocio local suele estar lista en 2 a 4 semanas, contando desde que tengo todos los contenidos: textos, fotos y logo. Si necesitas ayuda para redactar los textos, los escribo yo misma ya optimizados para Google, aunque eso puede sumar unos días. Una landing de una sola página suele ir más rápido que una web completa de 5 páginas, simplemente porque hay menos contenido que preparar y revisar contigo. El plazo exacto siempre se cierra en la propuesta inicial, junto con el precio, así que lo sabes desde el primer día.",
+      a: "Una web de negocio local suele estar lista en 2 a 4 semanas, contando desde que tengo todos los contenidos: textos, fotos y logo. Si necesitas ayuda para redactar los textos, los escribo yo misma ya optimizados para Google, aunque eso puede sumar unos días.\n\nUna landing de una sola página suele ir más rápido que una web completa de 5 páginas, simplemente porque hay menos contenido que preparar y revisar contigo. El plazo exacto siempre se cierra en la propuesta inicial, junto con el precio, así que lo sabes desde el primer día.",
     },
     {
       q: "¿Qué diferencia hay entre una web hecha a medida y una hecha con Wix o una plantilla de WordPress?",
@@ -117,7 +117,7 @@ export const disenoWeb: ServicePageData = {
     },
     {
       q: "¿Qué incluye exactamente el precio de 399 € de la web completa?",
-      a: "Los 399 € de la web completa incluyen: hasta 5 páginas (inicio, servicios, sobre mí, contacto y lo que necesite tu negocio), diseño a medida adaptado a móvil, textos optimizados para SEO local y para las búsquedas de tu zona en Sevilla, botón de WhatsApp y formulario de contacto, alta en Google Search Console y en Google Business Profile, dominio y hosting durante el primer año, y un mes de soporte tras el lanzamiento. Si necesitas algo adicional, como una tienda online completa con pasarela de pago, se presupuesta aparte y siempre con precio cerrado antes de empezar.",
+      a: "Los 399 € de la web completa incluyen: hasta 5 páginas (inicio, servicios, sobre mí, contacto y lo que necesite tu negocio), diseño a medida adaptado a móvil, textos optimizados para SEO local y para las búsquedas de tu zona en Sevilla, botón de WhatsApp y formulario de contacto, alta en Google Search Console y en Google Business Profile, dominio y hosting durante el primer año, y un mes de soporte tras el lanzamiento.\n\nSi necesitas algo adicional, como una tienda online completa con pasarela de pago, se presupuesta aparte y siempre con precio cerrado antes de empezar.",
     },
     {
       q: "Ya tengo una página web pero no me está funcionando, ¿qué puedo hacer?",
@@ -207,7 +207,7 @@ export const desarrolloSoftware: ServicePageData = {
     },
     {
       q: "¿Cuánto cuesta desarrollar software a medida en Sevilla?",
-      a: "El desarrollo de software a medida parte de 999 € para una herramienta interna sencilla, y los proyectos más completos se presupuestan por fases: primero analizo tu caso, y después te doy un precio cerrado para cada fase antes de empezarla, nunca una cifra global a ciegas. Esto te permite empezar por la parte que más tiempo o dinero te está haciendo perder, comprobar el resultado, y decidir después si amplías con nuevas funciones. El coste final depende de cuántas pantallas, integraciones con otras herramientas y usuarios necesita tu proyecto, algo que se concreta en la primera reunión de análisis.",
+      a: "El desarrollo de software a medida parte de 999 € para una herramienta interna sencilla, y los proyectos más completos se presupuestan por fases: primero analizo tu caso, y después te doy un precio cerrado para cada fase antes de empezarla, nunca una cifra global a ciegas.\n\nEsto te permite empezar por la parte que más tiempo o dinero te está haciendo perder, comprobar el resultado, y decidir después si amplías con nuevas funciones. El coste final depende de cuántas pantallas, integraciones con otras herramientas y usuarios necesita tu proyecto, algo que se concreta en la primera reunión de análisis.",
     },
     {
       q: "¿No me vale con un Excel o un programa estándar?",
@@ -219,7 +219,7 @@ export const desarrolloSoftware: ServicePageData = {
     },
     {
       q: "¿Cuánto tiempo se tarda en desarrollar una aplicación a medida?",
-      a: "El plazo depende del alcance que definimos en la fase de análisis. Una herramienta sencilla, con una o dos funciones concretas (por ejemplo, un sistema de reservas o un control de pedidos), suele estar lista en unas pocas semanas. Un sistema más completo, con varios módulos y usuarios distintos, se desarrolla y entrega por fases, de forma que puedas empezar a usar cada parte según va estando terminada, en vez de esperar meses para ver el resultado. El plazo exacto de cada fase se cierra por escrito junto con el precio, antes de empezar a desarrollar esa fase.",
+      a: "El plazo depende del alcance que definimos en la fase de análisis. Una herramienta sencilla, con una o dos funciones concretas (por ejemplo, un sistema de reservas o un control de pedidos), suele estar lista en unas pocas semanas.\n\nUn sistema más completo, con varios módulos y usuarios distintos, se desarrolla y entrega por fases, de forma que puedas empezar a usar cada parte según va estando terminada, en vez de esperar meses para ver el resultado. El plazo exacto de cada fase se cierra por escrito junto con el precio, antes de empezar a desarrollar esa fase.",
     },
     {
       q: "¿Qué diferencia hay entre contratar software a medida y usar un programa SaaS con licencia mensual?",
@@ -325,11 +325,11 @@ export const automatizaciones: ServicePageData = {
     },
     {
       q: "¿Cuánto cuesta automatizar un proceso de mi negocio?",
-      a: "El precio parte de 149 € por automatización, e incluye la auditoría de esa tarea concreta, el diseño e implementación del flujo, las pruebas con casos reales de tu negocio y la documentación. Si necesitas automatizar varias tareas a la vez, los packs de varias automatizaciones tienen descuento sobre el precio individual. El coste final de cada automatización depende de cuántas herramientas hay que conectar y de qué tan compleja sea la lógica del proceso (por ejemplo, si hay que tomar decisiones distintas según el caso), algo que se concreta después de la auditoría inicial.",
+      a: "El precio parte de 149 € por automatización, e incluye la auditoría de esa tarea concreta, el diseño e implementación del flujo, las pruebas con casos reales de tu negocio y la documentación. Si necesitas automatizar varias tareas a la vez, los packs de varias automatizaciones tienen descuento sobre el precio individual.\n\nEl coste final de cada automatización depende de cuántas herramientas hay que conectar y de qué tan compleja sea la lógica del proceso (por ejemplo, si hay que tomar decisiones distintas según el caso), algo que se concreta después de la auditoría inicial.",
     },
     {
       q: "¿Cuánto tiempo se tarda en tener lista una automatización?",
-      a: "Depende de cuántas herramientas conecta y de qué tan compleja sea la lógica del proceso. Una automatización sencilla, como enviar un recordatorio de cita o volcar un formulario a una hoja de cálculo, suele estar lista en pocos días desde que se aprueba la propuesta. Procesos con varios pasos condicionales o que conectan tres o cuatro herramientas distintas necesitan algo más de tiempo, porque incluyen una fase de pruebas con casos reales antes de dejarlas funcionando en tu día a día. El plazo se concreta en la propuesta priorizada, junto con el precio.",
+      a: "Depende de cuántas herramientas conecta y de qué tan compleja sea la lógica del proceso. Una automatización sencilla, como enviar un recordatorio de cita o volcar un formulario a una hoja de cálculo, suele estar lista en pocos días desde que se aprueba la propuesta.\n\nProcesos con varios pasos condicionales o que conectan tres o cuatro herramientas distintas necesitan algo más de tiempo, porque incluyen una fase de pruebas con casos reales antes de dejarlas funcionando en tu día a día. El plazo se concreta en la propuesta priorizada, junto con el precio.",
     },
     {
       q: "¿Qué pasa si una automatización falla o hay un error a mitad de proceso?",
@@ -427,7 +427,7 @@ export const inteligenciaArtificial: ServicePageData = {
     },
     {
       q: "¿Cuánto cuesta implantar IA en mi negocio?",
-      a: "Un chatbot para web o WhatsApp parte de 399 €, incluyendo el análisis del caso de uso, la prueba piloto con tus datos reales, la integración con tu web o WhatsApp y la configuración respetuosa con el RGPD. Los proyectos que combinan IA con automatizaciones (por ejemplo, un chatbot que además genera un pedido o una cita automáticamente) se presupuestan según el caso concreto, porque el coste depende de cuántas herramientas hay que conectar. En todos los casos, la prueba piloto previa te permite ver cómo responde la IA con tu información real antes de decidir si sigues adelante.",
+      a: "Un chatbot para web o WhatsApp parte de 399 €, incluyendo el análisis del caso de uso, la prueba piloto con tus datos reales, la integración con tu web o WhatsApp y la configuración respetuosa con el RGPD.\n\nLos proyectos que combinan IA con automatizaciones (por ejemplo, un chatbot que además genera un pedido o una cita automáticamente) se presupuestan según el caso concreto, porque el coste depende de cuántas herramientas hay que conectar. En todos los casos, la prueba piloto previa te permite ver cómo responde la IA con tu información real antes de decidir si sigues adelante.",
     },
     {
       q: "¿Qué diferencia hay entre un chatbot con IA y los chatbots clásicos de \"elige una opción\"?",
@@ -435,7 +435,7 @@ export const inteligenciaArtificial: ServicePageData = {
     },
     {
       q: "¿Cuánto tiempo se tarda en tener un chatbot con IA funcionando?",
-      a: "El proceso empieza con el análisis del caso de uso y sigue con una prueba piloto montada con la información real de tu negocio, algo que suele tardar entre una y dos semanas según cuánta información haya que preparar (servicios, precios, horarios, preguntas frecuentes). A partir de ahí, ajustamos las respuestas con casos reales antes de conectarlo a tu web o WhatsApp de forma definitiva. El plazo exacto depende de si la información de tu negocio ya está organizada o hay que recopilarla primero, algo que se aclara en la primera reunión.",
+      a: "El proceso empieza con el análisis del caso de uso y sigue con una prueba piloto montada con la información real de tu negocio, algo que suele tardar entre una y dos semanas según cuánta información haya que preparar (servicios, precios, horarios, preguntas frecuentes).\n\nA partir de ahí, ajustamos las respuestas con casos reales antes de conectarlo a tu web o WhatsApp de forma definitiva. El plazo exacto depende de si la información de tu negocio ya está organizada o hay que recopilarla primero, algo que se aclara en la primera reunión.",
     },
     {
       q: "¿Puedo probar el chatbot antes de decidir si lo contrato de verdad?",
@@ -553,7 +553,7 @@ export const seoLocal: ServicePageData = {
     },
     {
       q: "¿Cuánto cuesta el SEO local en Sevilla?",
-      a: "El proyecto inicial tiene un precio cerrado de 299 € e incluye la auditoría de tu negocio y tu competencia, la configuración de tu ficha de Google Business Profile, los datos estructurados de tu web y las primeras FAQs pensadas para que te citen los buscadores con inteligencia artificial. Después, si decides seguir con el trabajo mensual, hay dos tiers recurrentes: Básico desde 199 €/mes, pensado para sectores con poca competencia en tu zona, y Competitivo desde 349 €/mes, para sectores más disputados en Sevilla, con más piezas de contenido y optimización más frecuente. No hay obligación de continuar después del proyecto inicial: decides con datos reales delante, no a ciegas.",
+      a: "El proyecto inicial tiene un precio cerrado de 299 € e incluye la auditoría de tu negocio y tu competencia, la configuración de tu ficha de Google Business Profile, los datos estructurados de tu web y las primeras FAQs pensadas para que te citen los buscadores con inteligencia artificial.\n\nDespués, si decides seguir con el trabajo mensual, hay dos tiers recurrentes: Básico desde 199 €/mes, pensado para sectores con poca competencia en tu zona, y Competitivo desde 349 €/mes, para sectores más disputados en Sevilla, con más piezas de contenido y optimización más frecuente. No hay obligación de continuar después del proyecto inicial: decides con datos reales delante, no a ciegas.",
     },
     {
       q: "¿Qué es el GEO y por qué me interesa si ya hago SEO?",
@@ -561,7 +561,7 @@ export const seoLocal: ServicePageData = {
     },
     {
       q: "¿Cuánto tiempo se tarda en ver resultados con el SEO local?",
-      a: "El SEO local suele moverse más rápido que el SEO general porque compites por búsquedas más concretas y contra menos negocios, pero sigue sin ser instantáneo: los primeros cambios (ficha de Google Business Profile, datos estructurados) pueden reflejarse en semanas, mientras que una mejora sólida y estable en tu posicionamiento suele necesitar varios meses de trabajo continuado, por eso el recurrente sugiere un compromiso mínimo de tres meses. No puedo prometerte una fecha exacta ni una posición concreta, porque depende también de tu sector y de lo que haga tu competencia, pero sí puedo enseñarte cada mes qué se ha hecho y qué oportunidades se han detectado.",
+      a: "El SEO local suele moverse más rápido que el SEO general porque compites por búsquedas más concretas y contra menos negocios, pero sigue sin ser instantáneo: los primeros cambios (ficha de Google Business Profile, datos estructurados) pueden reflejarse en semanas, mientras que una mejora sólida y estable en tu posicionamiento suele necesitar varios meses de trabajo continuado, por eso el recurrente sugiere un compromiso mínimo de tres meses.\n\nNo puedo prometerte una fecha exacta ni una posición concreta, porque depende también de tu sector y de lo que haga tu competencia, pero sí puedo enseñarte cada mes qué se ha hecho y qué oportunidades se han detectado.",
     },
     {
       q: "¿Me garantizas que voy a salir en la primera página de Google?",
@@ -569,7 +569,7 @@ export const seoLocal: ServicePageData = {
     },
     {
       q: "¿Qué incluye exactamente el proyecto inicial de 299 €?",
-      a: "El proyecto inicial de 299 € incluye una auditoría de tu negocio y de tu competencia directa en Sevilla, la alta o corrección de tu ficha de Google Business Profile (la que aparece en Google Maps), los datos estructurados de tu web para que Google entienda claramente qué ofreces y desde dónde, y las primeras FAQs redactadas para que puedan citarte los buscadores con inteligencia artificial. Es un precio cerrado, sin sorpresas, y no obliga a contratar nada después: al terminar tienes la base técnica lista y decides tú si quieres seguir con el trabajo mensual recurrente o no.",
+      a: "El proyecto inicial de 299 € incluye una auditoría de tu negocio y de tu competencia directa en Sevilla, la alta o corrección de tu ficha de Google Business Profile (la que aparece en Google Maps), los datos estructurados de tu web para que Google entienda claramente qué ofreces y desde dónde, y las primeras FAQs redactadas para que puedan citarte los buscadores con inteligencia artificial.\n\nEs un precio cerrado, sin sorpresas, y no obliga a contratar nada después: al terminar tienes la base técnica lista y decides tú si quieres seguir con el trabajo mensual recurrente o no.",
     },
     {
       q: "¿En qué se diferencia el tier Básico del Competitivo, y cuál me conviene?",
@@ -670,7 +670,7 @@ export const tiendaOnline: ServicePageData = {
   faqs: [
     {
       q: "¿Cuánto cuesta una tienda online en Sevilla?",
-      a: "No existe un precio único de tienda online, porque el coste depende directamente de cuántos productos vas a vender, si necesitas variantes (talla, color, modelo…), gestión de stock y qué pasarela de pago quieres usar. El punto de partida es la web completa desde 399 €, sobre la que se construye la estructura de categorías y fichas de producto; la integración de la pasarela de pago y las funciones específicas de venta online se presupuestan aparte, siempre con precio cerrado por escrito después de conocer tu catálogo, antes de que empieces a pagar nada.",
+      a: "No existe un precio único de tienda online, porque el coste depende directamente de cuántos productos vas a vender, si necesitas variantes (talla, color, modelo…), gestión de stock y qué pasarela de pago quieres usar.\n\nEl punto de partida es la web completa desde 399 €, sobre la que se construye la estructura de categorías y fichas de producto; la integración de la pasarela de pago y las funciones específicas de venta online se presupuestan aparte, siempre con precio cerrado por escrito después de conocer tu catálogo, antes de que empieces a pagar nada.",
     },
     {
       q: "¿Qué pasarelas de pago se pueden integrar en mi tienda online?",
@@ -690,7 +690,7 @@ export const tiendaOnline: ServicePageData = {
     },
     {
       q: "¿Cuánto tiempo se tarda en tener la tienda online lista?",
-      a: "Una tienda online suele necesitar algo más de tiempo que una web informativa, porque hay que cargar y revisar cada ficha de producto además de construir la estructura general. El plazo concreto depende de cuántos productos tengas y de si tu catálogo ya está preparado (fotos, descripciones, precios) o hay que organizarlo primero. El plazo exacto, igual que el precio, se cierra por escrito en la propuesta inicial después de conocer el alcance de tu catálogo, así que lo sabes desde el primer día y no a mitad de proyecto.",
+      a: "Una tienda online suele necesitar algo más de tiempo que una web informativa, porque hay que cargar y revisar cada ficha de producto además de construir la estructura general. El plazo concreto depende de cuántos productos tengas y de si tu catálogo ya está preparado (fotos, descripciones, precios) o hay que organizarlo primero.\n\nEl plazo exacto, igual que el precio, se cierra por escrito en la propuesta inicial después de conocer el alcance de tu catálogo, así que lo sabes desde el primer día y no a mitad de proyecto.",
     },
     {
       q: "¿Quién sube los productos a la tienda una vez está lista, tú o yo?",
