@@ -19,7 +19,18 @@ test('does not load analytics before affirmative consent', () => {
   const { controller, scripts, calls } = setup()
   controller.initialize()
   assert.deepEqual(scripts, [])
-  assert.deepEqual(calls, [])
+  assert.deepEqual(calls, [
+    [
+      'consent',
+      'default',
+      {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+      },
+    ],
+  ])
 })
 
 test('acceptance persists consent and loads GA with advertising consent denied', () => {
