@@ -30,7 +30,8 @@ User explicitly authorized executing the backlog "poco a poco" (one task at a ti
 - [x] SEO-21 Bridges between adjacent commercial pages (tienda-online ↔ comercios) + niche links from diseño-web/SEO-local — `docs/seo-audit/full-audit-2026-09-22/tasks/21-puentes-navegacion-paginas-comerciales.md`
 - [x] SEO-22 Absolute URL in niche FAQ + llms.txt editorial coverage — `docs/seo-audit/full-audit-2026-09-22/tasks/22-enlace-absoluto-llms-txt.md`
 - [x] SEO-23 Question-format H2s + short-answer blocks in 3 blog posts, GEO H2 rewrite, comparison tables in GEO post and `/seo-local-sevilla/` — `docs/seo-audit/full-audit-2026-09-22/tasks/23-estructura-geo-posts-blog.md`
-- [ ] SEO-24 through SEO-26 — pending, see `docs/seo-audit/full-audit-2026-09-22/tasks/`
+- [x] SEO-24 Reforzar "agencia" en `/seo-local-sevilla/` sin tocar el H1 de marca — `docs/seo-audit/full-audit-2026-09-22/tasks/24-reforzar-agencia-seo-local.md`
+- [ ] SEO-25 through SEO-26 — pending, see `docs/seo-audit/full-audit-2026-09-22/tasks/`
 
 ## Progress evidence
 (updated per task as completed)
@@ -115,5 +116,13 @@ User explicitly authorized executing the backlog "poco a poco" (one task at a ti
   **Verification:** `npm run build` (0 errors) → full `check:seo-02` through `check:seo-14` sweep (11 checks) on fresh `dist` — all passed (initial run surfaced the `check:seo-07` signal-string mismatch above; fixed, rebuilt, reran — all green, including `check:seo-08`'s GEO-specific "Respuesta corta" heading assertion). `git diff --check` clean. Manual re-read of every new/changed H2, respuesta-corta paragraph, and table cell against `.agents/product-marketing-context.md`: no invented figures, timeframes, guarantees, or ranking claims found; both tables state explicitly that no tier/discipline guarantees a Google position. Video/infographic production untouched (out of scope per task doc). Scope limited to the 3 blog posts, the GEO post, `seo-local-sevilla.astro`, `seo-intents.ts`, plus these two doc files; unrelated untracked files (`research/`, `.seo-cache/`) left untouched.
   One commit on `develop`.
 
+- **SEO-24 (2026-09-22):** `/seo-local-sevilla/`'s `<title>` and H1 use only "SEO local en Sevilla" (500 búsquedas/mes), never "agencia" — but 9/9 real Google organic results for "agencia SEO Sevilla" (5.000/mes) use the word literally in title or domain. Brand-positioning decision in `.agents/product-marketing-context.md` (Nuria is freelance, not an agency) explicitly keeps "agencia" out of the H1, so the fix adds the term as supporting vocabulary instead of changing the brand H1.
+  **Fix** — `src/pages/seo-local-sevilla.astro`: added a new `SectionContainer`/H2 as the very first block inside the `before-benefits` fragment (i.e. the first H2 on the page, right after the H1/hero), pushing the existing "¿Sales en Google...?" H2 down one position:
+  - New H2: *"SEO local en Sevilla sin agencia: trato directo con quien hace el trabajo"*
+  - New paragraph: *"No soy una agencia con varios departamentos y comerciales entre medias: hablas conmigo, la misma persona que audita tu negocio, configura tu ficha de Google Business Profile y programa los datos estructurados de tu web. Precio cerrado desde el principio, sin cuotas ocultas ni intermediarios."*
+  Wording grounded in `.agents/product-marketing-context.md`'s verified differentiators (trato directo — misma persona diseña/programa/entrega —, precio cerrado, sin vendor lock-in/cuotas ocultas), not invented. No ranking/position/guarantee claim introduced.
+  **Verification:** `npm run build` (0 errors) → full `check:seo-02` through `check:seo-14` sweep (11 checks) on fresh `dist` — all passed, no checker changes needed (none of the existing checkers assert "agencia" presence specifically, per the task doc's own note that this is acceptable). `git diff --check` clean. Read the rendered `dist/seo-local-sevilla/index.html` directly: H1 is unchanged — *"SEO local en Sevilla para negocios que quieren clientes, no solo aparecer en Google"* — and still contains no "agencia"; the new H2 is the first `<h2>` on the page and contains "agencia" in context ("sin agencia"); the new paragraph is the first visible paragraph after that H2. Scope limited to `src/pages/seo-local-sevilla.astro` plus these two doc files; SEO-25/SEO-26 untouched; unrelated untracked files (`research/`, `.seo-cache/`) left untouched.
+  One commit on `develop`.
+
 ## Next step
-SEO-24 through SEO-26 pending, one at a time per user instruction — see `docs/seo-audit/full-audit-2026-09-22/tasks/`.
+SEO-25 through SEO-26 pending, one at a time per user instruction — see `docs/seo-audit/full-audit-2026-09-22/tasks/`.
