@@ -7,9 +7,29 @@
     </div>
   </div>
   <div class="consent-actions">
-    <button id="consent-accept" type="button">Aceptar analítica</button>
-    <button id="consent-reject" type="button">Rechazar analítica</button>
-    <button id="consent-customize" type="button" aria-expanded="false">Configurar</button>
+    <button id="consent-accept" type="button">Aceptar</button>
+    <button id="consent-reject" type="button">Rechazar</button>
+    <button
+      id="consent-customize"
+      type="button"
+      aria-label="Configurar preferencias"
+      aria-expanded="false"
+    >
+      <span class="consent-settings-label">Configurar</span>
+      <svg
+        class="consent-settings-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    </button>
     <button id="consent-save" type="button" hidden>Guardar preferencias</button>
   </div>
 </aside>
@@ -79,16 +99,18 @@
 </script>
 
 <style>
-  .consent-panel { position: fixed; z-index: 100; inset: auto 1rem 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; max-width: 64rem; margin-inline: auto; padding: 1.25rem; border: 1px solid #9ca3af; border-radius: .75rem; background: #fff; color: #111827; box-shadow: 0 10px 30px #0003; }
+  .consent-panel { position: fixed; z-index: 100; inset: auto 1rem 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; max-width: 64rem; margin-inline: auto; padding: 1rem; border: 1px solid #9ca3af; border-radius: .75rem; background: #fff; color: #111827; box-shadow: 0 10px 30px #0003; }
   .consent-panel[hidden] { display: none; }
   .consent-panel h2 { margin: 0 0 .35rem; font-size: 1.1rem; }
-  .consent-panel p { max-width: 42rem; margin: 0; font-size: .95rem; }
+  .consent-panel p { max-width: 42rem; margin: 0; font-size: .9rem; }
   .consent-panel a { text-decoration: underline; }
-  .consent-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
-  .consent-actions button { min-height: 3rem; padding: .6rem .9rem; border: 1px solid #111827; border-radius: .4rem; background: #fff; color: #111827; font: inherit; font-weight: 600; cursor: pointer; }
+  .consent-actions { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .consent-actions button { min-height: 2.75rem; padding: .5rem .75rem; border: 1px solid #111827; border-radius: .4rem; background: #fff; color: #111827; font: inherit; font-weight: 600; cursor: pointer; }
   .consent-actions button:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
   #consent-accept { background: #111827; color: #fff; }
   #consent-save[hidden] { display: none; }
   #consent-settings { flex-basis: 100%; padding-top: .5rem; }
-  @media (max-width: 600px) { .consent-panel { inset: auto .5rem max(.5rem, env(safe-area-inset-bottom)); max-height: min(35vh, 18.5rem); overflow-y: auto; overscroll-behavior: contain; align-items: stretch; padding: .75rem; gap: .75rem; } .consent-panel p { font-size: .875rem; } .consent-actions { display: grid; grid-template-columns: 1fr 1fr; } }
+  .consent-settings-icon { display: none; width: 1.15rem; height: 1.15rem; }
+  @media (max-width: 600px) { .consent-panel { inset: auto .5rem max(.5rem, env(safe-area-inset-bottom)); max-height: min(35vh, 18.5rem); overflow-y: auto; overscroll-behavior: contain; align-items: stretch; padding: .5rem; gap: .4rem; } .consent-panel p { font-size: .875rem; } .consent-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .25rem; } .consent-actions button { min-width: 0; white-space: nowrap; padding-inline: .25rem; font-size: .875rem; } .consent-settings-label { display: none; } .consent-settings-icon { display: inline-block; width: 1.25rem; height: 1.25rem; } #consent-customize { display: inline-flex; align-items: center; justify-content: center; min-width: 2.5rem; padding: 0; border: 0; background: transparent; box-shadow: none; } #consent-customize:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; } #consent-save:not([hidden]) { grid-column: 1 / -1; } }
+  @media (max-width: 320px) { .consent-panel { inset-inline: .35rem; padding: .4rem; } .consent-actions { gap: .15rem; } .consent-actions button { padding-inline: .15rem; font-size: .8rem; } #consent-customize { min-width: 2.25rem; } }
 </style>
