@@ -33,12 +33,14 @@ export interface ServicePageData {
       from: string
       includes?: string[]
       note?: string
+      ctaLabel?: string
     }
     tiers?: {
       name: string
       from: string
       includes: string[]
       note?: string
+      ctaLabel?: string
       recommended?: boolean
     }[]
   }

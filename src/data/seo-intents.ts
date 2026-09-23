@@ -33,6 +33,16 @@ export const intentMatrix: SeoIntentRow[] = [
     contentSignals: ["Así es el proceso de trabajar tu SEO local", "Cuánto cuesta el SEO local en Sevilla"],
   },
   {
+    url: "/seo-para-clinicas-capilares-sevilla/",
+    intent: "Commercial: contract local SEO and conversion foundations for a hair-transplant clinic",
+    topic: "SEO para clínicas capilares en Sevilla",
+    cta: "Request the CAPILAR LOCAL initial project",
+    titleSignal: "SEO para clínicas capilares en Sevilla",
+    descriptionSignal: "CAPILAR LOCAL 299 € + IVA",
+    h1Signal: "CAPILAR LOCAL",
+    contentSignals: ["Visibilidad, confianza y contacto", "Proyecto inicial de alcance cerrado"],
+  },
+  {
     url: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
     intent: "Informational: compare web project budget variables",
     topic: "cuánto cuesta una página web y qué revisar",
@@ -90,6 +100,7 @@ export const serviceRoutes = [
   "/automatizaciones/",
   "/inteligencia-artificial/",
   "/seo-local-sevilla/",
+  "/seo-para-clinicas-capilares-sevilla/",
   "/tienda-online-sevilla/",
 ]
 

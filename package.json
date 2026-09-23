@@ -29,7 +29,8 @@
     "check:seo-13": "npm run build && node scripts/check-seo-13.mjs",
     "check:seo-13:dist": "node scripts/check-seo-13.mjs",
     "check:seo-14": "npm run build && node scripts/check-seo-14.mjs",
-    "check:seo-14:dist": "node scripts/check-seo-14.mjs"
+    "check:seo-14:dist": "node scripts/check-seo-14.mjs",
+    "check:capilar-local": "node scripts/check-capilar-local.mjs"
   },
   "dependencies": {
     "@astrojs/check": "0.5.6",

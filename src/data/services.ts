@@ -456,150 +456,133 @@ export const seoLocal: ServicePageData = {
   slug: "/seo-local-sevilla/",
   breadcrumbName: "SEO local en Sevilla",
   seo: {
-    title: "SEO local en Sevilla | Auditoría SEO/GEO desde 299 €",
+    title: "SEO local en Sevilla | Proyecto inicial desde 299 € + IVA",
     description:
-      "SEO local en Sevilla: Google Maps, datos estructurados y FAQs para buscadores con IA, con precio cerrado. Proyecto inicial 299 €, recurrente desde 199 €/mes.",
+      "SEO local en Sevilla para negocios: proyecto inicial de alcance acotado por 299 € + IVA y opciones de crecimiento desde 199 €/mes + IVA.",
   },
   hero: {
-    h1: "SEO local en Sevilla para negocios que quieren clientes, no solo aparecer en Google",
+    h1: "SEO local en Sevilla para negocios que quieren una base clara en Google",
     subtitle:
-      "Que te encuentren cuando alguien busca lo que ofreces en tu barrio, tanto en Google como en los asistentes de inteligencia artificial. Sin cuotas mensuales a ciegas: empiezas con un proyecto inicial de precio cerrado antes de decidir si sigues cada mes.",
-    secondaryCta: {
-      label: "Ver precios",
-      href: "#precios",
-    },
+      "Empezamos por una puesta a punto con alcance, precio y plazo definidos. Después decides si te interesa continuar: no hay obligación de contratar mantenimiento.",
+    secondaryCta: { label: "Ver el proyecto inicial", href: "#precios" },
   },
   sectionTitles: {
-    benefits: "SEO local en Sevilla explicado por una desarrolladora, no solo \"posicionamiento\"",
+    benefits: "SEO local en Sevilla explicado con alcance real",
     process: "Así es el proceso de trabajar tu SEO local",
-    pricing: "Cuánto cuesta el SEO local en Sevilla",
+    pricing: "Proyecto inicial y opciones de crecimiento",
     faq: "Preguntas frecuentes sobre SEO local en Sevilla",
   },
   benefits: [
     {
-      title: "Apareces en Google Maps cuando alguien busca tu negocio en tu barrio",
-      text: "Configuro y optimizo tu ficha de Google Business Profile (la ficha que aparece en Google Maps con tu dirección, horario y reseñas) y añado datos estructurados a tu web para que Google entienda exactamente qué ofreces y desde qué zona de Sevilla. Es la diferencia entre estar registrada en Google Maps y aparecer justo cuando alguien busca lo que vendes cerca de donde está.",
+      title: "Visibilidad local con una base técnica revisada",
+      text: "Reviso la presencia local, la indexación básica y la ficha de Google Business Profile para detectar prioridades concretas. No prometo posiciones: el objetivo es dejar una base coherente con tu negocio, tu zona y tu web.",
     },
     {
-      title: "Que te citen los buscadores con inteligencia artificial, no solo Google",
-      text: "Cada vez más gente pregunta directamente a ChatGPT, Perplexity o al resumen con IA de Google (lo que se conoce como AI Overviews) en vez de escribir una búsqueda clásica. Redacto las FAQs y los textos de tu web para que esos asistentes puedan citar tu negocio como respuesta, no solo para que aparezcas en una lista de enlaces azules.",
+      title: "Contenido claro y datos estructurados cuando encajan",
+      text: "Trabajamos una página estratégica, sus FAQs aprobadas por tu negocio y el enlazado interno básico. Los datos estructurados se aplican solo cuando son técnicamente viables y coherentes con el contenido real.",
     },
     {
-      title: "Proceso y oportunidades medibles, nunca una posición prometida",
-      text: "Cada mes sabes exactamente qué se ha hecho y qué se entrega: un informe de trabajo, no una promesa de \"top 3\" o de tráfico multiplicado. Nadie puede garantizar una posición concreta en Google, y menos en un plazo exacto. Lo que sí puedo garantizarte es transparencia sobre el trabajo real y las oportunidades que vamos encontrando para tu negocio.",
+      title: "Medición básica sin datos personales sensibles",
+      text: "Compruebo Search Console, GA4 y acciones de contacto medibles sin enviar información identificable ni datos sensibles a analítica. El informe explica el trabajo realizado y las prioridades, no resultados inventados.",
     },
   ],
   process: [
-    {
-      title: "Auditoría inicial de tu negocio y tu competencia en Sevilla",
-      text: "Reviso cómo apareces hoy en Google y en Google Maps, qué está haciendo tu competencia directa en Sevilla y qué buscan realmente tus clientes potenciales. De ahí sale un diagnóstico claro de dónde estás y qué oportunidades tienes.",
-    },
-    {
-      title: "Configuración de base: Google Business Profile, datos estructurados, FAQs para IA",
-      text: "Doy de alta o corrijo tu ficha de Google Business Profile, añado los datos estructurados que ayudan a Google a entender tu negocio, y redacto las primeras FAQs pensadas para que te citen los buscadores con inteligencia artificial. Esta base es la que se entrega en el proyecto inicial de 299 €.",
-    },
-    {
-      title: "Contenido y optimización mensual",
-      text: "Si sigues con el recurrente, cada mes creo contenido (una o varias piezas según el tier) y ajusto la web para mejorar tu posicionamiento local, siempre con las búsquedas reales de tu sector y tu zona de Sevilla.",
-    },
-    {
-      title: "Seguimiento e informe cada mes",
-      text: "Recibes un informe mensual con lo que se ha hecho, cómo evoluciona tu ficha de Google Business Profile y qué oportunidades nuevas hemos detectado. Sin letra pequeña ni cifras infladas: solo lo que es verificable.",
-    },
+    { title: "Diagnóstico breve", text: "Reviso web, indexación básica, SEO local, Google Business Profile y tres competidores de Sevilla para ordenar entre cinco y diez prioridades." },
+    { title: "Puesta a punto", text: "Ajusto la ficha de Google Business Profile, una página estratégica, cinco FAQs aprobadas y el enlazado interno básico. Los datos estructurados se valoran según la plataforma y el contenido real." },
+    { title: "Entrega en 10 días hábiles", text: "El proyecto se entrega en 10 días hábiles desde que están disponibles los accesos y materiales necesarios, con un informe corto y una hoja de ruta de 90 días." },
+    { title: "Revisión acotada a los 30 días", text: "Incluye una comprobación rápida a los 30 días. Es un bonus puntual, no mantenimiento ni gestión mensual de reseñas." },
   ],
   pricing: {
-    from: "299 €",
-    note: "El proyecto inicial (299 €) es el primer paso: auditoría, Google Business Profile y las bases de datos estructurados y FAQs para IA. Después, si sigues con el recurrente, elige Básico si tu sector tiene poca competencia en tu zona, o Competitivo si te mueves en un sector disputado en Sevilla.",
+    from: "299 € + IVA",
+    note: "La puesta a punto inicial es un proyecto cerrado. Los planes recurrentes solo se valoran después si encajan con tu situación; tres meses es un mínimo sugerido para dar continuidad al trabajo, no una permanencia obligatoria.",
     initial: {
-      from: "299 €",
+      from: "299 € + IVA",
       includes: [
-        "Auditoría SEO y GEO de tu negocio y tu competencia en Sevilla",
-        "Alta y configuración de tu ficha de Google Business Profile",
-        "Datos estructurados para que Google entienda tu negocio",
-        "Primeras FAQs redactadas para que te citen los buscadores con IA",
+        "Diagnóstico breve: web, indexación básica, SEO local, Google Business Profile y 3 competidores",
+        "Revisión de Google Business Profile: categoría, servicios, descripción, contacto, enlace y fotos existentes",
+        "Optimización de una página estratégica y enlazado interno básico",
+        "Datos estructurados básicos cuando sean técnicamente viables",
+        "5 FAQs con información aprobada por tu negocio",
+        "Medición básica segura, hoja de ruta de 90 días y comprobación a los 30 días",
       ],
-      note: "Precio cerrado, sin compromiso posterior: decides después si sigues con el recurrente.",
+      note: "Pago único, entrega en 10 días hábiles y sin obligación de continuar. No incluye gestión mensual de reseñas, SEO completo de toda la web, rediseño integral ni varias páginas optimizadas.",
+      ctaLabel: "Solicitar proyecto inicial",
     },
     tiers: [
       {
-        name: "Básico",
-        from: "199 €/mes",
-        includes: [
-          "1 pieza de contenido optimizada al mes",
-          "Mantenimiento de tu ficha de Google Business Profile",
-          "Seguimiento mensual de tu posicionamiento local",
-          "Recomendado si tu sector tiene poca competencia en tu zona",
-        ],
-        note: "Compromiso mínimo sugerido de 3 meses para dar tiempo a que el trabajo mensual se note.",
+        name: "Crecimiento básico",
+        from: "199 €/mes + IVA",
+        includes: ["Una pieza de contenido optimizada al mes", "Ajustes y seguimiento de prioridades locales", "Informe mensual de trabajo y próximos pasos"],
+        note: "Sugerencia de continuidad: 3 meses para evaluar el trabajo mensual; se concreta por escrito antes de empezar.",
+        ctaLabel: "Hablar sobre crecimiento",
       },
       {
-        name: "Competitivo",
-        from: "349 €/mes",
+        name: "Crecimiento competitivo",
+        from: "349 €/mes + IVA",
         recommended: true,
-        includes: [
-          "2-3 piezas de contenido optimizadas al mes",
-          "Optimización más frecuente de tu ficha y tu web",
-          "Informe mensual detallado con oportunidades detectadas",
-          "Recomendado en sectores y zonas con más competencia en Sevilla",
-        ],
-        note: "Compromiso mínimo sugerido de 3 meses para dar tiempo a que el trabajo mensual se note.",
+        includes: ["Dos o tres piezas de contenido optimizadas al mes", "Ajustes más frecuentes de web y presencia local", "Informe mensual de trabajo y oportunidades observadas"],
+        note: "Sugerencia de continuidad: 3 meses para evaluar el trabajo mensual; se concreta por escrito antes de empezar.",
+        ctaLabel: "Hablar sobre crecimiento",
       },
     ],
   },
   faqs: [
-    {
-      q: "¿Qué es el SEO local y en qué se diferencia del SEO normal?",
-      a: "El SEO local es el conjunto de técnicas para que tu negocio aparezca cuando alguien busca algo cerca de donde está, por ejemplo \"clínica dental en Triana\" en vez de solo \"clínica dental\". Se diferencia del SEO general en que da mucho peso a tu ficha de Google Business Profile (la que aparece en Google Maps con tu dirección, horario y reseñas), a los datos estructurados que indican dónde estás y qué ofreces, y a las reseñas de clientes reales. Para un negocio de Sevilla que depende de clientes de su zona (una tienda, una clínica, un despacho), el SEO local suele traer resultados más rápidos y más rentables que competir por keywords genéricas a nivel nacional, porque compites contra menos negocios y con una intención de búsqueda mucho más clara.",
-    },
-    {
-      q: "¿Cuánto cuesta el SEO local en Sevilla?",
-      a: "El proyecto inicial tiene un precio cerrado de 299 € e incluye la auditoría de tu negocio y tu competencia, la configuración de tu ficha de Google Business Profile, los datos estructurados de tu web y las primeras FAQs pensadas para que te citen los buscadores con inteligencia artificial.\n\nDespués, si decides seguir con el trabajo mensual, hay dos tiers recurrentes: Básico desde 199 €/mes, pensado para sectores con poca competencia en tu zona, y Competitivo desde 349 €/mes, para sectores más disputados en Sevilla, con más piezas de contenido y optimización más frecuente. No hay obligación de continuar después del proyecto inicial: decides con datos reales delante, no a ciegas.",
-    },
-    {
-      q: "¿Qué es el GEO y por qué me interesa si ya hago SEO?",
-      a: "El GEO (Generative Engine Optimization) es optimizar tu presencia para que te citen asistentes de inteligencia artificial como ChatGPT, Perplexity o el resumen con IA de Google (AI Overviews), en vez de solo aparecer en la lista clásica de resultados. Cada vez más gente hace preguntas directamente a estos asistentes en lugar de escribir una búsqueda en Google, así que si tu negocio no está preparado para eso, existe una parte creciente de búsquedas donde simplemente no apareces, aunque tu SEO clásico esté bien hecho. El GEO se trabaja con contenido claro y bien estructurado, sobre todo FAQs redactadas para dar una respuesta directa y citable, algo que muy pocos negocios en Sevilla están haciendo todavía.",
-    },
-    {
-      q: "¿Cuánto tiempo se tarda en ver resultados con el SEO local?",
-      a: "El SEO local suele moverse más rápido que el SEO general porque compites por búsquedas más concretas y contra menos negocios, pero sigue sin ser instantáneo: los primeros cambios (ficha de Google Business Profile, datos estructurados) pueden reflejarse en semanas, mientras que una mejora sólida y estable en tu posicionamiento suele necesitar varios meses de trabajo continuado, por eso el recurrente sugiere un compromiso mínimo de tres meses.\n\nNo puedo prometerte una fecha exacta ni una posición concreta, porque depende también de tu sector y de lo que haga tu competencia, pero sí puedo enseñarte cada mes qué se ha hecho y qué oportunidades se han detectado.",
-    },
-    {
-      q: "¿Me garantizas que voy a salir en la primera página de Google?",
-      a: "No, y desconfía de quien te lo prometa: nadie controla el algoritmo de Google ni puede garantizar una posición concreta, ni en Google clásico ni en los buscadores con inteligencia artificial. Lo que sí puedo garantizarte es el trabajo real: una auditoría honesta, una ficha de Google Business Profile bien configurada, datos estructurados correctos y contenido optimizado cada mes, con un informe que te enseña exactamente qué se ha hecho y qué oportunidades hemos encontrado. Prefiero venderte un proceso serio y medible antes que una promesa de \"top 3\" que ninguna agencia puede cumplir de verdad, por mucho que algunas lo digan en su web.",
-    },
-    {
-      q: "¿Qué incluye exactamente el proyecto inicial de 299 €?",
-      a: "El proyecto inicial de 299 € incluye una auditoría de tu negocio y de tu competencia directa en Sevilla, la alta o corrección de tu ficha de Google Business Profile (la que aparece en Google Maps), los datos estructurados de tu web para que Google entienda claramente qué ofreces y desde dónde, y las primeras FAQs redactadas para que puedan citarte los buscadores con inteligencia artificial.\n\nEs un precio cerrado, sin sorpresas, y no obliga a contratar nada después: al terminar tienes la base técnica lista y decides tú si quieres seguir con el trabajo mensual recurrente o no.",
-    },
-    {
-      q: "¿En qué se diferencia el tier Básico del Competitivo, y cuál me conviene?",
-      a: "La diferencia está en cuánta competencia tiene tu sector en tu zona de Sevilla. El tier Básico, desde 199 €/mes, incluye una pieza de contenido optimizada al mes y seguimiento mensual, ideal si tu negocio tiene poca competencia local directa. El tier Competitivo, desde 349 €/mes, incluye entre dos y tres piezas de contenido al mes, optimización más frecuente y un informe mensual más detallado, pensado para sectores disputados donde varios negocios compiten por las mismas búsquedas. En la auditoría inicial te digo con sinceridad cuál encaja mejor con tu caso, no el que más me convenga a mí facturar.",
-    },
-    {
-      q: "¿Tengo que quedarme un mínimo de tiempo contratado?",
-      a: "En el proyecto inicial de 299 € no hay ningún compromiso posterior: es un pago único y decides después si quieres continuar. Si decides pasar al recurrente (Básico o Competitivo), sugiero un compromiso mínimo de tres meses, porque el SEO local necesita ese margen de tiempo para que el trabajo mensual empiece a notarse; contratar solo un mes no da tiempo a comprobar si está funcionando. Lo dejo por escrito desde el principio, sin letra pequeña: sabes exactamente a qué te comprometes antes de decidir, y puedes hacer las preguntas que necesites antes de empezar.",
-    },
-    {
-      q: "¿Necesito tener ya una web para contratar el SEO local, o me la puedes hacer también?",
-      a: "No es obligatorio, pero ayuda: el SEO local funciona mejor si tienes al menos una web básica donde puedan aterrizar los datos estructurados y las FAQs. Si todavía no tienes web, puedo hacerte una desde 149 € (puedes ver los detalles en la página de diseño web) e integrar el SEO local desde el primer día, en vez de añadirlo después sobre una web ya existente. Si ya tienes web, trabajo sobre lo que hay: la auditoría inicial me dice si la base técnica actual permite aplicar bien el SEO local o si conviene ajustar algo antes de avanzar.",
-    },
-    {
-      q: "¿Qué es Google Business Profile y por qué es tan importante para un negocio local?",
-      a: "Google Business Profile es la ficha gratuita de Google que muestra tu negocio en Google Maps y en los resultados con mapa: tu dirección, horario, teléfono, fotos y reseñas de clientes. Es probablemente el elemento más importante del SEO local, porque es lo primero que ve alguien que busca tu tipo de negocio cerca de su ubicación, antes incluso de entrar en tu web. Muchos negocios de Sevilla ya tienen una ficha creada pero desactualizada, sin reseñas gestionadas o con la categoría equivocada, lo que hace que pierdan visibilidad frente a competidores con la ficha mejor cuidada, aunque su negocio sea igual de bueno o mejor.",
-    },
-    {
-      q: "¿Cómo hace un asistente de inteligencia artificial (ChatGPT, Perplexity) para recomendar un negocio en vez de otro?",
-      a: "Estos asistentes buscan información clara, bien estructurada y fácil de citar directamente: si tu web responde preguntas concretas de forma directa (qué ofreces, dónde estás, cuánto cuesta aproximadamente), tienen más probabilidades de citarte que si tu contenido es ambiguo o está pensado solo para \"sonar bien\". Por eso trabajo las FAQs pensando en esa citabilidad, con respuestas autocontenidas que no necesitan contexto adicional para tener sentido. Es una disciplina distinta al SEO clásico, todavía poco explotada por los negocios de Sevilla, lo que la convierte en una oportunidad real de diferenciarte mientras la mayoría de tu competencia sigue centrada solo en Google.",
-    },
-    {
-      q: "¿Trabajas el SEO local solo para negocios de Sevilla?",
-      a: "Me centro sobre todo en negocios de Sevilla capital y su área metropolitana porque conozco bien el mercado local: cómo busca la gente, qué zonas y qué expresiones usa, y puedo ofrecer un trato cercano (llamada, café o reunión en persona) que ayuda a definir mejor la estrategia. Dicho esto, también trabajo con negocios de otras zonas de España en remoto, cuando el cliente lo prefiere así. La diferencia principal es que con los negocios de Sevilla puedo ofrecer ese trato presencial si hace falta, mientras que fuera de Sevilla todo el proceso se hace por videollamada y mensajería, sin que eso afecte al resultado del trabajo.",
-    },
+    { q: "¿Qué incluye el proyecto inicial de 299 € + IVA?", a: "Es una puesta a punto de alcance acotado: diagnóstico breve, revisión de Google Business Profile, tres competidores de Sevilla, una página estratégica, datos estructurados básicos cuando sean viables, cinco FAQs aprobadas por tu negocio, medición básica segura, hoja de ruta de 90 días y comprobación a los 30 días. No es SEO completo de toda la web ni mantenimiento mensual." },
+    { q: "¿Cuándo se entrega?", a: "El plazo es de 10 días hábiles desde que están disponibles los accesos y materiales necesarios. Si faltan datos, fotos o aprobaciones, el calendario se ajusta para poder trabajar con información real." },
+    { q: "¿Tengo que contratar un plan mensual después?", a: "No. El proyecto inicial es un pago único de 299 € + IVA y no obliga a continuar. Si después tiene sentido mantener un ritmo de contenido y mejoras, existen opciones desde 199 €/mes + IVA y 349 €/mes + IVA; tres meses es una sugerencia razonada, no una permanencia inventada." },
+    { q: "¿Incluye gestión de reseñas?", a: "No incluye gestión mensual de reseñas ni respuestas en nombre de tu negocio. La revisión de la ficha puede señalar buenas prácticas para solicitar reseñas auténticas, pero la gestión continua se valora aparte." },
+    { q: "¿Garantizas posiciones o contactos?", a: "No. Nadie puede garantizar una posición concreta, un número de contactos ni cómo mostrará un buscador un negocio. El compromiso es con el alcance acordado, la transparencia del trabajo y una base técnica y editorial coherente." },
+    { q: "¿Qué pasa con los asistentes de IA?", a: "Un contenido claro, estructurado y fiel a tu negocio puede facilitar su comprensión y citabilidad, pero no se garantiza que un asistente de IA lo cite o recomiende. Se evita convertir esa posibilidad en una promesa comercial." },
   ],
-  cta: {
-    title: "Empecemos con el SEO local de tu negocio en Sevilla",
-    text: "Cuéntame en qué punto está tu negocio y qué necesitas conseguir. Te respondo con una propuesta clara, sin compromiso.",
+  cta: { title: "Hablemos de la presencia local de tu negocio", text: "Cuéntame qué servicio ofreces y en qué punto está tu web. Te respondo con una propuesta clara y sin compromiso." },
+}
+
+export const capilarLocal: ServicePageData = {
+  slug: "/seo-para-clinicas-capilares-sevilla/",
+  breadcrumbName: "SEO para clínicas capilares en Sevilla",
+  seo: {
+    title: "SEO para clínicas capilares en Sevilla | CAPILAR LOCAL, 299 € + IVA",
+    description: "CAPILAR LOCAL es una puesta a punto de Google y web para clínicas de injerto capilar en Sevilla: 299 € + IVA, alcance cerrado y entrega en 10 días hábiles.",
   },
+  hero: {
+    h1: "CAPILAR LOCAL: puesta a punto de Google y web para clínicas de injerto capilar en Sevilla",
+    subtitle: "Para propietarias y responsables de clínica que necesitan ordenar su presencia local y sus puntos de contacto sin promesas de pacientes, posiciones ni resultados médicos.",
+    secondaryCta: { label: "Ver alcance y precio", href: "#precios" },
+  },
+  sectionTitles: { benefits: "Visibilidad, confianza y contacto: una base comercial clara", process: "Proceso de 10 días hábiles", pricing: "CAPILAR LOCAL: alcance y precio cerrados", faq: "Preguntas frecuentes para clínicas" },
+  benefits: [
+    { title: "Visibilidad", text: "Diagnóstico breve de web, indexación básica, SEO local, Google Business Profile y tres competidores de Sevilla para priorizar qué corregir primero." },
+    { title: "Confianza", text: "Revisión de la información pública de la ficha y una página estratégica con cinco FAQs. Las afirmaciones médicas, tratamientos y precios los proporciona y aprueba la clínica; no se inventan claims clínicos." },
+    { title: "Contacto", text: "Reviso acciones de formulario, teléfono y WhatsApp como contactos medibles. La medición se plantea sin datos clínicos, mensajes, nombres ni teléfonos enviados a analítica." },
+  ],
+  process: [
+    { title: "Día 1: accesos y contexto", text: "Confirmamos propiedad de los activos, servicios, materiales disponibles y quién valida la información médica y comercial." },
+    { title: "Días 2–4: diagnóstico", text: "Reviso la presencia local y tres competidores de Sevilla para preparar una lista de prioridades realista." },
+    { title: "Días 5–8: puesta a punto", text: "Trabajo la ficha, una página estratégica, FAQs aprobadas, enlazado interno y datos estructurados básicos solo si son viables." },
+    { title: "Días 9–10: entrega y siguiente paso", text: "Entrego un informe corto, la hoja de ruta de 90 días y la propuesta de comprobación a los 30 días. El mantenimiento es opcional." },
+  ],
+  pricing: {
+    from: "299 € + IVA",
+    note: "CAPILAR LOCAL es un pago único, con entrega en 10 días hábiles desde accesos y materiales. No obliga a continuar con un plan mensual.",
+    initial: {
+      from: "299 € + IVA",
+      includes: ["Diagnóstico breve de visibilidad, Google Business Profile y 3 competidores", "Revisión de ficha y optimización de una página estratégica", "Datos estructurados básicos cuando sean técnicamente viables", "5 FAQs con información aprobada por la clínica", "Medición básica segura, hoja de ruta de 90 días y comprobación a los 30 días"],
+      note: "Pago único y alcance acotado. No incluye gestión mensual de reseñas, SEO completo de toda la web, rediseño integral, varias páginas optimizadas, publicidad ni garantías de posiciones, solicitudes o resultados médicos.",
+      ctaLabel: "Solicitar proyecto inicial",
+    },
+    tiers: [
+      { name: "Crecimiento básico", from: "199 €/mes + IVA", includes: ["Una pieza de contenido optimizada al mes", "Seguimiento de prioridades acordadas", "Informe mensual de trabajo"], note: "Tres meses es una sugerencia mínima para evaluar continuidad, no una permanencia obligatoria.", ctaLabel: "Hablar sobre crecimiento" },
+      { name: "Crecimiento competitivo", from: "349 €/mes + IVA", recommended: true, includes: ["Dos o tres piezas de contenido optimizadas al mes", "Ajustes más frecuentes de presencia local y web", "Informe mensual de trabajo y prioridades"], note: "Tres meses es una sugerencia mínima para evaluar continuidad, no una permanencia obligatoria.", ctaLabel: "Hablar sobre crecimiento" },
+    ],
+  },
+  faqs: [
+    { q: "¿CAPILAR LOCAL está dirigido a pacientes?", a: "No. Es un servicio B2B para propietarias y responsables de clínicas de injerto capilar que quieren revisar su presencia local y los puntos de contacto de su propia clínica." },
+    { q: "¿Qué no incluye el proyecto?", a: "No incluye gestión mensual de reseñas, SEO completo de toda la web, rediseño integral, varias páginas optimizadas, publicidad ni garantías de posiciones, solicitudes de valoración o resultados médicos." },
+    { q: "¿Quién valida las FAQs y el contenido médico?", a: "La clínica debe aportar y aprobar la información médica, los tratamientos, los precios y cualquier afirmación clínica antes de publicar. El servicio no inventa ni valida contenido sanitario." },
+    { q: "¿Se pueden medir los contactos sin tratar datos de salud?", a: "Sí. Se revisan de forma básica los clics de WhatsApp, teléfono, formulario y CTA sin enviar datos clínicos, nombres, teléfonos ni mensajes a analítica." },
+    { q: "¿Garantiza CAPILAR LOCAL más solicitudes?", a: "No. La entrega es una puesta a punto acotada y transparente; no se garantizan posiciones, volumen de contactos, citas, pacientes, menciones en asistentes de IA ni resultados médicos." },
+  ],
+  cta: { title: "Solicita el proyecto inicial CAPILAR LOCAL", text: "Cuéntame qué activos tiene hoy tu clínica y quién puede validar la información. El primer contacto no necesita datos clínicos de pacientes." },
 }
 
 export const tiendaOnline: ServicePageData = {
@@ -721,6 +704,7 @@ export const tiendaOnline: ServicePageData = {
 
 export const services = [
   seoLocal,
+  capilarLocal,
   disenoWeb,
   desarrolloSoftware,
   automatizaciones,

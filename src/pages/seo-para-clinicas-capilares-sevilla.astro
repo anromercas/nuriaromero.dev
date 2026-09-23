@@ -1,0 +1,79 @@
+---
+import ServiceLayout from "@/layouts/ServiceLayout.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import LinkButton from "@/components/LinkButton.astro"
+import WhatsAppIcon from "@/components/icons/WhatsApp.astro"
+import MailIcon from "@/components/icons/Mail.astro"
+import { capilarLocal } from "@/data/services"
+import { SITE, whatsappUrl } from "@/data/site"
+---
+
+<ServiceLayout page={capilarLocal}>
+  <Fragment slot="before-benefits">
+    <SectionContainer>
+      <TitleSection>Cuando una clínica depende de búsquedas locales, la base importa</TitleSection>
+      <div class="max-w-3xl space-y-4 text-gray-700 dark:text-gray-400">
+        <p>
+          Esta página es para propietarias y responsables de clínicas de injerto
+          capilar en Sevilla, no para pacientes que buscan un tratamiento. CAPILAR
+          LOCAL ordena la información pública de Google y una página clave para
+          que la clínica pueda explicar mejor qué hace y cómo contactarla.
+        </p>
+        <p>
+          No vende atajos ni resultados médicos. Parte de datos reales de la
+          clínica, de una revisión acotada y de decisiones que el equipo puede
+          validar antes de publicar.
+        </p>
+      </div>
+    </SectionContainer>
+  </Fragment>
+
+  <SectionContainer>
+    <TitleSection>Qué no incluye</TitleSection>
+    <ul class="max-w-3xl space-y-3 text-gray-700 dark:text-gray-400">
+      <li>Gestión mensual de reseñas o respuestas en nombre de la clínica.</li>
+      <li>SEO completo de toda la web, rediseño integral o varias páginas optimizadas.</li>
+      <li>Publicidad, captación de pacientes o garantía de posiciones, solicitudes, citas o resultados médicos.</li>
+      <li>Datos estructurados cuando la plataforma o el contenido real no los hagan viables.</li>
+    </ul>
+  </SectionContainer>
+
+  <SectionContainer>
+    <TitleSection>Prueba social con contexto, no promesas</TitleSection>
+    <div class="max-w-3xl space-y-4 text-gray-700 dark:text-gray-400">
+      <p>
+        No presento rankings, pacientes o conversiones como casos de éxito sin
+        una fuente verificable. Puedo mostrar el trabajo entregado y los cambios
+        públicos que acuerde la clínica, sin atribuir resultados que dependan de
+        factores fuera del proyecto.
+      </p>
+      <p>
+        Si tu prioridad es una web nueva para la clínica, mira también el
+        <a href="/web-para-clinicas-sevilla/" class="text-blue-600 underline underline-offset-4 dark:text-blue-400">diseño web para clínicas en Sevilla</a>.
+        Para una visión no sectorial, tienes el
+        <a href="/seo-local-sevilla/" class="text-blue-600 underline underline-offset-4 dark:text-blue-400">servicio general de SEO local en Sevilla</a>.
+      </p>
+    </div>
+  </SectionContainer>
+
+  <SectionContainer>
+    <TitleSection>Contacto inicial sin datos clínicos</TitleSection>
+    <div class="max-w-3xl space-y-4 text-gray-700 dark:text-gray-400">
+      <p>
+        Para valorar el proyecto basta con conocer la web, la zona y quién puede
+        validar la información pública. No envíes historiales, diagnósticos ni
+        información identificable de pacientes por el formulario, teléfono o WhatsApp.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full border border-green-700 bg-green-600 px-4 py-2 text-white hover:bg-green-500">
+          <WhatsAppIcon class="size-4" /> Solicitar proyecto inicial
+        </a>
+        <a href={`tel:+${SITE.whatsapp}`} class="inline-flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 text-gray-800 hover:text-blue-600 dark:border-gray-700 dark:text-white dark:hover:text-blue-400">
+          <MailIcon class="size-4" /> Hablar por teléfono
+        </a>
+        <LinkButton href="/contacto"><MailIcon class="size-4" /> Formulario de contacto</LinkButton>
+      </div>
+    </div>
+  </SectionContainer>
+</ServiceLayout>

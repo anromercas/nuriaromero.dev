@@ -41,11 +41,17 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
     { path: "/diseno-web-sevilla/", anchor: "diseño web preparado para SEO local", kind: "contextual" },
     { path: "/web-para-restaurantes-sevilla/", anchor: "SEO local para restaurantes en Sevilla", kind: "contextual" },
     { path: "/web-para-clinicas-sevilla/", anchor: "SEO local para clínicas en Sevilla", kind: "contextual" },
+    { path: "/seo-para-clinicas-capilares-sevilla/", anchor: "CAPILAR LOCAL para clínicas de injerto capilar", kind: "contextual" },
     { path: "/web-para-comercios-sevilla/", anchor: "SEO local para comercios en Sevilla", kind: "contextual" },
     { path: "/web-para-abogados-gestorias-sevilla/", anchor: "SEO local para despachos y gestorías", kind: "contextual" },
     { path: "/blog/como-aparecer-en-google-maps-negocio-sevilla/", anchor: "guía para mejorar tu ficha de Google Maps", kind: "contextual" },
     { path: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/", anchor: "guía sobre SEO local y GEO", kind: "contextual" },
     { path: "/contacto", anchor: "cuéntame cómo aparece hoy tu negocio", kind: "conversion" },
+  ],
+  "/seo-para-clinicas-capilares-sevilla/": [
+    { path: "/seo-local-sevilla/", anchor: "servicio general de SEO local en Sevilla", kind: "contextual" },
+    { path: "/web-para-clinicas-sevilla/", anchor: "diseño web para clínicas en Sevilla", kind: "contextual" },
+    { path: "/contacto", anchor: "solicitar el proyecto inicial", kind: "conversion" },
   ],
   "/tienda-online-sevilla/": [
     { path: "/web-para-comercios-sevilla/", anchor: "web para comercios que también quieren vender online", kind: "contextual" },
@@ -62,6 +68,7 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
   "/web-para-clinicas-sevilla/": [
     { path: "/diseno-web-sevilla/", anchor: "diseño web para clínicas y consultas", kind: "contextual" },
     { path: "/seo-local-sevilla/", anchor: "SEO local para que encuentren tu clínica", kind: "contextual" },
+    { path: "/seo-para-clinicas-capilares-sevilla/", anchor: "CAPILAR LOCAL para clínicas de injerto capilar", kind: "contextual" },
     { path: "/contacto", anchor: "cuéntame qué necesita tu consulta", kind: "conversion" },
   ],
   "/web-para-comercios-sevilla/": [
