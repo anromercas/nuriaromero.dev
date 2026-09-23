@@ -1,7 +1,7 @@
 # Eliminar 'unsafe-inline' de script-src en la CSP
 - **ID:** SEO-27
 - **Prioridad:** Medium (seguridad, no SEO directo)
-- **Estado:** pendiente
+- **Estado:** completado (2026-09-23)
 - **Fuente:** [technical.md](../findings/technical.md), hallazgo TECH-05; investigación SEO-25 (2026-09-22), diferida a decisión humana; autorizada por la usuaria el 2026-09-23
 - **Scope:** `src/components/WhatsAppButton.astro`, `src/components/Header.astro`, `src/components/ThemeToggle.astro`, `src/components/ContactForm.astro`, `public/_headers`
 
@@ -42,3 +42,25 @@ curl -I https://nuriaromero.dev/ | grep -i content-security-policy
 
 ## No hacer
 No usar nonces (no viables en sitio estático sin generación por request). No debilitar la CSP en otro punto para compensar. No tocar `AnalyticsConsent.astro` (ya no es inline, no lo necesita).
+
+## Evidencia de cierre (2026-09-23)
+
+Los 4 scripts se movieron a archivos externos bajo `src/scripts/` (mismo patrón que `AnalyticsConsent.astro`: `<script>` sin `is:inline` que hace `import "../scripts/x.js"`), y se eliminó `'unsafe-inline'` de `script-src` en `public/_headers` (única directiva tocada).
+
+- `src/scripts/whatsapp-button.js` — port verbatim del guard de `IntersectionObserver` (SEO-17), incluido el re-enganche en `astro:page-load` para View Transitions (commit `cd1ca20`). Sin cambios de comportamiento.
+- `src/scripts/header-mobile-menu.js` — port verbatim del menú móvil (guard `window.__mobileMenuInit`, delegación a nivel `document`, cierre en `astro:after-swap`). Sin cambios de comportamiento.
+- `src/scripts/theme-toggle.js` — port verbatim del selector de tema, incluido el re-enganche en `astro:after-swap` (paint-critical, deliberadamente no cambiado a `astro:page-load`).
+- `src/scripts/contact-form.js` — port del envío del formulario **+ fix del bug preexistente** `Uncaught SyntaxError: Identifier 'ENDPOINT' has already been declared` (hallado por un subagente de SEO-17 esta misma sesión). Fix: toda la lógica se envolvió en `initContactForm()` (scope de función, redeclaración estructuralmente imposible) enganchado solo a `astro:page-load` (igual que WhatsAppButton, que también dispara en la carga inicial — sin llamada directa adicional, para no duplicar el listener de submit). El guard de "elementos no encontrados" ahora retorna en silencio si `#contact-form` no existe (normal en el resto de páginas, ya que el listener persiste en `document` y dispara en cada navegación), y solo avisa por consola si el formulario existe pero faltan `#form-status`/`#submit-btn`.
+
+**Verificación:**
+- `npm run build` (23 páginas, 0 errores) + barrido completo `check:seo-02`–`check:seo-14` (11 checks) sobre `dist` limpio: todos en verde (`check:seo-12` incluido).
+- Confirmado en el HTML de `dist` que no queda ningún `<script is:inline>`; solo `application/ld+json` y `<script type="module" src="/_astro/hoisted.*.js">`.
+- `netlify dev --dir dist --offline` + `curl -I`: `script-src 'self' https://www.googletagmanager.com` (sin `'unsafe-inline'`), `style-src 'self' 'unsafe-inline'` intacto.
+- Playwright contra el `dist` servido, viewport 360px:
+  - Botón WhatsApp: se oculta en el hero de home y reaparece al hacer scroll — PASS. Repetición exacta de la reproducción de SEO-17 (navegar a `/contacto/`, click en "Inicio", home) — se re-oculta correctamente — PASS.
+  - Menú móvil: abre y cierra (botón + tecla Escape) — PASS.
+  - Selector de tema: cambia Dark→Light y persiste (`localStorage` + clase `.dark`) tras navegación por View Transitions — PASS.
+  - Formulario de contacto: sin errores/warnings de consola en carga ni tras 3 ciclos de navegación repetida a `/contacto/` (único error de consola presente en todo momento: `font-src 'self'` bloqueando una fuente `data:` woff2, preexistente y fuera de alcance — no relacionado con `script-src`) — PASS. Bug de `ENDPOINT` confirmado corregido. Envío real de prueba completado con éxito (`✅ ¡Mensaje enviado correctamente!`).
+- `git diff --check` limpio. Alcance limitado a los 4 componentes, los 4 `.js` nuevos, `public/_headers` y los dos documentos de seguimiento.
+
+Un commit en `develop`.
