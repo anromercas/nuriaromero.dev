@@ -34,6 +34,7 @@ export const SITE = {
     "https://github.com/anromercas",
   ],
   defaultOgImage: "/og/og-default.png",
+  logo: "/logo.jpg",
 } as const
 
 export const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.whatsappMessage)}`

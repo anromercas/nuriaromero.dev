@@ -20,6 +20,7 @@ export function localBusinessSchema() {
     url: SITE.url,
     description: SITE.description,
     image: `${SITE.url}${SITE.defaultOgImage}`,
+    logo: `${SITE.url}${SITE.logo}`,
     telephone: `+${SITE.whatsapp}`,
     email: SITE.email,
     priceRange: "€€",
