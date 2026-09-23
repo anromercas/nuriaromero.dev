@@ -33,6 +33,9 @@ User explicitly authorized executing the backlog "poco a poco" (one task at a ti
 - [x] SEO-24 Reforzar "agencia" en `/seo-local-sevilla/` sin tocar el H1 de marca — `docs/seo-audit/full-audit-2026-09-22/tasks/24-reforzar-agencia-seo-local.md`
 - [x] SEO-25 Mejoras técnicas y de schema menores (parcial: `@graph` implementado; logo pendiente de asset; TTFB/HSTS/CSP investigados sin fix o pendientes de decisión; IndexNow explícitamente no implementado) — `docs/seo-audit/full-audit-2026-09-22/tasks/25-mejoras-tecnicas-schema-menores.md`
 - [x] SEO-26 Unify service-area wording (footer vs. /contacto) — `docs/seo-audit/full-audit-2026-09-22/tasks/26-unificar-wording-area-servicio.md`
+- [x] HSTS includeSubDomains (deferred item from SEO-25, authorized 2026-09-23) — see Progress evidence
+- [ ] SEO-27 Remove CSP unsafe-inline (deferred item from SEO-25, authorized 2026-09-23) — `docs/seo-audit/full-audit-2026-09-22/tasks/27-eliminar-unsafe-inline-csp.md`
+- [ ] Organization.logo (deferred item from SEO-25, unblocked 2026-09-23 pending asset delivery)
 
 ## Progress evidence
 (updated per task as completed)
@@ -140,5 +143,9 @@ User explicitly authorized executing the backlog "poco a poco" (one task at a ti
   **Verification:** `npm run build` (0 errors, 23 pages) → `node scripts/check-seo-11.mjs` (`schema checks passed for 23 pages and 10 services`) → full `check:seo-02` through `check:seo-14` sweep (11 checks) on fresh `dist` — all passed, no checker changes needed. `git diff --check` clean. Scope limited to `src/components/Footer.astro` plus these two doc files.
   One commit on `develop`, no formal review-agent pass (trivial single-line content change, self-verified).
 
+- **HSTS `includeSubDomains` (2026-09-23):** user reviewed the SEO-25 deferred items and made explicit decisions: `includeSubDomains` — yes, do it now (confirmed she'll never need a non-HTTPS subdomain). `preload` — still explicitly declined, not implemented, not planned. Added `Strict-Transport-Security: max-age=31536000; includeSubDomains` to `public/_headers` (previously no HSTS line existed in the repo at all; Netlify was injecting a platform-default `max-age=31536000` with no `includeSubDomains`). Verified in built `dist/_headers` that the header is present with no `preload` directive. `npm run build` (23 pages) + full `check:seo-02` through `check:seo-14` sweep (11 checks) all passed. `git diff --check` clean. Scope limited to `public/_headers`. Done inline (single-line header addition, no new logic). One commit on `develop`, pending.
+- **Logo asset (2026-09-23):** user confirmed she has a real square company logo and will provide it. Awaiting the file before implementing `Organization.logo` in `src/lib/schema.ts` (deferred from SEO-25 item 1 for lack of asset — now unblocked, pending file delivery).
+- **New task SEO-27 created (2026-09-23):** `docs/seo-audit/full-audit-2026-09-22/tasks/27-eliminar-unsafe-inline-csp.md` — user authorized migrating the CSP's `'unsafe-inline'` script-src removal (deferred from SEO-25 item 5) now that she understands the tradeoff. Scope: migrate 4 inline scripts (WhatsAppButton, Header, ThemeToggle, ContactForm) to external files, remove `'unsafe-inline'` from `public/_headers`, verify each affected feature (WhatsApp hero-hide incl. View Transitions re-attach, mobile menu, theme persistence incl. `astro:after-swap`, contact form submission) still works via Playwright, not just build success.
+
 ## Next step
-All 12 tasks (SEO-15 through SEO-26) from the 2026-09-22 audit backlog are complete and committed on `develop`, not pushed. Awaiting user decision on: push/PR, and whether to authorize follow-up work on the SEO-25 deferred items (CSP unsafe-inline migration, HSTS includeSubDomains) or other action-plan items beyond this bounded 12-task set.
+SEO-27 (CSP unsafe-inline removal) is authorized and next up for implementation. Logo asset pending delivery from user before `Organization.logo` can be added. All 12 original tasks (SEO-15–26) plus the HSTS fix are complete and committed on `develop`, not pushed. Awaiting user decision on push/PR timing.
