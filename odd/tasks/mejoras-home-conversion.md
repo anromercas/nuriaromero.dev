@@ -106,6 +106,7 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
   - **Check:** `npm run build`; revisión visual responsive; comprobación de semántica, enlaces y accesibilidad.
   - **Copy aprobada:** “Diseño personalizado — Cada web parte de tus objetivos, no de una plantilla”; “SEO desde la base — Estructura y contenidos pensados para ser encontrados”; “Experiencia responsive — Una web cuidada en móvil, tablet y ordenador”; “Trato directo — Comunicación cercana durante todo el proyecto”.
   - **Progreso:** sección implementada en `src/pages/index.astro`, con lista semántica, iconos decorativos ocultos a lectores de pantalla y grid responsive. `npm run build` pasó (0 errores; queda el hint existente de `Schema.astro`); verificación del HTML generado confirmó el orden hero → hitos → servicios y los cuatro títulos. La revisión visual en navegador queda pendiente: la conexión CUA agotó el tiempo.
+  - **Commit de implementación:** `20ba8e46e3a81a7e71c2ef239493196b959956a9` (`feat(home): add trust milestones below hero`).
   - **Nota de build ajena a T8:** Google Places devolvió HTTP 403 y Astro omitió el bloque de reseñas, sin impedir el build; diagnosticar en T6.
 
 ## Orden recomendado
