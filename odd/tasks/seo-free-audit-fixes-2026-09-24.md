@@ -17,7 +17,7 @@ The crawl found `/recursos/` in the sitemap with no HTML inlinks, repeated `/coo
 - Route: delegated direct implementation; mapping trigger fired because source understanding spans 4+ files, and writer trigger fired because implementation changes multiple files.
 - TDD: enabled by user instructions; use RED → GREEN → REFACTOR. Exact existing runner: `node --test tests/analytics-consent.test.js`; build runner: `npm run build`.
 - RDD: disabled by default (`gentle-ai review mode status`); do not start a review.
-- Delivery: one coherent work-unit commit on a feature branch; conventional commit, no AI attribution.
+- Delivery: one coherent implementation work-unit commit on a feature branch; conventional commit, no AI attribution.
 - Image: keep source JPEG unless existing asset convention says otherwise; save the WebP in the existing asset folder. Never remove unrelated files.
 
 ## Acceptance criteria
@@ -41,7 +41,7 @@ The crawl found `/recursos/` in the sitemap with no HTML inlinks, repeated `/coo
 - `npm run check:seo-13:dist` — passed.
 - Runtime harness: N/A; static Astro site, verified through build and generated-distribution checks.
 - Rollback boundary: revert this single SEO-FREE-01 work-unit commit; it contains only task-scope source, test, image, and task-state files.
-- Commit: this task is the single HEAD work-unit commit; its immutable hash is reported in the handoff.
+- Implementation commit: `503dd5b0ecc7920e9a7df8b0320ed68a76d74085` (`fix(seo): link resources and optimize profile image`).
 
 ## Next step
 SEO-FREE-01 complete; no further task authorized in this handoff.
