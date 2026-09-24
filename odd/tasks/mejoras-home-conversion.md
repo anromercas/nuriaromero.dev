@@ -58,7 +58,7 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
   - Añadir `alt` descriptivo, dimensiones/aspect ratio y carga optimizada.
   - **Aceptación:** la home muestra la imagen aprobada en desktop y móvil, sin CLS visible, overflow ni pérdida de legibilidad del hero.
   - **Check:** `npm run build`; revisión visual responsive; inspección de formato, `alt`, dimensiones y peso.
-  - **Hecho:** se eliminó el fondo ajedrezado con `rembg`, se generó `src/assets/perfil-home.webp` (RGBA, 1157 × 1359, 70 KB) y se integró con `astro:assets` a la derecha del texto en desktop y debajo en móvil. `git diff --check` pasa. El build queda bloqueado por archivos de logo eliminados previamente y no relacionados: `src/assets/projects/nuriaromerodev-logo-negro.svg` y su variante blanca.
+  - **Hecho:** se eliminó el fondo ajedrezado con `rembg`, se generó `src/assets/perfil-home.webp` (RGBA, 1157 × 1359, 70 KB) y se integró con `astro:assets` a la derecha del texto en desktop y debajo en móvil. También se relinkearon los logos y la imagen de “Sobre mí” desde `src/assets/`; `git diff --check` y `npm run build` pasan.
 
 - [ ] **T3 — Acortar el bloque “quién soy” de la home**
   - **Archivos:** modificar el bloque de presentación inline de `src/pages/index.astro`; no modificar `src/components/AboutMe.astro` salvo autorización posterior.
