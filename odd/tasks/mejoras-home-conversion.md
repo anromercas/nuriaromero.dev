@@ -101,11 +101,14 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
   - **Archivos:** crear un componente de hitos si es reutilizable; modificar `src/pages/index.astro`; añadir datos en `src/data/` si el contenido se separa del markup.
   - **Ruta:** delegado, por nueva sección de UI y contenido; un único escritor para implementar en `src/pages/index.astro`.
   - Insertar la sección inmediatamente después de `SectionContainer id="home-hero"`. La usuaria aprobó cuatro hitos cualitativos, presentados como icono y texto, sin cifras inventadas: diseño personalizado, SEO desde la base, experiencia responsive y trato directo.
+  - Presentarlos sin cajas: icono destacado arriba, título y subtítulo debajo; en móvil, cuadrícula de dos columnas con iconos y texto compactos. Reducir el espacio entre el hero y la sección.
   - Añadir jerarquía semántica, navegación accesible y comportamiento responsive.
   - **Aceptación:** los hitos se entienden sin contexto adicional, no contienen cifras o logros inventados y la sección no desplaza de forma desproporcionada el CTA principal.
   - **Check:** `npm run build`; revisión visual responsive; comprobación de semántica, enlaces y accesibilidad.
   - **Copy aprobada:** “Diseño personalizado — Cada web parte de tus objetivos, no de una plantilla”; “SEO desde la base — Estructura y contenidos pensados para ser encontrados”; “Experiencia responsive — Una web cuidada en móvil, tablet y ordenador”; “Trato directo — Comunicación cercana durante todo el proyecto”.
   - **Progreso:** sección implementada en `src/pages/index.astro`, con lista semántica, iconos decorativos ocultos a lectores de pantalla y grid responsive. `npm run build` pasó (0 errores; queda el hint existente de `Schema.astro`); verificación del HTML generado confirmó el orden hero → hitos → servicios y los cuatro títulos. La revisión visual en navegador queda pendiente: la conexión CUA agotó el tiempo.
+  - **Refinamiento aprobado:** eliminar el aspecto de tarjetas, colocar iconos grandes encima del texto, mantener los cuatro elementos en dos columnas compactas en móvil y acercar los hitos al hero.
+  - **Refinamiento implementado:** sin fondos ni bordes de tarjeta; iconos superiores de 36–40 px, tipografía más compacta y dos columnas en móvil/cuatro en pantallas grandes. Se redujo el padding inferior del hero. `npm run build` y comprobación del HTML generado pasan; la revisión visual en navegador sigue pendiente.
   - **Commit de implementación:** `20ba8e46e3a81a7e71c2ef239493196b959956a9` (`feat(home): add trust milestones below hero`).
   - **Nota de build ajena a T8:** Google Places devolvió HTTP 403 y Astro omitió el bloque de reseñas, sin impedir el build; diagnosticar en T6.
 
