@@ -74,10 +74,10 @@ test('cookie policy links use the canonical trailing-slash path', async () => {
   assert.match(privacy, /href="\/cookies\/"/)
 })
 
-test('about portrait uses the WebP asset while retaining the JPEG source', async () => {
+test('about portrait imports and renders the Astro WebP asset', async () => {
   const { access, readFile } = await import('node:fs/promises')
   const about = await readFile(new URL('../src/components/AboutMe.astro', import.meta.url), 'utf8')
-  assert.match(about, /src="\/images\/me\.webp"/)
-  await access(new URL('../public/images/me.webp', import.meta.url))
-  await access(new URL('../public/me.jpg', import.meta.url))
+  assert.match(about, /import\s+portrait\s+from\s+['"]@\/assets\/me\.webp['"]/)
+  assert.match(about, /<Image[\s\S]*?src=\{portrait\}/)
+  await access(new URL('../src/assets/me.webp', import.meta.url))
 })
