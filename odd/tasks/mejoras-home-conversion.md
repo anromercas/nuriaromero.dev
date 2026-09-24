@@ -110,6 +110,8 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
   - **Refinamiento aprobado:** eliminar el aspecto de tarjetas, colocar iconos grandes encima del texto, mantener los cuatro elementos en dos columnas compactas en móvil y acercar los hitos al hero.
   - **Ajuste de espaciado aprobado:** la primera reducción quedó demasiado ajustada; aumentar el espacio un poco, conservando un punto intermedio respecto al hero original.
   - **Refinamiento implementado:** sin fondos ni bordes de tarjeta; iconos superiores de 36–40 px, tipografía más compacta y dos columnas en móvil/cuatro en pantallas grandes. Se redujo el padding inferior del hero. `npm run build` y comprobación del HTML generado pasan; la revisión visual en navegador sigue pendiente.
+  - **Espaciado retocado:** tras feedback de que quedó demasiado justo, se aumentó a un punto intermedio: padding inferior de 40 px en móvil y 64 px en desktop, compensado con márgenes negativos de 16 px y 24 px respectivamente. `npm run build` pasó.
+  - **Commit de ajuste de espaciado:** `01cf2048aaf40596a80653d5e6b794ca8033f0a6` (`style(home): restore moderate hero spacing`).
   - **Commit de implementación:** `20ba8e46e3a81a7e71c2ef239493196b959956a9` (`feat(home): add trust milestones below hero`).
   - **Commit de refinamiento visual:** `f0db643613ed291758fe6f36b3124118fbc3e562` (`style(home): simplify milestone layout`).
   - **Nota de build ajena a T8:** Google Places devolvió HTTP 403 y Astro omitió el bloque de reseñas, sin impedir el build; diagnosticar en T6.
