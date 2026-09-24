@@ -7,9 +7,7 @@ function setAccordion(panel, btn, open) {
   btn.setAttribute("aria-expanded", String(open));
   if (open) {
     panel.classList.add("open");
-    panel.style.maxHeight = panel.scrollHeight + "px";
   } else {
-    panel.style.maxHeight = "0px";
     panel.classList.remove("open");
   }
 }
