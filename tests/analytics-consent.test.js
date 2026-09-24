@@ -56,3 +56,28 @@ test('revocation prevents further page views and denies analytics consent', () =
   assert.ok(calls.some((args) => args[0] === 'consent' && args[1] === 'update' && args[2].analytics_storage === 'denied'))
   assert.equal(calls.some((args) => args[0] === 'event' && args[1] === 'page_view'), false)
 })
+
+test('homepage related links include the contextual resources page', async () => {
+  const { readFile } = await import('node:fs/promises')
+  const links = await readFile(new URL('../src/data/internal-links.ts', import.meta.url), 'utf8')
+  const homepageLinks = links.match(/"\/": \[([\s\S]*?)\n  \],/)?.[1] ?? ''
+  assert.match(homepageLinks, /path: "\/recursos\/".*kind: "contextual"/)
+})
+
+test('cookie policy links use the canonical trailing-slash path', async () => {
+  const { readFile } = await import('node:fs/promises')
+  const [consent, privacy] = await Promise.all([
+    readFile(new URL('../src/components/AnalyticsConsent.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/pages/privacidad.astro', import.meta.url), 'utf8'),
+  ])
+  assert.match(consent, /href="\/cookies\/"/)
+  assert.match(privacy, /href="\/cookies\/"/)
+})
+
+test('about portrait uses the WebP asset while retaining the JPEG source', async () => {
+  const { access, readFile } = await import('node:fs/promises')
+  const about = await readFile(new URL('../src/components/AboutMe.astro', import.meta.url), 'utf8')
+  assert.match(about, /src="\/images\/me\.webp"/)
+  await access(new URL('../public/images/me.webp', import.meta.url))
+  await access(new URL('../public/me.jpg', import.meta.url))
+})

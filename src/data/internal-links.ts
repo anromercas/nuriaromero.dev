@@ -11,6 +11,7 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
     { path: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/", anchor: "qué son el SEO local y el GEO", kind: "contextual" },
     { path: "/blog/como-aparecer-en-google-maps-negocio-sevilla/", anchor: "guía para aparecer en Google Maps", kind: "contextual" },
     { path: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/", anchor: "cómo calcular el precio de una web", kind: "contextual" },
+    { path: "/recursos/", anchor: "recursos y herramientas para mejorar tu web", kind: "contextual" },
   ],
   "/diseno-web-sevilla/": [
     { path: "/seo-local-sevilla/", anchor: "SEO local y GEO para tu negocio", kind: "contextual" },
