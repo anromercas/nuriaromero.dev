@@ -47,7 +47,7 @@ The crawl found `/recursos/` in the sitemap with no HTML inlinks, repeated `/coo
 - SEO-FREE-02 GREEN: `node --test tests/analytics-consent.test.js` — 7 passed, 0 failed.
 - `npm run build` — passed (24 pages, 0 errors, 0 warnings; 1 pre-existing inline JSON-LD hint). Build optimized the imported image as `dist/_astro/me.Yt7x5cb6_18FY1g.webp`; no public duplicate was added.
 - Rollback boundary: this SEO-FREE-02 commit alone, including the Astro import/rendering change, focused test, moved image, and this task record.
-- SEO-FREE-02 implementation commit: `faee4dcfd4ee7a968933d8de4af8f9a740035b1e` (`fix(seo): reference moved portrait asset`).
+- SEO-FREE-02 implementation commit: `6e7b7b519332f4dc8a2b6931447c36267a3b602f` (`fix(seo): reference moved portrait asset`).
 
 ## Next step
 SEO-FREE-02 implementation and verification are complete; commit identity is recorded below.
