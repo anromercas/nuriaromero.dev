@@ -97,13 +97,16 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
   - **Aceptación:** la home gana apoyo visual sin parecer un informe ficticio, mantiene rendimiento y cada gráfica tiene fuente o explicación comprensible.
   - **Check:** `npm run build`; revisión visual móvil/desktop; inspección de peso, accesibilidad y CLS.
 
-- [ ] **T8 — Añadir sección de hitos debajo del hero**
+- [~] **T8 — Añadir sección de hitos debajo del hero**
   - **Archivos:** crear un componente de hitos si es reutilizable; modificar `src/pages/index.astro`; añadir datos en `src/data/` si el contenido se separa del markup.
-  - **Ruta:** delegado, por nueva sección de UI y contenido.
-  - Insertar la sección inmediatamente después de `SectionContainer id="home-hero"`. Mostrar únicamente hitos confirmados, con fechas o contexto cuando sea necesario; si son pocos, usar una composición breve y no una línea temporal artificial.
+  - **Ruta:** delegado, por nueva sección de UI y contenido; un único escritor para implementar en `src/pages/index.astro`.
+  - Insertar la sección inmediatamente después de `SectionContainer id="home-hero"`. La usuaria aprobó cuatro hitos cualitativos, presentados como icono y texto, sin cifras inventadas: diseño personalizado, SEO desde la base, experiencia responsive y trato directo.
   - Añadir jerarquía semántica, navegación accesible y comportamiento responsive.
   - **Aceptación:** los hitos se entienden sin contexto adicional, no contienen cifras o logros inventados y la sección no desplaza de forma desproporcionada el CTA principal.
   - **Check:** `npm run build`; revisión visual responsive; comprobación de semántica, enlaces y accesibilidad.
+  - **Copy aprobada:** “Diseño personalizado — Cada web parte de tus objetivos, no de una plantilla”; “SEO desde la base — Estructura y contenidos pensados para ser encontrados”; “Experiencia responsive — Una web cuidada en móvil, tablet y ordenador”; “Trato directo — Comunicación cercana durante todo el proyecto”.
+  - **Progreso:** sección implementada en `src/pages/index.astro`, con lista semántica, iconos decorativos ocultos a lectores de pantalla y grid responsive. `npm run build` pasó (0 errores; queda el hint existente de `Schema.astro`); verificación del HTML generado confirmó el orden hero → hitos → servicios y los cuatro títulos. La revisión visual en navegador queda pendiente: la conexión CUA agotó el tiempo.
+  - **Nota de build ajena a T8:** Google Places devolvió HTTP 403 y Astro omitió el bloque de reseñas, sin impedir el build; diagnosticar en T6.
 
 ## Orden recomendado
 1. T1 — decisiones y recursos bloqueantes.
@@ -122,4 +125,4 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
 - Cada tarea completada debe cerrar con un commit convencional independiente en una rama de feature; no incluir `Co-Authored-By`.
 
 ## Estado
-**T2 completada.** T1 sigue pendiente para resolver las decisiones de calendario, hitos, gráficas, alcance de “Sevilla” y destino del CTA.
+**T2 completada; T8 implementada con revisión visual responsive pendiente.** T1 sigue pendiente para resolver calendario, gráficas, alcance de “Sevilla” y destino del CTA. Rama activa: `feat/home-trust-milestones`.
