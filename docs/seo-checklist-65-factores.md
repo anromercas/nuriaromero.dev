@@ -94,11 +94,11 @@ Leyenda de estado: **Hecho** · **Parcial** (funciona pero incompleto, se explic
 | 55 | Página de autor con bio/credenciales/redes | Parcial | `/sobre-mi` existe con experiencia y trayectoria (NTT DATA, +10 años), pero podría reforzarse con más redes/credenciales visibles | Alta |
 | 56 | Presencia en redes sociales | Parcial | `sameAs` limitado a LinkedIn + GitHub (GEO score señala esto como hueco) | Media |
 | 57 | Brand queries | Pendiente | No verificable sin credenciales de Google Search Console (bloqueado, ver SEO-14) | Alta |
-| 58 | Google Business Profile | Pendiente | Decisión humana pendiente, ya documentada como SEO-10 en el backlog anterior — no es un problema de código | Alta |
+| 58 | Google Business Profile | Hecho | Confirmado y verificado 2026-09-25: ficha real (Place ID `ChIJ8Uv-vM9f0CoR8J75dj4I0HM`), negocio de zona de servicio, enlazada en `sameAs`/`hasMap` y en `/seo-local-sevilla` vía `LocalTrustStatus.astro` | Alta |
 | 59 | Página "Sobre nosotros" completa | Hecho | `/sobre-mi` con trayectoria, experiencia y misión | Alta |
 | 60 | Política de privacidad, legal y cookies | Hecho | Aviso legal, privacidad y cookies implementados (commit "páginas legales... + consentimiento") | Media |
 | 61 | Menciones en medios y prensa (PR digital) | Pendiente | Sin evidencia de estrategia de Digital PR activa | Media |
-| 62 | Reseñas de clientes y testimonios | Parcial | Componente `GoogleReviews.astro` listo y condicional a datos reales de Google Business Profile; sin `AggregateRating`/`Review` schema aún (depende del factor 58) | Alta |
+| 62 | Reseñas de clientes y testimonios | Parcial | GBP ya no es el bloqueo (ver #58). `GoogleReviews.astro` necesita `GOOGLE_PLACES_API_KEY` + `GOOGLE_PLACE_ID=ChIJ8Uv-vM9f0CoR8J75dj4I0HM` en variables de entorno (bloqueado solo por la API key, ver SEO-14); sin `AggregateRating`/`Review` schema todavía | Alta |
 | 63 | Directorios y rankings en blog | No aplica | Formato de contenido no usado actualmente en el blog | Alta |
 | 64 | HTTPS + datos de contacto visibles | Hecho | Footer con email y teléfono visibles, HTTPS confirmado | Alta |
 | 65 | Presencia en Wikipedia/Wikidata | No aplica | Negocio en etapa demasiado temprana para justificar una entrada enciclopédica | Baja |
@@ -107,9 +107,9 @@ Leyenda de estado: **Hecho** · **Parcial** (funciona pero incompleto, se explic
 
 ## Resumen
 
-- **Hecho:** 39
-- **Parcial:** 12
-- **Pendiente:** 7
+- **Hecho:** 41
+- **Parcial:** 11
+- **Pendiente:** 6
 - **No aplica (por ahora):** 7
 
 ## Por dónde empezar
@@ -117,18 +117,17 @@ Leyenda de estado: **Hecho** · **Parcial** (funciona pero incompleto, se explic
 ### Accionables ya mismo (sin bloqueos externos), de menor a mayor esfuerzo
 
 1. **#51 — Página 404 personalizada.** Un solo archivo nuevo (`src/pages/404.astro`), sin dependencias. El quick win más rápido de esta lista.
-2. **#48 — Verificar lazy loading explícito.** Revisar que las imágenes above-the-fold (hero, logo) usen `loading="eager"` y el resto `lazy`, en vez de confiar en el default de `astro:assets`.
-3. **#39 — Enlaces externos de autoridad en el blog.** Añadir 1-2 enlaces a fuentes citables (estudios, Google oficial) en los 4 posts existentes.
-4. **#55 — Reforzar `/sobre-mi`.** Ampliar redes sociales visibles y credenciales concretas; esto también alimenta el factor #56 (`sameAs`).
-5. **#34 y #41 — Definir arquitectura de pillar pages.** Decidir qué página de servicio actúa como "pilar" por tema (SEO local, diseño web, automatización) y reforzar el interlinking entrante hacia ella desde el resto del contenido relacionado.
-6. **#11 — Calendario de freshness.** Definir qué páginas se revisan cada cuánto (las de mayor tráfico/relevancia primero).
-7. **#10 — Proceso de vigilancia de duplicados.** Convertir la corrección puntual de SEO-19 en una revisión periódica, no solo reactiva a auditorías.
-8. **#1, #5, #6, #7, #24 — Contenido y semántica.** Trabajo editorial de fondo: sistematizar el análisis de intención de búsqueda antes de escribir, ampliar el blog, y reforzar la cobertura semántica de las páginas de servicio ya existentes.
+2. **#39 — Enlaces externos de autoridad en el blog.** Añadir 1-2 enlaces a fuentes citables (estudios, Google oficial) en los 4 posts existentes.
+3. **#56 — Ampliar `sameAs`.** Ya se sumó GBP (#58); faltan más redes si existen (Instagram, X, YouTube...).
+4. **#34 y #41 — Definir arquitectura de pillar pages.** Decidir qué página de servicio actúa como "pilar" por tema (SEO local, diseño web, automatización) y reforzar el interlinking entrante hacia ella desde el resto del contenido relacionado.
+5. **#11 — Calendario de freshness.** Definir qué páginas se revisan cada cuánto (las de mayor tráfico/relevancia primero).
+6. **#10 — Proceso de vigilancia de duplicados.** Convertir la corrección puntual de SEO-19 en una revisión periódica, no solo reactiva a auditorías.
+7. **#1, #5, #6, #7, #24 — Contenido y semántica.** Trabajo editorial de fondo: sistematizar el análisis de intención de búsqueda antes de escribir, ampliar el blog, y reforzar la cobertura semántica de las páginas de servicio ya existentes.
 
 ### Bloqueados por decisión externa o credenciales (backlog secundario, ya documentado en tareas anteriores)
 
 - **#45, #57 — INP y brand queries:** requieren credenciales de Google Search Console/CrUX (propiedad de SEO-14).
-- **#58, #62 — Google Business Profile y reseñas con schema:** requieren la decisión humana pendiente de crear la ficha de GBP (propiedad de SEO-10). El schema de reseñas (#62) se desbloquea automáticamente en cuanto exista GBP.
+- **#62 — Reseñas con schema:** GBP (#58) ya no es el bloqueo. Falta únicamente `GOOGLE_PLACES_API_KEY` en variables de entorno (`GOOGLE_PLACE_ID` ya se conoce: `ChIJ8Uv-vM9f0CoR8J75dj4I0HM`) — propiedad de SEO-14.
 - **#61 — PR digital:** requiere una estrategia de comunicación/relaciones con medios, fuera del alcance de cambios de código.
 
 ### No aplica por ahora (revisar si el negocio escala)
