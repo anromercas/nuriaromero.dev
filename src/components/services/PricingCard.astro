@@ -33,12 +33,12 @@ const { from, includes, note, initial, tiers } = Astro.props
     <div>
       {initial && (
         <div class="mb-8 rounded-xl border border-gray-300 bg-gray-100/50 p-6 dark:border-gray-700 dark:bg-gray-800/50 md:max-w-lg">
-          <p class="text-gray-700 dark:text-gray-400">Proyecto inicial</p>
+          <p class="text-gray-300">Proyecto inicial</p>
           <p class="mb-4 text-3xl font-bold text-gray-800 dark:text-white">
             {initial.from}
           </p>
           {initial.includes && (
-            <ul class="mb-4 space-y-2 text-gray-700 dark:text-gray-400">
+            <ul class="mb-4 space-y-2 text-gray-300">
               {initial.includes.map((item) => (
                 <li class="flex gap-x-2">
                   <span
@@ -61,7 +61,7 @@ const { from, includes, note, initial, tiers } = Astro.props
         </div>
       )}
       {note && (
-        <p class="mb-6 text-gray-700 dark:text-gray-400">{note}</p>
+        <p class="mb-6 text-gray-300">{note}</p>
       )}
       <div class="grid gap-6 sm:grid-cols-2">
       {tiers.map((tier) => (
@@ -78,11 +78,11 @@ const { from, includes, note, initial, tiers } = Astro.props
               Recomendado
             </p>
           )}
-          <p class="text-gray-700 dark:text-gray-400">{tier.name}</p>
+          <p class="text-gray-300">{tier.name}</p>
           <p class="mb-4 text-3xl font-bold text-gray-800 dark:text-white">
             Desde {tier.from}
           </p>
-          <ul class="mb-6 space-y-2 text-gray-700 dark:text-gray-400">
+          <ul class="mb-6 space-y-2 text-gray-300">
             {tier.includes.map((item) => (
               <li class="flex gap-x-2">
                 <span
@@ -107,11 +107,11 @@ const { from, includes, note, initial, tiers } = Astro.props
     </div>
   ) : (
     <div class="rounded-xl border border-gray-300 bg-gray-100/50 p-6 dark:border-gray-700 dark:bg-gray-800/50 md:max-w-lg">
-      <p class="text-gray-700 dark:text-gray-400">Desde</p>
+      <p class="text-gray-300">Desde</p>
       <p class="mb-4 text-4xl font-bold text-gray-800 dark:text-white">
         {from}
       </p>
-      <ul class="mb-6 space-y-2 text-gray-700 dark:text-gray-400">
+      <ul class="mb-6 space-y-2 text-gray-300">
         {includes?.map((item) => (
           <li class="flex gap-x-2">
             <span
