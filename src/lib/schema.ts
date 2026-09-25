@@ -60,6 +60,8 @@ export function personSchema() {
       "Angular",
       "React",
       "WordPress",
+      "Astro",
+      "Next.js",
     ],
     sameAs: [...SITE.sameAs],
   }
