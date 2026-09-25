@@ -17,7 +17,7 @@ if (!existsSync(homePath)) {
   const home = readFileSync(homePath, "utf8")
   requireText(home, /seo12-home-hero/, "home hero marker is missing")
   requireText(home, /data-seo12-primary-cta/, "home primary CTA marker is missing")
-  requireText(home, /href="https:\/\/wa\.me\//, "home primary CTA must point to WhatsApp")
+  requireText(home, /href="https:\/\/calendar\.google\.com\/calendar\/appointments\/schedules\//, "home primary CTA must point to the booking schedule")
 }
 
 const consentSource = readFileSync(consentPath, "utf8")

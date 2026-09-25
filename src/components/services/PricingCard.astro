@@ -1,6 +1,5 @@
 ---
-import LinkButton from "@/components/LinkButton.astro"
-import Link from "@/components/icons/Link.astro"
+import BookingButton from "@/components/BookingButton.astro"
 
 interface Tier {
   name: string
@@ -58,10 +57,7 @@ const { from, includes, note, initial, tiers } = Astro.props
               {initial.note}
             </p>
           )}
-          <LinkButton href="/contacto">
-            <Link class="size-4" />
-            {initial.ctaLabel ?? "Pedir presupuesto exacto"}
-          </LinkButton>
+          <BookingButton />
         </div>
       )}
       {note && (
@@ -104,10 +100,7 @@ const { from, includes, note, initial, tiers } = Astro.props
               {tier.note}
             </p>
           )}
-          <LinkButton href="/contacto">
-            <Link class="size-4" />
-            {tier.ctaLabel ?? "Pedir presupuesto exacto"}
-          </LinkButton>
+          <BookingButton />
         </div>
       ))}
       </div>
@@ -134,10 +127,7 @@ const { from, includes, note, initial, tiers } = Astro.props
       {note && (
         <p class="mb-6 text-sm text-gray-600 dark:text-gray-500">{note}</p>
       )}
-      <LinkButton href="/contacto">
-        <Link class="size-4" />
-        Pedir presupuesto exacto
-      </LinkButton>
+      <BookingButton />
     </div>
   )
 }

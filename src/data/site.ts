@@ -38,3 +38,6 @@ export const SITE = {
 } as const
 
 export const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.whatsappMessage)}`
+
+export const bookingUrl =
+  "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3MCaXahzt3LtR0JLmotWCaTlTd2NAYgMsbewkRE-Kd7Zl-AuRcaI9gb8x1u_CGhGgEiTNQ0Xaq?gv=true"

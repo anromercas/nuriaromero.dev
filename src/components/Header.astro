@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import ThemeToggle from "./ThemeToggle.astro";
 import Menu from "./icons/Menu.astro";
 import X from "./icons/X.astro";
+import BookingButton from "./BookingButton.astro";
 import { services } from "@/data/services";
 import { niches } from "@/data/niches";
 import logoDark from "@/assets/nuriaromerodev-logo-negro.svg";
@@ -149,6 +150,9 @@ const navLinkClass =
   class="fixed top-0 right-0 z-50 flex w-[min(340px,85vw)] flex-col overflow-y-auto overscroll-contain border-l border-gray-300 bg-white/95 py-3 shadow-lg backdrop-blur dark:border-gray-700 dark:bg-gray-800/95 md:hidden"
 >
   <ul class="flex flex-1 flex-col gap-0.5 px-3">
+    <li class="mb-2 border-b border-gray-200 pb-3 dark:border-gray-700">
+      <BookingButton class="w-full" />
+    </li>
     {
       navItems.map((link) =>
         link.label === "servicios" ? (

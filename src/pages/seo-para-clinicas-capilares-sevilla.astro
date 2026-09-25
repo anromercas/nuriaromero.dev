@@ -2,11 +2,8 @@
 import ServiceLayout from "@/layouts/ServiceLayout.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
 import TitleSection from "@/components/TitleSection.astro"
-import LinkButton from "@/components/LinkButton.astro"
-import WhatsAppIcon from "@/components/icons/WhatsApp.astro"
-import MailIcon from "@/components/icons/Mail.astro"
+import BookingButton from "@/components/BookingButton.astro"
 import { capilarLocal } from "@/data/services"
-import { SITE, whatsappUrl } from "@/data/site"
 ---
 
 <ServiceLayout page={capilarLocal}>
@@ -61,18 +58,13 @@ import { SITE, whatsappUrl } from "@/data/site"
     <TitleSection>Contacto inicial sin datos clínicos</TitleSection>
     <div class="max-w-3xl space-y-4 text-gray-700 dark:text-gray-400">
       <p>
-        Para valorar el proyecto basta con conocer la web, la zona y quién puede
-        validar la información pública. No envíes historiales, diagnósticos ni
-        información identificable de pacientes por el formulario, teléfono o WhatsApp.
+          Para valorar el proyecto basta con conocer la web, la zona y quién puede
+          validar la información pública. No envíes historiales, diagnósticos ni
+          información identificable de pacientes antes de la primera sesión.
+          La <a href="/contacto/" class="underline underline-offset-4">página de contacto</a> sigue disponible para consultas informativas.
       </p>
       <div class="flex flex-wrap gap-4">
-        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full border border-green-700 bg-green-600 px-4 py-2 text-white hover:bg-green-500">
-          <WhatsAppIcon class="size-4" /> Solicitar proyecto inicial
-        </a>
-        <a href={`tel:+${SITE.whatsapp}`} class="inline-flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 text-gray-800 hover:text-blue-600 dark:border-gray-700 dark:text-white dark:hover:text-blue-400">
-          <MailIcon class="size-4" /> Hablar por teléfono
-        </a>
-        <LinkButton href="/contacto"><MailIcon class="size-4" /> Formulario de contacto</LinkButton>
+        <BookingButton />
       </div>
     </div>
   </SectionContainer>

@@ -12,6 +12,7 @@ import CTASection from "@/components/services/CTASection.astro"
 import InternalLinks from "@/components/InternalLinks.astro"
 import { internalLinksBySource } from "@/data/internal-links"
 import SocialPill from "@/components/SocialPill.astro"
+import BookingButton from "@/components/BookingButton.astro"
 import Badge from "@/components/Badge.astro"
 import WhatsAppIcon from "@/components/icons/WhatsApp.astro"
 import CodeIcon from "@/components/icons/Code.astro"
@@ -20,7 +21,6 @@ import ProfileCheck from "@/components/icons/ProfileCheck.astro"
 import { faqSchema, personSchema } from "@/lib/schema"
 import { services } from "@/data/services"
 import { niches } from "@/data/niches"
-import { whatsappUrl } from "@/data/site"
 import profileHome from "@/assets/perfil-home.webp"
 
 // Proceso genérico de trabajo, resumido a partir del patrón que ya se repite
@@ -30,7 +30,7 @@ import profileHome from "@/assets/perfil-home.webp"
 const homeProcess = [
   {
     title: "Cuéntame tu proyecto",
-    text: "Escríbeme por WhatsApp o por el formulario contándome qué negocio tienes y qué necesitas. Respondo en menos de 24 horas laborables.",
+    text: "Reserva una primera sesión para contarme qué negocio tienes y qué necesitas. En esa conversación entiendo tu caso y después te envío una propuesta por escrito.",
   },
   {
     title: "Propuesta con presupuesto cerrado",
@@ -69,7 +69,7 @@ const homeFaqs = [
   },
   {
     q: "¿Cómo empiezo?",
-    a: "Escríbeme por WhatsApp o por el formulario de contacto contándome qué negocio tienes y qué necesitas, con tus propias palabras y sin tecnicismos. Te respondo en menos de 24 horas laborables con los siguientes pasos y, tras conocer tu caso, recibes una propuesta por escrito con el precio y los plazos cerrados: sabes el coste exacto antes de que empecemos, sin sorpresas después. Si la aceptas, empezamos el diseño y desarrollo compartiendo avances por el camino y no solo al final, para que puedas ver cómo va tomando forma y dar tu opinión mientras se construye. Antes de darlo por terminado revisamos juntas el resultado y ajusto lo que haga falta. Por último, publico o entrego el proyecto, te enseño a manejarlo y quedo disponible después del lanzamiento para resolver dudas y hacer ajustes. Puedes escribirme por WhatsApp, por teléfono, por email o por LinkedIn, lo que te resulte más cómodo.",
+    a: "Reserva una primera sesión y cuéntame qué negocio tienes y qué necesitas, con tus propias palabras y sin tecnicismos. En esa conversación entiendo tu caso y, después, te envío una propuesta por escrito con el precio y los plazos cerrados. Si la aceptas, empezamos el diseño y desarrollo compartiendo avances por el camino, revisamos juntas el resultado y ajusto lo que haga falta antes del lanzamiento.",
   },
   {
     q: "¿Trabajar con una freelance en vez de una agencia es un riesgo?",
@@ -108,20 +108,12 @@ const homeFaqs = [
             más oportunidades de venta.
           </p>
           <nav class="order-4 flex flex-wrap gap-4 mt-0 sm:mt-2 lg:mt-6" data-seo12-primary-cta>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center justify-center gap-2 px-4 py-1 text-white transition bg-green-600 border border-green-700 rounded-full text-md hover:bg-green-500 max-w-fit focus:outline-none focus-visible:ring focus-visible:ring-green-500/80 focus-visible:ring-offset-2"
-            >
-              <WhatsAppIcon class="size-4" />
-              Cuéntame tu negocio por WhatsApp
-            </a>
-            <SocialPill href="#servicios">
-              <Briefcase class="size-4" />
-              Ver qué puedo hacer por tu negocio
-            </SocialPill>
-          </nav>
+            <BookingButton />
+                <SocialPill href="#servicios">
+                  <Briefcase class="size-4" />
+                  Ver qué puedo hacer por tu negocio
+                </SocialPill>
+              </nav>
         </div>
         <Image
           src={profileHome}

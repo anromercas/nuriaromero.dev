@@ -4,11 +4,11 @@ import Schema from "@/components/seo/Schema.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
 import Breadcrumbs from "@/components/Breadcrumbs.astro"
 import ContactForm from "@/components/ContactForm.astro"
-import WhatsAppIcon from "@/components/icons/WhatsApp.astro"
+import BookingButton from "@/components/BookingButton.astro"
 import MailIcon from "@/components/icons/Mail.astro"
 import LinkedInIcon from "@/components/icons/LinkedIn.astro"
 import { breadcrumbSchema } from "@/lib/schema"
-import { SITE, whatsappUrl } from "@/data/site"
+import { SITE } from "@/data/site"
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
@@ -44,21 +44,19 @@ const breadcrumbs = [
         </div>
 
         <div class="space-y-6">
+          <div class="rounded-xl border border-blue-200 bg-blue-50/70 p-5 dark:border-blue-900 dark:bg-blue-950/30">
+            <h2 class="mb-2 text-2xl font-semibold text-gray-800 dark:text-gray-100">
+              Empieza por una primera sesión
+            </h2>
+            <p class="mb-4 text-sm text-gray-700 dark:text-gray-300">
+              En la primera conversación entiendo tu caso y después te envío una propuesta clara, con precio y plazos.
+            </p>
+            <BookingButton />
+          </div>
           <h2 class="text-2xl font-semibold text-black/80 dark:text-white">
-            Otras formas de contacto
+            Datos de contacto
           </h2>
           <ul class="space-y-4 text-gray-800 dark:text-gray-300">
-            <li>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-x-3 hover:text-blue-500"
-              >
-                <WhatsAppIcon class="size-5" />
-                WhatsApp: {SITE.phone}
-              </a>
-            </li>
             <li>
               <a
                 href={`tel:+${SITE.whatsapp}`}
@@ -98,6 +96,7 @@ const breadcrumbs = [
               remoto para el resto de España.
             </p>
           </div>
+
         </div>
       </div>
     </SectionContainer>
