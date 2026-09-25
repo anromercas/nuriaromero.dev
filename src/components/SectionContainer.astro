@@ -9,3 +9,30 @@ const { class: className, id } = Astro.props
 >
   <slot />
 </section>
+
+<style>
+  /* Aparición sutil al entrar en viewport. El hero queda excluido porque ya
+     es visible en la primera pintura: animarlo perjudicaría el LCP. Envuelto
+     en @supports para que los navegadores sin animation-timeline: view()
+     sigan mostrando el contenido normal (opacity:1) sin quedar invisible. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .section:not(#home-hero) {
+        animation: section-reveal linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 35%;
+      }
+    }
+  }
+
+  @keyframes section-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
