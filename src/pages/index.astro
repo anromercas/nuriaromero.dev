@@ -320,21 +320,23 @@ const homeFaqs = [
         <ProcessSteps steps={homeProcess} />
       </SectionContainer>
 
-      <SectionContainer id="casos">
-        <TitleSection>
-          <CodeIcon class="size-7" />
-          Casos de éxito
-        </TitleSection>
-        <p class="mb-12 text-gray-700 dark:text-gray-400 max-w-2xl">
-          Webs de negocios de Sevilla que ya están funcionando y posicionando
-          en Google. Cada proyecto está en producción con su propio dominio,
-          así que puedes visitarlo y comprobar la velocidad de carga y el
-          diseño con tus propios ojos. Más allá de estos casos, trabajo con
-          WordPress, Astro, React, Next.js y otras tecnologías según lo que
-          mejor encaje con cada negocio.
-        </p>
-        <Projects />
-      </SectionContainer>
+      <div class="rounded-2xl border border-gray-800 bg-gray-900/60 px-4 py-12 sm:px-6 md:px-8 md:py-16">
+        <SectionContainer id="casos">
+          <TitleSection>
+            <CodeIcon class="size-7" />
+            Casos de éxito
+          </TitleSection>
+          <p class="mb-12 text-gray-300 max-w-2xl">
+            Webs de negocios de Sevilla que ya están funcionando y
+            posicionando en Google. Cada proyecto está en producción con su
+            propio dominio, así que puedes visitarlo y comprobar la velocidad
+            de carga y el diseño con tus propios ojos. Más allá de estos
+            casos, trabajo con WordPress, Astro, React, Next.js y otras
+            tecnologías según lo que mejor encaje con cada negocio.
+          </p>
+          <Projects />
+        </SectionContainer>
+      </div>
 
       <GoogleReviews />
 

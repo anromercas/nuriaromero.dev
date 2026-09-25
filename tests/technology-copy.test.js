@@ -9,7 +9,7 @@ test('home describes the broader technology stack without attributing it to the 
   const cases = home.match(/<SectionContainer id="casos">([\s\S]*?)<Projects \/>/)?.[1]
 
   assert.ok(cases, 'success cases section exists')
-  assert.match(cases, /trabajo con\s+WordPress, Astro, React, Next\.js y otras tecnologías/i)
+  assert.match(cases, /trabajo con\s+WordPress, Astro, React, Next\.js y otras\s+tecnologías/i)
   assert.doesNotMatch(cases, /Wordpress, Vite y React/)
 })
 

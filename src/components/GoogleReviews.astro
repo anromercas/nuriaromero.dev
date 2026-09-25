@@ -13,67 +13,69 @@ const data = await getGoogleReviews()
 
 {
   data && data.reviews.length > 0 && (
-    <SectionContainer id="resenas-google">
-      <TitleSection>
-        <Star class="size-7 text-yellow-400" />
-        Lo que dicen mis clientes en Google
-      </TitleSection>
-      <p class="mb-8 text-gray-700 dark:text-gray-400 max-w-2xl">
-        Reseñas reales de mi ficha de Google Business Profile
-        {data.userRatingCount > 0 && (
-          <>
-            , con una valoración media de {data.rating.toFixed(1)} sobre 5 (
-            {data.userRatingCount}{" "}
-            {data.userRatingCount === 1 ? "reseña" : "reseñas"})
-          </>
-        )}
-        .
-      </p>
-      <ul class="grid gap-6 sm:grid-cols-2">
-        {data.reviews.map((review) => (
-          <li class="flex h-full flex-col rounded-xl border border-gray-300 bg-gray-100/50 p-6 dark:border-gray-700 dark:bg-gray-800/50">
-            <div
-              class="flex items-center gap-0.5"
-              aria-label={`Valoración: ${review.rating} de 5 estrellas`}
-            >
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  class={`size-4 ${
-                    i < Math.round(review.rating)
-                      ? "text-yellow-400"
-                      : "text-gray-300 dark:text-gray-700"
-                  }`}
-                />
-              ))}
-            </div>
-            <p class="mt-3 flex-1 text-gray-700 dark:text-gray-400">
-              {review.text}
-            </p>
-            <div class="mt-4 flex items-center justify-between gap-3 text-sm">
-              <span class="font-semibold text-gray-800 dark:text-gray-100">
-                {review.author}
-              </span>
-              {review.relativeTime && (
-                <span class="whitespace-nowrap text-gray-500 dark:text-gray-500">
-                  {review.relativeTime}
-                </span>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
-      {data.placeId && (
-        <p class="mt-8 text-gray-700 dark:text-gray-400">
-          <a
-            href={`https://search.google.com/local/reviews?placeid=${data.placeId}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-medium text-blue-600 underline hover:no-underline dark:text-blue-400"
-          >
-            Ver todas las reseñas en Google →
-          </a>
+    <div class="rounded-2xl border border-gray-800 bg-gray-900/60 px-4 py-12 sm:px-6 md:px-8 md:py-16">
+      <SectionContainer id="resenas-google">
+        <TitleSection>
+          <Star class="size-7 text-yellow-400" />
+          Lo que dicen mis clientes en Google
+        </TitleSection>
+        <p class="mb-8 text-gray-300 max-w-2xl">
+          Reseñas reales de mi ficha de Google Business Profile
+          {data.userRatingCount > 0 && (
+            <>
+              , con una valoración media de {data.rating.toFixed(1)} sobre 5 (
+              {data.userRatingCount}{" "}
+              {data.userRatingCount === 1 ? "reseña" : "reseñas"})
+            </>
+          )}
+          .
         </p>
-      )}
-    </SectionContainer>
+        <ul class="grid gap-6 sm:grid-cols-2">
+          {data.reviews.map((review) => (
+            <li class="flex h-full flex-col rounded-xl border border-gray-300 bg-gray-100/50 p-6 dark:border-gray-700 dark:bg-gray-800/50">
+              <div
+                class="flex items-center gap-0.5"
+                aria-label={`Valoración: ${review.rating} de 5 estrellas`}
+              >
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    class={`size-4 ${
+                      i < Math.round(review.rating)
+                        ? "text-yellow-400"
+                        : "text-gray-300 dark:text-gray-700"
+                    }`}
+                  />
+                ))}
+              </div>
+              <p class="mt-3 flex-1 text-gray-300">
+                {review.text}
+              </p>
+              <div class="mt-4 flex items-center justify-between gap-3 text-sm">
+                <span class="font-semibold text-gray-800 dark:text-gray-100">
+                  {review.author}
+                </span>
+                {review.relativeTime && (
+                  <span class="whitespace-nowrap text-gray-500 dark:text-gray-500">
+                    {review.relativeTime}
+                  </span>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+        {data.placeId && (
+          <p class="mt-8 text-gray-300">
+            <a
+              href={`https://search.google.com/local/reviews?placeid=${data.placeId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-medium text-blue-600 underline hover:no-underline dark:text-blue-400"
+            >
+              Ver todas las reseñas en Google →
+            </a>
+          </p>
+        )}
+      </SectionContainer>
+    </div>
   )
 }
