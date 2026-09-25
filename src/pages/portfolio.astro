@@ -10,12 +10,12 @@ import { breadcrumbSchema } from "@/lib/schema"
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
-  { name: "Portfolio", url: "/portfolio" },
+  { name: "Casos de éxito", url: "/portfolio" },
 ]
 ---
 
 <Layout
-  title="Portfolio — Webs y proyectos para negocios en Sevilla"
+  title="Casos de éxito — Webs para negocios en Sevilla"
   description="Proyectos reales de Nuria Romero: webs para negocios de Sevilla optimizadas para SEO local, aplicaciones a medida y más."
 >
   <Schema slot="head" schema={breadcrumbSchema(breadcrumbs)} />
@@ -24,11 +24,11 @@ const breadcrumbs = [
       <Breadcrumbs items={breadcrumbs} />
       <h1 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
         <CodeIcon class="size-7" />
-        Proyectos web para negocios de Sevilla
+        Casos de éxito
       </h1>
       <p class="mb-12 text-gray-700 dark:text-gray-400 max-w-2xl">
-        Una selección de proyectos reales: webs para negocios locales de
-        Sevilla, optimizadas para aparecer en Google, y proyectos propios.
+        Una selección de webs para negocios locales de Sevilla, optimizadas
+        para aparecer en Google. Puedes visitar cada proyecto en su dominio.
       </p>
       <Projects />
     </SectionContainer>
