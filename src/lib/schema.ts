@@ -1,6 +1,7 @@
 // Constructores de JSON-LD (schema.org). Cada página inyecta los suyos
 // con <Schema slot="head" schema={...} />; el de negocio va global en Layout.
 import { SITE } from "@/data/site"
+import { localTrust } from "@/data/local-trust"
 
 const BUSINESS_ID = `${SITE.url}/#business`
 const PERSON_ID = `${SITE.url}/#person`
@@ -33,6 +34,9 @@ export function localBusinessSchema() {
     areaServed: SERVICE_AREA,
     sameAs: [...SITE.sameAs],
     founder: { "@id": PERSON_ID },
+    ...(localTrust.gbp.status === "verified" && localTrust.gbp.profileUrl
+      ? { hasMap: localTrust.gbp.profileUrl }
+      : {}),
   }
 }
 

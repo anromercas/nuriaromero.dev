@@ -17,9 +17,13 @@ export interface SocialProofRecord {
 
 export const localTrust = {
   gbp: {
-    status: "pending-human-approval" as TrustStatus,
-    profileUrl: null as string | null,
-    placeId: null as string | null,
+    // Verificado 2026-09-25: confirmado por la propietaria y contrastado
+    // contra la ficha pública (vista "Gestionas este Perfil de Empresa",
+    // teléfono coincide con SITE.phone). Negocio de zona de servicio, sin
+    // dirección pública — publicAddress se mantiene en null a propósito.
+    status: "verified" as TrustStatus,
+    profileUrl: "https://www.google.com/maps/place/?q=place_id:ChIJ8Uv-vM9f0CoR8J75dj4I0HM" as string | null,
+    placeId: "ChIJ8Uv-vM9f0CoR8J75dj4I0HM" as string | null,
     publicAddress: null as string | null,
     serviceArea: "Sevilla y área metropolitana",
   },

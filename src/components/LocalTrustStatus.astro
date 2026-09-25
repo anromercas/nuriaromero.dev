@@ -11,23 +11,44 @@ const hasVerifiedGbp = localTrust.gbp.status === "verified" && Boolean(localTrus
   <TitleSection>Prueba social verificable</TitleSection>
   <div class="max-w-3xl space-y-4 text-gray-300">
     <p>
-      La <strong class="text-gray-900 dark:text-gray-100">GBP propia está pendiente de decisión</strong>.
-      No publico una dirección, un perfil de Google, reseñas ni resultados de clientes hasta tener el
-      activo real, el consentimiento correspondiente y una evidencia que se pueda revisar.
+      {hasVerifiedGbp ? (
+        <>
+          <strong class="text-gray-900 dark:text-gray-100">Google Business Profile verificado.</strong>{" "}
+          Es un negocio de zona de servicio, sin domicilio público. Podés ver la ficha real, con
+          categoría, horarios y contacto, directamente en Google.
+        </>
+      ) : (
+        <>
+          La <strong class="text-gray-900 dark:text-gray-100">GBP propia está pendiente de decisión</strong>.
+          No publico una dirección, un perfil de Google, reseñas ni resultados de clientes hasta tener el
+          activo real, el consentimiento correspondiente y una evidencia que se pueda revisar.
+        </>
+      )}
     </p>
     <p>
-      {hasVerifiedGbp
-        ? "La ficha verificada se enlazará aquí cuando la URL pública y los datos de servicio hayan sido revisados."
-        : "No se enlaza todavía ninguna ficha de Google Business Profile: crear o reclamarla como negocio de área de servicio requiere una decisión humana sobre categoría, área, horarios y dirección de verificación."}
+      {hasVerifiedGbp && localTrust.gbp.profileUrl ? (
+        <a
+          href={localTrust.gbp.profileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-medium text-blue-400 underline hover:no-underline"
+        >
+          Ver ficha en Google Maps →
+        </a>
+      ) : (
+        "No se enlaza todavía ninguna ficha de Google Business Profile: crear o reclamarla como negocio de área de servicio requiere una decisión humana sobre categoría, área, horarios y dirección de verificación."
+      )}
     </p>
     <p>
       {hasVerifiedProof
         ? "Los casos autorizados se publicarán con su referencia de consentimiento y evidencia verificable."
-        : "No se muestran reseñas ni valoraciones, y no se publican testimonios ni métricas de clientes sin permiso explícito y trazabilidad."}
+        : "No se muestran reseñas ni valoraciones, y no se publican testimonios ni métricas de clientes sin permiso explícito y trazabilidad. La valoración real puede consultarse en la ficha de Google enlazada arriba."}
     </p>
     <ul class="list-disc space-y-2 pl-5 text-sm">
-      <li>El área de servicio propuesta es {localTrust.gbp.serviceArea}; no se muestra un domicilio particular.</li>
-      <li>La activación queda pendiente de revisar NAP, categoría, horarios, URL pública y políticas aplicables.</li>
+      <li>El área de servicio {hasVerifiedGbp ? "es" : "propuesta es"} {localTrust.gbp.serviceArea}; no se muestra un domicilio particular.</li>
+      {!hasVerifiedGbp && (
+        <li>La activación queda pendiente de revisar NAP, categoría, horarios, URL pública y políticas aplicables.</li>
+      )}
     </ul>
   </div>
 </SectionContainer>
