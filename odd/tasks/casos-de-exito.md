@@ -21,7 +21,8 @@ The current cases list includes the portfolio itself, and the menu says «Portfo
 - Generated home and `/portfolio/` each render exactly two client cases; live browser confirms menu text and accessible name «Casos de éxito», and the unchanged `/portfolio/` destination.
 - Runtime boundary: Astro dev preview at `/portfolio/`; rollback boundary: the cases-specific hunks in `src/pages/index.astro`, `src/components/Projects.astro`, `src/components/Header.astro`, `src/pages/portfolio.astro`, `src/pages/recursos.astro`, and `tests/casos-exito.test.js`.
 - Receipt-driven review: disabled/unmanaged unless the user has explicitly enabled it; no review receipt claimed.
+- Work-unit commit: `ecb2abc` (`feat(home): present client work as success cases`). The prior uncommitted home-service refinements and unrelated changes remain outside the commit.
 - Existing uncommitted home and unrelated SEO/consent changes predate this feature and must not be included in its commit.
 
 ## Next step
-Commit the verified work unit without staging pre-existing unrelated changes; record commit identity and mirror this document.
+Collect user feedback; keep `/portfolio/` until a separately authorized URL migration is planned.
