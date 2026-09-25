@@ -21,6 +21,7 @@ The home lists WordPress, Vite, and React near success cases; the user requested
 - RED observed: 2/2 focused assertions failed before the edit. GREEN observed: 2/2 focused tests passed; combined nearby tests 5/5 passed. `npm run build` passed (Astro 0 errors/0 warnings, one existing hint; Google Reviews 403 omitted reviews).
 - Generated home text and Person JSON-LD contain the requested stack. Client-project tags and historical About Me examples were left intact. `git diff --check` passed.
 - Runtime boundary: static Astro home and Person JSON-LD; rollback boundary: technology sentence hunk in `src/pages/index.astro`, two `knowsAbout` entries in `src/lib/schema.ts`, and `tests/technology-copy.test.js`. Receipt-driven review remains disabled/unmanaged.
+- Work-unit commit: `690d96a` (`feat(home): update general technology stack copy`). Pre-existing uncommitted home-service refinements and unrelated worktree changes remain outside this commit.
 
 ## Next step
-Commit only this work unit, record commit identity, and collect feedback.
+Collect feedback; do not alter case-specific technology tags without project evidence.
