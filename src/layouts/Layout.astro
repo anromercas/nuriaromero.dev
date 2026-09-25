@@ -23,7 +23,7 @@ const { title, description, canonical, ogImage, ogType, noindex } = Astro.props
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -56,11 +56,12 @@ const { title, description, canonical, ogImage, ogType, noindex } = Astro.props
     <WhatsAppButton />
     <style is:global>
       :root {
-        color-scheme: light dark;
+        color-scheme: dark;
       }
 
       html {
         font-family: "Onest Variable", system-ui, sans-serif;
+        font-size: 106.25%;
         scroll-behavior: smooth;
       }
 
@@ -70,6 +71,11 @@ const { title, description, canonical, ogImage, ogType, noindex } = Astro.props
         flex-direction: column;
         min-height: 100vh;
         overscroll-behavior: none;
+      }
+
+      p,
+      li {
+        line-height: 1.7;
       }
 
       @media (prefers-reduced-motion: reduce) {
