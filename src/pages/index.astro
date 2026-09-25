@@ -23,6 +23,41 @@ import { services } from "@/data/services"
 import { niches } from "@/data/niches"
 import profileHome from "@/assets/perfil-home.webp"
 
+const serviceOutcomes: Record<string, string> = {
+  "/seo-local-sevilla/": "Pon a punto cómo aparece tu negocio en Google y Maps.",
+  "/seo-para-clinicas-capilares-sevilla/": "Ordena la presencia local y el contacto de tu clínica.",
+  "/diseno-web-sevilla/": "Ten una web clara, rápida y preparada para que te encuentren.",
+  "/desarrollo-software-medida/": "Sustituye procesos que ya no caben en hojas de cálculo.",
+  "/automatizaciones/": "Deja que tus herramientas hagan las tareas repetitivas.",
+  "/inteligencia-artificial/": "Responde consultas frecuentes y agiliza el trabajo con IA.",
+  "/tienda-online-sevilla/": "Vende tus productos desde una tienda propia.",
+}
+
+// Servicios de la home agrupados por el problema que resuelven, no por la
+// tecnología que usan. CAPILAR LOCAL queda fuera: es B2B de nicho con landing
+// propia, no encaja en este selector genérico.
+const serviceGroups: { title: string; text: string; slugs: string[] }[] = [
+  {
+    title: "Quiero conseguir más clientes",
+    text: "Que aparezcas en Google y Maps cuando alguien busca lo que ofreces.",
+    slugs: ["/seo-local-sevilla/"],
+  },
+  {
+    title: "Necesito una web que venda",
+    text: "Diseño y desarrollo web, con tienda online si necesitas vender productos.",
+    slugs: ["/diseno-web-sevilla/", "/tienda-online-sevilla/"],
+  },
+  {
+    title: "Quiero ahorrar tiempo",
+    text: "Software a medida, automatizaciones e inteligencia artificial para las tareas repetitivas.",
+    slugs: [
+      "/desarrollo-software-medida/",
+      "/automatizaciones/",
+      "/inteligencia-artificial/",
+    ],
+  },
+]
+
 // Proceso genérico de trabajo, resumido a partir del patrón que ya se repite
 // en las páginas de /servicios/* (contacto -> presupuesto cerrado -> diseño y
 // desarrollo -> revisión -> lanzamiento y soporte). Sin plazos ni cifras que
@@ -173,33 +208,49 @@ const homeFaqs = [
           <Briefcase class="size-8" />
           ¿Qué necesita tu negocio?
         </TitleSection>
-        <p class="mb-8 text-gray-700 dark:text-gray-400 max-w-2xl">
-          Así consigo esas oportunidades en la práctica: elige el servicio que
-          más se ajusta a lo que necesitas ahora mismo.
+        <p class="mb-8 text-gray-300 max-w-2xl">
+          Elige el problema que tienes ahora mismo: debajo te cuento cómo lo
+          resuelvo.
         </p>
-        <ul class="grid gap-6 sm:grid-cols-2">
+        <div class="space-y-10">
           {
-            services.map((service) => (
-              <li>
-                <a
-                  href={service.slug}
-                  class="block h-full rounded-xl border border-gray-300 bg-gray-100/50 p-6 transition hover:border-blue-500 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800/50 dark:hover:border-blue-500"
-                >
-                  <h3 class="mb-2 text-xl font-semibold text-gray-800 dark:text-gray-100">
-                    {service.breadcrumbName}
-                  </h3>
-                  <p class="text-gray-700 dark:text-gray-400">
-                    {service.hero.subtitle}
-                  </p>
-                  <span class="mt-4 inline-block font-medium text-blue-600 dark:text-blue-400">
-                    Ver servicio →
-                  </span>
-                </a>
-              </li>
+            serviceGroups.map((group) => (
+              <div>
+                <h3 class="text-lg font-semibold text-yellow-500 dark:text-yellow-200">
+                  {group.title}
+                </h3>
+                <p class="mt-1 mb-4 text-sm text-gray-300">
+                  {group.text}
+                </p>
+                <ul class="grid gap-x-10 md:grid-cols-2">
+                  {services
+                    .filter((service) => group.slugs.includes(service.slug))
+                    .map((service) => (
+                      <li class="border-b border-gray-300 dark:border-gray-700">
+                        <a
+                          href={service.slug}
+                          class="group flex min-h-20 items-center justify-between gap-4 py-4 transition-colors focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400"
+                        >
+                          <span class="min-w-0">
+                            <span class="block font-semibold text-blue-600 transition-colors group-hover:text-white dark:text-blue-400 dark:group-hover:text-white">
+                              {service.breadcrumbName}
+                            </span>
+                            <span class="mt-1 block text-sm leading-snug text-gray-300">
+                              {serviceOutcomes[service.slug]}
+                            </span>
+                          </span>
+                          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 text-blue-600 transition-transform group-hover:translate-x-1 dark:text-blue-400">
+                            <path d="M5 12h14m-6-6 6 6-6 6" />
+                          </svg>
+                        </a>
+                      </li>
+                    ))}
+                </ul>
+              </div>
             ))
           }
-        </ul>
-        <p class="mt-8 text-gray-700 dark:text-gray-400">
+        </div>
+        <p class="mt-8 text-gray-300">
           ¿Tienes un restaurante, una clínica, un comercio o un despacho?
           Mira lo que puedo hacer por tu sector:
         </p>
