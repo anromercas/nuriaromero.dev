@@ -8,7 +8,7 @@ export const restaurantes: ServicePageData = {
   seo: {
     title: "Página web para restaurantes en Sevilla | Carta, reservas y Google",
     description:
-      "Creo páginas web para restaurantes y bares en Sevilla: carta digital, reservas, fotos que abren el apetito y SEO local para salir en Google Maps.",
+      "Soy Nuria Romero y creo páginas web para restaurantes y bares en Sevilla: carta digital, reservas, fotos que abren el apetito y SEO local en Google Maps.",
   },
   hero: {
     h1: "Página web para restaurantes y bares en Sevilla",
@@ -112,7 +112,7 @@ export const clinicas: ServicePageData = {
   seo: {
     title: "Página web para clínicas en Sevilla | Dentistas, fisios, psicólogos",
     description:
-      "Diseño webs para clínicas y consultas en Sevilla: dentistas, fisioterapeutas, psicólogos y estética. Cita online, SEO local y confianza para tu paciente.",
+      "Soy Nuria Romero y diseño webs para clínicas en Sevilla: dentistas, fisioterapeutas, psicólogos y estética, con cita online y SEO local.",
   },
   hero: {
     h1: "Página web para clínicas y consultas en Sevilla",
@@ -216,7 +216,7 @@ export const comercios: ServicePageData = {
   seo: {
     title: "Página web para comercios y tiendas en Sevilla | Vende online",
     description:
-      "Webs y tiendas online para comercios de Sevilla: catálogo de productos, venta online y SEO local para que te encuentren los clientes de tu barrio.",
+      "Soy Nuria Romero y creo webs y tiendas online para comercios de Sevilla: catálogo, venta online y SEO local para que te encuentren en tu barrio.",
   },
   hero: {
     h1: "Página web para comercios y tiendas en Sevilla",
@@ -320,7 +320,7 @@ export const profesionales: ServicePageData = {
   seo: {
     title: "Página web para abogados y gestorías en Sevilla | Capta clientes",
     description:
-      "Webs para abogados, gestorías, asesorías y despachos profesionales en Sevilla: imagen seria, SEO local por especialidad y captación de consultas.",
+      "Soy Nuria Romero y creo webs para abogados, gestorías y despachos en Sevilla: imagen seria, SEO local por especialidad y captación de consultas.",
   },
   hero: {
     h1: "Página web para abogados, gestorías y asesorías en Sevilla",
