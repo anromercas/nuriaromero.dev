@@ -9,7 +9,7 @@ export const disenoWeb: ServicePageData = {
   seo: {
     title: "Diseño web en Sevilla | Precio cerrado desde 149 €",
     description:
-      "Diseño páginas web en Sevilla para negocios locales: rápidas, con SEO local y precio cerrado antes de empezar. Web completa desde 399 €, landing desde 149 €.",
+      "Diseño páginas web en Sevilla con más de 10 años de experiencia: rápidas, con SEO local y precio cerrado. Web completa desde 399 €, landing desde 149 €.",
   },
   hero: {
     h1: "Diseño web en Sevilla para negocios que quieren clientes, no solo una web bonita",
@@ -246,7 +246,7 @@ export const automatizaciones: ServicePageData = {
   seo: {
     title: "Automatización de procesos para negocios en Sevilla | n8n y Make",
     description:
-      "Automatizo las tareas repetitivas de tu negocio en Sevilla: facturas, correos, citas, informes. Con n8n y Make, tus herramientas trabajan solas.",
+      "Automatizo las tareas repetitivas de tu negocio en Sevilla con n8n y Make y más de 10 años de experiencia: facturas, correos, citas e informes.",
   },
   hero: {
     h1: "Automatizaciones: que tu negocio trabaje solo",
@@ -352,7 +352,7 @@ export const inteligenciaArtificial: ServicePageData = {
   seo: {
     title: "IA para negocios en Sevilla | Chatbots y asistentes con IA",
     description:
-      "Llevo la inteligencia artificial a tu negocio en Sevilla: chatbots que atienden clientes, asistentes que redactan y clasifican, IA integrada en tus procesos.",
+      "Llevo la IA a tu negocio en Sevilla con más de 10 años de experiencia en desarrollo: chatbots que atienden clientes, asistentes que redactan y clasifican.",
   },
   hero: {
     h1: "Inteligencia artificial aplicada a tu negocio",

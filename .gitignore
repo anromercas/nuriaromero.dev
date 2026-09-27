@@ -33,4 +33,10 @@ pnpm-lock.yaml
 # seo-audits
 docs/seo-audit/full-audit-2026-09-21/screenshots/
 docs/seo-audit/full-audit-2026-09-22/screenshots/
+docs/seo-audit/full-audit-2026-09-22/findings/
 docs/seo-audit/keywords
+research/
+
+# scratch caches and one-off captures, not versioned deliverables
+.seo-cache/
+artifacts/

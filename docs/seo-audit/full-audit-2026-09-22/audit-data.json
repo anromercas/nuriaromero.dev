@@ -1,0 +1,224 @@
+{
+  "summary": {
+    "audit_date": "2026-09-22",
+    "site": "https://nuriaromero.dev",
+    "business_type": "Service Area Business (SAB) — desarrolladora freelance de servicios digitales para negocios locales en Sevilla y área metropolitana",
+    "health_score": 77,
+    "health_score_method": "Media ponderada: Technical SEO 22%, Content Quality 23%, On-Page SEO 20%, Schema 10%, Performance 10%, AI Search Readiness (GEO) 10%, Images 5%. Local SEO y Backlinks se reportan pero no se ponderan en este ciclo.",
+    "top_findings": [
+      "Panel de consentimiento de analítica sin aria-modal, focus trap ni cierre con Escape (confirmado por 3 fuentes independientes: PSI real, código fuente, pruebas en navegador)",
+      "Botón flotante de WhatsApp solapa visualmente el CTA del hero a 360px de ancho (confirmado con captura y geometría DOM)",
+      "Cierre de FAQ plantillado en las 4 páginas de nicho, idéntico al hallazgo del 2026-09-21, sin cambios pese a evidencia de trabajo técnico en SEO-05/SEO-07",
+      "/seo-local-sevilla/ sigue sin la palabra 'agencia' en título/H1 pese a 9/9 resultados SERP usándola para la keyword de mayor volumen (5.000/mes)",
+      "Header.astro y Footer.astro (renderizados en todo el sitio) siguen enlazando 7 rutas sin barra final, generando un 301 evitable en cada página"
+    ],
+    "quick_wins": [
+      "Reescribir las 4 variantes del cierre de FAQ de nicho (editorial puro, ~1-2h)",
+      "Añadir barra final a los 7 enlaces de Header/Footer (~30 min)",
+      "Sustituir la ruta relativa /seo-local-sevilla por URL absoluta en las 4 FAQ de nicho (~15 min)",
+      "Añadir los 3 posts de blog restantes a llms.txt (~15 min)",
+      "Añadir 'agencia' como vocabulario de apoyo en /seo-local-sevilla/ sin cambiar el H1 de marca (~1h)"
+    ],
+    "resolved_since_previous_audit": [
+      "SEO-01: redirects de /servicios/<slug> — confirmado en vivo, 301 único salto",
+      "SEO-03: /components/ ausente — confirmado 404, fuera del sitemap",
+      "SEO-09: autoría/fecha en el post GEO — confirmado en HTML servido y JSON-LD Article",
+      "SEO-11: naming de marca unificado y grafo de entidad con @id — confirmado en 22 páginas y 10 servicios",
+      "SEO-12: CTA de WhatsApp visible sin scroll en mobile — confirmado con capturas en 360/390/414px"
+    ],
+    "tracking_hygiene_note": "SEO-05 y SEO-07 están marcados 'parcial' en el backlog anterior con evidencia real de checkers deterministas en verde, pero el hallazgo textual original (cierre de FAQ de nicho) permanece verbatim sin cambios. Los checkers validan estructura/claims/similitud agregada, no la variación semántica de una frase concreta ya señalada. Recomendación de proceso: cuando una tarea cita un texto exacto como problema, el cierre debería verificar que ese texto cambió, no solo que un checker estructural pase.",
+    "environment_limitations": [
+      "Sin credenciales de Google API: sin datos de Search Console, CrUX ni GA4 en ningún punto de la auditoría",
+      "Sin clave Moz/Bing: perfil de backlinks en Tier 0 (Common Crawl + verificación manual), sin DA/Spam Score",
+      "drift_history.py roto en este entorno (Python 3.9 vs sintaxis que requiere 3.10+): sin línea base de drift",
+      "Google Rich Results Test no ejecutable desde este entorno: validación de schema manual, no equivalente a la herramienta real"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "weight": 0.22,
+      "score": 88,
+      "what_works": [
+        "robots.txt correcto, abierto a bots de IA (GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, Google-Extended)",
+        "Sitemap válido, 23 URLs, 0 errores, 0 páginas huérfanas (92/100 propio)",
+        "HTTPS forzado en un único salto, cabeceras de seguridad completas",
+        "Renderizado 100% SSR/SSG (Astro), sin dependencia de JS para contenido indexable",
+        "SEO-01 y SEO-03 confirmados en vivo con evidencia HTTP real"
+      ],
+      "findings": [
+        {"id": "TECH-01", "title": "Header/Footer sin barra final en 7 enlaces compartidos", "severity": "Medium", "source": "technical.md"},
+        {"id": "TECH-03", "title": "IndexNow no implementado", "severity": "Low", "source": "technical.md"},
+        {"id": "TECH-04", "title": "HSTS sin includeSubDomains/preload", "severity": "Low", "source": "technical.md"},
+        {"id": "TECH-05", "title": "CSP con 'unsafe-inline' en script-src", "severity": "Low", "source": "technical.md"},
+        {"id": "SITEMAP-01", "title": "19 de 23 páginas sin lastmod (decisión intencional, sin fechas fabricadas)", "severity": "Low", "source": "sitemap.md"}
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "weight": 0.23,
+      "score": 70,
+      "what_works": [
+        "Autoría y fecha visibles en el post GEO (SEO-09 desplegado, no solo documentado)",
+        "Cumplimiento consistente de restricciones de claims (sin cifras de velocidad ni posiciones prometidas)",
+        "FAQs sectoriales con conocimiento técnico correcto y específico"
+      ],
+      "findings": [
+        {"id": "CONTENT-01", "title": "Cierre de FAQ plantillado en las 4 páginas de nicho, idéntico al 21-09", "severity": "Media-Alta", "source": "content.md"},
+        {"id": "CONTENT-02", "title": "Respuestas de FAQ largas (100-130+ palabras) sin subdivisión", "severity": "Media", "source": "content.md"},
+        {"id": "CONTENT-03", "title": "Solape semántico FAQ 'Qué es el GEO' vs. post de blog dedicado", "severity": "Media", "source": "content.md"}
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "weight": 0.20,
+      "score": 62,
+      "what_works": [
+        "Páginas de servicio/nicho ya no son huérfanas de navegación",
+        "CTA de WhatsApp visible sin scroll en mobile (SEO-12)",
+        "Enlace cruzado comercios <-> tienda online ya existe",
+        "Foco de teclado visible y con buen contraste donde el foco llega"
+      ],
+      "findings": [
+        {"id": "ONPAGE-01", "title": "Panel de consentimiento sin aria-modal, focus trap ni cierre con Escape (3 fuentes convergentes)", "severity": "Alta", "source": "technical.md + visual.md"},
+        {"id": "ONPAGE-02", "title": "Botón flotante de WhatsApp solapa el CTA del hero a 360px", "severity": "Alta", "source": "visual.md"},
+        {"id": "ONPAGE-03", "title": "/seo-local-sevilla/ sin 'agencia' en título/H1 pese a 9/9 SERP", "severity": "Media-Alta", "source": "sxo.md"},
+        {"id": "ONPAGE-04", "title": "FAQ 'Cuánto cuesta una tienda online' casi duplicada entre comercios y tienda-online, no cubierta por check-seo-07.mjs", "severity": "Media-Alta", "source": "cluster.md"},
+        {"id": "ONPAGE-05", "title": "Sin puentes de navegación entre páginas comerciales adyacentes", "severity": "Media", "source": "sxo.md + cluster.md"},
+        {"id": "ONPAGE-06", "title": "H2/FAQ de precio en diseño-web casi calcado del post de blog", "severity": "Media", "source": "cluster.md"},
+        {"id": "ONPAGE-07", "title": "RGPD no confirmado en FAQ de clínicas/abogados (gap sin verificar)", "severity": "Baja (no confirmado)", "source": "sxo.md"}
+      ]
+    },
+    {
+      "name": "Schema",
+      "weight": 0.10,
+      "score": 88,
+      "what_works": [
+        "23/23 páginas con JSON-LD sintácticamente válido, 0 errores críticos",
+        "Tipos correctos con propiedades obligatorias presentes (ProfessionalService, Service, Article, FAQPage, BreadcrumbList, Person, WebSite)",
+        "Ausencia intencional y correcta de geo/aggregateRating/review/openingHoursSpecification sin datos verificados"
+      ],
+      "findings": [
+        {"id": "SCHEMA-01", "title": "Referencias @id entre bloques <script> sin @graph, sin confirmar con Rich Results Test", "severity": "Warning", "source": "schema.md"},
+        {"id": "SCHEMA-02", "title": "Falta Organization.logo (solo hay image)", "severity": "Info", "source": "schema.md"},
+        {"id": "SCHEMA-03", "title": "Patrón array con @context repetido en vez de @graph", "severity": "Info", "source": "schema.md"}
+      ]
+    },
+    {
+      "name": "Performance",
+      "weight": 0.10,
+      "score": 100,
+      "score_caveat": "Solo datos de laboratorio (Lighthouse, una ejecución, 4 páginas). Sin datos de campo (CrUX/PSI) por falta de credenciales de Google API. No representa el CWV real percibido por usuarios (p75).",
+      "what_works": [
+        "Performance 100/100 en las 4 páginas evaluadas (home, diseno-web-sevilla, web-para-restaurantes-sevilla, contacto)",
+        "LCP 0.97-1.38s (Good), CLS 0.000-0.016 (Good)",
+        "Peso de página mínimo: 68 KiB, 7 peticiones"
+      ],
+      "findings": [
+        {"id": "PERF-01", "title": "INP no verificable, sin datos de campo CrUX", "severity": "Media (hueco de medición)", "source": "performance.md"},
+        {"id": "PERF-02", "title": "TTFB de la home (496ms) notablemente más alto que otras páginas (48-193ms)", "severity": "Baja", "source": "performance.md"},
+        {"id": "PERF-03", "title": "Impacto de terceros tras aceptar cookies no medido", "severity": "Media (hueco de medición)", "source": "performance.md"}
+      ]
+    },
+    {
+      "name": "Images",
+      "weight": 0.05,
+      "score": 68,
+      "score_caveat": "Estimación razonada; no hubo auditoría de imágenes dedicada en este ciclo de 11 especialistas.",
+      "what_works": [
+        "Imágenes de portfolio con width/height, srcset, loading=lazy, decoding=async (technical.md)",
+        "CLS 0.000-0.016 en todas las páginas medidas, consistente con buena gestión de dimensiones de imagen"
+      ],
+      "findings": [
+        {"id": "IMG-01", "title": "Ausencia total de imágenes editoriales propias (diagramas, capturas, infografías) en blog y FAQs", "severity": "Media", "source": "geo.md"},
+        {"id": "IMG-02", "title": "Cobertura y calidad de alt-text no verificada sistemáticamente", "severity": "No confirmado (gap de verificación)", "source": "inferido, sin auditoría dedicada"}
+      ]
+    },
+    {
+      "name": "AI Search Readiness (GEO)",
+      "weight": 0.10,
+      "score": 74,
+      "what_works": [
+        "llms.txt con 18 enlaces absolutos, confirmado en producción",
+        "FAQ con respuesta directa resaltada en 9 páginas",
+        "Post GEO con sección 'Respuesta corta'",
+        "Byline y fecha visibles en los 4 posts de blog",
+        "robots.txt abre explícitamente a GPTBot/ClaudeBot/PerplexityBot/OAI-SearchBot/Google-Extended"
+      ],
+      "findings": [
+        {"id": "GEO-01", "title": "Enlace relativo no citable (/seo-local-sevilla sin dominio) en 4 FAQ de nicho", "severity": "Media", "source": "geo.md"},
+        {"id": "GEO-02", "title": "llms.txt solo enlaza individualmente 1 de 4 posts de blog", "severity": "Media", "source": "geo.md"},
+        {"id": "GEO-03", "title": "sameAs limitado a LinkedIn + GitHub, sin GBP/YouTube/Reddit", "severity": "Media", "source": "geo.md"},
+        {"id": "GEO-04", "title": "H2 sin formato pregunta; 3 de 4 posts sin bloque 'respuesta corta'", "severity": "Baja-Media", "source": "geo.md"},
+        {"id": "GEO-05", "title": "Sin contenido multi-modal (tablas, imágenes propias, vídeo)", "severity": "Media", "source": "geo.md"},
+        {"id": "GEO-06", "title": "ai.txt/rsl.xml no implementados", "severity": "Baja (informativo)", "source": "geo.md"}
+      ]
+    }
+  ],
+  "additional_reported_categories": [
+    {
+      "name": "Local SEO",
+      "score": 38,
+      "weighted_in_health_score": false,
+      "note": "45% del peso interno (GBP Signals + Reviews) bloqueado por decisión humana pendiente (ficha de GBP), ya cubierta por SEO-10. Mejora real en naming de marca y schema desde el 21-09.",
+      "source": "local.md"
+    },
+    {
+      "name": "Backlinks",
+      "score": null,
+      "weighted_in_health_score": false,
+      "note": "Datos insuficientes (Tier 0, sin Moz/Bing). 0 de 7 factores de scoring con dato positivo real. Sin cambios desde el 21-09. Ya cubierto por SEO-13.",
+      "source": "backlinks.md"
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "phase": "Critical",
+        "tasks": []
+      },
+      {
+        "phase": "High",
+        "tasks": [
+          {"task_id": "SEO-16", "title": "Accesibilidad del panel de consentimiento de analítica", "effort": "Medio (2-4h)"},
+          {"task_id": "SEO-17", "title": "Solape del botón flotante de WhatsApp con el CTA del hero a 360px", "effort": "Bajo (1-2h)"},
+          {"task_id": "SEO-18", "title": "Reescribir el cierre de FAQ plantillado en las 4 páginas de nicho", "effort": "Bajo (1-2h)"},
+          {"task_id": "SEO-24", "title": "Reforzar 'agencia' en /seo-local-sevilla/ sin tocar el H1 de marca", "effort": "Bajo (1-2h)"}
+        ]
+      },
+      {
+        "phase": "Medium",
+        "tasks": [
+          {"task_id": "SEO-15", "title": "Barra final en enlaces de Header/Footer", "effort": "Trivial (<1h)"},
+          {"task_id": "SEO-19", "title": "Diferenciar FAQ de precio duplicada (comercios/tienda-online, diseño-web/blog) y ampliar check-seo-07.mjs", "effort": "Medio (3-5h)"},
+          {"task_id": "SEO-20", "title": "Dividir respuestas de FAQ largas en bloques escaneables", "effort": "Medio (4-6h)"},
+          {"task_id": "SEO-21", "title": "Puentes de navegación entre páginas comerciales adyacentes", "effort": "Medio (2-3h)"},
+          {"task_id": "SEO-22", "title": "Enlace absoluto en FAQ de nicho + completar llms.txt", "effort": "Bajo (1h)"},
+          {"task_id": "SEO-23", "title": "Estructura GEO: H2 en pregunta, respuesta corta, contenido multi-modal", "effort": "Medio-Alto (4-8h)"}
+        ]
+      },
+      {
+        "phase": "Low",
+        "tasks": [
+          {"task_id": "SEO-25", "title": "Mejoras técnicas/schema menores (logo, @graph, IndexNow, HSTS, CSP, TTFB)", "effort": "Bajo (2-3h)"},
+          {"task_id": "SEO-26", "title": "Unificar redacción del área de servicio (footer vs. /contacto)", "effort": "Trivial (<1h)"}
+        ]
+      }
+    ],
+    "excluded_already_tracked": [
+      "GBP y prueba social — propiedad de SEO-10, decisión humana pendiente",
+      "Verificación externa de backlinks / outreach — propiedad de SEO-13",
+      "Credenciales Google API (GSC/CrUX/GA4/PSI) — propiedad de SEO-14"
+    ]
+  },
+  "artifacts": {
+    "report": "docs/seo-audit/full-audit-2026-09-22/FULL-AUDIT-REPORT.md",
+    "action_plan": "docs/seo-audit/full-audit-2026-09-22/ACTION-PLAN.md",
+    "findings_dir": "docs/seo-audit/full-audit-2026-09-22/findings/",
+    "tasks_dir": "docs/seo-audit/full-audit-2026-09-22/tasks/",
+    "screenshots_dir": "docs/seo-audit/full-audit-2026-09-22/screenshots/",
+    "previous_audit_backlog": "odd/tasks/seo-audit-backlog-2026-09-21.md",
+    "previous_audit_tasks_dir": "docs/seo-audit/full-audit-2026-09-21/tasks/",
+    "business_context": ".agents/product-marketing-context.md"
+  }
+}

@@ -80,7 +80,7 @@ La cuenta personal de Google no permite seleccionar directamente el calendario l
 `src/data/site.ts`, `src/components/BookingButton.astro`, `src/components/icons/Calendar.astro`, `src/components/services/ServiceHero.astro`, `src/components/services/CTASection.astro`, `src/components/services/PricingCard.astro`, `src/components/Header.astro`, `src/components/Footer.astro`, `src/components/WhatsAppButton.astro`, `src/pages/index.astro`, `src/pages/contacto.astro`, `src/pages/seo-para-clinicas-capilares-sevilla.astro`, `src/pages/privacidad.astro`, `src/pages/cookies.astro`, `src/scripts/whatsapp-button.js` (eliminado), `public/_headers`, `scripts/check-seo-12.mjs`, `tests/google-calendar-reserva.test.js`, `odd/tasks/google-calendar-reserva.md`.
 
 ## Próximo paso
-Mantener el commit local en `develop` y no hacer push todavía; probar manualmente el enlace de reserva y la experiencia móvil antes de acumular el siguiente lote.
+Ninguno: verificado que el commit `7f4b9f0` (junto con `50765e9`, ajuste responsive del label) está en `origin/main` y en producción. Feature cerrada.
 
 ## Revisión final de CTA aprobada
 - En cada página comercial debe existir **un único CTA principal de conversión**: reservar la primera sesión.
