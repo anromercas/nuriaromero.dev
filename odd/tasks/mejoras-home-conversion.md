@@ -50,6 +50,7 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
   - Confirmar si el CTA del header enlazará a calendario, contacto o WhatsApp mientras el calendario no esté disponible.
   - **Aceptación:** las decisiones quedan registradas en este documento antes de ejecutar T2, T4, T6 o T7.
   - **Check:** revisión de dependencias y ausencia de placeholders.
+  - **Resuelto parcialmente (auditoría 2026-09-27):** imagen profesional (T2) y calendario ya resueltos por features independientes ya mergeadas en `develop` — el calendario es la booking page de Google (`bookingUrl`, feature `google-calendar-reserva`, en producción); el destino del CTA de T4 es por tanto `bookingUrl`, ya decidido. Quedan sin decidir: hitos (ya publicados, T8 cerrada, así que esto también queda resuelto), fuentes de datos para gráficas (T7) y alcance exacto de "Sevilla" (T5) — este último en tensión real con `home-reposicionamiento` y SEO-28, que van en la dirección de reforzar "Sevilla", no retirarla; necesita que la usuaria decida el alcance antes de tocar nada.
 
 - [x] **T2 — Añadir imagen profesional diferenciada en la home**
   - **Archivos:** modificar `src/pages/index.astro` o crear un componente específico si la composición lo requiere; añadir el recurso aprobado en `public/` o `src/assets/` según el patrón elegido.
@@ -60,12 +61,13 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
   - **Check:** `npm run build`; revisión visual responsive; inspección de formato, `alt`, dimensiones y peso.
   - **Hecho:** se eliminó el fondo ajedrezado con `rembg`, se generó `src/assets/perfil-home.webp` (RGBA, 1157 × 1359, 70 KB) y se integró con `astro:assets` a la derecha del texto en desktop y debajo en móvil. También se relinkearon los logos y la imagen de “Sobre mí” desde `src/assets/`; `git diff --check` y `npm run build` pasan.
 
-- [ ] **T3 — Acortar el bloque “quién soy” de la home**
+- [x] **T3 — Acortar el bloque “quién soy” de la home**
   - **Archivos:** modificar el bloque de presentación inline de `src/pages/index.astro`; no modificar `src/components/AboutMe.astro` salvo autorización posterior.
   - **Ruta:** inline, un archivo y copy acotada una vez aprobado el texto.
   - Reducir el bloque a una presentación breve que explique quién es Nuria, su experiencia relevante y el resultado que busca para el negocio, evitando repetir el hero.
   - **Aceptación:** el bloque ocupa menos líneas, mantiene información verificable y conserva una ruta clara hacia contacto/servicios.
   - **Check:** `npm run build`; revisión de legibilidad móvil y de ausencia de claims no respaldados.
+  - **Confirmado hecho (auditoría 2026-09-27):** ya es un bloque de 2 frases (`src/pages/index.astro:151-153`, "Soy Nuria Romero, desarrolladora con más de 10 años de experiencia. Trabajo para que tu negocio aparezca donde buscan tus clientes y tenga más oportunidades de venta."), notablemente más corto que la versión original de 3-4 líneas (`git log -S` localiza el acortamiento en el commit `b9609f7`, "feat(home): optimize responsive hero layout", una feature distinta que resolvió esto como efecto colateral). Sin acción pendiente.
 
 - [ ] **T4 — Incorporar CTA destacado en el header**
   - **Archivos:** modificar `src/components/Header.astro`; revisar `src/components/Header.astro` y cualquier script de menú móvil asociado.
@@ -88,6 +90,8 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
   - Verificar por qué faltan `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID` o datos de reseñas; comprobar permisos/API, identificador de ficha, respuesta de Google Places y condiciones que hacen que el componente no renderice. Resolver la causa o documentar el bloqueo y dejar una presentación honesta sin datos inventados.
   - **Aceptación:** en producción o entorno de verificación la home muestra reseñas reales con fuente y estado de error controlado, o la sección explica/oculta correctamente la falta de datos sin dejar un bloque vacío.
   - **Check:** script/build; prueba con configuración válida y ausente; validación de CSP, privacidad y manejo de errores.
+  - **Diagnóstico técnico confirmado (auditoría 2026-09-27):** la causa raíz sí está resuelta a nivel de código — `src/lib/google-reviews.ts` y `reviewsSchema()` en `src/lib/schema.ts` funcionan correctamente, confirmado en `docs/seo-checklist-65-factores.md` (factor #62, 2026-09-27): "`GoogleReviews.astro` trae reseñas reales (1 reseña, 5.0 de media)" en local tras corregir `GOOGLE_PLACES_API_KEY`/`GOOGLE_PLACE_ID`. El commit que añade `AggregateRating`/`Review` al schema (`8d2ee17`) ya está en `origin/main`.
+  - **Contradicción con "ya solucionado" (verificado en vivo, 2026-09-27):** comprobé `https://nuriaromero.dev/` en el navegador — el JSON-LD servido en producción **no contiene `AggregateRating` ni `"@type":"Review"`** (solo 2 bloques `@graph`: `ProfessionalService`/`Organization` y `Person`), y no hay ninguna sección de reseñas visible en el DOM. El título de la home en producción también es el antiguo (sin "Sevilla" de SEO-28), lo que indica que el último deploy es anterior a estos commits o que Netlify no ha vuelto a construir desde entonces. **No cierro T6 como hecha**: el código está listo, pero producción no lo refleja todavía — falta confirmar que el deploy más reciente incluye estos commits y que las variables de entorno de Netlify realmente se están aplicando en el build (no solo que estén guardadas en el panel).
 
 - [ ] **T7 — Añadir recursos visuales y gráficas basadas en datos reales**
   - **Archivos:** modificar `src/pages/index.astro` y/o crear un componente de sección; añadir assets en `src/assets/` o `public/` según el tipo de recurso.
@@ -134,4 +138,4 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
 - Cada tarea completada debe cerrar con un commit convencional independiente en una rama de feature; no incluir `Co-Authored-By`.
 
 ## Estado
-**T2 y T8 completadas y verificadas visualmente.** El calendario ya quedó resuelto por la feature independiente `google-calendar-reserva` (en producción); el CTA del header desktop sigue pendiente de ese destino (T4). T1 sigue pendiente para lo que falta: gráficas, alcance de “Sevilla”. Rama `feat/home-trust-milestones` ya mergeada en `develop`.
+**T2, T3 y T8 completadas y verificadas.** El calendario ya quedó resuelto por la feature independiente `google-calendar-reserva` (en producción) — el destino del CTA de T4 (`bookingUrl`) ya está decidido, solo falta implementar el botón en el header desktop. T6: código y schema correctos y confirmados localmente, pero **no reflejado en producción todavía** (verificado en vivo 2026-09-27 — falta confirmar deploy/env vars de Netlify). Quedan genuinamente pendientes: T1 (cerrar solo alcance de "Sevilla" y fuente de gráficas), T4 (CTA header desktop), T5 (alcance de "Sevilla", en tensión con otras features que van en dirección contraria), T6 (confirmar en producción) y T7 (gráficas). Rama `feat/home-trust-milestones` ya mergeada en `develop`.
