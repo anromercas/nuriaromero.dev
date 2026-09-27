@@ -18,7 +18,7 @@ export interface GoogleReview {
   authorProfileUrl?: string
   /** Valoración de la reseña, de 1 a 5 estrellas. */
   rating: number
-  /** Texto de la reseña (ya localizado por la API si hay traducción). */
+  /** Texto de la reseña en su idioma original, si Google lo proporciona. */
   text: string
   /** Fecha relativa tal como la formatea Google (p. ej. "hace 2 semanas"). */
   relativeTime: string
@@ -84,7 +84,7 @@ export async function getGoogleReviews(): Promise<GoogleReviewsData | null> {
         authorPhotoUrl: review.authorAttribution?.photoUri,
         authorProfileUrl: review.authorAttribution?.uri,
         rating: typeof review.rating === "number" ? review.rating : 0,
-        text: review.text?.text ?? review.originalText?.text ?? "",
+        text: review.originalText?.text ?? review.text?.text ?? "",
         relativeTime: review.relativePublishTimeDescription ?? "",
       }),
     )

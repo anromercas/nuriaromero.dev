@@ -9,3 +9,9 @@ test('logs the Google Places API error body without exposing the API key', async
   assert.match(source, /Place Details respondió \$\{response\.status\}[^\n]*\$\{errorBody/)
   assert.doesNotMatch(source, /console\.(?:warn|error)\([^\n]*apiKey/)
 })
+
+test('prefers the review text in its original language', async () => {
+  const source = await readFile(new URL('../src/lib/google-reviews.ts', import.meta.url), 'utf8')
+
+  assert.ok(source.includes('text: review.originalText?.text ?? review.text?.text ?? ""'))
+})
