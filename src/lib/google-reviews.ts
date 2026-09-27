@@ -57,8 +57,9 @@ export async function getGoogleReviews(): Promise<GoogleReviewsData | null> {
     })
 
     if (!response.ok) {
+      const errorBody = await response.text()
       console.warn(
-        `[google-reviews] Place Details respondió ${response.status}; se omite la sección de reseñas.`,
+        `[google-reviews] Place Details respondió ${response.status}: ${errorBody.slice(0, 1000)}; se omite la sección de reseñas.`,
       )
       return null
     }
