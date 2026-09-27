@@ -2,6 +2,7 @@
 // con <Schema slot="head" schema={...} />; el de negocio va global en Layout.
 import { SITE } from "@/data/site"
 import { localTrust } from "@/data/local-trust"
+import type { GoogleReviewsData } from "@/lib/google-reviews"
 
 const BUSINESS_ID = `${SITE.url}/#business`
 const PERSON_ID = `${SITE.url}/#person`
@@ -37,6 +38,37 @@ export function localBusinessSchema() {
     ...(localTrust.gbp.status === "verified" && localTrust.gbp.profileUrl
       ? { hasMap: localTrust.gbp.profileUrl }
       : {}),
+  }
+}
+
+// Reseñas reales de Google Business Profile (ver src/lib/google-reviews.ts).
+// Referencia BUSINESS_ID por @id para que, dentro del mismo @graph, Google
+// asocie este aggregateRating/review con la entidad LocalBusiness/Organization
+// ya declarada en localBusinessSchema(). Solo se llama cuando
+// getGoogleReviews() devolvió datos reales — nunca con reseñas inventadas.
+export function reviewsSchema(data: GoogleReviewsData) {
+  return {
+    "@context": "https://schema.org",
+    "@type": ["ProfessionalService", "Organization"],
+    "@id": BUSINESS_ID,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: data.rating,
+      reviewCount: data.userRatingCount,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    review: data.reviews.map((review) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: review.author },
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: review.rating,
+        bestRating: 5,
+        worstRating: 1,
+      },
+      reviewBody: review.text,
+    })),
   }
 }
 

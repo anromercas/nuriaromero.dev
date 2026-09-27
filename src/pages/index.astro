@@ -18,10 +18,13 @@ import WhatsAppIcon from "@/components/icons/WhatsApp.astro"
 import CodeIcon from "@/components/icons/Code.astro"
 import Briefcase from "@/components/icons/Briefcase.astro"
 import ProfileCheck from "@/components/icons/ProfileCheck.astro"
-import { faqSchema, personSchema } from "@/lib/schema"
+import { faqSchema, personSchema, reviewsSchema } from "@/lib/schema"
+import { getGoogleReviews } from "@/lib/google-reviews"
 import { services } from "@/data/services"
 import { niches } from "@/data/niches"
 import profileHome from "@/assets/perfil-home.webp"
+
+const reviewsData = await getGoogleReviews()
 
 const serviceOutcomes: Record<string, string> = {
   "/seo-local-sevilla/": "Pon a punto cómo aparece tu negocio en Google y Maps.",
@@ -117,7 +120,14 @@ const homeFaqs = [
   title="Nuria Romero | Visibilidad en Google y en búsquedas con IA para tu negocio"
   description="Trabajo para que tu negocio aparezca en Google y en las nuevas búsquedas con inteligencia artificial. También diseño o mejoro tu web cuando hace falta. Precios claros y trato directo, sin intermediarios."
 >
-  <Schema slot="head" schema={[personSchema(), faqSchema(homeFaqs)]} />
+  <Schema
+    slot="head"
+    schema={[
+      personSchema(),
+      faqSchema(homeFaqs),
+      ...(reviewsData ? [reviewsSchema(reviewsData)] : []),
+    ]}
+  />
   <main class="px-4">
     <SectionContainer id="home-hero" class="seo12-home-hero pt-24 pb-10 md:pt-32 md:pb-16" data-seo12-hero="true">
       <div class="grid items-center gap-4 sm:gap-6 lg:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,28rem)]">
@@ -146,7 +156,7 @@ const homeFaqs = [
             <BookingButton />
                 <SocialPill href="#servicios">
                   <Briefcase class="size-4" />
-                  Ver qué puedo hacer por tu negocio
+                  Ver servicios
                 </SocialPill>
               </nav>
         </div>
@@ -338,7 +348,7 @@ const homeFaqs = [
         </SectionContainer>
       </div>
 
-      <GoogleReviews />
+      <GoogleReviews data={reviewsData} />
 
       <SectionContainer>
         <InternalLinks links={internalLinksBySource["/"]} />

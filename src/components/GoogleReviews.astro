@@ -1,14 +1,22 @@
 ---
 // Sección de reseñas reales de Google Business Profile.
-// Mientras no haya ficha creada (o no lleguen reseñas por cualquier otro
-// motivo), getGoogleReviews() devuelve null y este componente no renderiza
-// NADA — ni el contenedor de sección, ni un título, ni un estado vacío.
-import { getGoogleReviews } from "@/lib/google-reviews"
+// Recibe los datos ya resueltos por la página (en vez de llamar a
+// getGoogleReviews() por su cuenta) para que una sola página que también
+// necesite estos datos en el schema (ver reviewsSchema en lib/schema.ts) no
+// dispare dos peticiones a la API en el mismo build. Mientras no haya ficha
+// creada (o no lleguen reseñas por cualquier otro motivo), data es null y
+// este componente no renderiza NADA — ni el contenedor de sección, ni un
+// título, ni un estado vacío.
+import type { GoogleReviewsData } from "@/lib/google-reviews"
 import SectionContainer from "@/components/SectionContainer.astro"
 import TitleSection from "@/components/TitleSection.astro"
 import Star from "@/components/icons/Star.astro"
 
-const data = await getGoogleReviews()
+interface Props {
+  data: GoogleReviewsData | null
+}
+
+const { data } = Astro.props
 ---
 
 {
