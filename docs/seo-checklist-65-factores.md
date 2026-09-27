@@ -98,7 +98,7 @@ Leyenda de estado: **Hecho** · **Parcial** (funciona pero incompleto, se explic
 | 59 | Página "Sobre nosotros" completa | Hecho | `/sobre-mi` con trayectoria, experiencia y misión | Alta |
 | 60 | Política de privacidad, legal y cookies | Hecho | Aviso legal, privacidad y cookies implementados (commit "páginas legales... + consentimiento") | Media |
 | 61 | Menciones en medios y prensa (PR digital) | Pendiente | Sin evidencia de estrategia de Digital PR activa | Media |
-| 62 | Reseñas de clientes y testimonios | Parcial | Confirmado 2026-09-27 en local: `GoogleReviews.astro` ya trae reseñas reales de la API (1 reseña, 5.0 de media) — solo faltaba que `GOOGLE_PLACES_API_KEY`/`GOOGLE_PLACE_ID` estuvieran bien puestas. Falta aún: confirmar las mismas variables en el hosting de producción, y añadir `AggregateRating`/`Review` schema | Alta |
+| 62 | Reseñas de clientes y testimonios | Parcial | Confirmado 2026-09-27 en local: `GoogleReviews.astro` trae reseñas reales (1 reseña, 5.0 de media) y `reviewsSchema()` ya emite `AggregateRating`/`Review` en el JSON-LD de la home, verificado en el `<script>` renderizado. Único punto pendiente: confirmar que `GOOGLE_PLACES_API_KEY`/`GOOGLE_PLACE_ID` están bien puestas en el hosting de producción (no solo local) y hacer un deploy con estos commits | Alta |
 | 63 | Directorios y rankings en blog | No aplica | Formato de contenido no usado actualmente en el blog | Alta |
 | 64 | HTTPS + datos de contacto visibles | Hecho | Footer con email y teléfono visibles, HTTPS confirmado | Alta |
 | 65 | Presencia en Wikipedia/Wikidata | No aplica | Negocio en etapa demasiado temprana para justificar una entrada enciclopédica | Baja |
