@@ -35,6 +35,7 @@ User explicitly authorized executing the backlog "poco a poco" (one task at a ti
 - [x] SEO-26 Unify service-area wording (footer vs. /contacto) — `docs/seo-audit/full-audit-2026-09-22/tasks/26-unificar-wording-area-servicio.md`
 - [x] HSTS includeSubDomains (deferred item from SEO-25, authorized 2026-09-23) — see Progress evidence
 - [x] SEO-27 Remove CSP unsafe-inline (deferred item from SEO-25, authorized 2026-09-23) — `docs/seo-audit/full-audit-2026-09-22/tasks/27-eliminar-unsafe-inline-csp.md`
+- [ ] SEO-28 Revisar y mejorar meta titles y meta descriptions de toda la web tomando como referencia el posicionamiento y el enfoque de consultor freelance de `soyjaviersantos.com`, `soyrafaramos.com` y `sergiogarciamonge.es`; comparar qué términos, propuesta de valor y señales de freelance/agencia utilizan, y definir mejoras propias sin copiar claims no verificables.
 - [x] Organization.logo (deferred item from SEO-25, asset delivered and wired 2026-09-23)
 
 ## Progress evidence
@@ -156,4 +157,4 @@ User explicitly authorized executing the backlog "poco a poco" (one task at a ti
   One commit on `develop`.
 
 ## Next step
-SEO-27 (CSP unsafe-inline removal) is complete. Logo asset pending delivery from user before `Organization.logo` can be added. All 12 original tasks (SEO-15–26) plus the HSTS fix and SEO-27 are complete and committed on `develop`, not pushed. Awaiting user decision on push/PR timing.
+SEO-27 (CSP unsafe-inline removal) is complete. Logo asset pending delivery from user before `Organization.logo` can be added. All 12 original tasks (SEO-15–26) plus the HSTS fix and SEO-27 are complete and committed on `develop`, not pushed. SEO-28 is pending for a future batch. Awaiting user decision on push/PR timing.
