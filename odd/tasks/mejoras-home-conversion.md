@@ -97,7 +97,7 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
   - **Aceptación:** la home gana apoyo visual sin parecer un informe ficticio, mantiene rendimiento y cada gráfica tiene fuente o explicación comprensible.
   - **Check:** `npm run build`; revisión visual móvil/desktop; inspección de peso, accesibilidad y CLS.
 
-- [~] **T8 — Añadir sección de hitos debajo del hero**
+- [x] **T8 — Añadir sección de hitos debajo del hero**
   - **Archivos:** crear un componente de hitos si es reutilizable; modificar `src/pages/index.astro`; añadir datos en `src/data/` si el contenido se separa del markup.
   - **Ruta:** delegado, por nueva sección de UI y contenido; un único escritor para implementar en `src/pages/index.astro`.
   - Insertar la sección inmediatamente después de `SectionContainer id="home-hero"`. La usuaria aprobó cuatro hitos cualitativos, presentados como icono y texto, sin cifras inventadas: diseño personalizado, SEO desde la base, experiencia responsive y trato directo.
@@ -115,6 +115,7 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
   - **Commit de implementación:** `20ba8e46e3a81a7e71c2ef239493196b959956a9` (`feat(home): add trust milestones below hero`).
   - **Commit de refinamiento visual:** `f0db643613ed291758fe6f36b3124118fbc3e562` (`style(home): simplify milestone layout`).
   - **Nota de build ajena a T8:** Google Places devolvió HTTP 403 y Astro omitió el bloque de reseñas, sin impedir el build; diagnosticar en T6.
+  - **Revisión visual completada (2026-09-27):** en `develop` (ya mergeada), `npm run dev` + navegador confirman en móvil (609 px) la sección sin tarjetas, iconos grandes arriba, grid 2 columnas, copy exacta y espaciado razonable tras el hero. El resize a escritorio no funcionó en la extensión de navegador (el viewport capturado no cambiaba), así que el grid de 4 columnas en pantallas grandes se verificó leyendo el código (`grid grid-cols-2 ... lg:grid-cols-4` en `src/pages/index.astro:175`) en vez de una captura en vivo. **T8 dada por cerrada.**
 
 ## Orden recomendado
 1. T1 — decisiones y recursos bloqueantes.
@@ -133,4 +134,4 @@ El modo estricto de TDD está activo a nivel de sesión, pero estas tareas son p
 - Cada tarea completada debe cerrar con un commit convencional independiente en una rama de feature; no incluir `Co-Authored-By`.
 
 ## Estado
-**T2 completada; T8 implementada con revisión visual responsive pendiente.** T1 sigue pendiente para resolver calendario, gráficas, alcance de “Sevilla” y destino del CTA. Rama activa: `feat/home-trust-milestones`.
+**T2 y T8 completadas y verificadas visualmente.** El calendario ya quedó resuelto por la feature independiente `google-calendar-reserva` (en producción); el CTA del header desktop sigue pendiente de ese destino (T4). T1 sigue pendiente para lo que falta: gráficas, alcance de “Sevilla”. Rama `feat/home-trust-milestones` ya mergeada en `develop`.
