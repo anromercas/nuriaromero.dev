@@ -43,6 +43,15 @@ test('booking CTAs open the official schedule in a new tab accessibly', async ()
   }
 })
 
+test('booking CTA hides only primera below 370px while preserving its accessible label', async () => {
+  const button = await readSource('src/components/BookingButton.astro')
+
+  assert.match(button, /aria-label="Reserva una primera sesión"/)
+  assert.match(button, /Reserva una <span class="booking-first-word">primera <\/span>sesión/)
+  assert.match(button, /\.booking-first-word\s*\{\s*display:\s*none;/)
+  assert.match(button, /@media\s*\(min-width:\s*370px\)\s*\{\s*\.booking-first-word\s*\{\s*display:\s*inline;/)
+})
+
 test('commercial blocks remove inline WhatsApp and contact conversion alternatives', async () => {
   const sources = await Promise.all(commercialSources.map(readSource))
 
