@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Informe web Centro Amara</title>
+<style>
+  @font-face{font-family:"Onest Variable";font-style:normal;font-display:swap;font-weight:100 900;
+    src:url("assets/onest-latin-ext-wght-normal.woff2") format("woff2-variations");
+    unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}
+  @font-face{font-family:"Onest Variable";font-style:normal;font-display:swap;font-weight:100 900;
+    src:url("assets/onest-latin-wght-normal.woff2") format("woff2-variations");
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  :root{
+    color-scheme:dark;
+    --bg:#030712; --card:rgba(31,41,55,.5); --card-solid:#111827; --ink:#ffffff; --body:#d1d5db; --muted:#9ca3af; --line:#374151;
+    --brand:#60a5fa; --brand-strong:#3b82f6; --brand-soft:rgba(59,130,246,.14);
+    --hl:#fef08a; --green:#4ade80; --logo-green:#0f6445;
+    --ok:#4ade80; --ok-soft:rgba(74,222,128,.13);
+    --warn:#fef08a; --warn-soft:rgba(254,240,138,.11);
+    --bad:#fca5a5; --bad-soft:rgba(248,113,113,.14);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;font-size:106.25%}
+  body{margin:0;color:var(--ink);font:400 1rem/1.7 "Onest Variable",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:radial-gradient(ellipse 80% 80% at 50% -20%,rgba(120,119,198,.3),rgba(255,255,255,0)) top center/100% 1100px no-repeat,var(--bg);min-height:100vh}
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px}
+  p,li{color:var(--body)}
+  strong{color:var(--ink)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0}
+  .topbar img{height:44px;width:auto;display:block}
+  .topbar span{color:var(--muted);font-size:.85rem;text-align:right}
+  header.hero{padding:28px 0 36px;border-bottom:1px solid var(--line)}
+  .pill{display:inline-block;border:1px solid var(--logo-green);background:rgba(15,100,69,.25);color:#e5e7eb;border-radius:999px;padding:4px 14px;font-size:.85rem;font-weight:500}
+  h1{font-size:clamp(2rem,6vw,2.9rem);line-height:1.12;margin:.45em 0 .4em;font-weight:700;color:#fff}
+  h2{font-size:clamp(1.45rem,3.6vw,1.9rem);line-height:1.25;margin:0 0 .5em;font-weight:700;color:#fff}
+  h3{font-size:1.1rem;margin:0 0 .3em;color:#fff;font-weight:600}
+  p{margin:.5em 0}
+  .lead{font-size:1.15rem;color:var(--muted);max-width:60ch}
+  .lead strong,.hl{color:var(--hl);font-weight:600}
+  .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+  .btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:11px 22px;font-weight:600;text-decoration:none;font-size:.98rem}
+  .btn.primary{background:var(--brand-strong);color:#fff}
+  .btn.ghost{border:1px solid var(--line);background:rgba(17,24,39,.7);color:#e5e7eb}
+  section{padding:46px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .grid{display:grid;gap:16px}
+  @media(min-width:680px){.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}}
+  .score{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .score .num{font-size:3.4rem;font-weight:800;line-height:1;color:var(--hl)}
+  .score .num small{font-size:1.3rem;color:var(--muted);font-weight:600}
+  .bar{height:12px;background:var(--line);border-radius:99px;overflow:hidden;min-width:200px;flex:1;margin:.4em 0}
+  .bar i{display:block;height:100%;background:var(--hl);width:44%}
+  .tag{display:inline-block;font-size:.75rem;font-weight:700;padding:2px 10px;border-radius:99px;letter-spacing:.03em}
+  .tag.bad{background:var(--bad-soft);color:var(--bad)}
+  .tag.warn{background:var(--warn-soft);color:var(--warn)}
+  .tag.ok{background:var(--ok-soft);color:var(--ok)}
+  .tag.brand{background:var(--brand-soft);color:var(--brand)}
+  .issue{margin-top:14px}
+  .issue dl{margin:.6em 0 0;display:grid;gap:.4em}
+  .issue dt{font-weight:700;font-size:.8rem;color:var(--brand);text-transform:uppercase;letter-spacing:.05em}
+  .issue dd{margin:0 0 .5em;color:var(--body)}
+  ul,ol{padding-left:1.2em;margin:.5em 0}
+  li{margin:.3em 0}
+  .good li::marker{color:var(--green)}
+  .phase{position:relative;padding-left:22px;border-left:3px solid var(--brand-strong);margin:0 0 22px}
+  .phase .when{color:var(--brand);font-weight:700;font-size:.9rem}
+  table{width:100%;border-collapse:collapse;font-size:.95rem;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--body)}
+  td strong{color:#fff}
+  th{background:var(--brand-soft);color:var(--brand);font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}
+  tr:last-child td{border-bottom:0}
+  .scroll{overflow-x:auto}
+  .callout{border-left:4px solid var(--brand-strong);background:var(--brand-soft);padding:16px 18px;border-radius:0 12px 12px 0;margin:16px 0}
+  .callout.warn{border-color:var(--hl);background:var(--warn-soft)}
+  .callout>strong:first-child{color:var(--hl)}
+  .small{font-size:.9rem;color:var(--muted)}
+  a{color:var(--brand)}
+  footer{padding:32px 0 56px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+  footer .brand{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  footer img{height:38px;width:auto}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  nav.toc a{font-size:.85rem;text-decoration:none;color:#e5e7eb;border:1px solid var(--line);background:rgba(31,41,55,.5);padding:5px 14px;border-radius:99px}
+  nav.toc a:hover{border-color:var(--brand-strong);color:var(--brand)}
+  .chart{display:grid;gap:10px;margin:14px 0}
+  .row{display:grid;grid-template-columns:minmax(120px,210px) 1fr;gap:12px;align-items:center;font-size:.92rem;color:var(--body)}
+  .row .track{background:#1f2937;border-radius:6px;height:26px;position:relative;overflow:hidden}
+  .row .fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:#fff;font-weight:700;font-size:.8rem;min-width:34px}
+  .fill.bad{background:#dc2626} .fill.warn{background:var(--hl);color:#422006} .fill.ok{background:#16a34a} .fill.brand{background:var(--brand-strong)} .fill.grey{background:#6b7280}
+  @media(max-width:520px){.row{grid-template-columns:1fr;gap:4px}}
+  .flow{display:grid;gap:14px}
+  @media(min-width:680px){.flow{grid-template-columns:1fr 1fr}}
+  .flow .card ol{margin:.6em 0 0;padding-left:1.3em}
+  .flow .card.bad{border-color:rgba(248,113,113,.6)} .flow .card.ok{border-color:rgba(74,222,128,.6)}
+  .dots{letter-spacing:1px;color:var(--brand)}
+  .pages td:first-child{font-weight:600;color:#fff}
+  .new{color:var(--green);font-weight:700;font-size:.8rem}
+  .keep{color:var(--muted);font-weight:700;font-size:.8rem}
+  .opt{color:var(--hl);font-weight:700;font-size:.8rem}
+  .mono{font-variant-numeric:tabular-nums}
+  @media print{
+    :root{color-scheme:light;--bg:#fff;--card:#fff;--ink:#000;--body:#222;--muted:#555;--line:#ccc;--brand:#1d4ed8;--brand-soft:#eef3ff;--hl:#8a6d00;--warn:#8a6d00;--warn-soft:#fff8dc;--ok:#166534;--ok-soft:#e8f6ec;--bad:#991b1b;--bad-soft:#fdecec;--green:#166534}
+    body{background:#fff;font-size:11.5pt}
+    h1,h2,h3,strong,td strong,.pages td:first-child{color:#000}
+    nav.toc,.cta{display:none}
+    section{break-inside:avoid-page;padding:22px 0}
+    .card,.phase{break-inside:avoid}
+    .row .track{background:#e5e7eb}
+    .btn.primary{background:#1d4ed8}
+    .topbar img,footer img{filter:invert(1) hue-rotate(180deg)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="topbar">
+  <img src="assets/nuriaromerodev-logo-blanco.svg" alt="nuriaromero.dev" width="132" height="44">
+  <span>Informe de la web · 29 de septiembre de 2026</span>
+</div>
+
+<header class="hero">
+  <span class="pill">Informe para Centro Amara</span>
+  <h1>Cómo se ve <span class="hl">Centro Amara</span> en Google, y cómo mejorarlo</h1>
+  <p class="lead">Hemos revisado a fondo www.centroamara.com: <strong>cómo la ven las personas que buscan un psicólogo o sexólogo en Sevilla</strong> y cómo la ven Google y los buscadores con inteligencia artificial. Este documento explica lo que hemos encontrado y lo que proponemos, sin tecnicismos.</p>
+  <div class="cta">
+    <a class="btn primary" href="#plan">Ver el plan de acción</a>
+    <a class="btn ghost" href="#inversion">Ver la inversión</a>
+  </div>
+  <nav class="toc" aria-label="Contenido">
+    <a href="#resumen">Resumen</a>
+    <a href="#bien">Lo que ya funciona</a>
+    <a href="#problemas">Qué hay que mejorar</a>
+    <a href="#plan">Plan y plazos</a>
+    <a href="#paginas">Páginas de la web</a>
+    <a href="#tecnologia">Cambio de tecnología</a>
+    <a href="#google">Ficha de Google</a>
+    <a href="#inversion">Inversión</a>
+    <a href="#pasos">Siguientes pasos</a>
+  </nav>
+</header>
+
+<section id="resumen">
+  <h2>Resumen en un minuto</h2>
+  <div class="card">
+    <div class="score">
+      <div class="num">44<small>/100</small></div>
+      <div style="flex:1;min-width:220px">
+        <strong>Nota global de salud de la web en buscadores.</strong>
+        <div class="bar" role="img" aria-label="44 de 100"><i></i></div>
+        <div class="small">Una web bien preparada suele estar por encima de 75.</div>
+      </div>
+    </div>
+  </div>
+  <p>La web de Centro Amara <strong>transmite confianza</strong>: se ve quién es el equipo, sus números de colegiada, el registro sanitario y los más de 20 años de experiencia. El problema es que <strong>Google no recibe la información que necesita para mostrarla</strong> a quien busca "psicólogo en Sevilla", "terapia sexual" o "terapia de pareja".</p>
+  <p>Ahora mismo la web funciona como un folleto de cuatro páginas. Los buscadores premian a las webs que tienen <strong>una página dedicada a cada cosa que la gente busca</strong>, y aquí los tratamientos son solo unas líneas en la portada.</p>
+  <h3 style="margin-top:22px">Nota por áreas (sobre 100)</h3>
+  <div class="chart" role="img" aria-label="Notas por área: rendimiento 82, técnico 52, contenido 46, textos de cada página 34, datos para Google 28, ficha local 28, preparación para IA 24">
+    <div class="row"><span>Velocidad (laboratorio)</span><div class="track"><div class="fill ok" style="width:82%">82</div></div></div>
+    <div class="row"><span>Base técnica</span><div class="track"><div class="fill warn" style="width:52%">52</div></div></div>
+    <div class="row"><span>Calidad del contenido</span><div class="track"><div class="fill warn" style="width:46%">46</div></div></div>
+    <div class="row"><span>Títulos y resúmenes</span><div class="track"><div class="fill bad" style="width:34%">34</div></div></div>
+    <div class="row"><span>Datos para Google</span><div class="track"><div class="fill bad" style="width:28%">28</div></div></div>
+    <div class="row"><span>Presencia local</span><div class="track"><div class="fill bad" style="width:28%">28</div></div></div>
+    <div class="row"><span>Preparación para IA</span><div class="track"><div class="fill bad" style="width:24%">24</div></div></div>
+  </div>
+  <p class="small">Verde: bien. Naranja: mejorable. Rojo: hay que actuar.</p>
+  <div class="callout"><strong>La buena noticia:</strong> casi todo lo que falla se puede arreglar, y lo más importante (la confianza del equipo) ya lo tienen.</div>
+</section>
+
+<section id="bien">
+  <h2>Lo que ya funciona</h2>
+  <div class="card">
+    <ul class="good">
+      <li><strong>Equipo con credenciales visibles:</strong> tres psicólogas colegiadas con su número y su biografía, y el registro de centro sanitario. En temas de salud esto es oro para Google y para los pacientes.</li>
+      <li><strong>Datos de contacto coherentes:</strong> dirección (C/ Rosario 16, Sevilla) y teléfono aparecen igual en la web.</li>
+      <li><strong>Web segura y estable:</strong> usa el candado (https) y redirige bien las direcciones antiguas.</li>
+      <li><strong>Rápida en ordenador:</strong> carga en menos de un segundo.</li>
+      <li><strong>Sin saltos molestos:</strong> los elementos no se mueven mientras se carga la página.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="problemas">
+  <h2>Qué hay que mejorar, explicado sin tecnicismos</h2>
+  <p class="small">Ordenado de más a menos importante.</p>
+
+  <article class="card issue">
+    <span class="tag bad">MUY IMPORTANTE</span>
+    <h3>1. No hay una página para cada tratamiento</h3>
+    <dl>
+      <dt>Qué pasa</dt><dd>Terapia sexual, terapia de pareja y psicología de la salud son unas viñetas en la portada. La página que parece "de servicios" es en realidad la del equipo.</dd>
+      <dt>Por qué importa</dt><dd>Cuando alguien busca "terapia de pareja Sevilla", Google enseña sobre todo páginas dedicadas a ese tema. Sin ella, Centro Amara casi no aparece.</dd>
+      <dt>Cómo se arregla</dt><dd>Crear una página por tratamiento, con explicación clara, preguntas frecuentes y un botón para pedir cita.</dd>
+    </dl>
+  </article>
+
+  <article class="card issue">
+    <span class="tag bad">MUY IMPORTANTE</span>
+    <h3>2. Todas las páginas se presentan igual en Google</h3>
+    <dl>
+      <dt>Qué pasa</dt><dd>El texto que Google enseña bajo el enlace (el "resumen" de cada página) es el mismo en todas, y los títulos de algunas son muy pobres ("Novedades", "Solicita consulta").</dd>
+      <dt>Por qué importa</dt><dd>Es el escaparate en los resultados de búsqueda. Si todo parece igual, nadie sabe por qué entrar ni Google entiende de qué va cada página.</dd>
+      <dt>Cómo se arregla</dt><dd>Escribir un título y un resumen propios para cada página, con el servicio y la ciudad.</dd>
+    </dl>
+  </article>
+
+  <article class="card issue">
+    <span class="tag bad">MUY IMPORTANTE</span>
+    <h3>3. Google no tiene un "índice" de la web</h3>
+    <dl>
+      <dt>Qué pasa</dt><dd>No existe el mapa de la web (sitemap) que ayuda a Google a descubrir todas las páginas. Además, una misma página se puede abrir con varias direcciones distintas y Google no sabe cuál es la buena.</dd>
+      <dt>Por qué importa</dt><dd>Google puede tardar más en encontrar las páginas nuevas o mostrar la versión equivocada.</dd>
+      <dt>Cómo se arregla</dt><dd>Generar el mapa de la web, indicar la dirección oficial de cada página y redirigir las duplicadas.</dd>
+    </dl>
+  </article>
+
+  <article class="card issue">
+    <span class="tag bad">MUY IMPORTANTE</span>
+    <h3>4. Google no sabe que sois una clínica en Sevilla</h3>
+    <dl>
+      <dt>Qué pasa</dt><dd>La información "oculta" que se da a Google sobre la empresa es la genérica que trae el programa de la web: casi solo el nombre. No incluye dirección, teléfono, equipo ni registro sanitario. Tampoco hay enlace a la ficha de Google, ni mapa, ni horarios, ni opiniones.</dd>
+      <dt>Por qué importa</dt><dd>Para aparecer en el mapa de Google ("cerca de ti") y en las respuestas de asistentes de IA, primero tienen que poder identificar el negocio con seguridad.</dd>
+      <dt>Cómo se arregla</dt><dd>Añadir los datos de la clínica y del equipo en un formato que Google entiende, enlazar la ficha de Google y poner el mapa y el horario en la web.</dd>
+    </dl>
+  </article>
+
+  <article class="card issue">
+    <span class="tag warn">IMPORTANTE</span>
+    <h3>5. En el móvil cuesta encontrar cómo pedir cita</h3>
+    <dl>
+      <dt>Qué pasa</dt><dd>En el teléfono, lo primero que se ve no incluye el teléfono ni el botón de pedir cita; hay que bajar bastante hasta encontrarlos. Algunos botones son muy pequeños y algunos textos tienen poco contraste.</dd>
+      <dt>Por qué importa</dt><dd>La mayoría de las personas que buscan ayuda psicológica lo hacen desde el móvil. Si no encuentran cómo contactar, se van.</dd>
+      <dt>Cómo se arregla</dt><dd>Botón de llamar y de pedir cita siempre visible, botones más grandes y colores más legibles.</dd>
+    </dl>
+  </article>
+
+  <article class="card issue">
+    <span class="tag warn">IMPORTANTE</span>
+    <h3>6. En el móvil la web tarda en mostrarse</h3>
+    <dl>
+      <dt>Qué pasa</dt><dd>En pruebas de laboratorio, la imagen principal tarda unos 3,8 segundos en aparecer en móvil (lo recomendable es menos de 2,5). En ordenador va muy bien.</dd>
+      <dt>Por qué importa</dt><dd>Una web lenta hace que la gente se marche y Google lo tiene en cuenta.</dd>
+      <dt>Cómo se arregla</dt><dd>Preparar mejor las imágenes y los archivos de la web para que se carguen antes y se guarden en el móvil del visitante.</dd>
+    </dl>
+  </article>
+
+  <article class="card issue">
+    <span class="tag warn">IMPORTANTE</span>
+    <h3>7. No hay opiniones de pacientes ni textos con autor</h3>
+    <dl>
+      <dt>Qué pasa</dt><dd>No se ven reseñas ni valoraciones, y los textos no llevan firma ni fecha. El pie de página dice "© 2023".</dd>
+      <dt>Por qué importa</dt><dd>En salud, Google y los pacientes buscan señales de que detrás hay profesionales reales y actuales.</dd>
+      <dt>Cómo se arregla</dt><dd>Firmar los textos con la psicóloga que los escribe, poner fecha, actualizar el año y mostrar valoraciones (ver apartado de la ficha de Google).</dd>
+    </dl>
+  </article>
+
+  <article class="card issue">
+    <span class="tag brand">DETALLES</span>
+    <h3>8. Otros ajustes pendientes</h3>
+    <ul>
+      <li>Varias imágenes no tienen descripción (la usan las personas con lectores de pantalla y Google).</li>
+      <li>La web sigue enviando datos a una versión antigua de Google Analytics que ya no funciona: hay que sustituirla y comprobar el aviso de cookies.</li>
+      <li>Algunas cabeceras de seguridad no están activadas y hay un archivo interno visible que revela la versión del programa de la web.</li>
+      <li>Las noticias son muy breves y poco útiles para un paciente que se informa.</li>
+      <li>Hay pequeñas erratas ("Psicologíca", "¿Quienes somos?").</li>
+      <li>Aún no existe una guía para asistentes de IA (un archivo llamado llms.txt) que explique quiénes sois.</li>
+    </ul>
+  </article>
+</section>
+
+<section id="plan">
+  <h2>Plan de acción y plazos</h2>
+  <p>Los plazos son <strong>estimaciones de trabajo</strong> para el caso de mejorar la web actual, y se confirmarán con el presupuesto definitivo. Los resultados en Google no son inmediatos: los primeros cambios suelen notarse entre <strong>2 y 3 meses</strong> después de aplicarse, y no podemos garantizar posiciones concretas.</p>
+
+  <div class="phase">
+    <div class="when">Fase 1 · Semana 1 · Arreglos urgentes</div>
+    <h3>Que Google entienda la web</h3>
+    <ul>
+      <li>Títulos y resúmenes propios en cada página.</li>
+      <li>Mapa de la web y aviso a Google de que existe.</li>
+      <li>Dirección oficial por página y redirección de duplicados.</li>
+      <li>Datos de la clínica y del equipo para Google (dirección, teléfono, colegiadas, registro sanitario).</li>
+      <li>Teléfono y botón de cita bien visibles en el móvil.</li>
+      <li>Revisar y reclamar la ficha de Google y enlazarla desde la web.</li>
+    </ul>
+  </div>
+
+  <div class="phase">
+    <div class="when">Fase 2 · Semanas 2 a 4 · Páginas y velocidad</div>
+    <h3>Una página para cada tratamiento</h3>
+    <ul>
+      <li>Páginas de terapia sexual, terapia de pareja y psicología de la salud, con preguntas frecuentes y botón de cita.</li>
+      <li>Reorganizar la página del equipo como "Quiénes somos", con foto y textos de cada psicóloga.</li>
+      <li>Mapa, horarios y descripción de las imágenes.</li>
+      <li>Mejoras de velocidad y de seguridad; sustituir Analytics y revisar el aviso de cookies.</li>
+    </ul>
+  </div>
+
+  <div class="phase">
+    <div class="when">Fase 3 · Mes 2 · Confianza y presencia</div>
+    <h3>Que os encuentren y se fíen</h3>
+    <ul>
+      <li>Reseñas de pacientes (ver apartado de la ficha de Google).</li>
+      <li>Dar de alta o reclamar el perfil en directorios como Doctoralia, Páginas Amarillas, Top Doctors, el Colegio de Psicología de Andalucía y Bing, con los mismos datos en todos.</li>
+      <li>Guía para asistentes de IA (llms.txt).</li>
+    </ul>
+  </div>
+
+  <div class="phase">
+    <div class="when">Fase 4 · De forma continua</div>
+    <h3>Medir y ajustar</h3>
+    <ul>
+      <li>Conectar Google Search Console y Google Analytics 4.</li>
+      <li>Revisar cada mes: cuánta gente os encuentra, qué buscan y cuántas llamadas o citas llegan.</li>
+      <li>Repetir esta revisión tras la fase 2 para comparar la nota.</li>
+    </ul>
+  </div>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Fase</th><th>Duración estimada</th><th>Qué se consigue</th></tr></thead>
+    <tbody>
+      <tr><td>1. Arreglos urgentes</td><td>1 semana</td><td>Google entiende la web y la clínica</td></tr>
+      <tr><td>2. Páginas y velocidad</td><td>2-3 semanas</td><td>Una página por tratamiento; web más rápida</td></tr>
+      <tr><td>3. Confianza y presencia</td><td>Un mes, en paralelo</td><td>Reseñas, directorios y contenido útil</td></tr>
+      <tr><td>4. Seguimiento</td><td>Continuo</td><td>Datos reales para decidir</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="paginas">
+  <h2>Qué páginas incluye el plan</h2>
+  <p>La propuesta parte de una <strong>base de 6 páginas</strong>: las esenciales del centro y una página para cada tratamiento que se quiere posicionar. Además se mantienen las páginas legales que ya existen y se añade la de cookies.</p>
+  <div class="scroll">
+  <table class="pages">
+    <thead><tr><th>Página</th><th>Estado</th><th>Para qué sirve</th></tr></thead>
+    <tbody>
+      <tr><td>Inicio</td><td><span class="keep">SE MANTIENE, MEJORADA</span></td><td>Presentar el centro, con teléfono y cita visibles en el móvil y enlaces a cada tratamiento.</td></tr>
+      <tr><td>Quiénes somos</td><td><span class="keep">SE REORGANIZA</span></td><td>La actual página del equipo, con colegiada y especialidad de cada psicóloga.</td></tr>
+      <tr><td>Contacto y cómo llegar</td><td><span class="keep">SE MANTIENE, MEJORADA</span></td><td>Teléfono, mapa, horario y formulario.</td></tr>
+      <tr><td>Terapia sexual en Sevilla</td><td><span class="new">NUEVA</span></td><td>Responder a "sexólogo / terapia sexual Sevilla": a quién ayuda, cómo son las sesiones, preguntas frecuentes.</td></tr>
+      <tr><td>Terapia de pareja en Sevilla</td><td><span class="new">NUEVA</span></td><td>Responder a "terapia de pareja Sevilla".</td></tr>
+      <tr><td>Psicología de la salud / psicólogo en Sevilla</td><td><span class="new">NUEVA</span></td><td>Responder a "psicólogo Sevilla" y a los motivos de consulta generales.</td></tr>
+      <tr><td>Aviso legal y Política de privacidad</td><td><span class="keep">SE MANTIENEN</span></td><td>Obligatorias. Ya existen y se trasladan a la web nueva.</td></tr>
+      <tr><td>Política de cookies</td><td><span class="new">NUEVA</span></td><td>Necesaria para poder medir visitas con Google Analytics con el aviso correspondiente.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3 style="margin-top:22px">Queda fuera de la base (se puede ver más adelante)</h3>
+  <ul>
+    <li><strong>Blog / Novedades:</strong> el actual tiene poco contenido y está poco actualizado. Si queréis un blog en serio, se plantea más adelante y requiere un panel de administración.</li>
+    <li><strong>Fichas individuales de cada psicóloga:</strong> una página por profesional para reforzar la confianza.</li>
+    <li><strong>Páginas por barrio o ciudad cercana:</strong> solo se crean si tienen contenido propio y útil, para no dañar el posicionamiento con páginas repetidas.</li>
+  </ul>
+</section>
+
+<section id="tecnologia">
+  <h2>Recomendación: cambiar la tecnología de la web</h2>
+  <p>La web actual está hecha con <strong>Joomla</strong>, un programa que genera cada página en el momento en que alguien la visita y que necesita un servidor de pago y mantenimiento constante (actualizaciones de seguridad). Proponemos reconstruirla con <strong>Astro</strong>, una tecnología moderna que prepara las páginas de antemano, de forma que se sirven casi al instante.</p>
+
+  <div class="grid two">
+    <div class="card">
+      <h3>Qué se gana</h3>
+      <ul class="good">
+        <li><strong>Mucha más velocidad</strong>, sobre todo en móvil, que es donde hoy flojea. Es un factor que Google valora.</li>
+        <li><strong>Hosting sin coste mensual:</strong> se puede alojar en una plataforma como Netlify, que para una web de este tamaño ofrece un plan gratuito. Hoy se paga un servidor todos los meses.</li>
+        <li><strong>Más seguridad:</strong> al ser páginas ya preparadas, desaparece gran parte de los riesgos de Joomla (panel de administración expuesto, versiones sin actualizar).</li>
+        <li><strong>Todo lo de este informe queda resuelto de base:</strong> mapa de la web, títulos, datos para Google y ajustes de velocidad se construyen desde el principio, no como parches.</li>
+        <li><strong>Sin pérdida de posicionamiento:</strong> se mantienen las direcciones actuales o se redirigen una a una.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Lo que hay que tener en cuenta</h3>
+      <ul>
+        <li><strong>El dominio sigue costando</strong> (normalmente entre 10 y 15 € al año). Lo que desaparece es la cuota mensual del hosting.</li>
+        <li><strong>Cambia cómo se editan los textos.</strong> En Joomla se hace desde un panel. La web base en Astro <strong>no incluye panel de administración</strong>: los cambios los hace el equipo técnico. Si se necesita editar contenidos por vuestra cuenta, se puede añadir un panel, con un presupuesto aparte.</li>
+        <li><strong>Es un trabajo puntual</strong> de reconstrucción que se paga una vez. A cambio desaparecen la cuota mensual de hosting y buena parte del mantenimiento.</li>
+        <li><strong>Correos y otros servicios:</strong> si el correo del dominio está en el mismo hosting, hay que migrarlo con cuidado.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:24px">Dos caminos posibles</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th></th><th>A. Mejorar la web actual (Joomla)</th><th>B. Nueva web en Astro (recomendado)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Plazo estimado</strong></td><td>3-4 semanas</td><td>3-4 semanas (incluye las mejoras del plan)</td></tr>
+      <tr><td><strong>Velocidad en móvil</strong></td><td>Mejora, con límites</td><td>Muy alta</td></tr>
+      <tr><td><strong>Hosting</strong></td><td>Se mantiene la cuota actual</td><td>Plan gratuito en Netlify, sin cuota mensual</td></tr>
+      <tr><td><strong>Mantenimiento</strong></td><td>Actualizaciones y seguridad continuas</td><td>Mínimo</td></tr>
+      <tr><td><strong>Edición de textos</strong></td><td>Panel de Joomla (como ahora)</td><td>Sin panel en la web base (opcional, aparte)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small">Los plazos son orientativos, para una web de 6 páginas más las legales. Se cierran en la propuesta económica.</p>
+
+  <h3 style="margin-top:26px">Cómo funciona cada una</h3>
+  <div class="flow">
+    <div class="card bad">
+      <span class="tag bad">JOOMLA (HOY)</span>
+      <ol>
+        <li>Una persona pide una página.</li>
+        <li>El servidor <strong>construye la página en ese momento</strong>: consulta la base de datos, ejecuta el programa y monta el resultado.</li>
+        <li>Se envía al visitante, con muchos archivos que cargar.</li>
+      </ol>
+      <p class="small">Cada visita repite el trabajo. Si el servidor va lento o el programa no está actualizado, se nota y se abren puertas a ataques.</p>
+    </div>
+    <div class="card ok">
+      <span class="tag ok">ASTRO (PROPUESTA)</span>
+      <ol>
+        <li>Las páginas se <strong>preparan una sola vez</strong>, antes de publicarlas.</li>
+        <li>Se guardan en una red de servidores repartida por el mundo (Netlify).</li>
+        <li>La persona recibe la página ya hecha desde el servidor más cercano, con muy poco código.</li>
+      </ol>
+      <p class="small">Sin base de datos ni panel expuesto en internet: más rápida y con mucha menos superficie de ataque.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:26px">El dato que lo explica: velocidad en el móvil</h3>
+  <div class="card">
+    <div class="chart" role="img" aria-label="Tiempo hasta ver la imagen principal en móvil: Joomla hoy 3,8 segundos; máximo recomendado por Google 2,5 segundos">
+      <div class="row"><span>Web actual (Joomla), móvil</span><div class="track"><div class="fill bad" style="width:76%">3,8 s</div></div></div>
+      <div class="row"><span>Máximo que recomienda Google</span><div class="track"><div class="fill grey" style="width:50%">2,5 s</div></div></div>
+      <div class="row"><span>Objetivo con la web nueva</span><div class="track"><div class="fill ok" style="width:36%">&lt; 2,5 s</div></div></div>
+    </div>
+    <p class="small">Tiempo hasta que aparece la imagen principal en un móvil (medición de laboratorio del 29/09/2026). El objetivo de la web nueva es quedar por debajo del máximo recomendado; se medirá y se enseñará al entregarla, no lo damos por hecho de antemano.</p>
+  </div>
+
+  <h3 style="margin-top:26px">Comparativa de un vistazo</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th></th><th>Mejorar Joomla</th><th>Nueva web en Astro</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Velocidad en móvil</strong></td><td class="dots">●●●○○</td><td class="dots">●●●●●</td></tr>
+      <tr><td><strong>Seguridad</strong></td><td class="dots">●●○○○</td><td class="dots">●●●●●</td></tr>
+      <tr><td><strong>Coste mensual de hosting</strong></td><td class="dots">Cuota actual</td><td class="dots">0 €</td></tr>
+      <tr><td><strong>Mantenimiento necesario</strong></td><td class="dots">●●●●○ (alto)</td><td class="dots">●○○○○ (mínimo)</td></tr>
+      <tr><td><strong>Facilidad para editar textos</strong></td><td class="dots">●●●●○</td><td class="dots">●●○○○ (sin panel en la base; opcional)</td></tr>
+      <tr><td><strong>Plazo</strong></td><td class="dots">3-4 semanas</td><td class="dots">3-4 semanas</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small">Los puntos son una valoración cualitativa del equipo técnico, no una medición. Sí son medidos: los 3,8 s del gráfico anterior y las carencias descritas en este informe.</p>
+
+  <div class="callout"><strong>Por qué recomendamos Astro y no seguir con Joomla:</strong> arreglar Joomla resuelve los problemas de hoy, pero deja la web lenta en móvil, con mantenimiento y cuota mensual permanentes. Con Astro los arreglos de este informe se construyen de origen, la web se sirve más rápido y el hosting no tiene cuota mensual.</div>
+</section>
+
+<section id="google">
+  <h2>Ficha de Google Business Profile: qué falla hoy</h2>
+  <p>La ficha es lo que aparece en Google Maps y en el recuadro lateral cuando alguien busca "psicólogo Sevilla". Es gratuita y, para un negocio local, suele traer más llamadas que la propia web. Hemos revisado la ficha pública de <strong>"CentroAmara, Psicologia y Sexologia"</strong> el 29/09/2026.</p>
+
+  <div class="grid two">
+    <div class="card">
+      <h3>Lo que está bien</h3>
+      <ul class="good">
+        <li>La ficha <strong>existe</strong> y está bien situada (C/ Rosario 16, 1º B).</li>
+        <li>Teléfono (954 21 58 61), horario (abierto hasta las 21:00) y enlace a la web.</li>
+        <li>Valoración de <strong>5,0</strong>, con reseñas muy buenas que hablan de escucha y de un lugar seguro.</li>
+        <li>Las reseñas mencionan a las psicólogas por su nombre.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Lo que falla</h3>
+      <ul>
+        <li><span class="tag bad">CRÍTICO</span> <strong>Solo 2 reseñas.</strong> Una es de hace 11 meses y la otra se editó hace 4 años. Google interpreta la actividad reciente como señal de que el negocio sigue activo.</li>
+        <li><span class="tag bad">CRÍTICO</span> <strong>La competencia tiene muchísimas más</strong> (ver gráfico).</li>
+        <li><span class="tag warn">IMPORTANTE</span> <strong>Una sola categoría visible ("Psicólogo").</strong> No aparecen categorías que describan la sexología o la terapia de pareja.</li>
+        <li><span class="tag warn">IMPORTANTE</span> <strong>No se ven respuestas del centro</strong> a las reseñas recibidas.</li>
+        <li><span class="tag warn">IMPORTANTE</span> <strong>El nombre no coincide con la web:</strong> "CentroAmara, Psicologia y Sexologia" (sin tildes) frente a "Centro Amara" en la web. Conviene unificarlo.</li>
+        <li><span class="tag brand">MEJORAR</span> La web no enlaza a la ficha ni muestra el mapa, y la ficha muestra una sola foto principal de la consulta.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:24px">Reseñas: Centro Amara frente a la competencia en Sevilla</h3>
+  <div class="card">
+    <div class="chart" role="img" aria-label="Número de reseñas en Google: Artea 134, Centro Antonio Cabezas 93, Sexóloga Sevilla 29, Espacio Vida 13, Valsexologa 10, Centro Amara 2">
+      <div class="row"><span>Artea</span><div class="track"><div class="fill grey" style="width:100%">134</div></div></div>
+      <div class="row"><span>Centro Antonio Cabezas</span><div class="track"><div class="fill grey" style="width:69%">93</div></div></div>
+      <div class="row"><span>Sexóloga Sevilla</span><div class="track"><div class="fill grey" style="width:22%">29</div></div></div>
+      <div class="row"><span>Espacio Vida</span><div class="track"><div class="fill grey" style="width:10%">13</div></div></div>
+      <div class="row"><span>Valsexologa</span><div class="track"><div class="fill grey" style="width:8%">10</div></div></div>
+      <div class="row"><span><strong>Centro Amara</strong></span><div class="track"><div class="fill bad" style="width:3%;min-width:26px">2</div></div></div>
+    </div>
+    <p class="small">Número de reseñas visibles en Google Maps el 29/09/2026. Son los negocios que Google sugiere en la ficha bajo "Otras personas también buscan".</p>
+  </div>
+
+  <div class="callout warn">
+    <strong>Lo que no hemos podido comprobar</strong> desde la vista pública: cantidad y calidad de las fotos, publicaciones, descripción, servicios cargados, preguntas y respuestas, y estadísticas (llamadas, visitas, búsquedas). Para eso hace falta acceso de administrador a la ficha.
+  </div>
+
+  <h3 style="margin-top:24px">Cómo mejorarla</h3>
+  <div class="grid two">
+    <div class="card">
+      <h3>Dentro de la ficha (con las herramientas de Google)</h3>
+      <ul>
+        <li>Añadir categorías secundarias que describan la sexología y la terapia de pareja.</li>
+        <li>Completar la descripción y los servicios, con enlaces a las nuevas páginas de cada tratamiento.</li>
+        <li>Unificar el nombre con el de la web.</li>
+        <li>Subir fotos reales del centro y del equipo (nunca de pacientes).</li>
+        <li>Publicar novedades de forma periódica.</li>
+        <li>Responder a todas las reseñas.</li>
+        <li>Activar la reserva de cita o los mensajes, si el centro quiere gestionarlos.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Cómo conseguir más reseñas</h3>
+      <ul>
+        <li>Enlace directo y código QR para dejar la opinión en un clic.</li>
+        <li>Petición amable al final de la consulta o en el correo de seguimiento.</li>
+        <li>Ritmo constante: pocas reseñas al mes es mejor que muchas de golpe.</li>
+      </ul>
+      <div class="callout warn" style="margin-bottom:0">
+        <strong>Dos límites importantes:</strong>
+        <ul style="margin:.4em 0 0">
+          <li>Google <strong>prohíbe ofrecer regalos o descuentos a cambio de reseñas</strong>. Se puede animar y facilitar, no pagar.</li>
+          <li>Al ser un servicio de salud, la petición debe ser <strong>voluntaria y discreta</strong>, sin presionar y sin publicar datos de pacientes.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <p><strong>Plazo estimado:</strong> puesta a punto de la ficha en 1-2 semanas; las reseñas se acumulan de forma continua. Es una opción que funciona tanto si se mejora Joomla como si se cambia a Astro.</p>
+</section>
+
+<section id="inversion">
+  <h2>Inversión</h2>
+  <p>Precio cerrado por escrito antes de empezar: sabéis lo que se paga y qué incluye. Todos los importes son <strong>+ IVA</strong>.</p>
+
+  <div class="grid three">
+    <div class="card">
+      <span class="tag brand">PAGO ÚNICO</span>
+      <h3 style="margin-top:8px">Web nueva en Astro</h3>
+      <div class="mono" style="font-size:2rem;font-weight:800">349 €</div>
+      <p class="small">+ IVA · 6 páginas</p>
+      <p class="small" style="font-size:.8rem;margin-top:0">Inicio, Quiénes somos, Contacto, Terapia sexual, Terapia de pareja y Psicología de la salud (más aviso legal, privacidad y cookies).</p>
+    </div>
+    <div class="card">
+      <span class="tag brand">PAGO ÚNICO</span>
+      <h3 style="margin-top:8px">Proyecto inicial de SEO local</h3>
+      <div class="mono" style="font-size:2rem;font-weight:800">299 €</div>
+      <p class="small">+ IVA</p>
+    </div>
+    <div class="card">
+      <span class="tag ok">OPCIONAL · RECOMENDADO</span>
+      <h3 style="margin-top:8px">SEO local Básico</h3>
+      <div class="mono" style="font-size:2rem;font-weight:800">199 €<small style="font-size:1rem;color:var(--muted)">/mes</small></div>
+      <p class="small">+ IVA · sugerido 3 meses, sin permanencia</p>
+    </div>
+  </div>
+
+  <div class="callout"><strong>El SEO local mensual es opcional, pero lo recomendamos</strong> si queréis que vuestros próximos pacientes os encuentren: la web y el proyecto inicial dejan todo bien montado, y el trabajo mensual es lo que mantiene y hace crecer la presencia en Google y en Maps frente a otros centros de Sevilla.</div>
+
+  <div class="scroll" style="margin-top:20px">
+  <table>
+    <thead><tr><th>Concepto</th><th>Importe (sin IVA)</th></tr></thead>
+    <tbody>
+      <tr><td>Web nueva (6 páginas + aviso legal, privacidad y cookies)</td><td class="mono">349 €</td></tr>
+      <tr><td>Proyecto inicial de SEO local</td><td class="mono">299 €</td></tr>
+      <tr><td><strong>Inversión inicial</strong></td><td class="mono"><strong>648 €</strong></td></tr>
+      <tr><td>SEO local Básico (cuota mensual, opcional)</td><td class="mono">199 €/mes</td></tr>
+      <tr><td><strong>Primer trimestre completo</strong> (inversión inicial + 3 meses de SEO local Básico)</td><td class="mono"><strong>1.245 €</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="grid two" style="margin-top:20px">
+    <div class="card">
+      <h3>Qué incluye la web (349 €)</h3>
+      <ul class="good">
+        <li>Las 6 páginas base, diseño a medida adaptado a móvil y textos optimizados para SEO local.</li>
+        <li>Aviso legal, política de privacidad y política de cookies.</li>
+        <li>Las mejoras técnicas de este informe: títulos y resúmenes propios, mapa de la web, direcciones oficiales, datos de la clínica y del equipo para Google, velocidad y botón de cita visible en móvil.</li>
+        <li>Creación y configuración del dominio y del hosting.</li>
+        <li>Redirecciones desde las direcciones actuales para no perder posicionamiento.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Qué incluye el SEO local</h3>
+      <ul class="good">
+        <li><strong>Proyecto inicial (299 €):</strong> diagnóstico, revisión de la ficha de Google Business Profile, una página estratégica y datos estructurados básicos cuando sean técnicamente viables.</li>
+        <li><strong>Cuota mensual Básica (199 €/mes, opcional):</strong> trabajo continuo, con 1 pieza de contenido optimizado al mes.</li>
+        <li>Tres meses son una sugerencia de continuidad, <strong>no una permanencia obligatoria</strong>.</li>
+      </ul>
+      <p class="small" style="margin-bottom:0">Ningún nivel garantiza una posición concreta en Google.</p>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <strong>No está incluido en estos precios:</strong>
+    <ul style="margin:.4em 0 0">
+      <li><strong>El pago del dominio y del hosting.</strong> Nos ocupamos de crearlos y configurarlos, pero el coste lo asume el centro. El dominio suele costar entre 10 y 15 € al año; el alojamiento en una plataforma como Netlify tiene plan gratuito para una web de este tamaño.</li>
+      <li><strong>Panel de administración</strong> para que el centro edite los textos por su cuenta.</li>
+      <li><strong>Blog</strong> (necesita panel de administración).</li>
+      <li>Fichas individuales de cada psicóloga.</li>
+    </ul>
+    <p class="small" style="margin:.5em 0 0">Todo esto puede añadirse más adelante con un presupuesto aparte.</p>
+  </div>
+
+  <h3 style="margin-top:24px">Opción a valorar: reservas online con cada profesional</h3>
+  <div class="card">
+    <p>Se puede integrar en la web un <strong>sistema de reservas</strong> para que los pacientes agenden cita directamente con cada una de las profesionales, sin llamar por teléfono. Reduce fricción, sobre todo en móvil, y permite atender fuera del horario del centro.</p>
+    <ul>
+      <li>No entra en los precios de arriba: se valora aparte cuando se conozca cómo trabaja el centro (agendas, duración de las sesiones, avisos, cancelaciones).</li>
+      <li>Al tratarse de citas de salud, se diseñaría cuidando la protección de datos: pedir solo los datos imprescindibles y sin mostrar información clínica.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="pasos">
+  <h2>Siguientes pasos</h2>
+  <div class="card">
+    <ol>
+      <li><strong>Decidir el camino:</strong> mejorar la web actual (A) o rehacerla en Astro (B).</li>
+      <li><strong>Confirmar datos que necesitamos:</strong> horario de atención, redes sociales o perfiles existentes, acceso a la ficha de Google y si hay o no aviso de cookies.</li>
+      <li><strong>Confirmar el alcance</strong> (ver apartado de inversión) y aceptar la propuesta con plazos y entregables por escrito.</li>
+      <li><strong>Empezar por la fase 1</strong>, que es la de mayor impacto y menor esfuerzo.</li>
+    </ol>
+  </div>
+  <div class="callout">
+    <strong>Qué no sabemos todavía.</strong> No tenemos los datos de visitas de la web ni sabemos en qué posición salís hoy en las búsquedas. De la ficha de Google solo hemos podido revisar la parte pública (fotos, publicaciones, descripción y estadísticas requieren acceso de administrador). Con acceso a Google Search Console, a Google Analytics y a la ficha podremos afinar el plan.
+  </div>
+</section>
+
+<footer>
+  <div class="brand">
+    <img src="assets/nuriaromerodev-logo-blanco.svg" alt="nuriaromero.dev" width="114" height="38">
+    <span>Informe preparado por <strong>Nuria Romero</strong> · nuriaromero.dev</span>
+  </div>
+  Informe elaborado a partir de una revisión técnica del sitio www.centroamara.com realizada el 29 de septiembre de 2026 (nota global calculada sobre 100). Los plazos son estimaciones y los resultados en buscadores dependen de factores que no controlamos.
+</footer>
+
+</div>
+</body>
+</html>
