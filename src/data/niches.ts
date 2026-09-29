@@ -62,14 +62,14 @@ export const restaurantes: ServicePageData = {
       "Botón de reservas por WhatsApp",
       "SEO local para tu zona de Sevilla",
       "Conexión con Google Maps y reseñas",
-      "Dominio y hosting el primer año",
+      "Creación y configuración del dominio y hosting",
     ],
     note: "¿Necesitas reservas online con confirmación automática o pedidos para llevar? Se presupuestan aparte.",
   },
   faqs: [
     {
       q: "¿Cuánto cuesta una página web para un restaurante?",
-      a: "Una web completa para restaurante o bar, con carta digital editable, botón de reservas por WhatsApp y SEO local para tu zona, parte de 399 €, con dominio y hosting incluidos el primer año.\n\nSi solo necesitas algo más sencillo para arrancar, una landing de una página parte de 149 €. El precio se cierra por escrito antes de empezar, así que sabes exactamente cuánto vas a pagar sin sorpresas a mitad de proyecto.\n\nFuncionalidades adicionales, como reservas online con confirmación automática, pedidos para llevar o integración con TPV, se presupuestan aparte según lo que necesite tu local. En la primera conversación te digo qué encaja mejor con tu restaurante y con tu presupuesto, sin empujarte hacia la opción más cara si no la necesitas.",
+      a: "Una web completa para restaurante o bar, con carta digital editable, botón de reservas por WhatsApp y SEO local para tu zona, parte de 399 €, e incluye la creación y configuración del dominio y el hosting (su coste corre por tu cuenta, porque quedan a tu nombre).\n\nSi solo necesitas algo más sencillo para arrancar, una landing de una página parte de 149 €. El precio se cierra por escrito antes de empezar, así que sabes exactamente cuánto vas a pagar sin sorpresas a mitad de proyecto.\n\nFuncionalidades adicionales, como reservas online con confirmación automática, pedidos para llevar o integración con TPV, se presupuestan aparte según lo que necesite tu local. En la primera conversación te digo qué encaja mejor con tu restaurante y con tu presupuesto, sin empujarte hacia la opción más cara si no la necesitas.",
     },
     {
       q: "¿Puedo actualizar la carta yo mismo?",
@@ -166,7 +166,7 @@ export const clinicas: ServicePageData = {
       "Botón de cita por WhatsApp o integración de citas",
       "SEO local por especialidad y zona",
       "Formularios adaptados al RGPD",
-      "Dominio y hosting el primer año",
+      "Creación y configuración del dominio y hosting",
     ],
     note: "Las clínicas con muchos tratamientos o varios centros se presupuestan según alcance.",
   },
@@ -177,7 +177,7 @@ export const clinicas: ServicePageData = {
     },
     {
       q: "¿Cuánto cuesta la web de una clínica?",
-      a: "Una web de consulta con una página por tratamiento, botón de cita por WhatsApp o integración con tu sistema de citas y SEO local por especialidad parte de 399 €, con dominio y hosting incluidos el primer año. El precio se cierra por escrito antes de empezar, así que sabes exactamente en qué se traduce esa cifra.\n\nClínicas con muchas especialidades, varios profesionales o integración con un software de gestión de citas más complejo se presupuestan aparte, siempre con precio cerrado y sin sorpresas a mitad de proyecto.\n\nEn la primera conversación repasamos tus tratamientos actuales y te digo con sinceridad si te conviene empezar con una web más sencilla e ir ampliando página a página, o si merece la pena lanzar todo el catálogo de especialidades desde el principio.",
+      a: "Una web de consulta con una página por tratamiento, botón de cita por WhatsApp o integración con tu sistema de citas y SEO local por especialidad parte de 399 €, e incluye la creación y configuración del dominio y el hosting (su coste corre por tu cuenta, porque quedan a tu nombre). El precio se cierra por escrito antes de empezar, así que sabes exactamente en qué se traduce esa cifra.\n\nClínicas con muchas especialidades, varios profesionales o integración con un software de gestión de citas más complejo se presupuestan aparte, siempre con precio cerrado y sin sorpresas a mitad de proyecto.\n\nEn la primera conversación repasamos tus tratamientos actuales y te digo con sinceridad si te conviene empezar con una web más sencilla e ir ampliando página a página, o si merece la pena lanzar todo el catálogo de especialidades desde el principio.",
     },
     {
       q: "¿Puede integrarse con Doctoralia o mi programa de citas?",
@@ -270,7 +270,7 @@ export const comercios: ServicePageData = {
       "Encargos por WhatsApp",
       "SEO local para tu barrio y ciudad",
       "Conexión con Google Maps",
-      "Dominio y hosting el primer año",
+      "Creación y configuración del dominio y hosting",
     ],
     note: "La tienda online completa con pago y envíos se presupuesta según el número de productos.",
   },
@@ -281,7 +281,7 @@ export const comercios: ServicePageData = {
     },
     {
       q: "Catálogo o tienda online completa: ¿qué precio tiene cada opción?",
-      a: "Depende de cuál de las dos opciones elijas, porque son dos productos con alcance distinto. Una web de catálogo (fotos, precios y encargos por WhatsApp) parte de 399 €, con dominio y hosting incluidos el primer año.\n\nUna tienda online completa con pasarela de pago y gestión de envíos se presupuesta aparte según el número de productos y las funciones que necesites (variantes de talla o color, descuentos, gestión de stock…), porque el trabajo cambia mucho entre un catálogo de 20 productos y uno de 500. En ambos casos el precio se cierra por escrito antes de empezar.\n\nSi no tienes claro cuántos productos vas a subir al principio, podemos arrancar con un catálogo reducido de los productos que más vendes e ir ampliándolo con el tiempo, en vez de intentar meterlo todo desde el primer día.",
+      a: "Depende de cuál de las dos opciones elijas, porque son dos productos con alcance distinto. Una web de catálogo (fotos, precios y encargos por WhatsApp) parte de 399 €, e incluye la creación y configuración del dominio y el hosting (su coste corre por tu cuenta, porque quedan a tu nombre).\n\nUna tienda online completa con pasarela de pago y gestión de envíos se presupuesta aparte según el número de productos y las funciones que necesites (variantes de talla o color, descuentos, gestión de stock…), porque el trabajo cambia mucho entre un catálogo de 20 productos y uno de 500. En ambos casos el precio se cierra por escrito antes de empezar.\n\nSi no tienes claro cuántos productos vas a subir al principio, podemos arrancar con un catálogo reducido de los productos que más vendes e ir ampliándolo con el tiempo, en vez de intentar meterlo todo desde el primer día.",
     },
     {
       q: "¿Podré gestionar los productos yo mismo?",
@@ -374,7 +374,7 @@ export const profesionales: ServicePageData = {
       "Formulario de consulta con filtrado previo",
       "SEO local por especialidad",
       "Perfil de Google Business optimizado",
-      "Dominio y hosting el primer año",
+      "Creación y configuración del dominio y hosting",
     ],
     note: "Despachos con muchas áreas o varios socios se presupuestan según alcance.",
   },
@@ -385,7 +385,7 @@ export const profesionales: ServicePageData = {
     },
     {
       q: "¿Cuánto cuesta la web de un despacho o gestoría?",
-      a: "Una web profesional con páginas por área de práctica, formulario de consulta con filtrado previo y SEO local parte de 399 €, con dominio y hosting incluidos el primer año y presupuesto cerrado por escrito antes de empezar.\n\nDespachos con muchas áreas de práctica, varios socios con perfil propio o necesidades específicas (por ejemplo, un blog jurídico extenso desde el lanzamiento) se presupuestan aparte, siempre con precio fijo, no por horas.\n\nEn la primera conversación repasamos tus áreas actuales y priorizamos cuáles conviene lanzar primero: no hace falta cubrir todas las especialidades del despacho desde el día uno, se puede empezar por las que más consultas os traen y ampliar más adelante sin rehacer la web entera.",
+      a: "Una web profesional con páginas por área de práctica, formulario de consulta con filtrado previo y SEO local parte de 399 €, e incluye la creación y configuración del dominio y el hosting (su coste corre por tu cuenta, porque quedan a tu nombre), con presupuesto cerrado por escrito antes de empezar.\n\nDespachos con muchas áreas de práctica, varios socios con perfil propio o necesidades específicas (por ejemplo, un blog jurídico extenso desde el lanzamiento) se presupuestan aparte, siempre con precio fijo, no por horas.\n\nEn la primera conversación repasamos tus áreas actuales y priorizamos cuáles conviene lanzar primero: no hace falta cubrir todas las especialidades del despacho desde el día uno, se puede empezar por las que más consultas os traen y ampliar más adelante sin rehacer la web entera.",
     },
     {
       q: "¿Quién escribe los textos legales de la web?",

@@ -69,7 +69,7 @@ export const disenoWeb: ServicePageData = {
           "Diseño a medida adaptado a móvil",
           "Textos optimizados para SEO local en Sevilla",
           "Botón de WhatsApp y formulario de contacto",
-          "Dominio y hosting el primer año",
+          "Creación y configuración del dominio y hosting",
         ],
       },
       {
@@ -89,7 +89,7 @@ export const disenoWeb: ServicePageData = {
   faqs: [
     {
       q: "¿Qué incluye el precio cerrado de una página web en Sevilla?",
-      a: "Trabajo siempre con precio cerrado, pactado por escrito antes de empezar: una landing de una página parte de 149 €, y una web completa de hasta 5 páginas parte de 399 €. Ese precio incluye diseño a medida adaptado a móvil, textos optimizados para SEO local, dominio y hosting el primer año, y un mes de soporte tras el lanzamiento.\n\nPara un negocio local en Sevilla, una web profesional suele costar entre 500 y 3.000 €, así que estos precios se mueven dentro de ese rango pero quedan cerrados desde el primer día: sabes exactamente cuánto vas a pagar, sin letra pequeña ni cuotas que aparecen a mitad de proyecto.",
+      a: "Trabajo siempre con precio cerrado, pactado por escrito antes de empezar: una landing de una página parte de 149 €, y una web completa de hasta 5 páginas parte de 399 €. Ese precio incluye diseño a medida adaptado a móvil, textos optimizados para SEO local, creación y configuración del dominio y el hosting, y un mes de soporte tras el lanzamiento. El coste del dominio y del hosting corre por tu cuenta, porque quedan contratados a tu nombre.\n\nPara un negocio local en Sevilla, una web profesional suele costar entre 500 y 3.000 €, así que estos precios se mueven dentro de ese rango pero quedan cerrados desde el primer día: sabes exactamente cuánto vas a pagar, sin letra pequeña ni cuotas que aparecen a mitad de proyecto.",
     },
     {
       q: "¿Cuánto tiempo se tarda en tener la página web lista?",
@@ -117,7 +117,7 @@ export const disenoWeb: ServicePageData = {
     },
     {
       q: "¿Qué incluye exactamente el precio de 399 € de la web completa?",
-      a: "Los 399 € de la web completa incluyen: hasta 5 páginas (inicio, servicios, sobre mí, contacto y lo que necesite tu negocio), diseño a medida adaptado a móvil, textos optimizados para SEO local y para las búsquedas de tu zona en Sevilla, botón de WhatsApp y formulario de contacto, alta en Google Search Console y en Google Business Profile, dominio y hosting durante el primer año, y un mes de soporte tras el lanzamiento.\n\nSi necesitas algo adicional, como una tienda online completa con pasarela de pago, se presupuesta aparte y siempre con precio cerrado antes de empezar.",
+      a: "Los 399 € de la web completa incluyen: hasta 5 páginas (inicio, servicios, sobre mí, contacto y lo que necesite tu negocio), diseño a medida adaptado a móvil, textos optimizados para SEO local y para las búsquedas de tu zona en Sevilla, botón de WhatsApp y formulario de contacto, alta en Google Search Console y en Google Business Profile, creación y configuración del dominio y el hosting, y un mes de soporte tras el lanzamiento. El coste del dominio y del hosting corre por tu cuenta, porque quedan contratados a tu nombre.\n\nSi necesitas algo adicional, como una tienda online completa con pasarela de pago, se presupuesta aparte y siempre con precio cerrado antes de empezar.",
     },
     {
       q: "Ya tengo una página web pero no me está funcionando, ¿qué puedo hacer?",
@@ -645,7 +645,7 @@ export const tiendaOnline: ServicePageData = {
     includes: [
       "Web completa con estructura de tienda: categorías y fichas de producto",
       "Textos optimizados para que te encuentren buscando tus productos",
-      "Dominio y hosting el primer año",
+      "Creación y configuración del dominio y hosting",
       "Un mes de soporte tras el lanzamiento",
     ],
     note: "399 € es el precio de partida de la web completa sobre la que se construye la tienda. La integración de la pasarela de pago, la gestión de stock, variantes o envíos se presupuestan aparte, según tu número de productos y necesidades concretas: no existe un precio único de tienda online, pero sí un presupuesto cerrado por escrito antes de empezar, sin cifras a ciegas.",
