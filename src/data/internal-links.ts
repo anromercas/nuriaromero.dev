@@ -52,7 +52,7 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
   "/seo-para-clinicas-capilares-sevilla/": [
     { path: "/seo-local-sevilla/", anchor: "servicio general de SEO local en Sevilla", kind: "contextual" },
     { path: "/web-para-clinicas-sevilla/", anchor: "diseño web para clínicas en Sevilla", kind: "contextual" },
-    { path: "/contacto", anchor: "solicitar el proyecto inicial", kind: "conversion" },
+    { path: "/contacto", anchor: "pedir precio de CAPILAR LOCAL", kind: "conversion" },
   ],
   "/tienda-online-sevilla/": [
     { path: "/web-para-comercios-sevilla/", anchor: "web para comercios que también quieren vender online", kind: "contextual" },
