@@ -1,6 +1,4 @@
 // Fuente única de verdad de los datos del negocio (NAP + constantes).
-// La dirección no incluye calle a propósito: el negocio opera desde casa,
-// solo se publica la ciudad (Sevilla).
 
 export const SITE = {
   // Public brand: use this exact name for entity/schema/metadata surfaces.
@@ -16,10 +14,23 @@ export const SITE = {
   whatsapp: "34611812431",
   whatsappMessage: "Hola Nuria, tengo un negocio y me gustaría hablar sobre mi página web",
   address: {
+    street: "Camino Andalucía, 426",
+    postalCode: "41309",
+    // Municipio real del domicilio postal (para el schema PostalAddress,
+    // debe coincidir con la ficha de Google Business Profile).
+    municipality: "La Rinconada",
+    // Ciudad usada como marca/zona de cobertura (footer, areaServed, copy).
     locality: "Sevilla",
-    region: "Andalucía",
+    // Provincia, tal como aparece en la dirección formateada de GBP.
+    region: "Sevilla",
     country: "ES",
+    // Texto completo tal como aparece en la ficha de Google Business Profile
+    // (NAP). El resto de la web usa `locality` ("Sevilla") para el área de
+    // cobertura; este campo es solo para mostrar la dirección exacta.
+    full: "Camino Andalucía, 426, 41309 La Rinconada, Sevilla",
   },
+  // Ficha de Google Business Profile: debe coincidir con `address.full`.
+  mapsUrl: "https://maps.app.goo.gl/8eg71eAQJrfH7BGaA",
   // Datos fiscales: SOLO se usan en las páginas legales (aviso legal y
   // privacidad). No se muestran en el footer, la web ni el JSON-LD.
   // ⚠️ Falta el NIF: sustituir {NIF} por el real antes de publicar.

@@ -28,7 +28,9 @@ export function localBusinessSchema() {
     priceRange: "€€",
     address: {
       "@type": "PostalAddress",
-      addressLocality: SITE.address.locality,
+      streetAddress: SITE.address.street,
+      postalCode: SITE.address.postalCode,
+      addressLocality: SITE.address.municipality,
       addressRegion: SITE.address.region,
       addressCountry: SITE.address.country,
     },
@@ -36,7 +38,7 @@ export function localBusinessSchema() {
     sameAs: [...SITE.sameAs],
     founder: { "@id": PERSON_ID },
     ...(localTrust.gbp.status === "verified" && localTrust.gbp.profileUrl
-      ? { hasMap: localTrust.gbp.profileUrl }
+      ? { hasMap: SITE.mapsUrl }
       : {}),
   }
 }

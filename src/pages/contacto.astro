@@ -86,7 +86,14 @@ const breadcrumbs = [
               {SITE.name}
             </h3>
             <address class="not-italic text-gray-300">
-              {SITE.address.locality}, España<br />
+              <a
+                href={SITE.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="hover:text-blue-500 hover:underline"
+              >
+                {SITE.address.full}
+              </a><br />
               <a href={`mailto:${SITE.email}`} class="hover:text-blue-500 hover:underline">
                 {SITE.email}
               </a>

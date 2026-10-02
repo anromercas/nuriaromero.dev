@@ -14,8 +14,8 @@ const hasVerifiedGbp = localTrust.gbp.status === "verified" && Boolean(localTrus
       {hasVerifiedGbp ? (
         <>
           <strong class="text-gray-900 dark:text-gray-100">Google Business Profile verificado.</strong>{" "}
-          Es un negocio de zona de servicio, sin domicilio público. Podés ver la ficha real, con
-          categoría, horarios y contacto, directamente en Google.
+          Podés ver la ficha real, con dirección, categoría, horarios y contacto, directamente en
+          Google.
         </>
       ) : (
         <>
@@ -45,7 +45,12 @@ const hasVerifiedGbp = localTrust.gbp.status === "verified" && Boolean(localTrus
         : "No se muestran reseñas ni valoraciones, y no se publican testimonios ni métricas de clientes sin permiso explícito y trazabilidad. La valoración real puede consultarse en la ficha de Google enlazada arriba."}
     </p>
     <ul class="list-disc space-y-2 pl-5 text-sm">
-      <li>El área de servicio {hasVerifiedGbp ? "es" : "propuesta es"} {localTrust.gbp.serviceArea}; no se muestra un domicilio particular.</li>
+      <li>
+        El área de servicio {hasVerifiedGbp ? "es" : "propuesta es"} {localTrust.gbp.serviceArea}
+        {hasVerifiedGbp && localTrust.gbp.publicAddress
+          ? <>; la dirección publicada es {localTrust.gbp.publicAddress}.</>
+          : "; no se muestra un domicilio particular."}
+      </li>
       {!hasVerifiedGbp && (
         <li>La activación queda pendiente de revisar NAP, categoría, horarios, URL pública y políticas aplicables.</li>
       )}
