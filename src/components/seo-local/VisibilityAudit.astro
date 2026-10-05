@@ -204,7 +204,10 @@ import Repeat from "@/components/icons/Repeat.astro"
 
   .audit-cycle-step p { margin: 0; line-height: 1.5; }
 
-  .audit-cycle-icon {
+  /* :global because Calendar.astro doesn't spread {...Astro.props}, so its <svg>
+     never receives Astro's scoping attribute and a plain scoped rule would miss it,
+     leaving Calendar's icon unsized (it sets no width/height of its own either). */
+  :global(.audit-cycle-icon) {
     flex: none;
     width: 1.5rem;
     height: 1.5rem;

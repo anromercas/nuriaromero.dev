@@ -44,3 +44,13 @@ test("VisibilityAudit renders a checklist-flow and a delivery-cycle instead of p
   assert.match(audit, /<ProfileCheck class="audit-cycle-icon" aria-hidden="true" \/>/)
   assert.match(audit, /<Briefcase class="audit-cycle-icon" aria-hidden="true" \/>/)
 })
+
+test("the delivery-cycle icon sizing rule stays unscoped so it also sizes the Calendar icon", async () => {
+  const audit = await source("src/components/seo-local/VisibilityAudit.astro")
+
+  // Calendar.astro does not spread {...Astro.props}, so it never receives Astro's
+  // scoped-style data-astro-cid attribute. A plain scoped `.audit-cycle-icon { ... }`
+  // rule silently fails to match Calendar's <svg>, which then renders at the browser's
+  // default intrinsic size (huge) because Calendar also sets no width/height itself.
+  assert.match(audit, /:global\(\.audit-cycle-icon\)\s*\{/)
+})
