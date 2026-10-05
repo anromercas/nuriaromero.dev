@@ -41,4 +41,6 @@ test("VisibilityAudit renders a checklist-flow and a delivery-cycle instead of p
   assert.match(audit, /aria-labelledby="diagnostico-title"[\s\S]*?id="diagnostico-title"/)
   assert.match(audit, /aria-labelledby="revision-title"[\s\S]*?id="revision-title"/)
   assert.match(audit, /aria-labelledby="evidencia-title"[\s\S]*?id="evidencia-title"/)
+  assert.match(audit, /<ProfileCheck class="audit-cycle-icon" aria-hidden="true" \/>/)
+  assert.match(audit, /<Briefcase class="audit-cycle-icon" aria-hidden="true" \/>/)
 })
