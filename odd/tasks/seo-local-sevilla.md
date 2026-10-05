@@ -18,6 +18,49 @@ Desplegado a producción (commit `025c944`, main). Indexación prioritaria
 solicitada en Search Console el 2026-09-21 ("Se ha solicitado la
 indexación"); pendiente de que Google la rastree (puede tardar horas/días).
 
+## Brief comercial validado (2026-10-04)
+
+### Oferta vigente — proporcionada por la usuaria
+
+Esta sección sustituye la estructura de precios y alcance anterior cuando
+entren en conflicto. La página actual debe reflejar estos dos planes:
+
+- **Plan Local — 300 €/mes, impuestos no incluidos:** ficha de Google
+  completa y ordenada; servicios, horarios y descripción actualizados;
+  palabras que buscan los clientes; datos coherentes en guías y directorios;
+  fotos y publicaciones mensuales; plan para conseguir más opiniones;
+  medición de llamadas, clics y rutas; vídeo-informe mensual con próximos
+  pasos; WhatsApp directo y llamada trimestral.
+- **Plan Local Pro — 500 €/mes, impuestos no incluidos (recomendado):** todo
+  lo incluido en Plan Local, más rediseño web, revisión completa y plan
+  estratégico, arquitectura web por servicios y zonas, corrección de errores
+  para Google, títulos que invitan a hacer clic, páginas por servicio y zona,
+  información que Google y ChatGPT puedan comprender, y páginas conectadas
+  entre sí.
+
+No hay proyecto inicial independiente. No se ha confirmado una permanencia
+obligatoria; la sugerencia anterior de tres meses no debe presentarse como
+condición contractual sin una nueva confirmación.
+
+### Público y mensaje — proporcionados por la usuaria
+
+La página se dirige a negocios locales de Sevilla en general, no a un nicho
+clínico. La prioridad son negocios donde cada cliente cuenta, normalmente
+con servicios de alto valor; no se publicará un umbral de ticket ni la cifra
+de 1.000 €. El listado de sectores aportado por la usuaria sirve como
+hipótesis de segmentación, no como evidencia de demanda, competencia,
+rentabilidad o resultados.
+
+Evitar vocabulario clínico específico, como "pacientes" o "tratamientos",
+salvo en futuras páginas sectoriales. Mantener un tono cercano y profesional,
+sin jerga sin explicar ni promesas de posiciones, tráfico o resultados
+garantizados.
+
+> **Nota histórica:** las secciones posteriores documentan el plan ejecutado
+> el 2026-09-21. Sus precios, paquetes, copy, metadatos y restricciones de
+> precio quedan sustituidos por este brief comercial validado; se conservan
+> solo como registro de aquel trabajo.
+
 ## Problema / por qué
 El sitio no tiene ninguna página que ataque el clúster de SEO local en Sevilla,
 pese a ser el término de mayor volumen de búsqueda de todo el negocio (10x el
@@ -445,3 +488,116 @@ resto de cambios en curso (reposicionamiento de home, orden del array
 `services` en `src/pages/index.astro`) y decida si se ejecuta la
 verificación opcional con Playwright/`pnpm preview` antes de commitear.
 Ningún `git add`/`commit` se ha realizado en esta ejecución.
+
+---
+
+## Rediseño aprobado — Parte de visibilidad local (2026-10-05)
+
+> **Estado:** autorizado para implementar. Esta sección reemplaza la dirección
+> comercial y visual de la página actual; los apartados y tareas completadas
+> anteriores se conservan como historial y no son la fuente de verdad vigente.
+
+### Objetivo y conversión
+
+Rediseñar `/seo-local-sevilla/` para que una persona responsable de un negocio
+local en Sevilla sienta que se ha entendido su problema de visibilidad y pueda
+reservar una llamada con claridad. La conversión principal es **reservar una
+llamada** mediante el CTA de reserva existente.
+
+### Dirección aprobada
+
+**Parte de visibilidad local:** recorrido persuasivo de diagnóstico — síntoma →
+qué está fallando → qué se corrige → alcance de cada plan → prueba verificable
+→ FAQs → CTA final. El sistema visual será una hoja de trabajo técnica oscura,
+con líneas de inspección y etiquetas de estado; habrá un único gesto de
+anotación azul. El amarillo queda reservado para el Plan Local Pro y las
+acciones importantes.
+
+La página se dirige a negocios locales generales donde cada cliente cuenta. No
+usa el lenguaje clínico de la propuesta de referencia ni promete posiciones,
+tráfico, leads, llamadas o recomendaciones de asistentes de IA.
+
+### Oferta vigente — proporcionada por la usuaria
+
+- **Plan Local:** 300 €/mes, impuestos no incluidos.
+- **Plan Local Pro:** 500 €/mes, impuestos no incluidos; recomendado.
+- No se ofrece proyecto inicial independiente.
+- No hay una permanencia contractual confirmada: no se debe inventar ni
+  publicar una.
+
+**Plan Local incluye:** ficha de Google completa y ordenada; información de
+servicios, horarios y descripción actualizada; palabras que busca la clientela;
+datos consistentes en guías y directorios; fotos y publicaciones mensuales;
+plan para conseguir opiniones; medición de llamadas, clics y rutas cuando
+estén disponibles; vídeo-informe mensual con próximos pasos; WhatsApp directo
+y llamada trimestral.
+
+**Plan Local Pro incluye todo lo anterior, más:** rediseño web; revisión
+completa y plan estratégico; organización web por servicios y zonas; mejoras
+para que los buscadores interpreten la web; títulos más claros en Google;
+páginas por servicio y zona cuando correspondan; estructura para que Google y
+sistemas de IA entiendan el negocio, sin garantizar recomendaciones; y páginas
+conectadas intencionalmente entre sí.
+
+### Restricciones de implementación
+
+- `PRODUCT.md` y esta sección son la fuente de verdad del brief actual.
+- `src/data/services.ts` debe quedar como fuente única de precios, inclusiones,
+  FAQs, metadata y datos que alimenten schema para esta página.
+- La prueba debe ser verificable: se puede mostrar proceso, entregables o
+  trabajos confirmados, nunca resultados inventados.
+- Deben eliminarse de esta superficie el proyecto inicial de 299 €, los tiers
+  de 199 €/mes y 349 €/mes, cualquier compromiso mínimo y la terminología
+  clínica heredada.
+
+### Tareas de rediseño
+
+- [ ] **R1 — Auditar y reconciliar el contenido vigente**
+  - Ruta: delegada; la página cruza datos comerciales, route, layout compartido,
+    metadata, FAQ y schema.
+  - Alcance: localizar en la superficie SEO local todos los importes y claims
+    retirados; contrastarlos con este brief y `PRODUCT.md` antes de escribir.
+  - Aceptación: inventario de rutas/campos afectados y sin duda abierta sobre
+    precios, conversión o claims.
+
+- [ ] **R2 — Actualizar la fuente comercial única**
+  - Ruta: delegada; cambio no trivial en datos y contenido asociado.
+  - Alcance: ajustar `seoLocal` en `src/data/services.ts` con los dos planes
+    vigentes, inclusiones, mensaje general de negocio, FAQs y metadata sin
+    oferta inicial ni permanencia inventada.
+  - Aceptación: la data contiene Local 300 €/mes + impuestos y Local Pro 500
+    €/mes + impuestos, recomendando Pro, y no conserva los valores retirados.
+
+- [ ] **R3 — Recomponer la narrativa de diagnóstico de la ruta**
+  - Ruta: delegada; la composición y el contenido de la página son no triviales.
+  - Alcance: ordenar hero, síntoma, fallos, correcciones, planes, prueba
+    verificable, FAQs y CTA final; el CTA principal debe reservar una llamada.
+  - Aceptación: la lectura sigue el recorrido aprobado y no contiene promesas de
+    resultados ni vocabulario específico de clínicas.
+
+- [ ] **R4 — Aplicar el sistema visual Parte de visibilidad local**
+  - Ruta: delegada; abarca jerarquía, responsive y componentes visuales.
+  - Alcance: superficie oscura técnica, reglas de inspección, etiquetas de
+    estado, anotación azul única y amarillo reservado para Pro/acciones, sin
+    degradar otras páginas de servicio.
+  - Aceptación: desktop y móvil conservan jerarquía, legibilidad, contraste,
+    foco visible, control por teclado y no presentan overflow horizontal.
+
+- [ ] **R5 — Verificar contenido, build y experiencia**
+  - Ruta: delegada; requiere checks de salida generada y revisión visual fresca.
+  - Alcance: ejecutar checks disponibles, inspeccionar HTML/schema generado,
+    buscar importes/claims retirados y revisar una vez desktop y móvil; corregir
+    hallazgos en un único lote y confirmar en un último pase.
+  - Aceptación: checks registrados con resultado real; la superficie generada
+    solo comunica la oferta vigente y el CTA de reserva es claro y usable.
+
+### Evidencia y siguiente paso
+
+- Diseño documentado en
+  `docs/superpowers/specs/2026-10-05-seo-local-sevilla-redesign-design.md`.
+- TDD estricto está habilitado en el proyecto; quien implemente debe resolver
+  el runner y registrar RED → GREEN → REFACTOR cuando haya comportamiento
+  comprobable. Para cambios de contenido/presentación sin lógica nueva, debe
+  ejecutar los checks funcionales disponibles y registrar la evidencia real.
+- Próximo paso: preparar el plan de implementación a partir del diseño aprobado
+  y ejecutar R1 antes de modificar la página.
