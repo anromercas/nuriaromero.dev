@@ -552,7 +552,7 @@ conectadas intencionalmente entre sí.
 
 ### Tareas de rediseño
 
-- [ ] **R1 — Auditar y reconciliar el contenido vigente**
+- [x] **R1 — Auditar y reconciliar el contenido vigente**
   - Ruta: delegada; la página cruza datos comerciales, route, layout compartido,
     metadata, FAQ y schema.
   - Alcance: localizar en la superficie SEO local todos los importes y claims
@@ -560,7 +560,7 @@ conectadas intencionalmente entre sí.
   - Aceptación: inventario de rutas/campos afectados y sin duda abierta sobre
     precios, conversión o claims.
 
-- [ ] **R2 — Actualizar la fuente comercial única**
+- [x] **R2 — Actualizar la fuente comercial única**
   - Ruta: delegada; cambio no trivial en datos y contenido asociado.
   - Alcance: ajustar `seoLocal` en `src/data/services.ts` con los dos planes
     vigentes, inclusiones, mensaje general de negocio, FAQs y metadata sin
@@ -568,14 +568,14 @@ conectadas intencionalmente entre sí.
   - Aceptación: la data contiene Local 300 €/mes + impuestos y Local Pro 500
     €/mes + impuestos, recomendando Pro, y no conserva los valores retirados.
 
-- [ ] **R3 — Recomponer la narrativa de diagnóstico de la ruta**
+- [x] **R3 — Recomponer la narrativa de diagnóstico de la ruta**
   - Ruta: delegada; la composición y el contenido de la página son no triviales.
   - Alcance: ordenar hero, síntoma, fallos, correcciones, planes, prueba
     verificable, FAQs y CTA final; el CTA principal debe reservar una llamada.
   - Aceptación: la lectura sigue el recorrido aprobado y no contiene promesas de
     resultados ni vocabulario específico de clínicas.
 
-- [ ] **R4 — Aplicar el sistema visual Parte de visibilidad local**
+- [x] **R4 — Aplicar el sistema visual Parte de visibilidad local**
   - Ruta: delegada; abarca jerarquía, responsive y componentes visuales.
   - Alcance: superficie oscura técnica, reglas de inspección, etiquetas de
     estado, anotación azul única y amarillo reservado para Pro/acciones, sin
@@ -583,7 +583,7 @@ conectadas intencionalmente entre sí.
   - Aceptación: desktop y móvil conservan jerarquía, legibilidad, contraste,
     foco visible, control por teclado y no presentan overflow horizontal.
 
-- [ ] **R5 — Verificar contenido, build y experiencia**
+- [x] **R5 — Verificar contenido, build y experiencia**
   - Ruta: delegada; requiere checks de salida generada y revisión visual fresca.
   - Alcance: ejecutar checks disponibles, inspeccionar HTML/schema generado,
     buscar importes/claims retirados y revisar una vez desktop y móvil; corregir
@@ -595,9 +595,12 @@ conectadas intencionalmente entre sí.
 
 - Diseño documentado en
   `docs/superpowers/specs/2026-10-05-seo-local-sevilla-redesign-design.md`.
+- Implementación completada el 2026-10-05: `seoLocal` centraliza la oferta vigente; la ruta usa el diagnóstico local `VisibilityAudit`; y todos los CTA de esta superficie dicen “Reservar una llamada”.
+- TDD: `node --test tests/seo-local-sevilla-redesign.test.js` fue RED antes de producción (oferta, componente y contrato de CTA ausentes) y GREEN después (`3/3` tests).
+- Verificación observada: `npm run build` (exit 0), `node scripts/check-seo-15.mjs` (OK), `node --test tests/seo-local-sevilla-redesign.test.js` (3/3), `node --test tests/*.test.js` (28/28) y `git diff --check` (exit 0).
+- Inspección local 1280×720 y 390×844: un único H1, cuatro CTA de reserva con el calendario oficial y `target=_blank`, Local Pro marcado como “Recomendado”, sin overflow horizontal; el FAQ nativo abre con interacción y existe regla de movimiento reducido.
 - TDD estricto está habilitado en el proyecto; quien implemente debe resolver
   el runner y registrar RED → GREEN → REFACTOR cuando haya comportamiento
   comprobable. Para cambios de contenido/presentación sin lógica nueva, debe
   ejecutar los checks funcionales disponibles y registrar la evidencia real.
-- Próximo paso: preparar el plan de implementación a partir del diseño aprobado
-  y ejecutar R1 antes de modificar la página.
+- Próximo paso: la implementación está cerrada localmente; queda revisión humana antes de decidir publicación.

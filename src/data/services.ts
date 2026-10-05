@@ -507,7 +507,7 @@ export const seoLocal: ServicePageData = {
   ],
   pricing: {
     from: "300 € + IVA",
-    note: "Los dos planes se facturan mes a mes. No hay proyecto inicial independiente ni una permanencia contractual indicada en esta página.",
+    note: "Los dos planes se facturan mes a mes. No se cobra una puesta en marcha independiente ni se indica una permanencia contractual en esta página.",
     tiers: [
       {
         name: "Local",
@@ -566,8 +566,8 @@ export const seoLocal: ServicePageData = {
       a: "No para trabajar el plan Local. Si tu web necesita acompañar a la ficha, Local Pro incluye la revisión y el trabajo web que se acuerde para tu negocio.",
     },
     {
-      q: "¿Hay un proyecto inicial separado o una permanencia?",
-      a: "No hay un proyecto inicial independiente. Los planes se facturan mes a mes y esta página no establece una permanencia contractual.",
+      q: "¿Hay una puesta en marcha separada o una permanencia?",
+      a: "No se cobra una puesta en marcha independiente. Los planes se facturan mes a mes y esta página no establece una permanencia contractual.",
     },
     {
       q: "¿Qué papel tienen los sistemas de IA?",
