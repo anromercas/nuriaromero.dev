@@ -4,11 +4,13 @@ import BookingButton from "@/components/BookingButton.astro"
 interface Props {
   title?: string
   text?: string
+  buttonLabel?: string
 }
 
 const {
   title = "¿Hablamos de tu proyecto?",
   text = "Cuéntame qué necesita tu negocio y te respondo con una propuesta clara, sin compromiso y sin tecnicismos.",
+  buttonLabel,
 } = Astro.props
 ---
 
@@ -20,7 +22,7 @@ const {
   </h2>
   <p class="mx-auto mb-6 max-w-xl text-gray-300">{text}</p>
   <nav class="flex flex-wrap justify-center gap-4">
-    <BookingButton />
+    <BookingButton label={buttonLabel} />
   </nav>
   <p class="mt-4 text-sm text-gray-600 dark:text-gray-500">
     30 minutos · Sin compromiso · Directamente conmigo

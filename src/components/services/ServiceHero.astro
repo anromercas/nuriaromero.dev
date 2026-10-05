@@ -4,13 +4,14 @@ import BookingButton from "@/components/BookingButton.astro"
 interface Props {
   h1: string
   subtitle: string
+  primaryCtaLabel?: string
   secondaryCta?: {
     label: string
     href: string
   }
 }
 
-const { h1, subtitle, secondaryCta } = Astro.props
+const { h1, subtitle, primaryCtaLabel, secondaryCta } = Astro.props
 ---
 
 <div class="py-10 md:py-16">
@@ -23,7 +24,7 @@ const { h1, subtitle, secondaryCta } = Astro.props
     {subtitle}
   </p>
   <nav class="flex flex-wrap gap-4 mt-8">
-    <BookingButton />
+    <BookingButton label={primaryCtaLabel} />
     {
       secondaryCta && (
         <a

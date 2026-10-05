@@ -57,7 +57,7 @@ const { from, includes, note, initial, tiers } = Astro.props
               {initial.note}
             </p>
           )}
-          <BookingButton />
+          <BookingButton label={initial.ctaLabel} />
         </div>
       )}
       {note && (
@@ -100,7 +100,7 @@ const { from, includes, note, initial, tiers } = Astro.props
               {tier.note}
             </p>
           )}
-          <BookingButton />
+          <BookingButton label={tier.ctaLabel} />
         </div>
       ))}
       </div>

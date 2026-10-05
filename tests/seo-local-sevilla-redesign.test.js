@@ -11,9 +11,9 @@ test("seo local data exposes only the approved recurring offer", async () => {
   const services = await source("src/data/services.ts")
   const seoLocal = services.slice(services.indexOf("export const seoLocal"), services.indexOf("export const capilarLocal"))
 
-  assert.match(seoLocal, /from:\s*"300 € \\+ IVA"/)
-  assert.match(seoLocal, /name:\s*"Local"[\s\S]*?from:\s*"300 €\/mes \\+ IVA"/)
-  assert.match(seoLocal, /name:\s*"Local Pro"[\s\S]*?from:\s*"500 €\/mes \\+ IVA"[\s\S]*?recommended:\s*true/)
+  assert.match(seoLocal, /from:\s*"300 € \+ IVA"/)
+  assert.match(seoLocal, /name:\s*"Local"[\s\S]*?from:\s*"300 €\/mes \+ IVA"/)
+  assert.match(seoLocal, /name:\s*"Local Pro"[\s\S]*?from:\s*"500 €\/mes \+ IVA"[\s\S]*?recommended:\s*true/)
   assert.doesNotMatch(seoLocal, /initial:\s*\{/)
   assert.doesNotMatch(seoLocal, legacyOrUnsafe)
   assert.doesNotMatch(seoLocal, positivePromise)

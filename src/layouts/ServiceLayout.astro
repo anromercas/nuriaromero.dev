@@ -51,6 +51,7 @@ const breadcrumbs = [
       <ServiceHero
         h1={page.hero.h1}
         subtitle={page.hero.subtitle}
+        primaryCtaLabel={page.hero.primaryCtaLabel}
         secondaryCta={page.hero.secondaryCta}
       />
     </SectionContainer>
@@ -103,7 +104,7 @@ const breadcrumbs = [
       </SectionContainer>
 
       <SectionContainer>
-        <CTASection title={page.cta?.title} text={page.cta?.text} />
+        <CTASection title={page.cta?.title} text={page.cta?.text} buttonLabel={page.cta?.buttonLabel} />
       </SectionContainer>
     </div>
   </main>

@@ -8,6 +8,7 @@ export interface ServicePageData {
   hero: {
     h1: string
     subtitle: string
+    primaryCtaLabel?: string
     secondaryCta?: {
       label: string
       href: string
@@ -51,6 +52,7 @@ export interface ServicePageData {
   cta?: {
     title: string
     text: string
+    buttonLabel?: string
   }
   sectionTitles?: {
     benefits?: string
