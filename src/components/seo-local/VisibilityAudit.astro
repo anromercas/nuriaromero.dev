@@ -1,0 +1,133 @@
+<section id="revision-local" class="audit-panel" aria-labelledby="diagnostico-title">
+  <p class="audit-kicker">Visibilidad local</p>
+  <h2 id="diagnostico-title">Estar en Google no siempre significa aparecer cuando te necesitan.</h2>
+  <p class="audit-copy">Puede que tu ficha exista, pero que muestre información antigua, que tu web no explique bien lo que haces o que las señales públicas de tu negocio no coincidan.</p>
+  <div class="audit-annotation" aria-label="Diagnóstico: presencia local por revisar">
+    <span aria-hidden="true">↗</span>
+    <p>La revisión empieza por detectar dónde se rompe el recorrido.</p>
+  </div>
+</section>
+
+<section class="audit-panel" aria-labelledby="revision-title">
+  <p class="audit-kicker">Revisión</p>
+  <h2 id="revision-title">Antes de corregir, hay que saber qué no está claro.</h2>
+  <ul class="audit-list">
+    <li><strong>Ficha de Google:</strong> categoría, servicios, horarios, descripción y señales visibles.</li>
+    <li><strong>Información pública:</strong> que los datos del negocio sean consistentes donde la gente los consulta.</li>
+    <li><strong>Búsquedas locales:</strong> cómo explicar tus servicios y zonas con palabras que entiende tu cliente.</li>
+    <li><strong>Opiniones y contenido:</strong> un proceso para pedir reseñas auténticas y mantener la ficha viva.</li>
+    <li><strong>Web y medición:</strong> qué conviene aclarar en la web y qué acciones se pueden observar.</li>
+  </ul>
+</section>
+
+<section class="audit-panel audit-proof" aria-labelledby="evidencia-title">
+  <p class="audit-kicker">Entrega verificable</p>
+  <h2 id="evidencia-title">Qué recibirás durante el trabajo.</h2>
+  <p class="audit-copy">No se muestran cifras ni resultados que no estén verificados. Sí podrás revisar el trabajo realizado, las prioridades acordadas y el vídeo-informe mensual con el siguiente paso.</p>
+</section>
+
+<style>
+  .audit-panel {
+    position: relative;
+    isolation: isolate;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    border-block: 1px solid rgb(71 85 105 / 0.85);
+    color: rgb(226 232 240);
+    background: rgb(2 6 23);
+  }
+
+  .audit-panel::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    content: "";
+    opacity: 0.16;
+    background-image: linear-gradient(rgb(51 65 85 / 0.8) 1px, transparent 1px);
+    background-size: 100% 2.25rem;
+    pointer-events: none;
+  }
+
+  .audit-kicker {
+    margin: 0 0 1rem;
+    color: rgb(125 211 252);
+    font-size: 0.78rem;
+    font-weight: 750;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    max-width: 18ch;
+    margin: 0;
+    color: white;
+    font-size: clamp(1.8rem, 4vw, 3.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+
+  .audit-copy {
+    max-width: 65ch;
+    margin: 1.5rem 0 0;
+    color: rgb(203 213 225);
+    font-size: 1.075rem;
+    line-height: 1.7;
+  }
+
+  .audit-annotation {
+    display: flex;
+    gap: 0.75rem;
+    max-width: 44rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(56 189 248 / 0.9);
+    color: rgb(186 230 253);
+  }
+
+  .audit-annotation span {
+    flex: none;
+    color: rgb(56 189 248);
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .audit-annotation p { margin: 0; line-height: 1.5; }
+
+  .audit-list {
+    display: grid;
+    gap: 0;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid rgb(71 85 105);
+  }
+
+  .audit-list li {
+    max-width: 70ch;
+    padding: 1rem 0 1rem 1.5rem;
+    border-bottom: 1px solid rgb(71 85 105);
+    color: rgb(203 213 225);
+    line-height: 1.6;
+  }
+
+  .audit-list li::before {
+    position: absolute;
+    margin-left: -1.5rem;
+    color: rgb(56 189 248);
+    content: "—";
+  }
+
+  .audit-list strong { color: white; }
+
+  .audit-proof { margin-bottom: 0; }
+
+  @media (max-width: 767px) {
+    .audit-panel { padding: 1.5rem; }
+    h2 { max-width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
