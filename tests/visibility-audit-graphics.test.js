@@ -35,4 +35,10 @@ test("VisibilityAudit renders a checklist-flow and a delivery-cycle instead of p
   assert.match(audit, /Vídeo-informe mensual/)
   assert.match(audit, /cada mes/)
   assert.doesNotMatch(audit, /(?:transition|animation):\s*(?!\s*none\b)/)
+
+  const flowIcons = audit.match(/class="audit-flow-icon" aria-hidden="true"/g)
+  assert.equal(flowIcons?.length, 5)
+  assert.match(audit, /aria-labelledby="diagnostico-title"[\s\S]*?id="diagnostico-title"/)
+  assert.match(audit, /aria-labelledby="revision-title"[\s\S]*?id="revision-title"/)
+  assert.match(audit, /aria-labelledby="evidencia-title"[\s\S]*?id="evidencia-title"/)
 })
