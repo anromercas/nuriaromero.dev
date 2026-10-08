@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T00:00:00Z",
+  "title": "Design System: nuriaromero.dev",
+  "extensions": {
+    "colorMeta": {
+      "ink-ground": { "role": "neutral", "displayName": "Ink Ground", "canonical": "#050a18", "tonalRamp": ["#030712", "#050a18", "#070e20", "#081024", "#0c1428", "#0f172a", "#1e293b", "#334155"] },
+      "card-surface": { "role": "neutral", "displayName": "Card Surface", "canonical": "#080f20", "tonalRamp": ["#030712", "#050a18", "#070e20", "#080f20", "#0c1428", "#0f172a", "#1e293b", "#334155"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#334155", "tonalRamp": ["#0f172a", "#1e293b", "#334155", "#475569", "#64748b", "#94a3b8", "#cbd5e1", "#e2e8f0"] },
+      "sky-signal": { "role": "primary", "displayName": "Sky Signal", "canonical": "#38bdf8", "tonalRamp": ["#082f49", "#075985", "#0369a1", "#0284c7", "#0ea5e9", "#38bdf8", "#7dd3fc", "#e0f2fe"] },
+      "sky-accent": { "role": "primary", "displayName": "Sky Accent", "canonical": "#7dd3fc", "tonalRamp": ["#082f49", "#075985", "#0369a1", "#0ea5e9", "#38bdf8", "#7dd3fc", "#bae6fd", "#e0f2fe"] },
+      "yellow-recommend": { "role": "secondary", "displayName": "Recommend Yellow", "canonical": "#facc15", "tonalRamp": ["#422006", "#713f12", "#854d0e", "#a16207", "#ca8a04", "#eab308", "#facc15", "#fef08a"] },
+      "action-blue": { "role": "tertiary", "displayName": "Action Blue", "canonical": "#3b82f6", "tonalRamp": ["#172554", "#1e3a8a", "#1d4ed8", "#2563eb", "#3b82f6", "#60a5fa", "#93c5fd", "#dbeafe"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The single h1 per page, max 16ch." },
+      "headline": { "displayName": "Headline", "purpose": "Section h2s with one serif-italic phrase." },
+      "accent": { "displayName": "Serif Accent", "purpose": "Instrument Serif italic, exactly one phrase per heading, sky-accent colour." },
+      "title": { "displayName": "Title", "purpose": "Tile, step and plan names." },
+      "stat": { "displayName": "Stat", "purpose": "Proof-band figures; must be true and sourced." },
+      "body": { "displayName": "Body", "purpose": "Paragraphs at up to 65ch." },
+      "label": { "displayName": "Label", "purpose": "Captions, meta lines, Ejemplo ilustrativo." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-out-expo-soft", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Colour and border state transitions (0.2s) and the timed fallback reveal." },
+      { "name": "scroll-fill", "value": "animation-timeline: scroll(root block); linear both", "purpose": "The one authored moment: the hero listing fills in. Only under prefers-reduced-motion: no-preference and @supports; completed state is the default." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Booking Button",
+      "kind": "button",
+      "refersTo": "button-booking",
+      "description": "The single filled control, a blue pill shared with the older site.",
+      "html": "<a class=\"ds-btn\" href=\"#\">Reservar una llamada</a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem 1rem; border: 1px solid #60a5fa; border-radius: 9999px; background: #3b82f6; color: #fff; font-weight: 500; text-decoration: none; transition: background 0.2s; } .ds-btn:hover { background: #60a5fa; } .ds-btn:focus-visible { outline: 2px solid #38bdf8; outline-offset: 3px; }"
+    },
+    {
+      "name": "Text Link",
+      "kind": "custom",
+      "description": "Secondary action: underlined slate text with a sky underline.",
+      "html": "<a class=\"ds-link\" href=\"#\">Ver los planes</a>",
+      "css": ".ds-link { color: #e2e8f0; text-decoration: underline; text-decoration-color: rgba(56,189,248,0.7); text-underline-offset: 0.3em; border-radius: 0.25rem; transition: color 0.2s; } .ds-link:hover { color: #7dd3fc; } .ds-link:focus-visible { outline: 2px solid #38bdf8; outline-offset: 4px; }"
+    },
+    {
+      "name": "Heading with Serif Phrase",
+      "kind": "custom",
+      "description": "Bold Onest headline with exactly one Instrument Serif italic phrase in sky-accent.",
+      "html": "<h2 class=\"ds-h2\">Trabajo que <em>puedes ver</em></h2>",
+      "css": ".ds-h2 { margin: 0; max-width: 20ch; color: #fff; font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 700; line-height: 1.06; letter-spacing: -0.03em; text-wrap: balance; } .ds-h2 em { color: #7dd3fc; font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; font-size: 1.12em; letter-spacing: -0.01em; }"
+    },
+    {
+      "name": "Proof Band",
+      "kind": "custom",
+      "description": "Three figure-plus-label cells between hairlines; no cards, no icons.",
+      "html": "<ul class=\"ds-proof\"><li><strong>+10 años</strong><span>de experiencia</span></li><li><strong>4,9 en Google</strong><span>opiniones</span></li><li><strong>2 webs en Sevilla</strong><span>de negocios locales</span></li></ul>",
+      "css": ".ds-proof { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; margin: 0; padding: 0; list-style: none; border-block: 1px solid #334155; } .ds-proof li { display: grid; gap: 0.15rem; padding: 1.1rem 1.5rem; } .ds-proof li:first-child { padding-left: 0; } .ds-proof li + li { border-left: 1px solid #334155; } .ds-proof strong { color: #fff; font-size: 1.375rem; font-weight: 650; letter-spacing: -0.01em; line-height: 1.2; } .ds-proof span { color: #cbd5e1; font-size: 0.9rem; }"
+    },
+    {
+      "name": "Bento Tile",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Dark panel with a single-stroke illustration, a title and one sentence.",
+      "html": "<article class=\"ds-tile\"><svg viewBox=\"0 0 160 40\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" aria-hidden=\"true\"><rect x=\"4\" y=\"6\" width=\"100\" height=\"12\" rx=\"6\" stroke=\"#38bdf8\"/><rect x=\"4\" y=\"26\" width=\"70\" height=\"8\" rx=\"4\" stroke=\"#475569\"/></svg><h3>Ficha de Google</h3><p>Categoría, servicios y horarios revisados.</p></article>",
+      "css": ".ds-tile { display: flex; flex-direction: column; gap: 0.5rem; max-width: 22rem; padding: 1.25rem; border: 1px solid #334155; border-radius: 1.25rem; background: #080f20; color: #94a3b8; } .ds-tile svg { width: 100%; height: auto; margin-bottom: 0.75rem; } .ds-tile h3 { margin: 0; color: #fff; font-size: 1.125rem; font-weight: 650; line-height: 1.25; } .ds-tile p { margin: 0; color: #cbd5e1; font-size: 0.975rem; line-height: 1.6; }"
+    },
+    {
+      "name": "Plan Card (recommended)",
+      "kind": "card",
+      "refersTo": "plan-recommended",
+      "description": "Recommended plan: yellow border, yellow pill badge, yellow checks; the only yellow on the page.",
+      "html": "<article class=\"ds-plan\"><div class=\"ds-head\"><h3>Plan Local Pro</h3><span class=\"ds-badge\">Recomendado</span></div><p class=\"ds-price\">500 €/mes</p><ul><li><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg><span>Alcance claro</span></li></ul></article>",
+      "css": ".ds-plan { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; max-width: 22rem; padding: 1.5rem; border: 1px solid #facc15; border-radius: 1.25rem; background: #0c1428; color: #e2e8f0; } .ds-head { display: flex; align-items: center; gap: 0.75rem; } .ds-head h3 { margin: 0; color: #fff; font-size: 1.25rem; font-weight: 650; } .ds-badge { padding: 0.15rem 0.7rem; border-radius: 999px; background: #facc15; color: #111827; font-size: 0.75rem; font-weight: 700; } .ds-price { margin: 0; color: #fff; font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; } .ds-plan ul { width: 100%; margin: 0; padding: 1rem 0 0; list-style: none; border-top: 1px solid #334155; } .ds-plan li { display: flex; gap: 0.6rem; color: #cbd5e1; font-size: 0.95rem; } .ds-plan li svg { flex: none; width: 1.1rem; height: 1.1rem; margin-top: 0.2rem; color: #facc15; }"
+    },
+    {
+      "name": "Drawn Accordion",
+      "kind": "custom",
+      "description": "Native details with a drawn plus whose vertical stroke disappears when open.",
+      "html": "<details class=\"ds-acc\"><summary><span>¿Cuánto tarda en notarse?</span><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path class=\"v\" d=\"M12 5v14\"/></svg></summary><p>Respuesta de ejemplo.</p></details>",
+      "css": ".ds-acc { border-bottom: 1px solid #334155; color: #cbd5e1; } .ds-acc summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem 0.25rem; color: #fff; font-weight: 600; line-height: 1.4; cursor: pointer; list-style: none; border-radius: 0.5rem; } .ds-acc summary::-webkit-details-marker { display: none; } .ds-acc summary:focus-visible { outline: 2px solid #38bdf8; outline-offset: 2px; } .ds-acc svg { flex: none; width: 1.5rem; height: 1.5rem; color: #38bdf8; } .ds-acc[open] .v { display: none; } .ds-acc p { margin: 0; padding: 0 0.25rem 1.25rem; }"
+    },
+    {
+      "name": "Related Link Pill",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Round outlined link; border and text turn sky on hover.",
+      "html": "<a class=\"ds-pill\" href=\"#\">Guía de ficha de Google</a>",
+      "css": ".ds-pill { display: inline-block; padding: 0.3rem 0.85rem; border: 1px solid #334155; border-radius: 9999px; color: #e2e8f0; font-size: 0.9rem; text-decoration: none; transition: border-color 0.2s, color 0.2s; } .ds-pill:hover { border-color: #38bdf8; color: #7dd3fc; } .ds-pill:focus-visible { outline: 2px solid #38bdf8; outline-offset: 3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Annotated Storefront",
+    "overview": "A dark ink-blue room where a local business is explained by drawing it. Pages read as a quiet working document: confident bold sans headlines, one italic serif phrase per heading, and hand-built single-stroke SVG illustrations in sky blue that show the thing instead of describing it with icons. Cards are calm dark panels with a hairline; nothing glows except a single soft sky halo behind the hero drawing and the closing band.\n\nDensity is moderate and editorial: wide section gaps (6rem), copy capped near 65ch, asymmetric compositions instead of equal grids. Honesty is a visual rule as much as a copy rule: illustrations are labelled as examples, proof is real or absent.\n\nThis is the reference direction for new and revised pages, recorded from the shipped SEO local page. The rest of the site still uses the older gray/yellow/blue styling (see Known Drift in DESIGN.md).",
+    "keyCharacteristics": [
+      "Ink-blue grounds, sky-blue strokes, yellow only for recommended and real star ratings.",
+      "Instrument Serif italic on exactly one phrase per heading, in sky-accent; everything else is Onest.",
+      "Illustration is line work (1.5 stroke, round caps and joins, currentColor), never filled icon sets.",
+      "Flat depth: hairline borders and tonal surface steps, no drop shadows.",
+      "Completed state is the default; one authored scroll moment at most."
+    ],
+    "rules": [
+      { "name": "The Reserved Yellow Rule", "body": "Yellow means recommended or a real star rating. It never decorates, highlights copy, or appears as a second accent on this world.", "section": "colors" },
+      { "name": "The One Serif Phrase Rule", "body": "Exactly one phrase per heading is set in Instrument Serif italic in sky-accent. Never gradient text, never a second accent phrase, never body copy.", "section": "colors" },
+      { "name": "The No Kicker Rule", "body": "Headings stand alone: no eyebrow, overline or numbering above or beside them.", "section": "typography" },
+      { "name": "The Asymmetry Rule", "body": "Groups of peers use unequal spans, never a grid of identical cards.", "section": "layout" },
+      { "name": "The Hairline Depth Rule", "body": "A surface is separated by a tone step and a 1px border, never a shadow. The recommended plan lifts by position and a yellow border, not by shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do draw explanatory visuals as single-stroke SVG (1.5 stroke, round caps/joins, currentColor, sky signal plus slate soft strokes) and label any illustration of a hypothetical result \"Ejemplo ilustrativo\".",
+      "Do set exactly one phrase per heading in Instrument Serif italic, sky-accent, 1.12em.",
+      "Do reserve yellow for the recommended plan and for real star ratings.",
+      "Do make every section default to its completed state; animation only enhances, and respects reduced motion.",
+      "Do keep copy honest: real reviews, real client sites, true figures with a visible source, plain business language.",
+      "Do vary spans and sizes in groups of peers; end sections with the single next action (booking call)."
+    ],
+    "donts": [
+      "Don't add eyebrows, kickers, step numbers or numbered lists above or beside headings.",
+      "Don't use gradient text, glassmorphism, or drop shadows on surfaces.",
+      "Don't build grids of equal icon-plus-title-plus-text cards, or nest a card inside a card.",
+      "Don't invent metrics, testimonials, client logos, rankings or guarantees of rankings, traffic or leads.",
+      "Don't use glyph or icon-font icons in this world; draw them.",
+      "Don't introduce a second accent hue or use yellow as general emphasis."
+    ]
+  }
+}
