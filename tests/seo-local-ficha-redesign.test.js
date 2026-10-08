@@ -268,3 +268,15 @@ test("finish review: ink-blue ground, cycle labels are large, plan buttons align
   assert.match(plans, /\.plan :global\(a\)[\s\S]*?margin-top:\s*auto|\.plan-cta\s*\{[^}]*margin-top:\s*auto/)
   assert.match(plans, /\.plan\.recommended\s*\{[^}]*margin-top:\s*-0\.75rem/)
 })
+
+test("bento named areas are not reset by a later grid-column: auto", async () => {
+  const bento = await source("src/components/seo-local/ReviewBento.astro")
+
+  assert.doesNotMatch(bento, /grid-area:\s*\w+;\s*grid-column:\s*auto/)
+})
+
+test("hero glow pool never bleeds past the page gutter (no horizontal scroll on mobile)", async () => {
+  const hero = await source("src/components/seo-local/SeoLocalHero.astro")
+
+  assert.match(hero, /\.hero-visual::before\s*\{[^}]*inset:\s*-25%\s+-1rem/)
+})
