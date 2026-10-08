@@ -509,7 +509,7 @@ export const seoLocal: ServicePageData = {
   ],
   pricing: {
     from: "300 € + IVA",
-    note: "Los dos planes se facturan mes a mes. No se cobra una puesta en marcha independiente ni se indica una permanencia contractual en esta página.",
+    note: "Se factura mes a mes y no hay cuota de puesta en marcha aparte.",
     tiers: [
       {
         name: "Local",

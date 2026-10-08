@@ -347,3 +347,12 @@ test("hero subtitle sells the work without defensive disclaimers", async () => {
   assert.match(subtitle, /cada mes/)
   assert.doesNotMatch(subtitle, /sin promesas/i)
 })
+
+test("plans note and proof line state facts without legalistic disclaimers", async () => {
+  const [data, proof] = await Promise.all([seoLocalData(), source("src/components/seo-local/RealProof.astro")])
+
+  assert.match(data, /note:\s*"Se factura mes a mes y no hay cuota de puesta en marcha aparte\."/)
+  assert.doesNotMatch(data.slice(data.indexOf("pricing:"), data.indexOf("tiers:")), /en esta página/)
+  assert.match(proof, /Dos webs reales de negocios de Sevilla, hechas por mí\. Puedes visitarlas y juzgar el trabajo por ti\./)
+  assert.doesNotMatch(proof, /No publico cifras/)
+})

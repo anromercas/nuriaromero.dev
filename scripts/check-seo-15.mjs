@@ -12,7 +12,7 @@ assert.match(text, /300 €\/mes \+ IVA/)
 assert.match(text, /500 €\/mes \+ IVA/)
 assert.match(text, /Recomendado/)
 assert.match(text, /Reservar una llamada/)
-assert.match(text, /Los dos planes se facturan mes a mes/)
+assert.match(text, /Se factura mes a mes y no hay cuota de puesta en marcha aparte/)
 assert.doesNotMatch(text, legacyOrUnsafe)
 assert.doesNotMatch(text, positivePromise)
 
