@@ -19,20 +19,32 @@ test("seo local data exposes only the approved recurring offer", async () => {
   assert.doesNotMatch(seoLocal, positivePromise)
 })
 
-test("seo local composition is diagnostic-led and books a call", async () => {
-  const [route, audit, services] = await Promise.all([
+test("seo local composition is diagnostic-led, ordered and books a call", async () => {
+  const [route, layout, plans, bento, process, proof, services] = await Promise.all([
     source("src/pages/seo-local-sevilla.astro"),
-    source("src/components/seo-local/VisibilityAudit.astro"),
+    source("src/layouts/ServiceLayout.astro"),
+    source("src/components/seo-local/SeoLocalPlans.astro"),
+    source("src/components/seo-local/ReviewBento.astro"),
+    source("src/components/seo-local/SeoLocalProcess.astro"),
+    source("src/components/seo-local/RealProof.astro"),
     source("src/data/services.ts"),
   ])
   const seoLocal = services.slice(services.indexOf("export const seoLocal"), services.indexOf("export const capilarLocal"))
 
   assert.match(route, /<ServiceLayout page=\{seoLocal\}>/)
   assert.match(route, /<ReviewBento \/>/)
-  assert.match(audit, /<section[\s\S]*?<h2/)
-  assert.match(audit, /aria-labelledby=/)
-  assert.match(audit, /<ul/)
-  assert.match(audit, /Qué recibirás|Trabajo que podrás revisar/)
+  const order = ["slot=\"hero\"", "<ReviewBento", "<SeoLocalProcess", "<RealProof", "<SeoLocalPlans"].map((marker) => route.indexOf(marker))
+  assert.ok(order.every((index) => index >= 0), "all sections composed")
+  assert.deepEqual(order, [...order].sort((x, y) => x - y), "hero, bento, process, proof, plans")
+  // FAQ, internal links and closing CTA stay in the shared layout after the pricing slot.
+  assert.ok(layout.indexOf('<slot name="pricing">') < layout.indexOf("<FAQ"))
+  assert.ok(layout.indexOf("<FAQ") < layout.indexOf("<InternalLinks"))
+  assert.ok(layout.indexOf("<InternalLinks") < layout.indexOf("<CTASection"))
+  for (const component of [bento, process, proof, plans]) {
+    assert.match(component, /<section[\s\S]*?<h2/)
+    assert.match(component, /aria-labelledby=/)
+  }
+  assert.match(plans, /<ul/)
   assert.match(seoLocal, /primaryCtaLabel:\s*"Reservar una llamada"/)
   assert.match(seoLocal, /ctaLabel:\s*"Reservar una llamada"/)
 })

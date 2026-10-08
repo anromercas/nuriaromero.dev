@@ -141,3 +141,21 @@ test("T5: real proof section reuses reviews and the two client sites, with no KP
   assert.match(route, /<RealProof reviews=\{reviewsData\}/)
   assert.match(layout, /<slot name="before-pricing" \/>/)
 })
+
+test("T6: plans use the dark language, mark Local Pro as recommended and leave other pages untouched", async () => {
+  const [plans, layout, route] = await Promise.all([
+    source("src/components/seo-local/SeoLocalPlans.astro"),
+    source("src/layouts/ServiceLayout.astro"),
+    source("src/pages/seo-local-sevilla.astro"),
+  ])
+
+  assert.match(plans, /id="precios"/)
+  assert.match(plans, /seoLocal\.pricing\.tiers/)
+  assert.match(plans, /Recomendado/)
+  assert.match(plans, /<BookingButton/)
+  assert.match(plans, /tier\.ctaLabel/)
+  assert.match(plans, /rgb\(250 204 21\)/)
+  assert.doesNotMatch(plans, /pacientes|tratamientos|garantiz|✓/i)
+  assert.match(layout, /<slot name="pricing">[\s\S]*?<PricingCard/)
+  assert.match(route, /slot="pricing"/)
+})

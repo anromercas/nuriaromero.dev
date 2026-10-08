@@ -6,6 +6,7 @@ import ProofStrip from "@/components/seo-local/ProofStrip.astro"
 import ReviewBento from "@/components/seo-local/ReviewBento.astro"
 import SeoLocalProcess from "@/components/seo-local/SeoLocalProcess.astro"
 import RealProof from "@/components/seo-local/RealProof.astro"
+import SeoLocalPlans from "@/components/seo-local/SeoLocalPlans.astro"
 import { seoLocal } from "@/data/services"
 import { getGoogleReviews } from "@/lib/google-reviews"
 
@@ -30,6 +31,11 @@ const reviewsData = await getGoogleReviews()
   <Fragment slot="before-pricing">
     <SectionContainer id="trabajo-real">
       <RealProof reviews={reviewsData} />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="pricing">
+    <SectionContainer>
+      <SeoLocalPlans />
     </SectionContainer>
   </Fragment>
 </ServiceLayout>

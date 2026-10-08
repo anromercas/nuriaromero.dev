@@ -1,0 +1,180 @@
+---
+import "@fontsource/instrument-serif/400-italic.css"
+import BookingButton from "@/components/BookingButton.astro"
+import { seoLocal } from "@/data/services"
+
+const { pricing, sectionTitles } = seoLocal
+const title = sectionTitles?.pricing ?? "Dos planes, con un alcance claro"
+const accent = "un alcance claro"
+const accentAt = title.indexOf(accent)
+const before = accentAt >= 0 ? title.slice(0, accentAt) : title
+const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
+const tiers = seoLocal.pricing.tiers ?? []
+---
+
+<section id="precios" class="plans scroll-m-20" aria-labelledby="planes-title">
+  <h2 id="planes-title">
+    {before}{accentAt >= 0 && <em>{accent}</em>}{after}
+  </h2>
+  {pricing.note && <p class="plans-note">{pricing.note}</p>}
+
+  <div class="plan-list">
+    {
+      tiers.map((tier) => (
+        <article class:list={["plan", { recommended: tier.recommended }]}>
+          <div class="plan-head">
+            <h3>{tier.name}</h3>
+            {tier.recommended && <span class="badge">Recomendado</span>}
+          </div>
+          <p class="price">{tier.from}</p>
+          <ul>
+            {tier.includes.map((item) => (
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M5 12.5l4.5 4.5L19 7.5" />
+                </svg>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          {tier.note && <p class="plan-note">{tier.note}</p>}
+          <BookingButton label={tier.ctaLabel} />
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .plans {
+    color: rgb(226 232 240);
+  }
+
+  h2 {
+    max-width: 20ch;
+    margin: 0 0 1rem;
+    color: white;
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  h2 em {
+    color: rgb(125 211 252);
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.12em;
+    letter-spacing: -0.01em;
+  }
+
+  .plans-note {
+    max-width: 65ch;
+    margin: 0 0 2rem;
+    color: rgb(203 213 225);
+    line-height: 1.6;
+  }
+
+  .plan-list {
+    display: grid;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .plan {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgb(51 65 85);
+    border-radius: 1.25rem;
+    background: rgb(8 15 32);
+  }
+
+  .plan.recommended {
+    border-color: rgb(250 204 21);
+    background: rgb(12 20 40);
+  }
+
+  .plan-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+  }
+
+  h3 {
+    margin: 0;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 650;
+  }
+
+  .badge {
+    padding: 0.15rem 0.7rem;
+    border-radius: 999px;
+    background: rgb(250 204 21);
+    color: rgb(17 24 39);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .price {
+    margin: 0;
+    color: white;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  ul {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 1rem 0 0;
+    list-style: none;
+    border-top: 1px solid rgb(51 65 85);
+    width: 100%;
+  }
+
+  li {
+    display: flex;
+    gap: 0.6rem;
+    color: rgb(203 213 225);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  li svg {
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0.2rem;
+    color: rgb(56 189 248);
+  }
+
+  .recommended li svg {
+    color: rgb(250 204 21);
+  }
+
+  .plan-note {
+    max-width: 65ch;
+    margin: 0;
+    color: rgb(148 163 184);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 768px) {
+    .plan-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .plan.recommended {
+      margin-top: -0.75rem;
+    }
+  }
+</style>

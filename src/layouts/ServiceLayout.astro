@@ -75,7 +75,7 @@ const breadcrumbs = [
           <ProcessSteps steps={page.process} />
         </SectionContainer></slot>
 
-      <slot name="before-pricing" /><SectionContainer id="precios">
+      <slot name="before-pricing" /><slot name="pricing"><SectionContainer id="precios">
         <TitleSection>
           <CodeIcon class="size-7" />
           {page.sectionTitles?.pricing ?? "Precio orientativo"}
@@ -87,7 +87,7 @@ const breadcrumbs = [
           initial={page.pricing.initial}
           tiers={page.pricing.tiers}
         />
-      </SectionContainer>
+      </SectionContainer></slot>
 
       <slot />
 
