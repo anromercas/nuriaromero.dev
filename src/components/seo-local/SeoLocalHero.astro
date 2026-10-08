@@ -1,0 +1,99 @@
+---
+import "@fontsource/instrument-serif/400-italic.css"
+import BookingButton from "@/components/BookingButton.astro"
+import ListingMock from "@/components/seo-local/ListingMock.astro"
+import { seoLocal } from "@/data/services"
+
+const { h1, h1Accent, subtitle, primaryCtaLabel } = seoLocal.hero
+
+const accentAt = h1Accent ? h1.indexOf(h1Accent) : -1
+const before = accentAt >= 0 && h1Accent ? h1.slice(0, accentAt) : h1
+const accent = accentAt >= 0 && h1Accent ? h1Accent : ""
+const after = accentAt >= 0 && h1Accent ? h1.slice(accentAt + h1Accent.length) : ""
+---
+
+<div class="hero">
+  <div class="hero-copy">
+    <h1>
+      {before}{accent && <em class="accent">{accent}</em>}{after}
+    </h1>
+    <p class="hero-subtitle">{subtitle}</p>
+    <div class="hero-actions">
+      <BookingButton label={primaryCtaLabel} />
+      <a class="hero-link" href="#precios">Ver los planes</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <ListingMock />
+  </div>
+</div>
+
+<style>
+  .hero {
+    display: grid;
+    gap: 2.5rem;
+    padding-block: 2.5rem 1.5rem;
+    align-items: center;
+  }
+
+  h1 {
+    margin: 0 0 1.5rem;
+    max-width: 16ch;
+    color: white;
+    font-size: clamp(2.25rem, 6vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  .accent {
+    color: rgb(125 211 252);
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.12em;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-subtitle {
+    max-width: 52ch;
+    margin: 0;
+    color: rgb(203 213 225);
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .hero-link {
+    color: rgb(226 232 240);
+    text-decoration: underline;
+    text-decoration-color: rgb(56 189 248 / 0.7);
+    text-underline-offset: 0.3em;
+    border-radius: 0.25rem;
+    transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-link:hover {
+    color: rgb(125 211 252);
+  }
+
+  .hero-link:focus-visible {
+    outline: 2px solid rgb(56 189 248);
+    outline-offset: 4px;
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 2rem;
+    }
+  }
+</style>

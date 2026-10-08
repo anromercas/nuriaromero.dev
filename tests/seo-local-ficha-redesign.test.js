@@ -27,3 +27,32 @@ test("T1: serif accent font is installed and the layout exposes optional slots w
   assert.match(data, /h1Accent:\s*"cuando importa"/)
   assert.ok(data.includes("La pregunta es si te encuentran cuando importa."))
 })
+
+test("T2: hero, listing mock and proof strip honour the proof and label rules", async () => {
+  const [hero, mock, proof, route] = await Promise.all([
+    source("src/components/seo-local/SeoLocalHero.astro"),
+    source("src/components/seo-local/ListingMock.astro"),
+    source("src/components/seo-local/ProofStrip.astro"),
+    source("src/pages/seo-local-sevilla.astro"),
+  ])
+
+  assert.match(hero, /instrument-serif\/400-italic\.css/)
+  assert.match(hero, /h1Accent/)
+  assert.match(hero, /<BookingButton/)
+  assert.match(hero, /Ver los planes/)
+  assert.match(hero, /href="#precios"/)
+  assert.match(mock, /Ejemplo ilustrativo/)
+  assert.match(mock, /Tu negocio/)
+  for (const label of ["Horarios actualizados", "Servicios claros", "Fotos nuevas", "Reseñas respondidas"]) {
+    assert.ok(mock.includes(label), label)
+  }
+  assert.match(mock, /prefers-reduced-motion:\s*no-preference/)
+  assert.match(proof, /\+10 años de experiencia/)
+  assert.match(proof, /2 webs de negocios locales en Sevilla/)
+  assert.match(proof, /reviews\s*\?/)
+  assert.match(proof, /GoogleReviewsData \| null/)
+  assert.match(route, /getGoogleReviews\(\)/)
+  assert.match(route, /<SeoLocalHero/)
+  assert.match(route, /slot="hero"/)
+})
+

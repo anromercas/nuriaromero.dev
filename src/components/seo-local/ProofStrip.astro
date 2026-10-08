@@ -1,0 +1,36 @@
+---
+import type { GoogleReviewsData } from "@/lib/google-reviews"
+
+interface Props {
+  reviews: GoogleReviewsData | null
+}
+
+const { reviews } = Astro.props
+const rating = reviews ? reviews.rating.toFixed(1).replace(".", ",") : ""
+---
+
+<ul class="proof">
+  <li>+10 años de experiencia</li>
+  {
+    reviews ? (
+      <li>
+        {rating} en Google · {reviews.userRatingCount} opiniones
+      </li>
+    ) : null
+  }
+  <li>2 webs de negocios locales en Sevilla</li>
+</ul>
+
+<style>
+  .proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    margin: 0 0 1rem;
+    padding: 1rem 0 0;
+    list-style: none;
+    border-top: 1px solid rgb(51 65 85);
+    color: rgb(203 213 225);
+    font-size: 0.9rem;
+  }
+</style>
