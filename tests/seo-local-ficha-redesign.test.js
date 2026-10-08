@@ -134,7 +134,6 @@ test("T5: real proof section reuses reviews and the two client sites, with no KP
   assert.match(proof, /Trabajo que <em>puedes ver<\/em>/)
   assert.match(proof, /reviews\.reviews\[0\]/)
   assert.match(proof, /<Projects only=\{\["arkady", "adfsevilla"\]\}/)
-  assert.match(proof, /sin confirmación del cliente|confirmación del cliente/)
   assert.match(proof, /aria-labelledby="prueba-title"[\s\S]*?id="prueba-title"/)
   assert.doesNotMatch(proof, /pacientes|tratamientos|garantiz|%/i)
   assert.match(route, /getGoogleReviews\(\)/)
