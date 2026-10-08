@@ -1,0 +1,258 @@
+---
+import "@fontsource/instrument-serif/400-italic.css"
+import { Image } from "astro:assets"
+import profileHome from "@/assets/perfil-home.webp"
+import { seoLocal } from "@/data/services"
+---
+
+<section class="process" aria-labelledby="proceso-title">
+  <h2 id="proceso-title">Hablas con <em>quien hace el trabajo</em></h2>
+
+  <div class="process-grid">
+    <figure class="person">
+      <Image
+        src={profileHome}
+        alt="Nuria Romero, desarrolladora web freelance en Sevilla"
+        widths={[320, 480, 640]}
+        sizes="(min-width: 1024px) 320px, 70vw"
+        loading="lazy"
+        decoding="async"
+      />
+      <figcaption>Nuria Romero, desarrolladora web freelance en Sevilla</figcaption>
+    </figure>
+
+    <div class="steps">
+      <ol class="timeline">
+        {
+          seoLocal.process.map((step) => (
+            <li>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="cycle">
+        <svg
+          class="cycle-diagram"
+          viewBox="0 0 360 330"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <circle cx="180" cy="170" r="100" class="soft"></circle>
+          <path d="M209.2 74.4A100 100 0 0 1 277.4 192.5" class="signal"></path>
+          <path d="M283.3 185.7L277.4 192.5L275.1 183.8" class="signal arrow"></path>
+          <path d="M248.2 243.1A100 100 0 0 1 111.8 243.1" class="signal"></path>
+          <path d="M114.7 251.6L111.8 243.1L120.5 245.5" class="signal arrow"></path>
+          <path d="M82.6 192.5A100 100 0 0 1 150.8 74.4" class="signal"></path>
+          <path d="M141.9 72.7L150.8 74.4L144.4 80.7" class="signal arrow"></path>
+          <circle cx="180" cy="70" r="9" class="node"></circle>
+          <circle cx="266.6" cy="220" r="9" class="node"></circle>
+          <circle cx="93.4" cy="220" r="9" class="node"></circle>
+          <text x="180" y="46" text-anchor="middle" class="label">Trabajo revisable</text>
+          <text x="282" y="250" text-anchor="start" class="label">Prioridades</text>
+          <text x="282" y="266" text-anchor="start" class="label">acordadas</text>
+          <text x="78" y="250" text-anchor="end" class="label">Vídeo-informe</text>
+          <text x="78" y="266" text-anchor="end" class="label">mensual</text>
+          <text x="180" y="180" text-anchor="middle" class="centre">cada mes</text>
+        </svg>
+        <ol class="cycle-list" aria-label="Ciclo mensual">
+          <li>Trabajo revisable</li>
+          <li>Prioridades acordadas</li>
+          <li>Vídeo-informe mensual</li>
+          <li>y vuelta a empezar, cada mes</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process {
+    color: rgb(226 232 240);
+  }
+
+  h2 {
+    max-width: 20ch;
+    margin: 0 0 2.25rem;
+    color: white;
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  h2 em {
+    color: rgb(125 211 252);
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.12em;
+    letter-spacing: -0.01em;
+  }
+
+  .process-grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .person {
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid rgb(51 65 85);
+    border-radius: 1.25rem;
+    background: rgb(8 15 32);
+  }
+
+  .person :global(img) {
+    display: block;
+    width: 100%;
+    max-width: 20rem;
+    height: auto;
+    margin-inline: auto;
+    border-radius: 0.9rem;
+  }
+
+  figcaption {
+    margin-top: 0.9rem;
+    color: rgb(203 213 225);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .steps {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .timeline {
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 1.75rem;
+    list-style: none;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    left: 0.3rem;
+    width: 1px;
+    background: rgb(56 189 248 / 0.55);
+  }
+
+  .timeline li {
+    position: relative;
+    padding-bottom: 1.75rem;
+  }
+
+  .timeline li:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline li::before {
+    content: "";
+    position: absolute;
+    top: 0.45rem;
+    left: -1.75rem;
+    width: 0.65rem;
+    height: 0.65rem;
+    border: 1.5px solid rgb(56 189 248);
+    border-radius: 50%;
+    background: rgb(3 7 18);
+  }
+
+  h3 {
+    margin: 0 0 0.35rem;
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 650;
+    line-height: 1.3;
+  }
+
+  .timeline p {
+    max-width: 65ch;
+    margin: 0;
+    color: rgb(203 213 225);
+    font-size: 0.975rem;
+    line-height: 1.6;
+  }
+
+  .cycle {
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+    padding: 1.25rem;
+    border: 1px solid rgb(51 65 85);
+    border-radius: 1.25rem;
+    background: rgb(8 15 32);
+  }
+
+  .cycle-diagram {
+    display: block;
+    width: 100%;
+    max-width: 22rem;
+    height: auto;
+    color: rgb(148 163 184);
+  }
+
+  .cycle-diagram :global(.signal) {
+    stroke: rgb(56 189 248);
+  }
+
+  .cycle-diagram :global(.soft) {
+    stroke: rgb(71 85 105);
+    stroke-dasharray: 2 6;
+  }
+
+  .cycle-diagram :global(.node) {
+    fill: rgb(8 15 32);
+    stroke: rgb(56 189 248);
+  }
+
+  .cycle-diagram :global(.label) {
+    fill: rgb(226 232 240);
+    stroke: none;
+    font-size: 13px;
+    font-family: inherit;
+  }
+
+  .cycle-diagram :global(.centre) {
+    fill: rgb(125 211 252);
+    stroke: none;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-size: 26px;
+  }
+
+  .cycle-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: rgb(203 213 225);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  @media (min-width: 1024px) {
+    .process-grid {
+      grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .person {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+</style>

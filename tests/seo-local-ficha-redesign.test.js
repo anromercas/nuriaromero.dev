@@ -91,3 +91,34 @@ test("batch A review fixes: singular opinion, caption attached to grid, balanced
   assert.match(bento, /<svg viewBox="0 40 360 150"/)
   assert.doesNotMatch(bento, /<circle cx="28" cy="(24|65|106)" r="7" class="soft">/)
 })
+
+test("T4: process section shows the real person, a timeline without numerals and an accessible monthly cycle", async () => {
+  const [proc, route, layout] = await Promise.all([
+    source("src/components/seo-local/SeoLocalProcess.astro"),
+    source("src/pages/seo-local-sevilla.astro"),
+    source("src/layouts/ServiceLayout.astro"),
+  ])
+
+  assert.match(proc, /Hablas con <em>quien hace el trabajo<\/em>/)
+  assert.match(proc, /instrument-serif\/400-italic\.css/)
+  assert.match(proc, /import \{ Image \} from "astro:assets"/)
+  assert.match(proc, /@\/assets\/perfil-home\.webp/)
+  assert.match(proc, /alt="Nuria Romero, desarrolladora web freelance en Sevilla"/)
+  assert.match(proc, /loading="lazy"/)
+  assert.match(proc, /<figcaption>Nuria Romero, desarrolladora web freelance en Sevilla<\/figcaption>/)
+  assert.match(proc, /seoLocal\.process/)
+  assert.match(proc, /class="timeline"/)
+  assert.doesNotMatch(proc, /list-style:\s*decimal/)
+  for (const label of ["Trabajo revisable", "Prioridades acordadas", "Vídeo-informe mensual", "cada mes"]) {
+    assert.ok(proc.includes(label), label)
+  }
+  assert.match(proc, /<svg[^>]*class="cycle-diagram"[^>]*aria-hidden="true"/)
+  assert.match(proc, /<marker|<path[^>]*class="[^"]*\barrow\b/)
+  assert.match(proc, /aria-labelledby="proceso-title"[\s\S]*?id="proceso-title"/)
+  assert.match(proc, /class="cycle-list"/)
+  assert.doesNotMatch(proc, /pacientes|tratamientos|garantiz/i)
+  assert.doesNotMatch(proc, /(?:transition|animation):/)
+  assert.match(route, /<SeoLocalProcess/)
+  assert.match(route, /slot="process"/)
+  assert.match(layout, /<slot name="process">/)
+})

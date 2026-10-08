@@ -4,6 +4,7 @@ import SectionContainer from "@/components/SectionContainer.astro"
 import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro"
 import ProofStrip from "@/components/seo-local/ProofStrip.astro"
 import ReviewBento from "@/components/seo-local/ReviewBento.astro"
+import SeoLocalProcess from "@/components/seo-local/SeoLocalProcess.astro"
 import { seoLocal } from "@/data/services"
 import { getGoogleReviews } from "@/lib/google-reviews"
 
@@ -18,6 +19,11 @@ const reviewsData = await getGoogleReviews()
   <Fragment slot="benefits">
     <SectionContainer id="revision-local">
       <ReviewBento />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="process">
+    <SectionContainer>
+      <SeoLocalProcess />
     </SectionContainer>
   </Fragment>
 </ServiceLayout>
