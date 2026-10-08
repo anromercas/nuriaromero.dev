@@ -48,32 +48,32 @@ const breadcrumbs = [
   <main class="px-4 pt-24">
     <SectionContainer>
       <Breadcrumbs items={breadcrumbs} />
-      <ServiceHero
-        h1={page.hero.h1}
-        subtitle={page.hero.subtitle}
-        primaryCtaLabel={page.hero.primaryCtaLabel}
-        secondaryCta={page.hero.secondaryCta}
-      />
+      <slot name="hero"><ServiceHero
+          h1={page.hero.h1}
+          subtitle={page.hero.subtitle}
+          primaryCtaLabel={page.hero.primaryCtaLabel}
+          secondaryCta={page.hero.secondaryCta}
+        /></slot>
     </SectionContainer>
 
     <div class="space-y-24 mt-8">
       <slot name="before-benefits" />
 
-      <SectionContainer>
-        <TitleSection>
-          <ProfileCheck class="size-8" />
-          {page.sectionTitles?.benefits ?? "Qué vas a conseguir"}
-        </TitleSection>
-        <BenefitsGrid benefits={page.benefits} />
-      </SectionContainer>
+      <slot name="benefits"><SectionContainer>
+          <TitleSection>
+            <ProfileCheck class="size-8" />
+            {page.sectionTitles?.benefits ?? "Qué vas a conseguir"}
+          </TitleSection>
+          <BenefitsGrid benefits={page.benefits} />
+        </SectionContainer></slot>
 
-      <SectionContainer>
-        <TitleSection>
-          <Briefcase class="size-8" />
-          {page.sectionTitles?.process ?? "Cómo trabajo"}
-        </TitleSection>
-        <ProcessSteps steps={page.process} />
-      </SectionContainer>
+      <slot name="process"><SectionContainer>
+          <TitleSection>
+            <Briefcase class="size-8" />
+            {page.sectionTitles?.process ?? "Cómo trabajo"}
+          </TitleSection>
+          <ProcessSteps steps={page.process} />
+        </SectionContainer></slot>
 
       <SectionContainer id="precios">
         <TitleSection>

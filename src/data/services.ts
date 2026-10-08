@@ -462,6 +462,7 @@ export const seoLocal: ServicePageData = {
   },
   hero: {
     h1: "Tu negocio está en Sevilla. La pregunta es si te encuentran cuando importa.",
+    h1Accent: "cuando importa",
     subtitle:
       "Reviso la ficha de Google y, si hace falta, la web para ordenar la información que ve quien busca tus servicios cerca. Sin promesas de posiciones: con trabajo claro y seguimiento.",
     primaryCtaLabel: "Reservar una llamada",
