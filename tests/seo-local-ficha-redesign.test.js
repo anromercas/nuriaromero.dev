@@ -335,3 +335,15 @@ test("meta description is human, keeps both prices and fits in a search snippet"
   assert.match(description, /300 €\/mes \+ IVA/)
   assert.match(description, /500 €\/mes \+ IVA/)
 })
+
+test("hero subtitle sells the work without defensive disclaimers", async () => {
+  const data = await seoLocalData()
+  const match = data.match(/subtitle:\s*\n?\s*"([^"]+)"/)
+
+  assert.ok(match, "seoLocal.hero.subtitle not found")
+  const subtitle = match[1]
+  assert.ok(subtitle.length <= 200, `subtitle is ${subtitle.length} chars`)
+  assert.match(subtitle, /^Tus clientes te buscan en Google/)
+  assert.match(subtitle, /cada mes/)
+  assert.doesNotMatch(subtitle, /sin promesas/i)
+})

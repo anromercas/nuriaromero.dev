@@ -465,7 +465,7 @@ export const seoLocal: ServicePageData = {
     title: "Tu negocio está en Sevilla. La pregunta es si te encuentran cuando importa.",
     titleAccent: "cuando importa",
     subtitle:
-      "Reviso la ficha de Google y, si hace falta, la web para ordenar la información que ve quien busca tus servicios cerca. Sin promesas de posiciones: con trabajo claro y seguimiento.",
+      "Tus clientes te buscan en Google antes de decidir. Trabajo contigo cada mes para que tu ficha de Google y tu web cuenten bien lo que haces y quien te busca no dude en llamarte.",
     primaryCtaLabel: "Reservar una llamada",
     secondaryCta: { label: "Ver qué se revisa", href: "#revision-local" },
   },
