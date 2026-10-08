@@ -1,4 +1,9 @@
 ---
+interface Props {
+  animate?: boolean
+}
+
+const { animate = true } = Astro.props
 const checks = [
   "Horarios actualizados",
   "Servicios claros",
@@ -9,7 +14,7 @@ const services = ["Servicio uno", "Servicio dos", "Servicio tres"]
 const starPoints = "12 3 14.6 9 21 9.6 16.2 13.9 17.6 20.2 12 17 6.4 20.2 7.8 13.9 3 9.6 9.4 9"
 ---
 
-<figure class="listing" aria-label="Ficha de Google de ejemplo">
+<figure class:list={["listing", { animate }]} aria-label="Ficha de Google de ejemplo">
   <svg class="storefront" viewBox="0 0 320 96" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
     <path d="M24 88h272"></path>
     <path d="M40 88V36h240v52"></path>
@@ -25,10 +30,13 @@ const starPoints = "12 3 14.6 9 21 9.6 16.2 13.9 17.6 20.2 12 17 6.4 20.2 7.8 13
     <p class="name">Tu negocio</p>
     <p class="category">Categoría principal · Sevilla</p>
 
-    <div class="stars" aria-hidden="true">
-      {Array.from({ length: 5 }).map(() => (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" focusable="false"><polygon points={starPoints}></polygon></svg>
-      ))}
+    <div class="rating-row" aria-hidden="true">
+      <div class="stars">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <svg style={`--s:${i}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" focusable="false"><polygon points={starPoints}></polygon></svg>
+        ))}
+      </div>
+      <span>Reseñas de clientes</span>
     </div>
 
     <div class="row hours">
@@ -41,11 +49,13 @@ const starPoints = "12 3 14.6 9 21 9.6 16.2 13.9 17.6 20.2 12 17 6.4 20.2 7.8 13
     </ul>
 
     <div class="photos" aria-hidden="true">
-      {[0, 1, 2].map(() => (
-        <svg viewBox="0 0 64 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+      {[0, 1, 2].map((i) => (
+        <svg style={`--p:${i}`} viewBox="0 0 64 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false">
           <rect x="1" y="1" width="62" height="42" rx="5"></rect>
-          <path d="M4 36l16-16 12 12 8-8 20 18"></path>
-          <circle cx="46" cy="13" r="4"></circle>
+          <g class="scene">
+            <path d="M2 43V30c10-8 18-8 26 0 8-10 18-12 34-2v15z" class="hill"></path>
+            <circle cx={22 + i * 14} cy="14" r="5" class="sun"></circle>
+          </g>
         </svg>
       ))}
     </div>
@@ -108,9 +118,31 @@ const starPoints = "12 3 14.6 9 21 9.6 16.2 13.9 17.6 20.2 12 17 6.4 20.2 7.8 13
     color: rgb(125 211 252);
   }
 
+  .rating-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgb(203 213 225);
+    font-size: 0.85rem;
+  }
+
   .stars svg {
     width: 1.1rem;
     height: 1.1rem;
+  }
+
+  .stars polygon {
+    fill: currentColor;
+  }
+
+  .scene .hill {
+    fill: rgb(56 189 248 / 0.28);
+    stroke: rgb(56 189 248);
+  }
+
+  .scene .sun {
+    fill: rgb(125 211 252);
+    stroke: none;
   }
 
   .row {
@@ -188,23 +220,67 @@ const starPoints = "12 3 14.6 9 21 9.6 16.2 13.9 17.6 20.2 12 17 6.4 20.2 7.8 13
     font-size: 0.78rem;
   }
 
+  /* Completed state is the default. The listing only "fills in" where a scroll
+     timeline exists and motion is welcome; elsewhere it stays complete. */
   @media (prefers-reduced-motion: no-preference) {
-    .checks li {
-      animation: check-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-      animation-delay: calc(0.35s + var(--i) * 0.28s);
+    @supports (animation-timeline: scroll()) {
+      .animate .stars polygon {
+        animation: star-fill linear both;
+        animation-timeline: scroll(root block);
+        animation-range: calc(var(--s) * 30px) calc(var(--s) * 30px + 90px);
+      }
+
+      .animate .scene {
+        animation: scene-in linear both;
+        animation-timeline: scroll(root block);
+        animation-range: calc(var(--p) * 40px + 60px) calc(var(--p) * 40px + 200px);
+      }
+
+      .animate .rating-row span,
+      .animate .checks li {
+        animation: check-in linear both;
+        animation-timeline: scroll(root block);
+        animation-range: calc(var(--i, 2) * 50px + 80px) calc(var(--i, 2) * 50px + 220px);
+      }
+
+      .animate .checks svg path {
+        stroke-dasharray: 14;
+        animation: check-draw linear both;
+        animation-timeline: scroll(root block);
+        animation-range: calc(var(--i, 0) * 50px + 120px) calc(var(--i, 0) * 50px + 260px);
+      }
     }
 
-    .checks svg path {
-      stroke-dasharray: 14;
-      animation: check-draw 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-      animation-delay: calc(0.55s + var(--i) * 0.28s);
+    @supports not (animation-timeline: scroll()) {
+      .animate .checks li {
+        animation: check-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+        animation-delay: calc(0.35s + var(--i) * 0.28s);
+      }
+    }
+  }
+
+  @keyframes star-fill {
+    from {
+      fill: transparent;
+    }
+    to {
+      fill: currentColor;
+    }
+  }
+
+  @keyframes scene-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 
   @keyframes check-in {
     from {
-      opacity: 0;
-      transform: translateY(6px);
+      opacity: 0.35;
+      transform: translateY(4px);
     }
     to {
       opacity: 1;

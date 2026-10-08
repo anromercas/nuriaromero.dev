@@ -90,6 +90,20 @@ const after = accentAt >= 0 && h1Accent ? h1.slice(accentAt + h1Accent.length) :
     outline-offset: 4px;
   }
 
+  .hero-visual {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .hero-visual::before {
+    content: "";
+    position: absolute;
+    inset: -25% -20%;
+    z-index: -1;
+    background: radial-gradient(closest-side, rgb(56 189 248 / 0.18), transparent);
+    pointer-events: none;
+  }
+
   @media (min-width: 768px) {
     .hero {
       grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);

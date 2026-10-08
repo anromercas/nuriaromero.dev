@@ -91,21 +91,21 @@ const breadcrumbs = [
 
       <slot />
 
-      <SectionContainer>
+      <slot name="faq"><SectionContainer>
         <TitleSection>
           <ProfileCheck class="size-8" />
           {page.sectionTitles?.faq ?? "Preguntas frecuentes"}
         </TitleSection>
         <FAQ faqs={page.faqs} />
-      </SectionContainer>
+      </SectionContainer></slot>
 
-      <SectionContainer>
+      <slot name="related"><SectionContainer>
         <InternalLinks links={internalLinksBySource[page.slug] ?? []} />
-      </SectionContainer>
+      </SectionContainer></slot>
 
-      <SectionContainer>
+      <slot name="closing"><SectionContainer>
         <CTASection title={page.cta?.title} text={page.cta?.text} buttonLabel={page.cta?.buttonLabel} />
-      </SectionContainer>
+      </SectionContainer></slot>
     </div>
   </main>
 </Layout>

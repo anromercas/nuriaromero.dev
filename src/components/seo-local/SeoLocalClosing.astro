@@ -1,0 +1,97 @@
+---
+import "@fontsource/instrument-serif/400-italic.css"
+import BookingButton from "@/components/BookingButton.astro"
+import ListingMock from "@/components/seo-local/ListingMock.astro"
+import { seoLocal } from "@/data/services"
+
+const cta = seoLocal.cta
+const title = cta?.title ?? ""
+const accent = "tu presencia local"
+const accentAt = title.indexOf(accent)
+const before = accentAt >= 0 ? title.slice(0, accentAt) : title
+const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
+---
+
+<section class="closing" aria-labelledby="cierre-title">
+  <div class="closing-inner">
+    <div class="closing-copy">
+      <h2 id="cierre-title">{before}{accentAt >= 0 && <em>{accent}</em>}{after}</h2>
+      <p>{cta?.text}</p>
+      <BookingButton label={cta?.buttonLabel ?? "Reservar una llamada"} />
+      <p class="meta">30 minutos · Sin compromiso · Directamente conmigo</p>
+    </div>
+    <div class="closing-visual">
+      <ListingMock animate={false} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .closing {
+    position: relative;
+    isolation: isolate;
+    margin-inline: -1rem;
+    padding: 4rem 1rem;
+    overflow: hidden;
+    border-block: 1px solid rgb(30 41 59);
+    background: rgb(7 14 32);
+  }
+
+  .closing::before {
+    content: "";
+    position: absolute;
+    inset: -30% -10%;
+    z-index: -1;
+    background: radial-gradient(ellipse 50% 55% at 75% 50%, rgb(56 189 248 / 0.16), transparent 70%);
+    pointer-events: none;
+  }
+
+  .closing-inner {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  h2 {
+    max-width: 16ch;
+    margin: 0 0 1.25rem;
+    color: white;
+    font-size: clamp(2.1rem, 5.5vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  h2 em {
+    color: rgb(125 211 252);
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.12em;
+    letter-spacing: -0.01em;
+  }
+
+  .closing-copy > p:not(.meta) {
+    max-width: 48ch;
+    margin: 0 0 1.75rem;
+    color: rgb(203 213 225);
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+
+  .meta {
+    margin: 1rem 0 0;
+    color: rgb(148 163 184);
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 768px) {
+    .closing-inner {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 3rem;
+    }
+  }
+</style>

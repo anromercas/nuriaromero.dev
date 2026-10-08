@@ -47,8 +47,9 @@ test("T2: hero, listing mock and proof strip honour the proof and label rules", 
     assert.ok(mock.includes(label), label)
   }
   assert.match(mock, /prefers-reduced-motion:\s*no-preference/)
-  assert.match(proof, /\+10 años de experiencia/)
-  assert.match(proof, /2 webs de negocios locales en Sevilla/)
+  assert.match(proof, /\+10 años/)
+  assert.match(proof, /de experiencia/)
+  assert.match(proof, /2 webs en Sevilla/)
   assert.match(proof, /reviews\s*\?/)
   assert.match(proof, /GoogleReviewsData \| null/)
   assert.match(route, /getGoogleReviews\(\)/)
@@ -131,7 +132,7 @@ test("T5: real proof section reuses reviews and the two client sites, with no KP
   ])
 
   assert.match(proof, /Trabajo que <em>puedes ver<\/em>/)
-  assert.match(proof, /<GoogleReviews data=\{reviews\}/)
+  assert.match(proof, /reviews\.reviews\[0\]/)
   assert.match(proof, /<Projects only=\{\["arkady", "adfsevilla"\]\}/)
   assert.match(proof, /sin confirmación del cliente|confirmación del cliente/)
   assert.match(proof, /aria-labelledby="prueba-title"[\s\S]*?id="prueba-title"/)
@@ -163,8 +164,107 @@ test("T6: plans use the dark language, mark Local Pro as recommended and leave o
 test("review fix round 1: padded cycle viewBox, sr-only cycle list, stretched photo column", async () => {
   const proc = await source("src/components/seo-local/SeoLocalProcess.astro")
 
-  assert.match(proc, /viewBox="-30 0 420 330"/)
+  assert.match(proc, /viewBox="0 0 440 300"/)
   assert.match(proc, /\.cycle-list \{[^}]*position:\s*absolute[^}]*clip:\s*rect\(0,\s*0,\s*0,\s*0\)/)
   assert.match(proc, /\.person \{[^}]*display:\s*flex/)
   assert.match(proc, /object-fit:\s*cover/)
+})
+
+test("finish review: layout exposes faq, related and closing slots with legacy fallbacks", async () => {
+  const layout = await source("src/layouts/ServiceLayout.astro")
+
+  assert.match(layout, /<slot name="faq"><SectionContainer>[\s\S]*?<FAQ[\s\S]*?<\/SectionContainer><\/slot>/)
+  assert.match(layout, /<slot name="related"><SectionContainer>[\s\S]*?<InternalLinks[\s\S]*?<\/SectionContainer><\/slot>/)
+  assert.match(layout, /<slot name="closing"><SectionContainer>[\s\S]*?<CTASection[\s\S]*?<\/SectionContainer><\/slot>/)
+})
+
+test("finish review: FAQ, related links and closing CTA are bespoke and keep the data", async () => {
+  const [faq, related, closing, route] = await Promise.all([
+    source("src/components/seo-local/SeoLocalFaq.astro"),
+    source("src/components/seo-local/SeoLocalRelated.astro"),
+    source("src/components/seo-local/SeoLocalClosing.astro"),
+    source("src/pages/seo-local-sevilla.astro"),
+  ])
+
+  assert.match(faq, /seoLocal\.faqs/)
+  assert.match(faq, /<details/)
+  assert.match(faq, /<summary/)
+  assert.match(faq, /<BookingButton/)
+  assert.match(faq, /aria-labelledby="faq-title"[\s\S]*?id="faq-title"/)
+  assert.match(faq, /<em>/)
+  assert.match(faq, /class="indicator"[^>]*aria-hidden="true"/)
+  assert.doesNotMatch(faq, /ProfileCheck|›/)
+  assert.match(faq, /:focus-visible/)
+
+  assert.match(related, /internalLinksBySource/)
+  assert.match(related, /<nav[^>]*aria-label="Contenido relacionado"/)
+  assert.match(related, /links\.length > 0/)
+  assert.doesNotMatch(related, /rounded-xl|bg-gray/)
+
+  assert.match(closing, /<ListingMock/)
+  assert.match(closing, /<BookingButton/)
+  assert.match(closing, /seoLocal\.cta/)
+  assert.match(closing, /<em>/)
+  assert.match(closing, /aria-labelledby="cierre-title"[\s\S]*?id="cierre-title"/)
+
+  for (const slot of ["faq", "related", "closing"]) assert.match(route, new RegExp(`slot="${slot}"`))
+})
+
+test("finish review: the hero listing fills in on a scroll timeline with a completed fallback", async () => {
+  const mock = await source("src/components/seo-local/ListingMock.astro")
+
+  assert.match(mock, /animation-timeline:\s*scroll\(/)
+  assert.match(mock, /@supports \(animation-timeline:\s*scroll\(\)\)/)
+  assert.match(mock, /prefers-reduced-motion:\s*no-preference/)
+  assert.match(mock, /class="scene"/)
+  assert.match(mock, /class="rating-row"/)
+  assert.match(mock, /animate\?:\s*boolean/)
+  assert.match(mock, /Ejemplo ilustrativo/)
+  assert.doesNotMatch(mock, /\d[,.]\d\s*(?:\/|sobre)/)
+})
+
+test("finish review: bento is truly asymmetric, measurement reads side by side, labels are legible", async () => {
+  const bento = await source("src/components/seo-local/ReviewBento.astro")
+
+  assert.match(bento, /"ficha ficha ficha ficha dir dir"/)
+  assert.match(bento, /"busq busq op op op op"/)
+  assert.match(bento, /"busq busq web web web web"/)
+  assert.match(bento, /\.t-med\s*\{[^}]*flex-direction:\s*row/)
+  const sizes = [...bento.matchAll(/\.tile :global\(\.(?:label|strong)\) \{[^}]*font-size:\s*(\d+)px/g)].map((m) => Number(m[1]))
+  assert.ok(sizes.length >= 1 && sizes.every((size) => size >= 17), `label sizes ${sizes}`)
+})
+
+test("finish review: real proof renders one pull-quote and the proof strip is a three-cell band", async () => {
+  const [proof, strip] = await Promise.all([
+    source("src/components/seo-local/RealProof.astro"),
+    source("src/components/seo-local/ProofStrip.astro"),
+  ])
+
+  assert.match(proof, /<blockquote/)
+  assert.match(proof, /reviews\.reviews\[0\]|reviews\?\.reviews/)
+  assert.doesNotMatch(proof, /import GoogleReviews/)
+  assert.match(proof, /Projects only=\{\["arkady", "adfsevilla"\]\}/)
+  assert.match(strip, /<strong>\+10 años<\/strong>/)
+  assert.match(strip, /de experiencia/)
+  assert.match(strip, /2 webs en Sevilla/)
+  assert.match(strip, /de negocios locales/)
+  assert.match(strip, /border-left/)
+})
+
+test("finish review: ink-blue ground, cycle labels are large, plan buttons align and Pro is lifted on purpose", async () => {
+  const [route, proc, plans, hero] = await Promise.all([
+    source("src/pages/seo-local-sevilla.astro"),
+    source("src/components/seo-local/SeoLocalProcess.astro"),
+    source("src/components/seo-local/SeoLocalPlans.astro"),
+    source("src/components/seo-local/SeoLocalHero.astro"),
+  ])
+
+  assert.match(route, /<style is:global>[\s\S]*?main\s*\{[\s\S]*?rgb\(5 10 24\)/)
+  assert.match(route, /\.band\b/)
+  assert.match(hero, /radial-gradient/)
+  const cycle = [...proc.matchAll(/\.cycle-diagram :global\(\.(?:label|centre)\) \{[^}]*font-size:\s*(\d+)px/g)].map((m) => Number(m[1]))
+  assert.ok(cycle.length === 2 && cycle.every((size) => size >= 19), `cycle sizes ${cycle}`)
+  assert.match(proc, /text-anchor="middle" class="label">Vídeo-informe/)
+  assert.match(plans, /\.plan :global\(a\)[\s\S]*?margin-top:\s*auto|\.plan-cta\s*\{[^}]*margin-top:\s*auto/)
+  assert.match(plans, /\.plan\.recommended\s*\{[^}]*margin-top:\s*-0\.75rem/)
 })

@@ -1,0 +1,155 @@
+---
+import "@fontsource/instrument-serif/400-italic.css"
+import BookingButton from "@/components/BookingButton.astro"
+import { seoLocal } from "@/data/services"
+
+const title = seoLocal.sectionTitles?.faq ?? "Preguntas antes de empezar"
+const accent = "antes de empezar"
+const accentAt = title.indexOf(accent)
+const before = accentAt >= 0 ? title.slice(0, accentAt) : title
+const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
+
+const splitAnswer = (answer: string) => {
+  const match = answer.match(/^[\s\S]*?[.!?](?=\s|$)/)
+  if (!match) return { lead: answer, context: [] as string[] }
+  const rest = answer.slice(match[0].length).trim()
+  return {
+    lead: match[0],
+    context: rest ? rest.split(/\n\s*\n/).map((paragraph) => paragraph.trim()).filter(Boolean) : [],
+  }
+}
+---
+
+<section class="faq" aria-labelledby="faq-title">
+  <div class="faq-intro">
+    <h2 id="faq-title">{before}{accentAt >= 0 && <em>{accent}</em>}{after}</h2>
+    <p>Si tu duda no está aquí, la resolvemos en la llamada.</p>
+    <BookingButton label={seoLocal.cta?.buttonLabel ?? "Reservar una llamada"} />
+  </div>
+
+  <div class="faq-list">
+    {
+      seoLocal.faqs.map((faq) => (
+        <details>
+          <summary>
+            <span class="question">{faq.q}</span>
+            <svg class="indicator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false">
+              <path d="M5 12h14"></path>
+              <path class="vertical" d="M12 5v14"></path>
+            </svg>
+          </summary>
+          <div class="answer">
+            <p><strong>{splitAnswer(faq.a).lead}</strong></p>
+            {splitAnswer(faq.a).context.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        </details>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .faq {
+    display: grid;
+    gap: 2rem;
+    color: rgb(226 232 240);
+  }
+
+  h2 {
+    max-width: 14ch;
+    margin: 0 0 1rem;
+    color: white;
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  h2 em {
+    color: rgb(125 211 252);
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.12em;
+    letter-spacing: -0.01em;
+  }
+
+  .faq-intro p {
+    max-width: 32ch;
+    margin: 0 0 1.5rem;
+    color: rgb(203 213 225);
+    line-height: 1.6;
+  }
+
+  .faq-list {
+    border-top: 1px solid rgb(51 65 85);
+  }
+
+  details {
+    border-bottom: 1px solid rgb(51 65 85);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 0.25rem;
+    color: white;
+    font-weight: 600;
+    line-height: 1.4;
+    cursor: pointer;
+    list-style: none;
+    border-radius: 0.5rem;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:focus-visible {
+    outline: 2px solid rgb(56 189 248);
+    outline-offset: 2px;
+  }
+
+  .indicator {
+    flex: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: rgb(56 189 248);
+  }
+
+  details[open] .vertical {
+    display: none;
+  }
+
+  .answer {
+    max-width: 65ch;
+    padding: 0 0.25rem 1.25rem;
+    color: rgb(203 213 225);
+    line-height: 1.65;
+  }
+
+  .answer p {
+    margin: 0 0 0.75rem;
+  }
+
+  .answer strong {
+    color: white;
+    font-weight: 600;
+  }
+
+  @media (min-width: 1024px) {
+    .faq {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .faq-intro {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+</style>

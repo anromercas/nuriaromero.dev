@@ -6,6 +6,9 @@ import ProofStrip from "@/components/seo-local/ProofStrip.astro"
 import ReviewBento from "@/components/seo-local/ReviewBento.astro"
 import SeoLocalProcess from "@/components/seo-local/SeoLocalProcess.astro"
 import RealProof from "@/components/seo-local/RealProof.astro"
+import SeoLocalFaq from "@/components/seo-local/SeoLocalFaq.astro"
+import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro"
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro"
 import SeoLocalPlans from "@/components/seo-local/SeoLocalPlans.astro"
 import { seoLocal } from "@/data/services"
 import { getGoogleReviews } from "@/lib/google-reviews"
@@ -24,9 +27,11 @@ const reviewsData = await getGoogleReviews()
     </SectionContainer>
   </Fragment>
   <Fragment slot="process">
-    <SectionContainer>
-      <SeoLocalProcess />
-    </SectionContainer>
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalProcess />
+      </SectionContainer>
+    </div>
   </Fragment>
   <Fragment slot="before-pricing">
     <SectionContainer id="trabajo-real">
@@ -34,8 +39,38 @@ const reviewsData = await getGoogleReviews()
     </SectionContainer>
   </Fragment>
   <Fragment slot="pricing">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalPlans />
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="faq">
     <SectionContainer>
-      <SeoLocalPlans />
+      <SeoLocalFaq />
     </SectionContainer>
   </Fragment>
+  <Fragment slot="related">
+    <SectionContainer>
+      <SeoLocalRelated />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="closing">
+    <SeoLocalClosing />
+  </Fragment>
 </ServiceLayout>
+
+<style is:global>
+  /* Route-local ground: keep the ink-blue hue down the whole page. */
+  main {
+    background-color: rgb(5 10 24);
+    background-image: radial-gradient(ellipse 80% 30% at 50% 0%, rgb(56 189 248 / 0.1), transparent 70%);
+  }
+
+  .band {
+    margin-inline: -1rem;
+    padding: 3rem 1rem;
+    border-block: 1px solid rgb(30 41 59);
+    background: rgb(8 16 36 / 0.85);
+  }
+</style>

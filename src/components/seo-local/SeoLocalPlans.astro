@@ -38,7 +38,7 @@ const tiers = seoLocal.pricing.tiers ?? []
             ))}
           </ul>
           {tier.note && <p class="plan-note">{tier.note}</p>}
-          <BookingButton label={tier.ctaLabel} />
+          <div class="plan-cta"><BookingButton label={tier.ctaLabel} /></div>
         </article>
       ))
     }
@@ -80,7 +80,7 @@ const tiers = seoLocal.pricing.tiers ?? []
   .plan-list {
     display: grid;
     gap: 1.25rem;
-    align-items: start;
+    align-items: stretch;
   }
 
   .plan {
@@ -92,6 +92,11 @@ const tiers = seoLocal.pricing.tiers ?? []
     border: 1px solid rgb(51 65 85);
     border-radius: 1.25rem;
     background: rgb(8 15 32);
+  }
+
+  .plan-cta {
+    margin-top: auto;
+    padding-top: 0.5rem;
   }
 
   .plan.recommended {
@@ -174,6 +179,7 @@ const tiers = seoLocal.pricing.tiers ?? []
     }
 
     .plan.recommended {
+      /* Deliberate lift: grows the card upward so both buttons keep the same baseline. */
       margin-top: -0.75rem;
     }
   }

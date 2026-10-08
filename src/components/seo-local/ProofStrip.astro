@@ -10,28 +10,76 @@ const rating = reviews ? reviews.rating.toFixed(1).replace(".", ",") : ""
 ---
 
 <ul class="proof">
-  <li>+10 años de experiencia</li>
+  <li>
+    <strong>+10 años</strong>
+    <span>de experiencia</span>
+  </li>
   {
     reviews ? (
       <li>
-        {rating} en Google · {reviews.userRatingCount}{" "}
-        {reviews.userRatingCount === 1 ? "opinión" : "opiniones"}
+        <strong>{rating} en Google</strong>
+        <span>
+          {reviews.userRatingCount}{" "}
+          {reviews.userRatingCount === 1 ? "opinión" : "opiniones"}
+        </span>
       </li>
     ) : null
   }
-  <li>2 webs de negocios locales en Sevilla</li>
+  <li>
+    <strong>2 webs en Sevilla</strong>
+    <span>de negocios locales</span>
+  </li>
 </ul>
 
 <style>
   .proof {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 2rem;
-    margin: 0 0 1rem;
-    padding: 1rem 0 0;
+    display: grid;
+    margin: 1rem 0;
+    padding: 0;
     list-style: none;
+    border-block: 1px solid rgb(51 65 85);
+  }
+
+  li {
+    display: grid;
+    gap: 0.15rem;
+    padding: 1rem 0;
+  }
+
+  li + li {
     border-top: 1px solid rgb(51 65 85);
+  }
+
+  strong {
+    color: white;
+    font-size: 1.375rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  span {
     color: rgb(203 213 225);
     font-size: 0.9rem;
+  }
+
+  @media (min-width: 640px) {
+    .proof {
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+    }
+
+    li {
+      padding: 1.1rem 1.5rem;
+    }
+
+    li:first-child {
+      padding-left: 0;
+    }
+
+    li + li {
+      border-top: 0;
+      border-left: 1px solid rgb(51 65 85);
+    }
   }
 </style>
