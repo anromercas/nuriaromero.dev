@@ -322,3 +322,16 @@ test("T7: every section has a small keyword heading above its display title, one
   assert.match(data, /¿Eres una agencia de SEO local\?/)
   assert.match(data, /nadie puede prometer la primera posición/)
 })
+
+test("meta description is human, keeps both prices and fits in a search snippet", async () => {
+  const data = await seoLocalData()
+  const match = data.match(/seo:\s*\{[\s\S]*?description:\s*\n?\s*"([^"]+)"/)
+
+  assert.ok(match, "seoLocal.seo.description not found")
+  const description = match[1]
+  assert.ok(description.length <= 160, `description is ${description.length} chars`)
+  assert.match(description, /^Me dedico a posicionar negocios en Google/)
+  assert.match(description, /SEO local en Sevilla/)
+  assert.match(description, /300 €\/mes \+ IVA/)
+  assert.match(description, /500 €\/mes \+ IVA/)
+})
