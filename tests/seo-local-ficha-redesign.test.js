@@ -56,3 +56,25 @@ test("T2: hero, listing mock and proof strip honour the proof and label rules", 
   assert.match(route, /slot="hero"/)
 })
 
+
+test("T3: review bento is asymmetric, has six drawn tiles and one illustrative label", async () => {
+  const [bento, route] = await Promise.all([
+    source("src/components/seo-local/ReviewBento.astro"),
+    source("src/pages/seo-local-sevilla.astro"),
+  ])
+
+  assert.match(bento, /Qué se revisa para que/)
+  assert.match(bento, /instrument-serif\/400-italic\.css/)
+  assert.match(bento, /te encuentren/)
+  assert.match(bento, /grid-template-areas/)
+  assert.match(bento, /@media \(max-width:\s*767px\)/)
+  assert.equal((bento.match(/<h3/g) ?? []).length, 6)
+  assert.ok((bento.match(/<svg/g) ?? []).length >= 6)
+  assert.equal((bento.match(/Ejemplo ilustrativo/g) ?? []).length, 1)
+  assert.match(bento, /fontanero cerca de mí/)
+  assert.match(bento, /llamadas/)
+  assert.match(bento, /clics/)
+  assert.match(bento, /rutas/)
+  assert.doesNotMatch(bento, /pacientes|tratamientos|garantiz/i)
+  assert.match(route, /<ReviewBento \/>/)
+})

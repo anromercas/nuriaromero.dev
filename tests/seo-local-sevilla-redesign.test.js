@@ -28,7 +28,7 @@ test("seo local composition is diagnostic-led and books a call", async () => {
   const seoLocal = services.slice(services.indexOf("export const seoLocal"), services.indexOf("export const capilarLocal"))
 
   assert.match(route, /<ServiceLayout page=\{seoLocal\}>/)
-  assert.match(route, /<VisibilityAudit \/>/)
+  assert.match(route, /<ReviewBento \/>/)
   assert.match(audit, /<section[\s\S]*?<h2/)
   assert.match(audit, /aria-labelledby=/)
   assert.match(audit, /<ul/)
