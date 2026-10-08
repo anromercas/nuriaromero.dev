@@ -35,6 +35,27 @@ export interface GoogleReviewsData {
   placeId: string
 }
 
+/** Fecha relativa en español a partir de publishTime (ISO); "" si no es válida. */
+export function formatRelativeTimeEs(publishTime?: string, now: Date = new Date()): string {
+  if (!publishTime) return ""
+  const published = new Date(publishTime).getTime()
+  if (Number.isNaN(published)) return ""
+  const seconds = Math.round((published - now.getTime()) / 1000)
+  const units: [Intl.RelativeTimeFormatUnit, number][] = [
+    ["year", 31536000],
+    ["month", 2592000],
+    ["week", 604800],
+    ["day", 86400],
+    ["hour", 3600],
+    ["minute", 60],
+  ]
+  const formatter = new Intl.RelativeTimeFormat("es", { numeric: "auto" })
+  for (const [unit, size] of units) {
+    if (Math.abs(seconds) >= size) return formatter.format(Math.trunc(seconds / size), unit)
+  }
+  return formatter.format(0, "second")
+}
+
 const PLACE_DETAILS_BASE_URL = "https://places.googleapis.com/v1/places"
 
 export async function getGoogleReviews(): Promise<GoogleReviewsData | null> {
@@ -79,13 +100,14 @@ export async function getGoogleReviews(): Promise<GoogleReviewsData | null> {
         text?: { text?: string }
         originalText?: { text?: string }
         relativePublishTimeDescription?: string
+        publishTime?: string
       }) => ({
         author: review.authorAttribution?.displayName ?? "Cliente de Google",
         authorPhotoUrl: review.authorAttribution?.photoUri,
         authorProfileUrl: review.authorAttribution?.uri,
         rating: typeof review.rating === "number" ? review.rating : 0,
         text: review.originalText?.text ?? review.text?.text ?? "",
-        relativeTime: review.relativePublishTimeDescription ?? "",
+        relativeTime: formatRelativeTimeEs(review.publishTime) || (review.relativePublishTimeDescription ?? ""),
       }),
     )
 

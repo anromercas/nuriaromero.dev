@@ -159,3 +159,12 @@ test("T6: plans use the dark language, mark Local Pro as recommended and leave o
   assert.match(layout, /<slot name="pricing">[\s\S]*?<PricingCard/)
   assert.match(route, /slot="pricing"/)
 })
+
+test("review fix round 1: padded cycle viewBox, sr-only cycle list, stretched photo column", async () => {
+  const proc = await source("src/components/seo-local/SeoLocalProcess.astro")
+
+  assert.match(proc, /viewBox="-30 0 420 330"/)
+  assert.match(proc, /\.cycle-list \{[^}]*position:\s*absolute[^}]*clip:\s*rect\(0,\s*0,\s*0,\s*0\)/)
+  assert.match(proc, /\.person \{[^}]*display:\s*flex/)
+  assert.match(proc, /object-fit:\s*cover/)
+})

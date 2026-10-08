@@ -15,3 +15,12 @@ test('prefers the review text in its original language', async () => {
 
   assert.ok(source.includes('text: review.originalText?.text ?? review.text?.text ?? ""'))
 })
+
+test('shows review dates in Spanish computed from publishTime, falling back to the API string', async () => {
+  const source = await readFile(new URL('../src/lib/google-reviews.ts', import.meta.url), 'utf8')
+
+  assert.match(source, /"X-Goog-FieldMask": "reviews,rating,userRatingCount"/)
+  assert.match(source, /publishTime\?:\s*string/)
+  assert.match(source, /new Intl\.RelativeTimeFormat\("es"/)
+  assert.match(source, /relativeTime:\s*formatRelativeTimeEs\(review\.publishTime\)\s*\|\|\s*\(review\.relativePublishTimeDescription \?\? ""\)/)
+})
