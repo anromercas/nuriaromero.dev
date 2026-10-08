@@ -22,8 +22,9 @@ const splitAnswer = (answer: string) => {
 
 <section class="faq" aria-labelledby="faq-title">
   <div class="faq-intro">
-    <h2 id="faq-title">{before}{accentAt >= 0 && <em>{accent}</em>}{after}</h2>
-    <p>Si tu duda no está aquí, la resolvemos en la llamada.</p>
+    <h2 id="faq-title" class="kw">Preguntas frecuentes sobre SEO local en Sevilla</h2>
+    <p class="display">{before}{accentAt >= 0 && <em>{accent}</em>}{after}</p>
+    <p class="lede">Si tu duda no está aquí, la resolvemos en la llamada.</p>
     <BookingButton label={seoLocal.cta?.buttonLabel ?? "Reservar una llamada"} />
   </div>
 
@@ -49,13 +50,21 @@ const splitAnswer = (answer: string) => {
 </section>
 
 <style>
+  .kw {
+    margin: 0 0 0.6rem;
+    color: rgb(203 213 225);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
   .faq {
     display: grid;
     gap: 2rem;
     color: rgb(226 232 240);
   }
 
-  h2 {
+  .display {
     max-width: 14ch;
     margin: 0 0 1rem;
     color: white;
@@ -66,7 +75,7 @@ const splitAnswer = (answer: string) => {
     text-wrap: balance;
   }
 
-  h2 em {
+  .display em {
     color: rgb(125 211 252);
     font-family: "Instrument Serif", Georgia, serif;
     font-style: italic;
@@ -75,7 +84,7 @@ const splitAnswer = (answer: string) => {
     letter-spacing: -0.01em;
   }
 
-  .faq-intro p {
+  .faq-intro .lede {
     max-width: 32ch;
     margin: 0 0 1.5rem;
     color: rgb(203 213 225);

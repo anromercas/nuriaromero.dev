@@ -161,7 +161,7 @@ Near-black navy grounds, slate text steps, one cool signal hue and one warm rese
 - **Label** (0.78-0.9rem, `text-muted`): captions, meta lines, "Ejemplo ilustrativo". Sentence case, no tracking, no uppercase.
 
 ### Named Rules
-**The No Kicker Rule.** Headings stand alone: no eyebrow, overline or numbering above or beside them.
+**The Keyword Heading Rule.** Every section opens with a small sentence-case keyword heading (Onest 600, about 1rem, colour slate-300, no uppercase, no letter-spacing, no icon) set directly above the display title. The keyword heading is the real h2 (h1 in the hero) and carries the aria-labelledby id; the display title, with its single serif-italic accent phrase, is a paragraph. Decorative tracked uppercase eyebrows, overlines and 01/02 numbering stay banned.
 
 ## Layout
 
@@ -229,7 +229,7 @@ One authored scroll-driven moment: the hero listing fills in (stars, photos, che
 - **Do** vary spans and sizes in groups of peers; end sections with the single next action (booking call).
 
 ### Don't:
-- **Don't** add eyebrows, kickers, step numbers or numbered lists above or beside headings.
+- **Don't** add decorative tracked uppercase eyebrows, overlines, step numbers or numbered lists. A small sentence-case keyword heading above the display title is required, not a kicker.
 - **Don't** use gradient text, glassmorphism, or drop shadows on surfaces.
 - **Don't** build grids of equal icon-plus-title-plus-text cards, or nest a card inside a card.
 - **Don't** invent metrics, testimonials, client logos, rankings or guarantees of rankings, traffic or leads.

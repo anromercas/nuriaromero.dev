@@ -23,8 +23,8 @@ test("T1: serif accent font is installed and the layout exposes optional slots w
   assert.match(layout, /<slot name="hero">[\s\S]*?<ServiceHero/)
   assert.match(layout, /<slot name="benefits">[\s\S]*?<BenefitsGrid/)
   assert.match(layout, /<slot name="process">[\s\S]*?<ProcessSteps/)
-  assert.match(types, /h1Accent\?:\s*string/)
-  assert.match(data, /h1Accent:\s*"cuando importa"/)
+  assert.match(types, /titleAccent\?:\s*string/)
+  assert.match(data, /titleAccent:\s*"cuando importa"/)
   assert.ok(data.includes("La pregunta es si te encuentran cuando importa."))
 })
 
@@ -37,7 +37,7 @@ test("T2: hero, listing mock and proof strip honour the proof and label rules", 
   ])
 
   assert.match(hero, /instrument-serif\/400-italic\.css/)
-  assert.match(hero, /h1Accent/)
+  assert.match(hero, /titleAccent/)
   assert.match(hero, /<BookingButton/)
   assert.match(hero, /Ver los planes/)
   assert.match(hero, /href="#precios"/)
@@ -285,4 +285,40 @@ test("listing pending state keeps text legible (>= 4.5:1 needs at least 0.7 opac
   const mock = await source("src/components/seo-local/ListingMock.astro")
 
   assert.match(mock, /@keyframes check-in\s*\{\s*from\s*\{\s*opacity:\s*0\.(?:7|8|9)/)
+})
+
+test("T7: every section has a small keyword heading above its display title, one h1 only", async () => {
+  const read = (name) => source(`src/components/seo-local/${name}.astro`)
+  const [hero, bento, proc, proof, plans, faq, closing, data] = await Promise.all([
+    read("SeoLocalHero"), read("ReviewBento"), read("SeoLocalProcess"), read("RealProof"),
+    read("SeoLocalPlans"), read("SeoLocalFaq"), read("SeoLocalClosing"), seoLocalData(),
+  ])
+  const keyword = (text, id, label) => {
+    const kw = text.indexOf(`<h2 id="${id}" class="kw">${label}</h2>`)
+    assert.ok(kw >= 0, `${id} keyword heading`)
+    assert.ok(text.indexOf('class="display"') > kw, `${id} display title follows the keyword heading`)
+  }
+
+  keyword(bento, "revision-title", "Posicionamiento en Google Maps para negocios locales")
+  keyword(proc, "proceso-title", "Consultor de SEO local en Sevilla")
+  keyword(proof, "prueba-title", "Webs de negocios locales en Sevilla")
+  keyword(plans, "planes-title", "Cuánto cuesta el SEO local en Sevilla")
+  keyword(faq, "faq-title", "Preguntas frecuentes sobre SEO local en Sevilla")
+  keyword(closing, "cierre-title", "Reserva una llamada sobre SEO local en Sevilla")
+  assert.match(hero, /<h1 class="kw">\{h1\}<\/h1>\s*<p class="display">/)
+  assert.match(data, /h1:\s*"SEO local Sevilla"/)
+  assert.match(data, /title:\s*"Tu negocio está en Sevilla\. La pregunta es si te encuentran cuando importa\."/)
+  assert.match(data, /title:\s*"SEO local Sevilla \| Planes desde 300 €\/mes \+ IVA"/)
+  for (const heading of ["Ficha de Google Business Profile", "Datos coherentes en directorios locales", "Búsquedas locales en Sevilla", "Reseñas de Google", "Web para negocios locales", "Medición de llamadas, clics y rutas"]) {
+    assert.ok(bento.includes(`<h3>${heading}</h3>`), heading)
+  }
+  for (const component of [bento, proc, proof, plans, faq, closing]) {
+    assert.equal((component.match(/<h1/g) ?? []).length, 0)
+    assert.doesNotMatch(component, /<h[1-3][^>]*>[^<]*agencia/i)
+    assert.match(component, /\.kw \{[^}]*font-weight:\s*600[^}]*\}/)
+    assert.doesNotMatch(component, /\.kw \{[^}]*(?:uppercase|letter-spacing)/)
+  }
+  assert.match(data, /¿Cómo puede aparecer mi negocio en Google Maps\?/)
+  assert.match(data, /¿Eres una agencia de SEO local\?/)
+  assert.match(data, /nadie puede prometer la primera posición/)
 })

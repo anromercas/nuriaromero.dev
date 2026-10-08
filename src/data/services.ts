@@ -456,13 +456,14 @@ export const seoLocal: ServicePageData = {
   slug: "/seo-local-sevilla/",
   breadcrumbName: "SEO local en Sevilla",
   seo: {
-    title: "SEO local en Sevilla | Planes desde 300 €/mes + IVA",
+    title: "SEO local Sevilla | Planes desde 300 €/mes + IVA",
     description:
-      "SEO local en Sevilla para negocios donde cada cliente cuenta: ficha de Google desde 300 €/mes + IVA o ficha y web desde 500 €/mes + IVA.",
+      "SEO local Sevilla para negocios donde cada cliente cuenta: ficha de Google desde 300 €/mes + IVA o ficha y web desde 500 €/mes + IVA.",
   },
   hero: {
-    h1: "Tu negocio está en Sevilla. La pregunta es si te encuentran cuando importa.",
-    h1Accent: "cuando importa",
+    h1: "SEO local Sevilla",
+    title: "Tu negocio está en Sevilla. La pregunta es si te encuentran cuando importa.",
+    titleAccent: "cuando importa",
     subtitle:
       "Reviso la ficha de Google y, si hace falta, la web para ordenar la información que ve quien busca tus servicios cerca. Sin promesas de posiciones: con trabajo claro y seguimiento.",
     primaryCtaLabel: "Reservar una llamada",
@@ -551,6 +552,10 @@ export const seoLocal: ServicePageData = {
       a: "Está pensado para negocios de Sevilla donde cada cliente cuenta y la información local debe ser clara. En la llamada vemos si el alcance encaja con tu situación.",
     },
     {
+      q: "¿Cómo puede aparecer mi negocio en Google Maps?",
+      a: "Con una ficha de Google Business Profile completa y coherente: categoría correcta, servicios y horarios al día, reseñas auténticas y datos que coinciden en directorios y en la web. También influye la distancia entre quien busca y tu negocio, así que nadie puede prometer la primera posición.",
+    },
+    {
       q: "¿Qué diferencia hay entre Local y Local Pro?",
       a: "Local se centra en la ficha de Google y su mantenimiento. Local Pro incorpora además el trabajo necesario en la web para que ficha y web funcionen como un mismo sistema.",
     },
@@ -573,6 +578,10 @@ export const seoLocal: ServicePageData = {
     {
       q: "¿Qué papel tienen los sistemas de IA?",
       a: "Una información clara y estructurada puede ayudar a que buscadores y sistemas de IA entiendan el negocio. No implica una recomendación, cita ni aparición garantizada.",
+    },
+    {
+      q: "¿Eres una agencia de SEO local?",
+      a: "No. Soy una profesional independiente, desarrolladora web freelance en Sevilla. Hablas directamente con la persona que hace el trabajo.",
     },
   ],
   cta: {

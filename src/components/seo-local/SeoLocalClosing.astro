@@ -15,8 +15,9 @@ const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
 <section class="closing" aria-labelledby="cierre-title">
   <div class="closing-inner">
     <div class="closing-copy">
-      <h2 id="cierre-title">{before}{accentAt >= 0 && <em>{accent}</em>}{after}</h2>
-      <p>{cta?.text}</p>
+      <h2 id="cierre-title" class="kw">Reserva una llamada sobre SEO local en Sevilla</h2>
+      <p class="display">{before}{accentAt >= 0 && <em>{accent}</em>}{after}</p>
+      <p class="lede">{cta?.text}</p>
       <BookingButton label={cta?.buttonLabel ?? "Reservar una llamada"} />
       <p class="meta">30 minutos · Sin compromiso · Directamente conmigo</p>
     </div>
@@ -27,6 +28,14 @@ const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
 </section>
 
 <style>
+  .kw {
+    margin: 0 0 0.6rem;
+    color: rgb(203 213 225);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
   .closing {
     position: relative;
     isolation: isolate;
@@ -54,7 +63,7 @@ const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
     margin-inline: auto;
   }
 
-  h2 {
+  .display {
     max-width: 16ch;
     margin: 0 0 1.25rem;
     color: white;
@@ -65,7 +74,7 @@ const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
     text-wrap: balance;
   }
 
-  h2 em {
+  .display em {
     color: rgb(125 211 252);
     font-family: "Instrument Serif", Georgia, serif;
     font-style: italic;
@@ -74,7 +83,7 @@ const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
     letter-spacing: -0.01em;
   }
 
-  .closing-copy > p:not(.meta) {
+  .closing-copy .lede {
     max-width: 48ch;
     margin: 0 0 1.75rem;
     color: rgb(203 213 225);

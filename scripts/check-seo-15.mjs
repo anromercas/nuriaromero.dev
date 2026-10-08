@@ -6,7 +6,8 @@ const text = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ")
 const legacyOrUnsafe = /299\s*€|199\s*€|349\s*€|proyecto inicial|mínimo de tres meses|pacientes|tratamientos/i
 const positivePromise = /(?:garantizamos|garantiza(?:mos)? más|primeras posiciones|más (?:tráfico|leads|llamadas|contactos)|te recomienda(?:rá)? (?:Google|ChatGPT|un asistente))/i
 
-assert.match(html, /<h1\b[^>]*>/i)
+assert.equal((html.match(/<h1\b/gi) ?? []).length, 1)
+assert.match(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "", /SEO local Sevilla/)
 assert.match(text, /300 €\/mes \+ IVA/)
 assert.match(text, /500 €\/mes \+ IVA/)
 assert.match(text, /Recomendado/)

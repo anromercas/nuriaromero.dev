@@ -107,7 +107,7 @@
     "rules": [
       { "name": "The Reserved Yellow Rule", "body": "Yellow means recommended or a real star rating. It never decorates, highlights copy, or appears as a second accent on this world.", "section": "colors" },
       { "name": "The One Serif Phrase Rule", "body": "Exactly one phrase per heading is set in Instrument Serif italic in sky-accent. Never gradient text, never a second accent phrase, never body copy.", "section": "colors" },
-      { "name": "The No Kicker Rule", "body": "Headings stand alone: no eyebrow, overline or numbering above or beside them.", "section": "typography" },
+      { "name": "The Keyword Heading Rule", "body": "Every section opens with a small sentence-case keyword heading (Onest 600, about 1rem, colour slate-300, no uppercase, no letter-spacing, no icon) set directly above the display title. The keyword heading is the real h2 (h1 in the hero) and carries the aria-labelledby id; the display title, with its single serif-italic accent phrase, is a paragraph. Decorative tracked uppercase eyebrows, overlines and 01/02 numbering stay banned.", "section": "typography" },
       { "name": "The Asymmetry Rule", "body": "Groups of peers use unequal spans, never a grid of identical cards.", "section": "layout" },
       { "name": "The Hairline Depth Rule", "body": "A surface is separated by a tone step and a 1px border, never a shadow. The recommended plan lifts by position and a yellow border, not by shadow.", "section": "elevation" }
     ],
@@ -120,7 +120,7 @@
       "Do vary spans and sizes in groups of peers; end sections with the single next action (booking call)."
     ],
     "donts": [
-      "Don't add eyebrows, kickers, step numbers or numbered lists above or beside headings.",
+      "Don't add decorative tracked uppercase eyebrows, overlines, step numbers or numbered lists. A small sentence-case keyword heading above the display title is required, not a kicker.",
       "Don't use gradient text, glassmorphism, or drop shadows on surfaces.",
       "Don't build grids of equal icon-plus-title-plus-text cards, or nest a card inside a card.",
       "Don't invent metrics, testimonials, client logos, rankings or guarantees of rankings, traffic or leads.",

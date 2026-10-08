@@ -4,19 +4,20 @@ import BookingButton from "@/components/BookingButton.astro"
 import ListingMock from "@/components/seo-local/ListingMock.astro"
 import { seoLocal } from "@/data/services"
 
-const { h1, h1Accent, subtitle, primaryCtaLabel } = seoLocal.hero
+const { h1, title = h1, titleAccent, subtitle, primaryCtaLabel } = seoLocal.hero
 
-const accentAt = h1Accent ? h1.indexOf(h1Accent) : -1
-const before = accentAt >= 0 && h1Accent ? h1.slice(0, accentAt) : h1
-const accent = accentAt >= 0 && h1Accent ? h1Accent : ""
-const after = accentAt >= 0 && h1Accent ? h1.slice(accentAt + h1Accent.length) : ""
+const accentAt = titleAccent ? title.indexOf(titleAccent) : -1
+const before = accentAt >= 0 && titleAccent ? title.slice(0, accentAt) : title
+const accent = accentAt >= 0 && titleAccent ? titleAccent : ""
+const after = accentAt >= 0 && titleAccent ? title.slice(accentAt + titleAccent.length) : ""
 ---
 
 <div class="hero">
   <div class="hero-copy">
-    <h1>
+    <h1 class="kw">{h1}</h1>
+    <p class="display">
       {before}{accent && <em class="accent">{accent}</em>}{after}
-    </h1>
+    </p>
     <p class="hero-subtitle">{subtitle}</p>
     <div class="hero-actions">
       <BookingButton label={primaryCtaLabel} />
@@ -36,7 +37,15 @@ const after = accentAt >= 0 && h1Accent ? h1.slice(accentAt + h1Accent.length) :
     align-items: center;
   }
 
-  h1 {
+  .kw {
+    margin: 0 0 0.6rem;
+    color: rgb(203 213 225);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .display {
     margin: 0 0 1.5rem;
     max-width: 16ch;
     color: white;

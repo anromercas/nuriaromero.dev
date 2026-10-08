@@ -7,8 +7,10 @@ export interface ServicePageData {
   }
   hero: {
     h1: string
-    // Fragmento del h1 que una portada a medida puede resaltar (subcadena exacta).
-    h1Accent?: string
+    // Titular grande editorial opcional (la portada a medida lo pinta como <p>,
+    // con h1 como encabezado pequeño con la palabra clave) y fragmento a resaltar.
+    title?: string
+    titleAccent?: string
     subtitle: string
     primaryCtaLabel?: string
     secondaryCta?: {

@@ -6,7 +6,8 @@ import { seoLocal } from "@/data/services"
 ---
 
 <section class="process" aria-labelledby="proceso-title">
-  <h2 id="proceso-title">Hablas con <em>quien hace el trabajo</em></h2>
+  <h2 id="proceso-title" class="kw">Consultor de SEO local en Sevilla</h2>
+  <p class="display">Hablas con <em>quien hace el trabajo</em></p>
 
   <div class="process-grid">
     <figure class="person">
@@ -74,11 +75,19 @@ import { seoLocal } from "@/data/services"
 </section>
 
 <style>
+  .kw {
+    margin: 0 0 0.6rem;
+    color: rgb(203 213 225);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
   .process {
     color: rgb(226 232 240);
   }
 
-  h2 {
+  .display {
     max-width: 20ch;
     margin: 0 0 2.25rem;
     color: white;
@@ -89,7 +98,7 @@ import { seoLocal } from "@/data/services"
     text-wrap: balance;
   }
 
-  h2 em {
+  .display em {
     color: rgb(125 211 252);
     font-family: "Instrument Serif", Georgia, serif;
     font-style: italic;
