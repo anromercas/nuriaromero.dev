@@ -41,4 +41,4 @@ Final visual round (2026-10-08, parent): found and fixed two real regressions th
 
 ## T7 (2026-10-08): capa SEO de encabezados
 Pedido de la usuaria: H1/H2/H3 con palabra clave (CSV Keyword Planner en docs/seo-audit/keywords/seo-local-sevilla/) como encabezado pequeño ENCIMA de cada título grande; el título grande sigue siendo mensaje para el usuario (patrón de la home y de Palo Seco). H1 = "SEO local Sevilla". Revoca la regla "sin etiqueta sobre el título" de DESIGN.md solo para esta capa (sin mayúsculas ni tracking: no es eyebrow decorativo).
-- [ ] T7 Capa SEO de encabezados + title/meta + FAQ con keywords + matriz de intenciones + tests + DESIGN.md
+- [x] T7 Capa SEO de encabezados + title/meta + FAQ con keywords + matriz de intenciones + tests + DESIGN.md
