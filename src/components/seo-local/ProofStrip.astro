@@ -14,7 +14,8 @@ const rating = reviews ? reviews.rating.toFixed(1).replace(".", ",") : ""
   {
     reviews ? (
       <li>
-        {rating} en Google · {reviews.userRatingCount} opiniones
+        {rating} en Google · {reviews.userRatingCount}{" "}
+        {reviews.userRatingCount === 1 ? "opinión" : "opiniones"}
       </li>
     ) : null
   }

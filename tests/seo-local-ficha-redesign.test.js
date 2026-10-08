@@ -78,3 +78,16 @@ test("T3: review bento is asymmetric, has six drawn tiles and one illustrative l
   assert.doesNotMatch(bento, /pacientes|tratamientos|garantiz/i)
   assert.match(route, /<ReviewBento \/>/)
 })
+
+test("batch A review fixes: singular opinion, caption attached to grid, balanced ficha tile, one matched state per directory row", async () => {
+  const [proof, bento] = await Promise.all([
+    source("src/components/seo-local/ProofStrip.astro"),
+    source("src/components/seo-local/ReviewBento.astro"),
+  ])
+
+  assert.match(proof, /userRatingCount === 1 \? "opinión" : "opiniones"/)
+  assert.ok(bento.indexOf("Ejemplo ilustrativo") > bento.indexOf('class="bento"'), "caption must follow the grid")
+  assert.match(bento, /class="bento-caption"/)
+  assert.match(bento, /<svg viewBox="0 40 360 150"/)
+  assert.doesNotMatch(bento, /<circle cx="28" cy="(24|65|106)" r="7" class="soft">/)
+})

@@ -4,11 +4,10 @@ import "@fontsource/instrument-serif/400-italic.css"
 
 <div class="bento-wrap">
   <h2>Qué se revisa para que <em>te encuentren</em></h2>
-  <p class="bento-note">Ejemplo ilustrativo</p>
 
   <div class="bento">
     <article class="tile t-ficha">
-      <svg viewBox="0 0 360 200" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <svg viewBox="0 40 360 150" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         <path d="M44 120c-12-12-24-22-24-36a24 24 0 0 1 48 0c0 14-12 24-24 36z" class="signal"></path>
         <circle cx="44" cy="84" r="8" class="signal"></circle>
         <rect x="92" y="52" width="150" height="14" rx="7"></rect>
@@ -30,18 +29,15 @@ import "@fontsource/instrument-serif/400-italic.css"
     <article class="tile t-dir">
       <svg viewBox="0 0 320 130" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         <rect x="8" y="8" width="304" height="32" rx="8"></rect>
-        <circle cx="28" cy="24" r="7" class="soft"></circle>
-        <text x="46" y="28" class="label">Tu negocio · Misma dirección</text>
+        <text x="24" y="28" class="label">Tu negocio · Misma dirección</text>
         <circle cx="290" cy="24" r="9" class="signal"></circle>
         <path d="M285 24l3.5 3.5 6-6.5" class="signal"></path>
         <rect x="8" y="49" width="304" height="32" rx="8"></rect>
-        <circle cx="28" cy="65" r="7" class="soft"></circle>
-        <text x="46" y="69" class="label">Tu negocio · Misma dirección</text>
+        <text x="24" y="69" class="label">Tu negocio · Misma dirección</text>
         <circle cx="290" cy="65" r="9" class="signal"></circle>
         <path d="M285 65l3.5 3.5 6-6.5" class="signal"></path>
         <rect x="8" y="90" width="304" height="32" rx="8"></rect>
-        <circle cx="28" cy="106" r="7" class="soft"></circle>
-        <text x="46" y="110" class="label">Tu negocio · Misma dirección</text>
+        <text x="24" y="110" class="label">Tu negocio · Misma dirección</text>
         <circle cx="290" cy="106" r="9" class="signal"></circle>
         <path d="M285 106l3.5 3.5 6-6.5" class="signal"></path>
       </svg>
@@ -116,6 +112,7 @@ import "@fontsource/instrument-serif/400-italic.css"
       <p>Qué acciones se pueden observar, como llamadas, clics y rutas, para decidir el siguiente paso.</p>
     </article>
   </div>
+  <p class="bento-caption">Ejemplo ilustrativo</p>
 </div>
 
 <style>
@@ -143,10 +140,24 @@ import "@fontsource/instrument-serif/400-italic.css"
     letter-spacing: -0.01em;
   }
 
-  .bento-note {
-    margin: 0.9rem 0 1.75rem;
+  .bento-wrap h2 {
+    margin-bottom: 1.75rem;
+  }
+
+  .bento-caption {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0.75rem 0 0;
     color: rgb(148 163 184);
     font-size: 0.8rem;
+  }
+
+  .bento-caption::before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgb(51 65 85);
   }
 
   .bento {
@@ -214,12 +225,11 @@ import "@fontsource/instrument-serif/400-italic.css"
       grid-template-columns: repeat(6, minmax(0, 1fr));
       grid-template-areas:
         "ficha ficha ficha dir dir dir"
-        "ficha ficha ficha busq busq busq"
-        "op op web web web web"
+        "busq busq op op web web"
         "med med med med med med";
     }
 
-    .t-ficha { grid-area: ficha; justify-content: center; }
+    .t-ficha { grid-area: ficha; }
     .t-dir { grid-area: dir; }
     .t-busq { grid-area: busq; }
     .t-op { grid-area: op; }
