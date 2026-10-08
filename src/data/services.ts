@@ -454,6 +454,7 @@ export const inteligenciaArtificial: ServicePageData = {
 
 export const seoLocal: ServicePageData = {
   slug: "/seo-local-sevilla/",
+  offersFromTiers: true,
   breadcrumbName: "SEO local en Sevilla",
   seo: {
     title: "SEO local Sevilla | Planes desde 300 €/mes + IVA",

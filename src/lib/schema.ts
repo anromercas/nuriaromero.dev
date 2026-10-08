@@ -113,20 +113,40 @@ export function serviceSchema(service: {
   // Precio de salida tal cual se muestra en la página (p. ej. "399 €"),
   // definido en src/data/services.ts o src/data/niches.ts.
   price: string
+  // Opt-in: un Offer mensual por plan. Si no se pasa, el JSON-LD queda como siempre.
+  tiers?: { name: string; from: string }[]
+  id?: string
 }) {
   const priceValue = service.price.replace(/[^\d,.]/g, "").replace(",", ".")
   const serviceUrl = new URL(service.url, SITE.url).href
 
+  const parsePrice = (text: string) => text.replace(/[^\d,.]/g, "").replace(",", ".")
+  const tierOffers = service.tiers?.map((tier) => ({
+    "@type": "Offer",
+    name: tier.name,
+    url: serviceUrl,
+    price: parsePrice(tier.from),
+    priceCurrency: "EUR",
+    priceSpecification: {
+      "@type": "UnitPriceSpecification",
+      price: Number(parsePrice(tier.from)),
+      priceCurrency: "EUR",
+      unitText: "MON",
+      valueAddedTaxIncluded: false,
+    },
+  }))
+
   return {
     "@context": "https://schema.org",
     "@type": "Service",
+    ...(tierOffers && service.id ? { "@id": `${serviceUrl}#${service.id}` } : {}),
     name: service.name,
     description: service.description,
     url: serviceUrl,
     serviceType: service.serviceType,
     provider: { "@id": BUSINESS_ID },
     areaServed: SERVICE_AREA,
-    offers: {
+    offers: tierOffers ?? {
       "@type": "Offer",
       url: serviceUrl,
       price: priceValue,

@@ -355,3 +355,46 @@ test("plans note and proof line state facts without legalistic disclaimers", asy
   assert.match(proof, /Dos webs reales de negocios de Sevilla, hechas por mí\. Puedes visitarlas y juzgar el trabajo por ti\./)
   assert.doesNotMatch(proof, /No publico cifras/)
 })
+
+test("T8: llms.txt carries the real offer, schema opts in to two monthly offers, NAP is published from the single source", async () => {
+  const [llms, schema, layout, types, data, site, nap, route, check] = await Promise.all([
+    source("public/llms.txt"),
+    source("src/lib/schema.ts"),
+    source("src/layouts/ServiceLayout.astro"),
+    source("src/data/types.ts"),
+    seoLocalData(),
+    source("src/data/site.ts"),
+    source("src/components/seo-local/SeoLocalNap.astro"),
+    source("src/pages/seo-local-sevilla.astro"),
+    source("scripts/check-seo-15.mjs"),
+  ])
+
+  const entry = llms.split("\n").find((line) => line.includes("/seo-local-sevilla/")) ?? ""
+  assert.ok(entry.includes("300 €/mes + IVA") && entry.includes("500 €/mes + IVA"))
+  assert.doesNotMatch(entry, /299|199|Proyecto inicial/i)
+  assert.doesNotMatch(entry, /garantiz/i)
+
+  assert.match(types, /offersFromTiers\?:\s*boolean/)
+  assert.match(data, /offersFromTiers:\s*true/)
+  assert.match(layout, /offersFromTiers/)
+  assert.match(schema, /UnitPriceSpecification/)
+  assert.match(schema, /unitText:\s*"MON"/)
+  assert.match(schema, /valueAddedTaxIncluded:\s*false/)
+  assert.match(schema, /\$\{serviceUrl\}#\$\{service\.id\}/)
+  assert.match(layout, /id:\s*"service"/)
+  assert.match(check, /unitText/)
+  assert.match(check, /valueAddedTaxIncluded/)
+
+  assert.ok(site.includes('full: "Camino Andalucía, 426, 41309 La Rinconada, Sevilla"'))
+  assert.match(nap, /<h2 id="nap-title" class="kw">SEO local desde La Rinconada, Sevilla<\/h2>/)
+  assert.match(nap, /aria-labelledby="nap-title"/)
+  assert.match(nap, /SITE\.address\.full/)
+  assert.match(nap, /href=\{`tel:\+\$\{SITE\.whatsapp\}`\}/)
+  assert.match(nap, /SITE\.phone/)
+  assert.match(nap, /SITE\.name/)
+  assert.match(nap, /href=\{SITE\.mapsUrl\}[\s\S]*?target="_blank"[\s\S]*?rel="noopener noreferrer"/)
+  assert.match(nap, /Ver en Google Maps/)
+  assert.match(nap, /:focus-visible/)
+  assert.doesNotMatch(nap, /<iframe|<h1|uppercase/)
+  assert.match(route, /<SeoLocalNap/)
+})

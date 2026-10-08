@@ -26,6 +26,9 @@ export interface ServicePageData {
     title: string
     text: string
   }[]
+  // Opt-in: emite una Offer por plan (UnitPriceSpecification mensual) en el JSON-LD
+  // del Service. Sin esta marca, el JSON-LD sigue con una única Offer.
+  offersFromTiers?: boolean
   pricing: {
     from: string
     includes?: string[]

@@ -22,9 +22,22 @@ const entities = payloads.flatMap((payload) => payload["@graph"] ?? [payload])
 const service = entities.find((entity) => entity["@type"] === "Service")
 
 assert.ok(service, "Expected a Service entity in JSON-LD")
-assert.equal(service.offers?.price, "300")
-assert.equal(service.offers?.priceCurrency, "EUR")
-assert.match(service.offers?.url ?? "", /\/seo-local-sevilla\/$/)
+assert.equal(service["@id"], "https://nuriaromero.dev/seo-local-sevilla/#service")
+const offers = Array.isArray(service.offers) ? service.offers : []
+assert.deepEqual(offers.map((offer) => [offer.name, offer.price]), [["Local", "300"], ["Local Pro", "500"]])
+for (const offer of offers) {
+  assert.equal(offer.priceCurrency, "EUR")
+  assert.match(offer.url ?? "", /\/seo-local-sevilla\/$/)
+  assert.equal(offer.priceSpecification?.["@type"], "UnitPriceSpecification")
+  assert.equal(offer.priceSpecification?.price, Number(offer.price))
+  assert.equal(offer.priceSpecification?.priceCurrency, "EUR")
+  assert.equal(offer.priceSpecification?.unitText, "MON")
+  assert.equal(offer.priceSpecification?.valueAddedTaxIncluded, false)
+}
 assert.doesNotMatch(JSON.stringify(service), legacyOrUnsafe)
+
+assert.match(html, /Camino Andalucía, 426, 41309 La Rinconada, Sevilla/)
+assert.match(html, /href="tel:\+34611812431"/)
+assert.match(html, /href="https:\/\/maps\.app\.goo\.gl\/8eg71eAQJrfH7BGaA"/)
 
 console.log("SEO-15 OK: seo-local-sevilla commercial and schema checks passed")

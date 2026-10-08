@@ -40,6 +40,9 @@ const breadcrumbs = [
         url: page.slug,
         serviceType: page.breadcrumbName,
         price: page.pricing.from,
+        ...(page.offersFromTiers && page.pricing.tiers
+          ? { tiers: page.pricing.tiers, id: "service" }
+          : {}),
       }),
       faqSchema(page.faqs),
       breadcrumbSchema(breadcrumbs),
