@@ -122,3 +122,22 @@ test("T4: process section shows the real person, a timeline without numerals and
   assert.match(route, /slot="process"/)
   assert.match(layout, /<slot name="process">/)
 })
+
+test("T5: real proof section reuses reviews and the two client sites, with no KPI figures", async () => {
+  const [proof, route, layout] = await Promise.all([
+    source("src/components/seo-local/RealProof.astro"),
+    source("src/pages/seo-local-sevilla.astro"),
+    source("src/layouts/ServiceLayout.astro"),
+  ])
+
+  assert.match(proof, /Trabajo que <em>puedes ver<\/em>/)
+  assert.match(proof, /<GoogleReviews data=\{reviews\}/)
+  assert.match(proof, /<Projects only=\{\["arkady", "adfsevilla"\]\}/)
+  assert.match(proof, /sin confirmación del cliente|confirmación del cliente/)
+  assert.match(proof, /aria-labelledby="prueba-title"[\s\S]*?id="prueba-title"/)
+  assert.doesNotMatch(proof, /pacientes|tratamientos|garantiz|%/i)
+  assert.match(route, /getGoogleReviews\(\)/)
+  assert.equal((route.match(/getGoogleReviews\(\)/g) ?? []).length, 1)
+  assert.match(route, /<RealProof reviews=\{reviewsData\}/)
+  assert.match(layout, /<slot name="before-pricing" \/>/)
+})

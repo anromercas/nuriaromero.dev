@@ -1,0 +1,62 @@
+---
+import "@fontsource/instrument-serif/400-italic.css"
+import GoogleReviews from "@/components/GoogleReviews.astro"
+import Projects from "@/components/Projects.astro"
+import type { GoogleReviewsData } from "@/lib/google-reviews"
+
+interface Props {
+  reviews: GoogleReviewsData | null
+}
+
+const { reviews } = Astro.props
+---
+
+<section class="proof" aria-labelledby="prueba-title">
+  <h2 id="prueba-title">Trabajo que <em>puedes ver</em></h2>
+
+  <GoogleReviews data={reviews} />
+
+  <div class="sites">
+    <p class="sites-note">
+      Estas son webs reales de negocios locales de Sevilla. No publico cifras de resultados sin confirmación del cliente.
+    </p>
+    <Projects only={["arkady", "adfsevilla"]} />
+  </div>
+</section>
+
+<style>
+  .proof {
+    display: grid;
+    gap: 3rem;
+    color: rgb(226 232 240);
+  }
+
+  h2 {
+    max-width: 20ch;
+    margin: 0;
+    color: white;
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  h2 em {
+    color: rgb(125 211 252);
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.12em;
+    letter-spacing: -0.01em;
+  }
+
+  .sites-note {
+    max-width: 65ch;
+    margin: 0 0 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(51 65 85);
+    color: rgb(203 213 225);
+    line-height: 1.6;
+  }
+</style>
