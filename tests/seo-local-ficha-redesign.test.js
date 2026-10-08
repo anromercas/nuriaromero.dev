@@ -280,3 +280,9 @@ test("hero glow pool never bleeds past the page gutter (no horizontal scroll on 
 
   assert.match(hero, /\.hero-visual::before\s*\{[^}]*inset:\s*-25%\s+-1rem/)
 })
+
+test("listing pending state keeps text legible (>= 4.5:1 needs at least 0.7 opacity)", async () => {
+  const mock = await source("src/components/seo-local/ListingMock.astro")
+
+  assert.match(mock, /@keyframes check-in\s*\{\s*from\s*\{\s*opacity:\s*0\.(?:7|8|9)/)
+})
