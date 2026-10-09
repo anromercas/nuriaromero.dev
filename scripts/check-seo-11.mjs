@@ -1,12 +1,18 @@
 import { readdir, readFile } from "node:fs/promises"
 
 const distRoot = new URL("../dist/", import.meta.url)
+const { localTrust } = await import(new URL("../src/data/local-trust.ts", import.meta.url))
 const pages = []
 
 async function collect(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const path = new URL(entry.name + (entry.isDirectory() ? "/" : ""), directory)
-    if (entry.isDirectory()) await collect(path)
+    // public/informes/* are private, noindex client reports copied verbatim from
+    // public/ (standalone HTML, no site Layout), so they carry no site schema.
+    if (entry.isDirectory()) {
+      if (directory.pathname === distRoot.pathname && entry.name === "informes") continue
+      await collect(path)
+    }
     else if (entry.name === "index.html") pages.push(path)
   }
 }
@@ -57,14 +63,29 @@ for (const path of pages) {
     fail(`business naming is not canonical in ${file}`)
   }
   if (!hasArea(business)) fail(`business areaServed is incomplete in ${file}`)
-  if (!Array.isArray(business.sameAs) || business.sameAs.join("|") !== "https://linkedin.com/in/nuria-romero-castillo|https://github.com/anromercas") {
+  // Verified profiles only: LinkedIn, GitHub and the verified Google Business
+// Profile (activated in b5e59b6, see src/data/local-trust.ts). Add a profile
+// here only after it is verified as Nuria's.
+const VERIFIED_SAME_AS = [
+  "https://linkedin.com/in/nuria-romero-castillo",
+  "https://github.com/anromercas",
+  "https://www.google.com/maps/place/?q=place_id:ChIJ8Uv-vM9f0CoR8J75dj4I0HM",
+]
+if (!Array.isArray(business.sameAs) || business.sameAs.join("|") !== VERIFIED_SAME_AS.join("|")) {
     fail(`business sameAs is not limited to verified profiles in ${file}`)
   }
   for (const forbidden of ["geo", "openingHoursSpecification", "aggregateRating", "review"]) {
     if (forbidden in business) fail(`business contains unverified ${forbidden} in ${file}`)
   }
+  // The street address is public on the verified GBP (local-trust.ts) and in the
+  // NAP block, so the schema may carry it, but only exactly as verified.
   if (business.address?.streetAddress || business.address?.postalCode) {
-    fail(`business exposes an unverified street address in ${file}`)
+    const verifiedAddress = localTrust.gbp.status === "verified" ? localTrust.gbp.publicAddress : null
+    const { streetAddress, postalCode, addressLocality } = business.address
+    const rendered = `${streetAddress}, ${postalCode} ${addressLocality}`
+    if (!verifiedAddress || !verifiedAddress.startsWith(rendered)) {
+      fail(`business address "${rendered}" does not match the verified GBP address in ${file}`)
+    }
   }
   if (html.includes('<meta property="og:site_name" content="nuriaromero.dev"')) {
     fail(`metadata uses the domain as the primary brand in ${file}`)
