@@ -1,0 +1,112 @@
+{
+  "title": "Elegí la dirección visual",
+  "question": "¿Qué mundo debería convertir el dolor de visibilidad local en una llamada reservada?",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Parte de visibilidad local",
+      "kicker": "LA DIRECCIÓN",
+      "lineage": "partes de trabajo y hojas de diagnóstico de servicios profesionales",
+      "thesis": "La página funciona como un parte claro: detecta el problema, muestra el alcance y abre la conversación.",
+      "palette": ["#07111F", "#E8EDF2", "#1D75FF", "#F5DF56"],
+      "materials": ["papel técnico oscuro", "líneas de inspección", "sellos de estado"],
+      "viewport": "Un diagnóstico breve de visibilidad con una llamada como siguiente acción inequívoca.",
+      "risk": "Debe mantener calidez humana para no parecer una pantalla interna de software.",
+      "raised": [
+        {"from": "Manga de club", "raise": "Un único gesto azul de anotación señala el dolor principal sin convertir la página en un collage."},
+        {"from": "Cartel serigrafiado", "raise": "La acción de reservar conserva un campo claro y tranquilo que rompe la densidad del diagnóstico."},
+        {"from": "Detector de partículas", "raise": "Los servicios se conectan como un sistema visible, sin usar metáforas técnicas en el copy."}
+      ],
+      "wireframe": {
+        "cols": 12,
+        "rows": 10,
+        "regions": [
+          {"label": "dolor diagnosticado", "x": 0, "y": 0, "w": 8, "h": 5, "accent": true},
+          {"label": "reservar llamada", "x": 8, "y": 0, "w": 4, "h": 5},
+          {"label": "alcance y prueba", "x": 0, "y": 5, "w": 12, "h": 5}
+        ]
+      }
+    },
+    {
+      "id": "model-pick",
+      "label": "Mapa de decisiones del barrio",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "planos urbanos, señalética de barrio y mapas de rutas",
+      "thesis": "La visibilidad se explica como una ruta concreta desde la búsqueda hasta el contacto.",
+      "palette": ["#08121E", "#F3EEE2", "#55B5A7", "#F5DF56"],
+      "materials": ["trazos de plano", "placas de calle", "marcas de ruta"],
+      "viewport": "Una ruta de tres paradas hace visible dónde se pierde el cliente y cómo recuperarla.",
+      "risk": "Es una metáfora más conocida y podría sentirse demasiado amable si no se ejecuta con precisión.",
+      "wireframe": {
+        "cols": 12,
+        "rows": 10,
+        "regions": [
+          {"label": "ruta de búsqueda", "x": 0, "y": 0, "w": 12, "h": 5, "accent": true},
+          {"label": "planes", "x": 0, "y": 5, "w": 8, "h": 5},
+          {"label": "llamada", "x": 8, "y": 5, "w": 4, "h": 5}
+        ]
+      }
+    },
+    {
+      "id": "canon",
+      "label": "La página de servicio convencional",
+      "kicker": "ALTERNATIVA CLÁSICA",
+      "lineage": "landing profesional de servicios",
+      "thesis": "Jerarquía limpia, beneficios, proceso, precios y CTA, sin una metáfora estructural.",
+      "palette": ["#08111E", "#FFFFFF", "#2563EB"],
+      "materials": ["grid limpio", "tarjetas oscuras", "acento azul"],
+      "viewport": "Una propuesta de valor directa seguida de planes y una llamada a reservar.",
+      "risk": "Es fiable, pero se parece a lo que ya ofrece la categoría.",
+      "wireframe": {
+        "cols": 12,
+        "rows": 10,
+        "regions": [
+          {"label": "propuesta", "x": 0, "y": 0, "w": 12, "h": 4, "accent": true},
+          {"label": "beneficios", "x": 0, "y": 4, "w": 8, "h": 6},
+          {"label": "cta", "x": 8, "y": 4, "w": 4, "h": 6}
+        ]
+      }
+    },
+    {
+      "id": "challenger-architecture", 
+      "label": "Sección de luz y escaparate",
+      "verdict": "declined",
+      "lineage": "secciones arquitectónicas de luz diurna",
+      "thesis": "Representa la visibilidad como luz que entra en un negocio.",
+      "palette": ["#F4F0E8", "#182432", "#E5BA43", "#6B849C"],
+      "materials": ["cal", "sombra azul", "anotaciones de plano"],
+      "viewport": "Un corte de fachada relaciona búsqueda, ficha y web con el contacto.",
+      "risk": "La metáfora pierde claridad comercial para quien quiere entender el servicio rápido.",
+      "case": "Pierde en identificación y claridad frente al parte de visibilidad.",
+      "kept": "El uso de una sola sección continua para ordenar la lectura.",
+      "hero": "https://impeccable.style/worlds/cards/architecture-inhabitable-space-daylight-section-hero.webp"
+    },
+    {
+      "id": "challenger-collage",
+      "label": "Cartel de capas urbanas",
+      "verdict": "declined",
+      "lineage": "carteles serigrafiados de barrio",
+      "thesis": "Una capa por señal local: ficha, reseñas, web y directorios.",
+      "palette": ["#F3EDE0", "#111111", "#FF6A00", "#7B57F0"],
+      "materials": ["riso", "papel rasgado", "pegatinas"],
+      "viewport": "Una composición de capas lleva a un panel de reserva despejado.",
+      "risk": "El exceso de ruido visual puede restar confianza en un servicio de alto valor.",
+      "case": "Pierde en claridad, pero aporta una separación más valiente entre información y acción.",
+      "kept": "Un único campo despejado para la acción principal.",
+      "hero": "https://impeccable.style/worlds/cards/fly-posted-festival-hoarding-built-hero.webp"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code", "toggle": true},
+  "canon": true,
+  "canonCard": {
+    "label": "La página de servicio convencional",
+    "thesis": "La estructura que la categoría suele publicar, resuelta con rigor.",
+    "palette": ["#08111E", "#FFFFFF", "#2563EB"],
+    "materials": ["grid limpio", "tarjetas oscuras", "acento azul"],
+    "viewport": "Propuesta, beneficios, precios y CTA con jerarquía directa.",
+    "risk": "No se diferencia por su sistema visual.",
+    "wireframe": {"cols": 12, "rows": 10, "regions": [{"label": "propuesta", "x": 0, "y": 0, "w": 12, "h": 4, "accent": true}, {"label": "contenido", "x": 0, "y": 4, "w": 8, "h": 6}, {"label": "cta", "x": 8, "y": 4, "w": 4, "h": 6}]}
+  },
+  "steer": true
+}
