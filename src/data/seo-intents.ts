@@ -30,7 +30,7 @@ export const intentMatrix: SeoIntentRow[] = [
     titleSignal: "SEO local Sevilla",
     descriptionSignal: "desde 300 €/mes",
     h1Signal: "SEO local Sevilla",
-    contentSignals: ["Consultor de SEO local en Sevilla", "Cuánto cuesta el SEO local en Sevilla"],
+    contentSignals: ["Cómo trabajamos el SEO local en Sevilla", "Cuánto cuesta el SEO local en Sevilla"],
   },
   {
     url: "/seo-para-clinicas-capilares-sevilla/",

@@ -82,7 +82,8 @@ export function personSchema() {
     name: SITE.name,
     alternateName: "Nuria Romero Castillo",
     url: `${SITE.url}/sobre-mi`,
-    jobTitle: "Desarrolladora web freelance",
+    jobTitle: "Consultor SEO y desarrolladora web freelance",
+    description: "Consultor SEO en Sevilla y desarrolladora web. Ayudo a negocios locales a aparecer en Google, Google Maps y buscadores con IA.",
     worksFor: { "@id": BUSINESS_ID },
     address: {
       "@type": "PostalAddress",
@@ -92,6 +93,10 @@ export function personSchema() {
     knowsAbout: [
       "Diseño y desarrollo web",
       "SEO local",
+      "Consultoría SEO",
+      "Posicionamiento web",
+      "Optimización para buscadores con IA (GEO)",
+      "Google Business Profile",
       "Desarrollo de software a medida",
       "Automatización de procesos con n8n y Make",
       "Inteligencia artificial aplicada a negocios",
