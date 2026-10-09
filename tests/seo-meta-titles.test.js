@@ -121,3 +121,9 @@ test('home owns the "consultor SEO Sevilla" keyword in title, description, H1 an
   const heroParagraph = home.match(/<\/h2>\s*<p[^>]*>([\s\S]*?)<\/p>/)?.[1] ?? ''
   assert.equal((heroParagraph.match(/consultor SEO en Sevilla/gi) ?? []).length, 1)
 })
+
+test('home profile photo alt uses the "consultor SEO en Sevilla" wording', async () => {
+  const home = await source('src/pages/index.astro')
+  assert.match(home, /alt="Nuria Romero, consultor SEO en Sevilla y desarrolladora web"/)
+  assert.doesNotMatch(home, /alt="[^"]*consultora SEO/i)
+})
