@@ -41,3 +41,6 @@ research/
 # scratch caches and one-off captures, not versioned deliverables
 .seo-cache/
 artifacts/
+# Local design tool output and private prospecting data
+.impeccable/review/
+LEADS-clinica-capilar-sevilla.md
