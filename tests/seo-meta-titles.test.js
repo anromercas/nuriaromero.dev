@@ -99,3 +99,25 @@ test('niches.ts: los seo.title de los 4 nichos no cambian', async () => {
     assert.equal(block.title, expectedTitle, `${name}: el seo.title no debe cambiar`)
   }
 })
+
+test('home owns the "consultor SEO Sevilla" keyword in title, description, H1 and first paragraph', async () => {
+  const home = await source('src/pages/index.astro')
+  const match = home.match(/<Layout\s+title="([^"]+)"\s+description="([^"]+)"/)
+  assert.ok(match, 'no se encontró el bloque <Layout title=... description=...> en index.astro')
+  const [, title, description] = match
+
+  assert.ok(title.startsWith('Consultor SEO en Sevilla'), 'el title debe empezar por "Consultor SEO en Sevilla"')
+  assert.ok(title.length <= 65, `el title mide ${title.length} caracteres (límite 65)`)
+  assert.match(description, /consultor SEO en Sevilla/i)
+  assert.ok(
+    description.length >= 140 && description.length <= 160,
+    `la description mide ${description.length} caracteres (rango 140-160)`
+  )
+
+  const h1 = home.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? ''
+  assert.match(h1, /Consultor SEO en Sevilla/)
+  assert.doesNotMatch(h1, /consultora/i)
+
+  const heroParagraph = home.match(/<\/h2>\s*<p[^>]*>([\s\S]*?)<\/p>/)?.[1] ?? ''
+  assert.equal((heroParagraph.match(/consultor SEO en Sevilla/gi) ?? []).length, 1)
+})
