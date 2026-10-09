@@ -99,3 +99,49 @@ test('niches.ts: los seo.title de los 4 nichos no cambian', async () => {
     assert.equal(block.title, expectedTitle, `${name}: el seo.title no debe cambiar`)
   }
 })
+
+test('home owns the "consultor SEO Sevilla" keyword in title, description, H1 and first paragraph', async () => {
+  const home = await source('src/pages/index.astro')
+  const match = home.match(/<Layout\s+title="([^"]+)"\s+description="([^"]+)"/)
+  assert.ok(match, 'no se encontró el bloque <Layout title=... description=...> en index.astro')
+  const [, title, description] = match
+
+  assert.ok(title.startsWith('Consultor SEO en Sevilla'), 'el title debe empezar por "Consultor SEO en Sevilla"')
+  assert.ok(title.length <= 65, `el title mide ${title.length} caracteres (límite 65)`)
+  assert.match(description, /consultor SEO en Sevilla/i)
+  assert.ok(
+    description.length >= 140 && description.length <= 160,
+    `la description mide ${description.length} caracteres (rango 140-160)`
+  )
+
+  const h1 = home.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? ''
+  assert.match(h1, /Consultor SEO en Sevilla/)
+  assert.doesNotMatch(h1, /consultora/i)
+
+  const heroParagraph = home.match(/<\/h2>\s*<p[^>]*>([\s\S]*?)<\/p>/)?.[1] ?? ''
+  assert.equal((heroParagraph.match(/consultor SEO en Sevilla/gi) ?? []).length, 1)
+})
+
+test('home profile photo alt uses the "consultor SEO en Sevilla" wording', async () => {
+  const home = await source('src/pages/index.astro')
+  assert.match(home, /alt="Nuria Romero, consultor SEO en Sevilla y desarrolladora web"/)
+  assert.doesNotMatch(home, /alt="[^"]*consultora SEO/i)
+})
+
+test('home: "posicionamiento web en Sevilla" aparece en un h2/h3, <=3 veces y no en title ni H1', async () => {
+  const home = await source('src/pages/index.astro')
+  const keyword = /posicionamiento web/gi
+  const title = home.match(/<Layout\s+title="([^"]+)"/)[1]
+  const h1 = home.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)[1]
+  const headings = [...home.matchAll(/<h[23][^>]*>([\s\S]*?)<\/h[23]>/g)].map((m) => m[1])
+  // TitleSection renders an h2, so its slot content counts as a heading.
+  const titleSections = [...home.matchAll(/<TitleSection>([\s\S]*?)<\/TitleSection>/g)].map((m) => m[1])
+
+  assert.ok(
+    [...headings, ...titleSections].some((h) => /posicionamiento web en Sevilla/i.test(h)),
+    'falta "posicionamiento web en Sevilla" en un encabezado h2/h3 de la home'
+  )
+  assert.ok((home.match(keyword) ?? []).length <= 3, 'más de 3 apariciones de "posicionamiento web" en la home')
+  assert.doesNotMatch(title, keyword, 'el title no debe contener la keyword')
+  assert.doesNotMatch(h1, keyword, 'el H1 no debe contener la keyword')
+})

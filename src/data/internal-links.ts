@@ -85,6 +85,7 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
   "/blog/como-aparecer-en-google-maps-negocio-sevilla/": [
     { path: "/seo-local-sevilla/", anchor: "servicio de SEO local y GEO", kind: "contextual" },
     { path: "/diseno-web-sevilla/", anchor: "web preparada para conectar con Google Maps", kind: "contextual" },
+    { path: "/", anchor: "consultor SEO en Sevilla", kind: "contextual" },
     { path: "/contacto", anchor: "cuéntame cómo está tu ficha", kind: "conversion" },
   ],
   "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/": [
@@ -102,6 +103,7 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
     { path: "/seo-local-sevilla/", anchor: "servicio de SEO local y GEO en Sevilla", kind: "contextual" },
     { path: "/diseno-web-sevilla/", anchor: "web propia bien construida", kind: "contextual" },
     { path: "/blog/como-aparecer-en-google-maps-negocio-sevilla/", anchor: "guía para aparecer en Google Maps", kind: "contextual" },
+    { path: "/", anchor: "consultor SEO en Sevilla", kind: "contextual" },
     { path: "/contacto", anchor: "cuéntame qué necesita tu negocio", kind: "conversion" },
   ],
 }

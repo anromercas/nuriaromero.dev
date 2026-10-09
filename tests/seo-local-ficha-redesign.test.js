@@ -299,7 +299,7 @@ test("T7: every section has a small keyword heading above its display title, one
   }
 
   keyword(bento, "revision-title", "Posicionamiento en Google Maps para negocios locales")
-  keyword(proc, "proceso-title", "Consultor de SEO local en Sevilla")
+  keyword(proc, "proceso-title", "Cómo trabajamos el SEO local en Sevilla")
   keyword(proof, "prueba-title", "Webs de negocios locales en Sevilla")
   keyword(plans, "planes-title", "Cuánto cuesta el SEO local en Sevilla")
   keyword(faq, "faq-title", "Preguntas frecuentes sobre SEO local en Sevilla")
