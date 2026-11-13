@@ -1,0 +1,77 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in *.astro|*.ts|*.js|*.mjs|*.css|*.json|*.md) pnpm exec prettier --write \"$f\" >/dev/null 2>&1 || true;; esac"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "team-harness@nuriaromerodev-harness": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(/Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/ship-pr.sh:*)",
+      "Bash(bat:*)",
+      "Bash(eza:*)",
+      "Bash(fd:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(git branch:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git status:*)",
+      "Bash(git worktree add:*)",
+      "Bash(git worktree list:*)",
+      "Bash(git worktree remove:*)",
+      "Bash(node --test tests/*)",
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/doctor.mjs:*)",
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/jira-agile.mjs:*)",
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/rank-report.mjs:*)",
+      "Bash(pnpm astro check)",
+      "Bash(pnpm astro check:*)",
+      "Bash(pnpm build)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(pnpm exec prettier --check:*)",
+      "Bash(pnpm format:*)",
+      "Bash(pnpm install)",
+      "Bash(pnpm install:*)",
+      "Bash(rg:*)",
+      "mcp__plugin_small-business_atlassian__createJiraIssue",
+      "mcp__plugin_small-business_atlassian__editJiraIssue",
+      "mcp__plugin_small-business_atlassian__transitionJiraIssue",
+      "mcp__plugin_small-business_atlassian__addOrEditJiraIssueComment",
+      "mcp__plugin_small-business_atlassian__executeWrite",
+      "mcp__ccd_pr__bind_pr",
+      "mcp__ccd_pr__set_monitor",
+      "Bash(/Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/merge-pr.sh:*)",
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/doctor.mjs:*)"
+    ],
+    "deny": [
+      "Bash(* --plugin*)",
+      "Bash(fd * --exec-batch:*)",
+      "Bash(fd * --exec:*)",
+      "Bash(fd * -X:*)",
+      "Bash(fd * -x:*)",
+      "Bash(git diff * --output:*)",
+      "Bash(git diff --output:*)",
+      "Bash(git push:*)",
+      "Bash(rg * --pre:*)",
+      "Bash(rg --pre:*)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  }
+}
