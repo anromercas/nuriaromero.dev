@@ -48,7 +48,16 @@
       "Bash(pnpm format:*)",
       "Bash(pnpm install)",
       "Bash(pnpm install:*)",
-      "Bash(rg:*)"
+      "Bash(rg:*)",
+      "mcp__plugin_small-business_atlassian__createJiraIssue",
+      "mcp__plugin_small-business_atlassian__editJiraIssue",
+      "mcp__plugin_small-business_atlassian__transitionJiraIssue",
+      "mcp__plugin_small-business_atlassian__addOrEditJiraIssueComment",
+      "mcp__plugin_small-business_atlassian__executeWrite",
+      "mcp__ccd_pr__bind_pr",
+      "mcp__ccd_pr__set_monitor",
+      "Bash(/Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/merge-pr.sh:*)",
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/doctor.mjs:*)"
     ],
     "deny": [
       "Bash(* --plugin*)",
