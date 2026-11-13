@@ -31,7 +31,9 @@
     "check:seo-13:dist": "node scripts/check-seo-13.mjs",
     "check:seo-14": "npm run build && node scripts/check-seo-14.mjs",
     "check:seo-14:dist": "node scripts/check-seo-14.mjs",
-    "check:capilar-local": "node scripts/check-capilar-local.mjs"
+    "check:capilar-local": "node scripts/check-capilar-local.mjs",
+    "check:google-reviews": "pnpm build && node scripts/check-google-reviews.mjs",
+    "check:google-reviews:dist": "node scripts/check-google-reviews.mjs"
   },
   "dependencies": {
     "@astrojs/check": "0.5.6",
