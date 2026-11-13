@@ -142,5 +142,5 @@ No user-facing UI change. The story touches only the home `<head>` meta descript
 
 ## Tasks
 
-- [ ] 1.1 [NRD-43 app] Build the home meta description from the `seoLocal` Local tier via `tierFrom`; tests: `tests/single-price-source.test.js` home cases and the updated `tests/seo-meta-titles.test.js` first.
+- [x] 1.1 [NRD-43 app] Build the home meta description from the `seoLocal` Local tier via `tierFrom`; tests: `tests/single-price-source.test.js` home cases and the updated `tests/seo-meta-titles.test.js` first.
 - [ ] 1.2 [NRD-44 app] Guard `public/llms.txt` service prices against `src/data/services.ts`; tests: llms cases in `tests/single-price-source.test.js`, RED by a temporary price edit.
