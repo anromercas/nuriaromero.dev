@@ -33,6 +33,8 @@
     "check:seo-14:dist": "node scripts/check-seo-14.mjs",
     "check:seo-15": "pnpm build && node scripts/check-seo-15.mjs",
     "check:seo-15:dist": "node scripts/check-seo-15.mjs",
+    "check:google-reviews": "pnpm build && node scripts/check-google-reviews.mjs",
+    "check:google-reviews:dist": "node scripts/check-google-reviews.mjs",
     "check:capilar-local": "node scripts/check-capilar-local.mjs"
   },
   "dependencies": {
