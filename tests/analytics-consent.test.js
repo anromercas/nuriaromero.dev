@@ -81,3 +81,21 @@ test('about portrait imports and renders the Astro WebP asset', async () => {
   assert.match(about, /<Image[\s\S]*?src=\{portrait\}/)
   await access(new URL('../src/assets/me.webp', import.meta.url))
 })
+
+test('every import.meta.env variable read in src is declared in env.d.ts', async () => {
+  const { readFile, readdir } = await import('node:fs/promises')
+  const envTypes = await readFile(new URL('../src/env.d.ts', import.meta.url), 'utf8')
+  const declared = envTypes.match(/interface ImportMetaEnv\s*\{([\s\S]*?)\n\}/)?.[1] ?? ''
+  assert.match(declared, /readonly PUBLIC_GA4_MEASUREMENT_ID\?: string/)
+
+  const srcDir = new URL('../src/', import.meta.url)
+  const entries = await readdir(srcDir, { recursive: true })
+  const used = new Set()
+  for (const entry of entries.filter((name) => /\.(astro|ts)$/.test(name) && !name.endsWith('env.d.ts'))) {
+    const source = await readFile(new URL(entry, srcDir), 'utf8')
+    for (const match of source.matchAll(/import\.meta\.env\.(\w+)/g)) used.add(match[1])
+  }
+  for (const name of used) {
+    assert.match(declared, new RegExp(`readonly ${name}\\??: `), `${name} is not declared in src/env.d.ts`)
+  }
+})
