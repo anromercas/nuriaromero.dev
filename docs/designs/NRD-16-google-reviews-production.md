@@ -155,4 +155,4 @@ No visual change. This story adds tests, a build-output check script and evidenc
 ## Tasks
 
 - [x] 1.1 [NRD-38 app] Guard the reviews fallback and the visible/JSON-LD consistency; tests: new cases in `tests/google-reviews-error.test.js` first, then `scripts/check-google-reviews.mjs` and its `package.json` scripts.
-- [ ] 1.2 [NRD-39 app] Record the production diagnosis and dated evidence in T6 of `odd/tasks/mejoras-home-conversion.md` and on the story; tests: run the 1.1 script on the saved production HTML.
+- [x] 1.2 [NRD-39 app] Record the production diagnosis and dated evidence in T6 of `odd/tasks/mejoras-home-conversion.md` and on the story; tests: run the 1.1 script on the saved production HTML.
