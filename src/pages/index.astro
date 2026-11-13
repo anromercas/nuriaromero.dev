@@ -20,11 +20,13 @@ import Briefcase from "@/components/icons/Briefcase.astro"
 import ProfileCheck from "@/components/icons/ProfileCheck.astro"
 import { faqSchema, personSchema, reviewsSchema } from "@/lib/schema"
 import { getGoogleReviews } from "@/lib/google-reviews"
-import { services } from "@/data/services"
+import { services, seoLocal, tierFrom } from "@/data/services"
 import { niches } from "@/data/niches"
 import profileHome from "@/assets/perfil-home.webp"
 
 const reviewsData = await getGoogleReviews()
+
+const homeDescription = `Consultor SEO en Sevilla para negocios locales: aparece en Google, Maps y en las respuestas de IA. SEO local desde ${tierFrom(seoLocal, "Local")} y trato directo.`
 
 const serviceOutcomes: Record<string, string> = {
   "/seo-local-sevilla/": "Pon a punto cómo aparece tu negocio en Google y Maps.",
@@ -118,7 +120,7 @@ const homeFaqs = [
 
 <Layout
   title="Consultor SEO en Sevilla | Nuria Romero, SEO local y para IA"
-  description="Consultor SEO en Sevilla para negocios locales: aparece en Google, Maps y en las respuestas de IA. SEO local desde 300 €/mes + IVA y trato directo."
+  description={homeDescription}
 >
   <Schema
     slot="head"
