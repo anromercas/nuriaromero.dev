@@ -69,3 +69,18 @@ test('package.json defines the google reviews check scripts', async () => {
   assert.equal(pkg.scripts['check:google-reviews'], 'pnpm build && node scripts/check-google-reviews.mjs')
   assert.equal(pkg.scripts['check:google-reviews:dist'], 'node scripts/check-google-reviews.mjs')
 })
+
+test('check-google-reviews fails when the page has no JSON-LD at all', async () => {
+  const { spawnSync } = await import('node:child_process')
+  const { mkdtemp, writeFile } = await import('node:fs/promises')
+  const { tmpdir } = await import('node:os')
+  const { join } = await import('node:path')
+  const dir = await mkdtemp(join(tmpdir(), 'google-reviews-'))
+  const file = join(dir, 'index.html')
+  await writeFile(file, '<html><body><h1>Home</h1></body></html>')
+
+  const result = spawnSync(process.execPath, ['scripts/check-google-reviews.mjs', file], { encoding: 'utf8' })
+
+  assert.equal(result.status, 1)
+  assert.match(result.stderr, /GOOGLE-REVIEWS: no JSON-LD found/)
+})

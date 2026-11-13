@@ -44,6 +44,9 @@ function containsReviewSchema(value) {
 const sectionStart = html.indexOf('id="resenas-google"');
 
 if (sectionStart === -1) {
+  if (nodes.length === 0) {
+    fail("no JSON-LD found")
+  }
   if (nodes.some(containsReviewSchema)) {
     fail(
       "section is absent but the JSON-LD contains AggregateRating or Review",
