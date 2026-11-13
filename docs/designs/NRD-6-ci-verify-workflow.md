@@ -172,4 +172,4 @@ Must stay visually unchanged: every page of the built site, including the home. 
 
 ## Tasks
 
-- [ ] 1.1 [NRD-35 app] Add `.github/workflows/ci.yml` with the `verify` job; tests: `tests/ci-workflow.test.js` first (RED on missing file), then the workflow (GREEN), full suite and `pnpm build` locally.
+- [x] 1.1 [NRD-35 app] Add `.github/workflows/ci.yml` with the `verify` job; tests: `tests/ci-workflow.test.js` first (RED on missing file), then the workflow (GREEN), full suite and `pnpm build` locally.
