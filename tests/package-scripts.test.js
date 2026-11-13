@@ -15,7 +15,17 @@ const checkNumbers = readdirSync(new URL("scripts/", root))
 
 test("no script uses npm", () => {
   for (const [name, value] of Object.entries(scripts)) {
-    assert.ok(!value.includes("npm run"), `${name} uses npm run`);
+    assert.ok(!/\bnpm\b|\bnpx\b/.test(value), `${name} uses npm/npx`);
+  }
+});
+
+test("no check script references npm run", () => {
+  const files = readdirSync(new URL("scripts/", root)).filter((f) =>
+    f.endsWith(".mjs"),
+  );
+  for (const f of files) {
+    const src = readFileSync(new URL(`scripts/${f}`, root), "utf8");
+    assert.ok(!/npm run/.test(src), `scripts/${f} references npm run`);
   }
 });
 
