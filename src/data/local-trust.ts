@@ -15,6 +15,8 @@ export interface SocialProofRecord {
   publicUrl: string | null
 }
 
+const GBP_PLACE_ID = "ChIJ8Uv-vM9f0CoR8J75dj4I0HM"
+
 export const localTrust = {
   gbp: {
     // Verificado 2026-09-25 (teléfono coincide con SITE.phone) y actualizado
@@ -22,8 +24,11 @@ export const localTrust = {
     // de servicio y ahora muestra dirección pública. publicAddress debe
     // coincidir exactamente con SITE.address.full (NAP).
     status: "verified" as TrustStatus,
-    profileUrl: "https://www.google.com/maps/place/?q=place_id:ChIJ8Uv-vM9f0CoR8J75dj4I0HM" as string | null,
-    placeId: "ChIJ8Uv-vM9f0CoR8J75dj4I0HM" as string | null,
+    profileUrl: `https://www.google.com/maps/place/?q=place_id:${GBP_PLACE_ID}` as string | null,
+    placeId: GBP_PLACE_ID as string | null,
+    // "Write a review" dialog of the verified profile; used by the contact
+    // success state and docs/google-review-request-template.md.
+    writeReviewUrl: `https://search.google.com/local/writereview?placeid=${GBP_PLACE_ID}` as string | null,
     publicAddress: "Camino Andalucía, 426, 41309 La Rinconada, Sevilla" as string | null,
     serviceArea: "Sevilla y área metropolitana",
   },

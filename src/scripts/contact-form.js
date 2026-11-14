@@ -25,6 +25,8 @@ function initContactForm() {
 
   const statusEl = document.getElementById('form-status');
   const submitBtn = document.getElementById('submit-btn');
+  // Optional: only rendered when the GBP is verified (see ContactForm.astro).
+  const reviewInvite = document.getElementById('form-review-invite');
 
   if (!statusEl || !submitBtn) {
     console.warn('[ContactForm] Elementos no encontrados en el DOM.');
@@ -37,6 +39,10 @@ function initContactForm() {
     if (type === 'success') statusEl.classList.add('text-green-600');
     else if (type === 'error') statusEl.classList.add('text-red-600');
     else statusEl.classList.add('text-gray-600','dark:text-gray-300');
+  }
+
+  function setReviewInvite(visible) {
+    if (reviewInvite) reviewInvite.hidden = !visible;
   }
 
   async function postFormData() {
@@ -60,6 +66,7 @@ function initContactForm() {
     if (submitBtn.disabled) return;
 
     if (!form.checkValidity()) {
+      setReviewInvite(false);
       setStatus('Por favor, completa los campos requeridos.', 'error');
       if (form.reportValidity) form.reportValidity();
       return;
@@ -69,6 +76,7 @@ function initContactForm() {
     const originalText = submitBtn.textContent || 'Enviar mensaje';
     submitBtn.textContent = 'Enviando…';
     setStatus('');
+    setReviewInvite(false);
 
     try {
       let res;
@@ -77,6 +85,7 @@ function initContactForm() {
 
       if (res.ok) {
         setStatus('✅ ¡Mensaje enviado correctamente! Te responderé en breve.', 'success');
+        setReviewInvite(true);
         form.reset();
       } else {
         let msg = `❌ Error ${res.status}`;
@@ -91,10 +100,12 @@ function initContactForm() {
           const text = await res.text().catch(() => '');
           if (text) msg += ' · ' + text.slice(0, 200);
         }
+        setReviewInvite(false);
         setStatus(msg, 'error');
       }
     } catch (err) {
       console.error('[ContactForm] Error de red/JS:', err);
+      setReviewInvite(false);
       setStatus('⚠️ Error de conexión. Inténtalo de nuevo en unos minutos.', 'error');
     } finally {
       submitBtn.disabled = false;
