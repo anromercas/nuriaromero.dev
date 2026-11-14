@@ -8,7 +8,7 @@ Portfolio y web de servicios SEO local de Nuria Romero (nuriaromero.dev). Sitio 
 - Build (incluye typecheck): `pnpm build` (`astro check && astro build`)
 - Typecheck solo: `pnpm astro check`
 - Tests: `node --test tests/*.test.js`
-- Checks SEO: `pnpm check:seo-NN` (construyen antes con `npm run build`), o `pnpm check:seo-NN:dist` si ya existe `dist/`
+- Checks SEO: `pnpm check:seo-NN` (construyen antes con `pnpm build`), o `pnpm check:seo-NN:dist` si ya existe `dist/`
 - Formateo: `pnpm format <ficheros>` (Prettier + prettier-plugin-astro). No formatear el repo entero de golpe: solo los ficheros que se editan.
 - Lint: no hay configurado; el typecheck lo cubre `astro check`.
 
