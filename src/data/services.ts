@@ -647,14 +647,14 @@ export const tiendaOnline: ServicePageData = {
   slug: "/tienda-online-sevilla/",
   breadcrumbName: "Tienda online en Sevilla",
   seo: {
-    title: "Tienda online en Sevilla | Ecommerce con pasarela de pago",
+    title: "Diseño de tienda online en Sevilla | Pasarela de pago propia",
     description:
-      "Creo tiendas online en Sevilla con pasarela de pago propia, sin comisión de marketplace. Presupuesto cerrado según tu número de productos y necesidades.",
+      "Diseño y creo tiendas online para negocios de Sevilla, con pasarela de pago propia y sin comisión de marketplace. Presupuesto cerrado según tu catálogo.",
   },
   hero: {
-    h1: "Tienda online en Sevilla para negocios que quieren vender, no solo tener una web",
+    h1: "Diseño de tienda online en Sevilla para negocios que quieren vender",
     subtitle:
-      "Una tienda online no es una web más: necesitas pasarela de pago, gestión de productos y stock, y que te encuentren cuando alguien busca lo que vendes. Te la construyo a medida, sin comisión de marketplace y con precio cerrado antes de empezar.",
+      "Si tienes un negocio en Sevilla y quieres vender por internet con una tienda online propia, la diseño y la construyo a medida: pasarela de pago, gestión de productos y stock, sin comisión de marketplace y con precio cerrado antes de empezar.",
     secondaryCta: {
       label: "Ver cómo se presupuesta",
       href: "#precios",

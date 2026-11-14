@@ -14,7 +14,7 @@ const normalise = (keyword) =>
     .replace(/\s+/g, " ")
     .trim();
 
-test("keywordOwners records the four local head terms", () => {
+test("keywordOwners records the local head terms", () => {
   const owners = Object.fromEntries(
     keywordOwners.map(({ keyword, url }) => [keyword, url]),
   );
@@ -24,6 +24,7 @@ test("keywordOwners records the four local head terms", () => {
     "seo local sevilla": "/seo-local-sevilla/",
     "agencia seo sevilla": "/seo-local-sevilla/",
     "posicionamiento web sevilla": "/seo-local-sevilla/",
+    "diseño tienda online sevilla": "/tienda-online-sevilla/",
   });
 });
 
