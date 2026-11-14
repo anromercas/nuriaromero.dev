@@ -49,6 +49,7 @@
       "Bash(pnpm install)",
       "Bash(pnpm install:*)",
       "Bash(rg:*)",
+      "Bash(/Users/nuria/.config/claude-seo/run.sh:*)",
       "mcp__plugin_small-business_atlassian__createJiraIssue",
       "mcp__plugin_small-business_atlassian__editJiraIssue",
       "mcp__plugin_small-business_atlassian__transitionJiraIssue",
