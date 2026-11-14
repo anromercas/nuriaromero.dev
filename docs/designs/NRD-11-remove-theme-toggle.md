@@ -140,5 +140,5 @@ Removing `@media (prefers-color-scheme: dark) { body { color: ... } }` must not 
 
 ## Tasks
 
-- [ ] 1.1 [NRD-63 app] Delete `ThemeToggle.astro`, `theme-toggle.js` and the Sun/Moon/System icons; tests: `tests/dark-only-cleanup.test.js` (files gone, no references) first.
+- [x] 1.1 [NRD-63 app] Delete `ThemeToggle.astro`, `theme-toggle.js` and the Sun/Moon/System icons; tests: `tests/dark-only-cleanup.test.js` (files gone, no references) first.
 - [ ] 1.2 [NRD-64 app] Single `logoLight` `<Image>` in `Header.astro`, delete `logo-negro.svg`, and no `prefers-color-scheme` body block in `Layout.astro` (verify or remove; the `blur` block is NRD-12's); tests: extend `tests/dark-only-cleanup.test.js` first.
