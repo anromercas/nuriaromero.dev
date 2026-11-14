@@ -298,7 +298,7 @@ test("T7: every section has a small keyword heading above its display title, one
     assert.ok(text.indexOf('class="display"') > kw, `${id} display title follows the keyword heading`)
   }
 
-  keyword(bento, "revision-title", "Posicionamiento en Google Maps para negocios locales")
+  keyword(bento, "revision-title", "Posicionamiento web en Sevilla: Google y Google Maps")
   keyword(proc, "proceso-title", "Cómo trabajamos el SEO local en Sevilla")
   keyword(proof, "prueba-title", "Webs de negocios locales en Sevilla")
   keyword(plans, "planes-title", "Cuánto cuesta el SEO local en Sevilla")
