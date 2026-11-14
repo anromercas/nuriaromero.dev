@@ -5,7 +5,6 @@ import X from "./icons/X.astro";
 import BookingButton from "./BookingButton.astro";
 import { services } from "@/data/services";
 import { niches } from "@/data/niches";
-import logoDark from "@/assets/nuriaromerodev-logo-negro.svg";
 import logoLight from "@/assets/nuriaromerodev-logo-blanco.svg";
 
 const navItems = [
@@ -65,15 +64,9 @@ const navLinkClass =
       aria-label="Ir al inicio"
     >
       <Image
-        src={logoDark}
-        alt="Nuria Romero"
-        class="block h-10 w-auto dark:hidden"
-        loading="eager"
-      />
-      <Image
         src={logoLight}
         alt="Nuria Romero"
-        class="hidden h-10 w-auto dark:block"
+        class="block h-10 w-auto"
         loading="eager"
       />
     </a>
