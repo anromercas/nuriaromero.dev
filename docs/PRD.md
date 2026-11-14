@@ -125,7 +125,13 @@ Radical (needs the user):
 - No secret in the repo or client bundle; only `PUBLIC_*` variables reach the browser.
 - SEO safety: no URL breaks without a 301, one H1, trailing-slash links, sitemap/robots/`llms.txt` consistent, `check-seo-*` passing.
 
-## 11. Current state (2026-11-13)
+## 11. Current state (2026-11-14)
+
+Shipped in NRD Sprint 1 (closed 2026-11-14, 20 of 20 points, all on `develop`; production gets them with the scheduled promotions):
+
+- M0: CI workflow `ci.yml` with the required `verify` job on PRs to `develop` (NRD-6); `pnpm-lock.yaml` tracked and out of `.gitignore` (NRD-7); `check:seo-*` scripts use pnpm and `check-seo-15` has a script (NRD-8, NRD-46); `PUBLIC_GA4_MEASUREMENT_ID` declared in `src/env.d.ts` (NRD-9); home meta and `llms.txt` prices guarded by tests from one source (NRD-10). Remaining M0: dark-only cleanup (NRD-11 to NRD-14).
+- M1: desktop and mobile booking CTA in the header (NRD-15); Google reviews confirmed rendering on the production home (NRD-16); production CWV/LCP baseline for the in-focus pages recorded (NRD-18, `docs/designs/NRD-18-cwv-lcp-baseline.md`); production JSON-LD, FAQs and `llms.txt` links validated (NRD-19). Remaining M1 exit criteria: GA4 / Search Console verification and KPI baseline (NRD-17, needs the user's access), backlink baseline and outreach list (NRD-21).
+- Found during the sprint: NRD-48 (Person.url without trailing slash), NRD-49 (BookingButton dark-theme contrast below WCAG AA), NRD-50 (header CLS to be measured on production).
 
 Product:
 
@@ -146,7 +152,7 @@ Open work (now in Jira):
 - `eliminar-selector-tema-dark-only`: not started.
 - `capilar-local-captacion`: parked.
 
-Known gaps: no CI workflow (`.github/` absent); `pnpm-lock.yaml` both tracked and in `.gitignore:25`; `check:seo-*` scripts call `npm run build` and `check-seo-15.mjs` has no script; home meta price hardcoded (`src/pages/index.astro:121`); `llms.txt` prices maintained by hand and missing the capilares page; orphan `ThemeToggle.astro` / `theme-toggle.js` and `darkMode: 'class'` with 186 `dark:` usages in 38 files; `PUBLIC_GA4_MEASUREMENT_ID` not declared in `src/env.d.ts`.
+Known gaps (CI, lockfile, `check:seo-*` scripts, price duplication and the GA4 env type were closed in Sprint 1): `llms.txt` missing the capilares page (parked, NRD-27); orphan `ThemeToggle.astro` / `theme-toggle.js` and `darkMode: 'class'` with 186 `dark:` usages in 38 files (NRD-11 to NRD-14); BookingButton contrast below AA in the dark theme (NRD-49).
 
 ## 12. Open questions for the user
 
@@ -167,3 +173,6 @@ Known gaps: no CI workflow (`.github/` absent); `pnpm-lock.yaml` both tracked an
 - 2026-11-13 - `llms.txt` stays a static file (no endpoints, invariant "Static output"); price consistency is enforced by a test instead.
 - 2026-11-13 - NRD Sprint 1 (id 50) planned and started for 2026-11-16 to 2026-11-30 with 20 points (initial capacity): M0 NRD-7, NRD-6, NRD-8, NRD-10, NRD-9 and M1 NRD-18, NRD-16, NRD-19, NRD-15. NRD-17 left out because it needs the user's GA4/Search Console access; NRD-18 raised to High so the CWV baseline is taken before the header CTA ships.
 - 2026-11-13 - SEO report 2026-11-13: accepted S-2026-11-13-2 -> NRD-32 (M1), S-2026-11-13-3 -> NRD-33 (M1), S-2026-11-13-6 -> NRD-34 (M3); S-2026-11-13-5 covered by NRD-21; S-2026-11-13-4 rejected (single source, focus); S-2026-11-13-1 (prices in the blog post) waits for the user's decision.
+- 2026-11-14 - NRD Sprint 1 closed: goal met, 20 of 20 points, velocity 20, no spillover. NRD-31 closed as done (merged in PR #1).
+- 2026-11-14 - NRD-15 AC "exactly one link to `bookingUrl`" confirmed as one visible and accessible link per breakpoint (two instances with mutually exclusive `display`, never hidden only visually). Review follow-ups filed in M1: NRD-49 (BookingButton dark-theme contrast, High) and NRD-50 (header CLS/LCP on production vs the NRD-18 baseline).
+- 2026-11-14 - NRD Sprint 2 (id 57) planned and started for 2026-11-16 to 2026-11-30 with 19 points (capacity 20): M1 NRD-49, NRD-33, NRD-32, NRD-48, NRD-20, NRD-50, NRD-21; M0 NRD-11, NRD-12; M3 fill NRD-34 (M2 is gated by D1-D4). NRD-17 labelled `needs-human` and left out again (user's GA4 / Search Console access), so NRD-22 stays blocked. M2 stories set to Low per the priority mapping (next, gated milestone).
