@@ -113,4 +113,4 @@ What must stay visually unchanged, so the baseline measures the current site:
 ## Tasks
 
 - [x] 1.1 [NRD-36 app] Measure lab and field CWV for the 7 production URLs and record them in audit task 04; tests: none (measurement only), record conditions and attach reports.
-- [ ] 1.2 [NRD-37 app] File follow-up bugs/stories for pages outside the thresholds and link them from audit task 04; tests: none.
+- [x] 1.2 [NRD-37 app] File follow-up bugs/stories for pages outside the thresholds and link them from audit task 04; tests: none.

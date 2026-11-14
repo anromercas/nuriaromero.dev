@@ -80,3 +80,7 @@ Ejecuciones individuales (LCP en s, 3 runs): `/` 2,33 / 2,08 / 2,08; `/seo-local
 - Las páginas de servicio muestran retraso de render de ~1 050 ms con 0 ms de carga: es el coste simulado de FCP/CSS bloqueante en móvil lento, sin recurso a priorizar.
 - CLS máximo observado en una ejecución: 0,009 (`/desarrollo-software-medida/`).
 - Limitación: el laboratorio simulado no sustituye al campo; INP real y LCP/CLS p75 de usuarios reales siguen sin conocerse (requiere cuota de PSI, CrUX API con clave o GA4/web-vitals, NRD-17).
+
+## Seguimientos (NRD-37)
+
+Todas las URLs en foco están dentro de los umbrales de laboratorio (LCP <= 2,5 s, CLS <= 0,1, TBT <= 200 ms) el 2026-11-14. No se requiere ningún issue de seguimiento ni ninguna optimización. Salvedad: INP de campo y p75 de LCP/CLS no evaluables hoy (sin datos de campo por cuota de PSI); conviene repetir la consulta de PSI/CrUX más adelante y compararla con la medición posterior a NRD-15.
