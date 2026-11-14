@@ -474,7 +474,7 @@ export const seoLocal: ServicePageData = {
     title: "Tu negocio está en Sevilla. La pregunta es si te encuentran cuando importa.",
     titleAccent: "cuando importa",
     subtitle:
-      "Tus clientes te buscan en Google antes de decidir. Trabajo contigo cada mes para que tu ficha de Google y tu web cuenten bien lo que haces y quien te busca no dude en llamarte.",
+      "Tus clientes te buscan en Google antes de decidir. Trabajo contigo cada mes el posicionamiento web en Sevilla de tu negocio, ficha y web, para que quien te busca no dude en llamarte.",
     primaryCtaLabel: "Reservar una llamada",
     secondaryCta: { label: "Ver qué se revisa", href: "#revision-local" },
   },
@@ -590,7 +590,7 @@ export const seoLocal: ServicePageData = {
     },
     {
       q: "¿Eres una agencia de SEO local?",
-      a: "No. Soy una profesional independiente, desarrolladora web freelance en Sevilla. Hablas directamente con la persona que hace el trabajo.",
+      a: "No, soy consultora SEO y desarrolladora web freelance. El posicionamiento web en Sevilla de tu negocio lo hago yo misma: hablas directamente con la persona que hace el trabajo.",
     },
   ],
   cta: {

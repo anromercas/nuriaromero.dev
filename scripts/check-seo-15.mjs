@@ -16,6 +16,9 @@ assert.match(text, /Se factura mes a mes y no hay cuota de puesta en marcha apar
 assert.doesNotMatch(text, legacyOrUnsafe)
 assert.doesNotMatch(text, positivePromise)
 
+const h2Texts = [...html.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)].map(([, inner]) => inner.replace(/<[^>]*>/g, "").trim())
+assert.equal(h2Texts.filter((heading) => /posicionamiento web en Sevilla/i.test(heading)).length, 1)
+
 const payloads = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi)]
   .map(([, payload]) => JSON.parse(payload))
 const entities = payloads.flatMap((payload) => payload["@graph"] ?? [payload])
@@ -35,6 +38,13 @@ for (const offer of offers) {
   assert.equal(offer.priceSpecification?.valueAddedTaxIncluded, false)
 }
 assert.doesNotMatch(JSON.stringify(service), legacyOrUnsafe)
+
+const faqPage = entities.find((entity) => entity["@type"] === "FAQPage")
+assert.ok(faqPage, "Expected a FAQPage entity in JSON-LD")
+const faqAnswers = (faqPage.mainEntity ?? []).map((question) => question.acceptedAnswer?.text ?? "")
+const phraseAnswers = faqAnswers.filter((answer) => /posicionamiento web en Sevilla/i.test(answer))
+assert.equal(phraseAnswers.length, 1)
+assert.match(phraseAnswers[0], /consultora SEO/)
 
 assert.match(html, /Camino Andalucía, 426, 41309 La Rinconada, Sevilla/)
 assert.match(html, /href="tel:\+34611812431"/)

@@ -30,7 +30,11 @@ export const intentMatrix: SeoIntentRow[] = [
     titleSignal: "SEO local Sevilla",
     descriptionSignal: "desde 300 €/mes",
     h1Signal: "SEO local Sevilla",
-    contentSignals: ["Cómo trabajamos el SEO local en Sevilla", "Cuánto cuesta el SEO local en Sevilla"],
+    contentSignals: [
+      "Posicionamiento web en Sevilla: Google y Google Maps",
+      "Cómo trabajamos el SEO local en Sevilla",
+      "Cuánto cuesta el SEO local en Sevilla",
+    ],
   },
   {
     url: "/seo-para-clinicas-capilares-sevilla/",
@@ -82,6 +86,20 @@ export const intentMatrix: SeoIntentRow[] = [
     h1Signal: "Tienda online en Sevilla para negocios",
     contentSignals: ["Así es el proceso de crear tu tienda online", "Pasarela de pago integrada y probada"],
   },
+]
+
+export interface KeywordOwner {
+  keyword: string // lowercase search query, as tracked in seo.rankTracking
+  url: string // owner route, trailing slash
+}
+
+// One owner page per head term (ADR 0012). Other pages may mention a term in
+// passing, but only the owner targets it in title, H1 or H2.
+export const keywordOwners: KeywordOwner[] = [
+  { keyword: "consultor seo sevilla", url: "/" },
+  { keyword: "seo local sevilla", url: "/seo-local-sevilla/" },
+  { keyword: "agencia seo sevilla", url: "/seo-local-sevilla/" },
+  { keyword: "posicionamiento web sevilla", url: "/seo-local-sevilla/" },
 ]
 
 export const nicheRoutes = [
