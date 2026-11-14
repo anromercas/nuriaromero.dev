@@ -71,7 +71,7 @@ The register SHALL record, for `nuriaromero.dev`, from one authorised source:
 
 ### Requirement: outreach list
 
-The outreach table SHALL hold 10-20 real opportunities. Each has a URL that answers 200 at the time of checking, the real relationship (or "sin relación previa"), the proposed resource (usually `/recursos/` or a guide), why it is relevant, expected evidence and a rejection criterion. Status is "No iniciado".
+The outreach table SHALL hold 10-20 real opportunities (Scope decision 2026-11-14: closed with 5 verified opportunities by the owner). Each has a URL that answers 200 at the time of checking, the real relationship (or "sin relación previa"), the proposed resource (usually `/recursos/` or a guide), why it is relevant, expected evidence and a rejection criterion. Status is "No iniciado".
 
 #### Scenario: anti-manipulation
 
@@ -141,4 +141,4 @@ None in the UI. QA spot-checks three opportunity URLs (they answer and are relev
 
 - [x] 1.1 [NRD-60 app] Extract the register metric guard into `scripts/lib/register-metrics.mjs` (numbers only in dated, sourced baseline sections) and use it in `check-seo-13`; tests: `tests/register-metrics.test.js` first.
 - [x] 1.2 [NRD-61 app] Capture a dated backlink baseline from DataForSEO (at most 5 calls) or a Search Console export and record it, with the toxic list and no disavow; tests: check-seo-13 (rule from 1.1).
-- [x] 1.3 [NRD-62 app] Add 10-20 verified local and sector link opportunities to the outreach table; tests: check-seo-13.
+- [x] 1.3 [NRD-62 app] Add 10-20 verified local and sector link opportunities to the outreach table; tests: check-seo-13. Scope decision 2026-11-14: closed with 5 verified opportunities by the owner.

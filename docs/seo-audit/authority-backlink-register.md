@@ -7,6 +7,8 @@
 
 ## Línea base antes de cualquier campaña
 
+> Nota (2026-11-14): esta tabla queda sustituida por la línea base fechada 2026-11-14 de este documento. Se conservan las filas como histórico.
+
 | Campo                 | Estado verificable                                                                                       | Evidencia requerida antes de actualizarlo                                                                       |
 | --------------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | Fuente de datos       | No configurada; no se atribuyen cifras de backlinks, dominios referentes, anchors, autoridad o toxicidad | Export fechado de una fuente autorizada (por ejemplo, Search Console/Bing Webmaster Tools o una API contratada) |
@@ -143,3 +145,5 @@ No se ofrece dinero, producto, reseña, intercambio de enlaces, publicación de 
 ## Límites actuales
 
 La verificación de backlinks externos, anchors, autoridad y toxicidad queda **pendiente** hasta disponer de acceso autorizado a una fuente fiable. Este documento es un sistema de trabajo; no es evidencia de enlaces ganados.
+
+> Nota (2026-11-14): este texto queda sustituido por la línea base fechada 2026-11-14, que ya cuenta con fuente y fecha de captura. Se conserva como histórico.
