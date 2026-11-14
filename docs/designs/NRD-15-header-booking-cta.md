@@ -196,4 +196,4 @@ n/a: unchanged (`<BookingButton class="w-full" />` first item of `#mobile-menu`,
 
 ## Tasks
 
-- [ ] 1.1 [NRD-45 app] Add the desktop booking CTA (`Reservar`, aria "Reservar una primera sesión") to the header bar, one booking link per breakpoint, padding rule at `md`, and the icon-hiding fallback only if QA measures overflow at 768 px; tests: `tests/header-booking-cta.test.js` first.
+- [x] 1.1 [NRD-45 app] Add the desktop booking CTA (`Reservar`, aria "Reservar una primera sesión") to the header bar, one booking link per breakpoint, padding rule at `md`, and the icon-hiding fallback only if QA measures overflow at 768 px; tests: `tests/header-booking-cta.test.js` first.
