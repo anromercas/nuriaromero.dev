@@ -20,7 +20,8 @@ colors:
   text-secondary: "#cbd5e1"
   text-muted: "#94a3b8"
   drawing-soft: "#475569"
-  action-blue: "#3b82f6"
+  action-blue: "#2563eb"
+  action-blue-hover: "#1d4ed8"
   action-blue-border: "#60a5fa"
 typography:
   display:
@@ -213,7 +214,7 @@ A top-ruled row of pill links (hairline border, `text-body`; hover turns border 
 Full-bleed `ink-closing` band with hairline-quiet edges: large headline with serif phrase, 48ch copy, booking button, a muted meta line, and a static (non-animated) listing mock at right over a 16% sky radial.
 
 ### Buttons and focus
-The booking button is the site-wide pill: `action-blue` fill, `action-blue-border` border, white text, hover one blue step lighter, ring focus. It stays the single filled control. Text links are underlined. Focus on this world is a 2px `sky-signal` outline with 2-4px offset.
+The booking button is the site-wide pill: `action-blue` fill, `action-blue-border` border, white text, hover one step darker (`action-blue-hover`, AA contrast), ring focus. It stays the single filled control. Text links are underlined. Focus on this world is a 2px `sky-signal` outline with 2-4px offset.
 
 ### Motion
 One authored scroll-driven moment: the hero listing fills in (stars, photos, checks drawing in) using `animation-timeline: scroll(root)` inside `prefers-reduced-motion: no-preference` and `@supports`. The completed state is the default CSS; a timed fallback exists for browsers without scroll timelines; the closing copy of the mock is `animate={false}`. State transitions are 0.2s with `cubic-bezier(0.16, 1, 0.3, 1)`. No other entrance animation.
