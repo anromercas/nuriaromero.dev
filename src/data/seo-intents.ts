@@ -79,11 +79,11 @@ export const intentMatrix: SeoIntentRow[] = [
   {
     url: "/tienda-online-sevilla/",
     intent: "Transactional: build an ecommerce with checkout, products and stock",
-    topic: "tienda online con pasarela de pago en Sevilla",
+    topic: "diseño de tienda online para negocios en Sevilla",
     cta: "Request an ecommerce scope and quote",
-    titleSignal: "Tienda online en Sevilla",
+    titleSignal: "Diseño de tienda online en Sevilla",
     descriptionSignal: "pasarela de pago propia",
-    h1Signal: "Tienda online en Sevilla para negocios",
+    h1Signal: "Diseño de tienda online en Sevilla",
     contentSignals: ["Así es el proceso de crear tu tienda online", "Pasarela de pago integrada y probada"],
   },
 ]
@@ -100,6 +100,7 @@ export const keywordOwners: KeywordOwner[] = [
   { keyword: "seo local sevilla", url: "/seo-local-sevilla/" },
   { keyword: "agencia seo sevilla", url: "/seo-local-sevilla/" },
   { keyword: "posicionamiento web sevilla", url: "/seo-local-sevilla/" },
+  { keyword: "diseño tienda online sevilla", url: "/tienda-online-sevilla/" },
 ]
 
 export const nicheRoutes = [
