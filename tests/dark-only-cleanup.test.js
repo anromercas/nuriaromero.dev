@@ -45,3 +45,35 @@ test("nothing references the theme toggle or its icons", () => {
     );
   }
 });
+
+test("header renders a single white logo image", () => {
+  const header = readFileSync(
+    join(root, "src/components/Header.astro"),
+    "utf8",
+  );
+  assert.equal((header.match(/<Image\b/g) ?? []).length, 1);
+  assert.match(
+    header,
+    /import\s+\w+\s+from\s+"@\/assets\/nuriaromerodev-logo-blanco\.svg"/,
+  );
+  assert.doesNotMatch(header, /dark:hidden|dark:block|logo-negro/);
+  assert.match(header, /alt="Nuria Romero"/);
+  assert.match(header, /loading="eager"/);
+});
+
+test("the black logo asset is gone", () => {
+  assert.equal(
+    existsSync(join(root, "src/assets/nuriaromerodev-logo-negro.svg")),
+    false,
+  );
+});
+
+test("layout has no colour-scheme media block styling body and stays dark", () => {
+  const layout = readFileSync(join(root, "src/layouts/Layout.astro"), "utf8");
+  assert.doesNotMatch(
+    layout,
+    /@media\s*\(prefers-color-scheme[^)]*\)\s*\{\s*body\s*\{/,
+  );
+  assert.match(layout, /class="dark"/);
+  assert.match(layout, /color-scheme:\s*dark/);
+});
