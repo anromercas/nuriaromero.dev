@@ -154,4 +154,4 @@ Scope: copy-only change inside the existing hero of `/tienda-online-sevilla/`. N
 ## Tasks
 
 - [x] 1.1 [NRD-65 app] Retarget title, H1, meta description and hero subtitle to "Diseño de tienda online en Sevilla", update the intent row, `keywordOwners` and the `llms.txt` label, with no price change; tests: `tests/tienda-online-retarget.test.js` first.
-- [ ] 1.2 [NRD-66 app] Rank tracking: add "diseño tienda online sevilla" and move "tienda online sevilla" to the reference group in `.claude/harness.json`; tests: `tests/rank-tracking-keywords.test.js` first.
+- [x] 1.2 [NRD-66 app] Rank tracking: add "diseño tienda online sevilla" and move "tienda online sevilla" to the reference group in `.claude/harness.json`; tests: `tests/rank-tracking-keywords.test.js` first.
