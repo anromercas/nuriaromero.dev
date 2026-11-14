@@ -207,5 +207,5 @@ H1, `<title>`, display titles, the other five keyword H2s, buttons, links, relat
 
 ## Tasks
 
-- [ ] 1.1 [NRD-51 app] Record keyword ownership of the four local head terms in `keywordOwners`; tests: `tests/keyword-ownership.test.js` first.
+- [x] 1.1 [NRD-51 app] Record keyword ownership of the four local head terms in `keywordOwners`; tests: `tests/keyword-ownership.test.js` first.
 - [ ] 1.2 [NRD-52 app] Name "posicionamiento web en Sevilla" in the `ReviewBento` H2, the hero subtitle and the agencia FAQ answer, with `check-seo-15` assertions; tests: `tests/seo-local-posicionamiento-web.test.js` and the updated pin in `tests/seo-local-ficha-redesign.test.js` first.

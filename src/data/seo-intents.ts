@@ -84,6 +84,20 @@ export const intentMatrix: SeoIntentRow[] = [
   },
 ]
 
+export interface KeywordOwner {
+  keyword: string // lowercase search query, as tracked in seo.rankTracking
+  url: string // owner route, trailing slash
+}
+
+// One owner page per head term (ADR 0012). Other pages may mention a term in
+// passing, but only the owner targets it in title, H1 or H2.
+export const keywordOwners: KeywordOwner[] = [
+  { keyword: "consultor seo sevilla", url: "/" },
+  { keyword: "seo local sevilla", url: "/seo-local-sevilla/" },
+  { keyword: "agencia seo sevilla", url: "/seo-local-sevilla/" },
+  { keyword: "posicionamiento web sevilla", url: "/seo-local-sevilla/" },
+]
+
 export const nicheRoutes = [
   "/web-para-restaurantes-sevilla/",
   "/web-para-clinicas-sevilla/",
