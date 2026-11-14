@@ -139,6 +139,6 @@ None in the UI. QA spot-checks three opportunity URLs (they answer and are relev
 
 ## Tasks
 
-- [ ] 1.1 [NRD-60 app] Extract the register metric guard into `scripts/lib/register-metrics.mjs` (numbers only in dated, sourced baseline sections) and use it in `check-seo-13`; tests: `tests/register-metrics.test.js` first.
+- [x] 1.1 [NRD-60 app] Extract the register metric guard into `scripts/lib/register-metrics.mjs` (numbers only in dated, sourced baseline sections) and use it in `check-seo-13`; tests: `tests/register-metrics.test.js` first.
 - [ ] 1.2 [NRD-61 app] Capture a dated backlink baseline from DataForSEO (at most 5 calls) or a Search Console export and record it, with the toxic list and no disavow; tests: check-seo-13 (rule from 1.1).
 - [ ] 1.3 [NRD-62 app] Add 10-20 verified local and sector link opportunities to the outreach table; tests: check-seo-13.
