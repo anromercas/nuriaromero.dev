@@ -46,14 +46,45 @@ La primera captura debe usar una ventana fija, fecha/hora, zona horaria, filtros
 
 | Área | KPI | Fuente | Ventana inicial | Frecuencia | Estado |
 | --- | --- | --- | --- | --- | --- |
-| Visibilidad | Clicks, impresiones, CTR, posición media | Search Console | 28 días antes de cada cambio | Semanal; comparativa mensual | N/D: acceso pendiente |
-| Cobertura | Páginas indexadas, excluidas y motivos | Search Console | Fecha de captura | Semanal tras cambios técnicos | N/D: verificación pendiente |
-| Demanda | Consultas, páginas y dispositivos | Search Console | Misma ventana que visibilidad | Mensual | N/D: no inventar consultas |
+| Visibilidad | Clicks, impresiones, CTR, posición media | Search Console | 28 días antes de cada cambio | Semanal; comparativa mensual | Línea base 2026-11-14 (ver abajo) |
+| Cobertura | Páginas indexadas, excluidas y motivos | Search Console | Fecha de captura | Semanal tras cambios técnicos | Parcial 2026-11-14: sitemap y URLs `/servicios/` (ver abajo) |
+| Demanda | Consultas, páginas y dispositivos | Search Console | Misma ventana que visibilidad | Mensual | Línea base 2026-11-14 (ver abajo) |
 | Experiencia | Core Web Vitals: LCP, INP, CLS y disponibilidad de CrUX | CrUX / PSI | Fecha, URL y estrategia documentadas | Tras cambios de plantilla; mensual si hay campo | N/D: ejecución externa pendiente |
-| Adquisición | Usuarios/sesiones consentidas y landing pages | GA4 | 28 días antes/después | Mensual | N/D: validar recepción |
+| Adquisición | Usuarios/sesiones consentidas y landing pages | GA4 | 28 días antes/después | Mensual | Bloqueado: GA4 no recibe datos (bug NRD-17, ver abajo) |
 | Conversión | `contact_click`, `whatsapp_click`, `form_submit`, leads confirmados | GA4 + Formspree | Misma ventana y atribución declarada | Semanal para alertas; mensual | N/D: consentimiento y definición pendientes |
 
 La posición media nunca se usa como KPI único. Los informes distinguen **dato observado**, **estimación**, **limitación** y **decisión**; no se atribuye causalidad a un deploy sin comparación temporal y contexto suficiente.
+
+### Línea base 2026-11-14 (NRD-17)
+
+Fuente: Search Console API, propiedad `sc-domain:nuriaromero.dev`, búsqueda web, todos los países y dispositivos, consultada el 2026-11-14 con una cuenta de servicio de solo lectura. Ventana pedida: 28 días; la API devolvió datos del 2026-10-17 al 2026-11-11 (26 días con datos; los últimos días aún no están consolidados). CTR en porcentaje.
+
+**Total del sitio:** 1.199 impresiones, 2 clics.
+
+| Página | Clics | Impresiones | CTR | Posición media |
+| --- | --- | --- | --- | --- |
+| `/diseno-web-sevilla/` | 1 | 570 | 0,18 % | 60,8 |
+| `/seo-local-sevilla/` | 0 | 459 | 0 % | 47,6 |
+| `/automatizaciones/` | 0 | 41 | 0 % | 27,3 |
+| `/sobre-mi/` | 0 | 31 | 0 % | 10,5 |
+| `/` | 0 | 30 | 0 % | 27,5 |
+| `/desarrollo-software-medida/` | 0 | 16 | 0 % | 28,8 |
+| `/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/` | 1 | 13 | 7,69 % | 12,5 |
+| `/web-para-restaurantes-sevilla/` | 0 | 8 | 0 % | 8,2 |
+| `/web-para-abogados-gestorias-sevilla/` | 0 | 5 | 0 % | 10,6 |
+| `/contacto/` | 0 | 5 | 0 % | 5,0 |
+| `/web-para-clinicas-sevilla/` | 0 | 1 | 0 % | 7,0 |
+| `/inteligencia-artificial/`, `/tienda-online-sevilla/` | 0 | 0 | N/D | N/D: sin impresiones en la ventana |
+
+Otras URLs con impresiones: `/aviso-legal/` (9), `/servicios/automatizaciones/` (4), `/servicios/` (3), `https://n8n.nuriaromero.dev/` (3), `http://nuriaromero.dev/` (1).
+
+**Consultas con más impresiones:** "diseñador web sevilla" (134, pos. 58,4), "diseño paginas web sevilla" (88, pos. 59,7), "seo local sevilla" (84, pos. 31,3), "aplicaciones web a medida sevilla" (61, pos. 70,6), "diseño de paginas web en sevilla" (56, pos. 56,3), "plan seo sevilla" (41, pos. 41,1), "presupuesto seo sevilla" (35, pos. 47,8). Ninguna con clics.
+
+**Clics en reservar (GA4):** N/D. GA4 no ha recibido ningún dato (informe vacío del 2026-10-17 al 2026-11-13). Causa verificada el 2026-11-14 en producción: `src/components/AnalyticsConsent.astro` define `gtag` empujando un array (`dataLayer.push(args)`); gtag.js solo procesa objetos `arguments`, así que ignora `consent`, `js`, `config` y los eventos. Tras aceptar cookies se carga `gtag/js` pero no sale ninguna petición `/g/collect`; con el formato correcto (`function gtag(){dataLayer.push(arguments)}`) la misma página envía `POST region1.google-analytics.com/g/collect` (204). La línea base de GA4 empieza cuando el arreglo esté publicado.
+
+**Sitemap:** Search Console solo tiene enviado `https://nuriaromero.dev/sitemap-0.xml` (2026-07-09, 24 URLs, 0 errores, 0 avisos). `sitemap-index.xml` no está enviado; enviarlo es una acción en la interfaz de Search Console.
+
+**URLs antiguas `/servicios/*`:** en producción todas responden 301 a su ruta nueva (comprobado con `curl` el 2026-11-14). En la inspección de URLs, Google aún muestra estados de rastreos anteriores a la redirección: `/servicios/diseno-web-sevilla/` "Página con redirección"; `/servicios/desarrollo-software-medida/`, `/servicios/automatizaciones/`, `/servicios/inteligencia-artificial/` y `/servicios/` "Rastreada: actualmente sin indexar" (últimos rastreos entre 2026-08-19 y 2026-10-13). Ninguna está indexada. Revisar de nuevo en la próxima captura.
 
 ## Cadencia y registro de cambios
 
