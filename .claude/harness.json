@@ -1,0 +1,367 @@
+{
+  "$schema": "/Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/templates/harness.schema.json",
+  "version": 1,
+  "project": {
+    "name": "nuriaromero.dev",
+    "slug": "nuriaromero",
+    "reportLanguage": "es",
+    "artifactLanguage": "en",
+    "summary": "Portfolio and local services site of Nuria Romero, a freelance web developer and local SEO/GEO consultant in Seville (web design, online stores, local SEO, custom software, automations, AI). Static Astro 4 + Tailwind + TypeScript site deployed on Netlify; all site copy is in Spanish."
+  },
+  "repo": {
+    "github": "anromercas/nuriaromero.dev",
+    "baseBranch": "develop",
+    "branchPattern": "{type}/{KEY}-{slug}",
+    "mergeMethod": "merge",
+    "untrackedPaths": [
+      ".claude/state/",
+      ".env",
+      ".playwright-mcp/",
+      ".netlify/"
+    ],
+    "qaExemptPaths": [
+      "docs/",
+      "odd/",
+      "seo/ranks/",
+      ".github/workflows/",
+      ".gitignore",
+      "README.md",
+      "PRODUCT.md",
+      "DESIGN.md"
+    ]
+  },
+  "tracker": {
+    "type": "jira",
+    "site": "nuriaromerodev.atlassian.net",
+    "cloudId": "1a60def7-1fc1-499d-990b-dd942c4c8456",
+    "projectKey": "NRD",
+    "boardId": 37,
+    "issueTypeIds": {
+      "story": "10052",
+      "epic": "10049",
+      "subtask": "10050",
+      "bug": "10054"
+    },
+    "issueTypeNames": {
+      "story": "Historia",
+      "epic": "Epic",
+      "subtask": "Subtask",
+      "bug": "Error"
+    },
+    "fields": {
+      "storyPoints": "customfield_10016",
+      "sprint": "customfield_10020"
+    },
+    "statuses": {
+      "todo": "Tareas por hacer",
+      "inProgress": "En curso",
+      "done": "Finalizada"
+    },
+    "transitionIds": {
+      "inProgress": null,
+      "done": null
+    },
+    "sprintNaming": "{KEY} Sprint {n}",
+    "sprintLengthDays": 14,
+    "initialCapacityPoints": 20,
+    "labels": {
+      "tech-ready": "tech-ready",
+      "tech-blocked": "tech-blocked",
+      "needs-tech-answer": "needs-tech-answer",
+      "dev-done": "dev-done",
+      "qa-failed": "qa-failed",
+      "qa-bug": "qa-bug",
+      "pr-changes": "pr-changes",
+      "pr-approved": "pr-approved",
+      "needs-human": "needs-human",
+      "infra": "infra",
+      "research": "research",
+      "seo": "seo",
+      "size-S": "size-S",
+      "size-M": "size-M",
+      "size-L": "size-L",
+      "size-XL": "size-XL"
+    },
+    "blockingLabels": ["needs-human", "qa-failed", "pr-changes"]
+  },
+  "process": {
+    "tdd": true,
+    "conventionalCommits": true,
+    "wipLimit": 1
+  },
+  "commands": {
+    "install": "pnpm install",
+    "dev": "pnpm dev --port {port} --strictPort",
+    "unitTest": "node --test tests/*.test.js",
+    "singleTest": "node --test {file}",
+    "e2e": null,
+    "typecheck": "pnpm astro check",
+    "lint": null,
+    "formatCheck": null,
+    "format": "pnpm format {file}",
+    "build": "pnpm build",
+    "preShip": ["node --test tests/*.test.js", "pnpm build"],
+    "preCommit": ["node --test tests/*.test.js"]
+  },
+  "ci": {
+    "workflowFile": "ci.yml",
+    "requiredChecks": ["verify"],
+    "checkApp": "github-actions",
+    "mainHealthWorkflow": "ci.yml"
+  },
+  "layers": {
+    "app": {
+      "description": "The whole static site: pages, layouts, components, content collections, data, client scripts, styles, public assets, build-time SEO checks and their tests, plus project docs (docs/, CLAUDE.md).",
+      "paths": [
+        "src/**",
+        "public/**",
+        "tests/**",
+        "scripts/**",
+        "docs/**",
+        "CLAUDE.md",
+        "astro.config.mjs",
+        "tailwind.config.mjs",
+        "tsconfig.json",
+        "package.json"
+      ],
+      "owner": "team-harness:developer",
+      "testing": "node:test files in tests/*.test.js (run with node --test). Build-time SEO checks in scripts/check-seo-*.mjs run against dist/ after pnpm build. Site copy stays in Spanish."
+    }
+  },
+  "design": {
+    "mode": "markdown",
+    "markdown": {
+      "changesDir": "docs/designs",
+      "template": null,
+      "naming": "{KEY}-{storySlug}.md"
+    },
+    "adrDir": "docs/adr",
+    "prdPath": "docs/PRD.md",
+    "ux": {
+      "enabled": true,
+      "skill": "impeccable:impeccable",
+      "uiLayers": ["app"]
+    }
+  },
+  "review": {
+    "adversarial": {
+      "codex": false,
+      "codexModel": null,
+      "codexEffort": "high"
+    },
+    "specialists": [
+      {
+        "agent": "seo-review",
+        "paths": [
+          "src/pages/**",
+          "src/layouts/**",
+          "src/content/**",
+          "src/components/seo/**",
+          "src/lib/schema.ts",
+          "src/data/**",
+          "public/llms.txt",
+          "public/_redirects",
+          "public/_headers",
+          "astro.config.mjs"
+        ],
+        "when": "Any change to public pages, layouts, blog content, head/meta, structured data, site data, robots/sitemap config, llms.txt or redirects; checks indexability, structured data and the SEO candidate the story implements."
+      },
+      {
+        "agent": "ux-review",
+        "paths": [
+          "src/pages/**",
+          "src/layouts/**",
+          "src/components/**",
+          "src/styles/**",
+          "tailwind.config.mjs"
+        ],
+        "when": "Any change to pages, layouts, components or styles; checks the built UI against the story UI spec and DESIGN.md."
+      },
+      {
+        "agent": "a11y-responsive",
+        "paths": [
+          "src/pages/**",
+          "src/layouts/**",
+          "src/components/**",
+          "src/scripts/**",
+          "src/styles/**",
+          "tailwind.config.mjs"
+        ],
+        "when": "Any change to markup, client scripts or styles; checks WCAG semantics, keyboard, focus, contrast and mobile reflow at 375 px."
+      },
+      {
+        "agent": "compliance-privacy",
+        "paths": [
+          "src/components/ContactForm.astro",
+          "src/scripts/contact-form.js",
+          "src/components/AnalyticsConsent.astro",
+          "src/scripts/analytics-consent.js",
+          "src/pages/privacidad.astro",
+          "src/pages/cookies.astro",
+          "src/pages/aviso-legal.astro",
+          "public/_headers"
+        ],
+        "when": "Any change to the contact form, analytics consent, legal pages or CSP; checks RGPD/LOPDGDD and LSSI-CE compliance."
+      }
+    ]
+  },
+  "qa": {
+    "devUrl": "http://localhost:4399",
+    "devPort": 4399,
+    "cdpPort": 9333,
+    "browser": "devtools-mcp",
+    "e2eCommand": null,
+    "evidenceDir": "$TMPDIR/{slug}-qa/{KEY}",
+    "chromeFlags": [],
+    "regressionDoc": ".claude/harness/qa-regression.md"
+  },
+  "merge": {
+    "auto": true,
+    "maxPerRun": 3,
+    "deployOnMerge": false
+  },
+  "sprint": {
+    "stepBudget": 12,
+    "maxReviewRounds": 3,
+    "maxQaFailures": 3,
+    "lockStaleMinutes": 90,
+    "unattended": {
+      "enabled": true,
+      "reportEmail": "nuriaromero.dev@gmail.com",
+      "reportHour": 7,
+      "reportSubjectPrefix": "[nuriaromero.dev]"
+    },
+    "research": {
+      "enabled": false,
+      "reference": "nuriaromero.dev",
+      "competitors": [],
+      "sources": [],
+      "fetchBudget": 40,
+      "brief": null
+    }
+  },
+  "seo": {
+    "enabled": true,
+    "site": "nuriaromero.dev",
+    "competitors": [
+      "gfpublicidad.es",
+      "posicionatuwebsevilla.com",
+      "pluxdigital.com"
+    ],
+    "market": {
+      "location": "Seville,Andalusia,Spain",
+      "country": "Spain",
+      "languageCode": "es"
+    },
+    "seeds": [
+      "seo local sevilla",
+      "agencia seo sevilla",
+      "diseño web sevilla",
+      "tienda online sevilla",
+      "posicionamiento en ia",
+      "geo posicionamiento ia"
+    ],
+    "reportDir": ".claude/state/seo",
+    "dataforseo": {
+      "enabled": true,
+      "maxCallsPerRun": 30
+    },
+    "skills": [
+      "claude-seo:seo-geo",
+      "claude-seo:seo-local",
+      "claude-seo:seo-sxo"
+    ],
+    "fetchBudget": 40,
+    "brief": ".claude/harness/seo.md",
+    "unattended": {
+      "enabled": true,
+      "everyDays": 1
+    },
+    "rankTracking": {
+      "enabled": true,
+      "keywords": [
+        {
+          "keyword": "seo local sevilla",
+          "page": "/seo-local-sevilla/",
+          "group": "SEO local"
+        },
+        {
+          "keyword": "agencia seo sevilla",
+          "page": "/seo-local-sevilla/",
+          "group": "SEO local"
+        },
+        {
+          "keyword": "posicionamiento web sevilla",
+          "page": "/seo-local-sevilla/",
+          "group": "SEO local"
+        },
+        {
+          "keyword": "consultor seo sevilla",
+          "page": "/",
+          "group": "SEO local"
+        },
+        {
+          "keyword": "como aparecer en google maps",
+          "page": "/blog/como-aparecer-en-google-maps-negocio-sevilla/",
+          "group": "SEO local"
+        },
+        {
+          "keyword": "posicionamiento en ia",
+          "page": "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
+          "group": "GEO / IA"
+        },
+        {
+          "keyword": "inteligencia artificial para empresas sevilla",
+          "page": "/inteligencia-artificial/",
+          "group": "GEO / IA"
+        },
+        {
+          "keyword": "diseño web sevilla",
+          "page": "/diseno-web-sevilla/",
+          "group": "Diseño web"
+        },
+        {
+          "keyword": "cuanto cuesta una pagina web en sevilla",
+          "page": "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
+          "group": "Diseño web"
+        },
+        {
+          "keyword": "tienda online sevilla",
+          "page": "/tienda-online-sevilla/",
+          "group": "Diseño web"
+        },
+        {
+          "keyword": "desarrollo de software a medida sevilla",
+          "page": "/desarrollo-software-medida/",
+          "group": "Software"
+        }
+      ],
+      "maxCallsPerRun": 14,
+      "historyDir": "seo/ranks",
+      "unattended": {
+        "enabled": true,
+        "everyDays": 14
+      }
+    }
+  },
+  "infra": {
+    "ownedPaths": [
+      ".github/workflows/**",
+      "public/_headers",
+      "public/_redirects",
+      ".gitignore"
+    ],
+    "provider": "netlify",
+    "readOnlyCommands": [],
+    "productionUrl": "https://nuriaromero.dev",
+    "notes": "Netlify builds production from main only; the user has a budget of about 20 production deploys a month (300 credits). develop is promoted to main by a separate scheduled task every 2 days, never by the sprint. No netlify.toml: headers and redirects live in public/_headers and public/_redirects."
+  },
+  "docs": {
+    "claudeMd": "CLAUDE.md",
+    "agentsMd": null,
+    "invariants": ".claude/harness/invariants.md",
+    "qaRegression": ".claude/harness/qa-regression.md",
+    "architecture": ["PRODUCT.md", "DESIGN.md"],
+    "standards": ["docs/seo-checklist-65-factores.md"]
+  }
+}
