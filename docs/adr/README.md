@@ -45,3 +45,5 @@ Paths and symbols in the repository that show or enforce the decision.
 | [0008](0008-spanish-copy-english-code.md)          | Spanish copy, English code                                                | Accepted (retroactive) |
 | [0009](0009-branch-flow-and-production-deploys.md) | Branch flow and budgeted production deploys from `main`                   | Accepted (retroactive) |
 | [0010](0010-markdown-designs.md)                   | Markdown designs in `docs/designs/`                                       | Accepted               |
+| [0011](0011-ci-verify-workflow.md)                 | CI `verify` workflow on GitHub Actions                                    | Accepted               |
+| [0012](0012-keyword-ownership-registry.md)         | Keyword ownership registry in `src/data/seo-intents.ts`                   | Accepted               |
