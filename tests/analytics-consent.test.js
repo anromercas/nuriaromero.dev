@@ -152,6 +152,24 @@ test('AnalyticsConsent.astro uses createGtag instead of an Array-pushing wrapper
   assert.doesNotMatch(source, /dataLayer\.push\(args\)/)
 })
 
+test('accept, reject and accept again re-grants consent without reloading the script', () => {
+  withWindow(() => {
+    const { controller, target, scripts } = setupReal()
+    controller.initialize()
+    controller.accept()
+    controller.reject()
+    const before = target.dataLayer.length
+    controller.accept()
+    const fresh = target.dataLayer.slice(before).map((entry) => Array.from(entry))
+    assert.equal(scripts.length, 1)
+    assert.ok(fresh.some((a) => a[0] === 'consent' && a[1] === 'update' && a[2].analytics_storage === 'granted'))
+    assert.equal(fresh.some((a) => a[2]?.ad_storage === 'granted'), false)
+    assert.equal(fresh.filter((a) => a[0] === 'event' && a[1] === 'page_view').length, 1)
+    controller.trackEvent('contact_click')
+    assert.equal(Array.from(target.dataLayer.at(-1))[1], 'contact_click')
+  })
+})
+
 test('homepage related links include the contextual resources page', async () => {
   const { readFile } = await import('node:fs/promises')
   const links = await readFile(new URL('../src/data/internal-links.ts', import.meta.url), 'utf8')

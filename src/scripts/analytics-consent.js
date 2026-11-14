@@ -33,13 +33,15 @@ export function createConsentController({ storage, gtag, appendScript, measureme
   }
 
   function enableAnalytics() {
-    if (scriptLoaded || !measurementId) return false
+    if (analyticsAllowed || !measurementId) return false
     analyticsAllowed = true
     gtag('consent', 'update', { analytics_storage: 'granted' })
-    gtag('js', new Date())
-    gtag('config', measurementId, { send_page_view: false })
-    appendScript(`https://www.googletagmanager.com/gtag/js?id=${measurementId}`)
-    scriptLoaded = true
+    if (!scriptLoaded) {
+      gtag('js', new Date())
+      gtag('config', measurementId, { send_page_view: false })
+      appendScript(`https://www.googletagmanager.com/gtag/js?id=${measurementId}`)
+      scriptLoaded = true
+    }
     return true
   }
 
