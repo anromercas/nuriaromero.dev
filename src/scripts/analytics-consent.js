@@ -14,6 +14,16 @@ const DENIED_CONSENT = {
   ad_personalization: 'denied',
 }
 
+export function createGtag(target) {
+  target.dataLayer = target.dataLayer || []
+  target.gtag =
+    target.gtag ||
+    function gtag() {
+      target.dataLayer.push(arguments)
+    }
+  return target.gtag
+}
+
 export function createConsentController({ storage, gtag, appendScript, measurementId }) {
   let scriptLoaded = false
   let analyticsAllowed = false
@@ -23,13 +33,16 @@ export function createConsentController({ storage, gtag, appendScript, measureme
   }
 
   function enableAnalytics() {
-    if (scriptLoaded || !measurementId) return
+    if (analyticsAllowed || !measurementId) return false
     analyticsAllowed = true
     gtag('consent', 'update', { analytics_storage: 'granted' })
-    gtag('js', new Date())
-    gtag('config', measurementId, { send_page_view: false })
-    appendScript(`https://www.googletagmanager.com/gtag/js?id=${measurementId}`)
-    scriptLoaded = true
+    if (!scriptLoaded) {
+      gtag('js', new Date())
+      gtag('config', measurementId, { send_page_view: false })
+      appendScript(`https://www.googletagmanager.com/gtag/js?id=${measurementId}`)
+      scriptLoaded = true
+    }
+    return true
   }
 
   function initialize() {
@@ -39,7 +52,7 @@ export function createConsentController({ storage, gtag, appendScript, measureme
 
   function accept() {
     storage.setItem(CONSENT_KEY, 'accepted')
-    enableAnalytics()
+    if (enableAnalytics()) trackPageView()
   }
 
   function reject() {
