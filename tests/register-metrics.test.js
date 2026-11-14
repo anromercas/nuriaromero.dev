@@ -67,7 +67,7 @@ test("a sourced section does not leak into the next section", () => {
   const markdown = [
     "## Línea base 2026-11-20",
     "Fuente: a",
-    "Fecha de captura: b",
+    "Fecha de captura: 2026-11-20",
     "3 backlinks",
     "",
     "## Otra sección",
@@ -77,6 +77,72 @@ test("a sourced section does not leak into the next section", () => {
   const found = findUnsourcedMetrics(markdown);
   assert.equal(found.length, 1);
   assert.equal(found[0].section, "## Otra sección");
+});
+
+const sourced = (heading, fuente, fecha, eol = "\n") =>
+  [heading, "", fuente, fecha, "", "Hay 5 backlinks.", ""].join(eol);
+
+test("reports metrics when Fuente has an empty value", () => {
+  const md = sourced(
+    "## Línea base 2026-11-14",
+    "Fuente:",
+    "Fecha de captura: 2026-11-14",
+  );
+  assert.equal(findUnsourcedMetrics(md).length, 1);
+});
+
+test("reports metrics when Fecha de captura has an empty value", () => {
+  const md = sourced(
+    "## Línea base 2026-11-14",
+    "Fuente: DataForSEO",
+    "Fecha de captura:",
+  );
+  assert.equal(findUnsourcedMetrics(md).length, 1);
+});
+
+test("reports metrics when the capture date is not a real calendar date", () => {
+  const md = sourced(
+    "## Línea base 2026-11-14",
+    "Fuente: DataForSEO",
+    "Fecha de captura: 2099-99-99",
+  );
+  assert.equal(findUnsourcedMetrics(md).length, 1);
+});
+
+test("reports metrics when the heading date is not a real calendar date", () => {
+  const md = sourced(
+    "## Línea base 2026-13-45",
+    "Fuente: DataForSEO",
+    "Fecha de captura: 2026-11-14",
+  );
+  assert.equal(findUnsourcedMetrics(md).length, 1);
+});
+
+test("accepts a valid sourced section with CRLF line endings", () => {
+  const md = sourced(
+    "## Línea base 2026-11-14",
+    "Fuente: DataForSEO",
+    "Fecha de captura: 2026-11-14",
+    "\r\n",
+  );
+  assert.deepEqual(findUnsourcedMetrics(md), []);
+});
+
+test("reports an empty Fuente with CRLF line endings", () => {
+  const md = sourced(
+    "## Línea base 2026-11-14",
+    "Fuente:",
+    "Fecha de captura: 2026-11-14",
+    "\r\n",
+  );
+  assert.equal(findUnsourcedMetrics(md).length, 1);
+});
+
+test("reports a metric in preamble text before the first heading", () => {
+  const md = "Resumen: 12 backlinks.\n\n## Otra\n\nsin métricas\n";
+  const found = findUnsourcedMetrics(md);
+  assert.equal(found.length, 1);
+  assert.equal(found[0].section, "");
 });
 
 test("the current register reports nothing", async () => {
