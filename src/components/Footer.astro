@@ -2,6 +2,7 @@
 import { SITE } from "@/data/site";
 import { services } from "@/data/services";
 import { niches } from "@/data/niches";
+import { localTrust } from "@/data/local-trust";
 
 const currentYear = new Date().getFullYear();
 ---
@@ -51,7 +52,8 @@ const currentYear = new Date().getFullYear();
       <address
         class="space-y-1.5 text-sm not-italic text-zinc-800/90 dark:text-zinc-200/90"
       >
-        <p>{SITE.address.locality} y su área metropolitana</p>
+        <p>{SITE.address.full}</p>
+        <p>Zona de servicio: {localTrust.gbp.serviceArea}</p>
         <p>
           <a href={`mailto:${SITE.email}`} class="hover:text-blue-500 hover:underline">
             {SITE.email}
