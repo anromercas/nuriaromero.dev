@@ -4,6 +4,8 @@
  * Keep empty URLs and proof records until the owner has verified the asset,
  * its public NAP, and the consent/evidence trail for anything published.
  */
+import { SITE } from "./site.ts"
+
 export type TrustStatus = "pending-human-approval" | "verified"
 
 export interface SocialProofRecord {
@@ -29,7 +31,7 @@ export const localTrust = {
     // "Write a review" dialog of the verified profile; used by the contact
     // success state and docs/google-review-request-template.md.
     writeReviewUrl: `https://search.google.com/local/writereview?placeid=${GBP_PLACE_ID}` as string | null,
-    publicAddress: "Camino Andalucía, 426, 41309 La Rinconada, Sevilla" as string | null,
+    publicAddress: SITE.address.full as string | null,
     serviceArea: "Sevilla y área metropolitana",
   },
   socialProof: [] as SocialProofRecord[],

@@ -274,5 +274,5 @@ Screens and layout, hierarchy, states, copy, design-system reuse, responsive, in
 ## Tasks
 
 - [x] 1.1 [NRD-53 app] Derive `writeReviewUrl` from one `GBP_PLACE_ID` in `local-trust.ts` and reveal the optional review invite on the contact success state; tests: `tests/google-review-link.test.js` first.
-- [ ] 1.2 [NRD-54 app] Footer shows `SITE.address.full` and the service area from `localTrust`, and `publicAddress` reads `SITE.address.full`; tests: `tests/nap-consistency.test.js` first.
+- [x] 1.2 [NRD-54 app] Footer shows `SITE.address.full` and the service area from `localTrust`, and `publicAddress` reads `SITE.address.full`; tests: `tests/nap-consistency.test.js` first.
 - [ ] 1.3 [NRD-55 app] Spanish email and WhatsApp review request template in `docs/` with the same URL; tests: `tests/review-template-sync.test.js` first.
