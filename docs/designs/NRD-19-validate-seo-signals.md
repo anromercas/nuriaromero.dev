@@ -128,4 +128,4 @@ Reference for the 375 px FAQ check (task 1.3), so QA judges against the current 
 
 - [x] 1.1 [NRD-40 app] Validate production JSON-LD on `/`, `/seo-local-sevilla/`, `/diseno-web-sevilla/` and record it in task 11; tests: none (validation only), keep `check:seo-11:dist` green.
 - [x] 1.2 [NRD-41 app] Check every absolute link in production `llms.txt` returns 200 without redirects and record it in task 09; tests: none, keep `check:seo-09:dist` green.
-- [ ] 1.3 [NRD-42 app] Check FAQ direct-answer rendering at 375 px on `/seo-local-sevilla/` and the GEO post and record it in task 08; tests: none.
+- [x] 1.3 [NRD-42 app] Check FAQ direct-answer rendering at 375 px on `/seo-local-sevilla/` and the GEO post and record it in task 08; tests: none.
