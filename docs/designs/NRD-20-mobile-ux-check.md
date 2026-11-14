@@ -111,5 +111,5 @@ This story is the real-browser check. QA spot-checks two rows against their scre
 
 ## Tasks
 
-- [ ] 1.1 [NRD-56 app] Run the real-browser pass (2 pages x 4 widths x 3 consent states plus keyboard) on a local preview of `develop` and record it in audit task 12; tests: none (measurement only), record SHA, Chrome version and screenshots.
+- [x] 1.1 [NRD-56 app] Run the real-browser pass (2 pages x 4 widths x 3 consent states plus keyboard) on a local preview of `develop` and record it in audit task 12; tests: none (measurement only), record SHA, Chrome version and screenshots.
 - [ ] 1.2 [NRD-57 app] File an NRD bug per defect and link it from audit task 12, or record "sin defectos"; tests: none.
