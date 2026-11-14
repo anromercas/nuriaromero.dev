@@ -3,6 +3,14 @@
 // chatbot IA 399 €, software a medida 999 €. E-commerce: sin precio público.
 import type { ServicePageData } from "@/data/types"
 
+/** `from` label of a named pricing tier; throws so a renamed tier fails the build. */
+export function tierFrom(service: ServicePageData, tierName: string): string {
+  const tier = service.pricing.tiers?.find((t) => t.name === tierName)
+  if (!tier)
+    throw new Error(`Pricing tier "${tierName}" not found in ${service.slug}`)
+  return tier.from
+}
+
 export const disenoWeb: ServicePageData = {
   slug: "/diseno-web-sevilla/",
   breadcrumbName: "Diseño web en Sevilla",
