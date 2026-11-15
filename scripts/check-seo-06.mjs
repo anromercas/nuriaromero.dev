@@ -11,9 +11,6 @@ const errors = []
 
 if (linkRows.length === 0) errors.push("No internal-link map entries found")
 
-// G1b (NRD-114) removes this exemption once the /contacto links carry the trailing slash.
-const TRAILING_SLASH_EXEMPT = new Set(["/contacto"])
-
 const routeFile = (route) => {
   if (route === "/") return new URL("index.html", distDir)
   if (route.endsWith("/")) return new URL(`${route.slice(1)}index.html`, distDir)
@@ -50,7 +47,7 @@ for (const file of renderedFiles) {
   for (const [, href] of html.matchAll(/href="(\/[^"#?]*)"/g)) {
     if (href.endsWith("/")) {
       if (!existsSync(routeFile(href))) errors.push(`${file}: internal target does not exist: ${href}`)
-    } else if (!TRAILING_SLASH_EXEMPT.has(href) && existsSync(routeFile(href))) {
+    } else if (existsSync(routeFile(href))) {
       errors.push(`${file}: internal href omits trailing slash: ${href}`)
     }
   }
