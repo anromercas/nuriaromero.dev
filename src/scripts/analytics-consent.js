@@ -135,6 +135,25 @@ export function createConsentController({ storage, gtag, appendScript, measureme
   return { initialize, accept, reject, trackPageView, trackEvent }
 }
 
+export const CONSENT_OFFSET_PROPERTY = '--consent-offset'
+
+// Space the fixed panel takes from its top edge to the bottom of the viewport.
+export function consentOffset(panelRect, viewportHeight) {
+  if (!panelRect || panelRect.height <= 0) return 0
+  return Math.max(0, Math.ceil(viewportHeight - panelRect.top))
+}
+
+export function isObscured(rect, panelRect) {
+  if (!rect || !panelRect) return false
+  if (rect.width <= 0 && rect.height <= 0) return false
+  return (
+    rect.bottom > panelRect.top &&
+    rect.top < panelRect.bottom &&
+    rect.right > panelRect.left &&
+    rect.left < panelRect.right
+  )
+}
+
 export function createConsentPanel({ doc, storage, controller }) {
   // Elements are resolved on every call: View Transitions replaces <body>,
   // so any reference captured earlier would point at detached nodes.
@@ -149,9 +168,38 @@ export function createConsentPanel({ doc, storage, controller }) {
     if (customize) customize.setAttribute('aria-expanded', 'false')
   }
 
+  // Publishes the panel height on <html> so the page can reserve it (scroll
+  // padding, body padding, WhatsApp button). Astro resets <html> attributes on
+  // navigation, so this runs on every sync, show, hide and resize.
+  function update() {
+    const style = doc.documentElement?.style
+    if (!style) return
+    const panel = el('analytics-consent')
+    const viewport = doc.defaultView?.innerHeight
+    const offset =
+      panel && !panel.hidden && typeof panel.getBoundingClientRect === 'function' && viewport
+        ? consentOffset(panel.getBoundingClientRect(), viewport)
+        : 0
+    if (offset > 0) style.setProperty(CONSENT_OFFSET_PROPERTY, `${offset}px`)
+    else style.removeProperty(CONSENT_OFFSET_PROPERTY)
+  }
+
   function hide() {
     const panel = el('analytics-consent')
     if (panel) panel.hidden = true
+    update()
+  }
+
+  // WCAG 2.2 SC 2.4.11: bring a focused element out from under the panel.
+  function handleFocus(target) {
+    if (!target || typeof target.closest !== 'function') return
+    const panel = el('analytics-consent')
+    if (!panel || panel.hidden || typeof panel.getBoundingClientRect !== 'function') return
+    if (target.closest('#analytics-consent')) return
+    if (typeof target.getBoundingClientRect !== 'function') return
+    if (isObscured(target.getBoundingClientRect(), panel.getBoundingClientRect())) {
+      target.scrollIntoView?.({ block: 'nearest' })
+    }
   }
 
   function sync() {
@@ -159,6 +207,7 @@ export function createConsentPanel({ doc, storage, controller }) {
     if (!panel) return
     collapse()
     panel.hidden = Boolean(storage.getItem(CONSENT_KEY))
+    update()
   }
 
   function handleClick(target) {
@@ -177,6 +226,7 @@ export function createConsentPanel({ doc, storage, controller }) {
       settings.hidden = !settings.hidden
       save.hidden = settings.hidden
       customize.setAttribute('aria-expanded', String(!settings.hidden))
+      update()
     } else if (target.closest('#consent-save')) {
       if (el('analytics-toggle')?.checked) controller.accept()
       else controller.reject()
@@ -193,8 +243,9 @@ export function createConsentPanel({ doc, storage, controller }) {
       if (toggle) toggle.checked = storage.getItem(CONSENT_KEY) === 'accepted'
       if (save) save.hidden = false
       if (customize) customize.setAttribute('aria-expanded', 'true')
+      update()
     }
   }
 
-  return { sync, handleClick }
+  return { sync, handleClick, handleFocus, update }
 }
