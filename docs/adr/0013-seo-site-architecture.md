@@ -1,6 +1,6 @@
 # 0013. SEO site architecture: one owner page per keyword cluster
 
-- Status: Proposed (the PO sets it to Accepted when accepting NRD-74; each radical proposal stays "Pendiente de la usuaria" until the user approves it in the PRD decision log)
+- Status: Accepted (2026-11-15, PO on accepting NRD-74; proposals P1 and P2 remain "Pendiente de la usuaria")
 - Date: 2026-11-15
 
 ## Context
