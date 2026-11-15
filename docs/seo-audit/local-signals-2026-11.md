@@ -113,8 +113,89 @@ Date read 2026-11-15. **No directory or profile listing with our name, address a
 - The search for the exact name plus phone was refused by the search tool and was not worked around; a phone-only search returned nothing that ties the number to us (L0).
 - LinkedIn and the Google Maps profile are linked from our `sameAs` (`src/data/site.ts:44,46`); LinkedIn needs a login and the Maps page is dynamic, so neither was read.
 
+## Servicios y enlaces de la ficha -> páginas propietarias (ADR 0013)
+
+Source: owner map of `docs/adr/0013-seo-site-architecture.md` (status Proposed, dated 2026-11-15) and page slugs from `src/data/services.ts` (`slug` at lines 15, 146, 252, 358, 464, 647). Rule: one GBP service entry per service that has an owner page, and its link is the owner URL with trailing slash on `https://nuriaromero.dev`. The wording of each entry is proposed from the page names and is for the owner to adjust; no entry claims a result, a ranking or a price. The GBP services list is not publicly readable (L0), so whether each entry already exists is "sin dato público; lo confirma la propietaria".
+
+| Cluster (ADR status)                 | GBP service entry (proposed name)      | Link it should point to (owner URL)                   | Notes                                                                                                        |
+| ------------------------------------ | -------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| SL-1 and SL-3 (decided, provisional) | SEO local en Sevilla                   | `https://nuriaromero.dev/seo-local-sevilla/`          | The page carries the price section of SL-3. Local pack present in its SERP (L1)                              |
+| SL-2 (decided)                       | Consultoría SEO en Sevilla             | `https://nuriaromero.dev/`                            | The home is the owner of `consultor seo sevilla`; local pack present (ADR owner map)                         |
+| DW-1 (decided)                       | Diseño web en Sevilla                  | `https://nuriaromero.dev/diseno-web-sevilla/`         | Local pack present                                                                                           |
+| TO-2 and registered TO-1 term        | Tienda online en Sevilla               | `https://nuriaromero.dev/tienda-online-sevilla/`      | Page is live; "URL is unknown to Google" per NRD-98, so the link is correct but the page is not yet indexed  |
+| SW-1 (provisional)                   | Software a medida en Sevilla           | `https://nuriaromero.dev/desarrollo-software-medida/` | Local pack present in its SERP                                                                               |
+| IA-1 (provisional)                   | Automatizaciones para negocios         | `https://nuriaromero.dev/automatizaciones/`           | Indexed                                                                                                      |
+| IA-2 (provisional)                   | Inteligencia artificial para negocios  | `https://nuriaromero.dev/inteligencia-artificial/`    | Page is live, "URL is unknown to Google" (NRD-98)                                                            |
+| GEO-1 (pending the user, P1)         | pendiente de la decisión de la usuaria | pendiente de la decisión de la usuaria                | `/seo-para-ia/` does not exist (HTTP 404 on 2026-11-15, ADR 0013); no link to a non-existent URL is proposed |
+| DW-3 (pending the user, P2)          | pendiente de la decisión de la usuaria | pendiente de la decisión de la usuaria                | Only if a website maintenance plan is offered; no page exists                                                |
+| SL-4, DW-2, GEO-3 (posts)            | no GBP service entry                   | n/a                                                   | Informational posts are not services; they are not linked from the services list                             |
+
+The parked niche pages (`/web-para-restaurantes-sevilla/`, `/web-para-clinicas-sevilla/`, `/web-para-comercios-sevilla/`, `/web-para-abogados-gestorias-sevilla/`) and `/seo-para-clinicas-capilares-sevilla/` own no cluster in ADR 0013 and get no GBP service entry.
+
+Profile-level links:
+
+| GBP field        | Proposed target                                                                                                                                               | Source                                                                 |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Website link     | `https://nuriaromero.dev/` (the home, owner of SL-2; canonical with trailing slash)                                                                           | `SITE.url` `src/data/site.ts:8`; ADR 0013 owner map                    |
+| Appointment link | `bookingUrl`, the Google Calendar appointment page the site's booking button uses                                                                             | `src/data/site.ts:54-55`; `src/components/BookingButton.astro:24,38`   |
+| Review link      | `localTrust.gbp.writeReviewUrl` (`https://search.google.com/local/writereview?placeid=ChIJ8Uv-vM9f0CoR8J75dj4I0HM`), a reference for the routine, not a field | `src/data/local-trust.ts:33`; `docs/google-review-request-template.md` |
+
+## Cambios en la ficha para la propietaria
+
+Agents never log in to GBP and never apply these. Each item is a proposal from this document; the owner confirms what the profile shows today and applies what is missing. Tick an item when it is done and note the date next to it.
+
+**Primero, leer la ficha (lo que los datos públicos no devolvieron):**
+
+- [ ] Anotar la categoría principal y las categorías adicionales actuales de la ficha. Referencia observada en las competidoras del paquete local: "Marketing agency" (3 de 4) e "Internet marketing service" (1 de 4), sin que eso implique que sea la correcta para nosotros (Step 0, 2026-11-15).
+- [ ] Anotar el número de reseñas y la valoración media que muestra la ficha hoy (el JSON-LD de la web mostró 5 y 1 reseña el 2026-11-15).
+- [ ] Anotar si la ficha muestra la dirección pública y si el área de servicio configurada es "Sevilla y área metropolitana" (`src/data/local-trust.ts:35`).
+- [ ] Comprobar que el nombre, la dirección ("Camino Andalucía, 426, 41309 La Rinconada, Sevilla") y el teléfono ("611 812 431") de la ficha son exactamente los de `src/data/site.ts`; si difieren, avisar al PO (la web es la fuente de verdad del NAP).
+- [ ] Comprobar que los dos enlaces a la ficha que usa la web (`https://maps.app.goo.gl/8eg71eAQJrfH7BGaA` y `https://www.google.com/maps/place/?q=place_id:ChIJ8Uv-vM9f0CoR8J75dj4I0HM`) abren la misma ficha.
+
+**Cambios propuestos en la ficha:**
+
+- [ ] Enlace del sitio web: `https://nuriaromero.dev/`.
+- [ ] Enlace de cita (appointment link): el de `bookingUrl` (`src/data/site.ts:54`).
+- [ ] Servicios: dar de alta una entrada por cada fila con página propietaria de la tabla anterior (SEO local, consultoría SEO, diseño web, tienda online, software a medida, automatizaciones, inteligencia artificial) con el enlace de su página; no añadir entradas para `/seo-para-ia/` ni para mantenimiento web hasta que la usuaria decida (P1 y P2 de ADR 0013).
+- [ ] Categorías: revisar que la principal describa el servicio que más se quiere captar en el paquete local (decisión de la propietaria; los datos públicos no la fijan) y que las adicionales cubran diseño web y consultoría de marketing si aplican.
+- [ ] Descripción de la ficha: que mencione los servicios y la zona sin prometer posiciones ni resultados (invariante "No promised rankings").
+- [ ] Fotos, horario y atributos: completar los que falten; los de las competidoras, para comparar, están en la tabla de campos públicos (2 a 12 fotos, 6 a 10 servicios listados).
+- [ ] Confirmar si el perfil de Malt (`https://www.malt.fr/profile/nuriaromero`) es nuestro. Si lo es, comprobar que nombre, ciudad y teléfono coinciden con el NAP y, si no, corregir en Malt. Si no es nuestro, no hacer nada.
+- [ ] Buscar si existe algún otro listado con nuestro nombre y teléfono (directorios, perfiles) y, si hay alguno con datos distintos, corregir en <directorio>. Ninguno se encontró en el Step 0 (2026-11-15).
+
+## Rutina mensual de reseñas
+
+Reuses `docs/google-review-request-template.md` and its review link (`localTrust.gbp.writeReviewUrl`, `src/data/local-trust.ts:33`). The template is the single source for the wording; this routine only fixes the cadence and the log. Asking for reviews is a manual task of the owner: the site sends nothing to anyone.
+
+1. **Who asks:** the owner (Nuria), by email or WhatsApp, with the template of the document above.
+2. **When to ask:** once per client, after the project is delivered and the client has been able to use the result. No reminders.
+3. **Whom to ask: every client with a delivered project, not only the ones who seem satisfied.** Asking only satisfied clients is review gating, which Google's review policy forbids, and it contradicts the PRD principle "Real proof only" and rule 2 of the template ("Sin filtrar"). The owner does not ask beforehand who is happy.
+4. **What is never done:** no incentive of any kind (discount, gift, draw, extra service, conditioning a job), no writing, dictating or editing the review for the client, no fake reviews, no filtering of who receives the link (template rules 1 to 3).
+5. **How to log it:** a private list kept by the owner outside the repository (nothing about clients goes into the repository) with one line per delivered project: month, client initial only, "enviada: sí / no", date sent. "No" lines are not dropped: the next month they are reviewed again until sent once.
+6. **Monthly check (first week of each month):**
+   - Ask every client whose project was delivered last month and is not yet logged as "sí".
+   - Read the review count and average on the profile and note them with the date next to the log. The count is read from the profile itself; no figure is estimated or published unless Google shows it.
+   - Compare with the packs only to read context (the 2026-11 reference: 4 to 77 reviews in the packs, see the competitor table), not to set a target.
+7. **Site side:** the contact success state already links the review page (`src/components/ContactForm.astro:132`). The routine needs no site change.
+
+## Huecos en el sitio (bugs o historias a crear)
+
+Each row is a gap in the site, not in the GBP (GBP-side changes are in the owner checklist). Evidence is the source at the date of this document (branch `feat/NRD-77-local-signals`, build of 2026-11-15). The developer agent cannot create issues: the table is commented on NRD-77 and the PO files each row. Nothing here is applied.
+
+Checked and **not** a gap: `sameAs` already includes the GBP profile URL (`src/data/site.ts:46`, rendered in the home JSON-LD) and `check-seo-11` asserts it (`scripts/check-seo-11.mjs:74-75`); the footer and the `LocalBusiness` block render the same address from one source; the phone appears on the footer and `/seo-local-sevilla/` and is asserted by `check-seo-10` (`scripts/check-seo-10.mjs:21`).
+
+| #   | Gap                                                                                                                                                                                                                                                                                      | Evidence (`path:line`)                                                                                                                                                                                                            | Proposed test or guard                                                                                                                                                                                                                                      | Priority |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| G1  | The JSON-LD `telephone` is built from `SITE.whatsapp`, not from `SITE.phone`, while the footer text shows `SITE.phone`. Both are the same number today, but nothing ties them together, so a change to one would split the NAP                                                           | `src/lib/schema.ts:26` (`telephone` from `SITE.whatsapp`); `src/components/Footer.astro:64` (`SITE.phone`); `src/data/site.ts:12,14`; `tests/nap-consistency.test.js:29-30` checks the footer only                                | Add a case to `tests/nap-consistency.test.js` that strips the spaces of `SITE.phone`, prefixes `+34` and asserts equality with `+${SITE.whatsapp}`; or have `check-seo-11` compare the rendered `telephone` with `SITE.phone`                               | Medium   |
+| G2  | The `Person` JSON-LD gives `addressLocality` "Sevilla" while `LocalBusiness` gives "La Rinconada": two address strings for the same entity in the same page graph. Whether this is intentional is not recorded                                                                           | `src/lib/schema.ts:88-92` (`SITE.address.locality`) vs `src/lib/schema.ts:33` (`SITE.address.municipality`); `scripts/check-seo-11.mjs:84-85` only checks the business block                                                      | Decide with the PO: keep (and document it near `src/data/site.ts:19-23`, which already separates municipality and locality) or align; in both cases extend `check-seo-11` to read the `Person` address and fail on an unplanned difference                  | Low      |
+| G3  | The structured-data `areaServed` ("Sevilla" and "Área metropolitana de Sevilla") is written as literals and is not derived from the footer and registry value `serviceArea` ("Sevilla y área metropolitana"). Same meaning, two sources; the GBP service area is unread (L0)             | `src/lib/schema.ts:10-13`; `src/data/local-trust.ts:35`; `src/components/Footer.astro:56`; `scripts/check-seo-11.mjs:36-40` hardcodes the two literals                                                                            | Add a test that the place names of `SERVICE_AREA` and `localTrust.gbp.serviceArea` stay consistent ("Sevilla", "área metropolitana"); revisit the wording after the owner reads the GBP service area (checklist, first block)                               | Low      |
+| G4  | The site links to the same GBP through two URL forms: the short link `https://maps.app.goo.gl/8eg71eAQJrfH7BGaA` (`hasMap`, the `/seo-local-sevilla/` NAP block, the contact page) and the `place_id` form (`sameAs`, the trust status block). Nothing proves both open the same listing | `src/data/site.ts:33,46`; `src/lib/schema.ts:40-42`; `src/components/seo-local/SeoLocalNap.astro:18`; `src/pages/contacto.astro:90`; `src/components/LocalTrustStatus.astro:29-31`; allowlist at `scripts/check-seo-10.mjs:26-28` | No automatic guard proposed (resolving a short link needs the network and is not stable in CI). Covered by the owner step "los dos enlaces abren la misma ficha"; if the owner finds a difference, the PO files a bug to use the `place_id` form everywhere | Low      |
+
+No gap was found in: the footer NAP, the address of the `LocalBusiness` block, the `sameAs` list, or the `bookingUrl` constant.
+
 ## Huecos de datos
 
+- **Owner-only GBP fields** still unknown after this run: primary and secondary categories, service area as configured, services list, website and appointment links as set, review count and average, hours, attributes, description. They are the first block of the owner checklist; once the owner records them, this document is updated with source and date.
 - **Our whole GBP record** (categories, service area, services, website and appointment links, hours, attributes, review count and average): not returned by DataForSEO (4 empty calls plus the domain filter). Needs the owner's reading of the profile or a later re-run once the listing is indexed.
 - **Antonio Castro - Marketing Digital y SEO:** in the "seo local sevilla" pack on 2026-11-14 (L2); fields not read, only the review count (68, 5.0) from L2.
 - **Raw SERP of 2026-11-13** was not saved, so pack positions and place ids cannot be re-checked against it.
