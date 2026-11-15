@@ -14,6 +14,15 @@ const SCOPES = [
   "src/components/Header.astro",
   "src/components/Footer.astro",
   "src/components/EntryContentStyles.astro",
+  "src/components/services/PricingCard.astro",
+  "src/components/services/ServiceHero.astro",
+  "src/components/services/FAQ.astro",
+  "src/components/services/CTASection.astro",
+  "src/components/services/ProcessSteps.astro",
+  "src/components/services/BenefitsGrid.astro",
+  "src/components/Breadcrumbs.astro",
+  "src/components/TitleSection.astro",
+  "src/components/InternalLinks.astro",
 ];
 
 // A class token, not a word like "dark-only" in a comment.
