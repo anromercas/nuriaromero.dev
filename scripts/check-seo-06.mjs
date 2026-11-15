@@ -2,6 +2,7 @@ import { readFile, readdir } from "node:fs/promises"
 import { existsSync } from "node:fs"
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
+import { linkInMain } from "./lib/main-links.mjs"
 
 const root = new URL("../", import.meta.url)
 const distDir = new URL("dist/", root)
@@ -28,8 +29,7 @@ for (const [, source, links] of linkRows) {
   if (targets.length < 2) errors.push(`${source}: expected at least two mapped contextual/conversion links`)
   for (const [, path, anchor] of targets) {
     if (!existsSync(routeFile(path))) errors.push(`${source} -> ${path}: rendered target does not exist`)
-    if (!html.includes(`href="${path}"`)) errors.push(`${source} -> ${path}: link missing from rendered source`)
-    if (!html.includes(anchor)) errors.push(`${source} -> ${path}: descriptive anchor missing: ${anchor}`)
+    if (!linkInMain(html, path, anchor)) errors.push(`${source} -> ${path}: no <a href="${path}"> containing "${anchor}" inside <main>`)
   }
 }
 
