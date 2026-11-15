@@ -155,6 +155,42 @@ Ventana pedida: 28 días. La API devolvió datos del 2026-10-18 al 2026-11-12 (2
 
 **URLs antiguas `/servicios/*`:** en producción responden 301 el 2026-11-15 (`curl`): `/servicios/` a `/`, y `/servicios/diseno-web-sevilla/`, `/servicios/desarrollo-software-medida/`, `/servicios/automatizaciones/` y `/servicios/inteligencia-artificial/` a su ruta nueva. Inspección de URLs de Google el 2026-11-15, sin cambios frente al 2026-11-14: `/servicios/diseno-web-sevilla/` "Page with redirect" (último rastreo 2026-10-04); `/servicios/`, `/servicios/desarrollo-software-medida/`, `/servicios/automatizaciones/` y `/servicios/inteligencia-artificial/` "Crawled - currently not indexed" (últimos rastreos 2026-08-19, 2026-10-13, 2026-09-14 y 2026-08-21). Ninguna está indexada; Google aún no ha vuelto a rastrearlas tras la redirección.
 
+## Línea base 2026-11-15 (citación en IA)
+
+Fuente: DataForSEO `serp_organic_live_advanced` (Google, Sevilla, español, móvil, profundidad 10, con `load_async_ai_overview`), una consulta por cada palabra clave de seguimiento definida en la configuración del proyecto; los dominios son las referencias del bloque AI Overview tal como las devuelve la API (se omiten las referencias a `google.com`, propias de Google).
+Fecha de captura: 2026-11-15
+Llamadas: 12 a `serp/google/organic/live/advanced` (una por palabra clave, ninguna repetida ni fallida), dentro del límite de 30 por ejecución.
+
+Hechos observados, sin previsión de citas futuras. nuriaromero.dev no aparece en el AI Overview de ninguna de las 12 consultas, y su dominio no figura en ningún resultado de ninguna de las 12 respuestas (top 10 consultado).
+
+| Palabra clave | ¿AI Overview? | ¿Cita nuriaromero.dev? | Dominios referenciados |
+| --- | --- | --- | --- |
+| seo local sevilla | Sí | No | inventtatte.com, grupodiasan.com |
+| agencia seo sevilla | Sí | No | bringconnections.com, seowolf.es, posicionatuwebsevilla.com, citysem.es |
+| posicionamiento web sevilla | Sí | No | posicionatuwebsevilla.com, balboamedia.es, momoycia.com, citysem.es, seranking.com |
+| consultor seo sevilla | Sí | No | emprenderycrecer.emprenemjunts.es, dobuss.es, dobleo.com |
+| como aparecer en google maps | Sí | No | business.google.com, youtube.com, blog.hubspot.es, m.youtube.com |
+| posicionamiento en ia | Sí | No | bbva.com, promentconsulting.com, digital-nature.com, youtube.com |
+| inteligencia artificial para empresas sevilla | Sí | No | sevillaemprendedora.org, 10code.es, aslan.es |
+| diseño web sevilla | Sí | No | bassali.es, saulsanchez.agency |
+| cuanto cuesta una pagina web en sevilla | Sí | No | lourdesblanco.com, adrianpozo.es, bierzoseo.com |
+| tienda online sevilla | No | No aplica: sin AI Overview | No aplica |
+| diseño tienda online sevilla | Sí | No | sergiogarciamonge.es, estudiotipo.com, dondigital.es |
+| desarrollo de software a medida sevilla | Sí | No | q2bstudio.com, vidasoft.es, grupodiasan.com |
+
+Resumen observado: 11 de las 12 consultas muestran AI Overview en Sevilla (móvil) el 2026-11-15; nuriaromero.dev no es referencia en ninguno.
+
+**Prompts en ChatGPT y Perplexity (comprobación manual):** ningún agente de esta ejecución puede consultar ChatGPT ni Perplexity. Los resultados quedan pendientes de la usuaria (ver "Pendientes de la usuaria"); al rellenar la tabla, anotar fecha, herramienta y dominios citados, y solo hechos (citado / no citado).
+
+| Prompt | Fecha | Herramienta | Dominios citados |
+| --- | --- | --- | --- |
+| "¿Qué agencia o consultor de SEO local recomiendas en Sevilla?" | Pendiente: usuaria | ChatGPT | Pendiente: usuaria |
+| "¿Qué agencia o consultor de SEO local recomiendas en Sevilla?" | Pendiente: usuaria | Perplexity | Pendiente: usuaria |
+| "¿Cuánto cuesta una página web para un negocio en Sevilla?" | Pendiente: usuaria | ChatGPT | Pendiente: usuaria |
+| "¿Cuánto cuesta una página web para un negocio en Sevilla?" | Pendiente: usuaria | Perplexity | Pendiente: usuaria |
+| "¿Qué es el posicionamiento en IA (GEO) y quién lo ofrece en Sevilla?" | Pendiente: usuaria | ChatGPT | Pendiente: usuaria |
+| "¿Qué es el posicionamiento en IA (GEO) y quién lo ofrece en Sevilla?" | Pendiente: usuaria | Perplexity | Pendiente: usuaria |
+
 ## Cadencia y registro de cambios
 
 - **Antes del cambio:** guardar fecha, commit/deploy, rutas afectadas, objetivo, hipótesis y baseline disponible.
@@ -185,10 +221,16 @@ Decisión / siguiente revisión:
 4. En Search Console, inspeccionar home, sitemap, una página de servicio, una página de nicho y un artículo; guardar solo resultados agregados y fecha, no credenciales.
 5. Para PSI/CrUX, anotar URL, dispositivo/estrategia, fecha, disponibilidad y si el dato es laboratorio o campo. Un 404 o ausencia de datos es un resultado válido, no un cero.
 
-## Pendientes humanos y de producción
+## Pendientes de la usuaria
 
-- Confirmar la propiedad y permisos de Search Console, sitemap activo y URLs representativas.
-- Confirmar el stream GA4, la variable de despliegue opcional y la retención compatible con la política de privacidad.
-- Decidir objetivos de negocio, eventos de conversión definitivos y frecuencia de revisión.
-- Ejecutar validación desplegada con consentimiento real y registrar la primera línea base.
-- Autorizar o descartar GTM; mientras no exista la decisión, no se añade container ni se afirma que GTM esté configurado.
+Solo lo que todavía requiere a la propietaria o una acción de producción. Lo ya hecho (propiedad de Search Console verificada, `sitemap-index.xml` enviado el 2026-11-14, verificación de consentimiento en producción) consta en las secciones fechadas de arriba.
+
+- **Promoción a producción:** los eventos de conversión (NRD-82) llegan a producción con la próxima promoción de `develop` a `main`. La línea base de clics en reservar empieza ese día; repetir la lectura de GA4 a los 28 días.
+- **Eventos clave en GA4:** en la interfaz de GA4 marcar como evento clave `contact_click` (con `contact_method=booking`, y valorar `phone` y `email`), `whatsapp_click` y `form_submit`; `generate_lead` no se usa mientras no se decida.
+- **DebugView:** si se quiere confirmación visual, abrir DebugView tras la promoción y comprobar la llegada de `contact_click`, `whatsapp_click` y `form_submit` (los agentes no entran en la interfaz de GA4).
+- **Medición mejorada de GA4:** revisar en el flujo web las opciones de medición mejorada; la interacción con formularios envía `form_start` con `form_id` y el identificador y nombre del primer campo, y podría duplicar `form_submit`. Valorar desactivarla y confirmar que encaja con la política de privacidad.
+- **Retención de datos de GA4:** confirmar el periodo de retención y que es compatible con la política de privacidad.
+- **Comprobación manual en IA:** rellenar la tabla de prompts de ChatGPT y Perplexity de la sección "citación en IA" (fecha, herramienta, dominios citados).
+- **Sin verificar por los agentes:** llegada de datos de `page_view` a los informes de GA4 (la Data API todavía no tenía filas el 2026-11-15; repetir la lectura en 24 a 48 horas) y el motivo por el que `ep.page_path` no aparece en las peticiones de eventos.
+- **Palabra clave sin captura de rangos:** "diseño tienda online sevilla" figura en la configuración pero no en la captura del 2026-11-13; se medirá en la próxima captura programada.
+- **GTM:** autorizar o descartar GTM; mientras no exista la decisión, no se añade container ni se afirma que GTM esté configurado.
