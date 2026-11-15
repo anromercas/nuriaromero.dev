@@ -130,7 +130,9 @@ Copy-only change on `/desarrollo-software-medida/`. The page keeps the shared se
 - **Responsive**: the H1 wraps naturally, with breaks between words and no hyphenation or overflow.
   - 320 px: at most 5 lines.
   - 375 px: at most 4 lines. Today it takes 3, so one more line pushes the booking button about one line down.
-  - 768 px and up: at most 2 lines.
+  - 768 px to 1023 px (`md`, `md:max-w-2xl` container, 3rem type): at most 3 lines.
+  - 1024 px and up (`lg:max-w-4xl` container): at most 2 lines.
+  - Tech Lead decision (NRD-159): QA measured 3 lines at 768 and 820 px (714 px box, 51 px type) against the original 2-line estimate. The ceiling is relaxed for the `md` range instead of shortening the copy: the 58-character H1 keeps the registered term plus the audience ("para tu empresa") without repeating the `<title>` lead, and the same `ServiceHero` already runs 3 lines at `md` on `/diseno-web-sevilla/` (NRD-121 accepted "3 lines or fewer" from 640 px). Copy, font size and container stay unchanged.
   - Assumption: these line ceilings are estimates from the 2.25rem/3rem sizes at a 106.25% root, measured against the container widths. QA checks them on the built page. If the H1 goes over a ceiling, report it to the Tech Lead; never shrink the font to make it fit.
   - No horizontal scroll at 320 px.
 - **States, interactions**: n/a (static text).
