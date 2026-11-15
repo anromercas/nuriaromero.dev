@@ -152,5 +152,5 @@ None: no rendered output changes. QA reads the `check-seo-07` output (`verify` o
 
 ## Tasks
 
-- [ ] 1.1 [NRD-135 app] Add `scripts/lib/keyword-ownership.mjs` (`normaliseTerm`, `routeOf`, `LISTING_CARD_EXEMPTION`, `targetedTexts`, `findOwnershipViolations`); tests: fixture tests appended to `tests/keyword-ownership.test.js` first (RED), then the helper (GREEN).
+- [x] 1.1 [NRD-135 app] Add `scripts/lib/keyword-ownership.mjs` (`normaliseTerm`, `routeOf`, `LISTING_CARD_EXEMPTION`, `targetedTexts`, `findOwnershipViolations`); tests: fixture tests appended to `tests/keyword-ownership.test.js` first (RED), then the helper (GREEN).
 - [ ] 1.2 [NRD-136 app] Run the ownership rule over `dist/` in `scripts/check-seo-07.mjs`; tests: `node --test tests/*.test.js`, `pnpm build`, `check-seo-07` green plus one local negative run recorded.
