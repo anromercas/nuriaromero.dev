@@ -6,7 +6,9 @@ import {
   cookieDomainCandidates,
   createConsentController,
   createConsentPanel,
+  consentOffset,
   createGtag,
+  isObscured,
   placementFor,
 } from '../src/scripts/analytics-consent.js'
 
@@ -674,4 +676,110 @@ test('AnalyticsConsent.astro no longer caches panel elements and syncs on page-l
   assert.doesNotMatch(source, /const panel = document\.querySelector/)
   assert.match(source, /panel\.sync\(\)/)
   assert.match(source, /panel\.handleClick\(/)
+})
+
+const rect = (top, bottom, left = 0, right = 100) => ({ top, bottom, left, right, height: bottom - top, width: right - left })
+
+test('consentOffset is the viewport space from the panel top to the bottom edge', () => {
+  assert.equal(consentOffset(rect(600, 792), 800), 200)
+  assert.equal(consentOffset(rect(640.2, 792), 800), 160)
+  assert.equal(consentOffset(rect(0, 0), 800), 0)
+  assert.equal(consentOffset(null, 800), 0)
+})
+
+test('isObscured is true only when the element rect intersects the panel rect', () => {
+  const panelRect = rect(600, 792, 8, 392)
+  assert.equal(isObscured(rect(700, 740, 20, 200), panelRect), true)
+  assert.equal(isObscured(rect(500, 560, 20, 200), panelRect), false)
+  assert.equal(isObscured(rect(700, 740, 400, 500), panelRect), false)
+  assert.equal(isObscured(rect(0, 0, 0, 0), panelRect), false)
+})
+
+function offsetSetup(stored, panelRect = rect(600, 792, 8, 392)) {
+  const props = new Map()
+  const { world, a, b, panel, calls } = panelSetup(stored)
+  world.doc.documentElement = {
+    style: {
+      setProperty: (name, value) => props.set(name, value),
+      removeProperty: (name) => props.delete(name),
+    },
+  }
+  world.doc.defaultView = { innerHeight: 800 }
+  const scrolled = []
+  for (const nodes of [a, b]) nodes['analytics-consent'].getBoundingClientRect = () => panelRect
+  const target = (r, extra = {}) => ({
+    getBoundingClientRect: () => r,
+    scrollIntoView: (opts) => scrolled.push(opts),
+    closest: () => null,
+    ...extra,
+  })
+  return { world, a, b, panel, calls, props, scrolled, target }
+}
+
+test('panel: sync publishes --consent-offset while visible and removes it when answered', () => {
+  const { world, b, panel, props } = offsetSetup(null)
+  world.current = b
+  panel.sync()
+  assert.equal(props.get('--consent-offset'), '200px')
+  panel.handleClick(b['consent-reject'])
+  assert.equal(props.has('--consent-offset'), false)
+})
+
+test('panel: sync with a stored choice leaves no --consent-offset on a fresh page', () => {
+  const { world, b, panel, props } = offsetSetup('accepted')
+  props.set('--consent-offset', '200px')
+  world.current = b
+  panel.sync()
+  assert.equal(props.has('--consent-offset'), false)
+})
+
+test('panel: opening and customizing re-measure the offset, update() follows resize', () => {
+  let current = rect(600, 792, 8, 392)
+  const { world, b, panel, props } = offsetSetup('accepted')
+  b['analytics-consent'].getBoundingClientRect = () => current
+  world.current = b
+  panel.handleClick(b['cookie-settings'])
+  assert.equal(props.get('--consent-offset'), '200px')
+  current = rect(500, 792, 8, 392)
+  panel.update()
+  assert.equal(props.get('--consent-offset'), '300px')
+  current = rect(450, 792, 8, 392)
+  panel.handleClick(b['consent-customize'])
+  assert.equal(props.get('--consent-offset'), '350px')
+})
+
+test('panel: handleFocus scrolls only an obscured element outside the panel', () => {
+  const { world, b, panel, scrolled, target } = offsetSetup(null)
+  world.current = b
+  panel.sync()
+  panel.handleFocus(target(rect(700, 740, 20, 200)))
+  assert.deepEqual(scrolled, [{ block: 'nearest' }])
+  panel.handleFocus(target(rect(100, 140, 20, 200)))
+  assert.equal(scrolled.length, 1)
+  panel.handleFocus(target(rect(700, 740, 20, 200), { closest: (s) => (s === '#analytics-consent' ? b['analytics-consent'] : null) }))
+  assert.equal(scrolled.length, 1)
+  panel.handleFocus(null)
+  panel.handleFocus({})
+})
+
+test('panel: handleFocus does nothing while the panel is hidden', () => {
+  const { world, b, panel, scrolled, target } = offsetSetup('accepted')
+  world.current = b
+  panel.sync()
+  panel.handleFocus(target(rect(700, 740, 20, 200)))
+  assert.equal(scrolled.length, 0)
+})
+
+test('layout reserves the consent offset: scroll-padding, body padding, WhatsApp button, focusin and resize', async () => {
+  const { readFile } = await import('node:fs/promises')
+  const consent = await readFile(new URL('../src/components/AnalyticsConsent.astro', import.meta.url), 'utf8')
+  const whatsapp = await readFile(new URL('../src/components/WhatsAppButton.astro', import.meta.url), 'utf8')
+  assert.match(consent, /scroll-padding-bottom:\s*var\(--consent-offset/)
+  assert.match(consent, /padding-bottom:\s*var\(--consent-offset/)
+  assert.match(consent, /addEventListener\("focusin"/)
+  assert.match(consent, /addEventListener\("resize"/)
+  assert.match(consent, /panel\.handleFocus\(/)
+  assert.match(consent, /aria-controls="consent-settings"/)
+  assert.match(whatsapp, /bottom-\[calc\(var\(--consent-offset,0px\)\+1rem\)\]/)
+  assert.match(whatsapp, /sm:bottom-\[calc\(var\(--consent-offset,0px\)\+1\.25rem\)\]/)
 })
