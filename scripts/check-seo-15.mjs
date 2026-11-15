@@ -8,6 +8,11 @@ const positivePromise = /(?:garantizamos|garantiza(?:mos)? más|primeras posicio
 
 assert.equal((html.match(/<h1\b/gi) ?? []).length, 1)
 assert.match(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "", /SEO local Sevilla/)
+assert.match(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "", /posicionamiento web/i)
+const pageTitle = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? ""
+assert.match(pageTitle, /SEO local Sevilla/)
+assert.match(pageTitle, /posicionamiento web/i)
+assert.ok(pageTitle.length <= 65, `title is ${pageTitle.length} chars`)
 assert.match(text, /300 €\/mes \+ IVA/)
 assert.match(text, /500 €\/mes \+ IVA/)
 assert.match(text, /Recomendado/)
@@ -18,6 +23,13 @@ assert.doesNotMatch(text, positivePromise)
 
 const h2Texts = [...html.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)].map(([, inner]) => inner.replace(/<[^>]*>/g, "").trim())
 assert.equal(h2Texts.filter((heading) => /posicionamiento web en Sevilla/i.test(heading)).length, 1)
+assert.equal(
+  h2Texts.filter((heading) => ["agencia", "seo", "sevilla"].every((word) => new RegExp(`\\b${word}\\b`, "i").test(heading))).length,
+  1,
+  "Expected exactly one H2 that works agencia seo sevilla",
+)
+assert.doesNotMatch(text, /\b(?:soy|somos) (?:una |tu )?agencia\b/i)
+assert.doesNotMatch(text, /\bnuestra agencia\b/i)
 
 const payloads = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi)]
   .map(([, payload]) => JSON.parse(payload))

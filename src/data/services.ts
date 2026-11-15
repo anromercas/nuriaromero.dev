@@ -465,12 +465,12 @@ export const seoLocal: ServicePageData = {
   offersFromTiers: true,
   breadcrumbName: "SEO local en Sevilla",
   seo: {
-    title: "SEO local Sevilla | Planes desde 300 €/mes + IVA",
+    title: "SEO local Sevilla y posicionamiento web | Desde 300 €/mes + IVA",
     description:
       "Me dedico a posicionar negocios en Google y Google Maps con SEO local en Sevilla. Ficha desde 300 €/mes + IVA o ficha y web desde 500 €/mes + IVA.",
   },
   hero: {
-    h1: "SEO local Sevilla",
+    h1: "SEO local Sevilla y posicionamiento web",
     title: "Tu negocio está en Sevilla. La pregunta es si te encuentran cuando importa.",
     titleAccent: "cuando importa",
     subtitle:

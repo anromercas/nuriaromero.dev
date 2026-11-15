@@ -280,6 +280,18 @@ test("hero glow pool never bleeds past the page gutter (no horizontal scroll on 
   assert.match(hero, /\.hero-visual::before\s*\{[^}]*inset:\s*-25%\s+-1rem/)
 })
 
+test("the agency section follows the kw + display pattern and has one heading", async () => {
+  const agencia = await source("src/components/seo-local/SeoLocalAgencia.astro")
+
+  assert.match(agencia, /<section[^>]*id="agencia-o-consultora"[^>]*aria-labelledby="agencia-title"/)
+  assert.match(agencia, /<h2 id="agencia-title" class="kw">¿Agencia SEO en Sevilla o consultora\?<\/h2>\s*<p class="display">/)
+  assert.equal((agencia.match(/<h1/g) ?? []).length, 0)
+  assert.equal((agencia.match(/<h3/g) ?? []).length, 0)
+  assert.match(agencia, /\.kw \{[^}]*font-weight:\s*600[^}]*\}/)
+  assert.doesNotMatch(agencia, /\.kw \{[^}]*(?:uppercase|letter-spacing)/)
+  assert.match(agencia, /href="#precios"/)
+})
+
 test("listing pending state keeps text legible (>= 4.5:1 needs at least 0.7 opacity)", async () => {
   const mock = await source("src/components/seo-local/ListingMock.astro")
 
@@ -305,9 +317,9 @@ test("T7: every section has a small keyword heading above its display title, one
   keyword(faq, "faq-title", "Preguntas frecuentes sobre SEO local en Sevilla")
   keyword(closing, "cierre-title", "Reserva una llamada sobre SEO local en Sevilla")
   assert.match(hero, /<h1 class="kw">\{h1\}<\/h1>\s*<p class="display">/)
-  assert.match(data, /h1:\s*"SEO local Sevilla"/)
+  assert.match(data, /h1:\s*"SEO local Sevilla y posicionamiento web"/)
   assert.match(data, /title:\s*"Tu negocio está en Sevilla\. La pregunta es si te encuentran cuando importa\."/)
-  assert.match(data, /title:\s*"SEO local Sevilla \| Planes desde 300 €\/mes \+ IVA"/)
+  assert.match(data, /title:\s*"SEO local Sevilla y posicionamiento web \| Desde 300 €\/mes \+ IVA"/)
   for (const heading of ["Ficha de Google Business Profile", "Datos coherentes en directorios locales", "Búsquedas locales en Sevilla", "Reseñas de Google", "Web para negocios locales", "Medición de llamadas, clics y rutas"]) {
     assert.ok(bento.includes(`<h3>${heading}</h3>`), heading)
   }

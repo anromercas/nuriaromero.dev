@@ -33,6 +33,7 @@ export const intentMatrix: SeoIntentRow[] = [
     contentSignals: [
       "Posicionamiento web en Sevilla: Google y Google Maps",
       "Cómo trabajamos el SEO local en Sevilla",
+      "¿Agencia SEO en Sevilla o consultora?",
       "Cuánto cuesta el SEO local en Sevilla",
     ],
   },

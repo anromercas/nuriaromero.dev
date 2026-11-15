@@ -10,6 +10,8 @@ const accentAt = title.indexOf(accent)
 const before = accentAt >= 0 ? title.slice(0, accentAt) : title
 const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
 const tiers = seoLocal.pricing.tiers ?? []
+const local = tiers.find((tier) => tier.name === "Local")
+const pro = tiers.find((tier) => tier.name === "Local Pro")
 ---
 
 <section id="precios" class="plans scroll-m-20" aria-labelledby="planes-title">
@@ -17,6 +19,13 @@ const tiers = seoLocal.pricing.tiers ?? []
   <p class="display">
     {before}{accentAt >= 0 && <em>{accent}</em>}{after}
   </p>
+  {
+    local && pro && (
+      <p class="plans-lede">
+        El SEO local en Sevilla cuesta <strong>{local.from}</strong> con el plan Local, centrado en tu ficha de Google, y <strong>{pro.from}</strong> con Local Pro, que suma el trabajo en tu web.
+      </p>
+    )
+  }
   {pricing.note && <p class="plans-note">{pricing.note}</p>}
 
   <div class="plan-list">
@@ -77,6 +86,20 @@ const tiers = seoLocal.pricing.tiers ?? []
     font-weight: 400;
     font-size: 1.12em;
     letter-spacing: -0.01em;
+  }
+
+  .plans-lede {
+    max-width: 52ch;
+    margin: 0 0 0.75rem;
+    color: rgb(226 232 240);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .plans-lede strong {
+    color: white;
+    font-weight: 650;
+    white-space: nowrap;
   }
 
   .plans-note {
