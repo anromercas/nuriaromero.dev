@@ -39,6 +39,7 @@
     ANALYTICS_DOM_EVENT,
     analyticsEventForLink,
     createConsentController,
+    createConsentPanel,
     createGtag,
     placementFor,
   } from "../scripts/analytics-consent.js"
@@ -47,13 +48,6 @@
   const configuredMeasurementId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID
   const measurementId = configuredMeasurementId || "G-NCV98R3HW7"
 
-  const panel = document.querySelector<HTMLElement>("#analytics-consent")!
-  const settings = document.querySelector<HTMLElement>("#consent-settings")!
-  const toggle = document.querySelector<HTMLInputElement>("#analytics-toggle")!
-  const customize = document.querySelector<HTMLButtonElement>("#consent-customize")!
-  const save = document.querySelector<HTMLButtonElement>("#consent-save")!
-  const accept = document.querySelector<HTMLButtonElement>("#consent-accept")!
-  const reject = document.querySelector<HTMLButtonElement>("#consent-reject")!
   const gtag = createGtag(window)
   const controller = createConsentController({
     storage: window.localStorage,
@@ -75,39 +69,16 @@
     },
   })
 
-  const storedChoice = window.localStorage.getItem("site-analytics-consent")
   controller.initialize()
-  if (!storedChoice) panel.hidden = false
+  const panel = createConsentPanel({ doc: document, storage: window.localStorage, controller })
+  panel.sync()
 
-  accept.addEventListener("click", () => {
-    controller.accept()
-    panel.hidden = true
-  })
-  reject.addEventListener("click", () => {
-    controller.reject()
-    panel.hidden = true
-  })
-  customize.addEventListener("click", () => {
-    settings.hidden = !settings.hidden
-    save.hidden = !settings.hidden
-    customize.setAttribute("aria-expanded", String(!settings.hidden))
-  })
-  save.addEventListener("click", () => {
-    if (toggle.checked) controller.accept()
-    else controller.reject()
-    panel.hidden = true
+  document.addEventListener("click", (event) => {
+    if (event.target instanceof Element) panel.handleClick(event.target)
   })
   document.addEventListener("click", (event) => {
-    if ((event.target as HTMLElement).closest("#cookie-settings")) {
-      panel.hidden = false
-      settings.hidden = false
-      toggle.checked = window.localStorage.getItem("site-analytics-consent") === "accepted"
-      save.hidden = false
-      customize.setAttribute("aria-expanded", "true")
-    }
-  })
-  document.addEventListener("click", (event) => {
-    const link = (event.target as HTMLElement).closest<HTMLAnchorElement>("a[href]")
+    if (!(event.target instanceof Element)) return
+    const link = event.target.closest<HTMLAnchorElement>("a[href]")
     if (!link) return
     const found = analyticsEventForLink({
       href: link.getAttribute("href")!,
@@ -120,7 +91,10 @@
     const { name, params } = (event as CustomEvent).detail ?? {}
     controller.trackEvent(name, params)
   })
-  document.addEventListener("astro:page-load", () => controller.trackPageView())
+  document.addEventListener("astro:page-load", () => {
+    panel.sync()
+    controller.trackPageView()
+  })
 </script>
 
 <style>
