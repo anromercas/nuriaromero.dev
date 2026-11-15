@@ -15,12 +15,12 @@ export const disenoWeb: ServicePageData = {
   slug: "/diseno-web-sevilla/",
   breadcrumbName: "Diseño web en Sevilla",
   seo: {
-    title: "Diseño web en Sevilla | Precio cerrado desde 149 €",
+    title: "Diseño web Sevilla | Diseñadora web, precio cerrado desde 149 €",
     description:
       "Diseño páginas web en Sevilla con más de 10 años de experiencia: rápidas, con SEO local y precio cerrado. Web completa desde 399 €, landing desde 149 €.",
   },
   hero: {
-    h1: "Diseño web en Sevilla para negocios que quieren clientes, no solo una web bonita",
+    h1: "Diseño web Sevilla para negocios que quieren clientes, no solo una web bonita",
     subtitle:
       "Tu web trabaja 24 horas y es lo primero que ve un cliente antes de decidirse. Si buscan lo que ofreces en Sevilla, que te encuentren a ti.",
     secondaryCta: {
@@ -29,7 +29,7 @@ export const disenoWeb: ServicePageData = {
     },
   },
   sectionTitles: {
-    benefits: "Diseño web en Sevilla hecho por una programadora, no con plantillas",
+    benefits: "Diseñadora web en Sevilla que programa tu página, sin plantillas",
     process: "Así es el proceso de crear tu página web",
     pricing: "Precio de una página web en Sevilla: desde 149 €",
     faq: "Preguntas frecuentes sobre diseño web en Sevilla",
@@ -148,10 +148,10 @@ export const desarrolloSoftware: ServicePageData = {
   seo: {
     title: "Desarrollo de software a medida en Sevilla | Aplicaciones web",
     description:
-      "Desarrollo software y aplicaciones web a medida para empresas en Sevilla: gestión interna, reservas, presupuestos, portales de cliente. +10 años de experiencia.",
+      "Desarrollo de software y aplicaciones web a medida en Sevilla: gestión interna, reservas, presupuestos y portales de cliente. +10 años de experiencia.",
   },
   hero: {
-    h1: "Software a medida para tu empresa en Sevilla",
+    h1: "Desarrollo de software a medida en Sevilla para tu empresa",
     subtitle:
       "Cuando el Excel se queda corto y los programas genéricos no encajan con tu forma de trabajar, una aplicación hecha a tu medida ahorra horas cada semana. Desarrollo herramientas que se adaptan a tu negocio, y no al revés.",
   },
@@ -252,12 +252,12 @@ export const automatizaciones: ServicePageData = {
   slug: "/automatizaciones/",
   breadcrumbName: "Automatizaciones",
   seo: {
-    title: "Automatización de procesos para negocios en Sevilla | n8n y Make",
+    title: "Automatización de procesos en Sevilla para negocios | n8n y Make",
     description:
-      "Automatizo las tareas repetitivas de tu negocio en Sevilla con n8n y Make y más de 10 años de experiencia: facturas, correos, citas e informes.",
+      "Automatización de procesos en Sevilla con n8n y Make: facturas, correos, citas e informes que se hacen solos. Más de 10 años de experiencia.",
   },
   hero: {
-    h1: "Automatizaciones: que tu negocio trabaje solo",
+    h1: "Automatización de procesos en Sevilla: que tu negocio trabaje solo",
     subtitle:
       "¿Cuántas horas pierdes a la semana copiando datos, enviando los mismos correos o pasando pedidos de un sitio a otro? Conecto las herramientas que ya usas (correo, Excel, WhatsApp, facturación…) para que esas tareas se hagan solas.",
   },

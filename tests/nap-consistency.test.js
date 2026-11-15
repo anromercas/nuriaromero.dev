@@ -52,3 +52,26 @@ test("SITE.address.full equals the parts used by localBusinessSchema", async () 
   assert.match(schema, /addressLocality:\s*SITE\.address\.municipality/);
   assert.match(schema, /addressRegion:\s*SITE\.address\.region/);
 });
+
+test("the JSON-LD telephone is the E.164 form of the published phone", async () => {
+  const site = await readSource("src/data/site.ts");
+  const schema = await readSource("src/lib/schema.ts");
+
+  const toE164 = (phone) => {
+    const digits = phone.replace(/\D/g, "");
+    return digits.startsWith("34") && digits.length === 11
+      ? `+${digits}`
+      : `+34${digits}`;
+  };
+
+  const phone = literal(site, "phone");
+  const whatsapp = literal(site, "whatsapp");
+
+  assert.ok(phone && whatsapp);
+  assert.equal(
+    toE164(phone),
+    `+${whatsapp}`,
+    `SITE.phone "${phone}" (${toE164(phone)}) differs from SITE.whatsapp "${whatsapp}" (+${whatsapp})`,
+  );
+  assert.match(schema, /telephone:\s*`\+\$\{SITE\.whatsapp\}`/);
+});

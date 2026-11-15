@@ -24,15 +24,15 @@ const splitAnswer = (answer: string) => {
 <div class="space-y-3">
   {
     faqs.map((faq) => (
-      <details class="group rounded-xl border border-gray-300 bg-gray-100/50 p-5 dark:border-gray-700 dark:bg-gray-800/50">
-        <summary class="cursor-pointer list-none font-semibold text-gray-800 dark:text-gray-100 marker:content-none [&::-webkit-details-marker]:hidden">
+      <details class="group rounded-xl border border-gray-700 bg-gray-800/50 p-5">
+        <summary class="cursor-pointer list-none font-semibold text-gray-100 marker:content-none [&::-webkit-details-marker]:hidden">
           <span class="mr-2 inline-block transition group-open:rotate-90" aria-hidden="true">
             ›
           </span>
           {faq.q}
         </summary>
         <div class="mt-3 max-w-prose space-y-3 text-gray-300">
-          <p><strong class="font-semibold text-gray-900 dark:text-gray-100">{splitAnswer(faq.a).lead}</strong></p>
+          <p><strong class="font-semibold text-gray-100">{splitAnswer(faq.a).lead}</strong></p>
           {splitAnswer(faq.a).context.map((paragraph) => (
             <p>{paragraph}</p>
           ))}
