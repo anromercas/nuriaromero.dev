@@ -97,7 +97,7 @@ The NAP of the site is read from the built home page (L4, `dist/index.html`, 202
 Result of the comparison between the surfaces the site controls:
 
 - **Name:** "Nuria Romero" on every surface; matches `SITE.name` (`src/data/site.ts:6`). No mismatch.
-- **Phone:** the same number in two notations, "611 812 431" for people (footer text) and "+34611812431" for machines (`tel:` link, JSON-LD). Equivalent, not a mismatch; `tests/nap-consistency.test.js` guards that both come from `SITE`.
+- **Phone:** the same number in two notations, "611 812 431" for people (footer text) and "+34611812431" for machines (`tel:` link, JSON-LD). Equivalent, not a mismatch; the footer text and the `tel:` link come from `SITE` (asserted by `tests/nap-consistency.test.js:26-30`); the JSON-LD phone is not guarded (see G1).
 - **Address:** footer and `LocalBusiness` agree (La Rinconada, 41309, Camino Andalucía, 426). The `Person` block gives only "Sevilla" as locality: consistent with the brand locality (`src/data/site.ts:23`) but not the same string as the business address. Recorded as a site-side gap (see "Huecos en el sitio").
 - **Service area wording:** footer "Sevilla y área metropolitana" (`local-trust.ts:35`) versus JSON-LD `areaServed` "Sevilla" (City) and "Área metropolitana de Sevilla" (`src/lib/schema.ts:10-13`). Same meaning, different strings. Recorded as a site-side gap.
 
@@ -124,7 +124,7 @@ Source: owner map of `docs/adr/0013-seo-site-architecture.md` (status Proposed, 
 | DW-1 (decided)                       | Diseño web en Sevilla                  | `https://nuriaromero.dev/diseno-web-sevilla/`         | Local pack present                                                                                           |
 | TO-2 and registered TO-1 term        | Tienda online en Sevilla               | `https://nuriaromero.dev/tienda-online-sevilla/`      | Page is live; "URL is unknown to Google" per NRD-98, so the link is correct but the page is not yet indexed  |
 | SW-1 (provisional)                   | Software a medida en Sevilla           | `https://nuriaromero.dev/desarrollo-software-medida/` | Local pack present in its SERP                                                                               |
-| IA-1 (provisional)                   | Automatizaciones para negocios         | `https://nuriaromero.dev/automatizaciones/`           | Indexed                                                                                                      |
+| IA-1 (provisional)                   | Automatizaciones para negocios         | `https://nuriaromero.dev/automatizaciones/`           | Indexed per ADR 0013 page verdicts (last crawl 2026-10-10)                                                   |
 | IA-2 (provisional)                   | Inteligencia artificial para negocios  | `https://nuriaromero.dev/inteligencia-artificial/`    | Page is live, "URL is unknown to Google" (NRD-98)                                                            |
 | GEO-1 (pending the user, P1)         | pendiente de la decisión de la usuaria | pendiente de la decisión de la usuaria                | `/seo-para-ia/` does not exist (HTTP 404 on 2026-11-15, ADR 0013); no link to a non-existent URL is proposed |
 | DW-3 (pending the user, P2)          | pendiente de la decisión de la usuaria | pendiente de la decisión de la usuaria                | Only if a website maintenance plan is offered; no page exists                                                |
