@@ -100,21 +100,19 @@ Fecha de captura: 2026-11-15
 | --- | --- |
 | Rechazar | Ninguna petición a `googletagmanager.com` ni a `google-analytics.com`. |
 | Aceptar (estado limpio) | Carga `www.googletagmanager.com/gtag/js`; `POST region1.google-analytics.com/g/collect` con `en=page_view` responde 204. |
-| Aceptar y revocar desde el pie (`#cookie-settings`, desmarcar, guardar) | Tras revocar no sale ninguna petición más; al recargar con la preferencia guardada como rechazada no hay ninguna petición a Google. |
+| Aceptar y revocar desde el pie (`#cookie-settings`, desmarcar, guardar) | **Producción, 2026-11-15 (solo `page_view`):** tras revocar no salió ninguna petición de páginas vistas y, al recargar con la preferencia guardada como rechazada, ninguna petición a Google. **Fuga detectada por QA el 2026-11-15 (NRD-94):** tras revocar, la medición mejorada de gtag.js (clic saliente) seguía enviando `POST region1.google-analytics.com/g/collect` con `en=click` y `ep.link_url` (URL completa del enlace saliente, incluido el teléfono y el texto en el botón de WhatsApp). Producción mantiene esta fuga hasta la próxima promoción de `develop` a `main`. **Rama con NRD-95, 2026-11-15, navegador automatizado sobre `pnpm preview`:** aceptar envía `page_view` y crea `_ga` y `_ga_NCV98R3HW7`; con consentimiento, un desplazamiento envía `scroll` (antes de revocar); tras revocar desde el pie no sale ninguna petición a `google-analytics.com` ni a `googletagmanager.com` al hacer clic en el enlace de LinkedIn y en el botón de WhatsApp, `window['ga-disable-G-NCV98R3HW7']` es `true`, no quedan cookies `_ga*` y `localStorage` guarda `rejected`; recargar con `rejected` y hacer clic en WhatsApp, navegar a un enlace interno y desplazarse tampoco envía nada. Volver a aceptar en la misma página envía un único `page_view`, restablece la marca a `false` y los eventos vuelven a salir (`whatsapp_click`, y el clic saliente de la medición mejorada, ya con consentimiento). Eventos de prueba desde `127.0.0.1`: excluir de la línea base. |
 
 **Eventos de conversión (build de la rama, no en producción todavía):** el cableado de NRD-82 llega a producción con la próxima promoción de `develop` a `main`. Hasta entonces se verificó con `pnpm preview` en localhost enviando a la propiedad real. **Eventos de prueba (2026-11-15, origen `127.0.0.1`): excluir de la línea base.** Cada clic con consentimiento generó un único evento en `/g/collect` (204); sin consentimiento no salió ninguna petición.
 
 | Clic con consentimiento | `en` observado | Parámetros `ep.*` observados |
 | --- | --- | --- |
-| CTA de reserva (zona de contenido) | `contact_click` | `contact_method=booking`, `placement=nav` (observación superseded, ver nota) |
-| CTA de reserva (cabecera) | `contact_click` | `contact_method=booking`, `placement=nav` (observación superseded, ver nota) |
+| CTA de reserva (zona de contenido) | `contact_click` | `contact_method=booking`, `placement=main` (valor observado por QA el 2026-11-15) |
+| CTA de reserva (cabecera) | `contact_click` | `contact_method=booking`, `placement=header` (valor observado por QA el 2026-11-15) |
 | Teléfono del pie | `contact_click` | `contact_method=phone`, `placement=footer` |
 | Email del pie | `contact_click` | `contact_method=email`, `placement=footer` |
 | Botón flotante de WhatsApp | `whatsapp_click` | `placement=page` |
 | Formulario de contacto (respuesta simulada `ok` de Formspree) | `form_submit` | `placement=contact_form` |
-| Reserva tras navegar con View Transitions | `contact_click` | `contact_method=booking`, `placement=nav` (un solo evento; observación superseded, ver nota) |
-
-Nota de corrección: los valores `placement=nav` de las tres filas de reserva se observaron con `placementFor` resolviendo el landmark más cercano, que devolvía el `nav` envolvente del CTA. Desde la corrección posterior (NRD-82) se resuelve el landmark más externo, de modo que el CTA del hero debe enviar `placement=main` y el de la cabecera `placement=header`; está cubierto por tests unitarios con anidamiento real, pero la reverificación en el build de la rama está pendiente y no hay valores observados nuevos.
+| Reserva tras navegar con View Transitions | `contact_click` | `contact_method=booking` (un solo evento; `placement` no reverificado en esta fila) |
 
 Observaciones: no aparece ningún teléfono, email, `href` ni campo del formulario en `ep.*`. Un enlace interno no genera evento de conversión. La medición mejorada de GA4 envía además `scroll` y `form_start`; `form_start` incluye `form_id` y el identificador y nombre del primer campo (no sus valores), ver "Pendientes de la usuaria". `ep.page_path` no aparece en las peticiones observadas (el diseño lo esperaba); no se ha investigado el motivo y la ruta de página no se ha verificado como parámetro del evento.
 

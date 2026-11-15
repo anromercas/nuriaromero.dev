@@ -548,3 +548,10 @@ test('AnalyticsConsent.astro passes window and a document.cookie adapter to the 
   assert.match(source, /cookies:/)
   assert.match(source, /document\.cookie/)
 })
+
+test('measurement doc no longer claims a clean revoke or carries superseded rows', async () => {
+  const { readFile } = await import('node:fs/promises')
+  const doc = await readFile(new URL('../docs/seo-audit/measurement-seo.md', import.meta.url), 'utf8')
+  assert.doesNotMatch(doc, /no sale ninguna petición más/)
+  assert.doesNotMatch(doc, /superseded/)
+})
