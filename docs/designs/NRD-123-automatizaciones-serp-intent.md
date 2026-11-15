@@ -142,4 +142,4 @@ Scope: copy only, on the existing `/automatizaciones/` page (`src/pages/automati
 ## Tasks
 
 - [x] 1.1 [NRD-150 app] Read the exact SERP of `automatización de procesos sevilla`, record it and apply the stop gate; tests: none (docs).
-- [ ] 1.2 [NRD-151 app] Title, H1 and description work `automatización de procesos en Sevilla`; tests: new `tests/automatizaciones-intent.test.js` and the `seo-meta-titles` pin first (RED), then `services.ts` and the `intentMatrix` row.
+- [x] 1.2 [NRD-151 app] Title, H1 and description work `automatización de procesos en Sevilla`; tests: new `tests/automatizaciones-intent.test.js` and the `seo-meta-titles` pin first (RED), then `services.ts` and the `intentMatrix` row.

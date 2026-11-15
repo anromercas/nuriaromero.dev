@@ -57,7 +57,7 @@ test('services.ts: los seo.title de los 4 servicios no cambian (blindaje del pat
   const expectedTitles = {
     disenoWeb: 'Diseño web Sevilla | Diseñadora web, precio cerrado desde 149 €',
     desarrolloSoftware: 'Desarrollo de software a medida en Sevilla | Aplicaciones web',
-    automatizaciones: 'Automatización de procesos para negocios en Sevilla | n8n y Make',
+    automatizaciones: 'Automatización de procesos en Sevilla para negocios | n8n y Make',
     inteligenciaArtificial: 'IA para negocios en Sevilla | Chatbots y asistentes con IA',
   }
 

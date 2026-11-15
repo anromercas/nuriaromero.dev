@@ -252,12 +252,12 @@ export const automatizaciones: ServicePageData = {
   slug: "/automatizaciones/",
   breadcrumbName: "Automatizaciones",
   seo: {
-    title: "Automatización de procesos para negocios en Sevilla | n8n y Make",
+    title: "Automatización de procesos en Sevilla para negocios | n8n y Make",
     description:
-      "Automatizo las tareas repetitivas de tu negocio en Sevilla con n8n y Make y más de 10 años de experiencia: facturas, correos, citas e informes.",
+      "Automatización de procesos en Sevilla con n8n y Make: facturas, correos, citas e informes que se hacen solos. Más de 10 años de experiencia.",
   },
   hero: {
-    h1: "Automatizaciones: que tu negocio trabaje solo",
+    h1: "Automatización de procesos en Sevilla: que tu negocio trabaje solo",
     subtitle:
       "¿Cuántas horas pierdes a la semana copiando datos, enviando los mismos correos o pasando pedidos de un sitio a otro? Conecto las herramientas que ya usas (correo, Excel, WhatsApp, facturación…) para que esas tareas se hagan solas.",
   },
