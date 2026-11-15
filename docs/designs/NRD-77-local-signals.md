@@ -120,5 +120,5 @@ None (docs path, `qaExemptPaths`). The PR reviewer opens two citation URLs and c
 
 ## Tasks
 
-- [ ] 1.1 [NRD-108 app] Gate on the Step 0 file; write the dated GBP record vs the top 3 local-pack competitors and the NAP consistency table in `docs/seo-audit/local-signals-2026-11.md`, plus the README row; tests: unit suite green.
+- [x] 1.1 [NRD-108 app] Gate on the Step 0 file; write the dated GBP record vs the top 3 local-pack competitors and the NAP consistency table in `docs/seo-audit/local-signals-2026-11.md`, plus the README row; tests: unit suite green.
 - [ ] 1.2 [NRD-109 app] Map GBP services and links to the ADR 0013 owner pages, write the owner change checklist, the monthly review routine (no gating) and the site-side gaps table, and comment the gaps on NRD-77 for the PO; tests: unit suite green.
