@@ -136,5 +136,5 @@ None (docs path). The PR reviewer and `seo-review` read the ADR against the inpu
 ## Tasks
 
 - [x] 1.1 [NRD-103 app] Create `docs/adr/0013-seo-site-architecture.md` (Proposed) with Context, Inputs (provisional/unconfirmed marking), owner map for every in-focus cluster, page verdicts (incl. the four posts) and `/seo-para-ia/` placement; tests: unit suite green.
-- [ ] 1.2 [NRD-104 app] Hub-and-spoke rules, anchor policy, menu and breadcrumb changes, and the data change spec for `internalLinksBySource`, `intentMatrix`, `keywordOwners` and `reciprocalLinks`; tests: unit suite green.
+- [x] 1.2 [NRD-104 app] Hub-and-spoke rules, anchor policy, menu and breadcrumb changes, and the data change spec for `internalLinksBySource`, `intentMatrix`, `keywordOwners` and `reciprocalLinks`; tests: unit suite green.
 - [ ] 1.3 [NRD-105 app] URL change impact table (301, sitemap, `llms.txt`, canonical), verdict line with reasons, "Propuestas pendientes de la usuaria", phase-5 order, Consequences, README index row, and the order comment on NRD-74; tests: unit suite green.
