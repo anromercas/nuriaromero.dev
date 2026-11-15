@@ -148,4 +148,4 @@ No browser checks (no UI change). QA verifies on GitHub:
 
 - [x] 1.1 [NRD-130 app] Add `check:seo:dist` and `check:seo` to `package.json` and document them in `CLAUDE.md`; tests: `tests/package-scripts.test.js` aggregate test first (RED), then the scripts (GREEN), then `pnpm build && pnpm check:seo:dist`.
 - [x] 1.2 [NRD-131 infra] Add the "SEO build checks" step (`pnpm check:seo:dist`) after `pnpm build` in `.github/workflows/ci.yml`; tests: existing `tests/ci-workflow.test.js` stays green.
-- [ ] 1.3 [NRD-132 app] Pin the step in `tests/ci-workflow.test.js` (order marker and placement test); tests: RED with the step deleted locally, GREEN restored.
+- [x] 1.3 [NRD-132 app] Pin the step in `tests/ci-workflow.test.js` (order marker and placement test); tests: RED with the step deleted locally, GREEN restored.
