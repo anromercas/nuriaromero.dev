@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import {
   ANALYTICS_DOM_EVENT,
   analyticsEventForLink,
+  cookieDomainCandidates,
   createConsentController,
   createGtag,
   placementFor,
@@ -445,4 +446,105 @@ test('privacy and cookie pages disclose the measured contact interactions', asyn
     assert.match(source, /clics en los enlaces de reserva, teléfono, correo y WhatsApp/, page)
     assert.match(source, /envío correcto del formulario de contacto/, page)
   }
+})
+
+const FLAG = 'ga-disable-G-NCV98R3HW7'
+
+function setupKillSwitch(initial = null, cookieNames = []) {
+  const store = new Map(initial ? [['site-analytics-consent', initial]] : [])
+  const global = { location: { hostname: 'www.nuriaromero.dev', pathname: '/' } }
+  const log = []
+  const expired = []
+  const controller = createConsentController({
+    storage: { getItem: (key) => store.get(key) ?? null, setItem: (key, value) => store.set(key, value) },
+    gtag: (...args) => log.push({ args, flag: global[FLAG] }),
+    appendScript: (src) => log.push({ args: ['script', src], flag: global[FLAG] }),
+    measurementId: 'G-NCV98R3HW7',
+    global,
+    cookies: { read: () => cookieNames.map((n) => `${n}=1`).join('; '), expire: (name, domain) => expired.push([name, domain]) },
+  })
+  return { controller, global, log, expired }
+}
+
+test('revoke after accept sets the ga-disable flag before the consent update', () => {
+  withWindow(() => {
+    const { controller, global, log } = setupKillSwitch()
+    controller.initialize()
+    controller.accept()
+    controller.reject()
+    assert.equal(global[FLAG], true)
+    const denied = log.filter((l) => l.args[0] === 'consent' && l.args[1] === 'update' && l.args[2].analytics_storage === 'denied')
+    assert.equal(denied.length, 1)
+    assert.equal(denied[0].flag, true)
+  })
+})
+
+test('initialize sets the flag for no choice or rejected and clears it for accepted', () => {
+  withWindow(() => {
+    for (const [initial, expected] of [[null, true], ['rejected', true], ['accepted', false]]) {
+      const { controller, global } = setupKillSwitch(initial)
+      controller.initialize()
+      assert.equal(global[FLAG], expected, String(initial))
+    }
+  })
+})
+
+test('accept after revoke clears the flag before consent granted and page_view, loading the script once', () => {
+  withWindow(() => {
+    const { controller, global, log } = setupKillSwitch()
+    controller.initialize()
+    controller.accept()
+    controller.reject()
+    const mark = log.length
+    controller.accept()
+    assert.equal(global[FLAG], false)
+    const after = log.slice(mark)
+    const granted = after.find((l) => l.args[0] === 'consent' && l.args[2]?.analytics_storage === 'granted')
+    const view = after.find((l) => l.args[0] === 'event' && l.args[1] === 'page_view')
+    assert.equal(granted.flag, false)
+    assert.equal(view.flag, false)
+    assert.equal(log.filter((l) => l.args[0] === 'script').length, 1)
+  })
+})
+
+test('revoke expires _ga and _ga_* cookies on every candidate domain and nothing else', () => {
+  withWindow(() => {
+    const { controller, expired } = setupKillSwitch(null, ['_ga', '_ga_ABC123', 'theme', 'site-analytics-consent'])
+    controller.initialize()
+    controller.accept()
+    controller.reject()
+    const domains = [null, ...cookieDomainCandidates('www.nuriaromero.dev')]
+    assert.deepEqual(expired.filter(([n]) => n === '_ga').map(([, d]) => d), domains)
+    assert.deepEqual(expired.filter(([n]) => n === '_ga_ABC123').map(([, d]) => d), domains)
+    assert.equal(expired.every(([n]) => n === '_ga' || n === '_ga_ABC123'), true)
+  })
+})
+
+test('revoke does not throw without the optional global and cookies dependencies', () => {
+  withWindow(() => {
+    const { controller } = setup()
+    controller.initialize()
+    controller.accept()
+    assert.doesNotThrow(() => controller.reject())
+  })
+})
+
+test('cookieDomainCandidates covers localhost, the apex domain and www', () => {
+  assert.deepEqual(cookieDomainCandidates('localhost'), [])
+  assert.deepEqual(cookieDomainCandidates('127.0.0.1'), [])
+  assert.deepEqual(cookieDomainCandidates('nuriaromero.dev'), ['nuriaromero.dev', '.nuriaromero.dev'])
+  assert.deepEqual(cookieDomainCandidates('www.nuriaromero.dev'), [
+    'www.nuriaromero.dev',
+    '.www.nuriaromero.dev',
+    'nuriaromero.dev',
+    '.nuriaromero.dev',
+  ])
+})
+
+test('AnalyticsConsent.astro passes window and a document.cookie adapter to the controller', async () => {
+  const { readFile } = await import('node:fs/promises')
+  const source = await readFile(new URL('../src/components/AnalyticsConsent.astro', import.meta.url), 'utf8')
+  assert.match(source, /global:\s*window/)
+  assert.match(source, /cookies:/)
+  assert.match(source, /document\.cookie/)
 })

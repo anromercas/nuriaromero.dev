@@ -65,6 +65,14 @@
       document.head.append(script)
     },
     measurementId,
+    global: window,
+    cookies: {
+      read: () => document.cookie,
+      expire: (name: string, domain: string | null) => {
+        const scope = domain ? `; Domain=${domain}` : ""
+        document.cookie = `${name}=; Max-Age=0; Path=/${scope}`
+      },
+    },
   })
 
   const storedChoice = window.localStorage.getItem("site-analytics-consent")

@@ -35,6 +35,21 @@ export function analyticsEventForLink({ href, placement, bookingUrl }) {
   return null
 }
 
+export function cookieDomainCandidates(hostname) {
+  if (!hostname || !hostname.includes('.') || /^[\d.]+$/.test(hostname)) return []
+  const labels = hostname.split('.')
+  const candidates = []
+  for (let i = 0; i <= labels.length - 2; i += 1) {
+    const domain = labels.slice(i).join('.')
+    candidates.push(domain, `.${domain}`)
+  }
+  return candidates
+}
+
+function isAnalyticsCookie(name) {
+  return name === '_ga' || name.startsWith('_ga_')
+}
+
 export function createGtag(target) {
   target.dataLayer = target.dataLayer || []
   target.gtag =
@@ -45,7 +60,23 @@ export function createGtag(target) {
   return target.gtag
 }
 
-export function createConsentController({ storage, gtag, appendScript, measurementId }) {
+export function createConsentController({ storage, gtag, appendScript, measurementId, global, cookies }) {
+  const disableFlag = `ga-disable-${measurementId}`
+  const setDisabled = (value) => {
+    if (global && measurementId) global[disableFlag] = value
+  }
+
+  function expireAnalyticsCookies() {
+    if (!cookies) return
+    const names = cookies
+      .read()
+      .split(';')
+      .map((pair) => pair.split('=')[0].trim())
+      .filter(isAnalyticsCookie)
+    const domains = [null, ...cookieDomainCandidates(global?.location?.hostname)]
+    for (const name of names) for (const domain of domains) cookies.expire(name, domain)
+  }
+
   let scriptLoaded = false
   let analyticsAllowed = false
 
@@ -56,6 +87,7 @@ export function createConsentController({ storage, gtag, appendScript, measureme
   function enableAnalytics() {
     if (analyticsAllowed || !measurementId) return false
     analyticsAllowed = true
+    setDisabled(false)
     gtag('consent', 'update', { analytics_storage: 'granted' })
     if (!scriptLoaded) {
       gtag('js', new Date())
@@ -69,6 +101,7 @@ export function createConsentController({ storage, gtag, appendScript, measureme
   function initialize() {
     setDeniedDefaults()
     if (storage.getItem(CONSENT_KEY) === 'accepted') enableAnalytics()
+    else setDisabled(true)
   }
 
   function accept() {
@@ -79,7 +112,9 @@ export function createConsentController({ storage, gtag, appendScript, measureme
   function reject() {
     storage.setItem(CONSENT_KEY, 'rejected')
     analyticsAllowed = false
+    setDisabled(true)
     if (scriptLoaded) gtag('consent', 'update', { analytics_storage: 'denied' })
+    expireAnalyticsCookies()
   }
 
   function trackPageView() {
