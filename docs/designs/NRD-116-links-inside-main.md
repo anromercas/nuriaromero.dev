@@ -135,4 +135,4 @@ None: no rendered output changes. QA reads the check output on the PR's `verify`
 ## Tasks
 
 - [x] 1.1 [NRD-133 app] Add `scripts/lib/main-links.mjs` (`mainContent`, `visibleText`, `anchorsIn`, `linkInMain`); tests: `tests/main-links.test.js` fixtures first (RED), then the helper (GREEN).
-- [ ] 1.2 [NRD-134 app] Use `linkInMain` in `scripts/check-seo-06.mjs` rows and `scripts/check-seo-07.mjs` reciprocal pairs; tests: `node --test tests/*.test.js`, `pnpm build`, both checks green plus one local negative run recorded.
+- [x] 1.2 [NRD-134 app] Use `linkInMain` in `scripts/check-seo-06.mjs` rows and `scripts/check-seo-07.mjs` reciprocal pairs; tests: `node --test tests/*.test.js`, `pnpm build`, both checks green plus one local negative run recorded.

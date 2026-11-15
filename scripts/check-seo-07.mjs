@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises"
 import { existsSync } from "node:fs"
+import { linkInMain } from "./lib/main-links.mjs"
 
 const root = new URL("../", import.meta.url)
 const distDir = new URL("dist/", root)
@@ -145,11 +146,11 @@ for (const nicheFaq of nicheFaqs) {
 for (const linkCheck of intents.reciprocalLinks) {
   const source = await readFile(routeFile(linkCheck.source), "utf8")
   const target = await readFile(routeFile(linkCheck.target), "utf8")
-  if (!source.includes(`href="${linkCheck.target}"`) || !source.includes(linkCheck.sourceAnchor)) {
-    errors.push(`${linkCheck.source}: missing reciprocal anchor "${linkCheck.sourceAnchor}" to ${linkCheck.target}`)
+  if (!linkInMain(source, linkCheck.target, linkCheck.sourceAnchor)) {
+    errors.push(`${linkCheck.source}: missing reciprocal anchor "${linkCheck.sourceAnchor}" to ${linkCheck.target} inside <main>`)
   }
-  if (!target.includes(`href="${linkCheck.source}"`) || !target.includes(linkCheck.targetAnchor)) {
-    errors.push(`${linkCheck.target}: missing reciprocal anchor "${linkCheck.targetAnchor}" to ${linkCheck.source}`)
+  if (!linkInMain(target, linkCheck.source, linkCheck.targetAnchor)) {
+    errors.push(`${linkCheck.target}: missing reciprocal anchor "${linkCheck.targetAnchor}" to ${linkCheck.source} inside <main>`)
   }
 }
 
