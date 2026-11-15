@@ -7,7 +7,16 @@ import { fileURLToPath } from "node:url";
 const root = resolve(fileURLToPath(import.meta.url), "../..");
 
 // Files or directories that must stay free of `dark:` variants (the site is dark-only).
-const SCOPES = ["src/layouts", "src/components", "src/scripts/contact-form.js"];
+const SCOPES = [
+  "src/layouts",
+  "src/components",
+  "src/scripts/contact-form.js",
+  "src/pages/index.astro",
+  "src/pages/diseno-web-sevilla.astro",
+  "src/pages/tienda-online-sevilla.astro",
+  "src/pages/seo-para-clinicas-capilares-sevilla.astro",
+  "src/pages/web-para-comercios-sevilla.astro",
+];
 
 // A class token, not a word like "dark-only" in a comment.
 const DARK = /(^|[\s"'`{(])dark:/;

@@ -1,48 +1,48 @@
 ---
-import ServiceLayout from "@/layouts/ServiceLayout.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
-import TitleSection from "@/components/TitleSection.astro"
-import Projects from "@/components/Projects.astro"
-import { disenoWeb } from "@/data/services"
-import { niches } from "@/data/niches"
+import ServiceLayout from "@/layouts/ServiceLayout.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import TitleSection from "@/components/TitleSection.astro";
+import Projects from "@/components/Projects.astro";
+import { disenoWeb } from "@/data/services";
+import { niches } from "@/data/niches";
 ---
 
 <ServiceLayout page={disenoWeb}>
   <Fragment slot="before-benefits">
     <SectionContainer>
-      <TitleSection>¿Tu web actual no te trae clientes, o todavía no tienes una?</TitleSection>
+      <TitleSection>
+        ¿Tu web actual no te trae clientes, o todavía no tienes una?
+      </TitleSection>
       <div class="space-y-4 text-gray-300">
         <p>
-          Si ya tienes web, conoces esta sensación: entra gente, pero no
-          llama ni escribe.
+          Si ya tienes web, conoces esta sensación: entra gente, pero no llama
+          ni escribe.
         </p>
         <p>
-          Si todavía no tienes, el problema es otro: cada día, alguien busca
-          tu servicio en Sevilla y encuentra a tu competencia en tu lugar.
+          Si todavía no tienes, el problema es otro: cada día, alguien busca tu
+          servicio en Sevilla y encuentra a tu competencia en tu lugar.
         </p>
         <p>
           La causa suele ser la misma en los dos casos: una web pensada para
-          verse bien el día de la entrega, no para seguir trabajando por ti
-          a partir del día siguiente.
+          verse bien el día de la entrega, no para seguir trabajando por ti a
+          partir del día siguiente.
         </p>
       </div>
       <p class="mt-8 text-gray-300">
-        ¿Tienes un restaurante, una clínica, un comercio o un despacho? Mira
-        la página dedicada a tu sector:
+        ¿Tienes un restaurante, una clínica, un comercio o un despacho? Mira la
+        página dedicada a tu sector:
       </p>
       <ul class="mt-4 flex flex-wrap gap-3">
-        {
-          niches.map((niche) => (
-            <li>
-              <a
-                href={niche.slug}
-                class="inline-block rounded-full border border-gray-300 bg-gray-100/50 px-4 py-1.5 text-sm font-medium text-gray-800 transition hover:border-blue-500 hover:text-blue-500 dark:border-gray-600 dark:bg-gray-800/50 dark:text-gray-200"
-              >
-                {niche.breadcrumbName}
-              </a>
-            </li>
-          ))
-        }
+        {niches.map((niche) => (
+          <li>
+            <a
+              href={niche.slug}
+              class="inline-block rounded-full border border-gray-600 bg-gray-800/50 px-4 py-1.5 text-sm font-medium text-gray-200 transition"
+            >
+              {niche.breadcrumbName}
+            </a>
+          </li>
+        ))}
       </ul>
     </SectionContainer>
   </Fragment>
@@ -50,8 +50,8 @@ import { niches } from "@/data/niches"
   <SectionContainer>
     <TitleSection>Webs reales de negocios de Sevilla</TitleSection>
     <p class="mb-8 text-gray-300">
-      Nada de maquetas ni ejemplos genéricos. Estas son webs reales, de
-      negocios reales de Sevilla, que puedes visitar ahora mismo.
+      Nada de maquetas ni ejemplos genéricos. Estas son webs reales, de negocios
+      reales de Sevilla, que puedes visitar ahora mismo.
     </p>
     <Projects only={["arkady", "adfsevilla"]} />
   </SectionContainer>
@@ -59,21 +59,36 @@ import { niches } from "@/data/niches"
   <SectionContainer>
     <TitleSection>Por qué elegir a alguien de Sevilla para tu web</TitleSection>
     <p class="mb-4 text-gray-300">
-      Trabajar con alguien de tu ciudad tiene ventajas que una agencia
-      grande o un freelance en remoto no te dan:
+      Trabajar con alguien de tu ciudad tiene ventajas que una agencia grande o
+      un freelance en remoto no te dan:
     </p>
     <ul class="space-y-2 text-gray-300">
       <li class="flex gap-x-2">
-        <span class="text-green-600 dark:text-green-400" aria-hidden="true">✓</span>
-        <span><strong class="text-gray-800 dark:text-white">Entiendo el mercado local</strong>: sé cómo busca tu cliente en Sevilla, qué zonas y qué palabras usa.</span>
+        <span class="text-green-400" aria-hidden="true">
+          ✓
+        </span>
+        <span>
+          <strong class="text-white">Entiendo el mercado local</strong>: sé cómo
+          busca tu cliente en Sevilla, qué zonas y qué palabras usa.
+        </span>
       </li>
       <li class="flex gap-x-2">
-        <span class="text-green-600 dark:text-green-400" aria-hidden="true">✓</span>
-        <span><strong class="text-gray-800 dark:text-white">Trato directo</strong>: hablas conmigo, quien diseña y programa tu web, no con un comercial.</span>
+        <span class="text-green-400" aria-hidden="true">
+          ✓
+        </span>
+        <span>
+          <strong class="text-white">Trato directo</strong>: hablas conmigo,
+          quien diseña y programa tu web, no con un comercial.
+        </span>
       </li>
       <li class="flex gap-x-2">
-        <span class="text-green-600 dark:text-green-400" aria-hidden="true">✓</span>
-        <span><strong class="text-gray-800 dark:text-white">Reunión en persona si hace falta</strong>: un café en Sevilla resuelve lo que diez correos no resuelven.</span>
+        <span class="text-green-400" aria-hidden="true">
+          ✓
+        </span>
+        <span>
+          <strong class="text-white">Reunión en persona si hace falta</strong>:
+          un café en Sevilla resuelve lo que diez correos no resuelven.
+        </span>
       </li>
     </ul>
   </SectionContainer>

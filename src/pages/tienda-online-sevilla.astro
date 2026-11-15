@@ -1,14 +1,17 @@
 ---
-import ServiceLayout from "@/layouts/ServiceLayout.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
-import TitleSection from "@/components/TitleSection.astro"
-import { tiendaOnline } from "@/data/services"
+import ServiceLayout from "@/layouts/ServiceLayout.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import TitleSection from "@/components/TitleSection.astro";
+import { tiendaOnline } from "@/data/services";
 ---
 
 <ServiceLayout page={tiendaOnline}>
   <Fragment slot="before-benefits">
     <SectionContainer>
-      <TitleSection>¿Ya vendes por Instagram o WhatsApp, o quieres empezar a vender online desde cero?</TitleSection>
+      <TitleSection>
+        ¿Ya vendes por Instagram o WhatsApp, o quieres empezar a vender online
+        desde cero?
+      </TitleSection>
       <div class="space-y-4 text-gray-300">
         <p>
           Si ya vendes por redes sociales o mensajes directos, conoces el
@@ -26,32 +29,62 @@ import { tiendaOnline } from "@/data/services"
           plataforma de terceros para seguir vendiendo.
         </p>
         <p>
-          Si lo único que necesitas es mostrar tu catálogo y tus horarios,
-          sin cobrar online todavía, seguramente te encaja mejor la
-          <a href="/web-para-comercios-sevilla/" class="text-blue-600 underline-offset-4 hover:underline dark:text-blue-400">web para comercios</a>.
+          Si lo único que necesitas es mostrar tu catálogo y tus horarios, sin
+          cobrar online todavía, seguramente te encaja mejor la
+          <a
+            href="/web-para-comercios-sevilla/"
+            class="text-blue-400 underline-offset-4 hover:underline"
+          >
+            web para comercios
+          </a>
+          .
         </p>
       </div>
     </SectionContainer>
   </Fragment>
 
   <SectionContainer>
-    <TitleSection>Por qué elegir a alguien que programa, no una plantilla de marketplace</TitleSection>
+    <TitleSection>
+      Por qué elegir a alguien que programa, no una plantilla de marketplace
+    </TitleSection>
     <p class="mb-4 text-gray-300">
       Una tienda online no es solo un catálogo bonito: hay decisiones técnicas
       detrás (pasarela de pago, stock, seguridad) que marcan la diferencia:
     </p>
     <ul class="space-y-2 text-gray-300">
       <li class="flex gap-x-2">
-        <span class="text-green-600 dark:text-green-400" aria-hidden="true">✓</span>
-        <span><strong class="text-gray-800 dark:text-white">Pasarela de pago integrada y probada</strong>: compruebo todo el proceso de compra de principio a fin antes de publicar la tienda.</span>
+        <span class="text-green-400" aria-hidden="true">
+          ✓
+        </span>
+        <span>
+          <strong class="text-white">
+            Pasarela de pago integrada y probada
+          </strong>
+          : compruebo todo el proceso de compra de principio a fin antes de
+          publicar la tienda.
+        </span>
       </li>
       <li class="flex gap-x-2">
-        <span class="text-green-600 dark:text-green-400" aria-hidden="true">✓</span>
-        <span><strong class="text-gray-800 dark:text-white">Presupuesto cerrado según tu catálogo</strong>: sabes qué vas a pagar antes de empezar, sin cifras a ciegas ni sorpresas a mitad de proyecto.</span>
+        <span class="text-green-400" aria-hidden="true">
+          ✓
+        </span>
+        <span>
+          <strong class="text-white">
+            Presupuesto cerrado según tu catálogo
+          </strong>
+          : sabes qué vas a pagar antes de empezar, sin cifras a ciegas ni
+          sorpresas a mitad de proyecto.
+        </span>
       </li>
       <li class="flex gap-x-2">
-        <span class="text-green-600 dark:text-green-400" aria-hidden="true">✓</span>
-        <span><strong class="text-gray-800 dark:text-white">Trato directo</strong>: hablas conmigo, quien diseña, programa e integra tu pasarela de pago, no con un comercial.</span>
+        <span class="text-green-400" aria-hidden="true">
+          ✓
+        </span>
+        <span>
+          <strong class="text-white">Trato directo</strong>: hablas conmigo,
+          quien diseña, programa e integra tu pasarela de pago, no con un
+          comercial.
+        </span>
       </li>
     </ul>
   </SectionContainer>
