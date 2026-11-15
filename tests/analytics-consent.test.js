@@ -1,6 +1,13 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { createConsentController, createGtag } from '../src/scripts/analytics-consent.js'
+import {
+  ANALYTICS_DOM_EVENT,
+  analyticsEventForLink,
+  cookieDomainCandidates,
+  createConsentController,
+  createGtag,
+  placementFor,
+} from '../src/scripts/analytics-consent.js'
 
 const tag = (value) => Object.prototype.toString.call(value)
 
@@ -211,4 +218,340 @@ test('every import.meta.env variable read in src is declared in env.d.ts', async
   for (const name of used) {
     assert.match(declared, new RegExp(`readonly ${name}\\??: `), `${name} is not declared in src/env.d.ts`)
   }
+})
+
+const BOOKING =
+  "https://calendar.google.com/calendar/appointments/schedules/abc?gv=true";
+
+test("analyticsEventForLink maps the booking URL to contact_click", () => {
+  assert.deepEqual(
+    analyticsEventForLink({
+      href: BOOKING,
+      placement: "main",
+      bookingUrl: BOOKING,
+    }),
+    {
+      name: "contact_click",
+      params: { contact_method: "booking", placement: "main" },
+    },
+  );
+});
+
+test("analyticsEventForLink returns null for a booking URL with a different query", () => {
+  assert.equal(
+    analyticsEventForLink({
+      href: `${BOOKING}&x=1`,
+      placement: "main",
+      bookingUrl: BOOKING,
+    }),
+    null,
+  );
+});
+
+test("analyticsEventForLink maps tel: and mailto: without sending the value", () => {
+  const phone = analyticsEventForLink({
+    href: "tel:+34600000000",
+    placement: "footer",
+    bookingUrl: BOOKING,
+  });
+  assert.deepEqual(phone, {
+    name: "contact_click",
+    params: { contact_method: "phone", placement: "footer" },
+  });
+  const email = analyticsEventForLink({
+    href: "mailto:hola@example.com",
+    placement: "main",
+    bookingUrl: BOOKING,
+  });
+  assert.deepEqual(email, {
+    name: "contact_click",
+    params: { contact_method: "email", placement: "main" },
+  });
+  assert.doesNotMatch(JSON.stringify([phone, email]), /600000000|example\.com/);
+});
+
+test("analyticsEventForLink maps wa.me links to whatsapp_click", () => {
+  assert.deepEqual(
+    analyticsEventForLink({
+      href: "https://wa.me/34600000000?text=hola",
+      placement: "page",
+      bookingUrl: BOOKING,
+    }),
+    { name: "whatsapp_click", params: { placement: "page" } },
+  );
+});
+
+test("analyticsEventForLink ignores internal and external unrelated links", () => {
+  assert.equal(
+    analyticsEventForLink({
+      href: "/seo-local-sevilla/",
+      placement: "nav",
+      bookingUrl: BOOKING,
+    }),
+    null,
+  );
+  assert.equal(
+    analyticsEventForLink({
+      href: "https://example.com/",
+      placement: "main",
+      bookingUrl: BOOKING,
+    }),
+    null,
+  );
+});
+
+test("placementFor returns the nearest landmark or page", () => {
+  const el = (landmark) => ({
+    closest: (selector) => {
+      assert.equal(selector, "header,nav,main,footer,aside");
+      return landmark ? { localName: landmark } : null;
+    },
+  });
+  assert.equal(placementFor(el("footer")), "footer");
+  assert.equal(placementFor(el("header")), "header");
+  assert.equal(placementFor(el(null)), "page");
+});
+
+test("conversion events are gated by consent and sent once after accept", () => {
+  withWindow(() => {
+    const { controller, target } = setupReal();
+    const events = () =>
+      target.dataLayer
+        .map((e) => Array.from(e))
+        .filter((a) => a[0] === "event" && a[1] === "contact_click");
+    controller.initialize();
+    controller.trackEvent("contact_click", {
+      contact_method: "booking",
+      placement: "main",
+    });
+    assert.equal(events().length, 0);
+    controller.accept();
+    controller.trackEvent("contact_click", {
+      contact_method: "booking",
+      placement: "main",
+    });
+    assert.equal(events().length, 1);
+    assert.deepEqual(events()[0][2], {
+      contact_method: "booking",
+      placement: "main",
+      page_path: "/",
+    });
+    controller.reject();
+    controller.trackEvent("contact_click", {
+      contact_method: "booking",
+      placement: "main",
+    });
+    assert.equal(events().length, 1);
+  });
+});
+
+test("every event name the mapper returns is allowlisted by trackEvent", () => {
+  withWindow(() => {
+    const links = [
+      "tel:+34600000000",
+      "mailto:a@b.es",
+      "https://wa.me/34600000000",
+      BOOKING,
+    ];
+    const { controller, target } = setupReal();
+    controller.initialize();
+    controller.accept();
+    for (const href of links) {
+      const found = analyticsEventForLink({
+        href,
+        placement: "main",
+        bookingUrl: BOOKING,
+      });
+      controller.trackEvent(found.name, found.params);
+    }
+    const names = target.dataLayer
+      .map((e) => Array.from(e))
+      .filter((a) => a[0] === "event" && a[1] !== "page_view")
+      .map((a) => a[1]);
+    assert.deepEqual(names, [
+      "contact_click",
+      "contact_click",
+      "whatsapp_click",
+      "contact_click",
+    ]);
+  });
+});
+
+test("contact form dispatches site:analytics and the consent component listens to it", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const form = await readFile(
+    new URL("../src/scripts/contact-form.js", import.meta.url),
+    "utf8",
+  );
+  assert.equal(ANALYTICS_DOM_EVENT, "site:analytics");
+  assert.match(form, /new CustomEvent\(['"]site:analytics['"]/);
+  assert.match(form, /name:\s*['"]form_submit['"]/);
+  assert.match(form, /placement:\s*['"]contact_form['"]/);
+  const component = await readFile(
+    new URL("../src/components/AnalyticsConsent.astro", import.meta.url),
+    "utf8",
+  );
+  assert.match(component, /addEventListener\(\s*ANALYTICS_DOM_EVENT/);
+  assert.match(component, /analyticsEventForLink/);
+});
+
+function fakeTree(chain) {
+  // chain: landmark names from the outermost ancestor down to the link
+  const nodes = chain.map((localName) => ({ localName, parentElement: null }))
+  nodes.forEach((node, i) => {
+    node.parentElement = i > 0 ? nodes[i - 1] : null
+    node.closest = (selector) => {
+      const set = selector.split(',')
+      for (let cur = node; cur; cur = cur.parentElement) if (set.includes(cur.localName)) return cur
+      return null
+    }
+  })
+  return nodes[nodes.length - 1]
+}
+
+test('placementFor resolves the outermost landmark for a CTA nested in a nav inside main', () => {
+  assert.equal(placementFor(fakeTree(['body', 'main', 'div', 'nav', 'a'])), 'main')
+})
+
+test('placementFor resolves header for a link in the header nav', () => {
+  assert.equal(placementFor(fakeTree(['body', 'header', 'nav', 'a'])), 'header')
+})
+
+test('placementFor keeps footer and falls back to page without a landmark', () => {
+  assert.equal(placementFor(fakeTree(['body', 'footer', 'div', 'a'])), 'footer')
+  assert.equal(placementFor(fakeTree(['body', 'div', 'a'])), 'page')
+})
+
+test('trackEvent drops params that are not in the taxonomy', () => {
+  withWindow(() => {
+    const { controller, target } = setupReal()
+    controller.initialize()
+    controller.accept()
+    controller.trackEvent('contact_click', {
+      contact_method: 'phone',
+      placement: 'footer',
+      email: 'a@b.es',
+      href: 'tel:+34600000000',
+      page_path: '/spoofed',
+    })
+    const sent = target.dataLayer.map((e) => Array.from(e)).find((a) => a[0] === 'event' && a[1] === 'contact_click')
+    assert.deepEqual(sent[2], { contact_method: 'phone', placement: 'footer', page_path: '/' })
+  })
+})
+
+test('privacy and cookie pages disclose the measured contact interactions', async () => {
+  const { readFile } = await import('node:fs/promises')
+  for (const page of ['privacidad', 'cookies']) {
+    const source = (await readFile(new URL(`../src/pages/${page}.astro`, import.meta.url), 'utf8')).replace(/\s+/g, ' ')
+    assert.match(source, /clics en los enlaces de reserva, teléfono, correo y WhatsApp/, page)
+    assert.match(source, /envío correcto del formulario de contacto/, page)
+  }
+})
+
+const FLAG = 'ga-disable-G-NCV98R3HW7'
+
+function setupKillSwitch(initial = null, cookieNames = []) {
+  const store = new Map(initial ? [['site-analytics-consent', initial]] : [])
+  const global = { location: { hostname: 'www.nuriaromero.dev', pathname: '/' } }
+  const log = []
+  const expired = []
+  const controller = createConsentController({
+    storage: { getItem: (key) => store.get(key) ?? null, setItem: (key, value) => store.set(key, value) },
+    gtag: (...args) => log.push({ args, flag: global[FLAG] }),
+    appendScript: (src) => log.push({ args: ['script', src], flag: global[FLAG] }),
+    measurementId: 'G-NCV98R3HW7',
+    global,
+    cookies: { read: () => cookieNames.map((n) => `${n}=1`).join('; '), expire: (name, domain) => expired.push([name, domain]) },
+  })
+  return { controller, global, log, expired }
+}
+
+test('revoke after accept sets the ga-disable flag before the consent update', () => {
+  withWindow(() => {
+    const { controller, global, log } = setupKillSwitch()
+    controller.initialize()
+    controller.accept()
+    controller.reject()
+    assert.equal(global[FLAG], true)
+    const denied = log.filter((l) => l.args[0] === 'consent' && l.args[1] === 'update' && l.args[2].analytics_storage === 'denied')
+    assert.equal(denied.length, 1)
+    assert.equal(denied[0].flag, true)
+  })
+})
+
+test('initialize sets the flag for no choice or rejected and clears it for accepted', () => {
+  withWindow(() => {
+    for (const [initial, expected] of [[null, true], ['rejected', true], ['accepted', false]]) {
+      const { controller, global } = setupKillSwitch(initial)
+      controller.initialize()
+      assert.equal(global[FLAG], expected, String(initial))
+    }
+  })
+})
+
+test('accept after revoke clears the flag before consent granted and page_view, loading the script once', () => {
+  withWindow(() => {
+    const { controller, global, log } = setupKillSwitch()
+    controller.initialize()
+    controller.accept()
+    controller.reject()
+    const mark = log.length
+    controller.accept()
+    assert.equal(global[FLAG], false)
+    const after = log.slice(mark)
+    const granted = after.find((l) => l.args[0] === 'consent' && l.args[2]?.analytics_storage === 'granted')
+    const view = after.find((l) => l.args[0] === 'event' && l.args[1] === 'page_view')
+    assert.equal(granted.flag, false)
+    assert.equal(view.flag, false)
+    assert.equal(log.filter((l) => l.args[0] === 'script').length, 1)
+  })
+})
+
+test('revoke expires _ga and _ga_* cookies on every candidate domain and nothing else', () => {
+  withWindow(() => {
+    const { controller, expired } = setupKillSwitch(null, ['_ga', '_ga_ABC123', 'theme', 'site-analytics-consent'])
+    controller.initialize()
+    controller.accept()
+    controller.reject()
+    const domains = [null, ...cookieDomainCandidates('www.nuriaromero.dev')]
+    assert.deepEqual(expired.filter(([n]) => n === '_ga').map(([, d]) => d), domains)
+    assert.deepEqual(expired.filter(([n]) => n === '_ga_ABC123').map(([, d]) => d), domains)
+    assert.equal(expired.every(([n]) => n === '_ga' || n === '_ga_ABC123'), true)
+  })
+})
+
+test('revoke does not throw without the optional global and cookies dependencies', () => {
+  withWindow(() => {
+    const { controller } = setup()
+    controller.initialize()
+    controller.accept()
+    assert.doesNotThrow(() => controller.reject())
+  })
+})
+
+test('cookieDomainCandidates covers localhost, the apex domain and www', () => {
+  assert.deepEqual(cookieDomainCandidates('localhost'), [])
+  assert.deepEqual(cookieDomainCandidates('127.0.0.1'), [])
+  assert.deepEqual(cookieDomainCandidates('nuriaromero.dev'), ['nuriaromero.dev', '.nuriaromero.dev'])
+  assert.deepEqual(cookieDomainCandidates('www.nuriaromero.dev'), [
+    'www.nuriaromero.dev',
+    '.www.nuriaromero.dev',
+    'nuriaromero.dev',
+    '.nuriaromero.dev',
+  ])
+})
+
+test('AnalyticsConsent.astro passes window and a document.cookie adapter to the controller', async () => {
+  const { readFile } = await import('node:fs/promises')
+  const source = await readFile(new URL('../src/components/AnalyticsConsent.astro', import.meta.url), 'utf8')
+  assert.match(source, /global:\s*window/)
+  assert.match(source, /cookies:/)
+  assert.match(source, /document\.cookie/)
+})
+
+test('measurement doc no longer claims a clean revoke or carries superseded rows', async () => {
+  const { readFile } = await import('node:fs/promises')
+  const doc = await readFile(new URL('../docs/seo-audit/measurement-seo.md', import.meta.url), 'utf8')
+  assert.doesNotMatch(doc, /no sale ninguna petición más/)
+  assert.doesNotMatch(doc, /superseded/)
 })

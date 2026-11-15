@@ -2,7 +2,10 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-import { findUnsourcedMetrics } from "../scripts/lib/register-metrics.mjs";
+import {
+  KPI_METRIC_PATTERN,
+  findUnsourcedMetrics,
+} from "../scripts/lib/register-metrics.mjs";
 
 test("reports a metric that sits outside a dated baseline section", () => {
   const markdown = "# Registro\n\nHay 26 dominios referentes en total.\n";
@@ -151,4 +154,38 @@ test("the current register reports nothing", async () => {
     "utf8",
   );
   assert.deepEqual(findUnsourcedMetrics(markdown), []);
+});
+
+test("KPI pattern reports an unsourced KPI figure outside a baseline section", () => {
+  const md = "## KPIs y línea base\n\nHay 84 impresiones en total.\n";
+  const found = findUnsourcedMetrics(md, KPI_METRIC_PATTERN);
+  assert.equal(found.length, 1);
+  assert.match(found[0].match, /84 impresiones/);
+});
+
+test("KPI pattern allows the same figure inside a dated, sourced baseline", () => {
+  const md = [
+    "## Línea base 2026-11-14 (Search Console)",
+    "",
+    "Fuente: Search Console API",
+    "Fecha de captura: 2026-11-14",
+    "",
+    "Hay 84 impresiones y 2 clics. posición: 3",
+    "",
+  ].join("\n");
+  assert.deepEqual(findUnsourcedMetrics(md, KPI_METRIC_PATTERN), []);
+});
+
+test("KPI pattern does not flag register metrics and the default pattern ignores KPI terms", () => {
+  const md = "## Otra\n\n12 dominios referentes y 84 impresiones.\n";
+  const kpi = findUnsourcedMetrics(md, KPI_METRIC_PATTERN);
+  assert.equal(kpi.length, 1);
+  const dflt = findUnsourcedMetrics(md);
+  assert.equal(dflt.length, 1);
+  assert.match(dflt[0].match, /dominios referentes/);
+});
+
+test("the current measurement protocol reports no unsourced KPI figures", async () => {
+  const markdown = await readFile("docs/seo-audit/measurement-seo.md", "utf8");
+  assert.deepEqual(findUnsourcedMetrics(markdown, KPI_METRIC_PATTERN), []);
 });
