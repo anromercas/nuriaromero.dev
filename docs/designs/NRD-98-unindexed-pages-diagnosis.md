@@ -120,4 +120,4 @@ None (docs path, `qaExemptPaths`). The PR reviewer re-runs `curl -sSIL` on the t
 ## Tasks
 
 - [x] 1.1 [NRD-101 app] Run the seven checks for `/tienda-online-sevilla/` and `/inteligencia-artificial/` and write the dated section in `docs/seo-audit/technical-follow-up.md` with sources, dates and `path:line` evidence; tests: unit suite green.
-- [ ] 1.2 [NRD-102 app] One-line checks for the six support URLs, "Causas en el sitio (bugs a crear)" table, owner Search Console checklist, README row, and comments on NRD-98 (bug table) and NRD-74 (confirmed state); tests: unit suite green.
+- [x] 1.2 [NRD-102 app] One-line checks for the six support URLs, "Causas en el sitio (bugs a crear)" table, owner Search Console checklist, README row, and comments on NRD-98 (bug table) and NRD-74 (confirmed state); tests: unit suite green.
