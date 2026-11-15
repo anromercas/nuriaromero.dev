@@ -2,6 +2,11 @@ import { readdir, readFile } from "node:fs/promises"
 
 const distRoot = new URL("../dist/", import.meta.url)
 const { localTrust } = await import(new URL("../src/data/local-trust.ts", import.meta.url))
+const { SITE } = await import(new URL("../src/data/site.ts", import.meta.url))
+const toE164 = (phone) => {
+  const digits = phone.replace(/\D/g, "")
+  return digits.startsWith("34") && digits.length === 11 ? `+${digits}` : `+34${digits}`
+}
 const pages = []
 
 async function collect(directory) {
@@ -63,6 +68,9 @@ for (const path of pages) {
     fail(`business naming is not canonical in ${file}`)
   }
   if (!hasArea(business)) fail(`business areaServed is incomplete in ${file}`)
+  if (business.telephone !== toE164(SITE.phone)) {
+    fail(`business telephone "${business.telephone}" is not the published phone ${toE164(SITE.phone)} in ${file}`)
+  }
   // Verified profiles only: LinkedIn, GitHub and the verified Google Business
 // Profile (activated in b5e59b6, see src/data/local-trust.ts). Add a profile
 // here only after it is verified as Nuria's.
