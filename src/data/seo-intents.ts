@@ -62,10 +62,14 @@ export const intentMatrix: SeoIntentRow[] = [
     intent: "Commercial: contract design and development for a local business website",
     topic: "diseño web para negocios locales en Sevilla",
     cta: "Request a fixed-price web proposal",
-    titleSignal: "Diseño web en Sevilla",
+    titleSignal: "Diseño web Sevilla",
     descriptionSignal: "Diseño páginas web en Sevilla",
-    h1Signal: "Diseño web en Sevilla para negocios",
-    contentSignals: ["Así es el proceso de crear tu página web", "Preguntas frecuentes sobre diseño web en Sevilla"],
+    h1Signal: "Diseño web Sevilla para negocios",
+    contentSignals: [
+      "Diseñadora web en Sevilla que programa tu página, sin plantillas",
+      "Así es el proceso de crear tu página web",
+      "Preguntas frecuentes sobre diseño web en Sevilla",
+    ],
   },
   {
     url: "/web-para-comercios-sevilla/",
