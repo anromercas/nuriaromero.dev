@@ -119,4 +119,4 @@ The `ux-review` and `a11y-responsive` reviewers have nothing to check beyond con
 
 ## Tasks
 
-- [ ] 1.1 [NRD-145 app] Guard the JSON-LD telephone against the published phone; tests: new `tests/nap-consistency.test.js` case first (RED by local mutation), then the `check-seo-11` rule.
+- [x] 1.1 [NRD-145 app] Guard the JSON-LD telephone against the published phone; tests: new `tests/nap-consistency.test.js` case first (RED by local mutation), then the `check-seo-11` rule.
