@@ -37,6 +37,8 @@ Conventions: analysis in English, queries and page copy in Spanish verbatim. **D
 | SW-1                     | provisional (split proposal)               | two SERPs read (calls 13 and 18) are different; call 18 was assigned to its keyword by response order                                                                        |
 | SL-4, DW-2, IA-2         | provisional (owner not indexed)            | owner post or page is not in Google's index (NRD-98), so its fit to the SERP cannot be measured                                                                              |
 
+DW-3 is marked provisional here because its SERP is off-intent; in the owner map it is counted as "pending the user" because creating its page or service is radical (P2). Both statuses apply.
+
 GEO-3 was confirmed as a separate cluster by S10 and is not provisional.
 
 ## Decision
@@ -76,6 +78,10 @@ Counts: 14 clusters, 14 owners (9 existing URLs, 3 existing posts, 2 new pages);
 
 **SL-2 variants.** `experto seo sevilla` (25 impressions at 52.8) and `consultor seo provincia de sevilla` (24 at 76.3) are served by `/seo-local-sevilla/` (S7). Decision: `/` remains the owner of the cluster and of the registered `consultor seo sevilla`; the two variants are not registered, are not routed by a link and are left where Google shows them; the phase-5 story for `/` checks whether "experto" belongs in its running copy. Both positions are beyond page 5 in one window, so moving them would rest on noise. `freelance seo sevilla` (10 a month, S1) is not a target.
 
+**SW-1 split not applied.** S10 proposed splitting SW-1 into a software-firm intent (`desarrollo de software a medida sevilla`, call 13: local pack of 3 software firms) and a web-design-led intent (`aplicaciones web a medida sevilla`, call 18: local pack of 4 web designers). The split is not applied because call 18 was assigned to its keyword by response order, `apps a medida sevilla` has no SERP read, and the three queries have no volume or 10 a month (S10). Until then `/desarrollo-software-medida/` owns the cluster; for `aplicaciones web a medida sevilla` the page that effectively receives its 67 impressions at 70.8 is `/diseno-web-sevilla/` (S7), and the query is routed to the owner by link row 1 of table A, not by moving ownership. Review trigger: the phase-5 story for `/desarrollo-software-medida/` re-reads the SERP of `aplicaciones web a medida sevilla` with its keyword echoed; if it is still web-design-led, the PO decides whether `/diseno-web-sevilla/` owns it. This answers open question 7 of NRD-73.
+
+**Other open questions of NRD-73.** Question 8 (`automatizaciones ia sevilla`, 4 impressions at 52 on `/automatizaciones/`, S7): the owner is `/automatizaciones/` as part of IA-1; `/inteligencia-artificial/` links to it and does not target the query. Question 9 (`tienda online sevilla`): reference keyword only, so it is not added to the title or H1 of `/tienda-online-sevilla/`; the current title and H1 are left to the phase-5 story of that page (step 6). Question 12 (local pack of `seo local sevilla`: S1 and S2 show a pack of 3, S5 shows none): not resolved by this ADR, it is a rank-tracking capture question (device and settings) for the PO; no owner decision depends on it.
+
 **Candidate queries not promoted (S10, call 20).** None of the 15 candidate queries of NRD-97 enters the owner map: each has a single overview reading and no SERP. `desarrollo web sevilla` (140, KD 6, data 2026-09-17) sits between DW-1 and SW-1 and is the one to read in a SERP first (phase 5, `/diseno-web-sevilla/`); `agencia ia sevilla` (70, navigational) would join IA-2 if read; `automatización de procesos con ia` (260) has no Sevilla qualifier and is out of the local scope.
 
 ### Page verdicts
@@ -111,7 +117,7 @@ Verdict vocabulary: **keep**, **re-target**, **merge**, **split**, **create**. N
 
 ### Hub-and-spoke and internal links
 
-**Hubs and spokes.** A hub is the owner page of a commercial cluster; a spoke is a post that answers the informational side of the same topic and sends the reader to the hub. Today four of the five commercial hubs have no spoke, so the structure is two small hubs (`/seo-local-sevilla/`, `/diseno-web-sevilla/`) and four service pages that rely on sibling links.
+**Hubs and spokes.** A hub is the owner page of a commercial cluster; a spoke is a post that answers the informational side of the same topic and sends the reader to the hub. Today only `/seo-local-sevilla/` and `/diseno-web-sevilla/` have spokes; `/tienda-online-sevilla/` has a secondary spoke and the other three service pages have none, so the rest of the structure relies on sibling links.
 
 | Hub (owner)                                                                       | Spokes                                                                                                      | Spoke to hub today                                                                                      | Hub to spoke today                                                                                          | Change                                                                                            |
 | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |

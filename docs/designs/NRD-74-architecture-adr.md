@@ -133,6 +133,10 @@ None (docs path). The PR reviewer and `seo-review` read the ADR against the inpu
 
 0004 (SEO head), 0005 (sitemap, robots, llms.txt, checks), 0012 (keyword ownership registry). Writes 0013.
 
+## Correction (developer, 2026-11-15)
+
+The statements above that `ServiceLayout` renders no breadcrumbs and that service pages have no `BreadcrumbList` (Inputs, Requirements) are wrong: `src/layouts/ServiceLayout.astro:27-29,48,53` renders both. See ADR 0013, section "Menu and breadcrumbs".
+
 ## Tasks
 
 - [x] 1.1 [NRD-103 app] Create `docs/adr/0013-seo-site-architecture.md` (Proposed) with Context, Inputs (provisional/unconfirmed marking), owner map for every in-focus cluster, page verdicts (incl. the four posts) and `/seo-para-ia/` placement; tests: unit suite green.
