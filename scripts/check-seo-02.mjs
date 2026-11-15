@@ -167,6 +167,22 @@ for (const file of htmlFiles) {
   })
   const breadcrumbs = getSections(html, "nav").filter((section) => /aria-label\s*=\s*["']Miga de pan["']/i.test(section))
 
+  // NRD-115: every BreadcrumbList item of every built page ends in "/", and
+  // the last item equals the page canonical.
+  const allBreadcrumbItems = parseBreadcrumbItems(html)
+  for (const item of allBreadcrumbItems) {
+    if (!item.endsWith("/")) {
+      addFailure(`${relativeFile}: BreadcrumbList item omits trailing slash (${item})`)
+    }
+  }
+  const canonicalHref = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']*)["']/i)?.[1]
+  if (allBreadcrumbItems.length > 0 && canonicalHref) {
+    const lastItem = allBreadcrumbItems[allBreadcrumbItems.length - 1]
+    if (lastItem !== canonicalHref) {
+      addFailure(`${relativeFile}: last BreadcrumbList item differs from canonical (${lastItem} vs ${canonicalHref})`)
+    }
+  }
+
   for (const { url: page } of pages) {
     const bareUrl = withoutSlash(page)
     if (hrefs.some((href) => isBareTargetUrl(href, bareUrl))) {
