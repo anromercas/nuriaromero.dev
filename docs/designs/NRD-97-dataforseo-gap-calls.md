@@ -143,4 +143,4 @@ None (docs path, `qaExemptPaths`). The PR reviewer spot-checks three volumes and
 ## Tasks
 
 - [x] 1.1 [NRD-99 app] Gate on the Step 0 evidence file; add S10, record measured volumes and difficulty (or "sin dato" with reason) for every volume gap, update "Run status", "Huecos" and the call ledger (30 or fewer); tests: unit suite green.
-- [ ] 1.2 [NRD-100 app] Resolve SL-3, GEO-2, GEO-3, DW-3, TO-1, TO-3, IA-1 from SERP page types (confirmed, merged or split, evidence next to each), update "Mapa cluster -> propietario", "Conflictos de propiedad", open question 11 and the README row; tests: unit suite green.
+- [x] 1.2 [NRD-100 app] Resolve SL-3, GEO-2, GEO-3, DW-3, TO-1, TO-3, IA-1 from SERP page types (confirmed, merged or split, evidence next to each), update "Mapa cluster -> propietario", "Conflictos de propiedad", open question 11 and the README row; tests: unit suite green.
