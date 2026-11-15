@@ -49,14 +49,14 @@ const isServiciosActive = dropdownItems.some((item) => isActive(item.url));
 
 // Área táctil mínima recomendada (WCAG 2.5.5 / Material): 44x44px.
 const navLinkClass =
-  "relative flex min-h-12 items-center whitespace-nowrap px-2.5 lg:px-3.5 transition hover:text-blue-500 dark:hover:text-blue-500";
+  "relative flex min-h-12 items-center whitespace-nowrap px-2.5 lg:px-3.5 transition hover:text-blue-500";
 ---
 
 <header
   class="fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2 px-3"
 >
   <nav
-    class="relative flex px-3 text-base font-medium rounded-full text-gray-600 dark:text-gray-200 justify-center items-center"
+    class="relative flex px-3 text-base font-medium rounded-full text-gray-200 justify-center items-center"
   >
     <a
       href="/"
@@ -86,7 +86,7 @@ const navLinkClass =
                 {link.title}
               </button>
               <div class="absolute left-1/2 hidden -translate-x-1/2 pt-2 group-hover:block group-focus-within:block">
-                <ul class="min-w-56 rounded-xl border border-gray-300 bg-white/95 py-2 shadow-lg backdrop-blur dark:border-gray-700 dark:bg-gray-800/95">
+                <ul class="min-w-56 rounded-xl border border-gray-700 bg-gray-800/95 py-2 shadow-lg backdrop-blur">
                   {dropdownItems.map((item) => (
                     <li>
                       <a
@@ -145,10 +145,10 @@ const navLinkClass =
 
 <div
   id="mobile-menu"
-  class="fixed top-0 right-0 z-50 flex w-[min(340px,85vw)] flex-col overflow-y-auto overscroll-contain border-l border-gray-300 bg-white/95 py-3 shadow-lg backdrop-blur dark:border-gray-700 dark:bg-gray-800/95 md:hidden"
+  class="fixed top-0 right-0 z-50 flex w-[min(340px,85vw)] flex-col overflow-y-auto overscroll-contain border-l border-gray-700 bg-gray-800/95 py-3 shadow-lg backdrop-blur md:hidden"
 >
   <ul class="flex flex-1 flex-col gap-0.5 px-3">
-    <li class="mb-2 border-b border-gray-200 pb-3 dark:border-gray-700">
+    <li class="mb-2 border-b border-gray-700 pb-3">
       <BookingButton class="w-full" />
     </li>
     {
@@ -167,7 +167,7 @@ const navLinkClass =
               </span>
               <button
                 type="button"
-                class="mobile-accordion-btn flex min-h-11 min-w-11 items-center justify-center text-gray-500 transition hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-500"
+                class="mobile-accordion-btn flex min-h-11 min-w-11 items-center justify-center text-gray-400 transition hover:text-blue-500"
                 aria-expanded="false"
                 aria-controls="mobile-submenu-servicios"
                 aria-label="Mostrar submenú de Servicios"
@@ -188,14 +188,14 @@ const navLinkClass =
             </div>
             <ul
               id="mobile-submenu-servicios"
-              class="mobile-accordion-panel ml-3 border-l border-gray-200 dark:border-gray-700"
+              class="mobile-accordion-panel ml-3 border-l border-gray-700"
             >
               <ul class="min-h-0 overflow-hidden">
                 {dropdownItems.map((item) => (
                   <li>
                     <a
                       href={item.url}
-                      class="flex min-h-12 items-center px-4 py-2.5 text-sm text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-500"
+                      class="flex min-h-12 items-center px-4 py-2.5 text-sm text-gray-400 hover:text-blue-500"
                     >
                       {item.title}
                     </a>
@@ -209,7 +209,7 @@ const navLinkClass =
             <a
               class:list={[
                 "block min-h-12 px-4 py-3 leading-[1.5rem] flex items-center",
-                "hover:text-blue-500 dark:hover:text-blue-500",
+                "hover:text-blue-500",
                 { "text-blue-500": isActive(link.url) },
               ]}
               aria-current={isActive(link.url) ? "page" : undefined}
@@ -236,7 +236,7 @@ const navLinkClass =
   }
 
   nav {
-    @apply dark:bg-gray-800/90 bg-white/50;
+    @apply bg-gray-800/90;
   }
 
   @keyframes nav-shadown {
