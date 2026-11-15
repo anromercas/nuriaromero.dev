@@ -109,9 +109,9 @@ export const intentMatrix: SeoIntentRow[] = [
     intent: "Commercial: contract automation of repetitive business tasks",
     topic: "automatización de procesos para negocios en Sevilla",
     cta: "Request an automation proposal",
-    titleSignal: "Automatización de procesos para negocios en Sevilla",
-    descriptionSignal: "tareas repetitivas de tu negocio en Sevilla",
-    h1Signal: "Automatizaciones: que tu negocio trabaje solo",
+    titleSignal: "Automatización de procesos en Sevilla",
+    descriptionSignal: "Automatización de procesos en Sevilla",
+    h1Signal: "Automatización de procesos en Sevilla",
     contentSignals: [
       "Así es el proceso de automatizar tus tareas repetitivas",
       "Cuánto cuesta automatizar un proceso",
