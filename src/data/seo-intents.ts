@@ -214,4 +214,22 @@ export const reciprocalLinks = [
     sourceAnchor: "web para comercios",
     targetAnchor: "tienda online en Sevilla",
   },
+  {
+    source: "/diseno-web-sevilla/",
+    target: "/desarrollo-software-medida/",
+    sourceAnchor: "aplicaciones web a medida para tu empresa",
+    targetAnchor: "diseño web para negocios en Sevilla",
+  },
+  {
+    source: "/blog/como-aparecer-en-google-maps-negocio-sevilla/",
+    target: "/seo-local-sevilla/",
+    sourceAnchor: "servicio de SEO local y GEO",
+    targetAnchor: "guía para mejorar tu ficha de Google Maps",
+  },
+  {
+    source: "/automatizaciones/",
+    target: "/inteligencia-artificial/",
+    sourceAnchor: "chatbots y soluciones con IA",
+    targetAnchor: "automatizaciones conectadas con tu negocio",
+  },
 ]

@@ -12,6 +12,7 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
     { path: "/blog/como-aparecer-en-google-maps-negocio-sevilla/", anchor: "guía para aparecer en Google Maps", kind: "contextual" },
     { path: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/", anchor: "cómo calcular el precio de una web", kind: "contextual" },
     { path: "/recursos/", anchor: "recursos y herramientas para mejorar tu web", kind: "contextual" },
+    { path: "/portfolio/", anchor: "casos de éxito de webs para negocios en Sevilla", kind: "contextual" },
   ],
   "/diseno-web-sevilla/": [
     { path: "/seo-local-sevilla/", anchor: "SEO local y GEO para tu negocio", kind: "contextual" },
@@ -21,11 +22,14 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
     { path: "/web-para-comercios-sevilla/", anchor: "web para comercios y tiendas", kind: "contextual" },
     { path: "/web-para-abogados-gestorias-sevilla/", anchor: "web para despachos y gestorías", kind: "contextual" },
     { path: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/", anchor: "guía para entender el precio de una web", kind: "contextual" },
+    { path: "/desarrollo-software-medida/", anchor: "aplicaciones web a medida para tu empresa", kind: "contextual" },
+    { path: "/portfolio/", anchor: "casos de éxito de webs para negocios en Sevilla", kind: "contextual" },
     { path: "/contacto/", anchor: "cuéntame qué web necesitas", kind: "conversion" },
   ],
   "/desarrollo-software-medida/": [
     { path: "/automatizaciones/", anchor: "automatizaciones para las tareas repetitivas", kind: "contextual" },
     { path: "/inteligencia-artificial/", anchor: "soluciones con inteligencia artificial", kind: "contextual" },
+    { path: "/diseno-web-sevilla/", anchor: "diseño web para negocios en Sevilla", kind: "contextual" },
     { path: "/contacto/", anchor: "cuéntame qué proceso quieres mejorar", kind: "conversion" },
   ],
   "/automatizaciones/": [
@@ -36,6 +40,7 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
   "/inteligencia-artificial/": [
     { path: "/automatizaciones/", anchor: "automatizaciones conectadas con tu negocio", kind: "contextual" },
     { path: "/seo-local-sevilla/", anchor: "SEO local y GEO en Sevilla", kind: "contextual" },
+    { path: "/desarrollo-software-medida/", anchor: "desarrollo de software a medida para empresas", kind: "contextual" },
     { path: "/contacto/", anchor: "cuéntame qué solución de IA necesitas", kind: "conversion" },
   ],
   "/seo-local-sevilla/": [
@@ -57,7 +62,7 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
   "/tienda-online-sevilla/": [
     { path: "/web-para-comercios-sevilla/", anchor: "web para comercios que también quieren vender online", kind: "contextual" },
     { path: "/diseno-web-sevilla/", anchor: "diseño web para empezar con una presencia local", kind: "contextual" },
-    { path: "/seo-local-sevilla/", anchor: "SEO local para atraer clientes de tu zona", kind: "contextual" },
+    { path: "/seo-local-sevilla/", anchor: "SEO para que encuentren tu tienda online en Sevilla", kind: "contextual" },
     { path: "/contacto/", anchor: "cuéntame qué quieres vender online", kind: "conversion" },
   ],
   "/web-para-restaurantes-sevilla/": [
@@ -97,6 +102,7 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
     { path: "/web-para-restaurantes-sevilla/", anchor: "web para restaurantes en Sevilla", kind: "contextual" },
     { path: "/seo-local-sevilla/", anchor: "SEO local para tu zona", kind: "contextual" },
     { path: "/tienda-online-sevilla/", anchor: "tienda online si también vendes productos", kind: "contextual" },
+    { path: "/diseno-web-sevilla/", anchor: "diseño web para negocios locales en Sevilla", kind: "contextual" },
     { path: "/contacto/", anchor: "cuéntame qué necesita tu restaurante", kind: "conversion" },
   ],
   "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/": [
