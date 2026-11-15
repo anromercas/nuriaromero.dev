@@ -8,6 +8,11 @@ const positivePromise = /(?:garantizamos|garantiza(?:mos)? más|primeras posicio
 
 assert.equal((html.match(/<h1\b/gi) ?? []).length, 1)
 assert.match(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "", /SEO local Sevilla/)
+assert.match(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "", /posicionamiento web/i)
+const pageTitle = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? ""
+assert.match(pageTitle, /SEO local Sevilla/)
+assert.match(pageTitle, /posicionamiento web/i)
+assert.ok(pageTitle.length <= 65, `title is ${pageTitle.length} chars`)
 assert.match(text, /300 €\/mes \+ IVA/)
 assert.match(text, /500 €\/mes \+ IVA/)
 assert.match(text, /Recomendado/)

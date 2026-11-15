@@ -305,9 +305,9 @@ test("T7: every section has a small keyword heading above its display title, one
   keyword(faq, "faq-title", "Preguntas frecuentes sobre SEO local en Sevilla")
   keyword(closing, "cierre-title", "Reserva una llamada sobre SEO local en Sevilla")
   assert.match(hero, /<h1 class="kw">\{h1\}<\/h1>\s*<p class="display">/)
-  assert.match(data, /h1:\s*"SEO local Sevilla"/)
+  assert.match(data, /h1:\s*"SEO local Sevilla y posicionamiento web"/)
   assert.match(data, /title:\s*"Tu negocio está en Sevilla\. La pregunta es si te encuentran cuando importa\."/)
-  assert.match(data, /title:\s*"SEO local Sevilla \| Planes desde 300 €\/mes \+ IVA"/)
+  assert.match(data, /title:\s*"SEO local Sevilla y posicionamiento web \| Desde 300 €\/mes \+ IVA"/)
   for (const heading of ["Ficha de Google Business Profile", "Datos coherentes en directorios locales", "Búsquedas locales en Sevilla", "Reseñas de Google", "Web para negocios locales", "Medición de llamadas, clics y rutas"]) {
     assert.ok(bento.includes(`<h3>${heading}</h3>`), heading)
   }

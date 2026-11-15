@@ -1,12 +1,18 @@
 import test from "node:test"
 import assert from "node:assert/strict"
 import { readFile, readdir } from "node:fs/promises"
+import { normaliseTerm } from "../scripts/lib/keyword-ownership.mjs"
 
 const source = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8")
 const seoLocalData = async () => {
   const services = await source("src/data/services.ts")
   return services.slice(services.indexOf("export const seoLocal"), services.indexOf("export const capilarLocal"))
 }
+
+const worksTerm = (text, term) =>
+  normaliseTerm(term)
+    .split(" ")
+    .every((word) => ` ${normaliseTerm(text)} `.includes(` ${word} `))
 
 const phrase = /posicionamiento web en Sevilla/i
 const positivePromise = /(?:garantizamos|garantiza(?:mos)? más|primeras posiciones|más (?:tráfico|leads|llamadas|contactos)|te recomienda(?:rá)? (?:Google|ChatGPT|un asistente))/i
@@ -55,4 +61,20 @@ test("the home gains no new posicionamiento web mentions", async () => {
   const home = await source("src/pages/index.astro")
 
   assert.ok((home.match(/posicionamiento web/gi) ?? []).length <= 3)
+})
+
+test("title and H1 work posicionamiento web sevilla and keep SEO local Sevilla", async () => {
+  const data = await seoLocalData()
+  const title = data.match(/seo:\s*\{\s*title:\s*"([^"]+)"/)?.[1]
+  const h1 = data.match(/\bh1:\s*"([^"]+)"/)?.[1]
+
+  assert.ok(title, "seoLocal.seo.title not found")
+  assert.ok(h1, "seoLocal.hero.h1 not found")
+  assert.match(title, /SEO local Sevilla/)
+  assert.ok(worksTerm(title, "posicionamiento web sevilla"), title)
+  assert.match(title, /300 €\/mes/)
+  assert.ok(title.length <= 65, `title is ${title.length} chars`)
+  assert.match(h1, /SEO local Sevilla/)
+  assert.ok(worksTerm(h1, "posicionamiento web sevilla"), h1)
+  assert.doesNotMatch(`${title} ${h1}`, /agencia/i)
 })
