@@ -134,3 +134,12 @@ Ejecuciones individuales (orden de ejecución 1 / 2 / 3):
 | `/seo-local-sevilla/` | 1,483 / 1,509 / 1,377 | 0,0000 / 0,0000 / 0,0048 | 0 / 0 / 0 | 100 / 100 / 100 |
 
 El único desplazamiento de diseño observado es el de la ejecución 3 de `/seo-local-sevilla/` (0,0048): `div.hero > div.hero-copy > p.display > em.accent` (0,0044) y `aside#analytics-consent` (0,0003). Ninguno es el CTA de la cabecera. En `/` no hay ningún desplazamiento en las tres ejecuciones.
+
+### Veredicto (NRD-59)
+
+Regla: regresión si CLS mediano > 0,1, o si LCP mediano menos baseline supera el rango entre ejecuciones de NRD-18 (`/` 0,25 s; `/seo-local-sevilla/` 0,01 s).
+
+- `/`: CLS 0,000 (<= 0,1); Δ LCP -0,195 s (no supera 0,25 s). Sin regresión.
+- `/seo-local-sevilla/`: CLS 0,000 (<= 0,1); Δ LCP -0,297 s (no supera 0,01 s; el LCP mejora). Sin regresión. No procede la confirmación con 6 ejecuciones porque ninguna regla se activa.
+
+**No se requiere seguimiento.** Ninguna de las dos URLs supera CLS 0,1 ni empeora el LCP respecto al baseline de NRD-18; el CTA de reserva de la cabecera no introduce desplazamientos de diseño medibles en producción. Salvedad: el elemento LCP de `/seo-local-sevilla/` cambió de `p.hero-subtitle` a `p.display` por los cambios de texto de NRD-52, por lo que la comparación de LCP es entre elementos distintos; sigue siendo texto y mejora. INP y datos de campo siguen sin evaluarse.
