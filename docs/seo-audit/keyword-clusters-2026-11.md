@@ -189,7 +189,7 @@ SERP observations already available:
 - `automatización de procesos sevilla` and its variants: SERP not read.
 - Both pages of this service pair have no declared intent or owner in `intentMatrix` / `keywordOwners` (S7, "Intent mismatches").
 
-## Grupo A: SEO local, GEO, diseño web (task 1.2)
+## Grupo A: SEO local, GEO, diseño web
 
 Calls made for this group in this run: **0** (plan: 12 calls plus a share of the reserve, see "Plan de llamadas"). Every "gap" below is a gap in the reused inputs that the planned calls would fill. Unless a cell says otherwise, difficulty is **gap**: the only difficulty values in the inputs are KD 1 (`posicionamiento web sevilla`), KD 15 (`tienda online sevilla`) and KD 52 (`geo generative engine optimization`), all from S1 (Labs, 2026-11-13). The Keyword Planner "competition" label in S6 measures ad competition and is not used as difficulty.
 
@@ -289,7 +289,7 @@ Search Console context (S7): `diseñador web sevilla` 145 impressions at 58.4, `
 
 **Not clustered (recorded).** `aplicaciones web a medida sevilla` (67 impressions at 70.8 on `/diseno-web-sevilla/`) belongs to the software service; it is clustered in group B. `usabilidad móvil y diseño web adaptable sevilla` (24 at 97) has no volume, no SERP and a position beyond page 9; it is left unclustered. `agencia marketing digital sevilla` (320, competitor rank 10, S1) is an agency term outside the freelance positioning and the brief; it is recorded and not proposed.
 
-## Grupo B: tienda online, software a medida, IA / automatizaciones (task 1.3)
+## Grupo B: tienda online, software a medida, IA / automatizaciones
 
 Calls made for this group in this run: **0** (plan: 11 calls plus a share of the reserve, see "Plan de llamadas"). Same rules as group A: volumes without a reused measurement read **gap**; difficulty is **gap** except KD 15 for `tienda online sevilla` (S1, Labs, 2026-11-13); "intent: inferred from query wording, SERP not read" means no SERP of any kind exists in the inputs; "partly observed" means only the top 3 domains of the rank capture (S5).
 
@@ -359,15 +359,91 @@ Search Console context (S7): `automatizacion procesos sevilla` 17 impressions at
 
 **Dato observado.** IA-1 is the only cluster of this group whose queries already earn impressions on the page that serves them (23.9 and 11.5 average positions on two variants, S7). **Inferencia:** the automation wording is the better-evidenced of the two service queries; the AI-for-companies head has no volume, no impressions and an unindexed page.
 
-## Huecos (preliminary, task 1.1)
+## Mapa cluster -> propietario
 
-Services or intents with no data in any input, which the call plan targets. The final list, after the clusters are built, is in the last section.
+All 16 clusters of the six services, one proposed owner each (trailing-slash URLs). "Evidence" says how much of the SERP was read: **observed** (a full Seville SERP in S1, S2 or S3), **partly observed** (top 3 domains only, S5), **inferred** ("intent: inferred from query wording, SERP not read"). "Registered" is the `keywordOwners` term(s) in the cluster (ADR 0012). Owner proposals are inputs for NRD-74; moving a term is a PO decision there.
 
-| Service               | Gap                                                                                                                                                                                                                                    | Planned call                        |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| SEO local             | No SERP features for `posicionamiento web sevilla` and `consultor seo sevilla` (top 3 domains only). No volume for `plan seo sevilla`, `presupuesto seo sevilla`, `experto seo sevilla`. Local-pack disagreement between S1/S2 and S5. | Group A candidates, volume, 4 SERPs |
-| GEO                   | No SERP for `seo para chatgpt`, `posicionamiento en chatgpt`, `agencia geo sevilla`. No volume for `agencia geo sevilla`. Whether a Seville qualifier changes the SERP: only `posicionamiento en ia` is known to be national.          | Group A candidates, 1 SERP          |
-| Diseño web            | No volume for `diseñador web sevilla` (145 impressions) or `diseño paginas web sevilla` (94); no SERP for them or for `cuanto cuesta una pagina web en sevilla` (features) beyond the top 3 domains.                                   | Group A volume, 3 SERPs             |
-| Tienda online         | No SERP for `diseño tienda online sevilla` (the registered owner term) or `crear tienda online sevilla`; no Search Console data (page not indexed).                                                                                    | Group B candidates, 2 SERPs         |
-| Software a medida     | No volume for any of the three queries; SERP features not read for any.                                                                                                                                                                | Group B candidates, 3 SERPs         |
-| IA / automatizaciones | No volume for `inteligencia artificial para empresas sevilla` or the automation variants; SERP features not read for any. `/inteligencia-artificial/` has no Search Console data (unknown to Google).                                  | Group B candidates, 2 SERPs         |
+| Cluster | Service               | Head query (Labs volume, Spain)                       | Evidence        | Proposed owner                                                   | Owner type    | Registered term(s)                                                                     | Flags                                                           |
+| ------- | --------------------- | ----------------------------------------------------- | --------------- | ---------------------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| SL-1    | SEO local             | `agencia seo sevilla` (1,000)                         | observed        | `/seo-local-sevilla/`                                            | existing URL  | `seo local sevilla`, `agencia seo sevilla`, `posicionamiento web sevilla` -> same page | none (owner is the proposed owner)                              |
+| SL-2    | SEO local             | `consultor seo sevilla` (590)                         | partly observed | `/`                                                              | existing URL  | `consultor seo sevilla` -> `/`                                                         | conflicto de propiedad: home                                    |
+| SL-3    | SEO local             | `plan seo sevilla` (gap)                              | inferred        | `/seo-local-sevilla/`                                            | existing URL  | none                                                                                   | possible overlap with SL-1, SERP not read                       |
+| SL-4    | SEO local             | `como aparecer en google maps` (110)                  | partly observed | `/blog/como-aparecer-en-google-maps-negocio-sevilla/`            | existing post | none                                                                                   | owner post not indexed                                          |
+| GEO-1   | GEO                   | `posicionamiento en ia` (70)                          | observed        | new page needed (planned `/seo-para-ia/`, NRD-24)                | new page      | none                                                                                   | SERP nacional; D1-D4 stay with the user                         |
+| GEO-2   | GEO                   | `agencia geo sevilla` (gap)                           | inferred        | new page needed (same page as GEO-1, only for a Seville variant) | new page      | none                                                                                   | depends on the GEO-1 decision                                   |
+| GEO-3   | GEO                   | `geo generative engine optimization` (110, KD 52)     | inferred        | `/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/`          | existing post | none                                                                                   | English-language query, low fit                                 |
+| DW-1    | Diseño web            | `diseño web sevilla` (880)                            | observed        | `/diseno-web-sevilla/`                                           | existing URL  | none (intent topic only)                                                               | none                                                            |
+| DW-2    | Diseño web            | `cuanto cuesta una pagina web en sevilla` (gap)       | partly observed | `/blog/cuanto-cuesta-una-pagina-web-en-sevilla/`                 | existing post | none                                                                                   | owner post not indexed; prices on site is a pending PO decision |
+| DW-3    | Diseño web            | `mantenimiento web sevilla` (90)                      | inferred        | new page needed, only if a maintenance service is offered        | new page      | none                                                                                   | service existence unanswered (S1)                               |
+| TO-1    | Tienda online         | `diseño tienda online sevilla` (70)                   | inferred        | `/tienda-online-sevilla/`                                        | existing URL  | `diseño tienda online sevilla` -> same page                                            | owner page not indexed                                          |
+| TO-2    | Tienda online         | `tienda online sevilla` (70, KD 15)                   | observed        | `/tienda-online-sevilla/` (reference keyword only)               | existing URL  | none                                                                                   | navigational SERP, not a ranking target                         |
+| TO-3    | Tienda online         | `seo para tiendas woocommerce en sevilla` (gap)       | inferred        | `/seo-local-sevilla/`                                            | existing URL  | none                                                                                   | split across two URLs today (S7)                                |
+| SW-1    | Software a medida     | `desarrollo de software a medida sevilla` (gap)       | partly observed | `/desarrollo-software-medida/`                                   | existing URL  | none                                                                                   | 67 of 76 impressions land on `/diseno-web-sevilla/`             |
+| IA-1    | IA / automatizaciones | `automatización de procesos sevilla` (gap)            | inferred        | `/automatizaciones/`                                             | existing URL  | none                                                                                   | `automatizaciones ia sevilla` could also fit IA-2               |
+| IA-2    | IA / automatizaciones | `inteligencia artificial para empresas sevilla` (gap) | partly observed | `/inteligencia-artificial/`                                      | existing URL  | none                                                                                   | owner page unknown to Google                                    |
+
+Counts: 6 services, 16 clusters, 16 owners. Owner type: 10 existing URLs, 3 existing posts (SL-4, GEO-3, DW-2), 3 new pages needed (GEO-1, GEO-2, DW-3; GEO-1 and GEO-2 point to the same planned page). Evidence: 4 clusters observed (SL-1, GEO-1, DW-1, TO-2), 5 partly observed (SL-2, SL-4, DW-2, SW-1, IA-2), 7 inferred (SL-3, GEO-2, GEO-3, DW-3, TO-1, TO-3, IA-1).
+
+## Conflictos de propiedad
+
+Checked against the five terms in `keywordOwners` (S9) and the home. **Dato observado** unless marked.
+
+### Registered terms: no move proposed
+
+| Registered term                | Registered owner          | Cluster | Proposed owner            | Result                                                                                                                       |
+| ------------------------------ | ------------------------- | ------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `consultor seo sevilla`        | `/`                       | SL-2    | `/`                       | Kept. **conflicto de propiedad: home** flag stays on SL-2 because two consultant variants are served by another page (below) |
+| `seo local sevilla`            | `/seo-local-sevilla/`     | SL-1    | `/seo-local-sevilla/`     | Kept. No impression on `/` for this query (S7)                                                                               |
+| `agencia seo sevilla`          | `/seo-local-sevilla/`     | SL-1    | `/seo-local-sevilla/`     | Kept. No impressions on any URL (S7); 1,000 searches a month (S1)                                                            |
+| `posicionamiento web sevilla`  | `/seo-local-sevilla/`     | SL-1    | `/seo-local-sevilla/`     | Kept. No impressions on any URL (S7); 320 searches a month (S1)                                                              |
+| `diseño tienda online sevilla` | `/tienda-online-sevilla/` | TO-1    | `/tienda-online-sevilla/` | Kept. Owner page `Discovered - currently not indexed` (S7)                                                                   |
+
+### Flags
+
+- **conflicto de propiedad: home (SL-2).** Evidence: `consultor seo sevilla` 3 impressions at 6.3 on `/`; `experto seo sevilla` 25 at 52.8 and `consultor seo provincia de sevilla` 24 at 76.3 on `/seo-local-sevilla/` (S7). The cluster contains consultor variants, so it is flagged as the design requires. The proposed owner stays `/`; routing the two variants to `/` or leaving them on `/seo-local-sevilla/` is for NRD-74.
+- **conflicto de propiedad: /seo-local-sevilla/.** Searched in every cluster that overlaps `seo local sevilla`, `agencia seo sevilla` or `posicionamiento web sevilla`: only SL-1 does, and its proposed owner is that page, so no flag applies. No other cluster proposes a different owner for those terms.
+- **Overlap notes (not registered-term conflicts).** (1) GEO-1: `intentMatrix` registers `/seo-local-sevilla/` as the commercial "SEO local y GEO" owner, while the proposed owner of GEO-1 is a new page. (2) TO-3: `seo para tiendas woocommerce en sevilla` is split across `/diseno-web-sevilla/` (17 impressions) and `/seo-local-sevilla/` (13) (S7); the inventory proposes `/seo-local-sevilla/`. (3) SW-1: 67 of its 76 impressions are on `/diseno-web-sevilla/` (S7). (4) IA-1 / IA-2: `automatizaciones ia sevilla` can fit either `/automatizaciones/` or `/inteligencia-artificial/`. (5) DW-1 / DW-2: price queries reach `/diseno-web-sevilla/` while the post meant to serve them is not indexed (S7). (6) The parked `/web-para-comercios-sevilla/` and `/tienda-online-sevilla/` overlap in intent and neither is indexed (S7); parked pages are out of scope and not touched.
+- **Inferencia.** Most overlaps come from pages that are not indexed or that Google associates with the wrong intent, not from two healthy pages competing: a conflict flag is a question about routing, not evidence of a ranking loss.
+
+## Preguntas abiertas para NRD-74
+
+Open questions, not decided in this study:
+
+1. **GEO-1, national or Seville demand.** `posicionamiento en ia` has a national SERP (no Seville-local result, 2026-11-15, S3). Should the owner page target national demand or a Seville variant? This also decides whether GEO-2 (`agencia geo sevilla`, `consultoría geo en sevilla`) exists as a separate target. Decisions D1 to D4 (price variant, main keyword, review method, hero) stay with the user.
+2. **Who owns the commercial GEO offer.** The new `/seo-para-ia/` (NRD-24) or `/seo-local-sevilla/` (`intentMatrix`: "SEO local y GEO")? Today the commercial GEO queries that appear land on the informational blog post.
+3. **SL-1 head terms.** `agencia seo sevilla` and `posicionamiento web sevilla` have volume and no impressions on the owner page; plan and budget queries have impressions. Does the owner page carry the head terms in title, H1 or an H2 (ADR 0012), or is a separate comparison-style page needed for the agency SERP?
+4. **SL-2 variants.** Route `experto seo sevilla` and `consultor seo provincia de sevilla` to `/`, or leave them on `/seo-local-sevilla/`.
+5. **DW-1 / DW-2 prices.** The price-led AI Overview and the post's "no figures" stance depend on the open PO decision on prices on the site (S-2026-11-13-1). Which page owns price queries once decided?
+6. **DW-3 maintenance.** Is a website maintenance plan offered? Without it, `mantenimiento web sevilla` (90 a month) is not a target.
+7. **SW-1 routing.** Does `/diseno-web-sevilla/` point to `/desarrollo-software-medida/` for application queries (inventory recommendation 4), and does the software page get an `intentMatrix` row and owner?
+8. **IA-1 / IA-2.** Which page owns `automatizaciones ia sevilla`; register `intentMatrix` rows for `/automatizaciones/` and `/inteligencia-artificial/` (inventory recommendation 3).
+9. **TO-2.** Keep `tienda online sevilla` as a reference keyword in the title or H1, or drop it from the page (NRD-34 kept it as a reference only).
+10. **Indexation first.** `/tienda-online-sevilla/` and `/inteligencia-artificial/` are not in Google's index, and 3 of 4 blog posts are not indexed (S7). Cluster owners TO-1, IA-2, SL-4 and DW-2 cannot be validated until they are.
+11. **Close the data gaps before deciding.** Run the plan in "Plan de llamadas" with DataForSEO tools (see "Huecos"); several clusters (SL-3, GEO-2, GEO-3, DW-3, TO-1, TO-3, IA-1) are grouped by wording only and could merge or split once their SERPs are read.
+12. **Local pack for `seo local sevilla`.** The reports and the rank capture disagree (S1, S2 versus S5). Which device and capture settings does rank tracking use?
+
+## Huecos
+
+Every gap that remains after this run. Nothing below was estimated.
+
+- **Volume (22 of 40 queries).** SEO local: `plan seo sevilla`, `presupuesto seo sevilla` (bucket 50 only), `experto seo sevilla` (bucket 500 only), `consultor seo provincia de sevilla`. GEO: `agencia geo sevilla`, `consultoría geo en sevilla`, `posicionamiento en ia para empresas` (absent from Labs). Diseño web: `diseñador web sevilla`, `diseño paginas web sevilla`, `paginas web sevilla` (bucket 50 only), `diseño web sevilla precio`, `cuanto cuesta una web sevilla`, `cuanto cuesta una pagina web en sevilla` (absent from Labs). Tienda online: `seo para tiendas woocommerce en sevilla`. Software: `desarrollo de software a medida sevilla` (absent from Labs), `apps a medida sevilla`, `aplicaciones web a medida sevilla`. IA / automatizaciones: `inteligencia artificial para empresas sevilla` (absent from Labs), `automatizacion procesos sevilla`, `automatización de procesos sevilla`, `automatización de procesos en sevilla`, `automatizaciones ia sevilla`. The other 18 of the 40 queries have a Labs volume (S1, 2026-11-13). Volumes also differ by source for `seo local sevilla` and `agencia seo sevilla` (see "Fuentes reutilizadas").
+- **Difficulty.** Only three values exist: KD 1 (`posicionamiento web sevilla`), KD 15 (`tienda online sevilla`), KD 52 (`geo generative engine optimization`); every other query is a gap.
+- **SERP.** Full Seville SERPs exist for 6 heads (`seo local sevilla`, `agencia seo sevilla`, `diseño web sevilla`, `tienda online sevilla`, `posicionamiento en ia`, `geo posicionamiento ia`). Top 3 domains only for 6 (`posicionamiento web sevilla`, `consultor seo sevilla`, `como aparecer en google maps`, `cuanto cuesta una pagina web en sevilla`, `desarrollo de software a medida sevilla`, `inteligencia artificial para empresas sevilla`). No SERP at all for the other 28 queries, among them the heads of 7 clusters (SL-3, GEO-2, GEO-3, DW-3, TO-1, TO-3, IA-1) that therefore carry "intent: inferred from query wording, SERP not read".
+- **Competitor data per cluster.** No competitor is recorded for the 7 inferred clusters; competitor word counts are not measured for any cluster (also noted in the NRD-22 inventory).
+- **Search Console.** One 28-day window with 1,156 impressions; `/tienda-online-sevilla/` and `/inteligencia-artificial/` have no data because Google has not indexed them.
+- **Rank capture.** `diseño tienda online sevilla` has no row in `seo/ranks/history.jsonl` although it is tracked in the configuration.
+- **Not a gap but out of scope.** GBP and review guide queries won by a competitor (S1 candidate 4, rejected by the PO on 2026-11-13), backlinks (S8) and parked niche pages.
+
+## Registro de llamadas DataForSEO
+
+**Calls made in this run: 0.** The run had no DataForSEO tools, so the design scenario "no DataForSEO access" applied: reused data only, volumes never estimated, plan kept for a later run. Limit: 30 calls for the story (`seo.dataforseo.maxCallsPerRun`). Total made: 0 of 30 (30 or less: holds).
+
+| Endpoint                                                               | Parameters                                                               | Date | Planned | Made  |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------ | ---- | ------- | ----- |
+| `dataforseo_labs/google/keyword_suggestions` or `keyword_ideas`        | Spain, `es`; 3 seeds for group A, 3 for group B (see "Plan de llamadas") | n/a  | 6       | 0     |
+| `dataforseo_labs/google/keyword_overview` or `bulk_keyword_difficulty` | Spain, `es`; group A, group B and one shared follow-up                   | n/a  | 3       | 0     |
+| `serp/google/organic/live/advanced`                                    | `Seville,Andalusia,Spain`, `es`, mobile, depth 10; 8 heads in A, 7 in B  | n/a  | 15      | 0     |
+| Reserve (retries, SERPs for heads surfaced by candidate calls)         | any of the above                                                         | n/a  | 6       | 0     |
+| **Total**                                                              |                                                                          |      | **30**  | **0** |
+
+Reused measurements (no call in this run, not charged to this story): Labs keyword overview and domain intersections, 2026-11-13 (S1); Seville SERPs 2026-11-13 (S1), 2026-11-14 (S2), 2026-11-15 (S3); rank capture 2026-11-13 (S5). The daily SEO runs of those dates made 19, 5 and 6 calls under their own per-run limit.
