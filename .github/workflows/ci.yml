@@ -30,3 +30,5 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: node --test tests/*.test.js
       - run: pnpm build
+      - name: SEO build checks
+        run: pnpm check:seo:dist

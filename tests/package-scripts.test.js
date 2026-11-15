@@ -43,6 +43,14 @@ test("every check-seo script file has pnpm and dist scripts", () => {
   }
 });
 
+test("check:seo:dist runs every check-seo file in numeric order, check:seo builds first", () => {
+  const expected = checkNumbers
+    .map((nn) => `node scripts/check-seo-${nn}.mjs`)
+    .join(" && ");
+  assert.equal(scripts["check:seo:dist"], expected);
+  assert.equal(scripts["check:seo"], "pnpm build && pnpm check:seo:dist");
+});
+
 test("check:seo scripts are ordered, each followed by its :dist", () => {
   const seo = keys.filter((k) => k.startsWith("check:seo-"));
   const expected = checkNumbers.flatMap((nn) => [

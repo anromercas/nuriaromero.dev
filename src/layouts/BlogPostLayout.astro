@@ -16,11 +16,11 @@ interface Props {
 
 const { post } = Astro.props
 const { title, description, pubDate, updatedDate, image } = post.data
-const url = `/blog/${post.slug}`
+const url = `/blog/${post.slug}/`
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
-  { name: "Blog", url: "/blog" },
+  { name: "Blog", url: "/blog/" },
   { name: title, url },
 ]
 
@@ -83,7 +83,7 @@ const formattedUpdatedDate = updatedDate ? formatDate(updatedDate) : undefined
     </SectionContainer>
 
     <SectionContainer class="mt-24">
-      <InternalLinks links={internalLinksBySource[`${url}/`] ?? []} />
+      <InternalLinks links={internalLinksBySource[url] ?? []} />
     </SectionContainer>
 
     <SectionContainer class="mt-24">

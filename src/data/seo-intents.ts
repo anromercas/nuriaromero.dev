@@ -86,6 +86,58 @@ export const intentMatrix: SeoIntentRow[] = [
     h1Signal: "Diseño de tienda online en Sevilla",
     contentSignals: ["Así es el proceso de crear tu tienda online", "Pasarela de pago integrada y probada"],
   },
+  {
+    url: "/desarrollo-software-medida/",
+    intent: "Commercial: contract custom software and web applications",
+    topic: "software a medida para empresas en Sevilla",
+    cta: "Request a software scope and quote",
+    titleSignal: "Desarrollo de software a medida en Sevilla",
+    descriptionSignal: "aplicaciones web a medida",
+    h1Signal: "Software a medida para tu empresa en Sevilla",
+    contentSignals: [
+      "Así es el proceso de desarrollar tu aplicación a medida",
+      "Cuánto cuesta el software a medida en Sevilla",
+    ],
+  },
+  {
+    url: "/automatizaciones/",
+    intent: "Commercial: contract automation of repetitive business tasks",
+    topic: "automatización de procesos para negocios en Sevilla",
+    cta: "Request an automation proposal",
+    titleSignal: "Automatización de procesos para negocios en Sevilla",
+    descriptionSignal: "tareas repetitivas de tu negocio en Sevilla",
+    h1Signal: "Automatizaciones: que tu negocio trabaje solo",
+    contentSignals: [
+      "Así es el proceso de automatizar tus tareas repetitivas",
+      "Cuánto cuesta automatizar un proceso",
+    ],
+  },
+  {
+    url: "/inteligencia-artificial/",
+    intent: "Commercial: contract AI chatbots and assistants for a business",
+    topic: "inteligencia artificial para empresas en Sevilla",
+    cta: "Request an AI solution proposal",
+    titleSignal: "IA para negocios en Sevilla",
+    descriptionSignal: "chatbots que atienden clientes",
+    h1Signal: "Inteligencia artificial aplicada a tu negocio",
+    contentSignals: [
+      "Así es el proceso de implantar IA en tu negocio",
+      "Cuánto cuesta implementar IA en tu negocio",
+    ],
+  },
+  {
+    url: "/blog/como-aparecer-en-google-maps-negocio-sevilla/",
+    intent: "Informational: complete and maintain a Google Business Profile",
+    topic: "cómo aparecer en Google Maps con un negocio en Sevilla",
+    cta: "Read the service when the profile needs hands-on work",
+    titleSignal: "Cómo aparecer en Google Maps",
+    descriptionSignal: "Perfil de Empresa",
+    h1Signal: "Cómo aparecer en Google Maps",
+    contentSignals: [
+      "¿Cómo conecto la ficha con mi página web?",
+      "¿Prefieres que te lo deje montado?",
+    ],
+  },
 ]
 
 export interface KeywordOwner {
@@ -101,6 +153,23 @@ export const keywordOwners: KeywordOwner[] = [
   { keyword: "agencia seo sevilla", url: "/seo-local-sevilla/" },
   { keyword: "posicionamiento web sevilla", url: "/seo-local-sevilla/" },
   { keyword: "diseño tienda online sevilla", url: "/tienda-online-sevilla/" },
+  { keyword: "diseño web sevilla", url: "/diseno-web-sevilla/" },
+  {
+    keyword: "desarrollo de software a medida sevilla",
+    url: "/desarrollo-software-medida/",
+  },
+  {
+    keyword: "inteligencia artificial para empresas sevilla",
+    url: "/inteligencia-artificial/",
+  },
+  {
+    keyword: "como aparecer en google maps",
+    url: "/blog/como-aparecer-en-google-maps-negocio-sevilla/",
+  },
+  {
+    keyword: "cuanto cuesta una pagina web en sevilla",
+    url: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
+  },
 ]
 
 export const nicheRoutes = [
@@ -144,5 +213,23 @@ export const reciprocalLinks = [
     target: "/web-para-comercios-sevilla/",
     sourceAnchor: "web para comercios",
     targetAnchor: "tienda online en Sevilla",
+  },
+  {
+    source: "/diseno-web-sevilla/",
+    target: "/desarrollo-software-medida/",
+    sourceAnchor: "aplicaciones web a medida para tu empresa",
+    targetAnchor: "diseño web para negocios en Sevilla",
+  },
+  {
+    source: "/blog/como-aparecer-en-google-maps-negocio-sevilla/",
+    target: "/seo-local-sevilla/",
+    sourceAnchor: "servicio de SEO local y GEO",
+    targetAnchor: "guía para mejorar tu ficha de Google Maps",
+  },
+  {
+    source: "/automatizaciones/",
+    target: "/inteligencia-artificial/",
+    sourceAnchor: "chatbots y soluciones con IA",
+    targetAnchor: "automatizaciones conectadas con tu negocio",
   },
 ]

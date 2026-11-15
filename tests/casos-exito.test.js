@@ -22,7 +22,7 @@ test('case labels identify success stories while preserving the existing route',
   assert.match(home, /<SectionContainer id="casos">[\s\S]*?Casos de éxito[\s\S]*?<Projects \/>/)
   assert.match(header, /title: "Casos de éxito",\s*label: "Casos de éxito",\s*url: "\/portfolio\/"/)
   assert.match(header, /aria-label=\{link\.label\}/)
-  assert.match(portfolio, /\{ name: "Casos de éxito", url: "\/portfolio" \}/)
+  assert.match(portfolio, /\{ name: "Casos de éxito", url: "\/portfolio\/" \}/)
   assert.match(portfolio, /title="Casos de éxito —/)
   assert.match(portfolio, /<h1[^>]*>[\s\S]*?Casos de éxito[\s\S]*?<\/h1>/)
   assert.doesNotMatch(portfolio, /proyectos propios/i)
