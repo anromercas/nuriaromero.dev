@@ -47,6 +47,8 @@ for (const file of renderedFiles) {
   for (const [, href] of html.matchAll(/href="(\/[^"#?]*)"/g)) {
     if (href.endsWith("/")) {
       if (!existsSync(routeFile(href))) errors.push(`${file}: internal target does not exist: ${href}`)
+    } else if (existsSync(routeFile(href))) {
+      errors.push(`${file}: internal href omits trailing slash: ${href}`)
     }
   }
 }
