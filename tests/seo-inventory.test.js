@@ -113,7 +113,7 @@ test("classifyPath assigns status and target query", () => {
     classifyPath("/blog/cuanto-cuesta-una-pagina-web-en-sevilla/", intents),
     {
       status: "support",
-      targetQuery: "cuánto cuesta una página web y qué revisar",
+      targetQuery: "cuanto cuesta una pagina web en sevilla",
     },
   );
   assert.deepEqual(classifyPath("/contacto/", intents), {

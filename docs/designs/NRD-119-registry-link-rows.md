@@ -148,6 +148,6 @@ Data-only. No component, token or class change: the rows render through the exis
 
 ## Tasks
 
-- [ ] 1.1 [NRD-139 app] Add the 4 `intentMatrix` rows (table B) and the 5 `keywordOwners` rows (table C); tests: exact-set assertion in `tests/keyword-ownership.test.js` and `classifyPath` in `tests/seo-inventory.test.js` first (RED), then data (GREEN), then `check-seo-07` with the G6 rule.
+- [x] 1.1 [NRD-139 app] Add the 4 `intentMatrix` rows (table B) and the 5 `keywordOwners` rows (table C); tests: exact-set assertion in `tests/keyword-ownership.test.js` and `classifyPath` in `tests/seo-inventory.test.js` first (RED), then data (GREEN), then `check-seo-07` with the G6 rule.
 - [ ] 1.2 [NRD-140 app] Add table A rows 1-6, edit row 7 and add the 3 table D pairs in one commit; tests: `tests/adr-0013-link-rows.test.js` first (RED), then data (GREEN), then `check-seo-06` and `check-seo-07` with the G3 rule.
 - [ ] 1.3 [NRD-141 app] Set ADR 0013 to Accepted in the ADR, the ADR index and the checklist input row; tests: `node --test tests/*.test.js` stays green.

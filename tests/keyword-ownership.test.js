@@ -25,6 +25,14 @@ test("keywordOwners records the local head terms", () => {
     "agencia seo sevilla": "/seo-local-sevilla/",
     "posicionamiento web sevilla": "/seo-local-sevilla/",
     "diseño tienda online sevilla": "/tienda-online-sevilla/",
+    "diseño web sevilla": "/diseno-web-sevilla/",
+    "desarrollo de software a medida sevilla": "/desarrollo-software-medida/",
+    "inteligencia artificial para empresas sevilla":
+      "/inteligencia-artificial/",
+    "como aparecer en google maps":
+      "/blog/como-aparecer-en-google-maps-negocio-sevilla/",
+    "cuanto cuesta una pagina web en sevilla":
+      "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
   });
 });
 
