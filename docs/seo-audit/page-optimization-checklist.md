@@ -62,3 +62,182 @@ Este documento no reescribe ninguna página, copy, título, schema, `llms.txt` n
 - Cada guarda nombrada existe en `scripts/` o `tests/` el 2026-11-15 (`check-seo-02`, `05` a `15` y los tests citados).
 - Los ítems sin guarda automática (SEO-2, GEO-1, parte de SEO-5 y de DEL-4 a DEL-8) lo dicen con la revisión de especialista, no con un check inventado.
 - ADR 0013 figura como "Proposed" en el fichero: la lista depende de su mapa de propietarios y de su orden, no de su aceptación; si la aceptación cambia algún propietario, se corrige la historia afectada, no este checklist.
+
+## Historias por página (borradores)
+
+Un borrador por página propietaria, en el orden exacto de ADR 0013 "Orden de optimización (fase 5)" (regla: primero las páginas indexadas con demanda medida; las que dependen de indexación o de una decisión de la usuaria, al final). El desarrollador no puede crear incidencias ni decide el orden del backlog: **el PO archiva cada borrador en la épica NRD-4 con la etiqueta `seo`, las ordena una página cada vez y enlaza y reordena NRD-34 y NRD-24/25/26 en lugar de duplicarlas**. Sobre las etiquetas de tamaño: S o M son una estimación del desarrollador por número de ítems del checklist que cambian y de ficheros implicados, no una medición; el PO confirma etiqueta y puntos al archivar.
+
+Datos de partida de todos los borradores: ADR 0013 (estado "Proposed" en el fichero), `inventory-2026-11.md` (ventana de Search Console 2026-10-16 a 2026-11-12; cobertura 2026-11-15), `keyword-clusters-2026-11.md` (SERP de DataForSEO del 2026-11-15) y la sección NRD-75 de `technical-follow-up.md`. "Sin dato" no es cero y no se estima ninguna cifra.
+
+### Orden y traspaso
+
+| #   | Página (clústeres)                                                | Tamaño             | Historia existente                 | Aprobación de la usuaria                                             | Precondiciones principales                                                    |
+| --- | ----------------------------------------------------------------- | ------------------ | ---------------------------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| 0   | Datos y enlaces, sin página (tablas A a D del ADR)                | M                  | ninguna                            | no                                                                   | G4 y G1a antes; G2a, G3 y G6 dentro                                           |
+| 1   | `/seo-local-sevilla/` (SL-1, SL-3, TO-3, GEO-2 absorbido)         | M                  | ninguna                            | no                                                                   | G5 antes; paso 0                                                              |
+| 2   | `/diseno-web-sevilla/` (DW-1)                                     | M                  | ninguna                            | sí, solo si toca precios publicados (decisión del PO S-2026-11-13-1) | S-2026-11-13-1 para el copy de precio; paso 0; G5                             |
+| 3   | `/` (SL-2)                                                        | S                  | ninguna                            | no                                                                   | paso 0; G5                                                                    |
+| 4   | `/automatizaciones/` (IA-1)                                       | S                  | ninguna                            | no                                                                   | lectura de la SERP exacta de `automatización de procesos sevilla`; paso 0; G5 |
+| 5   | `/desarrollo-software-medida/` (SW-1)                             | S                  | ninguna                            | no                                                                   | paso 0; G5                                                                    |
+| 6   | `/tienda-online-sevilla/` (TO-2, término registrado de TO-1)      | n/a                | existente: NRD-34 (Finalizada)     | no                                                                   | indexación primero, después 28 días de datos de Search Console                |
+| 7   | `/inteligencia-artificial/` (IA-2)                                | S                  | ninguna                            | no                                                                   | indexación primero; paso 0; G5                                                |
+| 8   | `/seo-para-ia/` (GEO-1)                                           | según NRD-24/25/26 | existentes: NRD-24, NRD-25, NRD-26 | sí (ADR 0013, propuesta P1) y decisiones D1 a D4                     | P1 aprobada; D1 a D4 respondidas                                              |
+| 9a  | Post `/blog/como-aparecer-en-google-maps-negocio-sevilla/` (SL-4) | S                  | ninguna                            | no                                                                   | indexación primero; G1a; muestra medida de competidores                       |
+| 9b  | Post `/blog/cuanto-cuesta-una-pagina-web-en-sevilla/` (DW-2)      | S                  | ninguna                            | sí, solo si el post cita cifras (decisión del PO S-2026-11-13-1)     | indexación primero; G1a; S-2026-11-13-1; muestra medida de competidores       |
+
+Sin historia nueva y sin cambio en este documento: el post `/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/` (GEO-3, indexado, "keep") y la propuesta P2 (`mantenimiento web sevilla`, DW-3), que no se aplica sin respuesta de la usuaria. Fuera del orden de páginas, el bug de barra final del blog (G1a) y las peticiones de indexación de la propietaria (NRD-98) preceden a los pasos 6, 7 y 9.
+
+### Huecos de NRD-75 y quién los archiva
+
+Los archiva el PO o se enlazan con `Blocks` antes de la historia que los necesita (aterrizaje según "Huecos (bugs o historias a crear)" de `technical-follow-up.md`): **G4** (checks `check-seo-NN` en CI, historia de infraestructura) y **G1a** (barra final del blog) antes de todo; **G2a** (migas de `/portfolio/`), **G3** (que `check-seo-06` y `check-seo-07` prueben el enlace dentro de `<main>`) y **G6** (que el registro `keywordOwners` se aplique a las páginas construidas) dentro del paso 0; **G5** (un único `<h1>` en toda página) antes del primer cambio de H1 (paso 1). G1b y G2b son extras fuera del ADR que decide el PO. Un borrador cuyo hueco no ha aterrizado no está listo para sprint.
+
+### Paso 0. Datos y enlaces (sin página)
+
+- **Resumen:** una historia pequeña con las filas de registro y de enlaces que el ADR deja por aplicar, para que las historias por página partan de un registro coherente.
+- **Problema de usuario:** `src/data` no refleja el mapa de propietarios: `/automatizaciones/`, `/desarrollo-software-medida/` e `/inteligencia-artificial/` no tienen fila de intención ni propietario, `/portfolio/` recibe un único enlace desde `<main>` y `/desarrollo-software-medida/` solo dos, mientras sus consultas llegan al diseño web (67 impresiones del clúster SW-1). Sin esas filas, `check-seo-07` no vigila esas páginas.
+- **Página y clústeres:** ninguna; todos.
+- **Criterios de aceptación (de este checklist):**
+  - SEO-1: las cuatro filas nuevas de `intentMatrix` (tabla B del ADR) pasan `pnpm check:seo-07`; las cinco filas nuevas de `keywordOwners` (tabla C) existen y `tests/keyword-ownership.test.js` actualiza la aserción del conjunto exacto de cinco términos en el mismo commit (fila de test que falla antes del cambio).
+  - SEO-6: las filas 1 a 7 de la tabla A de `internalLinksBySource` y los tres pares de `reciprocalLinks` (tabla D) existen; el par `/diseno-web-sevilla/` con `/desarrollo-software-medida/` se añade en el mismo commit que las filas 1 y 2 o `check-seo-07` falla; `pnpm check:seo-06` y `pnpm check:seo-07` en verde.
+  - DEL-3: G2a, G3 y G6 aterrizan en esta historia o antes; el ancla nueva de la fila 7 en `/tienda-online-sevilla/` mide 51 caracteres y se comprueba que no desborda a 375 px.
+- **Evidencia:** ADR 0013 tablas A a D; inventario, recomendaciones 3, 4, 6 y 8; NRD-75, "Registry and link rows against the current build" (las seis primeras filas de enlaces no existen hoy en `<main>`; los pares de Google Maps y automatizaciones/IA ya se cumplen en ambos sentidos).
+- **Huecos que deben aterrizar antes:** G4 y G1a; G2a, G3 y G6 dentro.
+- **Tamaño:** M. **Aprobación de la usuaria:** no (no se crea, fusiona ni renombra ninguna página; no cambia precios). Las filas 8 a 11 de la tabla A y la quinta fila de `intentMatrix` son de NRD-25 y quedan fuera.
+
+### Paso 1. `/seo-local-sevilla/` (SL-1, SL-3, TO-3, GEO-2 absorbido)
+
+Primera historia de página, lista para planificar (comprobación al final de la sección).
+
+- **Resumen:** recoger la demanda de los términos principales del propietario sin perder la señal de precio que ya capta la página.
+- **Problema de usuario:** un negocio de Sevilla que busca una agencia o un servicio de posicionamiento web no encuentra esta página. `agencia seo sevilla` (1.000 búsquedas al mes) y `posicionamiento web sevilla` (320) no tienen ninguna impresión en la ventana, mientras que `plan seo sevilla` (45 impresiones, posición 40,5) y `presupuesto seo sevilla` (37, posición 48,7) sí; `seo local sevilla` tiene 76 impresiones en posición 32,5. En `<main>` la página contiene "agencia" una vez y "posicionamiento web" tres veces (inventario).
+- **Página y clústeres:** `/seo-local-sevilla/`, propietario de SL-1 (decidido), SL-3 (provisional: no se ha leído una segunda SERP de precio) y TO-3 (provisional: SERP mixta); absorbe GEO-2 (provisional). Términos registrados: `seo local sevilla`, `agencia seo sevilla`, `posicionamiento web sevilla`.
+- **Criterios de aceptación (de este checklist):**
+  - SEO-1: title, H1 y al menos un H2 trabajan `agencia seo sevilla` y `posicionamiento web sevilla` sin que ninguna otra página trabaje esos términos; descripción de 160 caracteres o menos; test nuevo que falla antes del cambio (ampliar `tests/seo-local-posicionamiento-web.test.js` o `tests/seo-local-sevilla-redesign.test.js`, que ya cubren esta página).
+  - SEO-2: la historia lee de nuevo la SERP de `agencia seo sevilla` y nombra por dominio las páginas que posicionan, con fecha; hoy constan en la ficha del clúster el paquete local (Starenlared 77 reseñas, Posiciona Tu Web Sevilla 27, Slocal 4) y, en orgánico, Momo & Cía, Prismalia, Sortlist, `seosevilla.net`, `docseo.es` (S1, S2, 2026-11-13 a 2026-11-14); revisión `seo-review` con esa evidencia.
+  - SEO-4 y DEL-5: la sección de precios mantiene 300 €/mes + IVA y 500 €/mes + IVA (`check-seo-15`) y la respuesta a "cuánto cuesta el SEO local en Sevilla" para SL-3; ninguna promesa de posición.
+  - SEO-6: la página sigue enlazando a sus dos spokes (guía de la ficha de Google Maps y guía de SEO local y GEO) y recibe el enlace de TO-3 de la fila 7 (paso 0).
+  - GEO-1 a GEO-4: pasajes citables en las secciones clave y en las FAQ, NAP idéntico (GEO-2 de este documento, con la referencia GBP de `local-signals-2026-11.md`), entrada de `llms.txt` con los precios publicados y `Service`, `FAQPage` y `BreadcrumbList` intactos (`check-seo-08`, `10`, `11`, `15`).
+  - DEL-6: revisión `seo-review`, `ux-review` y `a11y-responsive`; LCP y CLS vuelven a medirse si cambia el elemento LCP (hoy `p.display`, NRD-75 "Carried requirements").
+- **Evidencia (fases 1 y 2):** inventario fila 17 (1.236 palabras en `<main>`, 12 enlaces entrantes, indexada, último rastreo 2026-10-26); clúster SL-1, SL-3, TO-3 y la ficha "Dato observado, SL-1"; ADR 0013, "One page, two intents (SL-1 and SL-3)". El único recuento de competidores es una estimación de 1.200 a 1.500 palabras para `citysem.es` (2026-11-13): no hay muestra medida y la historia no fija un objetivo de longitud.
+- **Huecos que deben aterrizar antes:** G5 (un H1 por página, antes del primer cambio de H1), G4 y G1a; paso 0 (filas de enlace y de registro).
+- **Tamaño:** M. **Aprobación de la usuaria:** no (la página y su URL no cambian; los precios publicados se conservan).
+- **Pendiente de la historia:** releer la SERP de precio de SL-3 (entrada provisional) y la de TO-3 (SERP mixta) y registrar el resultado; la discrepancia sobre el paquete local de `seo local sevilla` (pregunta 12 de NRD-73) es una cuestión de captura de ranking del PO y no bloquea esta historia.
+
+**Comprobación de Definition of Ready (PRD sección 8) del primer borrador:** problema de usuario y página nombrados (sí); criterios de aceptación comprobables con test o guarda (sí; el copy en español sale de la propia página y se fija en el test); etiqueta de tamaño M (sí; los puntos los pone el PO); dependencias enlazables con `Blocks` (G5, G4, G1a y paso 0, todas listadas); sin decisión abierta de la usuaria (sí: no cambia precios ni páginas); evidencia con documento y cifra (sí).
+
+### Paso 2. `/diseno-web-sevilla/` (DW-1)
+
+- **Resumen:** llevar el término principal de diseño web a title, H1 y H2 de la página y apuntar a la página de software con las filas de enlace del ADR.
+- **Problema de usuario:** quien busca `diseño web sevilla` (880 búsquedas al mes) no llega aquí por ese término: tiene 4 impresiones (posición 60,8) frente a 145 para `diseñador web sevilla` (58,4) y 94 para `diseño paginas web sevilla` (60,2); "diseñador" aparece una vez en `<main>`. Además recibe 67 impresiones de `aplicaciones web a medida sevilla` (70,8), una intención que pertenece a `/desarrollo-software-medida/`.
+- **Página y clústeres:** `/diseno-web-sevilla/`, propietario de DW-1 (decidido; absorbe TO-1, provisional). El término registrado `diseño tienda online sevilla` se queda en `/tienda-online-sevilla/` y esta página no lo trabaja en title, H1 ni H2.
+- **Criterios de aceptación (de este checklist):**
+  - SEO-1: title, H1 y H2 alineados con `diseño web sevilla` y su variante con más impresiones; test nuevo que falla antes del cambio; `keywordOwners` ya incluye `diseño web sevilla` (paso 0).
+  - SEO-2: revisión `seo-review` con la evidencia de competidores citada en la historia; se lee primero la SERP de `desarrollo web sevilla` (140 búsquedas, KD 6, dato del 2026-09-17), que el ADR señala como la siguiente a leer. Hoy constan el paquete local (Gráfica Estudio Creativo 15 reseñas, Diseño Web Sevilla 13, Starenlared 77) y, en orgánico, `sortlist.es`, `lsjestudio.com`, `metricweb.es`, `designcloud.es`, `creadorpaginaswebsevilla.es` y `agencianewmar.es` (S3, S5; 2026-11-13 a 2026-11-15).
+  - SEO-4: los precios salen de `services.ts` (título actual "Diseño web en Sevilla | Precio cerrado desde 149 €"); la SERP lleva una respuesta de IA con rango de precio (800 a 5.000+ EUR, S1 y S3), pero no se muestra ni se cambia ningún precio publicado sin la decisión S-2026-11-13-1.
+  - SEO-6: filas 1 y 4 de la tabla A (enlaces a `/desarrollo-software-medida/` y a `/portfolio/`) y pares de reciprocidad del paso 0; pasan `check-seo-06` y `check-seo-07`.
+  - GEO-1 a GEO-4, DEL-5 y DEL-6: como en la plantilla del checklist; LCP y CLS se vuelven a medir porque el cambio de H1 modifica el elemento LCP (hoy `h1.text-4xl`, mediana 1,78 s, NRD-18).
+- **Evidencia:** inventario filas 12 y apartado "Intent mismatches" (2.068 palabras, 10 enlaces entrantes, indexada, último rastreo 2026-10-28; 573 impresiones, la mayor de la ventana); clúster DW-1; ADR 0013 "Registered term inside a merged cluster (TO-1)".
+- **Huecos que deben aterrizar antes:** G5, G4, G1a; paso 0.
+- **Tamaño:** M. **Aprobación de la usuaria:** sí, solo si el cambio toca precios publicados (decisión del PO S-2026-11-13-1, abierta); sin precios, no.
+- **Pendiente de la historia:** mientras S-2026-11-13-1 siga abierta, la historia no se planifica con copy de precio.
+
+### Paso 3. `/` (SL-2)
+
+- **Resumen:** comprobar y, si procede, ampliar el copy de la home con la variante "experto", con el menor cambio de toda la lista.
+- **Problema de usuario:** quien busca un consultor de SEO en Sevilla (`consultor seo sevilla`, 590 búsquedas al mes) debe llegar a la home; hoy tiene 3 impresiones en posición 6,3, y las variantes `experto seo sevilla` (25 impresiones, posición 52,8) y `consultor seo provincia de sevilla` (24, posición 76,3) las sirve `/seo-local-sevilla/`.
+- **Página y clúster:** `/`, propietario de SL-2 (decidido; término registrado `consultor seo sevilla`).
+- **Criterios de aceptación (de este checklist):**
+  - SEO-1: la home conserva `consultor seo sevilla` en title, descripción, H1 y primer párrafo (cubierto por `tests/seo-meta-titles.test.js` y `tests/seo-consultor-strategy.test.js`); la historia decide, con evidencia, si "experto" entra en el copy corrido y, si entra, lo prueba con un test que falla antes; las dos variantes no se registran ni se enlazan.
+  - SEO-2: revisión `seo-review` con la evidencia de competidores: el paquete local de `consultor seo sevilla` tiene dos consultores individuales (Rafa Ramos con 13 y 77 reseñas, Antonio Castro con 68) y Consultoría Seo · Sevilla (16); en orgánico, listados y directorios 4 y páginas de agencia o servicio 4 (S10, 2026-11-15).
+  - SEO-6: fila 5 de la tabla A (enlace a `/portfolio/`, paso 0) y el enlace de la home a sus tres posts se mantienen.
+  - GEO-1 a GEO-4 y DEL-6: como en la plantilla; la home no emite `BreadcrumbList` (correcto por ADR) y el elemento LCP es una imagen (mediana 2,08 s, NRD-18; 1,885 s, NRD-50).
+- **Evidencia:** inventario fila 1 (1.811 palabras, 23 enlaces entrantes, indexada, último rastreo 2026-11-11); clúster SL-2 y "Dato observado, SL-2 (home conflict)"; ADR 0013 "SL-2 variants".
+- **Huecos que deben aterrizar antes:** G5, G4; paso 0.
+- **Tamaño:** S. **Aprobación de la usuaria:** no.
+
+### Paso 4. `/automatizaciones/` (IA-1)
+
+- **Resumen:** declarar la intención de la página y ajustar su copy al término que Google ya le asocia, tras leer la SERP del término exacto.
+- **Problema de usuario:** quien busca automatizar procesos de su negocio en Sevilla ya llega a esta página con cuatro variantes (`automatizacion procesos sevilla` 17 impresiones en posición 23,9; `automatización de procesos sevilla` 15 en 31,9; `automatización de procesos en sevilla` 4 en 11,5; `automatizaciones ia sevilla` 4 en 52), pero la página no tiene fila de intención ni propietario en el registro.
+- **Página y clúster:** `/automatizaciones/`, propietario de IA-1 (provisional: no se leyó la SERP del término exacto, dos llamadas fallaron con error 40101; la lectura de la variante sin tilde es de automatización industrial).
+- **Criterios de aceptación (de este checklist):**
+  - SEO-1: title, H1 y descripción alineados con la variante que la lectura elija; `intentMatrix` con la fila de la tabla B (paso 0) pasando `check-seo-07`; no se registra `keywordOwners` hasta que el PO añada el término a `seo.rankTracking` (ADR 0012 sigue la lista seguida).
+  - SEO-2: antes de escribir, se lee la SERP exacta de `automatización de procesos sevilla`; si la herramienta vuelve a fallar, la historia no cierra este ítem y se devuelve al PO. Con la lectura de la variante, el orgánico son directorios y bolsas de empleo (`es.kompass.com` cinco veces, `cylex.es`, `es.jooble.org`) y dos páginas de servicio, sin paquete local (S10, 2026-11-15, proxy).
+  - SEO-6 y GEO-3: se mantiene el par de reciprocidad con `/inteligencia-artificial/`; la entrada de `llms.txt` mantiene sus precios publicados.
+  - GEO-1, GEO-2, GEO-4, DEL-5 y DEL-6: como en la plantilla; sin cambio de marcado, sin riesgo de LCP (mediana 0,94 s, NRD-18).
+- **Evidencia:** inventario fila 2 (1.323 palabras, 3 enlaces entrantes, indexada, último rastreo 2026-10-10); clúster IA-1; ADR 0013 "Other open questions of NRD-73" (pregunta 8).
+- **Huecos que deben aterrizar antes:** G5, G4; paso 0.
+- **Tamaño:** S. **Aprobación de la usuaria:** no.
+
+### Paso 5. `/desarrollo-software-medida/` (SW-1)
+
+- **Resumen:** dar a la página su intención y su propietario en el registro y confirmar con una SERP leída a quién pertenece `aplicaciones web a medida sevilla`.
+- **Problema de usuario:** quien busca software o aplicaciones a medida llega al diseño web: 67 de las 76 impresiones del clúster van a `/diseno-web-sevilla/` y solo 9 a esta página (`apps a medida sevilla` 8 impresiones en posición 46).
+- **Página y clúster:** `/desarrollo-software-medida/`, propietario de SW-1 (provisional: la propuesta de dividir el clúster no se aplica; la lectura de `aplicaciones web a medida sevilla` se asignó a su consulta por orden de respuesta).
+- **Criterios de aceptación (de este checklist):**
+  - SEO-1: `intentMatrix` y `keywordOwners` (`desarrollo de software a medida sevilla`) del paso 0 en verde; title, H1 y descripción alineados con el término; test que falla antes del cambio.
+  - SEO-2: se relee la SERP de `aplicaciones web a medida sevilla` con la consulta repetida en la respuesta; si sigue siendo la del diseño web, el PO decide si `/diseno-web-sevilla/` la posee (disparador de revisión del ADR). Hoy constan el paquete local de tres empresas de software (Beateam 4 reseñas, DINAMIC ÁREA 7, Neored Solutions 4) y, en orgánico, `10code.es`, `beateam.es`, `sortlist.es`, `dasscore.com`, `bloonde.com` (S10, 2026-11-15).
+  - SEO-6: filas 1, 2 y 3 de la tabla A (de 2 a 4 enlaces entrantes desde `<main>`) y el par de reciprocidad con `/diseno-web-sevilla/`, todo vigilado por `check-seo-06` y `check-seo-07`.
+  - GEO-1 a GEO-4, DEL-5 y DEL-6: como en la plantilla; mediana de LCP 1,74 s (NRD-18), elemento de texto.
+- **Evidencia:** inventario filas 11 y 12 y apartado de enlaces débiles; clúster SW-1 (volumen 10 al mes, Google Ads, sin dato en Labs); ADR 0013 "SW-1 split not applied".
+- **Huecos que deben aterrizar antes:** G5, G4; paso 0 (de él parte la mayor parte del cambio).
+- **Tamaño:** S. **Aprobación de la usuaria:** no.
+
+### Paso 6. `/tienda-online-sevilla/` (TO-2, término registrado de TO-1)
+
+- **Estado:** **existente: NRD-34** (Finalizada, Sprint 2; reenfoque aceptado el 2026-11-13). No es historia nueva ni borrador duplicado. Nuevo rango: sexto, tras las páginas indexadas, y **indexación primero**: la página está "URL is unknown to Google" según NRD-98 (el inventario del mismo día la leyó como "Discovered - currently not indexed"; no se concilian las dos lecturas). Hasta que la propietaria solicite la indexación en Search Console y pasen 28 días de datos, no hay forma de medir el copy.
+- **Qué cubrió NRD-34 (según su diseño):** title, H1, descripción y subtítulo del reenfoque; señales de `intentMatrix`; fila `diseño tienda online sevilla` en `keywordOwners`; etiqueta de `llms.txt`; seguimiento de ranking; lógica de precio sin cambios (`tests/tienda-online-retarget.test.js`).
+- **Criterios del checklist que NRD-34 no cubrió y que se añaden a su seguimiento:**
+  - SEO-2: leer de nuevo la SERP con el término registrado una vez indexada la página (la lectura de `tienda online sevilla` es navegacional: 8 de 10 resultados son la tienda del Sevilla FC; la de `diseño tienda online sevilla` cae en el clúster DW-1, sin resultado orgánico específico de ecommerce, S10 llamada 8).
+  - SEO-6: fila 7 de la tabla A (ancla hacia `/seo-local-sevilla/` con el texto de SEO para tiendas, TO-3), que se aplica en el paso 0; comprobar a 375 px que el ancla de 51 caracteres no desborda.
+  - GEO-1, GEO-2 y GEO-4: pasajes citables y consistencia de entidad (la ficha GBP lista este servicio con su enlace, `local-signals-2026-11.md`); `Service`, `FAQPage` y `BreadcrumbList` ya cubiertos por `check-seo-11`, `08` y `02`.
+  - Disparador de revisión del ADR: si, con 28 días de datos tras la indexación, el término registrado sigue sin impresiones aquí mientras `/diseno-web-sevilla/` sí las recibe, el PO decide el traslado (ADR 0012).
+- **Tamaño:** n/a (existente). **Aprobación de la usuaria:** no. **Cómo se refleja:** el PO enlaza NRD-34, la reordena en la sexta posición y decide si reabre NRD-34 o añade una tarea de seguimiento enlazada; el desarrollador no la crea.
+
+### Paso 7. `/inteligencia-artificial/` (IA-2)
+
+- **Resumen:** una vez la página esté en el índice de Google, declarar su intención y alinear su copy con la SERP leída.
+- **Problema de usuario:** una empresa de Sevilla que busca incorporar IA (`inteligencia artificial para empresas sevilla`, sin dato de volumen) no puede encontrar la página: Google la da por desconocida (NRD-98) aunque responde HTTP 200 y está en el sitemap.
+- **Página y clúster:** `/inteligencia-artificial/`, propietario de IA-2 (provisional: propietario no indexado). **Indexación primero**: es la precondición de la historia, no un criterio de aceptación; se comprueba de nuevo con URL Inspection antes de planificar (acción de la propietaria en Search Console, NRD-98).
+- **Criterios de aceptación (de este checklist):**
+  - SEO-1: fila de `intentMatrix` y de `keywordOwners` (`inteligencia artificial para empresas sevilla`, guardarraíl, no promesa de posición) del paso 0; title, H1 y descripción alineados; test que falla antes del cambio.
+  - SEO-2: revisión `seo-review` con la evidencia de competidores: sin paquete local; tres páginas de servicio y cuatro de formación o cursos entre nueve resultados (`iasevilla.com`, `aslan.es`, `simebuscas.com`, `robleragency.com`, `10code.es`, `tumaster.com`; S10, 2026-11-15).
+  - SEO-6: fila 3 de la tabla A (enlace a `/desarrollo-software-medida/`) y par de reciprocidad con `/automatizaciones/`.
+  - GEO-1 a GEO-4, DEL-5 y DEL-6: como en la plantilla; sin promesa de que un asistente recomiende al negocio.
+- **Evidencia:** inventario fila 13 (1.386 palabras, 3 enlaces entrantes, sin datos de Google); `technical-follow-up.md`, sección NRD-98 (sin causa en el sitio); clúster IA-2.
+- **Huecos que deben aterrizar antes:** G5, G4; paso 0.
+- **Tamaño:** S. **Aprobación de la usuaria:** no.
+
+### Paso 8. `/seo-para-ia/` (GEO-1)
+
+- **Estado:** **existente: NRD-24, NRD-25 y NRD-26** (página no existente: HTTP 404 el 2026-11-15; fuera de la fase 5). No es historia nueva. **Requiere aprobación de la usuaria (ADR 0013, propuesta P1)** y las decisiones D1 a D4 de `odd/tasks/seo-para-ia-geo-page.md` (precio, palabra clave principal, método de revisión y seguimiento, hero) siguen abiertas; hasta entonces nada se aplica y el post de GEO conserva su papel informativo.
+- **Criterios del checklist que se añaden a esas historias:** SEO-1 (title, H1 y descripción de alcance nacional; sin consultas con Sevilla), SEO-2 (SERP nacional de `posicionamiento en ia`: guías y páginas de agencia, sin resultado local), SEO-4 (solo precio ya publicado, según la variante de D1), SEO-5, GEO-1 a GEO-4 (entrada de `llms.txt` con solo precios publicados), DEL-5 (sin promesa de recomendación por una IA) y DEL-7. Contrato de NRD-25 según ADR 0013: filas 8 a 11 de la tabla A, quinta fila de `intentMatrix`, entrada de `llms.txt` y fila `posicionamiento en ia` de `keywordOwners` cuando la página exista.
+- **Tamaño:** el de NRD-24, NRD-25 y NRD-26. **Cómo se refleja:** el PO enlaza las tres historias, las deja en la octava posición y las condiciona a P1 y a D1 a D4.
+
+### Paso 9a. Post de Google Maps (SL-4)
+
+- **Resumen:** ampliar o ajustar el post solo con una muestra medida de competidores y cuando esté en el índice.
+- **Problema de usuario:** quien busca `como aparecer en google maps` (110 búsquedas al mes) no encuentra el post: Google lo rastreó el 2026-08-21 y lo dejó "Crawled - currently not indexed"; sin impresiones.
+- **Página y clúster:** `/blog/como-aparecer-en-google-maps-negocio-sevilla/`, propietario de SL-4 (provisional: propietario no indexado). **Indexación primero**.
+- **Criterios de aceptación (de este checklist, adaptados a un post):** SEO-1 con la fila de `intentMatrix` y de `keywordOwners` del paso 0; SEO-2 solo con una muestra medida de competidores (hoy solo constan los tres primeros dominios: `blog.mareaalcalina.com`, `seonet.com.ar`, `palbin.com`; no hay recuento de palabras de competidores, un hueco que la historia cierra o deja nombrado); SEO-6 con el enlace al hub `/seo-local-sevilla/` y el par de reciprocidad ya presente; GEO-1 y GEO-4 con `Article` y `BreadcrumbList` (la barra final de las migas es G1a); DEL-5 y DEL-6.
+- **Evidencia:** inventario fila 5 (786 palabras, 5 enlaces entrantes); NRD-98 (robots, canónica, sitemap y HTTP pasan; sin causa en el sitio salvo los enlaces sin barra final del blog); ADR 0013 "Posts, summary of the NRD-98 one-line check".
+- **Huecos que deben aterrizar antes:** G1a y, tras él, una nueva inspección de la URL; G4.
+- **Tamaño:** S. **Aprobación de la usuaria:** no (fusionar o retirar un post sí lo requeriría, y no se propone).
+
+### Paso 9b. Post de precios (DW-2)
+
+- **Resumen:** igual que 9a, para el post de precios de una página web.
+- **Problema de usuario:** quien investiga `cuanto cuesta una pagina web en sevilla` (sin dato de volumen; cuatro preguntas de precio en "Otras preguntas") no puede llegar al post (último rastreo 2026-08-14, "Crawled - currently not indexed"); las consultas de precio (2 impresiones cada una) llegan a `/diseno-web-sevilla/`.
+- **Página y clúster:** `/blog/cuanto-cuesta-una-pagina-web-en-sevilla/`, propietario de DW-2 (provisional: propietario no indexado y precios sin decidir). **Indexación primero**.
+- **Criterios de aceptación (de este checklist, adaptados a un post):** SEO-1 con la fila de `keywordOwners` (`cuanto cuesta una pagina web en sevilla`) del paso 0; SEO-2 con muestra medida (hoy constan `seosevilla.com`, `creadorpaginaswebsevilla.es`, `proweb.cat`, `hostinger.com`, `ideandoazul.com`, `ikaroa.com`, `mejordesevilla.com`, `belleweb.es`, de los nueve resultados orgánicos, tres son páginas de servicio y una de ellas una lista de precios; S10, 2026-11-15); SEO-4: lo que el post puede decir sobre cifras depende de la decisión S-2026-11-13-1, así que la historia no las cambia sin ella; SEO-6 con el enlace al hub `/diseno-web-sevilla/` (ya existe en ambos sentidos); GEO-1 y GEO-4 con `Article` y `BreadcrumbList`; DEL-5 y DEL-6.
+- **Evidencia:** inventario filas 6 y apartado "Intent mismatches" (661 palabras, 3 enlaces entrantes); ADR 0013, "Posts, summary of the NRD-98 one-line check" y cola de dependencias del paso 9.
+- **Huecos que deben aterrizar antes:** G1a y nueva inspección; G4; S-2026-11-13-1 si el post cita cifras.
+- **Tamaño:** S. **Aprobación de la usuaria:** sí, solo si el post cita cifras (decisión S-2026-11-13-1); si no, no.
+
+## Autocomprobación de los borradores
+
+- Orden idéntico al de ADR 0013 "Orden de optimización (fase 5)": pasos 0 a 9, con el paso 9 dividido en dos borradores (9a y 9b) porque cubre dos posts.
+- Ningún borrador duplica NRD-34 ni NRD-24/25/26: los pasos 6 y 8 son referencias a esas historias con los criterios que se les añaden y su nuevo rango.
+- Las páginas no indexadas según NRD-98 (`/tienda-online-sevilla/`, `/inteligencia-artificial/`, los dos posts sin indexar) llevan "indexación primero".
+- Cada cifra procede de `inventory-2026-11.md`, `keyword-clusters-2026-11.md`, ADR 0013 o `technical-follow-up.md`; los volúmenes son de España y mensuales, las impresiones son de la ventana 2026-10-16 a 2026-11-12 y todas las conclusiones son direccionales.
+- El primer borrador de página (paso 1) cumple la Definition of Ready; el paso 0 la cumple tras archivar sus huecos como dependencias.

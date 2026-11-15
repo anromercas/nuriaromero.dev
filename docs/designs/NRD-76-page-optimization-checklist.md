@@ -99,4 +99,4 @@ None (docs path).
 ## Tasks
 
 - [x] 1.1 [NRD-110 app] Write the SEO, GEO and Delivery checklist in `docs/seo-audit/page-optimization-checklist.md`, each item with how it is verified and its source of truth, tied to ADR 0013, plus the README row; tests: unit suite green.
-- [ ] 1.2 [NRD-111 app] Write the per-page story drafts in ADR 0013 phase-5 order (existing NRD-34 and NRD-24/25/26 placed, not duplicated; first draft meets the Definition of Ready) and comment the ordered list on NRD-76 for the PO to file; tests: unit suite green.
+- [x] 1.2 [NRD-111 app] Write the per-page story drafts in ADR 0013 phase-5 order (existing NRD-34 and NRD-24/25/26 placed, not duplicated; first draft meets the Definition of Ready) and comment the ordered list on NRD-76 for the PO to file; tests: unit suite green.
