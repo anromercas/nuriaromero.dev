@@ -114,5 +114,5 @@ None for this story (docs path). Mobile 375 px checks of changed templates are r
 
 ## Tasks
 
-- [ ] 1.1 [NRD-106 app] Extract the scope table from ADR 0013 and write the verified coverage table of existing guards (check-seo-02..15, NRD-18, NRD-50, NRD-19) in a dated section of `docs/seo-audit/technical-follow-up.md`; tests: unit suite green.
+- [x] 1.1 [NRD-106 app] Extract the scope table from ADR 0013 and write the verified coverage table of existing guards (check-seo-02..15, NRD-18, NRD-50, NRD-19) in a dated section of `docs/seo-audit/technical-follow-up.md`; tests: unit suite green.
 - [ ] 1.2 [NRD-107 app] Run the per-item checks for every scoped item, write the gaps table ordered against the page-change stories, and comment it on NRD-75 for the PO to file; tests: unit suite green.
