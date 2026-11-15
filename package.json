@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write",
+    "seo:inventory": "node scripts/seo-inventory.mjs",
     "check:seo-02": "pnpm build && node scripts/check-seo-02.mjs",
     "check:seo-02:dist": "node scripts/check-seo-02.mjs",
     "check:seo-05": "pnpm build && node scripts/check-seo-05.mjs",
