@@ -148,10 +148,10 @@ export const desarrolloSoftware: ServicePageData = {
   seo: {
     title: "Desarrollo de software a medida en Sevilla | Aplicaciones web",
     description:
-      "Desarrollo software y aplicaciones web a medida para empresas en Sevilla: gestión interna, reservas, presupuestos, portales de cliente. +10 años de experiencia.",
+      "Desarrollo de software y aplicaciones web a medida en Sevilla: gestión interna, reservas, presupuestos y portales de cliente. +10 años de experiencia.",
   },
   hero: {
-    h1: "Software a medida para tu empresa en Sevilla",
+    h1: "Desarrollo de software a medida en Sevilla para tu empresa",
     subtitle:
       "Cuando el Excel se queda corto y los programas genéricos no encajan con tu forma de trabajar, una aplicación hecha a tu medida ahorra horas cada semana. Desarrollo herramientas que se adaptan a tu negocio, y no al revés.",
   },
