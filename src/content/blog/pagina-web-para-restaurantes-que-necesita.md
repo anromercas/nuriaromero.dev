@@ -27,7 +27,7 @@ Algunas búsquedas de restaurantes incluyen una zona o un tipo de comida, por ej
 
 - Textos que mencionen tu zona y tu especialidad de forma natural
 - Datos estructurados de negocio local que describan correctamente la información visible, como dirección y horario. Pueden ayudar a Google a entender la página, pero no garantizan que esos datos aparezcan en los resultados ([documentación de LocalBusiness](https://developers.google.com/search/docs/appearance/structured-data/local-business) y [políticas de Google](https://developers.google.com/search/docs/appearance/structured-data/sd-policies))
-- Conexión con tu ficha de Google Maps — aquí tienes [la guía completa de Google Business Profile](/blog/como-aparecer-en-google-maps-negocio-sevilla)
+- Conexión con tu ficha de Google Maps — aquí tienes [la guía completa de Google Business Profile](/blog/como-aparecer-en-google-maps-negocio-sevilla/)
 
 ### 4. Fotos que abran el apetito
 
@@ -52,4 +52,4 @@ TripAdvisor, TheFork y otros directorios pueden aportar visibilidad, pero sus co
 
 He preparado una página específica con todo lo que incluye [una web para restaurantes en Sevilla](/web-para-restaurantes-sevilla/): carta digital editable con QR, reservas por WhatsApp, SEO local para tu zona y conexión con Google Maps, con precio orientativo.
 
-¿Tienes un bar o restaurante en Sevilla? [Escríbeme](/contacto) y te digo, viendo tu caso concreto, qué te conviene y qué no — aunque sea quitarte cosas del presupuesto.
+¿Tienes un bar o restaurante en Sevilla? [Escríbeme](/contacto/) y te digo, viendo tu caso concreto, qué te conviene y qué no — aunque sea quitarte cosas del presupuesto.
