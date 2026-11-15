@@ -18,6 +18,7 @@ This folder turns the September 2026 audit findings into focused, verifiable wor
 | [Sector landing pages](sector-pages.md) | High | Verified pages exist; quality improvements require page-by-page review | None |
 | [Client case studies](case-studies.md) | Medium | Verified substantiation gap | Client-approved evidence where available |
 | [Technical and measurement follow-up](technical-follow-up.md) | Medium / low | Mixed: console errors observed; performance/indexing data unavailable | Browser validation; Search Console/Analytics or field data for data-dependent items |
+| [URL inventory, November 2026 (NRD-22)](inventory-2026-11.md) | High | Measured from `dist/` and Search Console (queries 2026-10-16 to 2026-11-12; coverage 2026-11-15) | None |
 
 ## Evidence boundaries
 
