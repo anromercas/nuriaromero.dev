@@ -81,7 +81,7 @@ export function personSchema() {
     "@id": PERSON_ID,
     name: SITE.name,
     alternateName: "Nuria Romero Castillo",
-    url: `${SITE.url}/sobre-mi`,
+    url: `${SITE.url}/sobre-mi/`,
     jobTitle: "Consultor SEO y desarrolladora web freelance",
     description: "Consultor SEO en Sevilla y desarrolladora web. Ayudo a negocios locales a aparecer en Google, Google Maps y buscadores con IA.",
     worksFor: { "@id": BUSINESS_ID },

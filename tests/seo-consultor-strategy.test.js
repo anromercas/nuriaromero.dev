@@ -53,3 +53,17 @@ test('pages link to the home with the exact anchor "consultor SEO en Sevilla", o
   const home = links.match(/"\/": \[([\s\S]*?)\n  \],/)?.[1] ?? ''
   assert.doesNotMatch(home, /path: "\/"/, 'home never links to itself')
 })
+
+test('Person schema url uses the canonical trailing-slash URL of /sobre-mi/', async () => {
+  const schema = await source('src/lib/schema.ts')
+  const person = schema.match(/export function personSchema\(\) \{([\s\S]*?)\n\}/)?.[1] ?? ''
+  assert.ok(person.includes('/sobre-mi/`'), 'url ends with /sobre-mi/')
+  assert.doesNotMatch(person, /\/sobre-mi`/)
+})
+
+test('every ${SITE.url}/<path> URL in schema.ts ends with a trailing slash', async () => {
+  const schema = await source('src/lib/schema.ts')
+  const paths = [...schema.matchAll(/`\$\{SITE\.url\}\/([A-Za-z0-9][^`]*)`/g)].map((m) => m[1])
+  assert.ok(paths.length > 0, 'found path URLs')
+  for (const path of paths) assert.ok(path.endsWith('/'), `/${path} lacks trailing slash`)
+})

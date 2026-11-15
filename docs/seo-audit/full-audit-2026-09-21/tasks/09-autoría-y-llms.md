@@ -44,3 +44,37 @@ No inventar fechas de actualización, perfiles sociales, credenciales o señales
 
 - Verificar en el entorno desplegado que `/llms.txt`, el post GEO y `/sobre-mi/` devuelven HTTP 200 y que los enlaces externos siguen siendo perfiles oficiales accesibles.
 - La comprobación local no acredita tratamiento de ningún crawler, citación, indexación ni mejora de rankings.
+
+## Validación de producción de `llms.txt` (2026-11-14, NRD-19 / NRD-41)
+
+- `curl -sS https://nuriaromero.dev/llms.txt`: HTTP 200, `content-type: text/plain; charset=UTF-8`. El contenido servido es **idéntico** a `public/llms.txt` en `origin/main` (`f4f6bfe`) y en el HEAD de la rama: no hay despliegue obsoleto.
+- Enlaces extraídos con `rg -o '\]\((https?://[^)]+)\)'`: **22** (coincide con el recuento de URLs distintas del fichero). Cada uno se pidió con `curl -s -o /dev/null --max-redirs 0 -w '%{http_code} %{redirect_url}'` (sin seguir redirecciones).
+- Resultado: **22 de 22 devuelven 200 y ninguno redirige** (URL de redirección vacía). Las 19 rutas internas usan barra final; `sitemap-index.xml` es un fichero y no la lleva.
+- LinkedIn respondió 200 (no 999) en esta ejecución, con y sin `User-Agent` de navegador. Un 999 sería una nota por bloqueo de bots, no un defecto.
+
+| URL | Estado | Redirección |
+| --- | --- | --- |
+| https://nuriaromero.dev/sobre-mi/ | 200 | - |
+| https://nuriaromero.dev/contacto/ | 200 | - |
+| https://nuriaromero.dev/diseno-web-sevilla/ | 200 | - |
+| https://nuriaromero.dev/seo-local-sevilla/ | 200 | - |
+| https://nuriaromero.dev/desarrollo-software-medida/ | 200 | - |
+| https://nuriaromero.dev/automatizaciones/ | 200 | - |
+| https://nuriaromero.dev/inteligencia-artificial/ | 200 | - |
+| https://nuriaromero.dev/tienda-online-sevilla/ | 200 | - |
+| https://nuriaromero.dev/web-para-restaurantes-sevilla/ | 200 | - |
+| https://nuriaromero.dev/web-para-clinicas-sevilla/ | 200 | - |
+| https://nuriaromero.dev/web-para-comercios-sevilla/ | 200 | - |
+| https://nuriaromero.dev/web-para-abogados-gestorias-sevilla/ | 200 | - |
+| https://nuriaromero.dev/recursos/ | 200 | - |
+| https://nuriaromero.dev/blog/ | 200 | - |
+| https://nuriaromero.dev/blog/pagina-web-para-restaurantes-que-necesita/ | 200 | - |
+| https://nuriaromero.dev/blog/como-aparecer-en-google-maps-negocio-sevilla/ | 200 | - |
+| https://nuriaromero.dev/blog/cuanto-cuesta-una-pagina-web-en-sevilla/ | 200 | - |
+| https://nuriaromero.dev/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/ | 200 | - |
+| https://nuriaromero.dev/portfolio/ | 200 | - |
+| https://linkedin.com/in/nuria-romero-castillo | 200 | - |
+| https://github.com/anromercas | 200 | - |
+| https://nuriaromero.dev/sitemap-index.xml | 200 | - |
+
+Defectos: ninguno. Esto verifica solo disponibilidad HTTP; no acredita indexación, citación ni tratamiento de ningún crawler.

@@ -46,3 +46,39 @@ No afirmar que el schema por sí solo produce rich results, no poner horarios fi
 - `npm run check:seo-11` pasa con build Astro de 22 páginas y validación de 22 HTML/10 schemas `Service`; Astro informa 0 errores, 0 warnings y 1 hint preexistente en `src/components/seo/Schema.astro`.
 - Pendiente de decisión/datos humanos: horarios reales de atención, precisión geográfica aprobada, nombre exacto si se crea/reclama GBP, área comercial definitiva y cualquier nuevo perfil oficial para `sameAs`.
 - Pendiente de validación de producción: inspección del JSON-LD desplegado, Schema Markup Validator/Rich Results Test y comparativa con NAP/legal una vez aprobados los datos humanos.
+
+## Validación de producción (2026-11-14, NRD-19 / NRD-40)
+
+**Herramientas.** El Schema Markup Validator y el Rich Results Test de Google son herramientas web y esta ejecución no tuvo navegador: **no verificado (sin navegador)**. No se afirma que pasen. Queda pendiente repetirlas en navegador real (QA/PO) sobre las tres URLs.
+
+**Validación realizada en su lugar** (no equivale a las herramientas de Google):
+
+1. `curl` del HTML de producción de `https://nuriaromero.dev/`, `/seo-local-sevilla/` y `/diseno-web-sevilla/` (los tres HTTP 200, `content-type: text/html`).
+2. Extracción de cada `<script type="application/ld+json">` y `JSON.parse` de todos: **0 errores de sintaxis** (2 bloques por página).
+3. Script de Node propio (no es una librería de validación) que comprueba propiedades requeridas y recomendadas por tipo y que cada `@id` referenciado se resuelve dentro de la página. Es una revisión estructural, no una validación contra el vocabulario completo de schema.org.
+4. Comparación con `dist/` generado con `pnpm astro build` desde el HEAD de la rama (develop fusionado): el JSON-LD de producción es **idéntico** al del build en las tres URLs. Producción coincide con `main` (`<title>` de `/` igual al de `src/pages/index.astro`; `origin/main` = `f4f6bfe`, y está contenido en el HEAD usado). No hay diferencias producción/build.
+
+### Tipos detectados y errores
+
+| URL | Tipos detectados | Errores (estructura) |
+| --- | --- | --- |
+| `/` | `ProfessionalService`+`Organization` (`#business`), `WebSite`, `Person`, `FAQPage` (6 preguntas), `ProfessionalService`+`Organization` (`#business`, solo `aggregateRating` + `review`: 1 `Review`) | 0 |
+| `/seo-local-sevilla/` | `ProfessionalService`+`Organization`, `WebSite`, `Service` (2 `Offer`), `FAQPage` (9 preguntas), `BreadcrumbList` (Inicio > SEO local en Sevilla) | 0 |
+| `/diseno-web-sevilla/` | `ProfessionalService`+`Organization`, `WebSite`, `Service` (1 `Offer`), `FAQPage` (10 preguntas), `BreadcrumbList` (Inicio > Diseño web en Sevilla) | 0 |
+
+`AggregateRating` (ratingValue 5, reviewCount 1) y `Review` (author, reviewRating) están presentes en `/` con las propiedades requeridas. No hay `BreadcrumbList` en `/` (la home no lo emite, es lo esperado).
+
+### Avisos (texto literal de mi script, no de Google)
+
+- `/`, `/seo-local-sevilla/`, `/diseno-web-sevilla/`: `ProfessionalService+Organization: sin geo (decisión documentada)` y `ProfessionalService+Organization: sin openingHoursSpecification (decisión documentada)` (ambas ausencias son decisión recogida arriba, en "Implementación local").
+- `/seo-local-sevilla/` y `/diseno-web-sevilla/`: `@id sin resolver: https://nuriaromero.dev/#person` (el `founder` del negocio referencia el `Person`, que solo se emite en `/`). Referencia entre páginas válida en JSON-LD, pero no resoluble desde la propia página.
+- `/`: el nodo `#business` aparece dos veces (uno con los datos y otro con solo `aggregateRating`/`review`). Se fusionan por `@id`; no es un error.
+- Previsible en Google (no comprobado): `aggregateRating`/`review` sobre la propia empresa y `FAQPage` pueden figurar como "no elegibles para resultados enriquecidos". Se registrarían como "no elegible", no como error.
+
+### Defecto detectado
+
+- `Person.url` es `https://nuriaromero.dev/sobre-mi` (sin barra final, `src/lib/schema.ts:84`), y producción responde `301` a `https://nuriaromero.dev/sobre-mi/` (comprobado con `curl --max-redirs 0`). Resto de URLs del JSON-LD usan barra final. Bug a registrar por separado (no se corrige en esta historia).
+
+### Pendiente
+
+- Schema Markup Validator y Rich Results Test (Googlebot smartphone) sobre las tres URLs: no verificado (sin navegador).

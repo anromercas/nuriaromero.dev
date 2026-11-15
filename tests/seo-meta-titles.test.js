@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
+import { renderedHomeDescription } from './helpers/home-description.js'
 
 const source = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 
@@ -18,9 +19,9 @@ function extractSeoBlocks(src) {
 
 test('home title includes Sevilla and description stays within 160 chars', async () => {
   const home = await source('src/pages/index.astro')
-  const match = home.match(/<Layout\s+title="([^"]+)"\s+description="([^"]+)"/)
-  assert.ok(match, 'no se encontró el bloque <Layout title=... description=...> en index.astro')
-  const [, title, description] = match
+  const title = home.match(/<Layout\s+title="([^"]+)"/)?.[1]
+  assert.ok(title, 'no se encontró el bloque <Layout title=... en index.astro')
+  const description = await renderedHomeDescription()
 
   assert.match(title, /Sevilla/, 'el title de home debe incluir "Sevilla"')
   assert.ok(
@@ -102,9 +103,9 @@ test('niches.ts: los seo.title de los 4 nichos no cambian', async () => {
 
 test('home owns the "consultor SEO Sevilla" keyword in title, description, H1 and first paragraph', async () => {
   const home = await source('src/pages/index.astro')
-  const match = home.match(/<Layout\s+title="([^"]+)"\s+description="([^"]+)"/)
-  assert.ok(match, 'no se encontró el bloque <Layout title=... description=...> en index.astro')
-  const [, title, description] = match
+  const title = home.match(/<Layout\s+title="([^"]+)"/)?.[1]
+  assert.ok(title, 'no se encontró el bloque <Layout title=... en index.astro')
+  const description = await renderedHomeDescription()
 
   assert.ok(title.startsWith('Consultor SEO en Sevilla'), 'el title debe empezar por "Consultor SEO en Sevilla"')
   assert.ok(title.length <= 65, `el title mide ${title.length} caracteres (límite 65)`)

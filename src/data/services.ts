@@ -3,6 +3,14 @@
 // chatbot IA 399 €, software a medida 999 €. E-commerce: sin precio público.
 import type { ServicePageData } from "@/data/types"
 
+/** `from` label of a named pricing tier; throws so a renamed tier fails the build. */
+export function tierFrom(service: ServicePageData, tierName: string): string {
+  const tier = service.pricing.tiers?.find((t) => t.name === tierName)
+  if (!tier)
+    throw new Error(`Pricing tier "${tierName}" not found in ${service.slug}`)
+  return tier.from
+}
+
 export const disenoWeb: ServicePageData = {
   slug: "/diseno-web-sevilla/",
   breadcrumbName: "Diseño web en Sevilla",
@@ -466,7 +474,7 @@ export const seoLocal: ServicePageData = {
     title: "Tu negocio está en Sevilla. La pregunta es si te encuentran cuando importa.",
     titleAccent: "cuando importa",
     subtitle:
-      "Tus clientes te buscan en Google antes de decidir. Trabajo contigo cada mes para que tu ficha de Google y tu web cuenten bien lo que haces y quien te busca no dude en llamarte.",
+      "Tus clientes te buscan en Google antes de decidir. Trabajo contigo cada mes el posicionamiento web en Sevilla de tu negocio, ficha y web, para que quien te busca no dude en llamarte.",
     primaryCtaLabel: "Reservar una llamada",
     secondaryCta: { label: "Ver qué se revisa", href: "#revision-local" },
   },
@@ -582,7 +590,7 @@ export const seoLocal: ServicePageData = {
     },
     {
       q: "¿Eres una agencia de SEO local?",
-      a: "No. Soy una profesional independiente, desarrolladora web freelance en Sevilla. Hablas directamente con la persona que hace el trabajo.",
+      a: "No, soy consultora SEO y desarrolladora web freelance. El posicionamiento web en Sevilla de tu negocio lo hago yo misma: hablas directamente con la persona que hace el trabajo.",
     },
   ],
   cta: {
@@ -639,14 +647,14 @@ export const tiendaOnline: ServicePageData = {
   slug: "/tienda-online-sevilla/",
   breadcrumbName: "Tienda online en Sevilla",
   seo: {
-    title: "Tienda online en Sevilla | Ecommerce con pasarela de pago",
+    title: "Diseño de tienda online en Sevilla | Pasarela de pago propia",
     description:
-      "Creo tiendas online en Sevilla con pasarela de pago propia, sin comisión de marketplace. Presupuesto cerrado según tu número de productos y necesidades.",
+      "Diseño y creo tiendas online para negocios de Sevilla, con pasarela de pago propia y sin comisión de marketplace. Presupuesto cerrado según tu catálogo.",
   },
   hero: {
-    h1: "Tienda online en Sevilla para negocios que quieren vender, no solo tener una web",
+    h1: "Diseño de tienda online en Sevilla para negocios que quieren vender",
     subtitle:
-      "Una tienda online no es una web más: necesitas pasarela de pago, gestión de productos y stock, y que te encuentren cuando alguien busca lo que vendes. Te la construyo a medida, sin comisión de marketplace y con precio cerrado antes de empezar.",
+      "Si tienes un negocio en Sevilla y quieres vender por internet con una tienda online propia, la diseño y la construyo a medida: pasarela de pago, gestión de productos y stock, sin comisión de marketplace y con precio cerrado antes de empezar.",
     secondaryCta: {
       label: "Ver cómo se presupuesta",
       href: "#precios",

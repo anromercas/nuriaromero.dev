@@ -20,7 +20,7 @@ const headers = await read("public/_headers", "security headers")
 const measurement = await read("docs/seo-audit/measurement-seo.md", "measurement protocol")
 const task = await read("docs/seo-audit/full-audit-2026-09-21/tasks/14-medicion-seo.md", "SEO-14 evidence")
 
-expect(packageJson.includes('"check:seo-14": "npm run build && node scripts/check-seo-14.mjs"'), "SEO-14: package.json must expose the focused checker")
+expect(packageJson.includes('"check:seo-14": "pnpm build && node scripts/check-seo-14.mjs"'), "SEO-14: package.json must expose the focused checker")
 expect(/consent['"]?, ['"]default['"]/.test(consent), "SEO-14: analytics must establish denied consent defaults")
 expect(consent.includes("trackEvent") && consent.includes("ALLOWED_EVENTS"), "SEO-14: event names must be allowlisted")
 expect(consentComponent.includes("PUBLIC_GA4_MEASUREMENT_ID"), "SEO-14: the measurement ID must support deployment configuration")
