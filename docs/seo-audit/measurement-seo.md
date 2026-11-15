@@ -89,6 +89,35 @@ Otras URLs con impresiones: `/aviso-legal/` (9), `/servicios/automatizaciones/` 
 
 **URLs antiguas `/servicios/*`:** en producción todas responden 301 a su ruta nueva (comprobado con `curl` el 2026-11-14). En la inspección de URLs, Google aún muestra estados de rastreos anteriores a la redirección: `/servicios/diseno-web-sevilla/` "Página con redirección"; `/servicios/desarrollo-software-medida/`, `/servicios/automatizaciones/`, `/servicios/inteligencia-artificial/` y `/servicios/` "Rastreada: actualmente sin indexar" (últimos rastreos entre 2026-08-19 y 2026-10-13). Ninguna está indexada. Revisar de nuevo en la próxima captura.
 
+## Línea base 2026-11-15 (verificación de GA4)
+
+Fuente: navegador automatizado (Chromium de Playwright, perfil limpio por prueba) contra `https://nuriaromero.dev/` y contra `pnpm preview` de la rama `feat/NRD-17-measurement-baseline` en `127.0.0.1`, con el mismo ID de medición `G-NCV98R3HW7`; registro de red del navegador (peticiones a `googletagmanager.com` y `google-analytics.com`).
+Fecha de captura: 2026-11-15
+
+**Producción, tras carga completa de `/` (el arreglo NRD-67 está publicado desde la promoción del 2026-11-15):**
+
+| Estado | Resultado observado |
+| --- | --- |
+| Rechazar | Ninguna petición a `googletagmanager.com` ni a `google-analytics.com`. |
+| Aceptar (estado limpio) | Carga `www.googletagmanager.com/gtag/js`; `POST region1.google-analytics.com/g/collect` con `en=page_view` responde 204. |
+| Aceptar y revocar desde el pie (`#cookie-settings`, desmarcar, guardar) | Tras revocar no sale ninguna petición más; al recargar con la preferencia guardada como rechazada no hay ninguna petición a Google. |
+
+**Eventos de conversión (build de la rama, no en producción todavía):** el cableado de NRD-82 llega a producción con la próxima promoción de `develop` a `main`. Hasta entonces se verificó con `pnpm preview` en localhost enviando a la propiedad real. **Eventos de prueba (2026-11-15, origen `127.0.0.1`): excluir de la línea base.** Cada clic con consentimiento generó un único evento en `/g/collect` (204); sin consentimiento no salió ninguna petición.
+
+| Clic con consentimiento | `en` observado | Parámetros `ep.*` observados |
+| --- | --- | --- |
+| CTA de reserva (zona de contenido) | `contact_click` | `contact_method=booking`, `placement=nav` |
+| CTA de reserva (cabecera) | `contact_click` | `contact_method=booking`, `placement=nav` |
+| Teléfono del pie | `contact_click` | `contact_method=phone`, `placement=footer` |
+| Email del pie | `contact_click` | `contact_method=email`, `placement=footer` |
+| Botón flotante de WhatsApp | `whatsapp_click` | `placement=page` |
+| Formulario de contacto (respuesta simulada `ok` de Formspree) | `form_submit` | `placement=contact_form` |
+| Reserva tras navegar con View Transitions | `contact_click` | `contact_method=booking`, `placement=nav` (un solo evento) |
+
+Observaciones: no aparece ningún teléfono, email, `href` ni campo del formulario en `ep.*`. Un enlace interno no genera evento de conversión. La medición mejorada de GA4 envía además `scroll` y `form_start`; `form_start` incluye `form_id` y el identificador y nombre del primer campo (no sus valores), ver "Pendientes de la usuaria". `ep.page_path` no aparece en las peticiones observadas (el diseño lo esperaba); no se ha investigado el motivo y la ruta de página no se ha verificado como parámetro del evento.
+
+**Llegada a los informes de GA4:** `ga4_report` (Data API, propiedad `554924129`) devuelve sin filas el periodo 2026-11-12 a 2026-11-14, anterior a la publicación del arreglo; los informes estándar aún no incluyen el 2026-11-15. DebugView es una interfaz que el agente no abre: confirmación de la usuaria pendiente.
+
 ## Cadencia y registro de cambios
 
 - **Antes del cambio:** guardar fecha, commit/deploy, rutas afectadas, objetivo, hipótesis y baseline disponible.
