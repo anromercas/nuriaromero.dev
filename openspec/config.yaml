@@ -1,0 +1,43 @@
+schema: spec-driven
+
+# Project context: constraints an agent cannot infer by reading the code.
+context: |
+  Stack: static Astro 4 site with Tailwind 3 and TypeScript, pnpm, deployed on Netlify from main only.
+  Commands: unit tests `node --test tests/*.test.js`; typecheck `pnpm astro check`; build `pnpm build` (runs astro check); SEO checks `pnpm check:seo:dist` after a build; format only edited files with `pnpm format <file>`. No lint and no e2e runner.
+  Layers: one layer `app` (src/, public/, tests/, scripts/, docs/, CLAUDE.md, root config) owned by team-harness:developer. CI/deploy config (.github/workflows/, public/_headers, public/_redirects, .gitignore) belongs to infra.
+  Conventions: Conventional Commits in English without AI attribution, one subtask per commit; TDD is on (observed RED before implementation); branches {type}/{KEY}-{slug} cut from develop and merged into develop with a merge commit, never main.
+  Invariants (full list in .claude/harness/invariants.md):
+  - Fully static output: no SSR adapter, endpoints or netlify.toml; third-party APIs only at build time.
+  - Site facts live in src/data and are never duplicated in pages.
+  - SEO head only through src/components/seo/SEO.astro; JSON-LD only through Schema.astro and src/lib/schema.ts.
+  - Every page uses a layout from src/layouts; only Layout.astro writes <html>/<head>.
+  - No public URL removed or renamed without a 301 in public/_redirects; one H1 per page; trailing-slash internal links.
+  - Sitemap, robots and llms.txt stay consistent; check-seo scripts keep passing.
+  - No promised rankings, no invented testimonials, figures or clients.
+  - No secrets in the repo or client bundles; CSP in public/_headers; no inline scripts; analytics only after consent.
+  - Site copy, metadata and structured data text in Spanish; identifiers, comments and commits in English.
+  - The site is dark-only (<html class="dark"> fixed in Layout.astro); real-browser checks cover menu, consent, form states, 375 px layout and focus.
+  - Radical changes (new runtime dependency, new external service, removing or renaming a public page, price changes, legal pages) need the user.
+  Write all artifacts in en.
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always state what is out of scope
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing
