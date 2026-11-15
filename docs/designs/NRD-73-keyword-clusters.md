@@ -129,6 +129,6 @@ None. QA (docs path, `qaExemptPaths`) is not required; the PR reviewer spot-chec
 ## Tasks
 
 - [x] 1.1 [NRD-90 app] Collect every reused figure per service with source and date, list the gaps and write the call plan (30 calls or less) in `docs/seo-audit/keyword-clusters-2026-11.md`; tests: unit suite green.
-- [ ] 1.2 [NRD-91 app] Group A (SEO local, GEO, diseño web): gap calls, Seville SERP intent reads, query tables and clusters with owners and ownership flags; tests: unit suite green.
+- [x] 1.2 [NRD-91 app] Group A (SEO local, GEO, diseño web): gap calls, Seville SERP intent reads, query tables and clusters with owners and ownership flags; tests: unit suite green.
 - [ ] 1.3 [NRD-92 app] Group B (tienda online, software a medida, IA / automatizaciones): same as 1.2; tests: unit suite green.
 - [ ] 1.4 [NRD-93 app] Cross-service cluster-owner map, ownership conflicts, open questions for NRD-74, gaps, call ledger and README index row; tests: unit suite green.
