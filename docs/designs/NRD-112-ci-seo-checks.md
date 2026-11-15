@@ -120,7 +120,7 @@ None. No schema, storage, settings, env vars or secrets.
 
 ## Test plan (TDD order)
 
-1. Task 1.1, `tests/package-scripts.test.js` (RED: keys missing): `check:seo:dist` equals the `checkNumbers` list mapped to `node scripts/check-seo-NN.mjs` and joined with ` && `; `check:seo` equals `pnpm build && pnpm check:seo:dist`. Then `package.json` (GREEN). Then `pnpm build && pnpm check:seo:dist` locally (exit 0), and one local negative run: temporarily rename `dist/llms.txt`, confirm a non-zero exit, restore it.
+1. Task 1.1, `tests/package-scripts.test.js` (RED: keys missing): `check:seo:dist` equals the `checkNumbers` list mapped to `node scripts/check-seo-NN.mjs` and joined with `&&`; `check:seo` equals `pnpm build && pnpm check:seo:dist`. Then `package.json` (GREEN). Then `pnpm build && pnpm check:seo:dist` locally (exit 0), and one local negative run: temporarily rename `dist/llms.txt`, confirm a non-zero exit, restore it.
 2. Task 1.2, `ci.yml`: existing `tests/ci-workflow.test.js` stays green (new step after all markers).
 3. Task 1.3, `tests/ci-workflow.test.js`: add the marker `'pnpm check:seo:dist'` after `'pnpm build'` and a test that `run: pnpm check:seo:dist` appears once, after `run: pnpm build`. RED proof: delete the step locally, run the test (fails), restore (passes); never commit the deletion.
 4. Full suite `node --test tests/*.test.js` green after each task.
@@ -146,6 +146,6 @@ No browser checks (no UI change). QA verifies on GitHub:
 
 ## Tasks
 
-- [ ] 1.1 [NRD-130 app] Add `check:seo:dist` and `check:seo` to `package.json` and document them in `CLAUDE.md`; tests: `tests/package-scripts.test.js` aggregate test first (RED), then the scripts (GREEN), then `pnpm build && pnpm check:seo:dist`.
+- [x] 1.1 [NRD-130 app] Add `check:seo:dist` and `check:seo` to `package.json` and document them in `CLAUDE.md`; tests: `tests/package-scripts.test.js` aggregate test first (RED), then the scripts (GREEN), then `pnpm build && pnpm check:seo:dist`.
 - [ ] 1.2 [NRD-131 infra] Add the "SEO build checks" step (`pnpm check:seo:dist`) after `pnpm build` in `.github/workflows/ci.yml`; tests: existing `tests/ci-workflow.test.js` stays green.
 - [ ] 1.3 [NRD-132 app] Pin the step in `tests/ci-workflow.test.js` (order marker and placement test); tests: RED with the step deleted locally, GREEN restored.
