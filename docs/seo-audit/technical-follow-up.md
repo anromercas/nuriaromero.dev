@@ -40,3 +40,40 @@
 - Performance data source: CrUX API (2026-09-18, 404 — insufficient traffic) and authenticated PSI API (2026-09-19, mobile, 2 runs on `/` and `/portfolio/`) — see acceptance criteria above for figures.
 - Indexing/traffic data source: Google Search Console (nuriaromero.dev domain property), read on 2026-09-19 via the site owner's own logged-in session — see acceptance criteria above for figures. GA4 was not checked this session.
 - The 20-URL sitemap count is only a sitemap inventory snapshot; it does not establish index coverage.
+
+## Indexación de páginas en foco (2026-11-15, NRD-98)
+
+Diagnóstico de por qué `/tienda-online-sevilla/` y `/inteligencia-artificial/` no están en el índice de Google. Solo lectura: no se ha cambiado código ni se ha escrito nada en Search Console. Ningún estado de indexación se infiere: cada línea cita su fuente y fecha.
+
+### Método y fecha
+
+- Fecha de captura: 2026-11-15, todas las comprobaciones.
+- URL Inspection y sitemaps de Search Console: `gsc_inspect` y `gsc_query sitemaps` con la cuenta de servicio de solo lectura, propiedad `sc-domain:nuriaromero.dev`.
+- Producción (`https://nuriaromero.dev`, se construye desde `main`): `curl -sS` y `curl -sSIL` sobre `robots.txt`, `sitemap-index.xml`, `sitemap-0.xml`, las cabeceras y el HTML de cada URL.
+- Enlaces internos: `pnpm build` nuevo sobre `develop` (`5abc00f` más el diseño de NRD-98, 24 páginas) y `parsePage` de `scripts/lib/seo-inventory.mjs` (misma regla que el inventario: enlaces dentro de `<main>`, sin autoenlaces), ejecutado con `node -e`. Aparte, un recuento de `href` en bruto para detectar enlaces sin barra final, que `parsePage` normaliza y por tanto oculta.
+- Producción y `develop` coinciden en el conjunto de URLs del sitemap (24 en ambos).
+- Las salidas en bruto de GSC y curl no se guardan en el repositorio.
+
+### `/tienda-online-sevilla/`
+
+1. **URL Inspection (2026-11-15, `gsc_inspect`)**: cobertura "URL is unknown to Google"; estado de indexación `INDEXING_STATE_UNSPECIFIED`; último rastreo: ninguno; rastreada como: ninguno; canónica elegida por Google y declarada: ninguna (sin datos); sitemaps que la referencian: N/D (la API de inspección no los devuelve); URLs de referencia: ninguna. Nota: el inventario `inventory-2026-11.md` (misma fecha) la recogía como "Discovered - currently not indexed"; la consulta de esta sesión devuelve "URL is unknown to Google". Se registran ambas lecturas tal cual, sin decidir cuál prevalece.
+2. **robots (2026-11-15, producción)**: `robots.txt` tiene `User-agent: *` con `Allow: /` y ninguna regla `Disallow`; la ruta está permitida. Cabecera `X-Robots-Tag`: ausente. `<meta name="robots">` en el HTML: ausente. Origen: `src/components/seo/SEO.astro:19,28` (`noindex` es opt-in y la página no lo pasa) y `astro.config.mjs:62` (`allow: '/'`).
+3. **Canónica (2026-11-15, producción)**: `<link rel="canonical" href="https://nuriaromero.dev/tienda-online-sevilla/">`, igual a la URL esperada (propia, con barra final).
+4. **Sitemap (2026-11-15)**: presente en `sitemap-0.xml` (vía `sitemap-index.xml`), sin `lastmod` (por diseño: solo posts del blog, `astro.config.mjs:50-57`). Estado en Search Console: `sitemap-index.xml` enviado el 2026-11-14T15:37Z, sin pendiente, 0 errores y 0 avisos, 24 URLs enviadas; `sitemap-0.xml` enviado el 2026-07-09T07:01Z (anterior a la creación de la página, 2026-09-21, commit `f084e16`), 0 errores, 24 URLs enviadas. La API no devuelve la fecha de última lectura por Google: N/D. Tampoco permite saber si el envío del 2026-11-14 fue el primero del índice.
+5. **HTTP (2026-11-15, producción, `curl -sSIL`)**: `/tienda-online-sevilla/` responde 200, URL final igual, 0 saltos. `/tienda-online-sevilla` responde 301 a `/tienda-online-sevilla/` y luego 200, 1 salto. `/servicios/tienda-online-sevilla` responde 404: la página se creó el 2026-09-21, después de la reestructuración `/servicios/` a raíz (2026-09-19), por lo que nunca existió bajo `/servicios/` y no necesita fila en `public/_redirects`.
+6. **Enlaces internos desde `<main>` (build de `develop`, 2026-11-15)**: 6 páginas de origen: `/blog/cuanto-cuesta-una-pagina-web-en-sevilla/`, `/blog/pagina-web-para-restaurantes-que-necesita/`, `/diseno-web-sevilla/`, `/`, `/web-para-comercios-sevilla/`, `/web-para-restaurantes-sevilla/`. Ningún enlace en bruto sin barra final hacia esta URL. Coincide con el inventario (6).
+7. **Render sin JS (2026-11-15, `curl` de producción)**: el HTML contiene el H1 "Diseño de tienda online en Sevilla para negocios que quieren vender" y el primer párrafo de `<main>` ("Si tienes un negocio en Sevilla y quieres vender por internet con una tienda online propia, la diseño y la construyo a medida..."). 2.094 palabras en `<main>`.
+
+**Conclusión del diagnóstico en el sitio: sin causa en el sitio.** Los siete controles pasan; el estado de Google es el registrado en el punto 1 y no se amplía con inferencias.
+
+### `/inteligencia-artificial/`
+
+1. **URL Inspection (2026-11-15, `gsc_inspect`)**: cobertura "URL is unknown to Google"; estado de indexación `INDEXING_STATE_UNSPECIFIED`; último rastreo: ninguno; rastreada como: ninguno; canónica elegida por Google y declarada: ninguna (sin datos); sitemaps que la referencian: N/D (la API de inspección no los devuelve); URLs de referencia: ninguna.
+2. **robots (2026-11-15, producción)**: ruta permitida por `User-agent: *` con `Allow: /`, sin `Disallow`. Cabecera `X-Robots-Tag`: ausente. `<meta name="robots">`: ausente. Origen: `src/components/seo/SEO.astro:19,28` y `astro.config.mjs:62`.
+3. **Canónica (2026-11-15, producción)**: `<link rel="canonical" href="https://nuriaromero.dev/inteligencia-artificial/">`, igual a la URL esperada (propia, con barra final).
+4. **Sitemap (2026-11-15)**: presente en `sitemap-0.xml` (vía `sitemap-index.xml`), sin `lastmod` (por diseño: solo posts del blog, `astro.config.mjs:50-57`). Estado en Search Console: el mismo que el de `/tienda-online-sevilla/` (índice enviado el 2026-11-14T15:37Z sin errores; `sitemap-0.xml` enviado el 2026-07-09T07:01Z, anterior a la página, primer commit 2026-09-19). La fecha de última lectura por Google: N/D.
+5. **HTTP (2026-11-15, producción, `curl -sSIL`)**: `/inteligencia-artificial/` responde 200, URL final igual, 0 saltos. `/inteligencia-artificial` responde 301 a `/inteligencia-artificial/` y luego 200, 1 salto. `/servicios/inteligencia-artificial` responde 301 a `/inteligencia-artificial/` (`public/_redirects:6`) y luego 200, 1 salto, sin cadena.
+6. **Enlaces internos desde `<main>` (build de `develop`, 2026-11-15)**: 3 páginas de origen: `/automatizaciones/`, `/desarrollo-software-medida/`, `/`. Ningún enlace en bruto sin barra final hacia esta URL. La navegación del `<header>` no cuenta (regla del inventario: solo `<main>`).
+7. **Render sin JS (2026-11-15, `curl` de producción)**: el HTML contiene el H1 "Inteligencia artificial aplicada a tu negocio" y el primer párrafo de `<main>` ("La IA ya no es cosa de grandes empresas. Un chatbot que responde a tus clientes a las 11 de la noche..."). 1.386 palabras en `<main>`.
+
+**Conclusión del diagnóstico en el sitio: sin causa en el sitio.** Los siete controles pasan; el estado de Google es el registrado en el punto 1.
