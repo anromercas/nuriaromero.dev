@@ -136,5 +136,5 @@ Copy-only change to one existing section of the home. No new component and no cl
 
 ## Tasks
 
-- [ ] 1.1 [NRD-148 app] Read the SERP of `experto seo sevilla`, record it and the SEO-1b decision in `docs/seo-audit/keyword-clusters-2026-11.md`; tests: none (docs).
+- [x] 1.1 [NRD-148 app] Read the SERP of `experto seo sevilla`, record it and the SEO-1b decision in `docs/seo-audit/keyword-clusters-2026-11.md`; tests: none (docs).
 - [ ] 1.2 [NRD-149 app] Reword the home `#proceso` H2 and add "experto SEO en Sevilla" to its paragraph; tests: rewritten `seo-meta-titles` home test and new `tests/home-seo-intent.test.js` first (RED), then `src/pages/index.astro`.
