@@ -46,12 +46,12 @@ La primera captura debe usar una ventana fija, fecha/hora, zona horaria, filtros
 
 | Área | KPI | Fuente | Ventana inicial | Frecuencia | Estado |
 | --- | --- | --- | --- | --- | --- |
-| Visibilidad | Clicks, impresiones, CTR, posición media | Search Console | 28 días antes de cada cambio | Semanal; comparativa mensual | Línea base 2026-11-14 (ver abajo) |
-| Cobertura | Páginas indexadas, excluidas y motivos | Search Console | Fecha de captura | Semanal tras cambios técnicos | Parcial 2026-11-14: sitemap y URLs `/servicios/` (ver abajo) |
-| Demanda | Consultas, páginas y dispositivos | Search Console | Misma ventana que visibilidad | Mensual | Línea base 2026-11-14 (ver abajo) |
+| Visibilidad | Clicks, impresiones, CTR, posición media | Search Console | 28 días antes de cada cambio | Semanal; comparativa mensual | Líneas base 2026-11-14 y 2026-11-15 (ver abajo) |
+| Cobertura | Páginas indexadas, excluidas y motivos | Search Console | Fecha de captura | Semanal tras cambios técnicos | Parcial 2026-11-15: sitemap y URLs `/servicios/` (ver abajo) |
+| Demanda | Consultas, páginas y dispositivos | Search Console | Misma ventana que visibilidad | Mensual | Líneas base 2026-11-14 y 2026-11-15 (ver abajo) |
 | Experiencia | Core Web Vitals: LCP, INP, CLS y disponibilidad de CrUX | CrUX / PSI | Fecha, URL y estrategia documentadas | Tras cambios de plantilla; mensual si hay campo | N/D: ejecución externa pendiente |
-| Adquisición | Usuarios/sesiones consentidas y landing pages | GA4 | 28 días antes/después | Mensual | Bloqueado: GA4 no recibe datos (bug NRD-17, ver abajo) |
-| Conversión | `contact_click`, `whatsapp_click`, `form_submit`, leads confirmados | GA4 + Formspree | Misma ventana y atribución declarada | Semanal para alertas; mensual | N/D: consentimiento y definición pendientes |
+| Adquisición | Usuarios/sesiones consentidas y landing pages | GA4 | 28 días antes/después | Mensual | GA4 recibe `page_view` desde la publicación de NRD-67 (2026-11-15); sin ventana de 28 días todavía (ver verificación) |
+| Conversión | `contact_click`, `whatsapp_click`, `form_submit`, leads confirmados | GA4 + Formspree | Misma ventana y atribución declarada | Semanal para alertas; mensual | N/D: eventos cableados en la rama, sin ventana en producción (ver abajo) |
 
 La posición media nunca se usa como KPI único. Los informes distinguen **dato observado**, **estimación**, **limitación** y **decisión**; no se atribuye causalidad a un deploy sin comparación temporal y contexto suficiente.
 
@@ -117,6 +117,43 @@ Fecha de captura: 2026-11-15
 Observaciones: no aparece ningún teléfono, email, `href` ni campo del formulario en `ep.*`. Un enlace interno no genera evento de conversión. La medición mejorada de GA4 envía además `scroll` y `form_start`; `form_start` incluye `form_id` y el identificador y nombre del primer campo (no sus valores), ver "Pendientes de la usuaria". `ep.page_path` no aparece en las peticiones observadas (el diseño lo esperaba); no se ha investigado el motivo y la ruta de página no se ha verificado como parámetro del evento.
 
 **Llegada a los informes de GA4:** `ga4_report` (Data API, propiedad `554924129`) devuelve sin filas el periodo 2026-11-12 a 2026-11-14, anterior a la publicación del arreglo; los informes estándar aún no incluyen el 2026-11-15. DebugView es una interfaz que el agente no abre: confirmación de la usuaria pendiente.
+
+## Línea base 2026-11-15 (Search Console, 28 días)
+
+Fuente: Search Console API (`gsc_query` y `gsc_inspect` de claude-seo con una cuenta de servicio de solo lectura), propiedad `sc-domain:nuriaromero.dev`, búsqueda web, todos los países y dispositivos. Posiciones de la captura de rangos de `seo/ranks/history.jsonl` (DataForSEO `serp_organic_live_advanced`, Sevilla, móvil, fecha 2026-11-13). Reservas de GA4 mediante la Data API (propiedad `554924129`).
+Fecha de captura: 2026-11-15
+
+Ventana pedida: 28 días. La API devolvió datos del 2026-10-18 al 2026-11-12 (26 días con datos; los últimos días aún no están consolidados). CTR en porcentaje. Las cifras difieren ligeramente de la línea base del 2026-11-14 porque la ventana se ha desplazado un día y los datos recientes se consolidan.
+
+**Total del sitio:** 1.155 impresiones, 2 clics, CTR 0,17 %, posición media 51,2.
+
+| Página | Clics | Impresiones | CTR | Posición media |
+| --- | --- | --- | --- | --- |
+| `/` | 0 | 29 | 0 % | 27,8 |
+| `/seo-local-sevilla/` | 0 | 457 | 0 % | 47,2 |
+| `/diseno-web-sevilla/` | 1 | 574 | 0,17 % | 61,0 |
+| `/tienda-online-sevilla/` | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana |
+| `/desarrollo-software-medida/` | 0 | 15 | 0 % | 27,1 |
+| `/automatizaciones/` | 0 | 40 | 0 % | 26,1 |
+| `/inteligencia-artificial/` | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana |
+
+**Consultas principales por página** (impresiones, posición media; ninguna con clics salvo que se indique):
+
+- `/`: "consultor seo sevilla" (3, pos. 6,3); "desarrollador de aplicaciones freelance sevilla contacto email -site:linkedin.com ..." (2, pos. 86,5); "núria romero" (1, pos. 11,0); "opiniones dean romero" (1, pos. 36,0). Solo hay cuatro consultas con impresiones.
+- `/seo-local-sevilla/`: "seo local sevilla" (85, pos. 30,8); "plan seo sevilla" (41, pos. 40,2); "presupuesto seo sevilla" (35, pos. 48,7); "anuncios de servicios locales google en sevilla" (25, pos. 60,0); "experto seo sevilla" (25, pos. 52,8).
+- `/diseno-web-sevilla/`: "diseñador web sevilla" (136, pos. 58,6); "diseño paginas web sevilla" (88, pos. 60,3); "aplicaciones web a medida sevilla" (61, pos. 71,3); "diseño de paginas web en sevilla" (56, pos. 56,3); "diseño de paginas web sevilla" (46, pos. 55,4).
+- `/tienda-online-sevilla/`: N/D: sin impresiones en la ventana.
+- `/desarrollo-software-medida/`: "apps a medida sevilla" (6, pos. 42,7); "desarrollo de software a medida sevilla" (1, pos. 34,0). Solo hay dos consultas con impresiones.
+- `/automatizaciones/`: "automatizacion procesos sevilla" (15, pos. 22,5); "automatización de procesos sevilla" (14, pos. 32,6); "automatización de procesos en sevilla" (4, pos. 11,5); "automatizaciones ia sevilla" (2, pos. 52,5).
+- `/inteligencia-artificial/`: N/D: sin impresiones en la ventana.
+
+**Clics en reservar (GA4, `contact_click` con `contact_method=booking`):** N/D: evento cableado en la rama el 2026-11-15 y sin publicar todavía en producción (llegará con la próxima promoción de `develop` a `main`), sin ventana completa. La historia de este evento empieza en la fecha de esa promoción. GA4 tampoco tiene datos de ninguna otra métrica en esta ventana (el informe de la Data API del 2026-10-18 al 2026-11-14 vuelve vacío).
+
+**Posiciones (captura de rangos):** fichero `seo/ranks/history.jsonl` (no versionado, vive en el checkout principal), captura del 2026-11-13, Sevilla, móvil, 11 palabras clave medidas (la configuración actual define 12: "diseño tienda online sevilla" no estaba en esa captura). Ninguna de las 11 muestra posición orgánica de nuriaromero.dev ni local pack en los resultados consultados (el informe de rangos lo denomina "not ranking"; la profundidad consultada no está registrada en el fichero, así que no se afirma "fuera del top 100"). No se han hecho llamadas nuevas de rangos. Palabras clave: "seo local sevilla", "agencia seo sevilla", "posicionamiento web sevilla", "consultor seo sevilla", "como aparecer en google maps", "posicionamiento en ia", "inteligencia artificial para empresas sevilla", "diseño web sevilla", "cuanto cuesta una pagina web en sevilla", "tienda online sevilla", "desarrollo de software a medida sevilla". Las posiciones medias de Search Console de arriba (p. ej. "seo local sevilla", pos. 30,8) no contradicen la captura: miden impresiones reales en todas las ubicaciones, no una consulta fija en Sevilla.
+
+**Sitemap:** `https://nuriaromero.dev/sitemap-index.xml` figura como enviado el 2026-11-14 (15:37 UTC), no pendiente, 24 URLs web enviadas, 0 errores, 0 avisos; `sitemap-0.xml` sigue enviado (2026-07-09, 24 URLs, 0 errores, 0 avisos). Cierra la acción pendiente de la línea base del 2026-11-14. La API no devuelve fecha de última lectura.
+
+**URLs antiguas `/servicios/*`:** en producción responden 301 el 2026-11-15 (`curl`): `/servicios/` a `/`, y `/servicios/diseno-web-sevilla/`, `/servicios/desarrollo-software-medida/`, `/servicios/automatizaciones/` y `/servicios/inteligencia-artificial/` a su ruta nueva. Inspección de URLs de Google el 2026-11-15, sin cambios frente al 2026-11-14: `/servicios/diseno-web-sevilla/` "Page with redirect" (último rastreo 2026-10-04); `/servicios/`, `/servicios/desarrollo-software-medida/`, `/servicios/automatizaciones/` y `/servicios/inteligencia-artificial/` "Crawled - currently not indexed" (últimos rastreos 2026-08-19, 2026-10-13, 2026-09-14 y 2026-08-21). Ninguna está indexada; Google aún no ha vuelto a rastrearlas tras la redirección.
 
 ## Cadencia y registro de cambios
 
