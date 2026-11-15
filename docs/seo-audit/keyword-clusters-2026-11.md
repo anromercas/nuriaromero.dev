@@ -315,6 +315,8 @@ Search Console context (S7): `diseñador web sevilla` 145 impressions at 58.4, `
 
 **Dato observado.** `diseño web sevilla` is 880 searches a month but gets 4 impressions at 60.8, while `diseñador web sevilla` gets 145 and `diseño paginas web sevilla` 94 (S7, S1). The SERP is price-led (S1, S3). **Inferencia:** the page earns impressions on variants of the head term, not on the head term; it is not known whether the variants have their own volume (gap) or a different SERP.
 
+**Dato observado (NRD-121, 2026-11-15), `desarrollo web sevilla`:** sin dato (the DataForSEO MCP tools `mcp__dataforseo__*` were not available in this run, so `serp/google/organic/live/advanced` was not called; 0 calls spent; the scheduled reports in `.claude/state/seo/` of the last 7 days hold no SERP for this query, only its keyword overview, 140 a month, KD 6, data 2026-09-17). **Inferencia:** none can be drawn about whether the SERP is web design (DW-1) or software (SW-1). NRD-121 ships its copy with the recorded DW-1 evidence (S3, S5 above) and adds no "desarrollo web" mention; the SERP read stays open for NRD-124.
+
 **Not clustered (recorded).** `aplicaciones web a medida sevilla` (67 impressions at 70.8 on `/diseno-web-sevilla/`) belongs to the software service; it is clustered in group B. `usabilidad móvil y diseño web adaptable sevilla` (24 at 97) has no volume, no SERP and a position beyond page 9; it is left unclustered. `agencia marketing digital sevilla` (320, competitor rank 10, S1) is an agency term outside the freelance positioning and the brief; it is recorded and not proposed.
 
 ## Grupo B: tienda online, software a medida, IA / automatizaciones
