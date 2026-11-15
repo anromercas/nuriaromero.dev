@@ -171,4 +171,4 @@ Each value is today's computed value with `<html class="dark">` and must match a
 
 - [x] 1.1 [NRD-154 app] Remove `dark:` from layouts, header, footer and `EntryContentStyles`; tests: create `tests/dark-variants.test.js` scoped to those six files first (RED).
 - [x] 1.2 [NRD-155 app] Remove `dark:` from service components, breadcrumbs, title section and internal links; tests: add the nine files to the guard first (RED).
-- [ ] 1.3 [NRD-156 app] Remove `dark:` from the contact form (component and `contact-form.js`) and the remaining shared components; tests: switch the guard to `src/layouts`, `src/components` and `contact-form.js` first (RED).
+- [x] 1.3 [NRD-156 app] Remove `dark:` from the contact form (component and `contact-form.js`) and the remaining shared components; tests: switch the guard to `src/layouts`, `src/components` and `contact-form.js` first (RED).
