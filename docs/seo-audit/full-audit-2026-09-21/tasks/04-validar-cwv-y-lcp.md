@@ -84,3 +84,53 @@ Ejecuciones individuales (LCP en s, 3 runs): `/` 2,33 / 2,08 / 2,08; `/seo-local
 ## Seguimientos (NRD-37)
 
 Todas las URLs en foco están dentro de los umbrales de laboratorio (LCP <= 2,5 s, CLS <= 0,1, TBT <= 200 ms) el 2026-11-14. No se requiere ningún issue de seguimiento ni ninguna optimización. Salvedad: INP de campo y p75 de LCP/CLS no evaluables hoy (sin datos de campo por cuota de PSI); conviene repetir la consulta de PSI/CrUX más adelante y compararla con la medición posterior a NRD-15.
+## Medición posterior a NRD-15 (NRD-50) 2026-11-15
+
+Solo medición: no se ha modificado código ni se ha aplicado ninguna optimización, y no se ha lanzado ningún despliegue. TDD no aplica (medición, sin cambio de comportamiento).
+
+### Comprobación previa (solo lectura)
+
+- Actualización de `origin/main` y `git merge-base --is-ancestor a892e8e origin/main` (merge del PR #11, NRD-15): correcto, `a892e8e` es ancestro de `origin/main`.
+- `curl -s https://nuriaromero.dev/` devuelve dentro de `<nav` el CTA de la barra con `aria-label="Reservar una primera sesión"` (etiqueta visible «Reservar»).
+- Commit de `origin/main`: `eab08c4` (merge del PR #27, promoción de `develop` del 2026-11-15). Baseline NRD-18 medido sobre `f4f6bfe`.
+
+### Historias incluidas desde el baseline de NRD-18 (`git log f4f6bfe..origin/main`, sin merges)
+
+Candidatas a influir en CLS/LCP de las dos URLs:
+
+- NRD-45 / NRD-15: CTA de reserva en la cabecera (objeto de esta medición).
+- NRD-49: contraste del botón de reserva en tema oscuro.
+- NRD-63, NRD-64, NRD-11: se retira el conmutador de tema huérfano y queda un único logo en la cabecera.
+- NRD-12: se elimina CSS muerto de `color-scheme` en el nav.
+- NRD-52 y NRD-51: texto sobre «posicionamiento web en Sevilla» en `/seo-local-sevilla/` (afecta al elemento LCP de esa página).
+- NRD-53, NRD-54: invitación a reseña tras el contacto y dirección de GBP en el pie.
+- NRD-65, NRD-66: reorientación de `/tienda-online-sevilla/` (fuera de las URLs medidas).
+- NRD-68: correcciones de consentimiento de analítica.
+- El resto son documentación, tests, checks SEO y configuración.
+
+### Condiciones
+
+- **Fecha:** 2026-11-15 (07:45-07:47 UTC).
+- **Herramienta:** Lighthouse CLI 12.8.2 (`npx -y lighthouse@12.8.2 <url> --form-factor=mobile --output=json --chrome-flags="--headless=new" --quiet`), modo navegación, perfil de Chrome limpio.
+- **Navegador:** Google Chrome 157.0.8103.51 (headless nuevo), misma máquina que NRD-18.
+- **Dispositivo / throttling:** móvil (Moto G Power por defecto), throttling simulado por defecto (RTT 150 ms, CPU x4, 1,6 Mbps).
+- **Muestra:** 3 ejecuciones por URL, secuenciales (alternando `/` y `/seo-local-sevilla/`); se registra la mediana.
+- **Desviaciones respecto a NRD-18:** ninguna conocida (mismo Chrome, misma versión de Lighthouse, mismos flags).
+- **Datos de campo:** no se consultan (fuera de alcance de NRD-50).
+- **Informes JSON:** guardados fuera del repo (no se commitean); se referencian en NRD-50.
+
+### Resultados (medianas de 3 ejecuciones, móvil)
+
+| URL                   | Fecha      | Herramienta y versión         | Dispositivo / throttling        | LCP     | CLS   | TBT  | Score | Elemento LCP                                                  | Baseline LCP / CLS | Δ LCP    | Δ CLS |
+| --------------------- | ---------- | ----------------------------- | ------------------------------- | ------- | ----- | ---- | ----- | ------------------------------------------------------------- | ------------------ | -------- | ----- |
+| `/`                   | 2026-11-15 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 1,885 s | 0,000 | 0 ms | 99    | `img` de perfil del hero (`section#home-hero img`)            | 2,08 s / 0,000     | -0,195 s | 0,000 |
+| `/seo-local-sevilla/` | 2026-11-15 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 1,483 s | 0,000 | 0 ms | 100   | `p.display` del hero (texto; era `p.hero-subtitle` en NRD-18) | 1,78 s / 0,000     | -0,297 s | 0,000 |
+
+Ejecuciones individuales (orden de ejecución 1 / 2 / 3):
+
+| URL                   | LCP (s)               | CLS                      | TBT (ms)  | Score           |
+| --------------------- | --------------------- | ------------------------ | --------- | --------------- |
+| `/`                   | 1,885 / 1,992 / 1,784 | 0,0000 / 0,0000 / 0,0000 | 0 / 0 / 0 | 99 / 99 / 100   |
+| `/seo-local-sevilla/` | 1,483 / 1,509 / 1,377 | 0,0000 / 0,0000 / 0,0048 | 0 / 0 / 0 | 100 / 100 / 100 |
+
+El único desplazamiento de diseño observado es el de la ejecución 3 de `/seo-local-sevilla/` (0,0048): `div.hero > div.hero-copy > p.display > em.accent` (0,0044) y `aside#analytics-consent` (0,0003). Ninguno es el CTA de la cabecera. En `/` no hay ningún desplazamiento en las tres ejecuciones.

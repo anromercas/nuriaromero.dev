@@ -102,5 +102,5 @@ The Lighthouse runs are the real-browser check. QA re-reads one URL's median fro
 
 ## Tasks
 
-- [ ] 1.1 [NRD-58 app] Gate on NRD-15 being live (read-only), then measure `/` and `/seo-local-sevilla/` with the NRD-18 method and append the dated section with deltas to audit task 04; tests: none (measurement only), no deploy.
+- [x] 1.1 [NRD-58 app] Gate on NRD-15 being live (read-only), then measure `/` and `/seo-local-sevilla/` with the NRD-18 method and append the dated section with deltas to audit task 04; tests: none (measurement only), no deploy.
 - [ ] 1.2 [NRD-59 app] Apply the verdict rule (CLS > 0.1 or LCP delta beyond the NRD-18 range, with 6-run confirmation): file a bug or record "No se requiere seguimiento"; tests: none.
