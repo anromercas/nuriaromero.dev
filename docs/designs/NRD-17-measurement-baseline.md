@@ -228,7 +228,7 @@ No storage, schema or settings change. GA4 receives the allowlisted events alrea
 
 ## Tasks
 
-- [ ] 1.1 [NRD-81 app] Let `findUnsourcedMetrics` take a pattern, add `KPI_METRIC_PATTERN`, use it in `check-seo-14` and restructure the 2026-11-14 baseline as a dated, sourced section; tests: `tests/register-metrics.test.js` first.
+- [x] 1.1 [NRD-81 app] Let `findUnsourcedMetrics` take a pattern, add `KPI_METRIC_PATTERN`, use it in `check-seo-14` and restructure the 2026-11-14 baseline as a dated, sourced section; tests: `tests/register-metrics.test.js` first.
 - [ ] 1.2 [NRD-82 app] Wire consent-gated conversion events (booking, phone, email, WhatsApp via a delegated listener; `form_submit` via `site:analytics`) and document `contact_method`; tests: `tests/analytics-consent.test.js` first.
 - [ ] 1.3 [NRD-83 app] Verify GA4 on the live site (accept, reject, revoke) and each event name at the collection endpoint; record it dated in `measurement-seo.md`; tests: check-seo-14 and the unit suite stay green.
 - [ ] 1.4 [NRD-84 app] Refresh the 28-day Search Console baseline for the home, `/seo-local-sevilla/` and the in-focus service pages, top queries per page, booking clicks or gap, position baseline from the 2026-11-13 rank capture, sitemap and `/servicios/*` recheck; tests: check-seo-14.

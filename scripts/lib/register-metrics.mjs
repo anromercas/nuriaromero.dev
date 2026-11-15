@@ -1,6 +1,9 @@
 export const METRIC_PATTERN =
   /(?:\b(?:DA|DR|authority score)\s*[:=]\s*\d|\b\d+\s+backlinks?\b|\b\d+\s+dominios?\s+referentes?\b)/gi;
 
+export const KPI_METRIC_PATTERN =
+  /(?:\b\d+\s+(?:clics|impresiones|conversiones|consultas|backlinks?)\b|posición\s*[:=]\s*\d)/gi;
+
 const DATED_BASELINE_HEADING = /^## Línea base (\d{4}-\d{2}-\d{2})/;
 const SOURCE_LINE = /^[ \t]*(?:[-*][ \t]*)?(?:\*\*)?Fuente:(?:\*\*)?[ \t]*\S/m;
 const CAPTURE_LINE =
@@ -18,9 +21,10 @@ function isRealDate(value) {
  * section ("## Línea base YYYY-MM-DD" with a non-empty "Fuente:" and a valid
  * "Fecha de captura: YYYY-MM-DD").
  * @param {string} markdown
+ * @param {RegExp} [pattern=METRIC_PATTERN] global regex
  * @returns {{ section: string, match: string }[]}
  */
-export function findUnsourcedMetrics(markdown) {
+export function findUnsourcedMetrics(markdown, pattern = METRIC_PATTERN) {
   const sections = markdown.split(/^(?=## )/m);
   const found = [];
 
@@ -36,7 +40,7 @@ export function findUnsourcedMetrics(markdown) {
       isRealDate(captureDate[1]);
     if (sourced) continue;
 
-    for (const match of body.matchAll(METRIC_PATTERN)) {
+    for (const match of body.matchAll(pattern)) {
       found.push({ section: heading, match: match[0] });
     }
   }

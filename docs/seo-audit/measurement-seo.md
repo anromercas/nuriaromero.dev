@@ -55,9 +55,12 @@ La primera captura debe usar una ventana fija, fecha/hora, zona horaria, filtros
 
 La posición media nunca se usa como KPI único. Los informes distinguen **dato observado**, **estimación**, **limitación** y **decisión**; no se atribuye causalidad a un deploy sin comparación temporal y contexto suficiente.
 
-### Línea base 2026-11-14 (NRD-17)
+## Línea base 2026-11-14 (Search Console)
 
-Fuente: Search Console API, propiedad `sc-domain:nuriaromero.dev`, búsqueda web, todos los países y dispositivos, consultada el 2026-11-14 con una cuenta de servicio de solo lectura. Ventana pedida: 28 días; la API devolvió datos del 2026-10-17 al 2026-11-11 (26 días con datos; los últimos días aún no están consolidados). CTR en porcentaje.
+Fuente: Search Console API, propiedad `sc-domain:nuriaromero.dev`, búsqueda web, todos los países y dispositivos, consultada con una cuenta de servicio de solo lectura.
+Fecha de captura: 2026-11-14
+
+Ventana pedida: 28 días; la API devolvió datos del 2026-10-17 al 2026-11-11 (26 días con datos; los últimos días aún no están consolidados). CTR en porcentaje.
 
 **Total del sitio:** 1.199 impresiones, 2 clics.
 
