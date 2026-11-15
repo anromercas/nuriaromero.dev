@@ -158,5 +158,5 @@ None (no UI change). QA spot-checks three rows (title, H1, word count) against t
 
 - [x] 1.1 [NRD-86 app] Build the dependency-free inventory helper and `pnpm seo:inventory` CLI over `dist/` and `src/data/seo-intents.ts`; tests: `tests/seo-inventory.test.js` first.
 - [x] 1.2 [NRD-87 app] Capture GSC page-query rows (28 days) and URL Inspection states, run the CLI and write the dated inventory table in `docs/seo-audit/inventory-2026-11.md`; tests: unit suite green.
-- [ ] 1.3 [NRD-88 app] Write the cannibalization section (queries with two or more URLs, figures, owner, keep/re-target/re-link); tests: unit suite green.
+- [x] 1.3 [NRD-88 app] Write the cannibalization section (queries with two or more URLs, figures, owner, keep/re-target/re-link); tests: unit suite green.
 - [ ] 1.4 [NRD-89 app] Write the thin, orphan and intent-mismatch sections and the phase-3 recommendations; tests: `check:seo-06:dist`, `check:seo-07:dist` green.

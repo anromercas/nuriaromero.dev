@@ -79,3 +79,35 @@ Query window 2026-10-16 to 2026-11-12 (web, Spain, all devices); coverage state 
 | 22  | /web-para-clinicas-sevilla/                           | Submitted and indexed              | 2026-09-13 | N/D: sin impresiones                                                                                                               |
 | 23  | /web-para-comercios-sevilla/                          | Crawled - currently not indexed    | 2026-08-02 | N/D: sin impresiones                                                                                                               |
 | 24  | /web-para-restaurantes-sevilla/                       | Submitted and indexed              | 2026-10-02 | sito romero (1, 20)                                                                                                                |
+
+## Cannibalization
+
+Method: `findCannibalization` (`scripts/lib/seo-inventory.mjs`) over the 69 page-query rows of the window 2026-10-16 to 2026-11-12 (web, Spain, all devices). It keeps queries (exact string) for which two or more distinct URLs have impressions. Variants of one head term that sit on the same URL (for example "diseño paginas web sevilla", "diseño de paginas web sevilla" and "diseño de páginas web sevilla" on `/diseno-web-sevilla/`) are not cannibalization. Positions are the average position Search Console reports for that page and query in the window; no clicks were reported on these rows.
+
+Result: 2 of the queries have two URLs. Owners come from `keywordOwners` (ADR 0012) and the PRD (home: "consultor SEO en Sevilla"; `/seo-local-sevilla/`: "SEO local Sevilla" and the NRD-33 head terms "agencia seo sevilla" and "posicionamiento web sevilla").
+
+| Query                                   | URL                    | Clicks | Impressions | Avg. position | Registered owner                                    |
+| --------------------------------------- | ---------------------- | ------ | ----------- | ------------- | --------------------------------------------------- |
+| seo para tiendas woocommerce en sevilla | `/diseno-web-sevilla/` | 0      | 17          | 58.3          | none (not in `keywordOwners`)                       |
+| seo para tiendas woocommerce en sevilla | `/seo-local-sevilla/`  | 0      | 13          | 46.3          | none                                                |
+| núria romero                            | `/sobre-mi/`           | 0      | 6           | 18.5          | none (brand query; `/sobre-mi/` is the person page) |
+| núria romero                            | `/`                    | 0      | 1           | 11            | none                                                |
+
+### Recommendations
+
+| Query                                   | Recommendation                         | Proposed owner        | Evidence and reasoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| --------------------------------------- | -------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| seo para tiendas woocommerce en sevilla | **Re-link** (propuesta, decide NRD-74) | `/seo-local-sevilla/` | 30 impressions in 28 days, both URLs beyond page 4 (positions 46.3 and 58.3), 0 clicks. The intent is an SEO service for online shops, which matches the SEO page, and it already ranks better there. Neither built page contains the word "WooCommerce" (only `/web-para-comercios-sevilla/` does), so Google is matching semantically, not on a targeted heading. Do not register an owner or re-target on this volume; if phase 3 wants the angle, route it to `/seo-local-sevilla/` and keep `/diseno-web-sevilla/` on web design. Re-check in the next window. |
+| núria romero                            | **Keep**                               | `/sobre-mi/`          | Brand/navigational query, not a competition between commercial pages. Home 1 impression (position 11), `/sobre-mi/` 6 impressions (position 18.5); the unaccented "nuria romero" appears only on `/sobre-mi/` (1 impression, position 7). For a brand name, positions 7 to 18 are low; this is an entity/brand-signal question for NRD-74, not a cannibalization fix.                                                                                                                                                                                               |
+
+### Cases that did not occur in this window
+
+- "seo local sevilla" (owner `/seo-local-sevilla/`): 76 impressions at position 32.5 on the owner and no impressions on `/`. The case "owner ranks behind another page" is not present, so no re-target is needed for the head terms.
+- "consultor seo sevilla" (owner `/`): 3 impressions at position 6.3, only on `/`.
+- "agencia seo sevilla", "posicionamiento web sevilla" (owner `/seo-local-sevilla/`) and "diseño tienda online sevilla" (owner `/tienda-online-sevilla/`) have no impressions on any URL in the window. The owner of the last one is `Discovered - currently not indexed` (see the coverage table).
+
+### Limits
+
+- Exact-query matching only; near-duplicates such as "seo local en sevilla" and "seo local sevilla" are both on `/seo-local-sevilla/`.
+- Anonymised queries are not exported by Search Console (the 2 clicks in the totals are not in the rows), so a cannibalization on low-volume queries can be hidden.
+- One 28-day window with 1,156 impressions in total: every conclusion is directional, not statistical.
