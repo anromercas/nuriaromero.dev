@@ -5,6 +5,7 @@ import {
   analyticsEventForLink,
   cookieDomainCandidates,
   createConsentController,
+  createConsentPanel,
   createGtag,
   placementFor,
 } from '../src/scripts/analytics-consent.js'
@@ -554,4 +555,123 @@ test('measurement doc no longer claims a clean revoke or carries superseded rows
   const doc = await readFile(new URL('../docs/seo-audit/measurement-seo.md', import.meta.url), 'utf8')
   assert.doesNotMatch(doc, /no sale ninguna petición más/)
   assert.doesNotMatch(doc, /superseded/)
+})
+
+function fakeDomWorld(ids) {
+  const build = (label, hidden) => {
+    const make = (id, extra = {}) => ({
+      id,
+      hidden: false,
+      checked: false,
+      attrs: {},
+      setAttribute(name, value) {
+        this.attrs[name] = value
+      },
+      closest(selector) {
+        return selector === `#${id}` ? this : null
+      },
+      ...extra,
+    })
+    const nodes = {}
+    for (const id of ids) nodes[id] = make(id)
+    nodes['analytics-consent'].hidden = hidden
+    nodes['consent-settings'].hidden = true
+    nodes['consent-save'].hidden = true
+    nodes['consent-customize'].attrs['aria-expanded'] = 'false'
+    nodes.label = label
+    return nodes
+  }
+  const world = { current: null }
+  world.doc = { getElementById: (id) => world.current[id] ?? null }
+  world.build = build
+  return world
+}
+
+const PANEL_IDS = [
+  'analytics-consent',
+  'consent-settings',
+  'analytics-toggle',
+  'consent-customize',
+  'consent-save',
+  'consent-accept',
+  'consent-reject',
+  'cookie-settings',
+]
+
+function panelSetup(stored) {
+  const store = new Map(stored ? [['site-analytics-consent', stored]] : [])
+  const calls = []
+  const controller = {
+    accept: () => calls.push('accept'),
+    reject: () => calls.push('reject'),
+  }
+  const world = fakeDomWorld(PANEL_IDS)
+  const a = world.build('A', true)
+  const b = world.build('B', true)
+  world.current = a
+  const storage = { getItem: (k) => store.get(k) ?? null, setItem: (k, v) => store.set(k, v) }
+  const panel = createConsentPanel({ doc: world.doc, storage, controller })
+  return { world, a, b, panel, calls }
+}
+
+test('panel: cookie-settings click after a DOM swap opens the new panel and leaves the old one', () => {
+  const { world, a, b, panel } = panelSetup('accepted')
+  world.current = b
+  panel.handleClick(b['cookie-settings'])
+  assert.equal(b['analytics-consent'].hidden, false)
+  assert.equal(b['consent-settings'].hidden, false)
+  assert.equal(b['consent-save'].hidden, false)
+  assert.equal(b['analytics-toggle'].checked, true)
+  assert.equal(a['analytics-consent'].hidden, true)
+})
+
+test('panel: reject after a DOM swap calls the controller and hides the new panel', () => {
+  const { world, b, panel, calls } = panelSetup('accepted')
+  world.current = b
+  b['analytics-consent'].hidden = false
+  panel.handleClick(b['consent-reject'])
+  assert.deepEqual(calls, ['reject'])
+  assert.equal(b['analytics-consent'].hidden, true)
+})
+
+test('panel: sync after a swap shows the panel when no choice is stored', () => {
+  const { world, b, panel } = panelSetup(null)
+  world.current = b
+  panel.sync()
+  assert.equal(b['analytics-consent'].hidden, false)
+  assert.equal(b['consent-settings'].hidden, true)
+  assert.equal(b['consent-save'].hidden, true)
+  assert.equal(b['consent-customize'].attrs['aria-expanded'], 'false')
+})
+
+test('panel: sync after a swap keeps it hidden with a stored choice and does not touch consent', () => {
+  const { world, b, panel, calls } = panelSetup('rejected')
+  world.current = b
+  panel.sync()
+  assert.equal(b['analytics-consent'].hidden, true)
+  assert.deepEqual(calls, [])
+})
+
+test('panel: customize toggles settings, save applies the toggle', () => {
+  const { world, b, panel, calls } = panelSetup(null)
+  world.current = b
+  panel.sync()
+  panel.handleClick(b['consent-customize'])
+  assert.equal(b['consent-settings'].hidden, false)
+  assert.equal(b['consent-save'].hidden, false)
+  assert.equal(b['consent-customize'].attrs['aria-expanded'], 'true')
+  b['analytics-toggle'].checked = true
+  panel.handleClick(b['consent-save'])
+  assert.deepEqual(calls, ['accept'])
+  assert.equal(b['analytics-consent'].hidden, true)
+  panel.handleClick(b['consent-accept'])
+  assert.deepEqual(calls, ['accept', 'accept'])
+})
+
+test('AnalyticsConsent.astro no longer caches panel elements and syncs on page-load', async () => {
+  const { readFile } = await import('node:fs/promises')
+  const source = await readFile(new URL('../src/components/AnalyticsConsent.astro', import.meta.url), 'utf8')
+  assert.doesNotMatch(source, /const panel = document\.querySelector/)
+  assert.match(source, /panel\.sync\(\)/)
+  assert.match(source, /panel\.handleClick\(/)
 })

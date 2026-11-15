@@ -1,6 +1,6 @@
 export const ANALYTICS_DOM_EVENT = 'site:analytics'
 
-const CONSENT_KEY = 'site-analytics-consent'
+export const CONSENT_KEY = 'site-analytics-consent'
 const ALLOWED_EVENTS = new Set([
   'contact_click',
   'form_submit',
@@ -133,4 +133,68 @@ export function createConsentController({ storage, gtag, appendScript, measureme
   }
 
   return { initialize, accept, reject, trackPageView, trackEvent }
+}
+
+export function createConsentPanel({ doc, storage, controller }) {
+  // Elements are resolved on every call: View Transitions replaces <body>,
+  // so any reference captured earlier would point at detached nodes.
+  const el = (id) => doc.getElementById(id)
+
+  function collapse() {
+    const settings = el('consent-settings')
+    const save = el('consent-save')
+    const customize = el('consent-customize')
+    if (settings) settings.hidden = true
+    if (save) save.hidden = true
+    if (customize) customize.setAttribute('aria-expanded', 'false')
+  }
+
+  function hide() {
+    const panel = el('analytics-consent')
+    if (panel) panel.hidden = true
+  }
+
+  function sync() {
+    const panel = el('analytics-consent')
+    if (!panel) return
+    collapse()
+    panel.hidden = Boolean(storage.getItem(CONSENT_KEY))
+  }
+
+  function handleClick(target) {
+    if (!target || typeof target.closest !== 'function') return
+    if (target.closest('#consent-accept')) {
+      controller.accept()
+      hide()
+    } else if (target.closest('#consent-reject')) {
+      controller.reject()
+      hide()
+    } else if (target.closest('#consent-customize')) {
+      const settings = el('consent-settings')
+      const save = el('consent-save')
+      const customize = el('consent-customize')
+      if (!settings || !save || !customize) return
+      settings.hidden = !settings.hidden
+      save.hidden = settings.hidden
+      customize.setAttribute('aria-expanded', String(!settings.hidden))
+    } else if (target.closest('#consent-save')) {
+      if (el('analytics-toggle')?.checked) controller.accept()
+      else controller.reject()
+      hide()
+    } else if (target.closest('#cookie-settings')) {
+      const panel = el('analytics-consent')
+      const settings = el('consent-settings')
+      const toggle = el('analytics-toggle')
+      const save = el('consent-save')
+      const customize = el('consent-customize')
+      if (!panel) return
+      panel.hidden = false
+      if (settings) settings.hidden = false
+      if (toggle) toggle.checked = storage.getItem(CONSENT_KEY) === 'accepted'
+      if (save) save.hidden = false
+      if (customize) customize.setAttribute('aria-expanded', 'true')
+    }
+  }
+
+  return { sync, handleClick }
 }
