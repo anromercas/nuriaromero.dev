@@ -12,8 +12,6 @@ test("internal markdown links in blog posts end in a trailing slash", () => {
     if (!name.endsWith(".md")) continue;
     for (const [, href] of read(dir + name).matchAll(/\]\((\/[^)\s]*)\)/g)) {
       const path = href.split("#")[0].split("?")[0];
-      // /contacto is exempt until G1b (NRD-114), same as TRAILING_SLASH_EXEMPT in check-seo-06.mjs.
-      if (path === "/contacto") continue;
       if (
         path.endsWith("/") ||
         /\.[a-z0-9]+$/i.test(path) ||
@@ -40,4 +38,22 @@ test("contact form privacy link ends in a trailing slash", () => {
     read("src/components/ContactForm.astro"),
     /href="\/privacidad\/"/,
   );
+});
+
+test("every internal-links path ends in a trailing slash", () => {
+  const offenders = [
+    ...read("src/data/internal-links.ts").matchAll(/path:\s*"([^"]+)"/g),
+  ]
+    .map(([, path]) => path)
+    .filter((path) => !path.endsWith("/"));
+  assert.deepEqual(offenders, []);
+});
+
+test("contact links in Hero, home and aviso legal end in a trailing slash", () => {
+  const offenders = [
+    "src/components/Hero.astro",
+    "src/pages/index.astro",
+    "src/pages/aviso-legal.astro",
+  ].filter((file) => /href="\/contacto"/.test(read(file)));
+  assert.deepEqual(offenders, []);
 });
