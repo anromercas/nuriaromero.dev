@@ -183,3 +183,31 @@ export function topQueriesByPage(rows, n = 3) {
     ]),
   );
 }
+
+function toPath(url, origin = "https://nuriaromero.dev") {
+  return withTrailingSlash(new URL(url, origin).pathname);
+}
+
+/** Adapter for `run.sh gsc_query --dimensions page,query --json`. */
+export function fromGscExport(json) {
+  return (json.rows ?? []).map((r) => ({
+    page: toPath(r.page ?? r.keys?.[0]),
+    query: r.query ?? r.keys?.[1],
+    clicks: r.clicks,
+    impressions: r.impressions,
+    position: r.position,
+  }));
+}
+
+/** Adapter for `run.sh gsc_inspect --batch ... --json`: path -> coverage state and last crawl date. */
+export function fromInspectExport(json) {
+  const map = new Map();
+  for (const item of json.results ?? []) {
+    if (!item.url) continue;
+    map.set(toPath(item.url), {
+      coverageState: item.index_status?.coverage_state ?? "N/D",
+      lastCrawl: item.index_status?.last_crawl_time?.slice(0, 10) ?? null,
+    });
+  }
+  return map;
+}

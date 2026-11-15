@@ -7,6 +7,8 @@ import {
   classifyPath,
   findCannibalization,
   topQueriesByPage,
+  fromGscExport,
+  fromInspectExport,
 } from "../scripts/lib/seo-inventory.mjs";
 
 const intents = await import(
@@ -159,4 +161,51 @@ test("topQueriesByPage returns the top N queries per page by impressions", () =>
     ["z", "w", "v"],
   );
   assert.equal(top.get("/a/").length, 1);
+});
+
+test("fromGscExport normalises page URLs and keeps the row shape", () => {
+  const rows = fromGscExport({
+    rows: [
+      {
+        keys: ["https://nuriaromero.dev/x", "q"],
+        page: "https://nuriaromero.dev/x",
+        query: "q",
+        clicks: 1,
+        impressions: 4,
+        position: 2.5,
+      },
+    ],
+  });
+  assert.deepEqual(rows, [
+    { page: "/x/", query: "q", clicks: 1, impressions: 4, position: 2.5 },
+  ]);
+  assert.deepEqual(fromGscExport({}), []);
+});
+
+test("fromInspectExport maps coverage state and last crawl by path", () => {
+  const map = fromInspectExport({
+    results: [
+      {
+        url: "https://nuriaromero.dev/a/",
+        index_status: {
+          coverage_state: "Submitted and indexed",
+          last_crawl_time: "2026-11-11T06:05:48Z",
+        },
+      },
+      {
+        url: "https://nuriaromero.dev/b/",
+        index_status: { coverage_state: "URL is unknown to Google" },
+      },
+      { url: "https://nuriaromero.dev/c/", error: "boom" },
+    ],
+  });
+  assert.deepEqual(map.get("/a/"), {
+    coverageState: "Submitted and indexed",
+    lastCrawl: "2026-11-11",
+  });
+  assert.deepEqual(map.get("/b/"), {
+    coverageState: "URL is unknown to Google",
+    lastCrawl: null,
+  });
+  assert.equal(map.get("/c/").coverageState, "N/D");
 });

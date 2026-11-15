@@ -11,6 +11,8 @@ import {
   countInboundLinks,
   classifyPath,
   topQueriesByPage,
+  fromGscExport,
+  fromInspectExport,
 } from "./lib/seo-inventory.mjs";
 
 const root = new URL("../", import.meta.url);
@@ -42,49 +44,14 @@ for (const path of paths) {
 }
 const inbound = countInboundLinks(pages);
 
-function pathOf(url) {
-  const u = new URL(url, origin);
-  return u.pathname.endsWith("/") ? u.pathname : `${u.pathname}/`;
-}
-
-/** Adapter for the JSON written by `run.sh gsc_query --dimensions page,query --json`. */
-export function fromGscExport(json) {
-  return (json.rows ?? []).map((r) => ({
-    page: pathOf(r.page ?? r.keys?.[0]),
-    query: r.query ?? r.keys?.[1],
-    clicks: r.clicks,
-    impressions: r.impressions,
-    position: r.position,
-  }));
-}
-
 const gscFile = arg("--gsc");
 const gscJson = gscFile ? JSON.parse(readFileSync(gscFile, "utf8")) : null;
 const gscRows = gscJson ? fromGscExport(gscJson) : null;
 const top = gscRows ? topQueriesByPage(gscRows, 3) : null;
 
-// gsc_inspect --batch output: { results: [{ url, ... coverage ... }] }; keys read leniently.
-function coverageStates(json) {
-  const list = Array.isArray(json)
-    ? json
-    : (json.results ?? json.inspections ?? []);
-  const map = new Map();
-  for (const item of list) {
-    const url = item.url ?? item.inspectionUrl ?? item.inspected_url;
-    const state =
-      item.coverage_state ??
-      item.coverageState ??
-      item.indexStatusResult?.coverageState ??
-      item.inspectionResult?.indexStatusResult?.coverageState ??
-      item.verdict ??
-      "N/D";
-    if (url) map.set(pathOf(url), state);
-  }
-  return map;
-}
 const inspectFile = arg("--inspect");
 const coverage = inspectFile
-  ? coverageStates(JSON.parse(readFileSync(inspectFile, "utf8")))
+  ? fromInspectExport(JSON.parse(readFileSync(inspectFile, "utf8")))
   : null;
 
 const rows = paths.map((path) => {
@@ -108,7 +75,8 @@ const rows = paths.map((path) => {
     canonical: p.canonical,
     mainWordCount: p.mainWordCount,
     inbound: inbound.get(path) ?? 0,
-    coverage: coverage ? (coverage.get(path) ?? "N/D") : "N/D",
+    coverage: coverage?.get(path)?.coverageState ?? "N/D",
+    lastCrawl: coverage?.get(path)?.lastCrawl ?? null,
     topQueries: queries,
   };
 });
@@ -140,7 +108,7 @@ if (process.argv.includes("--json")) {
         r.canonical ?? "none",
         r.mainWordCount,
         r.inbound,
-        r.coverage,
+        r.lastCrawl ? `${r.coverage} (crawl ${r.lastCrawl})` : r.coverage,
         gscCell(r),
       ]
         .map(cell)
