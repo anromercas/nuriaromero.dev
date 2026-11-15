@@ -90,4 +90,4 @@ None: no rendered output changes.
 ## Tasks
 
 - [x] 1.1 [NRD-137 app] Add `scripts/lib/one-h1.mjs` (`countH1`); tests: `tests/one-h1.test.js` fixtures first (RED), then the helper (GREEN).
-- [ ] 1.2 [NRD-138 app] Fail `scripts/check-seo-02.mjs` for any built page without exactly one `<h1>`; tests: `node --test tests/*.test.js`, `pnpm build`, `check-seo-02` green plus one local negative run recorded.
+- [x] 1.2 [NRD-138 app] Fail `scripts/check-seo-02.mjs` for any built page without exactly one `<h1>`; tests: `node --test tests/*.test.js`, `pnpm build`, `check-seo-02` green plus one local negative run recorded.
