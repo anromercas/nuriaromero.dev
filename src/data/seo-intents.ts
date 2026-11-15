@@ -98,7 +98,7 @@ export const intentMatrix: SeoIntentRow[] = [
     cta: "Request a software scope and quote",
     titleSignal: "Desarrollo de software a medida en Sevilla",
     descriptionSignal: "aplicaciones web a medida",
-    h1Signal: "Software a medida para tu empresa en Sevilla",
+    h1Signal: "Desarrollo de software a medida en Sevilla",
     contentSignals: [
       "Así es el proceso de desarrollar tu aplicación a medida",
       "Cuánto cuesta el software a medida en Sevilla",

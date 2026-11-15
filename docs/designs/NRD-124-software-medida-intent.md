@@ -150,4 +150,4 @@ Copy-only change on `/desarrollo-software-medida/`. The page keeps the shared se
 ## Tasks
 
 - [x] 1.1 [NRD-152 app] Re-read the SERP of `aplicaciones web a medida sevilla` (standalone call) and record it; tests: none (docs).
-- [ ] 1.2 [NRD-153 app] H1 and description work `desarrollo de software a medida sevilla`; tests: new `tests/software-medida-intent.test.js` first (RED), then `services.ts` and the `intentMatrix` row.
+- [x] 1.2 [NRD-153 app] H1 and description work `desarrollo de software a medida sevilla`; tests: new `tests/software-medida-intent.test.js` first (RED), then `services.ts` and the `intentMatrix` row.
