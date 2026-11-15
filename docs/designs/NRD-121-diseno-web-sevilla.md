@@ -188,4 +188,4 @@ n/a: no interactive element changes. The "Ver precios" link and the booking butt
 ## Tasks
 
 - [x] 1.1 [NRD-146 app] Read the SERP of `desarrollo web sevilla` and record it in `docs/seo-audit/keyword-clusters-2026-11.md`; tests: none (docs), source, date and task id in the subtask comment.
-- [ ] 1.2 [NRD-147 app] Title, H1 and benefits H2 work `diseño web sevilla` and carry "diseñadora web"; tests: new `tests/diseno-web-sevilla-intent.test.js` and the `seo-meta-titles` pin first (RED), then `services.ts` and the `intentMatrix` row.
+- [x] 1.2 [NRD-147 app] Title, H1 and benefits H2 work `diseño web sevilla` and carry "diseñadora web"; tests: new `tests/diseno-web-sevilla-intent.test.js` and the `seo-meta-titles` pin first (RED), then `services.ts` and the `intentMatrix` row.

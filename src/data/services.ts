@@ -15,12 +15,12 @@ export const disenoWeb: ServicePageData = {
   slug: "/diseno-web-sevilla/",
   breadcrumbName: "Diseño web en Sevilla",
   seo: {
-    title: "Diseño web en Sevilla | Precio cerrado desde 149 €",
+    title: "Diseño web Sevilla | Diseñadora web, precio cerrado desde 149 €",
     description:
       "Diseño páginas web en Sevilla con más de 10 años de experiencia: rápidas, con SEO local y precio cerrado. Web completa desde 399 €, landing desde 149 €.",
   },
   hero: {
-    h1: "Diseño web en Sevilla para negocios que quieren clientes, no solo una web bonita",
+    h1: "Diseño web Sevilla para negocios que quieren clientes, no solo una web bonita",
     subtitle:
       "Tu web trabaja 24 horas y es lo primero que ve un cliente antes de decidirse. Si buscan lo que ofreces en Sevilla, que te encuentren a ti.",
     secondaryCta: {
@@ -29,7 +29,7 @@ export const disenoWeb: ServicePageData = {
     },
   },
   sectionTitles: {
-    benefits: "Diseño web en Sevilla hecho por una programadora, no con plantillas",
+    benefits: "Diseñadora web en Sevilla que programa tu página, sin plantillas",
     process: "Así es el proceso de crear tu página web",
     pricing: "Precio de una página web en Sevilla: desde 149 €",
     faq: "Preguntas frecuentes sobre diseño web en Sevilla",
