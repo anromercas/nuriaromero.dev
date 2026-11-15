@@ -35,7 +35,14 @@
 </aside>
 
 <script>
-  import { createConsentController, createGtag } from "../scripts/analytics-consent.js"
+  import {
+    ANALYTICS_DOM_EVENT,
+    analyticsEventForLink,
+    createConsentController,
+    createGtag,
+    placementFor,
+  } from "../scripts/analytics-consent.js"
+  import { bookingUrl } from "@/data/site"
 
   const configuredMeasurementId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID
   const measurementId = configuredMeasurementId || "G-NCV98R3HW7"
@@ -90,6 +97,20 @@
       save.hidden = false
       customize.setAttribute("aria-expanded", "true")
     }
+  })
+  document.addEventListener("click", (event) => {
+    const link = (event.target as HTMLElement).closest<HTMLAnchorElement>("a[href]")
+    if (!link) return
+    const found = analyticsEventForLink({
+      href: link.getAttribute("href")!,
+      placement: placementFor(link),
+      bookingUrl,
+    })
+    if (found) controller.trackEvent(found.name, found.params)
+  })
+  document.addEventListener(ANALYTICS_DOM_EVENT, (event) => {
+    const { name, params } = (event as CustomEvent).detail ?? {}
+    controller.trackEvent(name, params)
   })
   document.addEventListener("astro:page-load", () => controller.trackPageView())
 </script>

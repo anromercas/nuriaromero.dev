@@ -87,6 +87,7 @@ function initContactForm() {
         setStatus('✅ ¡Mensaje enviado correctamente! Te responderé en breve.', 'success');
         setReviewInvite(true);
         form.reset();
+        document.dispatchEvent(new CustomEvent('site:analytics', { detail: { name: 'form_submit', params: { placement: 'contact_form' } } }));
       } else {
         let msg = `❌ Error ${res.status}`;
         try {

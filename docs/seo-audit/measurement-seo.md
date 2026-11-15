@@ -21,7 +21,7 @@ No se almacenan credenciales, tokens, cookies exportadas, datos personales, cons
 - Antes de cargar la librería de Google, se envía `analytics_storage: denied`, junto con `ad_storage`, `ad_user_data` y `ad_personalization` en `denied`.
 - GA4 solo se carga y solo recibe eventos después de aceptar la analítica. Rechazar guarda la preferencia y no activa eventos.
 - No se envían nombres, emails, teléfonos, textos de formularios, URLs con query strings, identificadores de usuario ni contenido de mensajes.
-- Los parámetros permitidos son contextuales y mínimos: `page_path`, `placement` y, cuando proceda, un `service_slug` no identificable.
+- Los parámetros permitidos son contextuales y mínimos: `page_path`, `placement`, `contact_method` (`booking`, `phone`, `email`) y, cuando proceda, un `service_slug` no identificable.
 - El formulario sigue siendo una conversión funcional de Formspree; su contenido no se replica en Analytics.
 - El consentimiento debe poder revocarse desde la interfaz de cookies. Cambiar la configuración de medición requiere revisar la política de cookies y privacidad.
 
@@ -32,13 +32,13 @@ Los nombres son lower_snake_case y no se crean eventos ad hoc desde componentes.
 | Evento | Cuándo | Parámetros permitidos | KPI relacionado |
 | --- | --- | --- | --- |
 | `page_view` | Cambio de ruta tras `astro:page-load` y consentimiento | `page_path` | Sesiones y páginas vistas |
-| `contact_click` | Click en un CTA de contacto | `placement`, `service_slug` | Intención de contacto |
+| `contact_click` | Click en el CTA de reserva, en un enlace `tel:` o en un enlace `mailto:` | `contact_method` (`booking`, `phone` o `email`), `placement`, `service_slug` | Intención de contacto |
 | `whatsapp_click` | Click en el CTA de WhatsApp | `placement` | Intención de contacto |
-| `form_submit` | Respuesta exitosa de Formspree | `placement` | Lead enviado |
+| `form_submit` | Respuesta exitosa de Formspree | `placement` (`contact_form`) | Lead enviado |
 | `form_error` | Error de validación, red o proveedor | `placement`, `error_type` genérico | Salud del formulario |
 | `generate_lead` | Solo si se decide usar una conversión GA4 separada | `placement`, `service_slug` | Lead atribuido |
 
-`form_submit` y `generate_lead` no deben dispararse juntos para el mismo envío salvo que se documente explícitamente la deduplicación en GA4. La implementación local mantiene la lista de eventos permitidos en `src/scripts/analytics-consent.js`; el cableado de cada CTA se incorporará únicamente cuando exista una necesidad de atribución aprobada.
+`form_submit` y `generate_lead` no deben dispararse juntos para el mismo envío salvo que se documente explícitamente la deduplicación en GA4. La implementación local mantiene la lista de eventos permitidos en `src/scripts/analytics-consent.js`; el cableado (NRD-82) es un único listener delegado en `AnalyticsConsent.astro` que traduce los enlaces de reserva, `tel:`, `mailto:` y `https://wa.me/` a estos eventos, más un evento DOM `site:analytics` que emite el formulario al enviarse correctamente. `placement` es el landmark más cercano del enlace (`header`, `nav`, `main`, `footer`, `aside`) o `page`. Nunca se envían el teléfono, el email, el `href` ni campos del formulario.
 
 ## KPIs y línea base
 

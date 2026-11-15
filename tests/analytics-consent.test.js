@@ -1,6 +1,12 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { createConsentController, createGtag } from '../src/scripts/analytics-consent.js'
+import {
+  ANALYTICS_DOM_EVENT,
+  analyticsEventForLink,
+  createConsentController,
+  createGtag,
+  placementFor,
+} from '../src/scripts/analytics-consent.js'
 
 const tag = (value) => Object.prototype.toString.call(value)
 
@@ -212,3 +218,178 @@ test('every import.meta.env variable read in src is declared in env.d.ts', async
     assert.match(declared, new RegExp(`readonly ${name}\\??: `), `${name} is not declared in src/env.d.ts`)
   }
 })
+
+const BOOKING =
+  "https://calendar.google.com/calendar/appointments/schedules/abc?gv=true";
+
+test("analyticsEventForLink maps the booking URL to contact_click", () => {
+  assert.deepEqual(
+    analyticsEventForLink({
+      href: BOOKING,
+      placement: "main",
+      bookingUrl: BOOKING,
+    }),
+    {
+      name: "contact_click",
+      params: { contact_method: "booking", placement: "main" },
+    },
+  );
+});
+
+test("analyticsEventForLink returns null for a booking URL with a different query", () => {
+  assert.equal(
+    analyticsEventForLink({
+      href: `${BOOKING}&x=1`,
+      placement: "main",
+      bookingUrl: BOOKING,
+    }),
+    null,
+  );
+});
+
+test("analyticsEventForLink maps tel: and mailto: without sending the value", () => {
+  const phone = analyticsEventForLink({
+    href: "tel:+34600000000",
+    placement: "footer",
+    bookingUrl: BOOKING,
+  });
+  assert.deepEqual(phone, {
+    name: "contact_click",
+    params: { contact_method: "phone", placement: "footer" },
+  });
+  const email = analyticsEventForLink({
+    href: "mailto:hola@example.com",
+    placement: "main",
+    bookingUrl: BOOKING,
+  });
+  assert.deepEqual(email, {
+    name: "contact_click",
+    params: { contact_method: "email", placement: "main" },
+  });
+  assert.doesNotMatch(JSON.stringify([phone, email]), /600000000|example\.com/);
+});
+
+test("analyticsEventForLink maps wa.me links to whatsapp_click", () => {
+  assert.deepEqual(
+    analyticsEventForLink({
+      href: "https://wa.me/34600000000?text=hola",
+      placement: "page",
+      bookingUrl: BOOKING,
+    }),
+    { name: "whatsapp_click", params: { placement: "page" } },
+  );
+});
+
+test("analyticsEventForLink ignores internal and external unrelated links", () => {
+  assert.equal(
+    analyticsEventForLink({
+      href: "/seo-local-sevilla/",
+      placement: "nav",
+      bookingUrl: BOOKING,
+    }),
+    null,
+  );
+  assert.equal(
+    analyticsEventForLink({
+      href: "https://example.com/",
+      placement: "main",
+      bookingUrl: BOOKING,
+    }),
+    null,
+  );
+});
+
+test("placementFor returns the nearest landmark or page", () => {
+  const el = (landmark) => ({
+    closest: (selector) => {
+      assert.equal(selector, "header,nav,main,footer,aside");
+      return landmark ? { localName: landmark } : null;
+    },
+  });
+  assert.equal(placementFor(el("footer")), "footer");
+  assert.equal(placementFor(el("header")), "header");
+  assert.equal(placementFor(el(null)), "page");
+});
+
+test("conversion events are gated by consent and sent once after accept", () => {
+  withWindow(() => {
+    const { controller, target } = setupReal();
+    const events = () =>
+      target.dataLayer
+        .map((e) => Array.from(e))
+        .filter((a) => a[0] === "event" && a[1] === "contact_click");
+    controller.initialize();
+    controller.trackEvent("contact_click", {
+      contact_method: "booking",
+      placement: "main",
+    });
+    assert.equal(events().length, 0);
+    controller.accept();
+    controller.trackEvent("contact_click", {
+      contact_method: "booking",
+      placement: "main",
+    });
+    assert.equal(events().length, 1);
+    assert.deepEqual(events()[0][2], {
+      contact_method: "booking",
+      placement: "main",
+      page_path: "/",
+    });
+    controller.reject();
+    controller.trackEvent("contact_click", {
+      contact_method: "booking",
+      placement: "main",
+    });
+    assert.equal(events().length, 1);
+  });
+});
+
+test("every event name the mapper returns is allowlisted by trackEvent", () => {
+  withWindow(() => {
+    const links = [
+      "tel:+34600000000",
+      "mailto:a@b.es",
+      "https://wa.me/34600000000",
+      BOOKING,
+    ];
+    const { controller, target } = setupReal();
+    controller.initialize();
+    controller.accept();
+    for (const href of links) {
+      const found = analyticsEventForLink({
+        href,
+        placement: "main",
+        bookingUrl: BOOKING,
+      });
+      controller.trackEvent(found.name, found.params);
+    }
+    const names = target.dataLayer
+      .map((e) => Array.from(e))
+      .filter((a) => a[0] === "event" && a[1] !== "page_view")
+      .map((a) => a[1]);
+    assert.deepEqual(names, [
+      "contact_click",
+      "contact_click",
+      "whatsapp_click",
+      "contact_click",
+    ]);
+  });
+});
+
+test("contact form dispatches site:analytics and the consent component listens to it", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const form = await readFile(
+    new URL("../src/scripts/contact-form.js", import.meta.url),
+    "utf8",
+  );
+  assert.equal(ANALYTICS_DOM_EVENT, "site:analytics");
+  assert.match(form, /new CustomEvent\(['"]site:analytics['"]/);
+  assert.match(form, /name:\s*['"]form_submit['"]/);
+  assert.match(form, /placement:\s*['"]contact_form['"]/);
+  const component = await readFile(
+    new URL("../src/components/AnalyticsConsent.astro", import.meta.url),
+    "utf8",
+  );
+  assert.match(component, /addEventListener\(\s*ANALYTICS_DOM_EVENT/);
+  assert.match(component, /analyticsEventForLink/);
+});

@@ -1,3 +1,5 @@
+export const ANALYTICS_DOM_EVENT = 'site:analytics'
+
 const CONSENT_KEY = 'site-analytics-consent'
 const ALLOWED_EVENTS = new Set([
   'contact_click',
@@ -12,6 +14,18 @@ const DENIED_CONSENT = {
   ad_storage: 'denied',
   ad_user_data: 'denied',
   ad_personalization: 'denied',
+}
+
+export function placementFor(element) {
+  return element.closest('header,nav,main,footer,aside')?.localName ?? 'page'
+}
+
+export function analyticsEventForLink({ href, placement, bookingUrl }) {
+  if (href === bookingUrl) return { name: 'contact_click', params: { contact_method: 'booking', placement } }
+  if (href.startsWith('tel:')) return { name: 'contact_click', params: { contact_method: 'phone', placement } }
+  if (href.startsWith('mailto:')) return { name: 'contact_click', params: { contact_method: 'email', placement } }
+  if (href.startsWith('https://wa.me/')) return { name: 'whatsapp_click', params: { placement } }
+  return null
 }
 
 export function createGtag(target) {
