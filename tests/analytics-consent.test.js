@@ -783,3 +783,55 @@ test('layout reserves the consent offset: scroll-padding, body padding, WhatsApp
   assert.match(whatsapp, /bottom-\[calc\(var\(--consent-offset,0px\)\+1rem\)\]/)
   assert.match(whatsapp, /sm:bottom-\[calc\(var\(--consent-offset,0px\)\+1\.25rem\)\]/)
 })
+
+// NRD-71 regression: the floating WhatsApp button must clear the consent panel.
+// The bottom inset is parsed from the real WhatsAppButton.astro class so the test
+// breaks if the --consent-offset term is removed.
+async function whatsappSource() {
+  const { readFile } = await import('node:fs/promises')
+  return readFile(new URL('../src/components/WhatsAppButton.astro', import.meta.url), 'utf8')
+}
+
+// Resolves the unprefixed `bottom-[...]` class to px given the published offset.
+function buttonBottomPx(source, offset) {
+  const match = source.match(/(?<![\w:-])bottom-\[calc\((var\(--consent-offset,0px\)\+)?([\d.]+)rem\)\]/)
+  assert.ok(match, 'WhatsAppButton.astro has an unprefixed bottom-[calc(...)] class')
+  const usesOffset = match[1] !== undefined
+  return (usesOffset ? offset : 0) + Number(match[2]) * 16
+}
+
+function buttonRect(viewport, bottomPx, size = 48, right = 16) {
+  const bottom = viewport.height - bottomPx
+  const rightEdge = viewport.width - right
+  return { top: bottom - size, bottom, left: rightEdge - size, right: rightEdge, width: size, height: size }
+}
+
+const consentViewports = [
+  { name: '390x844 (QA geometry)', width: 390, height: 844, panelHeight: 212 },
+  { name: '360x800 at 35vh max height', width: 360, height: 800, panelHeight: 800 * 0.35 },
+  { name: '414x896 at 35vh max height', width: 414, height: 896, panelHeight: 896 * 0.35 },
+]
+
+for (const vp of consentViewports) {
+  test(`WhatsApp button clears the consent panel at ${vp.name}`, async () => {
+    const source = await whatsappSource()
+    const panel = {
+      top: vp.height - vp.panelHeight,
+      bottom: vp.height,
+      left: 9,
+      right: vp.width - 8,
+      height: vp.panelHeight,
+      width: vp.width - 17,
+    }
+    // Pre-fix behavior: no offset applied, the button sits on top of the panel.
+    assert.equal(isObscured(buttonRect(vp, 16), panel), true)
+    // Current class: the offset published by the panel is applied.
+    const offset = consentOffset(panel, vp.height)
+    const fixed = buttonRect(vp, buttonBottomPx(source, offset))
+    assert.equal(isObscured(fixed, panel), false)
+    assert.ok(fixed.bottom <= panel.top)
+    // The same geometry with the term stripped from the class must be obscured.
+    const mutated = source.replaceAll('var(--consent-offset,0px)+', '')
+    assert.equal(isObscured(buttonRect(vp, buttonBottomPx(mutated, offset)), panel), true)
+  })
+}
