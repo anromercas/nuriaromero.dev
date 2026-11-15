@@ -12,7 +12,7 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
-  { name: "Blog", url: "/blog" },
+  { name: "Blog", url: "/blog/" },
 ]
 ---
 
@@ -39,7 +39,7 @@ const breadcrumbs = [
           posts.map((post) => (
             <li>
               <a
-                href={`/blog/${post.slug}`}
+                href={`/blog/${post.slug}/`}
                 class="block rounded-xl border border-gray-300 bg-gray-100/50 p-6 transition hover:border-blue-500 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800/50 dark:hover:border-blue-500"
               >
                 <time
