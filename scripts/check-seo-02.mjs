@@ -1,6 +1,8 @@
 import { readdir, readFile } from "node:fs/promises"
 import path from "node:path"
 
+import { countH1 } from "./lib/one-h1.mjs"
+
 const distDir = path.resolve("dist")
 const pages = [
   { url: "/diseno-web-sevilla/", breadcrumbName: "Diseño web en Sevilla" },
@@ -167,6 +169,28 @@ for (const file of htmlFiles) {
   })
   const breadcrumbs = getSections(html, "nav").filter((section) => /aria-label\s*=\s*["']Miga de pan["']/i.test(section))
 
+  // NRD-118: every built page has exactly one <h1>.
+  const h1Count = countH1(html)
+  if (h1Count !== 1) {
+    addFailure(`${relativeFile}: expected exactly one <h1>, found ${h1Count}`)
+  }
+
+  // NRD-115: every BreadcrumbList item of every built page ends in "/", and
+  // the last item equals the page canonical.
+  const allBreadcrumbItems = parseBreadcrumbItems(html)
+  for (const item of allBreadcrumbItems) {
+    if (!item.endsWith("/")) {
+      addFailure(`${relativeFile}: BreadcrumbList item omits trailing slash (${item})`)
+    }
+  }
+  const canonicalHref = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']*)["']/i)?.[1]
+  if (allBreadcrumbItems.length > 0 && canonicalHref) {
+    const lastItem = allBreadcrumbItems[allBreadcrumbItems.length - 1]
+    if (lastItem !== canonicalHref) {
+      addFailure(`${relativeFile}: last BreadcrumbList item differs from canonical (${lastItem} vs ${canonicalHref})`)
+    }
+  }
+
   for (const { url: page } of pages) {
     const bareUrl = withoutSlash(page)
     if (hrefs.some((href) => isBareTargetUrl(href, bareUrl))) {
@@ -261,5 +285,5 @@ if (failures.length > 0) {
   for (const failure of failures) console.error(`- ${failure}`)
   process.exitCode = 1
 } else {
-  console.log(`SEO-02 check passed: scanned ${htmlFiles.length} HTML files; ${pages.length} canonical service/niche pages use trailing-slash internal links, breadcrumbs, schemas, and canonicals.`)
+  console.log(`SEO-02 check passed: scanned ${htmlFiles.length} HTML files; ${pages.length} canonical service/niche pages use trailing-slash internal links, breadcrumbs, schemas, and canonicals; every page has exactly one <h1>.`)
 }
