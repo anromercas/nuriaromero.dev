@@ -1,0 +1,129 @@
+---
+import "@fontsource/instrument-serif/400-italic.css"
+---
+
+<section id="agencia-o-consultora" class="agencia scroll-m-20" aria-labelledby="agencia-title">
+  <div class="agencia-intro">
+    <h2 id="agencia-title" class="kw">¿Agencia SEO en Sevilla o consultora?</h2>
+    <p class="display">Dos maneras de llevar <em>tu SEO local</em></p>
+  </div>
+
+  <div class="agencia-body">
+    <ul class="agencia-list">
+      <li>
+        <p>
+          <strong>Una agencia SEO suele repartir tu cuenta entre varias personas: quien vende, quien coordina y quien ejecuta.</strong>
+          Conmigo, como consultora SEO, hablas directamente con quien revisa tu ficha de Google y trabaja tu web.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Una agencia tiene más manos y puede llevar a la vez campañas, redes sociales y diseño.</strong>
+          Si lo que necesitas es que tu negocio se entienda bien en Google y Google Maps, una consultora que domina la ficha y la parte técnica de la web suele ser suficiente.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Elijas lo que elijas, pide por escrito qué incluye cada mes y cuánto cuesta.</strong>
+          Aquí lo tienes publicado: dos planes con su alcance, facturados mes a mes y sin promesas de posiciones.
+        </p>
+      </li>
+    </ul>
+    <p class="agencia-more"><a class="agencia-link" href="#precios">Ver los planes y precios</a></p>
+  </div>
+</section>
+
+<style>
+  .agencia {
+    display: grid;
+    gap: 0;
+    color: rgb(226 232 240);
+  }
+
+  .kw {
+    margin: 0 0 0.6rem;
+    color: rgb(203 213 225);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .display {
+    max-width: 20ch;
+    margin: 0 0 1rem;
+    color: white;
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  .display em {
+    color: rgb(125 211 252);
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.12em;
+    letter-spacing: -0.01em;
+  }
+
+  .agencia-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid rgb(51 65 85);
+  }
+
+  .agencia-list li {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgb(51 65 85);
+  }
+
+  .agencia-list p {
+    max-width: 65ch;
+    margin: 0;
+    color: rgb(203 213 225);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .agencia-list strong {
+    color: white;
+    font-weight: 600;
+  }
+
+  .agencia-more {
+    margin: 1.5rem 0 0;
+  }
+
+  .agencia-link {
+    color: rgb(226 232 240);
+    text-decoration: underline;
+    text-decoration-color: rgb(56 189 248 / 0.7);
+    text-underline-offset: 0.3em;
+    border-radius: 0.25rem;
+    transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .agencia-link:hover {
+    color: rgb(125 211 252);
+  }
+
+  .agencia-link:focus-visible {
+    outline: 2px solid rgb(56 189 248);
+    outline-offset: 4px;
+  }
+
+  @media (min-width: 1024px) {
+    .agencia {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .display {
+      max-width: 14ch;
+    }
+  }
+</style>

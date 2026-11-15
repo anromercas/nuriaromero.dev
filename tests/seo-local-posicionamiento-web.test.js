@@ -49,12 +49,65 @@ test("exactly one FAQ answer names the phrase together with consultora SEO", asy
   assert.match(matching[0], /consultora SEO/)
 })
 
-test("copy stays honest: no agencia outside the negated question, no promises", async () => {
+const selfDescription = [/\b(?:soy|somos) (?:una |tu )?agencia\b/i, /\bnuestra agencia\b/i]
+const componentTexts = async () => {
+  const dir = "src/components/seo-local"
+  const files = (await readdir(new URL(`../${dir}`, import.meta.url))).filter((name) => name.endsWith(".astro"))
+  return Promise.all(files.map(async (file) => ({ file, text: await source(`${dir}/${file}`) })))
+}
+
+test("copy stays honest: agencia only in the FAQ question and the agency section, no self-description, no promises", async () => {
   const data = await seoLocalData()
+  const components = await componentTexts()
   const withoutQuestion = data.replace("¿Eres una agencia de SEO local?", "")
+  const agency = components.find(({ file }) => file === "SeoLocalAgencia.astro")
 
   assert.doesNotMatch(withoutQuestion, /agencia/i)
+  assert.ok(agency, "SeoLocalAgencia.astro exists")
+  assert.match(agency.text, /consultora/)
+  for (const { file, text } of components) {
+    if (file !== "SeoLocalAgencia.astro") assert.doesNotMatch(text, /agencia/i, file)
+    for (const pattern of selfDescription) assert.doesNotMatch(text, pattern, file)
+    assert.doesNotMatch(text, positivePromise, file)
+  }
+  for (const pattern of selfDescription) assert.doesNotMatch(data, pattern)
   assert.doesNotMatch(data, positivePromise)
+  assert.match(data, /No, soy consultora SEO/)
+})
+
+test("exactly one H2 works agencia seo sevilla and it lives in SeoLocalAgencia.astro", async () => {
+  const components = await componentTexts()
+  const headings = []
+  for (const { file, text } of components) {
+    for (const [, inner] of text.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)) headings.push({ file, inner })
+  }
+  const matching = headings.filter(({ inner }) => worksTerm(inner, "agencia seo sevilla"))
+
+  assert.equal(matching.length, 1)
+  assert.equal(matching[0].file, "SeoLocalAgencia.astro")
+})
+
+test("the price lede is composed from tiers, with no price literal in the component", async () => {
+  const plans = await source("src/components/seo-local/SeoLocalPlans.astro")
+
+  assert.match(plans, /tiers\.find\(\(tier\) => tier\.name === "Local"\)/)
+  assert.match(plans, /tiers\.find\(\(tier\) => tier\.name === "Local Pro"\)/)
+  assert.match(plans, /class="plans-lede"/)
+  assert.match(plans, /\{local\.from\}/)
+  assert.match(plans, /\{pro\.from\}/)
+  assert.doesNotMatch(plans, /(?:300|500)\s*€/)
+  assert.ok(plans.indexOf('class="display"') < plans.indexOf('class="plans-lede"'))
+  assert.ok(plans.indexOf('class="plans-lede"') < plans.indexOf('class="plans-note"'))
+})
+
+test("the llms.txt entry of the page keeps both published prices and promises no position", async () => {
+  const llms = await source("public/llms.txt")
+  const line = llms.split("\n").find((entry) => entry.includes("https://nuriaromero.dev/seo-local-sevilla/"))
+
+  assert.ok(line, "llms.txt entry not found")
+  assert.match(line, /300 €\/mes \+ IVA/)
+  assert.match(line, /500 €\/mes \+ IVA/)
+  assert.doesNotMatch(line, positivePromise)
 })
 
 test("the home gains no new posicionamiento web mentions", async () => {
