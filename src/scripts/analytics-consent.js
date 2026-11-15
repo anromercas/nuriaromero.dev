@@ -9,6 +9,8 @@ const ALLOWED_EVENTS = new Set([
   'whatsapp_click',
 ])
 
+const ALLOWED_PARAMS = new Set(['contact_method', 'placement', 'service_slug', 'error_type'])
+
 const DENIED_CONSENT = {
   analytics_storage: 'denied',
   ad_storage: 'denied',
@@ -17,7 +19,12 @@ const DENIED_CONSENT = {
 }
 
 export function placementFor(element) {
-  return element.closest('header,nav,main,footer,aside')?.localName ?? 'page'
+  const landmarks = 'header,nav,main,footer,aside'
+  let outermost = element.closest(landmarks)
+  while (outermost?.parentElement?.closest(landmarks)) {
+    outermost = outermost.parentElement.closest(landmarks)
+  }
+  return outermost?.localName ?? 'page'
 }
 
 export function analyticsEventForLink({ href, placement, bookingUrl }) {
@@ -81,8 +88,11 @@ export function createConsentController({ storage, gtag, appendScript, measureme
 
   function trackEvent(name, params = {}) {
     if (!analyticsAllowed || !ALLOWED_EVENTS.has(name)) return
+    const safe = Object.fromEntries(
+      Object.entries(params ?? {}).filter(([key]) => ALLOWED_PARAMS.has(key)),
+    )
     gtag('event', name, {
-      ...params,
+      ...safe,
       page_path: window.location.pathname,
     })
   }

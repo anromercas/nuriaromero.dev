@@ -38,7 +38,7 @@ Los nombres son lower_snake_case y no se crean eventos ad hoc desde componentes.
 | `form_error` | Error de validación, red o proveedor | `placement`, `error_type` genérico | Salud del formulario |
 | `generate_lead` | Solo si se decide usar una conversión GA4 separada | `placement`, `service_slug` | Lead atribuido |
 
-`form_submit` y `generate_lead` no deben dispararse juntos para el mismo envío salvo que se documente explícitamente la deduplicación en GA4. La implementación local mantiene la lista de eventos permitidos en `src/scripts/analytics-consent.js`; el cableado (NRD-82) es un único listener delegado en `AnalyticsConsent.astro` que traduce los enlaces de reserva, `tel:`, `mailto:` y `https://wa.me/` a estos eventos, más un evento DOM `site:analytics` que emite el formulario al enviarse correctamente. `placement` es el landmark más cercano del enlace (`header`, `nav`, `main`, `footer`, `aside`) o `page`. Nunca se envían el teléfono, el email, el `href` ni campos del formulario.
+`form_submit` y `generate_lead` no deben dispararse juntos para el mismo envío salvo que se documente explícitamente la deduplicación en GA4. La implementación local mantiene la lista de eventos permitidos en `src/scripts/analytics-consent.js`; el cableado (NRD-82) es un único listener delegado en `AnalyticsConsent.astro` que traduce los enlaces de reserva, `tel:`, `mailto:` y `https://wa.me/` a estos eventos, más un evento DOM `site:analytics` que emite el formulario al enviarse correctamente. `placement` es el landmark más externo del enlace (`header`, `nav`, `main`, `footer`, `aside`) o `page`. Nunca se envían el teléfono, el email, el `href` ni campos del formulario.
 
 ## KPIs y línea base
 
@@ -106,13 +106,15 @@ Fecha de captura: 2026-11-15
 
 | Clic con consentimiento | `en` observado | Parámetros `ep.*` observados |
 | --- | --- | --- |
-| CTA de reserva (zona de contenido) | `contact_click` | `contact_method=booking`, `placement=nav` |
-| CTA de reserva (cabecera) | `contact_click` | `contact_method=booking`, `placement=nav` |
+| CTA de reserva (zona de contenido) | `contact_click` | `contact_method=booking`, `placement=nav` (observación superseded, ver nota) |
+| CTA de reserva (cabecera) | `contact_click` | `contact_method=booking`, `placement=nav` (observación superseded, ver nota) |
 | Teléfono del pie | `contact_click` | `contact_method=phone`, `placement=footer` |
 | Email del pie | `contact_click` | `contact_method=email`, `placement=footer` |
 | Botón flotante de WhatsApp | `whatsapp_click` | `placement=page` |
 | Formulario de contacto (respuesta simulada `ok` de Formspree) | `form_submit` | `placement=contact_form` |
-| Reserva tras navegar con View Transitions | `contact_click` | `contact_method=booking`, `placement=nav` (un solo evento) |
+| Reserva tras navegar con View Transitions | `contact_click` | `contact_method=booking`, `placement=nav` (un solo evento; observación superseded, ver nota) |
+
+Nota de corrección: los valores `placement=nav` de las tres filas de reserva se observaron con `placementFor` resolviendo el landmark más cercano, que devolvía el `nav` envolvente del CTA. Desde la corrección posterior (NRD-82) se resuelve el landmark más externo, de modo que el CTA del hero debe enviar `placement=main` y el de la cabecera `placement=header`; está cubierto por tests unitarios con anidamiento real, pero la reverificación en el build de la rama está pendiente y no hay valores observados nuevos.
 
 Observaciones: no aparece ningún teléfono, email, `href` ni campo del formulario en `ep.*`. Un enlace interno no genera evento de conversión. La medición mejorada de GA4 envía además `scroll` y `form_start`; `form_start` incluye `form_id` y el identificador y nombre del primer campo (no sus valores), ver "Pendientes de la usuaria". `ep.page_path` no aparece en las peticiones observadas (el diseño lo esperaba); no se ha investigado el motivo y la ruta de página no se ha verificado como parámetro del evento.
 

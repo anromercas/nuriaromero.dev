@@ -393,3 +393,56 @@ test("contact form dispatches site:analytics and the consent component listens t
   assert.match(component, /addEventListener\(\s*ANALYTICS_DOM_EVENT/);
   assert.match(component, /analyticsEventForLink/);
 });
+
+function fakeTree(chain) {
+  // chain: landmark names from the outermost ancestor down to the link
+  const nodes = chain.map((localName) => ({ localName, parentElement: null }))
+  nodes.forEach((node, i) => {
+    node.parentElement = i > 0 ? nodes[i - 1] : null
+    node.closest = (selector) => {
+      const set = selector.split(',')
+      for (let cur = node; cur; cur = cur.parentElement) if (set.includes(cur.localName)) return cur
+      return null
+    }
+  })
+  return nodes[nodes.length - 1]
+}
+
+test('placementFor resolves the outermost landmark for a CTA nested in a nav inside main', () => {
+  assert.equal(placementFor(fakeTree(['body', 'main', 'div', 'nav', 'a'])), 'main')
+})
+
+test('placementFor resolves header for a link in the header nav', () => {
+  assert.equal(placementFor(fakeTree(['body', 'header', 'nav', 'a'])), 'header')
+})
+
+test('placementFor keeps footer and falls back to page without a landmark', () => {
+  assert.equal(placementFor(fakeTree(['body', 'footer', 'div', 'a'])), 'footer')
+  assert.equal(placementFor(fakeTree(['body', 'div', 'a'])), 'page')
+})
+
+test('trackEvent drops params that are not in the taxonomy', () => {
+  withWindow(() => {
+    const { controller, target } = setupReal()
+    controller.initialize()
+    controller.accept()
+    controller.trackEvent('contact_click', {
+      contact_method: 'phone',
+      placement: 'footer',
+      email: 'a@b.es',
+      href: 'tel:+34600000000',
+      page_path: '/spoofed',
+    })
+    const sent = target.dataLayer.map((e) => Array.from(e)).find((a) => a[0] === 'event' && a[1] === 'contact_click')
+    assert.deepEqual(sent[2], { contact_method: 'phone', placement: 'footer', page_path: '/' })
+  })
+})
+
+test('privacy and cookie pages disclose the measured contact interactions', async () => {
+  const { readFile } = await import('node:fs/promises')
+  for (const page of ['privacidad', 'cookies']) {
+    const source = (await readFile(new URL(`../src/pages/${page}.astro`, import.meta.url), 'utf8')).replace(/\s+/g, ' ')
+    assert.match(source, /clics en los enlaces de reserva, teléfono, correo y WhatsApp/, page)
+    assert.match(source, /envío correcto del formulario de contacto/, page)
+  }
+})
