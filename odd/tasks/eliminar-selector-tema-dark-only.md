@@ -19,12 +19,13 @@ Backlog. No autorizado para implementar todavía — solo tracking para más ade
 
 ## Scope de esta tarea (pendiente)
 - [ ] Borrar `src/components/ThemeToggle.astro` y `src/scripts/theme-toggle.js`.
-- [ ] Quitar `darkMode: 'class'` de `tailwind.config.mjs` una vez no quede
-      ningún uso de la variante `dark:`.
-- [ ] Barrido completo del codebase: quitar todas las clases `dark:*` de
+- [x] Quitar `darkMode: 'class'` de `tailwind.config.mjs` una vez no quede
+      ningún uso de la variante `dark:`. (NRD-14 / NRD-158)
+- [x] Barrido completo del codebase: quitar todas las clases `dark:*` de
       Tailwind (cientos, repartidas en casi todos los `.astro`) y dejar solo
       el valor que hoy se ve en dark. Esto es un cambio grande, tocar por
-      lotes/componente, no en un solo commit.
+      lotes/componente, no en un solo commit. (NRD-13 / NRD-156 componentes;
+      NRD-14 / NRD-157 `29bbbe6` y NRD-158 páginas)
 - [ ] `src/layouts/Layout.astro`: quitar el bloque
       `@media (prefers-color-scheme: dark) { body { color: ... } }` (ya
       redundante, Tailwind gana por especificidad, pero es ruido muerto).

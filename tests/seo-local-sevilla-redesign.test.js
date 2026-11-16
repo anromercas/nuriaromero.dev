@@ -31,17 +31,17 @@ test("seo local composition is diagnostic-led, ordered and books a call", async 
   ])
   const seoLocal = services.slice(services.indexOf("export const seoLocal"), services.indexOf("export const capilarLocal"))
 
-  assert.match(route, /<ServiceLayout page=\{seoLocal\}>/)
-  assert.match(route, /<ReviewBento \/>/)
-  const order = ["slot=\"hero\"", "<ReviewBento", "<SeoLocalProcess", "<RealProof", "<SeoLocalPlans"].map((marker) => route.indexOf(marker))
+  assert.match(route, /<ServiceLayout page=\{seoLocal\} variant="template">/)
+  assert.match(route, /<ReviewBento[\s>]/)
+  const order = ["slot=\"hero\"", "<ReviewBento", "<SeoLocalProcess", "<RealProof", "<SeoLocalAgencia", "<SeoLocalPlans"].map((marker) => route.indexOf(marker))
   assert.ok(order.every((index) => index >= 0), "all sections composed")
-  assert.deepEqual(order, [...order].sort((x, y) => x - y), "hero, bento, process, proof, plans")
+  assert.deepEqual(order, [...order].sort((x, y) => x - y), "hero, bento, process, proof, agency, plans")
   // FAQ, internal links and closing CTA stay in the shared layout after the pricing slot.
   assert.ok(layout.indexOf('<slot name="pricing">') < layout.indexOf("<FAQ"))
   assert.ok(layout.indexOf("<FAQ") < layout.indexOf("<InternalLinks"))
   assert.ok(layout.indexOf("<InternalLinks") < layout.indexOf("<CTASection"))
   for (const component of [bento, process, proof, plans]) {
-    assert.match(component, /<section[\s\S]*?<h2/)
+    assert.match(component, /<section[\s\S]*?(<h2|<SectionHeading)/)
     assert.match(component, /aria-labelledby=/)
   }
   assert.match(plans, /<ul/)

@@ -47,3 +47,6 @@ Paths and symbols in the repository that show or enforce the decision.
 | [0010](0010-markdown-designs.md)                   | Markdown designs in `docs/designs/`                                       | Accepted               |
 | [0011](0011-ci-verify-workflow.md)                 | CI `verify` workflow on GitHub Actions                                    | Accepted               |
 | [0012](0012-keyword-ownership-registry.md)         | Keyword ownership registry in `src/data/seo-intents.ts`                   | Accepted               |
+| [0013](0013-seo-site-architecture.md)              | SEO site architecture: one owner page per keyword cluster                 | Accepted               |
+| [0014](0014-template-section-components.md)        | Template section components and shared ink tokens                         | Accepted               |
+| [0015](0015-word-budget-owner-text.md)             | Word budgets measure owner-controlled text                                | Accepted               |

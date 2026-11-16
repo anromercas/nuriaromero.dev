@@ -14,6 +14,7 @@
       type="button"
       aria-label="Configurar preferencias"
       aria-expanded="false"
+      aria-controls="consent-settings"
     >
       <span class="consent-settings-label">Configurar</span>
       <svg
@@ -35,18 +36,19 @@
 </aside>
 
 <script>
-  import { createConsentController, createGtag } from "../scripts/analytics-consent.js"
+  import {
+    ANALYTICS_DOM_EVENT,
+    analyticsEventForLink,
+    createConsentController,
+    createConsentPanel,
+    createGtag,
+    placementFor,
+  } from "../scripts/analytics-consent.js"
+  import { bookingUrl } from "@/data/site"
 
   const configuredMeasurementId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID
   const measurementId = configuredMeasurementId || "G-NCV98R3HW7"
 
-  const panel = document.querySelector<HTMLElement>("#analytics-consent")!
-  const settings = document.querySelector<HTMLElement>("#consent-settings")!
-  const toggle = document.querySelector<HTMLInputElement>("#analytics-toggle")!
-  const customize = document.querySelector<HTMLButtonElement>("#consent-customize")!
-  const save = document.querySelector<HTMLButtonElement>("#consent-save")!
-  const accept = document.querySelector<HTMLButtonElement>("#consent-accept")!
-  const reject = document.querySelector<HTMLButtonElement>("#consent-reject")!
   const gtag = createGtag(window)
   const controller = createConsentController({
     storage: window.localStorage,
@@ -58,41 +60,52 @@
       document.head.append(script)
     },
     measurementId,
+    global: window,
+    cookies: {
+      read: () => document.cookie,
+      expire: (name: string, domain: string | null) => {
+        const scope = domain ? `; Domain=${domain}` : ""
+        document.cookie = `${name}=; Max-Age=0; Path=/${scope}`
+      },
+    },
   })
 
-  const storedChoice = window.localStorage.getItem("site-analytics-consent")
   controller.initialize()
-  if (!storedChoice) panel.hidden = false
+  const panel = createConsentPanel({ doc: document, storage: window.localStorage, controller })
+  panel.sync()
 
-  accept.addEventListener("click", () => {
-    controller.accept()
-    panel.hidden = true
+  document.addEventListener("focusin", (event) => {
+    if (event.target instanceof Element) panel.handleFocus(event.target)
   })
-  reject.addEventListener("click", () => {
-    controller.reject()
-    panel.hidden = true
-  })
-  customize.addEventListener("click", () => {
-    settings.hidden = !settings.hidden
-    save.hidden = !settings.hidden
-    customize.setAttribute("aria-expanded", String(!settings.hidden))
-  })
-  save.addEventListener("click", () => {
-    if (toggle.checked) controller.accept()
-    else controller.reject()
-    panel.hidden = true
+  window.addEventListener("resize", () => panel.update())
+  document.addEventListener("click", (event) => {
+    if (event.target instanceof Element) panel.handleClick(event.target)
   })
   document.addEventListener("click", (event) => {
-    if ((event.target as HTMLElement).closest("#cookie-settings")) {
-      panel.hidden = false
-      settings.hidden = false
-      toggle.checked = window.localStorage.getItem("site-analytics-consent") === "accepted"
-      save.hidden = false
-      customize.setAttribute("aria-expanded", "true")
-    }
+    if (!(event.target instanceof Element)) return
+    const link = event.target.closest<HTMLAnchorElement>("a[href]")
+    if (!link) return
+    const found = analyticsEventForLink({
+      href: link.getAttribute("href")!,
+      placement: placementFor(link),
+      bookingUrl,
+    })
+    if (found) controller.trackEvent(found.name, found.params)
   })
-  document.addEventListener("astro:page-load", () => controller.trackPageView())
+  document.addEventListener(ANALYTICS_DOM_EVENT, (event) => {
+    const { name, params } = (event as CustomEvent).detail ?? {}
+    controller.trackEvent(name, params)
+  })
+  document.addEventListener("astro:page-load", () => {
+    panel.sync()
+    controller.trackPageView()
+  })
 </script>
+
+<style is:global>
+  html { scroll-padding-bottom: var(--consent-offset, 0px); }
+  body { padding-bottom: var(--consent-offset, 0px); }
+</style>
 
 <style>
   .consent-panel { position: fixed; z-index: 100; inset: auto 1rem 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; max-width: 64rem; margin-inline: auto; padding: 1rem; border: 1px solid #9ca3af; border-radius: .75rem; background: #fff; color: #111827; box-shadow: 0 10px 30px #0003; }

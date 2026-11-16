@@ -1,46 +1,260 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import Schema from "@/components/seo/Schema.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
-import TitleSection from "@/components/TitleSection.astro"
-import Hero from "@/components/Hero.astro"
-import AboutMe from "@/components/AboutMe.astro"
-import Experience from "@/components/Experience.astro"
-import Briefcase from "@/components/icons/Briefcase.astro"
-import ProfileCheck from "@/components/icons/ProfileCheck.astro"
-import { personSchema, breadcrumbSchema } from "@/lib/schema"
+import { Image } from "astro:assets";
+import portrait from "@/assets/perfil-profesional.webp";
+import Layout from "@/layouts/Layout.astro";
+import Schema from "@/components/seo/Schema.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import ProofStrip from "@/components/seo-local/ProofStrip.astro";
+import SeoLocalProcess from "@/components/seo-local/SeoLocalProcess.astro";
+import RealProof from "@/components/seo-local/RealProof.astro";
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
+import type { Step } from "@/components/seo-local/types";
+import { personSchema, breadcrumbSchema } from "@/lib/schema";
+import { SITE_PROOF } from "@/data/site";
+import { getGoogleReviews } from "@/lib/google-reviews";
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
-  { name: "Sobre mí", url: "/sobre-mi" },
-]
+  { name: "Sobre mí", url: "/sobre-mi/" },
+];
+
+const reviewsData = await getGoogleReviews();
+
+const proofItems = [
+  SITE_PROOF[0],
+  ...(reviewsData
+    ? [
+        {
+          stat: `${reviewsData.rating.toFixed(1).replace(".", ",")} en Google`,
+          label: `${reviewsData.userRatingCount} ${reviewsData.userRatingCount === 1 ? "opinión" : "opiniones"}`,
+        },
+      ]
+    : []),
+  SITE_PROOF[1],
+];
+
+const steps: Step[] = [
+  {
+    title: "Trato directo conmigo",
+    text: "No hay comerciales ni cuentas que pasen de mano en mano. Me cuentas qué necesitas, te pregunto lo que haga falta para entender tu negocio y te respondo en menos de 24 horas laborables.",
+  },
+  {
+    title: "Propuesta cerrada por escrito",
+    text: "Antes de empezar te envío qué incluye, cuánto cuesta y en qué plazo lo tendrás, todo explicado sin tecnicismos. El precio no cambia a mitad de camino si no cambiamos lo acordado.",
+  },
+  {
+    title: "Entrega que puedes revisar",
+    text: "Ves los avances durante el proyecto y me dices qué cambiar antes de publicar. Al terminar te enseño a usar lo que te entrego para que no dependas de mí en el día a día.",
+  },
+  {
+    title: "Seguimiento después de publicar",
+    text: "Cuando todo está en marcha, sigo a tu lado para dudas, cambios y mejoras. Si tu negocio crece, ampliamos por fases, y cada fase llega con su propio precio cerrado antes de empezar.",
+  },
+];
+
+const career = [
+  {
+    year: "2014",
+    role: "Software de control en el Centro Nacional de Aceleradores (CNA)",
+  },
+  { year: "2018", role: "Desarrolladora fullstack en Corner Safety" },
+  {
+    year: "2020",
+    role: "Frontend sénior en NTT DATA, como desarrolladora principal en proyectos móviles",
+  },
+  {
+    year: "2022",
+    role: "Fullstack sénior en Vixion, con aplicaciones web y móviles industriales",
+  },
+  {
+    year: "Desde 2025",
+    role: "Freelance para Wipop by BBVA, TalentionTime y WHAN",
+  },
+];
 ---
 
 <Layout
   title="Sobre mí — Nuria Romero, desarrolladora web en Sevilla"
   description="Soy Nuria Romero, desarrolladora de software en Sevilla con más de 10 años de experiencia. Creo webs, software a medida y automatizaciones para negocios."
 >
-  <Schema slot="head" schema={[personSchema(), breadcrumbSchema(breadcrumbs)]} />
-  <main class="px-4 pt-24">
-    <SectionContainer class="py-8 md:py-16">
-      <Hero />
-    </SectionContainer>
+  <Schema
+    slot="head"
+    schema={[personSchema(), breadcrumbSchema(breadcrumbs)]}
+  />
+  <main class="template-ground px-4 pt-24 pb-24">
     <div class="space-y-24">
-      <SectionContainer id="sobre-mi">
-        <TitleSection>
-          <ProfileCheck class="size-8" />
-          Sobre mí
-        </TitleSection>
-        <AboutMe />
+      <SectionContainer>
+        <Breadcrumbs items={breadcrumbs} />
+        <SeoLocalHero
+          keyword="Sobre mí: Nuria Romero"
+          title={{
+            text: "Un proyecto, una sola persona",
+            accent: "una sola persona",
+          }}
+          subtitle="Soy Nuria Romero, desarrolladora web y consultora SEO en Sevilla. Hago webs, tiendas online, SEO local, software a medida y automatizaciones para negocios que quieren más clientes. Conmigo hablas directamente con quien hace el trabajo, desde la primera llamada hasta la entrega."
+          secondaryLink={{ label: "Cómo trabajo", href: "#como-trabajo" }}
+        >
+          <figure class="portrait" slot="visual">
+            <Image
+              src={portrait}
+              alt="Nuria Romero, desarrolladora web y consultora SEO en Sevilla"
+              widths={[320, 480, 640]}
+              sizes="(min-width: 768px) 352px, 256px"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </figure>
+        </SeoLocalHero>
+        <ProofStrip items={proofItems} />
       </SectionContainer>
 
-      <SectionContainer id="experiencia">
-        <TitleSection>
-          <Briefcase class="size-8" />
-          Experiencia laboral
-        </TitleSection>
-        <Experience />
+      <div class="band">
+        <SectionContainer>
+          <SeoLocalProcess
+            id="como-trabajo"
+            headingId="como-trabajo-title"
+            keyword="Cómo trabajo con tu negocio"
+            title={{
+              text: "Así trabajamos, de principio a fin",
+              accent: "de principio a fin",
+            }}
+            steps={steps}
+            portrait={false}
+          >
+            <Fragment slot="byline">
+              Desarrollo software desde 2014 y hoy trabajo también como{" "}
+              <a href="/">consultor SEO en Sevilla</a>, siempre con negocios
+              reales. Si lo que quieres es que tus clientes te encuentren en
+              Google Maps, aquí tienes cómo trabajo el{" "}
+              <a href="/seo-local-sevilla/">SEO local para negocios</a>.
+            </Fragment>
+            <div class="career" slot="aside">
+              <h3>Mi recorrido</h3>
+              <ol class="career-list">
+                {career.map((item) => (
+                  <li>
+                    <span class="career-year">{item.year}</span>
+                    <span class="career-role">{item.role}</span>
+                  </li>
+                ))}
+              </ol>
+              <p class="career-note">
+                He trabajado en proyectos de industria, salud y medioambiente,
+                con Angular, React, Node.js y apps móviles. Hoy pongo esa
+                experiencia al servicio de negocios de Sevilla: webs, tiendas
+                online, SEO local, software a medida y automatizaciones.
+              </p>
+            </div>
+          </SeoLocalProcess>
+        </SectionContainer>
+      </div>
+
+      <SectionContainer id="trabajo-real">
+        <RealProof
+          headingId="prueba-title"
+          keyword="Proyectos reales para negocios de Sevilla"
+          title={{
+            text: "Webs que puedes visitar hoy",
+            accent: "visitar hoy",
+          }}
+          reviews={reviewsData}
+          note="Dos webs de negocios de Sevilla hechas por mí: un local de celebraciones con reservas online y una administración de fincas. Puedes visitarlas y juzgar el trabajo por ti. Prefiero enseñarte webs reales que prometerte cifras que no puedo demostrar."
+          projects={["arkady", "adfsevilla"]}
+          projectsVariant="ink"
+        />
+      </SectionContainer>
+
+      <SectionContainer>
+        <SeoLocalClosing
+          headingId="cierre-title"
+          keyword="Reserva una llamada conmigo"
+          title={{
+            text: "Cuéntame qué necesita tu negocio",
+            accent: "tu negocio",
+          }}
+          text="En 30 minutos vemos tu caso, qué te conviene hacer primero y cuánto costaría. Si no soy la persona adecuada para lo que necesitas, te lo digo en la misma llamada."
+        />
       </SectionContainer>
     </div>
   </main>
 </Layout>
+
+<style>
+  .portrait {
+    width: 100%;
+    max-width: 16rem;
+    margin: 0 auto;
+    padding: 1rem 1rem 0;
+    overflow: hidden;
+    border: 1px solid var(--hairline);
+    border-radius: 1.25rem;
+    background: var(--card-surface);
+  }
+
+  .portrait :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .career {
+    max-width: 40rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .career h3 {
+    margin: 0 0 1rem;
+    color: var(--text-strong);
+    font-size: 1.125rem;
+    font-weight: 650;
+  }
+
+  .career-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .career-list li {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 0.6rem 0;
+  }
+
+  .career-list li + li {
+    border-top: 1px solid var(--hairline-quiet);
+  }
+
+  .career-year {
+    color: var(--text-strong);
+    font-size: 0.95rem;
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .career-role {
+    color: var(--text-secondary);
+    font-size: 0.975rem;
+    line-height: 1.5;
+  }
+
+  .career-note {
+    max-width: 65ch;
+    margin: 1.25rem 0 0;
+    color: var(--text-secondary);
+    font-size: 0.975rem;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .portrait {
+      max-width: 22rem;
+    }
+  }
+</style>

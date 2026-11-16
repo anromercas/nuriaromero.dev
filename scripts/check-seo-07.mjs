@@ -1,5 +1,7 @@
-import { readFile } from "node:fs/promises"
+import { readFile, readdir } from "node:fs/promises"
 import { existsSync } from "node:fs"
+import { linkInMain } from "./lib/main-links.mjs"
+import { findOwnershipViolations, routeOf } from "./lib/keyword-ownership.mjs"
 
 const root = new URL("../", import.meta.url)
 const distDir = new URL("dist/", root)
@@ -145,12 +147,33 @@ for (const nicheFaq of nicheFaqs) {
 for (const linkCheck of intents.reciprocalLinks) {
   const source = await readFile(routeFile(linkCheck.source), "utf8")
   const target = await readFile(routeFile(linkCheck.target), "utf8")
-  if (!source.includes(`href="${linkCheck.target}"`) || !source.includes(linkCheck.sourceAnchor)) {
-    errors.push(`${linkCheck.source}: missing reciprocal anchor "${linkCheck.sourceAnchor}" to ${linkCheck.target}`)
+  if (!linkInMain(source, linkCheck.target, linkCheck.sourceAnchor)) {
+    errors.push(`${linkCheck.source}: missing reciprocal anchor "${linkCheck.sourceAnchor}" to ${linkCheck.target} inside <main>`)
   }
-  if (!target.includes(`href="${linkCheck.source}"`) || !target.includes(linkCheck.targetAnchor)) {
-    errors.push(`${linkCheck.target}: missing reciprocal anchor "${linkCheck.targetAnchor}" to ${linkCheck.source}`)
+  if (!linkInMain(target, linkCheck.source, linkCheck.targetAnchor)) {
+    errors.push(`${linkCheck.target}: missing reciprocal anchor "${linkCheck.targetAnchor}" to ${linkCheck.source} inside <main>`)
   }
+}
+
+// Keyword ownership (ADR 0012): only the owner page may target a registered
+// head term in its <title>, H1 or H2. The registry is read at run time.
+const walkHtml = async (dir, prefix = "") => {
+  const files = []
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const relative = `${prefix}${entry.name}`
+    if (entry.isDirectory()) files.push(...(await walkHtml(new URL(`${entry.name}/`, dir), `${relative}/`)))
+    else if (entry.name.endsWith(".html")) files.push(relative)
+  }
+  return files
+}
+const builtPages = new Map()
+for (const relative of await walkHtml(distDir)) {
+  builtPages.set(routeOf(relative), await readFile(new URL(relative, distDir), "utf8"))
+}
+for (const violation of findOwnershipViolations(builtPages, intents.keywordOwners)) {
+  errors.push(
+    `keyword "${violation.keyword}" (owner ${violation.owner}) is targeted by ${violation.route} in ${violation.element}: "${violation.text}"`,
+  )
 }
 
 if (errors.length) {
@@ -160,5 +183,5 @@ if (errors.length) {
 }
 
 console.log(
-  `SEO-07 intent check passed: ${intents.intentMatrix.length} intent rows, ${nicheFaqs.length} niche FAQs (incl. niche-vs-service near-duplicate check against ${serviceFaqs.length} service FAQs) and ${intents.reciprocalLinks.length} reciprocal link pairs checked`,
+  `SEO-07 intent check passed: ${intents.intentMatrix.length} intent rows, ${nicheFaqs.length} niche FAQs (incl. niche-vs-service near-duplicate check against ${serviceFaqs.length} service FAQs), ${intents.reciprocalLinks.length} reciprocal link pairs and ${intents.keywordOwners.length} keyword owners checked on ${builtPages.size} pages`,
 )

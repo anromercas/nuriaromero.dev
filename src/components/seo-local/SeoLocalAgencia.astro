@@ -1,0 +1,109 @@
+---
+import SectionHeading from "@/components/seo-local/SectionHeading.astro"
+import "@/styles/template.css"
+import type { AccentTitle, ComparisonItem, TextLink } from "./types"
+
+interface Props {
+  id?: string
+  headingId: string
+  keyword: string
+  title: AccentTitle
+  items: ComparisonItem[]
+  link?: TextLink
+}
+
+const { id = "agencia-o-consultora", headingId, keyword, title, items, link } = Astro.props
+---
+
+<section id={id} class="agencia scroll-m-20" aria-labelledby={headingId}>
+  <div class="agencia-intro">
+    <SectionHeading id={headingId} keyword={keyword} title={title} class="agencia-display" />
+  </div>
+
+  <div class="agencia-body">
+    <ul class="agencia-list">
+      {
+        items.map((item) => (
+          <li>
+            <p>
+              <strong>{item.lead}</strong>{" "}{item.text}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+    {link && <p class="agencia-more"><a class="agencia-link" href={link.href}>{link.label}</a></p>}
+  </div>
+</section>
+
+<style>
+  .agencia {
+    display: grid;
+    gap: 0;
+    color: var(--text-body);
+  }
+
+  .agencia :global(.agencia-display) {
+    max-width: 20ch;
+    margin: 0 0 1rem;
+  }
+
+  .agencia-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .agencia-list li {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .agencia-list p {
+    max-width: 65ch;
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .agencia-list strong {
+    color: var(--text-strong);
+    font-weight: 600;
+  }
+
+  .agencia-more {
+    margin: 1.5rem 0 0;
+  }
+
+  .agencia-link {
+    color: var(--text-body);
+    text-decoration: underline;
+    text-decoration-color: rgb(var(--sky-signal-rgb) / 0.7);
+    text-underline-offset: 0.3em;
+    border-radius: 0.25rem;
+    transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .agencia-link:hover {
+    color: var(--sky-accent);
+  }
+
+  .agencia-link:focus-visible {
+    outline: 2px solid var(--sky-signal);
+    outline-offset: 4px;
+  }
+
+  @media (min-width: 1024px) {
+    .agencia {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .agencia :global(.agencia-display) {
+      max-width: 14ch;
+    }
+  }
+</style>

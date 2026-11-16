@@ -94,44 +94,46 @@ function llmsServiceLines(llms) {
     }));
 }
 
-// Prices of the service block whose top-level `slug` is `path`:
-// all `from` values of `pricing` (all) and only those of `pricing.tiers` (tiers).
-function dataPrices(servicesSrc, path) {
-  const blocks = servicesSrc.split(/\nexport const /).slice(1);
-  const block = blocks.find((b) => b.includes(`\n  slug: "${path}"`));
-  if (!block) return null;
-  const pricing =
-    block.match(/\n {2}pricing: \{([\s\S]*?)\n {2}\},/)?.[1] ?? "";
-  const froms = (text) =>
-    [...text.matchAll(/from:\s*"([^"]+)"/g)]
-      .map((m) => toPrice(m[1]))
-      .filter(Boolean);
-  const tiersText = pricing.match(/tiers:\s*\[([\s\S]*)\]/)?.[1] ?? "";
-  return { all: froms(pricing), tiers: froms(tiersText) };
+// Prices of the service whose `slug` is `path`, read from the runtime data (so
+// values built from constants are visible): `all` holds `pricing.from`,
+// `pricing.initial.from` and every `pricing.tiers[].from`; `tiers` only the tiers.
+const { services } = await import(
+  new URL("../src/data/services.ts", import.meta.url)
+);
+const { STORE_FROM } = await import(
+  new URL("../src/data/store-offer.ts", import.meta.url)
+);
+
+function dataPrices(path) {
+  const page = services.find((s) => s.slug === path);
+  if (!page) return null;
+  const tiers = (page.pricing.tiers ?? [])
+    .map((t) => toPrice(t.from))
+    .filter(Boolean);
+  const all = [page.pricing.from, page.pricing.initial?.from]
+    .filter(Boolean)
+    .map(toPrice)
+    .filter(Boolean)
+    .concat(tiers);
+  return { all, tiers };
 }
 
 test("llms.txt: every ## Servicios URL maps to a service in services.ts", async () => {
-  const [llms, servicesSrc] = await Promise.all([
-    source("public/llms.txt"),
-    source("src/data/services.ts"),
-  ]);
+  const llms = await source("public/llms.txt");
   const lines = llmsServiceLines(llms);
   assert.ok(lines.length > 0, "no se encontraron servicios en llms.txt");
   for (const { path } of lines) {
     assert.ok(
-      dataPrices(servicesSrc, path),
+      dataPrices(path),
       `llms.txt lista ${path} pero ningún slug de services.ts coincide`,
     );
   }
 });
 
 test("llms.txt: every price listed for a service exists in its pricing in services.ts", async () => {
-  const [llms, servicesSrc] = await Promise.all([
-    source("public/llms.txt"),
-    source("src/data/services.ts"),
-  ]);
+  const llms = await source("public/llms.txt");
   for (const { path, prices } of llmsServiceLines(llms)) {
-    const data = dataPrices(servicesSrc, path);
+    const data = dataPrices(path);
     if (!data) continue; // reported by the slug test
     const known = new Set(data.all.map(priceKey));
     for (const p of prices) {
@@ -144,15 +146,12 @@ test("llms.txt: every price listed for a service exists in its pricing in servic
 });
 
 test("llms.txt: diseño web and SEO local list all their tier prices", async () => {
-  const [llms, servicesSrc] = await Promise.all([
-    source("public/llms.txt"),
-    source("src/data/services.ts"),
-  ]);
+  const llms = await source("public/llms.txt");
   const lines = llmsServiceLines(llms);
   for (const path of ["/diseno-web-sevilla/", "/seo-local-sevilla/"]) {
     const line = lines.find((l) => l.path === path);
     assert.ok(line, `falta ${path} en la sección Servicios de llms.txt`);
-    const data = dataPrices(servicesSrc, path);
+    const data = dataPrices(path);
     assert.ok(
       data && data.tiers.length > 0,
       `${path}: sin tiers en services.ts`,
@@ -165,4 +164,22 @@ test("llms.txt: diseño web and SEO local list all their tier prices", async () 
       );
     }
   }
+});
+
+test("llms.txt: the store line follows the store offer source", async () => {
+  const llms = await source("public/llms.txt");
+  const line = llms
+    .split("\n")
+    .find((l) => l.includes("/tienda-online-sevilla/"));
+  assert.ok(line, "falta la línea de la tienda en llms.txt");
+  assert.ok(line.includes(`desde ${STORE_FROM}`), line);
+  for (const word of [
+    "panel de gestión",
+    "WooCommerce",
+    "Shopify",
+    "a medida",
+  ]) {
+    assert.ok(line.includes(word), `${word}: ${line}`);
+  }
+  assert.doesNotMatch(line, /se presupuesta según el catálogo/);
 });

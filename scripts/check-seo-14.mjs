@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises"
+import { KPI_METRIC_PATTERN, findUnsourcedMetrics } from "./lib/register-metrics.mjs"
 
 const failures = []
 const expect = (condition, message) => {
@@ -31,7 +32,9 @@ for (const phrase of ["dato observado", "estimación", "limitación", "decisión
 }
 expect(/generate_lead|contact_click|whatsapp_click/.test(measurement), "SEO-14: protocol must document conversion event names")
 expect(/pendiente/i.test(task), "SEO-14: task must retain honest pending status where external access is required")
-expect(!/(?:\b\d+\s+(?:clics|impresiones|conversiones|consultas|backlinks?)\b|posición\s*[:=]\s*\d)/i.test(measurement), "SEO-14: protocol must not invent performance metrics")
+for (const { section, match } of findUnsourcedMetrics(measurement, KPI_METRIC_PATTERN)) {
+  expect(false, `SEO-14: KPI figure "${match}" in "${section || "preamble"}" must sit in a "## Línea base YYYY-MM-DD" section with Fuente and Fecha de captura`)
+}
 
 if (failures.length > 0) {
   console.error(failures.map((failure) => `- ${failure}`).join("\n"))

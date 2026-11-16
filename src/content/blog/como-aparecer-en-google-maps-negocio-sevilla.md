@@ -66,4 +66,4 @@ No hay un plazo fiable para notar cambios en visibilidad: depende de la búsqued
 
 ## ¿Prefieres que te lo deje montado?
 
-Puedo ayudarte a completar la ficha, conectarla con tu web y preparar un enlace para solicitar reseñas. [Cuéntame tu caso](/contacto) y revisamos qué necesita tu negocio.
+Puedo ayudarte a completar la ficha, conectarla con tu web y preparar un enlace para solicitar reseñas. [Cuéntame tu caso](/contacto/) y revisamos qué necesita tu negocio.

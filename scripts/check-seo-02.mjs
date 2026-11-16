@@ -1,6 +1,8 @@
 import { readdir, readFile } from "node:fs/promises"
 import path from "node:path"
 
+import { countH1 } from "./lib/one-h1.mjs"
+
 const distDir = path.resolve("dist")
 const pages = [
   { url: "/diseno-web-sevilla/", breadcrumbName: "Diseño web en Sevilla" },
@@ -167,6 +169,28 @@ for (const file of htmlFiles) {
   })
   const breadcrumbs = getSections(html, "nav").filter((section) => /aria-label\s*=\s*["']Miga de pan["']/i.test(section))
 
+  // NRD-118: every built page has exactly one <h1>.
+  const h1Count = countH1(html)
+  if (h1Count !== 1) {
+    addFailure(`${relativeFile}: expected exactly one <h1>, found ${h1Count}`)
+  }
+
+  // NRD-115: every BreadcrumbList item of every built page ends in "/", and
+  // the last item equals the page canonical.
+  const allBreadcrumbItems = parseBreadcrumbItems(html)
+  for (const item of allBreadcrumbItems) {
+    if (!item.endsWith("/")) {
+      addFailure(`${relativeFile}: BreadcrumbList item omits trailing slash (${item})`)
+    }
+  }
+  const canonicalHref = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']*)["']/i)?.[1]
+  if (allBreadcrumbItems.length > 0 && canonicalHref) {
+    const lastItem = allBreadcrumbItems[allBreadcrumbItems.length - 1]
+    if (lastItem !== canonicalHref) {
+      addFailure(`${relativeFile}: last BreadcrumbList item differs from canonical (${lastItem} vs ${canonicalHref})`)
+    }
+  }
+
   for (const { url: page } of pages) {
     const bareUrl = withoutSlash(page)
     if (hrefs.some((href) => isBareTargetUrl(href, bareUrl))) {
@@ -234,6 +258,82 @@ for (const { url: page, breadcrumbName } of pages) {
   }
 }
 
+// NRD-189: /diseno-web-sevilla/ Service offers equal the visible plans as one-time Offers.
+const disenoWebHtml = await readFile(path.join(distDir, "diseno-web-sevilla", "index.html"), "utf8").catch(() => null)
+if (disenoWebHtml) {
+  const expectedOneTime = [
+    { name: "Landing de una página", price: "149" },
+    { name: "Web completa (hasta 5 páginas)", price: "399" },
+  ]
+  const services = []
+  for (const block of getJsonLdBlocks(disenoWebHtml)) {
+    try {
+      const parsed = JSON.parse(block)
+      const entries = Array.isArray(parsed) ? parsed : Array.isArray(parsed?.["@graph"]) ? parsed["@graph"] : [parsed]
+      services.push(...entries.filter((entry) => entry?.["@type"] === "Service"))
+    } catch {
+      // Malformed JSON-LD is owned by other checks.
+    }
+  }
+  const offers = services.flatMap((service) => (Array.isArray(service.offers) ? service.offers : service.offers ? [service.offers] : []))
+  if (offers.length !== expectedOneTime.length) {
+    addFailure(`/diseno-web-sevilla/: expected ${expectedOneTime.length} one-time Offers in the Service, found ${offers.length}`)
+  }
+  for (const { name, price } of expectedOneTime) {
+    const offer = offers.find((entry) => entry?.name === name)
+    if (!offer) addFailure(`/diseno-web-sevilla/: missing one-time Offer "${name}"`)
+    else if (String(offer.price) !== price) addFailure(`/diseno-web-sevilla/: Offer "${name}" price ${offer.price} differs from ${price}`)
+  }
+  for (const offer of offers) {
+    if (offer?.priceSpecification) addFailure(`/diseno-web-sevilla/: one-time Offer "${offer.name}" must not carry a priceSpecification`)
+  }
+} else {
+  addFailure("/diseno-web-sevilla/: missing dist page for the one-time Offers check")
+}
+
+// NRD-195: /tienda-online-sevilla/ Service publishes exactly one Offer, 499 EUR, from the store offer source.
+const storeHtml = await readFile(path.join(distDir, "tienda-online-sevilla", "index.html"), "utf8").catch(() => null)
+if (storeHtml) {
+  const storeServices = []
+  for (const block of getJsonLdBlocks(storeHtml)) {
+    try {
+      const parsed = JSON.parse(block)
+      const entries = Array.isArray(parsed) ? parsed : Array.isArray(parsed?.["@graph"]) ? parsed["@graph"] : [parsed]
+      storeServices.push(...entries.filter((entry) => entry?.["@type"] === "Service"))
+    } catch {
+      // Malformed JSON-LD is owned by other checks.
+    }
+  }
+  const storeOffers = storeServices.flatMap((service) => (Array.isArray(service.offers) ? service.offers : service.offers ? [service.offers] : []))
+  if (storeOffers.length !== 1) {
+    addFailure(`/tienda-online-sevilla/: expected exactly one Offer in the Service, found ${storeOffers.length}`)
+  }
+  for (const offer of storeOffers) {
+    if (String(offer?.price) !== "499") addFailure(`/tienda-online-sevilla/: Offer price ${offer?.price} differs from 499`)
+    if (offer?.priceCurrency !== "EUR") addFailure(`/tienda-online-sevilla/: Offer priceCurrency ${offer?.priceCurrency} differs from EUR`)
+    if (offer?.priceSpecification) addFailure("/tienda-online-sevilla/: the Offer must not carry a priceSpecification")
+  }
+  // NRD-195: the built <main> shows the offer read from the store offer source.
+  const { STORE_FROM, storeOptions, storeIncludes, storeQuotedSeparately, STORE_FINAL_PRICE_NOTE } = await import("../src/data/store-offer.ts")
+  const storeMain = getSections(storeHtml, "main").join("\n")
+  const storeText = storeMain.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ")
+  const expectedTexts = [
+    `Desde ${STORE_FROM}`,
+    ...storeOptions.flatMap((option) => [option.name, option.recurringCost]),
+    ...storeIncludes,
+    ...storeQuotedSeparately.map((item) => item.text),
+    STORE_FINAL_PRICE_NOTE,
+  ]
+  for (const text of expectedTexts) {
+    if (!storeText.includes(text)) addFailure(`/tienda-online-sevilla/: <main> is missing "${text}"`)
+  }
+  for (const { link } of storeQuotedSeparately) {
+    if (link && !getHrefs(storeMain).includes(link.href)) addFailure(`/tienda-online-sevilla/: <main> is missing the link ${link.href}`)
+  }
+} else {
+  addFailure("/tienda-online-sevilla/: missing dist page for the store Offer check")
+}
+
 const home = await readFile(path.join(distDir, "index.html"), "utf8").catch(() => null)
 if (!home) {
   addFailure("/: missing dist/index.html")
@@ -261,5 +361,5 @@ if (failures.length > 0) {
   for (const failure of failures) console.error(`- ${failure}`)
   process.exitCode = 1
 } else {
-  console.log(`SEO-02 check passed: scanned ${htmlFiles.length} HTML files; ${pages.length} canonical service/niche pages use trailing-slash internal links, breadcrumbs, schemas, and canonicals.`)
+  console.log(`SEO-02 check passed: scanned ${htmlFiles.length} HTML files; ${pages.length} canonical service/niche pages use trailing-slash internal links, breadcrumbs, schemas, and canonicals; every page has exactly one <h1>.`)
 }

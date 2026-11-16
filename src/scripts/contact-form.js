@@ -35,10 +35,10 @@ function initContactForm() {
 
   function setStatus(msg, type = 'info') {
     statusEl.textContent = msg;
-    statusEl.classList.remove('text-red-600','text-green-600','text-gray-600','dark:text-gray-300');
+    statusEl.classList.remove('text-red-600','text-green-600','text-gray-300');
     if (type === 'success') statusEl.classList.add('text-green-600');
     else if (type === 'error') statusEl.classList.add('text-red-600');
-    else statusEl.classList.add('text-gray-600','dark:text-gray-300');
+    else statusEl.classList.add('text-gray-300');
   }
 
   function setReviewInvite(visible) {
@@ -87,6 +87,7 @@ function initContactForm() {
         setStatus('✅ ¡Mensaje enviado correctamente! Te responderé en breve.', 'success');
         setReviewInvite(true);
         form.reset();
+        document.dispatchEvent(new CustomEvent('site:analytics', { detail: { name: 'form_submit', params: { placement: 'contact_form' } } }));
       } else {
         let msg = `❌ Error ${res.status}`;
         try {

@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in *.astro|*.ts|*.js|*.mjs|*.css|*.json|*.md) pnpm exec prettier --write \"$f\" >/dev/null 2>&1 || true;; esac"
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); root=$(git -C \"${CLAUDE_PROJECT_DIR:-.}\" rev-parse --show-toplevel 2>/dev/null); d=$(cd \"$(dirname \"$f\")\" 2>/dev/null && pwd -P); [ -n \"$f\" ] && [ -n \"$root\" ] && [ -n \"$d\" ] || exit 0; case \"$d/\" in \"$root\"/*) case \"$f\" in *.astro|*.ts|*.js|*.mjs|*.css|*.json|*.md) pnpm exec prettier --write \"$f\" >/dev/null 2>&1 || true;; esac;; esac"
           }
         ]
       }
@@ -64,7 +64,29 @@
       "mcp__ccd_pr__bind_pr",
       "mcp__ccd_pr__set_monitor",
       "Bash(/Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/merge-pr.sh:*)",
-      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/doctor.mjs:*)"
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/doctor.mjs:*)",
+      "Bash(pnpm dev --port 4399 --strictPort)",
+      "Bash(gh pr ready *)",
+      "Bash(npx -y @fission-ai/openspec@2.0.0 validate *)",
+      "Bash(npx -y @fission-ai/openspec@2.0.0 new change *)",
+      "Bash(npx -y @fission-ai/openspec@2.0.0 archive *)",
+      "Bash(npx -y @fission-ai/openspec@2.0.0 init --tools none --no-animation .)",
+      "mcp__plugin_small-business_atlassian__getJiraIssue",
+      "mcp__plugin_small-business_atlassian__searchJiraIssuesUsingJql",
+      "mcp__plugin_small-business_atlassian__discover",
+      "mcp__plugin_small-business_atlassian__executeRead",
+      "mcp__chrome-devtools__new_page",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__take_screenshot",
+      "mcp__chrome-devtools__take_snapshot",
+      "mcp__chrome-devtools__click",
+      "mcp__chrome-devtools__fill",
+      "mcp__chrome-devtools__press_key",
+      "mcp__chrome-devtools__list_console_messages",
+      "mcp__chrome-devtools__wait_for",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__close_page",
+      "mcp__dataforseo__serp_organic_live_advanced"
     ],
     "deny": [
       "Bash(* --plugin*)",
@@ -78,7 +100,10 @@
       "Bash(rg * --pre:*)",
       "Bash(rg --pre:*)",
       "Read(./.env)",
-      "Read(./.env.*)"
+      "Read(./.env.*)",
+      "Bash(git log *--output*)",
+      "Bash(git show *--output*)",
+      "Bash(git diff *--output*)"
     ]
   }
 }

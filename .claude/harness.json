@@ -6,6 +6,7 @@
     "slug": "nuriaromero",
     "reportLanguage": "es",
     "artifactLanguage": "en",
+    "collaborationLanguage": "es",
     "summary": "Portfolio and local services site of Nuria Romero, a freelance web developer and local SEO/GEO consultant in Seville (web design, online stores, local SEO, custom software, automations, AI). Static Astro 4 + Tailwind + TypeScript site deployed on Netlify; all site copy is in Spanish."
   },
   "repo": {
@@ -22,6 +23,7 @@
     "qaExemptPaths": [
       "docs/",
       "odd/",
+      "openspec/",
       "seo/ranks/",
       ".github/workflows/",
       ".gitignore",
@@ -129,7 +131,13 @@
     }
   },
   "design": {
-    "mode": "markdown",
+    "mode": "openspec",
+    "openspec": {
+      "cliVersion": "2.0.0",
+      "changesDir": "openspec/changes",
+      "specsDir": "openspec/specs",
+      "naming": "{slug}-{n}-{storySlug}"
+    },
     "markdown": {
       "changesDir": "docs/designs",
       "template": null,

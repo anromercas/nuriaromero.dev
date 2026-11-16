@@ -40,15 +40,17 @@ test('description is 140-160 chars, speaks of tienda online and promises nothing
   }
 })
 
-test('price logic is unchanged', async () => {
-  const faq = block.match(/q:\s*"¿Cuánto cuesta una tienda online en Sevilla\?",\s*a:\s*"((?:\\.|[^"\\])*)"/)?.[1]
+test('price logic follows the store offer source', async () => {
+  const faq = block.match(/q:\s*"¿Cuánto cuesta una tienda online en Sevilla\?",\s*a:\s*`((?:\\.|[^`\\])*)`/)?.[1]
   assert.ok(faq, 'FAQ de precio no encontrada')
-  assert.match(faq, /399 €/)
+  assert.doesNotMatch(faq, /399 €/)
+  assert.match(faq, /\$\{STORE_FROM\}/)
   assert.match(faq, /presupuest/)
   const llms = await source('public/llms.txt')
   const line = llms.split('\n').find((l) => l.includes('/tienda-online-sevilla/'))
   assert.ok(line.startsWith(`- [${PHRASE}]`), line)
-  assert.match(line, /se presupuesta según el catálogo/)
+  assert.match(line, /desde 499 €/)
+  assert.doesNotMatch(line, /se presupuesta según el catálogo/)
 })
 
 test('intent signals follow the new copy', () => {

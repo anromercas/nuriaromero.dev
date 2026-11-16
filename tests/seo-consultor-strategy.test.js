@@ -5,11 +5,11 @@ import { readFile } from 'node:fs/promises'
 const source = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 
 test('seo-local-sevilla does not compete for "consultor SEO" and keeps its H2 in sync with seo-intents', async () => {
-  const [proc, intents] = await Promise.all([
-    source('src/components/seo-local/SeoLocalProcess.astro'),
+  const [route, intents] = await Promise.all([
+    source('src/pages/seo-local-sevilla.astro'),
     source('src/data/seo-intents.ts'),
   ])
-  const h2 = proc.match(/<h2 id="proceso-title" class="kw">([^<]+)<\/h2>/)?.[1]
+  const h2 = route.match(/headingId="proceso-title"\s+keyword="([^"]+)"/)?.[1]
   assert.equal(h2, 'Cómo trabajamos el SEO local en Sevilla')
   assert.doesNotMatch(h2, /consultor/i)
   assert.ok(intents.includes(`"${h2}"`), 'contentSignals mirrors the process H2')
@@ -39,8 +39,8 @@ test('Person schema presents the SEO consultant role and expertise', async () =>
 
 test('pages link to the home with the exact anchor "consultor SEO en Sevilla", once per page', async () => {
   const anchorLink = /<a href="\/"[^>]*>consultor SEO en Sevilla<\/a>/g
-  const proc = await source('src/components/seo-local/SeoLocalProcess.astro')
-  const about = await source('src/components/AboutMe.astro')
+  const proc = await source('src/pages/seo-local-sevilla.astro')
+  const about = await source('src/pages/sobre-mi.astro')
   assert.equal((proc.match(anchorLink) ?? []).length, 1, 'seo-local-sevilla')
   assert.equal((about.match(anchorLink) ?? []).length, 1, 'sobre-mi')
 

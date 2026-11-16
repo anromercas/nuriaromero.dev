@@ -1,0 +1,166 @@
+---
+// Single-stroke drawings for the "ejemplos de automatización" bento tiles. Colours come
+// from BentoTile (.signal, .soft), so the drawings carry no style of their own.
+// Generic shapes only: no brand logos, no figures, no SVG text.
+interface Props {
+  kind:
+    "whatsapp" | "facturas" | "citas" | "formularios" | "avisos" | "informes";
+}
+
+const { kind } = Astro.props;
+---
+
+{kind === "whatsapp" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d="M14 20h96a8 8 0 0 1 8 8v40a8 8 0 0 1-8 8H44l-14 14V76h-16a8 8 0 0 1-8-8V28a8 8 0 0 1 8-8z"></path>
+    <rect x="26" y="36" width="64" height="7" rx="3.5" class="soft"></rect>
+    <rect x="26" y="52" width="40" height="7" rx="3.5" class="soft"></rect>
+    <circle cx="160" cy="62" r="14" class="soft"></circle>
+    <path d="M160 53v9l6 4" class="soft"></path>
+    <path
+      d="M212 56h96a8 8 0 0 1 8 8v40a8 8 0 0 1-8 8h-16v14l-14-14h-66a8 8 0 0 1-8-8V64a8 8 0 0 1 8-8z"
+      class="signal"
+    ></path>
+    <path d="M232 86l7 7 12-14" class="signal"></path>
+    <path d="M246 86l7 7 12-14" class="signal"></path>
+  </svg>
+)}
+{kind === "facturas" && (
+  <svg
+    viewBox="0 0 160 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d="M18 12h58v64l-6-5-6 5-6-5-6 5-6-5-6 5-6-5-6 5z"></path>
+    <rect x="28" y="26" width="30" height="6" rx="3" class="soft"></rect>
+    <rect x="28" y="40" width="38" height="6" rx="3" class="soft"></rect>
+    <rect x="28" y="54" width="22" height="6" rx="3" class="soft"></rect>
+    <path d="M84 52h22m-8-8l8 8-8 8" class="signal"></path>
+    <path d="M114 50h8l6 6h24v50h-38z" class="signal"></path>
+    <path d="M114 62h38" class="signal"></path>
+  </svg>
+)}
+{kind === "citas" && (
+  <svg
+    viewBox="0 0 160 230"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="22" y="14" width="116" height="92" rx="10"></rect>
+    <path d="M22 40h116" class="soft"></path>
+    <path d="M52 8v12m56-12v12"></path>
+    <rect x="38" y="52" width="14" height="12" rx="3" class="soft"></rect>
+    <rect x="62" y="52" width="14" height="12" rx="3" class="soft"></rect>
+    <rect x="86" y="52" width="14" height="12" rx="3" class="signal"></rect>
+    <rect x="110" y="52" width="14" height="12" rx="3" class="soft"></rect>
+    <rect x="38" y="74" width="14" height="12" rx="3" class="soft"></rect>
+    <rect x="62" y="74" width="14" height="12" rx="3" class="soft"></rect>
+    <path d="M93 114v34" class="signal"></path>
+    <path d="M86 142l7 7 7-7" class="signal"></path>
+    <path d="M30 158h78a8 8 0 0 1 8 8v28a8 8 0 0 1-8 8H66l-12 12v-12H30a8 8 0 0 1-8-8v-28a8 8 0 0 1 8-8z"></path>
+    <rect x="38" y="174" width="44" height="6" rx="3" class="soft"></rect>
+    <path
+      d="M132 170a8 8 0 0 1 16 0v8l4 6h-24l4-6zM136 190a4 4 0 0 0 8 0"
+      class="signal"
+    ></path>
+  </svg>
+)}
+{kind === "formularios" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="12" y="12" width="96" height="106" rx="10"></rect>
+    <rect x="26" y="28" width="68" height="10" rx="5" class="soft"></rect>
+    <rect x="26" y="48" width="68" height="10" rx="5" class="soft"></rect>
+    <rect x="26" y="68" width="44" height="10" rx="5" class="soft"></rect>
+    <rect x="26" y="92" width="44" height="16" rx="8" class="signal"></rect>
+    <path d="M122 65h40m-8-8l8 8-8 8" class="signal"></path>
+    <rect x="180" y="12" width="128" height="106" rx="10"></rect>
+    <path d="M180 38h128M180 64h128M180 90h128" class="soft"></path>
+    <path d="M222 12v106M265 12v106" class="soft"></path>
+    <path
+      d="M180 90h128v18a10 10 0 0 1-10 10H190a10 10 0 0 1-10-10z"
+      class="signal"
+    ></path>
+  </svg>
+)}
+{kind === "avisos" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d="M14 22h30l4 20H10z"></path>
+    <path d="M20 22a9 9 0 0 1 18 0"></path>
+    <path d="M10 52h38a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H32l-8 8v-8H10a5 5 0 0 1-5-5V57a5 5 0 0 1 5-5z"></path>
+    <rect x="8" y="94" width="44" height="26" rx="5"></rect>
+    <path d="M8 102h44" class="soft"></path>
+    <path
+      d="M62 32h50q24 0 44 30M62 64h94M62 107h50q24 0 44-34"
+      class="soft"
+    ></path>
+    <path
+      d="M232 26a30 30 0 0 0-30 30v20l-10 16h80l-10-16V56a30 30 0 0 0-30-30z"
+      class="signal"
+    ></path>
+    <path d="M220 100a12 12 0 0 0 24 0" class="signal"></path>
+    <path
+      d="M272 32a40 40 0 0 1 14 26M192 32a40 40 0 0 0-14 26"
+      class="signal"
+    ></path>
+  </svg>
+)}
+{kind === "informes" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="10" y="22" width="76" height="86" rx="8"></rect>
+    <path d="M10 50h76M10 78h76M36 22v86M62 22v86" class="soft"></path>
+    <path d="M98 65h28m-8-8l8 8-8 8" class="signal"></path>
+    <rect x="138" y="12" width="64" height="106" rx="8"></rect>
+    <rect x="150" y="28" width="40" height="7" rx="3.5" class="soft"></rect>
+    <rect x="150" y="46" width="40" height="7" rx="3.5" class="soft"></rect>
+    <rect x="150" y="64" width="26" height="7" rx="3.5" class="soft"></rect>
+    <path d="M214 65h28m-8-8l8 8-8 8" class="signal"></path>
+    <rect x="254" y="38" width="58" height="52" rx="6" class="signal"></rect>
+    <path d="M254 44l29 24 29-24" class="signal"></path>
+  </svg>
+)}
