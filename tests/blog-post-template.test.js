@@ -113,3 +113,37 @@ for (const slug of slugs) {
     );
   });
 }
+
+// --- Table borders (NRD-232) ---------------------------------------------------
+
+const luminance = (hex) => {
+  const [r, g, b] = [1, 3, 5].map((i) => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+const contrast = (a, b) => {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+};
+const token = (name) =>
+  read("src/styles/template.css").match(
+    new RegExp(`--${name}:\\s*(#[0-9a-fA-F]{6})`),
+  )?.[1];
+
+test("table cell borders use the hairline-strong token", () => {
+  const css = layout.slice(layout.indexOf("<style"));
+  const rule = css.match(
+    /\.post-prose :global\(th\),\s*\.post-prose :global\(td\)\s*\{[^}]*\}/,
+  )?.[0];
+  assert.ok(rule, "th/td rule not found");
+  assert.match(rule, /border:\s*1px solid var\(--hairline-strong\)/);
+});
+
+test("hairline-strong reaches 3:1 on ground and card surfaces", () => {
+  const strong = token("hairline-strong");
+  assert.ok(strong, "--hairline-strong missing in template.css");
+  assert.ok(contrast(strong, token("ink-ground")) >= 3);
+  assert.ok(contrast(strong, token("card-surface")) >= 3);
+});
