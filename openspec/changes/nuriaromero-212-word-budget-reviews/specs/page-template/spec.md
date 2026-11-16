@@ -1,23 +1,8 @@
-## MODIFIED Requirements
+## ADDED Requirements
 
-### Requirement: Template pages meet their contract at build time
+### Requirement: Word budget excludes live third-party content
 
-Every page registered as a template page SHALL pass a build-time check of its contract: visible word count in `<main>` inside its declared range when one is declared, visible FAQ questions equal to the FAQPage questions in the same order, and a Service entity present or absent as declared. The word count MUST NOT include the text inside any element marked as live third-party content with the attribute `data-word-budget="exclude"`, so a page measures the same with and without that content; the live Google review quote of the real proof section SHALL carry that marker on its whole block (quote text, stars, author, date and link to Google).
-
-#### Scenario: FAQ and structured data diverge
-
-- **WHEN** a registered page shows a question that the FAQPage does not list, or the reverse
-- **THEN** the template page check fails naming the page and the question
-
-#### Scenario: Word count over the target
-
-- **WHEN** a registered page has more visible words in `<main>` than its declared maximum
-- **THEN** the template page check fails with the measured count and the range
-
-#### Scenario: Unexpected Service entity
-
-- **WHEN** a page declared without Service emits a Service entity
-- **THEN** the template page check fails
+The template page word count in `<main>` MUST NOT include the text inside any element marked with the attribute `data-word-budget="exclude"`, so a page measures the same with and without that live third-party content. The live Google review quote of the real proof section SHALL carry that marker on its whole block.
 
 #### Scenario: Same count with and without the review quote
 
