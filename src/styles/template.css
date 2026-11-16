@@ -26,6 +26,8 @@
   --action-blue: #2563eb;
   --action-blue-hover: #1d4ed8;
   --action-blue-border: #60a5fa;
+  --status-error: #fca5a5;
+  --status-success: #86efac;
 
   /* Channel triplets for the alpha uses: rgb(var(--sky-signal-rgb) / 0.18) */
   --sky-signal-rgb: 56 189 248;

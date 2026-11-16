@@ -23,6 +23,8 @@ colors:
   action-blue: "#2563eb"
   action-blue-hover: "#1d4ed8"
   action-blue-border: "#60a5fa"
+  status-error: "#fca5a5"
+  status-success: "#86efac"
 typography:
   display:
     fontFamily: "Onest Variable, system-ui, sans-serif"
@@ -144,6 +146,7 @@ Near-black navy grounds, slate text steps, one cool signal hue and one warm rese
 - **Text**: `text-strong` for headings and key figures, `text-body` section default, `text-secondary` paragraphs, `text-muted` captions and meta, `drawing-soft` for de-emphasised illustration strokes.
 - **Site Ground** (`site-ground`): the global body ground from Layout (gray-950) under the page ground.
 - **Action Blue** (`action-blue` fill, `action-blue-border` border): the shared booking button, inherited from the older site; the only solid-fill control.
+- **Status** (`status-error`, `status-success`): form feedback text only (the contact form status line on `card-surface`), never decoration.
 
 ### Named Rules
 
