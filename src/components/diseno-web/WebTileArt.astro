@@ -1,0 +1,167 @@
+---
+// Single-stroke drawings for the "qué incluye tu web" bento tiles. Colours come
+// from BentoTile (.signal, .soft, .label), so the drawings carry no style of their own.
+interface Props {
+  kind: "movil" | "seo-local" | "contacto" | "google" | "dominio" | "soporte";
+}
+
+const { kind } = Astro.props;
+---
+
+{kind === "google" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="8" y="14" width="184" height="102" rx="10"></rect>
+    <rect x="24" y="30" width="116" height="12" rx="6" class="signal"></rect>
+    <rect x="24" y="54" width="150" height="8" rx="4" class="soft"></rect>
+    <rect x="24" y="70" width="128" height="8" rx="4" class="soft"></rect>
+    <rect x="24" y="92" width="62" height="12" rx="6"></rect>
+    <rect x="208" y="14" width="104" height="102" rx="10" class="soft"></rect>
+    <path d="M208 52h104M208 84h104M244 14v102M278 14v102" class="soft"></path>
+    <path
+      d="M260 94c-9-10-16-16-16-25a16 16 0 0 1 32 0c0 9-7 15-16 25z"
+      class="signal"
+    ></path>
+    <circle cx="260" cy="69" r="5.5" class="signal"></circle>
+  </svg>
+)}
+
+{kind === "contacto" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path
+      d="M16 14h110a8 8 0 0 1 8 8v44a8 8 0 0 1-8 8H58l-24 22V74H16a8 8 0 0 1-8-8V22a8 8 0 0 1 8-8z"
+      class="signal"
+    ></path>
+    <path d="M30 34h70M30 52h46" class="signal"></path>
+    <rect x="170" y="14" width="142" height="22" rx="6"></rect>
+    <rect x="170" y="44" width="142" height="22" rx="6"></rect>
+    <rect x="170" y="74" width="142" height="22" rx="6" class="soft"></rect>
+    <rect x="236" y="104" width="76" height="18" rx="9" class="signal"></rect>
+  </svg>
+)}
+
+{kind === "movil" && (
+  <svg
+    viewBox="0 0 320 300"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="70" y="8" width="180" height="284" rx="24"></rect>
+    <path d="M140 22h40"></path>
+    <rect x="90" y="44" width="140" height="18" rx="9" class="signal"></rect>
+    <rect x="90" y="72" width="110" height="8" rx="4" class="soft"></rect>
+    <rect x="90" y="88" width="126" height="8" rx="4" class="soft"></rect>
+    <rect x="90" y="112" width="140" height="56" rx="8"></rect>
+    <rect x="102" y="124" width="32" height="32" rx="5" class="soft"></rect>
+    <rect x="146" y="126" width="72" height="8" rx="4"></rect>
+    <rect x="146" y="142" width="48" height="8" rx="4" class="soft"></rect>
+    <rect x="90" y="180" width="140" height="56" rx="8"></rect>
+    <rect x="102" y="192" width="32" height="32" rx="5" class="soft"></rect>
+    <rect x="146" y="194" width="72" height="8" rx="4"></rect>
+    <rect x="146" y="210" width="48" height="8" rx="4" class="soft"></rect>
+    <rect x="90" y="248" width="140" height="30" rx="15" class="signal"></rect>
+  </svg>
+)}
+
+{kind === "seo-local" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="8" y="8" width="176" height="114" rx="10"></rect>
+    <rect x="24" y="24" width="112" height="14" rx="7" class="signal"></rect>
+    <rect x="24" y="50" width="144" height="8" rx="4" class="soft"></rect>
+    <rect x="24" y="66" width="120" height="8" rx="4" class="soft"></rect>
+    <rect x="24" y="82" width="136" height="8" rx="4" class="soft"></rect>
+    <rect x="24" y="100" width="84" height="8" rx="4" class="soft"></rect>
+    <path
+      d="M236 86c-10-12-18-19-18-30a18 18 0 0 1 36 0c0 11-8 18-18 30z"
+      class="signal"
+    ></path>
+    <circle cx="236" cy="56" r="6" class="signal"></circle>
+    <text x="236" y="112" text-anchor="middle" class="label">
+      Sevilla
+    </text>
+  </svg>
+)}
+
+{kind === "dominio" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="8" y="10" width="196" height="38" rx="19"></rect>
+    <text x="28" y="35" class="label">
+      tunegocio.es
+    </text>
+    <circle cx="170" cy="29" r="7" class="signal"></circle>
+    <path d="M177 29h19M189 29v6M196 29v4" class="signal"></path>
+    <path d="M106 48v22h138v14" class="soft"></path>
+    <rect x="196" y="84" width="96" height="18" rx="6"></rect>
+    <path d="M208 93h40" class="soft"></path>
+    <rect x="196" y="106" width="96" height="18" rx="6"></rect>
+    <path d="M208 115h40" class="soft"></path>
+  </svg>
+)}
+
+{kind === "soporte" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d="M24 82h272" class="soft"></path>
+    <path d="M24 74v16M110 74v16M196 74v16M282 74v16" class="soft"></path>
+    <circle cx="24" cy="82" r="12" class="signal"></circle>
+    <path d="M18 82l4.5 4.5L31 77" class="signal"></path>
+    <path
+      d="M120 14h74a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8h-52l-14 12V46h-8a8 8 0 0 1-8-8V22a8 8 0 0 1 8-8z"
+      class="soft"
+    ></path>
+    <path d="M132 30h46" class="soft"></path>
+    <path
+      d="M236 36h60a8 8 0 0 1 8 8v12a8 8 0 0 1-8 8h-4v10l-12-10h-44a8 8 0 0 1-8-8V44a8 8 0 0 1 8-8z"
+      class="signal"
+    ></path>
+    <path d="M246 50h38" class="signal"></path>
+  </svg>
+)}
