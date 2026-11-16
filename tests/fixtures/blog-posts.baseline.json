@@ -1,0 +1,294 @@
+{
+  "como-aparecer-en-google-maps-negocio-sevilla": {
+    "title": "Cómo aparecer en Google Maps si tienes un negocio en Sevilla (guía práctica)",
+    "description": "Guía práctica para gestionar tu Perfil de Empresa en Google: completar la ficha, responder reseñas y mejorar la información local de tu negocio en Sevilla.",
+    "canonical": "https://nuriaromero.dev/blog/como-aparecer-en-google-maps-negocio-sevilla/",
+    "jsonld": [
+      {
+        "@type": "Article",
+        "headline": "Cómo aparecer en Google Maps si tienes un negocio en Sevilla (guía práctica)",
+        "description": "Guía práctica para gestionar tu Perfil de Empresa en Google: completar la ficha, responder reseñas y mejorar la información local de tu negocio en Sevilla.",
+        "url": "https://nuriaromero.dev/blog/como-aparecer-en-google-maps-negocio-sevilla/",
+        "image": "https://nuriaromero.dev/og/og-default.png",
+        "datePublished": "2026-07-01T00:00:00.000Z",
+        "dateModified": "2026-07-01T00:00:00.000Z",
+        "author": {
+          "@id": "https://nuriaromero.dev/#person"
+        },
+        "publisher": {
+          "@id": "https://nuriaromero.dev/#business"
+        },
+        "inLanguage": "es"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://nuriaromero.dev/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://nuriaromero.dev/blog/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Cómo aparecer en Google Maps si tienes un negocio en Sevilla (guía práctica)",
+            "item": "https://nuriaromero.dev/blog/como-aparecer-en-google-maps-negocio-sevilla/"
+          }
+        ]
+      }
+    ],
+    "bodyText": "Cuando alguien busca “cerrajero cerca de mí” o “cafetería en Nervión”, Google puede mostrar resultados locales en Maps y en la Búsqueda. La posición depende de varios factores y no se puede garantizar; esta guía explica cómo mantener útil y completa la ficha de tu negocio. Respuesta corta Para aparecer en Google Maps necesitas crear o reclamar tu ficha de Google Business Profile, completarla al 100 % con información real y coherente con tu web, y mantenerla activa con reseñas y novedades. Ninguna de estas acciones garantiza una posición concreta, pero sí mejora la información disponible sobre tu negocio. ¿Qué es Google Business Profile y por qué es gratis? Google Business Profile (antes Google My Business) es la ficha de tu negocio en Google: la tarjeta con fotos, horario, reseñas y teléfono que puede aparecer en Maps y en las búsquedas. Mantenerla actualizada ayuda a que los clientes encuentren información práctica del negocio. ¿Cómo creo o reclamo mi ficha de Google Business Profile? Entra en google.com/business con una cuenta de Google. Busca tu negocio: puede que Google ya haya creado una ficha automática. Si existe, reclámala; si no, créala. Verifica la ficha con uno de los métodos que Google muestre para tu negocio; las opciones dependen del perfil y no siempre se pueden elegir ( métodos de verificación ). ¿Qué información debo completar en la ficha? La información completa y precisa puede ayudar a que el negocio aparezca en búsquedas locales relevantes. Google explica que los resultados dependen principalmente de relevancia, distancia y prominencia; ninguna mejora garantiza una posición concreta ( guía oficial de posicionamiento local ). Nombre real del negocio , tal como se presenta a los clientes ( directrices de Google ) Categoría principal adecuada y categorías adicionales pertinentes ( cómo elegir categorías ) Dirección, horario y teléfono precisos y coherentes entre la ficha y la web Descripción con tus servicios y tu zona (“…en el barrio de Triana, Sevilla”) Fotos reales : fachada, interior, equipo y productos ayudan a mostrar qué ofrece el negocio Servicios y productos detallados, con precios si puedes ¿Cómo consigo reseñas que marquen la diferencia? Las reseñas pueden ayudar a que el negocio destaque y aportan información a posibles clientes. Google recomienda pedirlas sin incentivos y responderlas ( consejos oficiales para conseguir reseñas ). Pide la reseña en el momento de máxima satisfacción : al entregar el trabajo, no una semana después. Pónselo fácil : Google genera un enlace directo para dejar reseña; envíalo por WhatsApp. Responde las reseñas con información útil. Google recomienda responder para mostrar que valoras las opiniones ( consejos oficiales ). No compres reseñas ni ofrezcas incentivos a cambio: infringe las políticas de Google. ¿Cómo conecto la ficha con mi página web? La ficha y la web se refuerzan mutuamente. Para que Google confíe: El nombre, dirección y teléfono deben ser idénticos en ficha y web (lo que en SEO llamamos NAP) Enlaza la web desde la ficha y la ficha desde la web Los datos estructurados de negocio local describen información del negocio para Google; no garantizan una posición ni que se muestre un resultado enriquecido ( documentación de LocalBusiness y políticas de datos estructurados ) Este último punto es donde una web bien hecha marca la diferencia: así las construyo yo . ¿Cómo mantengo la ficha actualizada? Mantén la información de la ficha al día: Publica novedades u ofertas cuando tengas información útil que compartir Actualiza el horario en festivos y fechas especiales, como Semana Santa o Feria Añade fotos nuevas periódicamente Responde las preguntas que deja la gente ¿Cuánto tarda en notarse? No hay un plazo fiable para notar cambios en visibilidad: depende de la búsqueda, la ubicación y otros factores. Puedes revisar las métricas disponibles en el informe de rendimiento del Perfil de Empresa . ¿Prefieres que te lo deje montado? Puedo ayudarte a completar la ficha, conectarla con tu web y preparar un enlace para solicitar reseñas. Cuéntame tu caso y revisamos qué necesita tu negocio.",
+    "bodyLinks": [
+      {
+        "href": "https://www.google.com/business/",
+        "text": "google.com/business"
+      },
+      {
+        "href": "https://support.google.com/business/answer/7107242?hl=es",
+        "text": "métodos de verificación"
+      },
+      {
+        "href": "https://support.google.com/business/answer/7091?hl=es",
+        "text": "guía oficial de posicionamiento local"
+      },
+      {
+        "href": "https://support.google.com/business/answer/3038177?hl=es",
+        "text": "directrices de Google"
+      },
+      {
+        "href": "https://support.google.com/business/answer/7249669?hl=es",
+        "text": "cómo elegir categorías"
+      },
+      {
+        "href": "https://support.google.com/business/answer/3474122?hl=es",
+        "text": "consejos oficiales para conseguir reseñas"
+      },
+      {
+        "href": "https://support.google.com/business/answer/7091?hl=es",
+        "text": "consejos oficiales"
+      },
+      {
+        "href": "https://developers.google.com/search/docs/appearance/structured-data/local-business",
+        "text": "documentación de LocalBusiness"
+      },
+      {
+        "href": "https://developers.google.com/search/docs/appearance/structured-data/sd-policies",
+        "text": "políticas de datos estructurados"
+      },
+      {
+        "href": "/diseno-web-sevilla/",
+        "text": "así las construyo yo"
+      },
+      {
+        "href": "https://support.google.com/business/answer/9918094?hl=es",
+        "text": "informe de rendimiento del Perfil de Empresa"
+      },
+      {
+        "href": "/contacto/",
+        "text": "Cuéntame tu caso"
+      }
+    ]
+  },
+  "cuanto-cuesta-una-pagina-web-en-sevilla": {
+    "title": "¿Cuánto cuesta una página web en Sevilla? Qué influye en el precio",
+    "description": "Qué factores influyen en el precio de una página web para un negocio en Sevilla y qué conviene revisar al comparar presupuestos.",
+    "canonical": "https://nuriaromero.dev/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
+    "jsonld": [
+      {
+        "@type": "Article",
+        "headline": "¿Cuánto cuesta una página web en Sevilla? Qué influye en el precio",
+        "description": "Qué factores influyen en el precio de una página web para un negocio en Sevilla y qué conviene revisar al comparar presupuestos.",
+        "url": "https://nuriaromero.dev/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
+        "image": "https://nuriaromero.dev/og/og-default.png",
+        "datePublished": "2026-07-07T00:00:00.000Z",
+        "dateModified": "2026-07-07T00:00:00.000Z",
+        "author": {
+          "@id": "https://nuriaromero.dev/#person"
+        },
+        "publisher": {
+          "@id": "https://nuriaromero.dev/#business"
+        },
+        "inLanguage": "es"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://nuriaromero.dev/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://nuriaromero.dev/blog/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "¿Cuánto cuesta una página web en Sevilla? Qué influye en el precio",
+            "item": "https://nuriaromero.dev/blog/cuanto-cuesta-una-pagina-web-en-sevilla/"
+          }
+        ]
+      }
+    ],
+    "bodyText": "El precio de una página web puede variar mucho según el alcance, el contenido y el trabajo técnico incluido. Sin una muestra documentada de presupuestos locales no corresponde presentar cifras como si fueran un estudio del mercado sevillano. Estas son las partidas que conviene comparar antes de contratar. Respuesta corta El precio de una web en Sevilla depende del alcance, el contenido y el trabajo técnico incluido; no existe una cifra única de mercado que se pueda dar como referencia fiable. Antes de comparar presupuestos conviene revisar qué incluye cada partida (rendimiento, SEO, contacto) y qué queda fuera. ¿Qué hace variar el presupuesto de una web? Una web sencilla con una plantilla y contenido ya preparado no requiere el mismo trabajo que un proyecto con diseño a medida, tienda online, redacción, integraciones o soporte continuado. Dominio, alojamiento, mantenimiento y licencias también pueden cobrarse aparte; pide que cada partida y su renovación queden claras en la propuesta. ¿Qué debo revisar en una propuesta económica? El precio por sí solo no permite saber si una web resolverá las necesidades del negocio. Comprueba qué trabajo incluye y qué queda fuera antes de comparar propuestas. Rendimiento : pide mediciones y cómo se obtuvieron. En Core Web Vitals, un LCP de hasta 2,5 segundos se considera “bueno” en el percentil 75; no es un umbral de penalización automática ( definición de umbrales ). SEO técnico y contenido : consulta si se incluyen estructura de encabezados, contenido útil, indexación y datos estructurados pertinentes. Ningún proveedor puede garantizar una posición concreta en Google. Contacto : revisa si el diseño facilita las acciones que necesita tu negocio, como llamar, escribir o pedir presupuesto. ¿Qué debe incluir una web profesional para un negocio local? Cuando compares presupuestos, comprueba que incluyan: Diseño adaptable a móvil y probado en pantallas habituales Textos optimizados para SEO local : que trabajen las búsquedas reales de tus clientes (“fontanero en Triana”, “clínica dental Sevilla este”…) Rendimiento medido — pide resultados de PageSpeed Insights y aclara si se refieren a laboratorio o datos de usuarios reales; 2,5 s es el umbral “bueno” de LCP en el percentil 75, no una garantía general de carga completa ( web.dev ) Botón de WhatsApp y formulario de contacto Alta en Google : Search Console, sitemap y ficha de Google Business Profile conectada Propiedad : dominio y hosting a tu nombre, no del diseñador ¿Qué preguntas debo hacer antes de contratar una web? ¿El dominio y el hosting quedan a mi nombre? ¿Puedo ver webs tuyas funcionando y cómo posicionan en Google? ¿Qué velocidad de carga tendrá? ¿Me lo demuestras con datos? ¿El precio es cerrado o pueden aparecer extras? ¿Qué pasa después del lanzamiento? ¿Hay soporte incluido? Si alguien no puede responderte con claridad a estas cinco, sigue buscando. ¿Cómo trabajo en cada proyecto? Soy desarrolladora de software con más de 10 años de experiencia . En cada propuesta detallo el alcance, el trabajo de SEO técnico previsto, los costes recurrentes y el soporte incluido. El rendimiento final depende del contenido, los recursos y el entorno de uso; si la medición es importante para tu proyecto, podemos acordar cómo comprobarlo. Puedes consultar mi servicio de diseño web y qué incluye , o escribirme con los detalles de tu proyecto para valorar el alcance.",
+    "bodyLinks": [
+      {
+        "href": "https://web.dev/articles/defining-core-web-vitals-thresholds",
+        "text": "definición de umbrales"
+      },
+      {
+        "href": "https://web.dev/articles/defining-core-web-vitals-thresholds",
+        "text": "web.dev"
+      },
+      {
+        "href": "/sobre-mi/",
+        "text": "desarrolladora de software con más de 10 años de experiencia"
+      },
+      {
+        "href": "/diseno-web-sevilla/",
+        "text": "mi servicio de diseño web y qué incluye"
+      },
+      {
+        "href": "/contacto/",
+        "text": "escribirme"
+      }
+    ]
+  },
+  "pagina-web-para-restaurantes-que-necesita": {
+    "title": "Página web para tu restaurante: qué necesita de verdad (y qué no)",
+    "description": "Qué puede aportar la web de un restaurante o bar en Sevilla: carta digital, opciones de reserva, información local y fotos; y qué conviene priorizar.",
+    "canonical": "https://nuriaromero.dev/blog/pagina-web-para-restaurantes-que-necesita/",
+    "jsonld": [
+      {
+        "@type": "Article",
+        "headline": "Página web para tu restaurante: qué necesita de verdad (y qué no)",
+        "description": "Qué puede aportar la web de un restaurante o bar en Sevilla: carta digital, opciones de reserva, información local y fotos; y qué conviene priorizar.",
+        "url": "https://nuriaromero.dev/blog/pagina-web-para-restaurantes-que-necesita/",
+        "image": "https://nuriaromero.dev/og/og-default.png",
+        "datePublished": "2026-06-24T00:00:00.000Z",
+        "dateModified": "2026-06-24T00:00:00.000Z",
+        "author": {
+          "@id": "https://nuriaromero.dev/#person"
+        },
+        "publisher": {
+          "@id": "https://nuriaromero.dev/#business"
+        },
+        "inLanguage": "es"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://nuriaromero.dev/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://nuriaromero.dev/blog/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Página web para tu restaurante: qué necesita de verdad (y qué no)",
+            "item": "https://nuriaromero.dev/blog/pagina-web-para-restaurantes-que-necesita/"
+          }
+        ]
+      }
+    ],
+    "bodyText": "Muchos comensales consultan información online antes de elegir dónde comer, pero el peso de cada canal depende del público y del restaurante. Una web clara y fácil de usar puede ayudar a mostrar la carta, los horarios y las opciones de contacto; no garantiza más reservas por sí sola. Respuesta corta Una web de restaurante en Sevilla necesita, como mínimo, una carta digital editable y legible en el móvil, un canal sencillo para reservar o consultar (como WhatsApp) y la información básica bien visible: horario, dirección y contacto. El resto —vídeos, pedidos online propios, animaciones— depende del volumen real del negocio, no es imprescindible desde el primer día. ¿Qué es imprescindible en la web de un restaurante? 1. Carta digital que se lea bien en el móvil Nada de PDF escaneados que hay que ampliar con los dedos. La carta debe ser una página web normal: rápida, legible y fácil de actualizar cuando cambies un plato o un precio. Un QR en las mesas permite enlazar a esa versión digital; valora también ofrecer una alternativa impresa. 2. Reservas sin coger el teléfono En hora punta puede ser difícil atender llamadas. Un enlace para consultar o reservar por WhatsApp permite que el cliente escriba cuando le resulte cómodo, aunque alguien tendrá que responder y confirmar la disponibilidad. Si necesitas confirmar reservas automáticamente o gestionar muchas solicitudes, compara un sistema especializado con el canal directo. 3. Información local útil para quienes buscan dónde comer Algunas búsquedas de restaurantes incluyen una zona o un tipo de comida, por ejemplo “restaurante en Triana” o “arroz en Sevilla”. Para ayudar a posibles clientes a entender tu oferta, puedes incluir: Textos que mencionen tu zona y tu especialidad de forma natural Datos estructurados de negocio local que describan correctamente la información visible, como dirección y horario. Pueden ayudar a Google a entender la página, pero no garantizan que esos datos aparezcan en los resultados ( documentación de LocalBusiness y políticas de Google ) Conexión con tu ficha de Google Maps — aquí tienes la guía completa de Google Business Profile 4. Fotos que abran el apetito Las fotos ayudan a mostrar los platos y el ambiente del local. Prioriza imágenes claras y representativas; la cantidad necesaria depende de la carta y de los recursos disponibles. 5. La información que todo el mundo busca Horario actualizado (con festivos), dirección con mapa, teléfono pulsable, si tienes terraza, si admites grupos, opciones para alérgenos. Una ficha completa reduce dudas y facilita que cada persona decida si el restaurante se ajusta a lo que busca. ¿En qué no merece la pena gastar el presupuesto? Vídeos de fondo y animaciones innecesarias : pueden añadir peso y distraer; comprueba el rendimiento antes de publicarlas. Música automática : no. Nunca. Pedidos online propios desde el día uno : si no tienes volumen de delivery, es pagar por mantener algo que no se usa. Empieza con carta + reservas y amplía cuando los números lo pidan. Traducciones automáticas sin revisar : si recibes clientes de otros idiomas, ofrece traducciones correctas; si no, prioriza el idioma que use tu público. ¿Cómo combino mi web con plataformas externas como TripAdvisor? TripAdvisor, TheFork y otros directorios pueden aportar visibilidad, pero sus condiciones, funciones y posibles comisiones varían según el servicio y el acuerdo. En tu propia web puedes explicar cómo contactar o reservar directamente; combinarla con perfiles y plataformas externas depende de dónde te encuentre tu público y del coste de cada canal. ¿Qué incluyo yo en una web para restaurantes? He preparado una página específica con todo lo que incluye una web para restaurantes en Sevilla : carta digital editable con QR, reservas por WhatsApp, SEO local para tu zona y conexión con Google Maps, con precio orientativo. ¿Tienes un bar o restaurante en Sevilla? Escríbeme y te digo, viendo tu caso concreto, qué te conviene y qué no — aunque sea quitarte cosas del presupuesto.",
+    "bodyLinks": [
+      {
+        "href": "https://developers.google.com/search/docs/appearance/structured-data/local-business",
+        "text": "documentación de LocalBusiness"
+      },
+      {
+        "href": "https://developers.google.com/search/docs/appearance/structured-data/sd-policies",
+        "text": "políticas de Google"
+      },
+      {
+        "href": "/blog/como-aparecer-en-google-maps-negocio-sevilla/",
+        "text": "la guía completa de Google Business Profile"
+      },
+      {
+        "href": "/web-para-restaurantes-sevilla/",
+        "text": "una web para restaurantes en Sevilla"
+      },
+      {
+        "href": "/contacto/",
+        "text": "Escríbeme"
+      }
+    ]
+  },
+  "que-es-geo-posicionamiento-ia-negocios-sevilla": {
+    "title": "Qué es el GEO y por qué tu negocio en Sevilla debería prestarle atención",
+    "description": "Guía práctica: SEO local y GEO explicados sin jerga, por qué cada vez más gente pregunta a la IA y 4 pasos para tu negocio en Sevilla.",
+    "canonical": "https://nuriaromero.dev/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
+    "jsonld": [
+      {
+        "@type": "Article",
+        "headline": "Qué es el GEO y por qué tu negocio en Sevilla debería prestarle atención",
+        "description": "Guía práctica: SEO local y GEO explicados sin jerga, por qué cada vez más gente pregunta a la IA y 4 pasos para tu negocio en Sevilla.",
+        "url": "https://nuriaromero.dev/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
+        "image": "https://nuriaromero.dev/og/og-default.png",
+        "datePublished": "2026-09-21T00:00:00.000Z",
+        "dateModified": "2026-09-21T00:00:00.000Z",
+        "author": {
+          "@id": "https://nuriaromero.dev/#person"
+        },
+        "publisher": {
+          "@id": "https://nuriaromero.dev/#business"
+        },
+        "inLanguage": "es"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://nuriaromero.dev/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://nuriaromero.dev/blog/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Qué es el GEO y por qué tu negocio en Sevilla debería prestarle atención",
+            "item": "https://nuriaromero.dev/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/"
+          }
+        ]
+      }
+    ],
+    "bodyText": "Respuesta corta El SEO local ayuda a que tu negocio aparezca en búsquedas de Google relacionadas con una zona; el GEO organiza esa información para que los asistentes de inteligencia artificial puedan entenderla y citarla. Ninguna de las dos disciplinas garantiza una posición o una mención concreta, pero ambas mejoran la claridad de la información disponible sobre tu negocio. En el resto de la guía encontrarás las definiciones, los límites de cada concepto y cuatro acciones concretas para empezar sin inventar datos ni prometer resultados. ¿Qué es el SEO local? El SEO local es el trabajo para mejorar la presencia de tu negocio cuando alguien busca en Google algo de tu sector y tu zona: “pastelería en Nervión”, “fontanero cerca de mí” o “clínica dental Triana”. No depende de un solo factor. Suele apoyarse en varios elementos: una ficha de Google Business Profile completa; una web con información clara; reseñas de clientes reales; y el mismo nombre, dirección y teléfono en los sitios donde aparece tu negocio. Nadie puede garantizarte una posición concreta en Google —quien lo prometa no está siendo del todo honesto contigo—, pero sí se puede trabajar para que tu negocio tenga toda la información necesaria para aparecer cuando corresponde. ¿Qué es el GEO, la versión del SEO para la inteligencia artificial? GEO son las siglas de Generative Engine Optimization, un término que se puede traducir como “optimización para buscadores generativos”. En la práctica, el GEO consiste en presentar información clara y accesible para que un asistente pueda entenderla y, si corresponde, mencionarte cuando alguien pregunta qué negocio elegir en una zona concreta. No garantiza que un asistente vaya a citarte. Un asistente de inteligencia artificial, en términos sencillos, es un programa al que le escribes una pregunta como si hablaras con una persona y que te contesta con una respuesta ya redactada, en vez de darte enlaces para que busques tú mismo la información. Para poder citarte, necesita encontrar en algún sitio (tu web, tu ficha de Google) información clara sobre quién eres, qué ofreces y dónde estás. ¿En qué se diferencian el SEO local y el GEO? Ambas disciplinas parten de la misma base (información clara y coherente sobre tu negocio), pero optimizan para lectores distintos: Aspecto SEO local GEO Qué optimiza Que tu negocio aparezca en Google Maps y en la búsqueda clásica de tu zona Que un asistente de IA (ChatGPT, Perplexity, AI Overviews) pueda entender tu negocio y, si corresponde, citarlo Dónde se nota Google Maps y los resultados locales de la búsqueda tradicional Las respuestas redactadas por asistentes de inteligencia artificial Qué necesita como base Ficha de Google Business Profile completa y NAP coherente (mismo nombre, dirección y teléfono en todas partes) Información clara y bien estructurada, con FAQs y datos estructurados que un asistente pueda citar directamente Qué no garantiza ninguno de los dos Una posición concreta en Google Que un asistente te mencione en su respuesta ¿Por qué importa el GEO ahora? Cada vez es más habitual que, en vez de escribir una búsqueda clásica en Google, la gente le pregunte directamente a uno de estos asistentes de IA. Es una tendencia que reconocen tanto los propios buscadores como los medios del sector, aunque no vamos a darte aquí una cifra concreta porque no podríamos sostenerla con datos propios verificables. Lo relevante para tu negocio es más sencillo: si esa persona pregunta por tu sector y tu zona, y tu negocio no tiene información clara y accesible en ningún sitio, el asistente simplemente no tiene de dónde sacarte para recomendarte. ¿Qué cuatro cosas puedes hacer ya? Completa tu ficha de Google Business Profile con la categoría, el horario real, las fotos, la descripción de tus servicios y tu zona. Redacta preguntas frecuentes claras con las dudas reales de tus clientes, como “¿tenéis aparcamiento?” o “¿hacéis envíos a toda Sevilla?“. Añade datos estructurados básicos : es código invisible para el visitante que describe qué es tu negocio, dónde está y qué ofreces. Mantén la información coherente en tu web, tu ficha de Google y tus redes sociales: mismo nombre, dirección y teléfono. ¿Prefieres que te lo monte alguien? Ninguno de estos cuatro puntos requiere que contrates a nadie, pero si prefieres no ocuparte tú del detalle técnico, es justo lo que trabajo en mi servicio de SEO local y GEO en Sevilla : ficha de Google, datos estructurados y FAQs pensadas también para buscadores con IA. Si todavía no tienes web propia donde apoyar todo esto, primero hace falta una web bien construida — es la base sobre la que se sostiene todo lo demás.",
+    "bodyLinks": [
+      {
+        "href": "https://nuriaromero.dev/seo-local-sevilla/",
+        "text": "mi servicio de SEO local y GEO en Sevilla"
+      },
+      {
+        "href": "https://nuriaromero.dev/diseno-web-sevilla/",
+        "text": "una web bien construida"
+      }
+    ]
+  }
+}

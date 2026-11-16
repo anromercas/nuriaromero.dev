@@ -1,19 +1,30 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import Schema from "@/components/seo/Schema.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
-import Breadcrumbs from "@/components/Breadcrumbs.astro"
-import { breadcrumbSchema } from "@/lib/schema"
-import { getCollection } from "astro:content"
+import Layout from "@/layouts/Layout.astro";
+import Schema from "@/components/seo/Schema.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import SectionHeading from "@/components/seo-local/SectionHeading.astro";
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
+import { breadcrumbSchema } from "@/lib/schema";
+import { getCollection } from "astro:content";
+import "@/styles/template.css";
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-)
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
   { name: "Blog", url: "/blog/" },
-]
+];
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("es-ES", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 ---
 
 <Layout
@@ -21,51 +32,115 @@ const breadcrumbs = [
   description="Guías prácticas para dueños de negocio: cuánto cuesta una web, cómo salir en Google Maps, automatizaciones que ahorran tiempo y más."
 >
   <Schema slot="head" schema={breadcrumbSchema(breadcrumbs)} />
-  <main class="px-4 pt-24">
-    <SectionContainer>
-      <Breadcrumbs items={breadcrumbs} />
-      <h1
-        class="text-4xl font-bold tracking-tight text-white sm:text-5xl mb-6"
-      >
-        Blog
-      </h1>
-      <p class="text-xl text-gray-300 max-w-2xl mb-12">
-        Guías prácticas, sin tecnicismos, para que tu negocio saque partido a
-        internet: precios reales, SEO local y automatización.
-      </p>
+  <main class="template-ground px-4 pt-24">
+    <div class="space-y-24">
+      <SectionContainer>
+        <Breadcrumbs items={breadcrumbs} />
+        <SeoLocalHero
+          keyword="Blog sobre webs, SEO local y búsquedas con IA"
+          title={{
+            text: "Guías claras para decidir sin tecnicismos",
+            accent: "sin tecnicismos",
+          }}
+          subtitle="Guías prácticas y sin jerga para dueños de negocios en Sevilla que quieren entender su web, su ficha de Google y las búsquedas con IA antes de invertir."
+        />
+      </SectionContainer>
 
-      <ul class="space-y-8">
-        {
-          posts.map((post) => (
-            <li>
-              <a
-                href={`/blog/${post.slug}/`}
-                class="block rounded-xl border border-gray-700 bg-gray-800/50 p-6 transition hover:border-blue-500 hover:shadow-lg"
+      <SectionContainer id="blog-entradas">
+        <SectionHeading
+          id="blog-entradas-title"
+          keyword="Guías publicadas"
+          title={{
+            text: "De la más reciente a la más antigua",
+            accent: "más reciente",
+          }}
+        />
+        <ul class="post-rows">
+          {posts.map((post) => (
+            <li class="post-row">
+              <time
+                class="post-date"
+                datetime={post.data.pubDate.toISOString()}
               >
-                <time
-                  datetime={post.data.pubDate.toISOString()}
-                  class="text-sm text-gray-500"
-                >
-                  {post.data.pubDate.toLocaleDateString("es-ES", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </time>
-                <h2 class="mt-1 mb-2 text-2xl font-semibold text-gray-100">
-                  {post.data.title}
-                </h2>
-                <p class="text-gray-300">
-                  {post.data.description}
-                </p>
-                <span class="mt-4 inline-block font-medium text-blue-400">
-                  Leer artículo →
-                </span>
-              </a>
+                {formatDate(post.data.pubDate)}
+              </time>
+              <div class="post-body">
+                <h3 class="post-title">
+                  <a class="tpl-link" href={`/blog/${post.slug}/`}>
+                    {post.data.title}
+                  </a>
+                </h3>
+                <p class="post-text">{post.data.description}</p>
+              </div>
             </li>
-          ))
-        }
-      </ul>
-    </SectionContainer>
+          ))}
+        </ul>
+      </SectionContainer>
+
+      <SectionContainer>
+        <SeoLocalClosing
+          headingId="blog-cierre-title"
+          keyword="Reserva una llamada"
+          title={{
+            text: "¿Quieres aplicarlo a tu negocio?",
+            accent: "a tu negocio",
+          }}
+          text="Si después de leer te quedan dudas sobre tu web, tu ficha de Google o las búsquedas con IA, lo vemos juntos en una llamada."
+        />
+      </SectionContainer>
+    </div>
   </main>
 </Layout>
+
+<style>
+  .post-rows {
+    margin: 2.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .post-row {
+    display: grid;
+    gap: 0.5rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .post-date {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .post-title {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+
+  .post-text {
+    max-width: 60ch;
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  @media (min-width: 768px) {
+    .post-row {
+      grid-template-columns: 11rem minmax(0, 1fr);
+      column-gap: 2rem;
+      align-items: baseline;
+    }
+
+    .post-title {
+      font-size: 1.375rem;
+    }
+  }
+</style>
