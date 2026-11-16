@@ -392,6 +392,7 @@ test("chatbot answer hands off to a person with no absolute guarantee", () => {
   const { a } = inteligenciaArtificial.faqs[4];
   assert.match(a, /persona/);
   assert.match(a, /no .*garant/i);
+  assert.doesNotMatch(a, /mucho/i, "no unbacked effectiveness claim");
   assert.doesNotMatch(a, /siempre acierta|100 ?%/i);
 });
 

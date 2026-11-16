@@ -403,7 +403,7 @@ export const inteligenciaArtificial: ServicePageData = {
   seo: {
     title: "IA para negocios en Sevilla | Chatbots y asistentes con IA",
     description:
-      "Llevo la IA a tu negocio en Sevilla con más de 10 años de experiencia en desarrollo: chatbots que atienden clientes, asistentes que redactan y clasifican.",
+      "Llevo la IA a tu negocio en Sevilla con más de 10 años de experiencia en desarrollo: chatbots que atienden clientes y agentes que reservan o toman pedidos.",
   },
   hero: {
     h1: "Inteligencia artificial aplicada a tu negocio",
@@ -497,7 +497,7 @@ export const inteligenciaArtificial: ServicePageData = {
     },
     {
       q: "¿Un chatbot puede atender a mis clientes?",
-      a: "Sí, atiende las preguntas frecuentes solo con la información de tu negocio. Cuando no sabe la respuesta, te pasa la conversación a una persona. Así se reducen mucho los errores, aunque no hay garantía absoluta de que acierte siempre.",
+      a: "Sí, atiende las preguntas frecuentes solo con la información de tu negocio. Cuando no sabe la respuesta, te pasa la conversación a una persona. Así se reducen los errores, aunque no hay garantía absoluta de que acierte siempre.",
     },
     {
       q: "¿Cuánto cuesta y cuánto se tarda en poner IA en marcha?",
