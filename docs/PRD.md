@@ -126,7 +126,13 @@ Radical (needs the user):
 - No secret in the repo or client bundle; only `PUBLIC_*` variables reach the browser.
 - SEO safety: no URL breaks without a 301, one H1, trailing-slash links, sitemap/robots/`llms.txt` consistent, `check-seo-*` passing.
 
-## 11. Current state (2026-11-16)
+## 11. Current state (2026-11-17)
+
+Shipped in NRD Sprint 11 (closed 2026-11-17, goal met, 6 of 6 points, no spillover, no QA bugs; on `develop` up to PR #89, production gets them with the scheduled promotions):
+
+- M4 polish: the shared `Breadcrumbs` component is on the ink tokens with its own `:focus-visible` style (NRD-228); blog post table borders reach 3:1, `.post-prose` styles blockquote, code, pre and img, and the post contract checks related links, the booking close and one H1 (NRD-229); `noindex` pages (the 404) no longer emit `og:url` (NRD-230).
+- Review follow-ups (LOW) filed: NRD-235 (breadcrumb current item cursor, row gap vs focus ring, contrast test over the purple radial) and NRD-236 (built-page `og:url` guard beyond the home).
+- Next (NRD Sprint 12): NRD-235 and NRD-236. Every other unparked story waits on the owner (NRD-160 accounts, indexation for NRD-125 to NRD-128, D1-D4 for M2, the real-data decision for NRD-23) or on time in production (NRD-78).
 
 Shipped in NRD Sprint 10 (closed 2026-11-16, goal met, 7 of 7 points, no spillover, no QA bugs; on `develop` up to PR #85, production gets them with the scheduled promotions):
 
@@ -281,3 +287,5 @@ Known gaps (CI, lockfile, `check:seo-*` scripts, price duplication and the GA4 e
 - 2026-11-16 - NRD Sprint 10 closed early with every item done: goal met, 7 of 7 points, velocity 7 (last 3 sprints 20, 15, 7; average 14, capacity 14), no spillover, no QA bugs. The low velocity reflects a commitment below capacity (every other unparked story is gated), not a slower pace. M4 exit criterion is met for every in-focus page.
 - 2026-11-16 - Sprint 10 review follow-ups filed in epic NRD-162 (M4): NRD-228 `Breadcrumbs` on the ink tokens with an own `:focus-visible` style (2 pts, High; the component is used by `ServiceLayout`, `LegalLayout`, the blog and four other pages); NRD-229 blog post table borders to at least 3:1, `.post-prose` styles for blockquote, code, pre and img, and the post contract extended to related links, booking close and one H1 (3 pts, Medium; batched so it lands before NRD-127 and NRD-128 change post content); NRD-230 `og:url` omitted on `noindex` pages like the canonical (1 pt bug, Low).
 - 2026-11-16 - NRD Sprint 11 (id 73) planned and started for 2026-11-16 to 2026-11-30 with 6 points (capacity 14), in execution order: NRD-228, NRD-229, NRD-230. The 8 free points are not filled: NRD-160 needs the owner's directory accounts, and every other unparked story is gated (indexation for NRD-125 to NRD-128, D1-D4 for M2, 2-4 weeks in production for NRD-78, the real-data decision for NRD-23, NRD-72 deferred). Backlog after the sprint: NRD-160, NRD-125, NRD-126, NRD-24/25/26, NRD-127, NRD-128, NRD-78, NRD-23, NRD-72, then parked.
+- 2026-11-17 - NRD Sprint 11 closed with every item done: goal met, 6 of 6 points, velocity 6 (last 3 sprints 15, 7, 6; average 9.3, capacity 9), no spillover, no QA bugs. Low velocity again reflects a commitment below capacity, not a slower pace. Sprint 11 review follow-ups filed in epic NRD-162 (M4): NRD-235 (2 pts, Medium) and NRD-236 (1 pt, Low).
+- 2026-11-17 - NRD Sprint 12 (id 74) planned and started for 2026-11-17 to 2026-12-01 with 3 points (capacity 9), in execution order: NRD-235, NRD-236. The 6 free points are not filled: NRD-160 needs the owner's directory accounts and every other unparked story is gated (indexation for NRD-125 to NRD-128, D1-D4 for M2, 2-4 weeks in production for NRD-78, the real-data decision for NRD-23, NRD-72 deferred). Backlog after the sprint: NRD-160, NRD-125, NRD-126, NRD-24/25/26, NRD-127, NRD-128, NRD-78, NRD-23, NRD-72, then parked.
