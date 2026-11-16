@@ -1,3 +1,7 @@
+## Purpose
+
+Defines what `/inteligencia-artificial/` shows and guarantees on the template: the intent placement "IA para negocios en Sevilla" without terms owned by other pages, the section order of `/seo-local-sevilla/`, a short text budget, a sourced FAQ mirrored in FAQPage, honest chatbot and proof claims, and the published price as the only plan.
+
 ## ADDED Requirements
 
 ### Requirement: The page keeps its intent placement
