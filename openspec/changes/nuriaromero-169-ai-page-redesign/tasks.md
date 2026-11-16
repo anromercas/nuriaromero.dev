@@ -4,7 +4,7 @@ Prerequisite: rebase on `develop` after NRD-212 (word budget without the live re
 
 ## 1. Page illustrations
 
-- [ ] 1.1 [NRD-214 app] `src/components/ia/ChatMock.astro` and `AiTileArt.astro` (chatbot, agente, respuestas, persona, resumenes, rgpd); tests: illustration assertions in `tests/ia-template.test.js` first; verify suite and `pnpm build` green
+- [x] 1.1 [NRD-214 app] `src/components/ia/ChatMock.astro` and `AiTileArt.astro` (chatbot, agente, respuestas, persona, resumenes, rgpd); tests: illustration assertions in `tests/ia-template.test.js` first; verify suite and `pnpm build` green
 
 ## 2. Page on the template
 
