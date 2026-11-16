@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 
 const root = new URL("../", import.meta.url);
 const read = (path) => readFileSync(new URL(path, root), "utf8");
@@ -337,4 +337,82 @@ test("the reference page draws its own bento tiles and passes the section copy",
   assert.match(src, /projects=\{\["arkady", "adfsevilla"\]\}/);
   assert.match(src, /Dos webs reales de negocios de Sevilla/);
   assert.match(src, /Una agencia SEO suele repartir tu cuenta/);
+});
+
+test("plans take tiers and note by props with a lede slot", () => {
+  const src = component("SeoLocalPlans");
+  assertTemplateSection(src, "SeoLocalPlans", [
+    "id",
+    "headingId",
+    "keyword",
+    "title",
+    "tiers",
+    "note",
+  ]);
+  assert.match(src, /<SectionHeading/);
+  assert.match(src, /<slot name="lede"/);
+  assert.match(src, /id = "precios"/);
+  assert.doesNotMatch(src, /(?:300|500)\s*€|Local Pro/);
+});
+
+test("FAQ takes questions by props and renders the optional links of an item", () => {
+  const src = component("SeoLocalFaq");
+  assertTemplateSection(src, "SeoLocalFaq", [
+    "headingId",
+    "keyword",
+    "title",
+    "lede",
+    "faqs",
+    "ctaLabel",
+  ]);
+  assert.match(src, /<SectionHeading/);
+  assert.match(src, /FaqItem\[\]/);
+  assert.match(src, /faq\.links/);
+  assert.match(src, /class="answer-links"/);
+  assert.match(src, /tpl-link/);
+  assert.match(src, /<span aria-hidden="true">/);
+  assert.match(src, /splitAnswer/);
+  assert.doesNotMatch(src, /Si tu duda no está aquí/);
+});
+
+test("faqSchema ignores FAQ item links and keeps its signature", () => {
+  const schema = read("src/lib/schema.ts");
+  assert.match(schema, /export function faqSchema\(faqs: \{ q: string; a: string \}\[\]\)/);
+  assert.doesNotMatch(schema, /\.links/);
+});
+
+test("related links take the list by props", () => {
+  const src = component("SeoLocalRelated");
+  assertTemplateSection(src, "SeoLocalRelated", ["links", "label"]);
+  assert.match(src, /links\.length > 0/);
+  assert.doesNotMatch(src, /internalLinksBySource/);
+});
+
+test("the reference page passes plans, FAQ and related content", () => {
+  const src = page();
+  assert.match(src, /<SeoLocalPlans[\s\S]*?headingId="planes-title"[\s\S]*?keyword="Cuánto cuesta el SEO local en Sevilla"/);
+  assert.match(src, /tiers=\{seoLocal\.pricing\.tiers \?\? \[\]\}/);
+  assert.match(src, /note=\{seoLocal\.pricing\.note\}/);
+  assert.match(src, /<Fragment slot="lede">[\s\S]*?tierFrom\(seoLocal, "Local"\)[\s\S]*?tierFrom\(seoLocal, "Local Pro"\)/);
+  assert.doesNotMatch(src, /(?:300|500)\s*€/);
+  assert.match(src, /<SeoLocalFaq[\s\S]*?headingId="faq-title"[\s\S]*?keyword="Preguntas frecuentes sobre SEO local en Sevilla"/);
+  assert.match(src, /faqs=\{seoLocal\.faqs\}/);
+  assert.match(src, /accent: "antes de empezar"/);
+  assert.match(src, /accent: "un alcance claro"/);
+  assert.match(src, /lede="Si tu duda no está aquí, la resolvemos en la llamada\."/);
+  assert.match(src, /links=\{internalLinksBySource\[seoLocal\.slug\] \?\? \[\]\}/);
+});
+
+test("no section copies the shared heading styles or imports the serif font twice", () => {
+  const dir = new URL("src/components/seo-local/", root);
+  const files = readdirSync(dir).filter((name) => name.endsWith(".astro"));
+  assert.ok(files.length >= 15);
+  for (const file of files) {
+    const src = readFileSync(new URL(file, dir), "utf8");
+    assert.doesNotMatch(src, /^ {2}\.(?:kw|display)(?: em)? \{/m, `${file} redefines heading styles`);
+    assert.doesNotMatch(src, /^ {2}\.band \{/m, `${file} redefines the band`);
+    const importsSerif = /@fontsource\/instrument-serif/.test(src);
+    const mayImport = ["SectionHeading.astro", "SeoLocalCycle.astro"].includes(file);
+    assert.equal(importsSerif, mayImport, `${file} serif import`);
+  }
 });

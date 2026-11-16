@@ -15,7 +15,8 @@ import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro"
 import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro"
 import SeoLocalPlans from "@/components/seo-local/SeoLocalPlans.astro"
 import ListingMock from "@/components/seo-local/ListingMock.astro"
-import { seoLocal } from "@/data/services"
+import { seoLocal, tierFrom } from "@/data/services"
+import { internalLinksBySource } from "@/data/internal-links"
 import { SITE_PROOF } from "@/data/site"
 import { getGoogleReviews } from "@/lib/google-reviews"
 
@@ -234,18 +235,39 @@ const proofItems = [
   <Fragment slot="pricing">
     <div class="band">
       <SectionContainer>
-        <SeoLocalPlans />
+        <SeoLocalPlans
+          headingId="planes-title"
+          keyword="Cuánto cuesta el SEO local en Sevilla"
+          title={{
+            text: seoLocal.sectionTitles?.pricing ?? "Dos planes, con un alcance claro",
+            accent: "un alcance claro",
+          }}
+          tiers={seoLocal.pricing.tiers ?? []}
+          note={seoLocal.pricing.note}
+        >
+          <Fragment slot="lede">El SEO local en Sevilla cuesta <strong>{tierFrom(seoLocal, "Local")}</strong> con el plan Local, centrado en tu ficha de Google, y <strong>{tierFrom(seoLocal, "Local Pro")}</strong> con Local Pro, que suma el trabajo en tu web.</Fragment>
+        </SeoLocalPlans>
       </SectionContainer>
     </div>
   </Fragment>
   <Fragment slot="faq">
     <SectionContainer>
-      <SeoLocalFaq />
+      <SeoLocalFaq
+        headingId="faq-title"
+        keyword="Preguntas frecuentes sobre SEO local en Sevilla"
+        title={{
+          text: seoLocal.sectionTitles?.faq ?? "Preguntas antes de empezar",
+          accent: "antes de empezar",
+        }}
+        lede="Si tu duda no está aquí, la resolvemos en la llamada."
+        faqs={seoLocal.faqs}
+        ctaLabel={seoLocal.cta?.buttonLabel}
+      />
     </SectionContainer>
   </Fragment>
   <Fragment slot="related">
     <SectionContainer>
-      <SeoLocalRelated />
+      <SeoLocalRelated links={internalLinksBySource[seoLocal.slug] ?? []} />
     </SectionContainer>
   </Fragment>
   <Fragment slot="closing">

@@ -48,7 +48,8 @@ test("each redesigned section pairs aria-labelledby with its heading id and keep
 
   assert.match(proof, /aria-labelledby=\{headingId\}[\s\S]*?id=\{headingId\}/)
   assert.match(route, /headingId="prueba-title"/)
-  assert.match(plans, /aria-labelledby="planes-title"[\s\S]*?id="planes-title"/)
+  assert.match(plans, /aria-labelledby=\{headingId\}[\s\S]*?id=\{headingId\}/)
+  assert.match(route, /headingId="planes-title"/)
   assert.match(bento, /aria-labelledby=\{headingId\}[\s\S]*?id=\{headingId\}/)
   assert.match(route, /headingId="revision-title"/)
   const svgs = route.match(/<svg[^>]*>/g) ?? []

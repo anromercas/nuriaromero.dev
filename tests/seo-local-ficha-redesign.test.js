@@ -166,12 +166,12 @@ test("T6: plans use the dark language, mark Local Pro as recommended and leave o
     source("src/pages/seo-local-sevilla.astro"),
   ])
 
-  assert.match(plans, /id="precios"/)
-  assert.match(plans, /seoLocal\.pricing\.tiers/)
+  assert.match(plans, /id = "precios"/)
+  assert.match(route, /tiers=\{seoLocal\.pricing\.tiers \?\? \[\]\}/)
   assert.match(plans, /Recomendado/)
   assert.match(plans, /<BookingButton/)
   assert.match(plans, /tier\.ctaLabel/)
-  assert.match(plans, /rgb\(250 204 21\)/)
+  assert.match(plans, /var\(--yellow-recommend\)/)
   assert.doesNotMatch(plans, /pacientes|tratamientos|garantiz|✓/i)
   assert.match(layout, /<slot name="pricing">[\s\S]*?<PricingCard/)
   assert.match(route, /slot="pricing"/)
@@ -205,17 +205,19 @@ test("finish review: FAQ, related links and closing CTA are bespoke and keep the
     source("src/pages/seo-local-sevilla.astro"),
   ])
 
-  assert.match(faq, /seoLocal\.faqs/)
+  assert.match(route, /faqs=\{seoLocal\.faqs\}/)
+  assert.match(faq, /faqs\.map/)
   assert.match(faq, /<details/)
   assert.match(faq, /<summary/)
   assert.match(faq, /<BookingButton/)
-  assert.match(faq, /aria-labelledby="faq-title"[\s\S]*?id="faq-title"/)
-  assert.match(faq, /<em>/)
+  assert.match(faq, /aria-labelledby=\{headingId\}[\s\S]*?id=\{headingId\}/)
+  assert.match(route, /headingId="faq-title"/)
+  assert.match(route, /accent: "antes de empezar"/)
   assert.match(faq, /class="indicator"[^>]*aria-hidden="true"/)
   assert.doesNotMatch(faq, /ProfileCheck|›/)
   assert.match(faq, /:focus-visible/)
 
-  assert.match(related, /internalLinksBySource/)
+  assert.match(route, /links=\{internalLinksBySource\[seoLocal\.slug\] \?\? \[\]\}/)
   assert.match(related, /<nav[^>]*aria-label="Contenido relacionado"/)
   assert.match(related, /links\.length > 0/)
   assert.doesNotMatch(related, /rounded-xl|bg-gray/)
@@ -350,9 +352,9 @@ test("T7: every section has a small keyword heading above its display title, one
   routeKeyword("revision-title", "Posicionamiento web en Sevilla: Google y Google Maps")
   routeKeyword("proceso-title", "Cómo trabajamos el SEO local en Sevilla")
   routeKeyword("prueba-title", "Webs de negocios locales en Sevilla")
-  for (const section of [bento, proc, proof]) assert.match(section, /<SectionHeading[\s\S]*?id=\{headingId\}[\s\S]*?keyword=\{keyword\}/)
-  keyword(plans, "planes-title", "Cuánto cuesta el SEO local en Sevilla")
-  keyword(faq, "faq-title", "Preguntas frecuentes sobre SEO local en Sevilla")
+  for (const section of [bento, proc, proof, plans, faq]) assert.match(section, /<SectionHeading[\s\S]*?id=\{headingId\}[\s\S]*?keyword=\{keyword\}/)
+  routeKeyword("planes-title", "Cuánto cuesta el SEO local en Sevilla")
+  routeKeyword("faq-title", "Preguntas frecuentes sobre SEO local en Sevilla")
   assert.match(route, /headingId="cierre-title"\s+keyword="Reserva una llamada sobre SEO local en Sevilla"/)
   assert.match(closing, /<SectionHeading\s+id=\{headingId\}\s+keyword=\{keyword\}/)
   assert.match(hero, /<SectionHeading[\s\S]*?level="h1"[\s\S]*?keyword=\{keyword\}/)
@@ -366,10 +368,6 @@ test("T7: every section has a small keyword heading above its display title, one
   for (const component of [bento, proc, proof, plans, faq]) {
     assert.equal((component.match(/<h1/g) ?? []).length, 0)
     assert.doesNotMatch(component, /<h[1-3][^>]*>[^<]*agencia/i)
-  }
-  for (const component of [plans, faq]) {
-    assert.match(component, /\.kw \{[^}]*font-weight:\s*600[^}]*\}/)
-    assert.doesNotMatch(component, /\.kw \{[^}]*(?:uppercase|letter-spacing)/)
   }
   assert.equal((closing.match(/<h1/g) ?? []).length, 0)
   assert.match(css, /\.tpl-kw \{[^}]*font-weight:\s*600[^}]*\}/)

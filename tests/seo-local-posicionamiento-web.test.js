@@ -101,15 +101,19 @@ test("exactly one H2 works agencia seo sevilla and it lives in SeoLocalAgencia.a
 })
 
 test("the price lede is composed from tiers, with no price literal in the component", async () => {
-  const plans = await source("src/components/seo-local/SeoLocalPlans.astro")
+  const [plans, route] = await Promise.all([
+    source("src/components/seo-local/SeoLocalPlans.astro"),
+    source("src/pages/seo-local-sevilla.astro"),
+  ])
 
-  assert.match(plans, /tiers\.find\(\(tier\) => tier\.name === "Local"\)/)
-  assert.match(plans, /tiers\.find\(\(tier\) => tier\.name === "Local Pro"\)/)
+  assert.match(route, /<Fragment slot="lede">/)
+  assert.match(route, /tierFrom\(seoLocal, "Local"\)/)
+  assert.match(route, /tierFrom\(seoLocal, "Local Pro"\)/)
   assert.match(plans, /class="plans-lede"/)
-  assert.match(plans, /\{local\.from\}/)
-  assert.match(plans, /\{pro\.from\}/)
+  assert.match(plans, /<slot name="lede"/)
   assert.doesNotMatch(plans, /(?:300|500)\s*€/)
-  assert.ok(plans.indexOf('class="display"') < plans.indexOf('class="plans-lede"'))
+  assert.doesNotMatch(route, /(?:300|500)\s*€/)
+  assert.ok(plans.indexOf("<SectionHeading") < plans.indexOf('class="plans-lede"'))
   assert.ok(plans.indexOf('class="plans-lede"') < plans.indexOf('class="plans-note"'))
 })
 
