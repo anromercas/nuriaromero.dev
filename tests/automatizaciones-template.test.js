@@ -284,3 +284,90 @@ test(
     assert.doesNotMatch(main, claims);
   },
 );
+
+// --- Task 2.2: FAQ and word budget (NRD-207) -----------------------------------
+
+const norm = (s) =>
+  s
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+test("template-pages lists the automations page with the word budget", () => {
+  assert.match(
+    read("scripts/lib/template-pages.mjs"),
+    /\{\s*route:\s*"\/automatizaciones\/",\s*words:\s*\[700,\s*800\],\s*service:\s*true\s*\}/,
+  );
+});
+
+test("FAQ holds the six sourced questions in order", () => {
+  assert.deepEqual(
+    automatizaciones.faqs.map((f) => norm(f.q)),
+    [
+      "¿Qué es la automatización de procesos?",
+      "¿Cuál es la mejor IA para automatizar procesos?",
+      "¿Qué ejemplos de automatización hay en una empresa?",
+      "¿Cómo se automatizan los mensajes de WhatsApp?",
+      "¿Se pueden automatizar las facturas y las tareas administrativas?",
+      "¿Cómo empiezo a automatizar los procesos de mi empresa?",
+    ].map(norm),
+  );
+});
+
+test("examples answer names the six bento examples", () => {
+  const { a } = automatizaciones.faqs[2];
+  for (const term of [
+    /WhatsApp/,
+    /facturas/,
+    /citas/,
+    /formularios/,
+    /avisos/,
+    /informes/,
+  ]) {
+    assert.match(a, term);
+  }
+});
+
+test("AI answer: tools to automate, where AI fits, link to the AI page", () => {
+  const faq = automatizaciones.faqs[1];
+  assert.match(faq.a, /n8n|Make/);
+  assert.match(faq.a, /IA|inteligencia artificial/);
+  assert.deepEqual(faq.links, [
+    {
+      label: "Chatbots y soluciones con IA",
+      href: "/inteligencia-artificial/",
+    },
+  ]);
+  assert.notEqual(norm(faq.q), norm("¿Cuál es la mejor IA para empresas?"));
+});
+
+test("FAQ answers are self-contained and hold no figures", () => {
+  for (const { q, a } of automatizaciones.faqs) {
+    assert.doesNotMatch(a.replace(/n8n/gi, ""), /\d/, q);
+    assert.doesNotMatch(a, claims, q);
+    assert.doesNotMatch(
+      a,
+      /\b(arriba|abajo|como ves|como has visto|de esta página|anterior)\b/i,
+      `${q} refers to the page around it`,
+    );
+    assert.ok(a.split(/(?<=[.!?])\s+/).length >= 2, `${q} has two sentences`);
+  }
+});
+
+test(
+  "built page stays within the word budget with matching FAQPage",
+  { skip: !existsSync(new URL("dist/automatizaciones/index.html", root)) },
+  () => {
+    const html = read("dist/automatizaciones/index.html");
+    const main = html.match(/<main\b[\s\S]*?<\/main>/)?.[0] ?? "";
+    const words = main
+      .replace(/<(script|style)\b[\s\S]*?<\/\1>/g, " ")
+      .replace(/<[^>]+>/g, " ")
+      .split(/\s+/)
+      .filter(Boolean).length;
+    assert.ok(words >= 700 && words <= 800, `${words} words`);
+  },
+);

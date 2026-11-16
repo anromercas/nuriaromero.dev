@@ -56,15 +56,15 @@ const proofItems = [
 const comparisonItems = [
   {
     lead: "Empieza por lo repetitivo.",
-    text: "Una tarea que sigue siempre los mismos pasos y te quita tiempo cada semana, como confirmar citas o pasar datos de un programa a otro.",
+    text: "Una tarea que sigue siempre los mismos pasos y te quita tiempo cada semana.",
   },
   {
     lead: "Deja fuera lo que cambia cada vez.",
-    text: "Si una tarea necesita tu criterio, como responder una queja o cerrar un presupuesto, es mejor que la siga haciendo una persona.",
+    text: "Si una tarea necesita tu criterio, es mejor que la siga haciendo una persona.",
   },
   {
     lead: "Simplifica antes de automatizar.",
-    text: "Un proceso con pasos de más sigue siendo lento aunque lo haga una máquina: primero lo ordenamos y luego lo automatizamos.",
+    text: "Un proceso con pasos de más sigue siendo lento aunque lo haga una máquina.",
   },
 ];
 ---
@@ -93,7 +93,7 @@ const comparisonItems = [
         headingId="ejemplos-title"
         keyword={automatizaciones.sectionTitles?.benefits ?? ""}
         title={{
-          text: "Lo que puede hacerse solo en tu negocio",
+          text: "Lo que puede hacerse solo",
           accent: "hacerse solo",
         }}
       >
@@ -155,8 +155,7 @@ const comparisonItems = [
         >
           <Fragment slot="lede">
             Cada automatización cuesta{" "}
-            <strong>desde {automatizaciones.pricing.from}</strong>, con las
-            pruebas, los avisos y la documentación incluidos.
+            <strong>desde {automatizaciones.pricing.from}</strong>.
           </Fragment>
         </SeoLocalPlans>
       </SectionContainer>
@@ -171,7 +170,7 @@ const comparisonItems = [
           text: "Lo que preguntan antes de automatizar",
           accent: "antes de automatizar",
         }}
-        lede="Si tu duda no está aquí, la vemos en la llamada."
+        lede="Si no está aquí, lo vemos en la llamada."
         faqs={automatizaciones.faqs}
       />
     </SectionContainer>
