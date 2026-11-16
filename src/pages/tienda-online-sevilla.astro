@@ -2,10 +2,33 @@
 import ServiceLayout from "@/layouts/ServiceLayout.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
 import TitleSection from "@/components/TitleSection.astro"
+import CodeIcon from "@/components/icons/Code.astro"
+import StoreOffer from "@/components/tienda-online/StoreOffer.astro"
 import { tiendaOnline } from "@/data/services"
+import {
+  STORE_FROM,
+  STORE_FINAL_PRICE_NOTE,
+  storeIncludes,
+  storeOptions,
+  storeQuotedSeparately,
+} from "@/data/store-offer"
 ---
 
 <ServiceLayout page={tiendaOnline}>
+  <SectionContainer slot="pricing" id="precios">
+    <TitleSection>
+      <CodeIcon class="size-7" />
+      {tiendaOnline.sectionTitles?.pricing}
+    </TitleSection>
+    <StoreOffer
+      from={STORE_FROM}
+      options={storeOptions}
+      includes={storeIncludes}
+      quotedSeparately={storeQuotedSeparately}
+      note={STORE_FINAL_PRICE_NOTE}
+    />
+  </SectionContainer>
+
   <Fragment slot="before-benefits">
     <SectionContainer>
       <TitleSection>¿Ya vendes por Instagram o WhatsApp, o quieres empezar a vender online desde cero?</TitleSection>
@@ -22,8 +45,8 @@ import { tiendaOnline } from "@/data/services"
         </p>
         <p>
           Una tienda online propia resuelve los dos casos: cobras de forma
-          automática y segura, tu catálogo queda ordenado y no dependes de una
-          plataforma de terceros para seguir vendiendo.
+          automática y segura, tu catálogo queda ordenado y vendes con tu
+          marca, no dentro de un marketplace.
         </p>
         <p>
           Si lo único que necesitas es mostrar tu catálogo y tus horarios,

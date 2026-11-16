@@ -313,6 +313,23 @@ if (storeHtml) {
     if (offer?.priceCurrency !== "EUR") addFailure(`/tienda-online-sevilla/: Offer priceCurrency ${offer?.priceCurrency} differs from EUR`)
     if (offer?.priceSpecification) addFailure("/tienda-online-sevilla/: the Offer must not carry a priceSpecification")
   }
+  // NRD-195: the built <main> shows the offer read from the store offer source.
+  const { STORE_FROM, storeOptions, storeIncludes, storeQuotedSeparately, STORE_FINAL_PRICE_NOTE } = await import("../src/data/store-offer.ts")
+  const storeMain = getSections(storeHtml, "main").join("\n")
+  const storeText = storeMain.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ")
+  const expectedTexts = [
+    `Desde ${STORE_FROM}`,
+    ...storeOptions.flatMap((option) => [option.name, option.recurringCost]),
+    ...storeIncludes,
+    ...storeQuotedSeparately.map((item) => item.text),
+    STORE_FINAL_PRICE_NOTE,
+  ]
+  for (const text of expectedTexts) {
+    if (!storeText.includes(text)) addFailure(`/tienda-online-sevilla/: <main> is missing "${text}"`)
+  }
+  for (const { link } of storeQuotedSeparately) {
+    if (link && !getHrefs(storeMain).includes(link.href)) addFailure(`/tienda-online-sevilla/: <main> is missing the link ${link.href}`)
+  }
 } else {
   addFailure("/tienda-online-sevilla/: missing dist page for the store Offer check")
 }

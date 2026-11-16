@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 const root = new URL("../", import.meta.url);
@@ -122,3 +122,66 @@ test("price FAQ and platform FAQ agree with the offer", () => {
     /no (te )?(lo )?ofrezco|no trabajo con shopify/i,
   );
 });
+
+// Task 1.2: page, component and built <main>. Assertions name no component on
+// purpose: the page recomposition replaces StoreOffer.astro and keeps them green.
+test("the store page reads the lists from the source and writes none of them", () => {
+  const page = read("src/pages/tienda-online-sevilla.astro").replace(
+    /\s+/g,
+    " ",
+  );
+  for (const name of [
+    "storeOptions",
+    "storeIncludes",
+    "storeQuotedSeparately",
+  ]) {
+    assert.match(page, new RegExp(`\\b${name}\\b`));
+  }
+  assert.match(page, /data\/store-offer/);
+  const texts = [
+    ...storeIncludes,
+    ...storeQuotedSeparately.map((i) => i.text),
+    ...storeOptions.flatMap((o) =>
+      [o.recurringCost, o.example].filter(Boolean),
+    ),
+  ];
+  for (const text of texts)
+    assert.ok(!page.includes(text), `hand-written: ${text}`);
+  assert.doesNotMatch(page, /no dependes de una plataforma/);
+  assert.match(page, /vendes con tu marca, no dentro de un marketplace/);
+});
+
+test("components under tienda-online are props only", () => {
+  const dir = new URL("src/components/tienda-online/", root);
+  const files = readdirSync(dir.pathname).filter((f) => f.endsWith(".astro"));
+  assert.ok(files.length > 0);
+  for (const f of files) {
+    assert.doesNotMatch(
+      readFileSync(new URL(f, dir), "utf8"),
+      /from\s+["']@\/data/,
+      f,
+    );
+  }
+});
+
+const distPage = new URL("dist/tienda-online-sevilla/index.html", root);
+test(
+  "built store page shows the offer in <main>",
+  { skip: !existsSync(distPage) },
+  () => {
+    const html = readFileSync(distPage, "utf8");
+    const main = html.match(/<main\b[^>]*>[\s\S]*?<\/main>/i)?.[0] ?? "";
+    const text = main.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+    assert.ok(text.includes(STORE_FROM), "price");
+    assert.match(text, /Desde 499 €/);
+    for (const o of storeOptions) {
+      assert.ok(text.includes(o.name), o.name);
+      assert.ok(text.includes(o.recurringCost), o.recurringCost);
+    }
+    for (const item of storeIncludes) assert.ok(text.includes(item), item);
+    for (const item of storeQuotedSeparately)
+      assert.ok(text.includes(item.text), item.text);
+    assert.match(main, /<a\b[^>]*href="\/automatizaciones\/"/);
+    assert.ok(text.includes(STORE_FINAL_PRICE_NOTE), "note");
+  },
+);
