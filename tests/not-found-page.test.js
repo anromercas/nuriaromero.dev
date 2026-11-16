@@ -88,6 +88,14 @@ test("SEO.astro renders the canonical only when the page is not noindex", () => 
   );
 });
 
+test("SEO.astro renders og:url only when the page is not noindex", () => {
+  const src = read("src/components/seo/SEO.astro");
+  assert.match(
+    src,
+    /\{!noindex && <meta property="og:url" content=\{canonical\} \/>\}/,
+  );
+});
+
 test("Netlify files do not mention the 404 and no netlify.toml exists", () => {
   assert.ok(!/404/.test(read("public/_redirects")));
   assert.ok(!/404/.test(read("public/_headers")));
@@ -124,6 +132,7 @@ test(
     const html = read("dist/404.html");
     assert.match(html, /<meta name="robots" content="[^"]*noindex/);
     assert.ok(!/<link rel="canonical"/.test(html));
+    assert.ok(!/<meta property="og:url"/.test(html));
     assert.equal((html.match(/<h1[\s>]/g) || []).length, 1);
     assert.ok(!/"@type":\s*"(Service|FAQPage)"/.test(html));
   },
@@ -157,5 +166,17 @@ test(
     }
     assert.ok(!/\/404/.test(read("dist/llms.txt")));
     assert.match(read("dist/index.html"), /<link rel="canonical"/);
+  },
+);
+
+test(
+  "built home: og:url equals its canonical",
+  { skip: existsSync(new URL("dist/index.html", root)) ? false : "no dist" },
+  () => {
+    const html = read("dist/index.html");
+    const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
+    const ogUrl = html.match(/<meta property="og:url" content="([^"]+)"/)?.[1];
+    assert.ok(canonical, "canonical present");
+    assert.equal(ogUrl, canonical);
   },
 );

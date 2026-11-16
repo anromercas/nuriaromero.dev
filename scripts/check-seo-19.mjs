@@ -24,6 +24,7 @@ if (!/<meta name="robots" content="[^"]*noindex/.test(html))
   fail("404: missing robots noindex");
 if (/<link rel="canonical"/.test(html))
   fail("404: must not declare a canonical");
+if (/<meta property="og:url"/.test(html)) fail("404: must not declare og:url");
 const h1 = (html.match(/<h1[\s>]/g) || []).length;
 if (h1 !== 1) fail(`404: expected exactly one H1, found ${h1}`);
 if (/"@type":\s*"(Service|FAQPage)"/.test(html))
