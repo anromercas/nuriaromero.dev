@@ -119,29 +119,29 @@ export const disenoWeb: ServicePageData = {
   faqs: [
     {
       q: "¿Cuánto cuesta hacer una página web?",
-      a: `Una landing de una página cuesta desde ${LANDING_FROM} y una web completa de hasta 5 páginas, desde ${WEB_FROM}. El precio queda cerrado por escrito.`,
+      a: `Una landing de una página cuesta desde ${LANDING_FROM} y una web completa de hasta 5 páginas, desde ${WEB_FROM}. El dominio y el hosting los pagas tú directamente, a tu nombre.`,
       links: [
         {
-          label: "Guía de precios de una web",
+          label: "Guía para entender el precio de una web",
           href: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
         },
       ],
     },
     {
       q: "¿Cuánto se tarda en hacer una web?",
-      a: "Una web de negocio suele estar lista en 2 a 4 semanas desde que tengo los contenidos: textos, fotos y logo. Una landing va más rápido.",
+      a: "Una web de negocio suele estar lista en 2 a 4 semanas desde que tengo los contenidos: textos, fotos y logo.",
     },
     {
       q: "¿Puedo hacer yo mi web gratis?",
-      a: "Sí, y a veces compensa: si te basta una página sencilla, un creador de webs gratuito puede servirte. Se queda corto cuando necesitas aparecer bien en Google o que la web sea tuya y no de la plataforma.",
+      a: "Sí, y a veces compensa: si estás empezando y te basta una página sencilla, un creador de webs gratuito puede servirte. Se queda corto si necesitas aparecer bien en Google o que la web sea tuya.",
     },
     {
       q: "¿WordPress o web a medida?",
-      a: "Depende de lo que vayas a hacer: trabajo con las dos. Una web a medida carga más rápido; WordPress, un gestor de contenidos, compensa si vas a publicar muy a menudo.\n\nLos planes de esta página son webs a medida sin panel de edición: durante el primer mes de soporte resuelvo tus dudas y hago yo los pequeños ajustes. Si quieres un panel de edición, se presupuesta aparte.",
+      a: "Depende de lo que vayas a hacer con ella: trabajo con las dos. Una web a medida carga más rápido; WordPress, un gestor de contenidos, compensa si vas a publicar muy a menudo.\n\nLos planes de esta página son webs a medida sin panel de edición: durante el primer mes de soporte resuelvo tus dudas y hago yo los pequeños ajustes. Si quieres un panel de edición, se presupuesta aparte.",
     },
     {
       q: "¿La web incluye SEO?",
-      a: "Sí, incluye SEO local básico: títulos y textos pensados para las búsquedas de tu zona y una base técnica rápida. La web completa suma el alta en Search Console y en tu ficha de Google Business Profile.",
+      a: "Sí, incluye SEO local básico: estructura, títulos y textos pensados para las búsquedas de tu zona, y una base técnica rápida y correcta. La web completa suma el alta en Search Console y Google Business Profile.",
       links: [
         {
           label: "SEO local y GEO para tu negocio",
@@ -154,7 +154,7 @@ export const disenoWeb: ServicePageData = {
       a: `Para estar online con lo esencial, desde ${LANDING_FROM} con una landing; si tienes varios servicios que explicar por separado, desde ${WEB_FROM} con la web completa. Las dos opciones tienen precio cerrado e incluyen un mes de soporte.`,
       links: [
         {
-          label: "Guía de precios de una web",
+          label: "Guía para entender el precio de una web",
           href: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
         },
       ],

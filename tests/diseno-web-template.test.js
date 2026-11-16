@@ -448,3 +448,40 @@ test("the built page keeps the owner facts and the word budget", (t) => {
     "support listed in both plans",
   );
 });
+
+// --- Review round: first sentences and domain/hosting cost (NRD-192) ----------------
+
+const firstSentence = (a) => a.match(/^[\s\S]*?[.!?](?=\s|$)/)[0];
+
+test("FAQ lead sentences are the ones in the design", () => {
+  const lead = (q) =>
+    firstSentence(disenoWeb.faqs.find((f) => norm(f.q) === q).a);
+  assert.equal(
+    lead(SOURCED[2]),
+    "Sí, y a veces compensa: si estás empezando y te basta una página sencilla, un creador de webs gratuito puede servirte.",
+  );
+  assert.equal(
+    lead(SOURCED[3]),
+    "Depende de lo que vayas a hacer con ella: trabajo con las dos.",
+  );
+  assert.equal(
+    lead(SOURCED[4]),
+    "Sí, incluye SEO local básico: estructura, títulos y textos pensados para las búsquedas de tu zona, y una base técnica rápida y correcta.",
+  );
+});
+
+test("the price answer says the client pays domain and hosting, after the lead", () => {
+  const faq = disenoWeb.faqs.find((f) => norm(f.q) === SOURCED[0]);
+  assert.match(faq.a, /dominio y (el )?hosting[^.]*pagas t[uú] directamente/i);
+  assert.doesNotMatch(firstSentence(faq.a), /hosting/i);
+});
+
+test("the guide link label follows the design", () => {
+  for (const faq of disenoWeb.faqs) {
+    for (const link of faq.links ?? []) {
+      if (link.href.includes("cuanto-cuesta")) {
+        assert.equal(link.label, "Guía para entender el precio de una web");
+      }
+    }
+  }
+});
