@@ -389,7 +389,7 @@ export const automatizaciones: ServicePageData = {
   ],
   cta: {
     title: "Empecemos por una tarea",
-    text: "Cuéntame qué tarea repites cada semana y te digo si compensa automatizarla, sin compromiso.",
+    text: "Cuéntame qué tarea repites cada semana y te digo si compensa automatizarla.",
   },
 };
 

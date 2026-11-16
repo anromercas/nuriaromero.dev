@@ -371,3 +371,40 @@ test(
     assert.ok(words >= 700 && words <= 800, `${words} words`);
   },
 );
+
+// --- Review round (NRD-166) ----------------------------------------------------
+
+test("meta description price comes from pricing.from", () => {
+  const price = automatizaciones.pricing.from.replace(/\s*€/, "");
+  assert.ok(
+    automatizaciones.seo.description.includes(`desde ${price} euros`),
+    automatizaciones.seo.description,
+  );
+});
+
+test("FlowMock pulse nudge stays clear of the arrowhead", () => {
+  const style =
+    read(mockPath).match(/<style[^>]*>([\s\S]*)<\/style>/)?.[1] ?? "";
+  const shifts = [...style.matchAll(/translateX\((-?[\d.]+)px\)/g)].map((m) =>
+    Math.abs(Number(m[1])),
+  );
+  assert.ok(shifts.length > 0);
+  for (const px of shifts) assert.ok(px <= 4, `nudge of ${px}px`);
+});
+
+test(
+  "built page keeps headroom under the word budget for the rating cell",
+  { skip: !existsSync(new URL("dist/automatizaciones/index.html", root)) },
+  () => {
+    const main =
+      read("dist/automatizaciones/index.html").match(
+        /<main\b[\s\S]*?<\/main>/,
+      )?.[0] ?? "";
+    const words = main
+      .replace(/<(script|style)\b[\s\S]*?<\/\1>/g, " ")
+      .replace(/<[^>]+>/g, " ")
+      .split(/\s+/)
+      .filter(Boolean).length;
+    assert.ok(words <= 790, `${words} words`);
+  },
+);
