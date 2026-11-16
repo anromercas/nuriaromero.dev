@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Defines what `/diseno-web-sevilla/` shows and guarantees: the owned "diseño web sevilla" placement, the template section order from `/seo-local-sevilla/`, a short text budget, a FAQ built only from sourced questions and mirrored in FAQPage, Service offers equal to the visible plans, and only already-published prices.
+Defines what `/diseno-web-sevilla/` shows and guarantees: the owned "diseño web sevilla" placement, the template section order from `/seo-local-sevilla/`, a short text budget, a FAQ built only from sourced questions and mirrored in FAQPage, Service offers equal to the visible plans, only already-published prices, the support month in both plans and no promised editing panel.
 
 ## ADDED Requirements
 
@@ -56,6 +56,34 @@ The plans SHALL be the landing and the full website with the prices already publ
 
 - **WHEN** the visible text is checked
 - **THEN** it contains no price other than those published in site data and no market range such as "entre 500 y 3.000 €"
+
+### Requirement: Both plans include one month of support
+
+Both visible plans, the landing and the full website, SHALL list "Un mes de soporte tras el lanzamiento" from site data, and no copy on the page MUST say or imply that the support month belongs only to the full website.
+
+#### Scenario: Support listed in both plans
+
+- **WHEN** the plans section renders
+- **THEN** the landing card and the full-website card each list "Un mes de soporte tras el lanzamiento"
+
+#### Scenario: Support never framed as full-website only
+
+- **WHEN** the process steps, bento tiles and FAQ answers are read
+- **THEN** no sentence that mentions the support month restricts it to the full website
+
+### Requirement: No editing panel is promised
+
+The page and its site data SHALL NOT promise an editing panel (a content back office) or that the client edits texts, photos or prices on their own; where changes after delivery are discussed, the copy SHALL say that the first month of support covers questions and small adjustments made by Nuria and that an editing panel can be quoted separately on request, without a published price.
+
+#### Scenario: No panel or self-editing promise
+
+- **WHEN** the page copy and its site data are checked
+- **THEN** every mention of a panel says it is not included or is quoted separately, and no text promises that the client edits the website themselves
+
+#### Scenario: WordPress answer consistent with the plans
+
+- **WHEN** the FAQ answer about WordPress or a custom website is read
+- **THEN** it states that the plans on the page are custom websites without an editing panel and that a panel is quoted separately
 
 ### Requirement: Service offers equal the visible plans
 
