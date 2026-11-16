@@ -1,0 +1,157 @@
+---
+// Single-stroke drawings for the "qué puede hacer la IA" bento tiles. Colours come
+// from BentoTile (.signal, .soft), so the drawings carry no style of their own.
+// Generic shapes only: no brand logos, no figures, no SVG text.
+interface Props {
+  kind: "chatbot" | "agente" | "respuestas" | "persona" | "resumenes" | "rgpd";
+}
+
+const { kind } = Astro.props;
+---
+
+{kind === "chatbot" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="12" y="12" width="170" height="106" rx="10"></rect>
+    <path d="M12 38h170" class="soft"></path>
+    <circle cx="26" cy="25" r="2.5" class="soft"></circle>
+    <circle cx="38" cy="25" r="2.5" class="soft"></circle>
+    <circle cx="50" cy="25" r="2.5" class="soft"></circle>
+    <rect x="66" y="19" width="104" height="12" rx="6" class="soft"></rect>
+    <rect x="104" y="66" width="68" height="36" rx="9" class="signal"></rect>
+    <rect x="114" y="76" width="44" height="5" rx="2.5" class="signal"></rect>
+    <rect x="114" y="87" width="28" height="5" rx="2.5" class="signal"></rect>
+    <rect x="216" y="10" width="84" height="110" rx="12"></rect>
+    <path d="M246 20h24" class="soft"></path>
+    <rect x="226" y="36" width="52" height="22" rx="8" class="soft"></rect>
+    <rect x="238" y="68" width="52" height="22" rx="8"></rect>
+    <path d="M246 108h24" class="soft"></path>
+  </svg>
+)}
+{kind === "agente" && (
+  <svg
+    viewBox="0 0 160 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="40" y="6" width="80" height="26" rx="8"></rect>
+    <rect x="52" y="16" width="50" height="6" rx="3" class="soft"></rect>
+    <path d="M80 36v14m-5-5l5 5 5-5" class="signal"></path>
+    <rect x="14" y="58" width="132" height="66" rx="8"></rect>
+    <rect x="28" y="68" width="24" height="10" rx="3" class="soft"></rect>
+    <rect x="68" y="68" width="24" height="10" rx="3" class="soft"></rect>
+    <rect x="108" y="68" width="24" height="10" rx="3" class="soft"></rect>
+    <rect x="28" y="84" width="24" height="10" rx="3" class="soft"></rect>
+    <rect x="68" y="84" width="24" height="10" rx="3" class="signal"></rect>
+    <path d="M75 89l4 4 7-7" class="signal"></path>
+    <rect x="108" y="84" width="24" height="10" rx="3" class="soft"></rect>
+    <rect x="28" y="100" width="24" height="10" rx="3" class="soft"></rect>
+    <rect x="68" y="100" width="24" height="10" rx="3" class="soft"></rect>
+    <rect x="108" y="100" width="24" height="10" rx="3" class="soft"></rect>
+  </svg>
+)}
+{kind === "respuestas" && (
+  <svg
+    viewBox="0 0 160 230"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="24" y="10" width="112" height="30" rx="6" class="soft"></rect>
+    <rect x="34" y="18" width="60" height="5" rx="2.5" class="soft"></rect>
+    <rect x="34" y="28" width="40" height="5" rx="2.5" class="soft"></rect>
+    <rect x="24" y="48" width="112" height="30" rx="6" class="soft"></rect>
+    <rect x="34" y="56" width="68" height="5" rx="2.5" class="soft"></rect>
+    <rect x="34" y="66" width="46" height="5" rx="2.5" class="soft"></rect>
+    <rect x="24" y="86" width="112" height="30" rx="6"></rect>
+    <rect x="34" y="94" width="64" height="5" rx="2.5" class="soft"></rect>
+    <rect x="34" y="104" width="44" height="5" rx="2.5" class="soft"></rect>
+    <path d="M80 118v32m-6-6l6 6 6-6" class="signal"></path>
+    <rect x="24" y="158" width="112" height="60" rx="10"></rect>
+    <rect x="36" y="172" width="88" height="6" rx="3" class="soft"></rect>
+    <rect x="36" y="188" width="56" height="6" rx="3" class="signal"></rect>
+  </svg>
+)}
+{kind === "persona" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="14" y="14" width="110" height="34" rx="10"></rect>
+    <rect x="26" y="27" width="70" height="6" rx="3" class="soft"></rect>
+    <rect x="14" y="62" width="110" height="34" rx="10"></rect>
+    <rect x="26" y="75" width="48" height="6" rx="3" class="soft"></rect>
+    <path d="M148 65h60m-8-8l8 8-8 8" class="signal"></path>
+    <circle cx="262" cy="44" r="16" class="signal"></circle>
+    <path d="M228 108c0-20 14-30 34-30s34 10 34 30" class="signal"></path>
+  </svg>
+)}
+{kind === "resumenes" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="14" y="14" width="150" height="8" rx="4" class="soft"></rect>
+    <rect x="14" y="34" width="132" height="8" rx="4" class="soft"></rect>
+    <rect x="14" y="54" width="150" height="8" rx="4" class="soft"></rect>
+    <rect x="14" y="74" width="120" height="8" rx="4" class="soft"></rect>
+    <rect x="14" y="94" width="142" height="8" rx="4" class="soft"></rect>
+    <path
+      d="M176 14h6q8 0 8 8v34q0 9 9 9h4M176 102h6q8 0 8-8V74q0-9 9-9h4"
+      class="signal"
+    ></path>
+    <rect x="214" y="36" width="92" height="58" rx="8" class="signal"></rect>
+    <rect x="226" y="52" width="68" height="6" rx="3" class="signal"></rect>
+    <rect x="226" y="68" width="40" height="6" rx="3" class="signal"></rect>
+  </svg>
+)}
+{kind === "rgpd" && (
+  <svg
+    viewBox="0 0 320 130"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <rect x="104" y="10" width="64" height="108" rx="8" class="soft"></rect>
+    <rect x="116" y="26" width="40" height="7" rx="3.5" class="soft"></rect>
+    <rect x="116" y="44" width="40" height="7" rx="3.5" class="soft"></rect>
+    <rect x="116" y="62" width="26" height="7" rx="3.5" class="soft"></rect>
+    <rect x="174" y="76" width="56" height="44" rx="3" class="signal"></rect>
+    <path d="M186 76V66a16 16 0 0 1 32 0v10" class="signal"></path>
+    <circle cx="202" cy="94" r="4" class="signal"></circle>
+    <path d="M202 98v8" class="signal"></path>
+  </svg>
+)}

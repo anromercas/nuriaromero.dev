@@ -536,3 +536,14 @@ test("DESIGN.md describes the shared tokens and how to use the components on ano
     assert.match(guide, new RegExp(section, "i"), section);
   }
 });
+
+test("RealProof review quote carries the word budget marker", () => {
+  const src = read("src/components/seo-local/RealProof.astro");
+  const figure = src.match(
+    /<figure class="quote" data-word-budget="exclude">([\s\S]*?)<\/figure>/,
+  )?.[1];
+  assert.ok(figure, "figure.quote has data-word-budget=exclude");
+  for (const part of ["<blockquote", "stars", "author", "when", "reviews"]) {
+    assert.match(figure, new RegExp(part));
+  }
+});

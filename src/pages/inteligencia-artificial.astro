@@ -1,6 +1,206 @@
 ---
-import ServiceLayout from "@/layouts/ServiceLayout.astro"
-import { inteligenciaArtificial } from "@/data/services"
+import ServiceLayout from "@/layouts/ServiceLayout.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import ProofStrip from "@/components/seo-local/ProofStrip.astro";
+import ReviewBento from "@/components/seo-local/ReviewBento.astro";
+import BentoTile from "@/components/seo-local/BentoTile.astro";
+import SeoLocalProcess from "@/components/seo-local/SeoLocalProcess.astro";
+import SeoLocalAgencia from "@/components/seo-local/SeoLocalAgencia.astro";
+import SeoLocalPlans from "@/components/seo-local/SeoLocalPlans.astro";
+import SeoLocalFaq from "@/components/seo-local/SeoLocalFaq.astro";
+import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro";
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
+import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro";
+import ChatMock from "@/components/ia/ChatMock.astro";
+import AiTileArt from "@/components/ia/AiTileArt.astro";
+import { inteligenciaArtificial } from "@/data/services";
+import { internalLinksBySource } from "@/data/internal-links";
+import { SITE_PROOF } from "@/data/site";
+import { getGoogleReviews } from "@/lib/google-reviews";
+
+const reviewsData = await getGoogleReviews();
+
+// Tiles a-f in source order; inteligenciaArtificial.benefits holds them in the same order.
+const tiles = [
+  { area: "a", kind: "chatbot", layout: "stack" },
+  { area: "b", kind: "agente", layout: "stack" },
+  { area: "c", kind: "respuestas", layout: "stack" },
+  { area: "d", kind: "persona", layout: "stack" },
+  { area: "e", kind: "resumenes", layout: "stack" },
+  { area: "f", kind: "rgpd", layout: "row" },
+] as const;
+
+// The only published price is one plan built from the site data.
+const plan = {
+  name: "Chatbot con IA",
+  from: inteligenciaArtificial.pricing.from,
+  includes: inteligenciaArtificial.pricing.includes ?? [],
+  note: inteligenciaArtificial.pricing.note,
+};
+
+// No AI project is published, so the strip carries only the experience cell
+// and the live Google rating when it exists.
+const proofItems = [
+  SITE_PROOF[0],
+  ...(reviewsData
+    ? [
+        {
+          stat: `${reviewsData.rating.toFixed(1).replace(".", ",")} en Google`,
+          label: `${reviewsData.userRatingCount} ${reviewsData.userRatingCount === 1 ? "opinión" : "opiniones"}`,
+        },
+      ]
+    : []),
+];
+
+const comparisonItems = [
+  {
+    lead: "Para redactar, buscar ideas o tu propio trabajo, ChatGPT tal cual te basta.",
+    text: "Te lo diré en la primera llamada.",
+  },
+  {
+    lead: "Si tiene que atender a tus clientes, compensa una solución para tu negocio.",
+    text: "Con tu información y con una persona detrás.",
+  },
+  {
+    lead: "Empieza por un solo caso de uso y un piloto.",
+    text: "Así ves cómo responde antes de decidir.",
+  },
+];
 ---
 
-<ServiceLayout page={inteligenciaArtificial} />
+<ServiceLayout page={inteligenciaArtificial} variant="template">
+  <Fragment slot="hero">
+    <SeoLocalHero
+      keyword={inteligenciaArtificial.hero.h1}
+      title={{
+        text:
+          inteligenciaArtificial.hero.title ?? inteligenciaArtificial.hero.h1,
+        accent: inteligenciaArtificial.hero.titleAccent,
+      }}
+      subtitle={inteligenciaArtificial.hero.subtitle}
+      secondaryLink={{
+        label: inteligenciaArtificial.hero.secondaryCta?.label ?? "Ver precio",
+        href: "#precios",
+      }}
+    >
+      <ChatMock slot="visual" />
+    </SeoLocalHero>
+    <ProofStrip items={proofItems} />
+  </Fragment>
+  <Fragment slot="benefits">
+    <SectionContainer id="que-puede-hacer">
+      <ReviewBento
+        headingId="que-puede-hacer-title"
+        keyword={inteligenciaArtificial.sectionTitles?.benefits ?? ""}
+        title={{
+          text: "Lo que puede hacer por ti",
+          accent: "por ti",
+        }}
+      >
+        {inteligenciaArtificial.benefits.map((benefit, i) => (
+          <BentoTile
+            area={tiles[i].area}
+            layout={tiles[i].layout}
+            title={benefit.title}
+            text={benefit.text}
+          >
+            <AiTileArt kind={tiles[i].kind} />
+          </BentoTile>
+        ))}
+      </ReviewBento>
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="process">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalProcess
+          id="proceso"
+          headingId="proceso-title"
+          keyword={inteligenciaArtificial.sectionTitles?.process ?? ""}
+          title={{
+            text: "Primero un piloto con tus datos",
+            accent: "con tus datos",
+          }}
+          steps={inteligenciaArtificial.process}
+        />
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="before-pricing">
+    <SectionContainer>
+      <SeoLocalAgencia
+        id="ia-o-chatgpt"
+        headingId="ia-o-chatgpt-title"
+        keyword="¿IA a medida o ChatGPT tal cual?"
+        title={{
+          text: "Cuándo basta con ChatGPT y cuándo no",
+          accent: "cuándo no",
+        }}
+        items={comparisonItems}
+        link={{ label: "Ver el precio", href: "#precios" }}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="pricing">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalPlans
+          headingId="planes-title"
+          keyword={inteligenciaArtificial.sectionTitles?.pricing ?? ""}
+          title={{
+            text: "Empieza con un chatbot",
+            accent: "un chatbot",
+          }}
+          tiers={[plan]}
+        >
+          <Fragment slot="lede">
+            Tu chatbot con IA, con piloto incluido,{" "}
+            <strong>desde {inteligenciaArtificial.pricing.from}</strong>.
+          </Fragment>
+        </SeoLocalPlans>
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="faq">
+    <SectionContainer>
+      <SeoLocalFaq
+        headingId="faq-title"
+        keyword={inteligenciaArtificial.sectionTitles?.faq ?? ""}
+        title={{
+          text: "Lo que preguntan las empresas sobre IA",
+          accent: "sobre IA",
+        }}
+        lede="Si tu duda no está aquí, la vemos en la llamada."
+        faqs={inteligenciaArtificial.faqs}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="related">
+    <SectionContainer>
+      <SeoLocalRelated
+        links={internalLinksBySource[inteligenciaArtificial.slug] ?? []}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="closing">
+    <SeoLocalClosing
+      headingId="cierre-title"
+      keyword="Reserva una llamada sobre IA para tu negocio"
+      title={{
+        text: inteligenciaArtificial.cta?.title ?? "",
+        accent: "tus clientes",
+      }}
+      text={inteligenciaArtificial.cta?.text ?? ""}
+      meta="30 minutos · Sin compromiso · Directamente conmigo"
+    >
+      <ChatMock slot="visual" animate={false} />
+    </SeoLocalClosing>
+    <SectionContainer>
+      <SeoLocalNap
+        headingId="nap-title"
+        keyword="Inteligencia artificial desde La Rinconada, Sevilla"
+      />
+    </SectionContainer>
+  </Fragment>
+</ServiceLayout>
