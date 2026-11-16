@@ -313,3 +313,138 @@ test("hero subtitle interpolates the landing price published in the plan", () =>
   assert.ok(disenoWeb.hero.subtitle.includes(landing.from));
   assert.equal(disenoWeb.pricing.from, landing.from);
 });
+
+// --- Sourced FAQ and owner-fact guards (task 2.2) ---------------------------------
+
+const norm = (text) =>
+  text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[¿?¡!.,]/g, "")
+    .trim();
+
+// The sourced questions of NRD-165 ("Investigación"); question 3 is answered by
+// the comparison section and is not in the FAQ.
+const SOURCED = [
+  "cuanto cuesta hacer una pagina web",
+  "cuanto se tarda en hacer una web",
+  "puedo hacer yo mi web gratis",
+  "wordpress o web a medida",
+  "la web incluye seo",
+  "que presupuesto necesito",
+];
+const GUIDE = "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/";
+
+const allStrings = (value, out = []) => {
+  if (typeof value === "string") out.push(value);
+  else if (Array.isArray(value)) value.forEach((v) => allStrings(v, out));
+  else if (value && typeof value === "object")
+    Object.values(value).forEach((v) => allStrings(v, out));
+  return out;
+};
+const sentences = (text) => text.split(/(?<=[.!?:])\s+|\n+/);
+const NEGATED_PANEL = /presupuest|sin panel|no incluye|no incluyen|sin un panel/i;
+
+test("FAQ has six items, each a sourced question", () => {
+  assert.equal(disenoWeb.faqs.length, 6);
+  const questions = disenoWeb.faqs.map((f) => norm(f.q));
+  assert.deepEqual(questions, SOURCED);
+});
+
+test("price and budget answers use the published prices and link to the guide", () => {
+  for (const q of [SOURCED[0], SOURCED[5]]) {
+    const faq = disenoWeb.faqs.find((f) => norm(f.q) === q);
+    assert.ok(faq.a.includes("149 €") && faq.a.includes("399 €"), q);
+    assert.ok(
+      faq.links?.some((l) => l.href === GUIDE),
+      `${q} links to the guide`,
+    );
+  }
+  const seo = disenoWeb.faqs.find((f) => norm(f.q) === SOURCED[4]);
+  assert.ok(seo.links?.some((l) => l.href === "/seo-local-sevilla/"));
+  for (const faq of disenoWeb.faqs) {
+    for (const link of faq.links ?? []) {
+      assert.ok(link.href.endsWith("/"), `${link.href} ends in /`);
+    }
+  }
+});
+
+test("FAQ data holds no market range and no price literal", () => {
+  const block = disenoWebBlock();
+  const faqSource = block.slice(block.indexOf("faqs: ["), block.indexOf("cta:"));
+  assert.doesNotMatch(faqSource, /500 y 3\.000/);
+  assert.doesNotMatch(faqSource, /€/, "prices come from the constants");
+  assert.match(faqSource, /\$\{LANDING_FROM\}/);
+  assert.match(faqSource, /\$\{WEB_FROM\}/);
+  const all = read("src/data/services.ts");
+  assert.equal((all.match(/const WEB_FROM = "399 €"/g) ?? []).length, 1);
+});
+
+test("no heading targets the DIY or price-guide terms", () => {
+  const titles = Object.values(disenoWeb.sectionTitles).join(" | ");
+  assert.doesNotMatch(titles, /gratis|hacer una p[aá]gina web/i);
+  assert.doesNotMatch(pageSource(), /title=\{\{[^}]*gratis/i);
+});
+
+test("the DIY answer says when it makes sense and when it does not", () => {
+  const faq = disenoWeb.faqs.find((f) => norm(f.q) === SOURCED[2]);
+  assert.match(faq.a, /^S[ií]/);
+  assert.match(faq.a, /se queda corto/i);
+});
+
+test("the WordPress answer states the plans have no editing panel, quoted apart", () => {
+  const faq = disenoWeb.faqs.find((f) => norm(f.q) === SOURCED[3]);
+  assert.match(faq.a, /sin panel de edici[oó]n/i);
+  assert.match(faq.a, /se presupuesta aparte/i);
+  assert.match(faq.a, /soporte/i);
+});
+
+const ownerFactChecks = (label, texts) => {
+  for (const text of texts) {
+    for (const sentence of sentences(text)) {
+      if (/\bpanel\b/i.test(sentence)) {
+        assert.match(
+          sentence,
+          NEGATED_PANEL,
+          `${label}: panel only as not included or quoted apart: "${sentence}"`,
+        );
+      }
+    }
+    assert.doesNotMatch(text, SELF_EDIT, `${label}: self-edit promise`);
+  }
+};
+
+test("disenoWeb promises no panel and no self-editing anywhere", () => {
+  ownerFactChecks("disenoWeb", allStrings(disenoWeb));
+});
+
+test("outside the plan cards, support is never framed as full-website only", () => {
+  const { tiers, ...pricing } = disenoWeb.pricing;
+  const texts = allStrings({ ...disenoWeb, pricing });
+  for (const text of texts) {
+    for (const sentence of sentences(text)) {
+      if (/soporte/i.test(sentence)) {
+        assert.doesNotMatch(sentence, /web completa/i, sentence);
+      }
+    }
+  }
+});
+
+test("the built page keeps the owner facts and the word budget", (t) => {
+  const file = new URL("dist/diseno-web-sevilla/index.html", root);
+  if (!existsSync(file)) return t.skip("dist not built");
+  const html = readFileSync(file, "utf8");
+  const main = html.match(/<main\b[\s\S]*<\/main>/)?.[0] ?? "";
+  const text = main
+    .replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ");
+  ownerFactChecks("built page", [text]);
+  assert.doesNotMatch(text, /500 y 3\.000/);
+  assert.ok(
+    (text.match(/Un mes de soporte tras el lanzamiento/g) ?? []).length >= 2,
+    "support listed in both plans",
+  );
+});

@@ -3,10 +3,11 @@
 // chatbot IA 399 €, software a medida 999 €. E-commerce: sin precio público.
 import type { ServicePageData } from "@/data/types"
 
-// Precio de la landing para interpolar en el copy. Los `from` de los planes
+// Precios de diseño web para interpolar en el copy y el FAQ. Los `from` de los planes
 // (guardados por tests/single-price-source.test.js) quedan como literales; un test
 // de tests/diseno-web-template.test.js comprueba que ambos coinciden.
 const LANDING_FROM = "149 €"
+const WEB_FROM = "399 €"
 
 /** `from` label of a named pricing tier; throws so a renamed tier fails the build. */
 export function tierFrom(service: ServicePageData, tierName: string): string {
@@ -117,44 +118,46 @@ export const disenoWeb: ServicePageData = {
   },
   faqs: [
     {
-      q: "¿Qué incluye el precio cerrado de una página web en Sevilla?",
-      a: "Trabajo siempre con precio cerrado, pactado por escrito antes de empezar: una landing de una página parte de 149 €, y una web completa de hasta 5 páginas parte de 399 €. Ese precio incluye diseño a medida adaptado a móvil, textos optimizados para SEO local, creación y configuración del dominio y el hosting, y un mes de soporte tras el lanzamiento. El coste del dominio y del hosting corre por tu cuenta, porque quedan contratados a tu nombre.\n\nPara un negocio local en Sevilla, una web profesional suele costar entre 500 y 3.000 €, así que estos precios se mueven dentro de ese rango pero quedan cerrados desde el primer día: sabes exactamente cuánto vas a pagar, sin letra pequeña ni cuotas que aparecen a mitad de proyecto.",
+      q: "¿Cuánto cuesta hacer una página web?",
+      a: `Una landing de una página cuesta desde ${LANDING_FROM} y una web completa de hasta 5 páginas, desde ${WEB_FROM}. El precio queda cerrado por escrito.`,
+      links: [
+        {
+          label: "Guía de precios de una web",
+          href: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
+        },
+      ],
     },
     {
-      q: "¿Cuánto tiempo se tarda en tener la página web lista?",
-      a: "Una web de negocio local suele estar lista en 2 a 4 semanas, contando desde que tengo todos los contenidos: textos, fotos y logo. Si necesitas ayuda para redactar los textos, los escribo yo misma ya optimizados para Google, aunque eso puede sumar unos días.\n\nUna landing de una sola página suele ir más rápido que una web completa de 5 páginas, simplemente porque hay menos contenido que preparar y revisar contigo. El plazo exacto siempre se cierra en la propuesta inicial, junto con el precio, así que lo sabes desde el primer día.",
+      q: "¿Cuánto se tarda en hacer una web?",
+      a: "Una web de negocio suele estar lista en 2 a 4 semanas desde que tengo los contenidos: textos, fotos y logo. Una landing va más rápido.",
     },
     {
-      q: "¿Qué diferencia hay entre una web hecha a medida y una hecha con Wix o una plantilla de WordPress?",
-      a: "La diferencia está en la base: una plantilla usa el mismo diseño y el mismo código para miles de webs distintas, mientras que yo vengo del desarrollo de software y construyo cada proyecto pensando en cumplir los Core Web Vitals de Google (las métricas que miden velocidad de carga, estabilidad visual y capacidad de respuesta). Eso significa menos código de sobra, menos plugins innecesarios y una base técnica más sólida para el SEO. También significa que el dominio y el hosting se contratan a tu nombre, no al mío, así que no dependes de una plataforma de terceros para seguir teniendo tu propia web.",
+      q: "¿Puedo hacer yo mi web gratis?",
+      a: "Sí, y a veces compensa: si te basta una página sencilla, un creador de webs gratuito puede servirte. Se queda corto cuando necesitas aparecer bien en Google o que la web sea tuya y no de la plataforma.",
     },
     {
-      q: "Si contrato a un diseñador web, ¿la página queda a mi nombre o me quedo atado a esa persona o agencia?",
-      a: "En mi caso, la web queda a tu nombre de verdad: el dominio y el hosting se contratan directamente a tu nombre, no al mío. Esto significa que si en algún momento decides cambiar de proveedor, continuar tú misma o contratar a otra persona, puedes hacerlo sin pedirme permiso ni depender de nadie. No es lo habitual en todas las agencias: algunas retienen el dominio o el hosting bajo su cuenta, lo que te deja atado a ellas. Antes de contratar cualquier servicio de diseño web, es una pregunta que merece la pena hacer explícitamente.",
+      q: "¿WordPress o web a medida?",
+      a: "Depende de lo que vayas a hacer: trabajo con las dos. Una web a medida carga más rápido; WordPress, un gestor de contenidos, compensa si vas a publicar muy a menudo.\n\nLos planes de esta página son webs a medida sin panel de edición: durante el primer mes de soporte resuelvo tus dudas y hago yo los pequeños ajustes. Si quieres un panel de edición, se presupuesta aparte.",
     },
     {
-      q: "¿Mi página web va a aparecer en Google?",
-      a: "Sí: todas las webs que hago se entregan indexadas en Google y optimizadas para SEO local, con estructura correcta, velocidad de carga cuidada, datos estructurados y textos escritos con las búsquedas reales que hacen tus clientes en Sevilla. Eso incluye también el alta en Google Search Console y en tu ficha de Google Business Profile. Lo que no puedo prometerte es una posición concreta en el buscador ni un plazo exacto para conseguirla, porque eso depende de más factores además de la web. Lo que sí garantizo es que la base técnica queda perfecta desde el primer día.",
+      q: "¿La web incluye SEO?",
+      a: "Sí, incluye SEO local básico: títulos y textos pensados para las búsquedas de tu zona y una base técnica rápida. La web completa suma el alta en Search Console y en tu ficha de Google Business Profile.",
+      links: [
+        {
+          label: "SEO local y GEO para tu negocio",
+          href: "/seo-local-sevilla/",
+        },
+      ],
     },
     {
-      q: "¿Necesito saber de tecnología para gestionar mi web después de que me la entregues?",
-      a: "No. En el lanzamiento te enseño a hacer los cambios básicos tú misma: actualizar un texto, cambiar una foto o ajustar un precio, sin necesidad de tocar código ni depender de mí para cada pequeño ajuste. El primer mes de soporte después de la entrega va incluido, así que si algo no te queda claro usando el panel, puedes preguntarme directamente. Para cambios más grandes (añadir una página nueva, rediseñar una sección) sí que suelo encargarme yo, pero el día a día de mantener actualizado tu contenido queda en tus manos.",
-    },
-    {
-      q: "¿Trabajas solo con negocios de Sevilla o también en remoto?",
-      a: "Trabajo sobre todo con negocios de Sevilla capital y su área metropolitana, porque el trato cercano (una llamada, un café, una reunión en persona si hace falta) marca la diferencia en cómo queda la web. Dicho esto, también hago proyectos para negocios del resto de España trabajando en remoto, cuando el cliente lo prefiere así. La diferencia principal es que con los negocios de Sevilla puedo ofrecer ese trato presencial si lo necesitas, mientras que fuera de Sevilla el proceso completo se hace por videollamada y mensajería.",
-    },
-    {
-      q: "¿Qué incluye exactamente el precio de 399 € de la web completa?",
-      a: "Los 399 € de la web completa incluyen: hasta 5 páginas (inicio, servicios, sobre mí, contacto y lo que necesite tu negocio), diseño a medida adaptado a móvil, textos optimizados para SEO local y para las búsquedas de tu zona en Sevilla, botón de WhatsApp y formulario de contacto, alta en Google Search Console y en Google Business Profile, creación y configuración del dominio y el hosting, y un mes de soporte tras el lanzamiento. El coste del dominio y del hosting corre por tu cuenta, porque quedan contratados a tu nombre.\n\nSi necesitas algo adicional, como una tienda online completa con pasarela de pago, se presupuesta aparte y siempre con precio cerrado antes de empezar.",
-    },
-    {
-      q: "Ya tengo una página web pero no me está funcionando, ¿qué puedo hacer?",
-      a: "Lo primero que hago es una auditoría de tu web actual antes de proponerte nada. A veces el problema se resuelve optimizando velocidad, textos y SEO local sobre lo que ya tienes, sin necesidad de rehacer nada desde cero. Otras veces, sobre todo si la web es muy antigua o está construida sobre una plantilla muy limitada, compensa más rediseñarla por completo. Te digo con sinceridad cuál de las dos opciones te conviene después de revisarla, no la que más me convenga a mí facturar. Esa auditoría inicial no lleva ningún compromiso de contratar el rediseño después.",
-    },
-    {
-      q: "¿Es mejor una landing de una página o una web completa de varias páginas?",
-      a: "Depende de en qué momento esté tu negocio. Si necesitas estar online ya, con lo esencial (qué ofreces, cómo contactarte) y sin mucho presupuesto, la landing desde 149 € suele ser suficiente, sobre todo para validar una idea, un evento o un servicio puntual. Si tu negocio ya tiene varios servicios definidos y quieres que cada uno pueda posicionar por separado en Google, la web completa desde 399 € da mejor resultado, porque cada página trabaja para búsquedas distintas. En la primera llamada te digo cuál encaja mejor con tu caso concreto.",
+      q: "¿Qué presupuesto necesito?",
+      a: `Para estar online con lo esencial, desde ${LANDING_FROM} con una landing; si tienes varios servicios que explicar por separado, desde ${WEB_FROM} con la web completa. Las dos opciones tienen precio cerrado e incluyen un mes de soporte.`,
+      links: [
+        {
+          label: "Guía de precios de una web",
+          href: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
+        },
+      ],
     },
   ],
   cta: {
