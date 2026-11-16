@@ -1,0 +1,143 @@
+---
+import "@/styles/template.css"
+import type { BentoArea, TextLink } from "./types"
+
+interface Props {
+  area: BentoArea
+  title: string
+  text: string
+  layout?: "stack" | "row"
+  link?: TextLink
+  class?: string
+}
+
+const { area, title, text, layout = "stack", link, class: className } = Astro.props
+const isRow = layout === "row"
+---
+
+<article class:list={["tile", `tile-${area}`, { "tile-row": isRow }, className]}>
+  <slot />
+  {
+    isRow ? (
+      <div class="tile-text">
+        <h3>{title}</h3>
+        <p>{text}</p>
+        {link && <p class="tile-link"><a class="tpl-link" href={link.href}>{link.label}</a></p>}
+      </div>
+    ) : (
+      <>
+        <h3>{title}</h3>
+        <p>{text}</p>
+        {link && <p class="tile-link"><a class="tpl-link" href={link.href}>{link.label}</a></p>}
+      </>
+    )
+  }
+</article>
+
+<style>
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    border: 1px solid var(--hairline);
+    border-radius: 1.25rem;
+    background: var(--card-surface);
+  }
+
+  .tile :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .tile :global(.signal) {
+    stroke: var(--sky-signal);
+  }
+
+  .tile :global(.soft) {
+    stroke: var(--drawing-soft);
+  }
+
+  .tile :global(.label) {
+    fill: var(--text-secondary);
+    stroke: none;
+    font-size: 19px;
+    font-family: inherit;
+  }
+
+  .tile :global(.strong) {
+    fill: var(--text-strong);
+    font-size: 19px;
+  }
+
+  h3 {
+    margin: 0;
+    color: var(--text-strong);
+    font-size: 1.125rem;
+    font-weight: 650;
+    line-height: 1.25;
+  }
+
+  .tile p {
+    max-width: 65ch;
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.975rem;
+    line-height: 1.6;
+  }
+
+  .tile .tile-link {
+    margin-top: 0.25rem;
+  }
+
+  .tile-text {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .tile-c {
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .tile-a,
+    .tile-f {
+      grid-column: 1 / -1;
+    }
+
+    .tile-row {
+      flex-direction: row;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .tile-row :global(svg) {
+      flex: 1 1 55%;
+      margin-bottom: 0;
+    }
+
+    .tile-row .tile-text {
+      flex: 1 1 45%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .tile-a { grid-area: a; }
+    .tile-b { grid-area: b; }
+    .tile-c { grid-area: c; }
+    .tile-d { grid-area: d; }
+    .tile-e { grid-area: e; }
+    .tile-f { grid-area: f; }
+
+    .tile-a :global(svg) {
+      max-height: 15rem;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .tile { padding: 1rem; }
+  }
+</style>

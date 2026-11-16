@@ -1,35 +1,38 @@
 ---
-import "@fontsource/instrument-serif/400-italic.css"
+import SectionHeading from "@/components/seo-local/SectionHeading.astro"
+import "@/styles/template.css"
+import type { AccentTitle, ComparisonItem, TextLink } from "./types"
+
+interface Props {
+  id?: string
+  headingId: string
+  keyword: string
+  title: AccentTitle
+  items: ComparisonItem[]
+  link?: TextLink
+}
+
+const { id = "agencia-o-consultora", headingId, keyword, title, items, link } = Astro.props
 ---
 
-<section id="agencia-o-consultora" class="agencia scroll-m-20" aria-labelledby="agencia-title">
+<section id={id} class="agencia scroll-m-20" aria-labelledby={headingId}>
   <div class="agencia-intro">
-    <h2 id="agencia-title" class="kw">¿Agencia SEO en Sevilla o consultora?</h2>
-    <p class="display">Dos maneras de llevar <em>tu SEO local</em></p>
+    <SectionHeading id={headingId} keyword={keyword} title={title} class="agencia-display" />
   </div>
 
   <div class="agencia-body">
     <ul class="agencia-list">
-      <li>
-        <p>
-          <strong>Una agencia SEO suele repartir tu cuenta entre varias personas: quien vende, quien coordina y quien ejecuta.</strong>
-          Conmigo, como consultora SEO, hablas directamente con quien revisa tu ficha de Google y trabaja tu web.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>Una agencia tiene más manos y puede llevar a la vez campañas, redes sociales y diseño.</strong>
-          Si lo que necesitas es que tu negocio se entienda bien en Google y Google Maps, una consultora que domina la ficha y la parte técnica de la web suele ser suficiente.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>Elijas lo que elijas, pide por escrito qué incluye cada mes y cuánto cuesta.</strong>
-          Aquí lo tienes publicado: dos planes con su alcance, facturados mes a mes y sin promesas de posiciones.
-        </p>
-      </li>
+      {
+        items.map((item) => (
+          <li>
+            <p>
+              <strong>{item.lead}</strong>{" "}{item.text}
+            </p>
+          </li>
+        ))
+      }
     </ul>
-    <p class="agencia-more"><a class="agencia-link" href="#precios">Ver los planes y precios</a></p>
+    {link && <p class="agencia-more"><a class="agencia-link" href={link.href}>{link.label}</a></p>}
   </div>
 </section>
 
@@ -37,59 +40,36 @@ import "@fontsource/instrument-serif/400-italic.css"
   .agencia {
     display: grid;
     gap: 0;
-    color: rgb(226 232 240);
+    color: var(--text-body);
   }
 
-  .kw {
-    margin: 0 0 0.6rem;
-    color: rgb(203 213 225);
-    font-size: 1.0625rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
-  .display {
+  .agencia :global(.agencia-display) {
     max-width: 20ch;
     margin: 0 0 1rem;
-    color: white;
-    font-size: clamp(1.9rem, 4.5vw, 3rem);
-    font-weight: 700;
-    line-height: 1.06;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  .display em {
-    color: rgb(125 211 252);
-    font-family: "Instrument Serif", Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 1.12em;
-    letter-spacing: -0.01em;
   }
 
   .agencia-list {
     margin: 0;
     padding: 0;
     list-style: none;
-    border-top: 1px solid rgb(51 65 85);
+    border-top: 1px solid var(--hairline);
   }
 
   .agencia-list li {
     padding: 1.25rem 0;
-    border-bottom: 1px solid rgb(51 65 85);
+    border-bottom: 1px solid var(--hairline);
   }
 
   .agencia-list p {
     max-width: 65ch;
     margin: 0;
-    color: rgb(203 213 225);
+    color: var(--text-secondary);
     font-size: 1rem;
     line-height: 1.65;
   }
 
   .agencia-list strong {
-    color: white;
+    color: var(--text-strong);
     font-weight: 600;
   }
 
@@ -98,20 +78,20 @@ import "@fontsource/instrument-serif/400-italic.css"
   }
 
   .agencia-link {
-    color: rgb(226 232 240);
+    color: var(--text-body);
     text-decoration: underline;
-    text-decoration-color: rgb(56 189 248 / 0.7);
+    text-decoration-color: rgb(var(--sky-signal-rgb) / 0.7);
     text-underline-offset: 0.3em;
     border-radius: 0.25rem;
     transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .agencia-link:hover {
-    color: rgb(125 211 252);
+    color: var(--sky-accent);
   }
 
   .agencia-link:focus-visible {
-    outline: 2px solid rgb(56 189 248);
+    outline: 2px solid var(--sky-signal);
     outline-offset: 4px;
   }
 
@@ -122,7 +102,7 @@ import "@fontsource/instrument-serif/400-italic.css"
       align-items: start;
     }
 
-    .display {
+    .agencia :global(.agencia-display) {
       max-width: 14ch;
     }
   }

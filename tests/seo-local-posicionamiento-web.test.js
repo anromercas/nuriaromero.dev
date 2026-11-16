@@ -14,6 +14,13 @@ const worksTerm = (text, term) =>
     .split(" ")
     .every((word) => ` ${normaliseTerm(text)} `.includes(` ${word} `))
 
+// Section keyword headings (the real h2) now come from the page as the
+// `keyword` prop of each section component, plus any literal h2 left in components.
+const pageKeywords = async () => {
+  const route = await source("src/pages/seo-local-sevilla.astro")
+  return [...route.matchAll(/<(\w+)\b[^<>]*?\bkeyword="([^"]+)"/g)].map(([, tag, inner]) => ({ file: `${tag}.astro`, inner }))
+}
+
 const phrase = /posicionamiento web en Sevilla/i
 const positivePromise = /(?:garantizamos|garantiza(?:mos)? más|primeras posiciones|más (?:tráfico|leads|llamadas|contactos)|te recomienda(?:rá)? (?:Google|ChatGPT|un asistente))/i
 
@@ -25,6 +32,7 @@ test("exactly one H2 of /seo-local-sevilla/ names the phrase", async () => {
     const text = await source(`${dir}/${file}`)
     for (const [, inner] of text.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)) headings.push(inner)
   }
+  for (const { inner } of await pageKeywords()) headings.push(inner)
 
   assert.equal(headings.filter((heading) => phrase.test(heading)).length, 1)
 })
@@ -65,6 +73,10 @@ test("copy stays honest: agencia only in the FAQ question and the agency section
   assert.doesNotMatch(withoutQuestion, /agencia/i)
   assert.ok(agency, "SeoLocalAgencia.astro exists")
   assert.match(agency.text, /consultora/)
+  const route = await source("src/pages/seo-local-sevilla.astro")
+  assert.match(route, /como consultora SEO, hablas directamente/)
+  for (const pattern of selfDescription) assert.doesNotMatch(route, pattern)
+  assert.doesNotMatch(route, positivePromise)
   for (const { file, text } of components) {
     if (file !== "SeoLocalAgencia.astro") assert.doesNotMatch(text, /agencia/i, file)
     for (const pattern of selfDescription) assert.doesNotMatch(text, pattern, file)
@@ -81,6 +93,7 @@ test("exactly one H2 works agencia seo sevilla and it lives in SeoLocalAgencia.a
   for (const { file, text } of components) {
     for (const [, inner] of text.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)) headings.push({ file, inner })
   }
+  headings.push(...(await pageKeywords()))
   const matching = headings.filter(({ inner }) => worksTerm(inner, "agencia seo sevilla"))
 
   assert.equal(matching.length, 1)
@@ -88,15 +101,19 @@ test("exactly one H2 works agencia seo sevilla and it lives in SeoLocalAgencia.a
 })
 
 test("the price lede is composed from tiers, with no price literal in the component", async () => {
-  const plans = await source("src/components/seo-local/SeoLocalPlans.astro")
+  const [plans, route] = await Promise.all([
+    source("src/components/seo-local/SeoLocalPlans.astro"),
+    source("src/pages/seo-local-sevilla.astro"),
+  ])
 
-  assert.match(plans, /tiers\.find\(\(tier\) => tier\.name === "Local"\)/)
-  assert.match(plans, /tiers\.find\(\(tier\) => tier\.name === "Local Pro"\)/)
+  assert.match(route, /<Fragment slot="lede">/)
+  assert.match(route, /tierFrom\(seoLocal, "Local"\)/)
+  assert.match(route, /tierFrom\(seoLocal, "Local Pro"\)/)
   assert.match(plans, /class="plans-lede"/)
-  assert.match(plans, /\{local\.from\}/)
-  assert.match(plans, /\{pro\.from\}/)
+  assert.match(plans, /<slot name="lede"/)
   assert.doesNotMatch(plans, /(?:300|500)\s*€/)
-  assert.ok(plans.indexOf('class="display"') < plans.indexOf('class="plans-lede"'))
+  assert.doesNotMatch(route, /(?:300|500)\s*€/)
+  assert.ok(plans.indexOf("<SectionHeading") < plans.indexOf('class="plans-lede"'))
   assert.ok(plans.indexOf('class="plans-lede"') < plans.indexOf('class="plans-note"'))
 })
 

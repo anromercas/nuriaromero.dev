@@ -1,35 +1,24 @@
 ---
-import type { GoogleReviewsData } from "@/lib/google-reviews"
+import "@/styles/template.css";
+import type { ProofItem } from "./types";
 
 interface Props {
-  reviews: GoogleReviewsData | null
+  items: ProofItem[];
 }
 
-const { reviews } = Astro.props
-const rating = reviews ? reviews.rating.toFixed(1).replace(".", ",") : ""
+const { items } = Astro.props;
 ---
 
-<ul class="proof">
-  <li>
-    <strong>+10 años</strong>
-    <span>de experiencia</span>
-  </li>
-  {
-    reviews ? (
+{items.length > 0 && (
+  <ul class="proof">
+    {items.map((item) => (
       <li>
-        <strong>{rating} en Google</strong>
-        <span>
-          {reviews.userRatingCount}{" "}
-          {reviews.userRatingCount === 1 ? "opinión" : "opiniones"}
-        </span>
+        <strong>{item.stat}</strong>
+        <span>{item.label}</span>
       </li>
-    ) : null
-  }
-  <li>
-    <strong>2 webs en Sevilla</strong>
-    <span>de negocios locales</span>
-  </li>
-</ul>
+    ))}
+  </ul>
+)}
 
 <style>
   .proof {
@@ -37,7 +26,7 @@ const rating = reviews ? reviews.rating.toFixed(1).replace(".", ",") : ""
     margin: 1rem 0;
     padding: 0;
     list-style: none;
-    border-block: 1px solid rgb(51 65 85);
+    border-block: 1px solid var(--hairline);
   }
 
   li {
@@ -47,11 +36,11 @@ const rating = reviews ? reviews.rating.toFixed(1).replace(".", ",") : ""
   }
 
   li + li {
-    border-top: 1px solid rgb(51 65 85);
+    border-top: 1px solid var(--hairline);
   }
 
   strong {
-    color: white;
+    color: var(--text-strong);
     font-size: 1.375rem;
     font-weight: 650;
     letter-spacing: -0.01em;
@@ -59,7 +48,7 @@ const rating = reviews ? reviews.rating.toFixed(1).replace(".", ",") : ""
   }
 
   span {
-    color: rgb(203 213 225);
+    color: var(--text-secondary);
     font-size: 0.9rem;
   }
 
@@ -79,7 +68,7 @@ const rating = reviews ? reviews.rating.toFixed(1).replace(".", ",") : ""
 
     li + li {
       border-top: 0;
-      border-left: 1px solid rgb(51 65 85);
+      border-left: 1px solid var(--hairline);
     }
   }
 </style>
