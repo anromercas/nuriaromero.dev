@@ -18,4 +18,5 @@ export const templatePages = [
   { route: "/sobre-mi/", words: [550, 600], service: false },
   { route: "/portfolio/", words: [100, 250], service: false },
   { route: "/recursos/", words: [100, 250], service: false },
+  { route: "/blog/", words: [150, 350], service: false },
 ];
