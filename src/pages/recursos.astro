@@ -1,45 +1,57 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import Schema from "@/components/seo/Schema.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
-import Breadcrumbs from "@/components/Breadcrumbs.astro"
-import { breadcrumbSchema } from "@/lib/schema"
+import Layout from "@/layouts/Layout.astro";
+import Schema from "@/components/seo/Schema.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import SectionHeading from "@/components/seo-local/SectionHeading.astro";
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
+import { breadcrumbSchema } from "@/lib/schema";
+import "@/styles/template.css";
+
+type Resource = {
+  kind: string;
+  title: string;
+  text: string;
+  href: string;
+  label: string;
+};
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
   { name: "Recursos", url: "/recursos/" },
-]
+];
 
-const resources = [
+const resources: Resource[] = [
   {
+    kind: "Perfil",
     title: "Perfil y experiencia",
-    description:
-      "Quién soy, qué experiencia describo y cómo contactar conmigo para confirmar el contexto de una colaboración.",
+    text: "Quién soy, cómo trabajo y cómo contactar para confirmar una colaboración.",
     href: "/sobre-mi/",
     label: "Conocer a Nuria",
   },
   {
+    kind: "Proyectos",
     title: "Casos de éxito",
-    description:
-      "Selección de proyectos y tecnologías que se pueden revisar directamente en sus dominios públicos.",
+    text: "Proyectos reales que puedes revisar en sus dominios públicos.",
     href: "/portfolio/",
     label: "Ver casos de éxito",
   },
   {
+    kind: "Blog",
     title: "Guías prácticas",
-    description:
-      "Artículos sobre webs, SEO local, automatización y búsquedas con inteligencia artificial para negocios.",
+    text: "Artículos sobre webs, SEO local, automatización y búsquedas con IA para negocios.",
     href: "/blog/",
     label: "Leer el blog",
   },
   {
+    kind: "Guía destacada",
     title: "Guía sobre GEO",
-    description:
-      "Definiciones y acciones prácticas para entender el posicionamiento en búsquedas con IA, con límites explícitos sobre lo que se puede garantizar.",
+    text: "Qué es el posicionamiento en búsquedas con IA, qué acciones ayudan y qué no se puede garantizar.",
     href: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
     label: "Abrir la guía",
   },
-]
+];
 ---
 
 <Layout
@@ -47,48 +59,137 @@ const resources = [
   description="Recursos públicos de Nuria Romero sobre desarrollo web, SEO local, automatización y búsquedas con inteligencia artificial."
 >
   <Schema slot="head" schema={breadcrumbSchema(breadcrumbs)} />
-  <main class="px-4 pt-24">
-    <SectionContainer>
-      <Breadcrumbs items={breadcrumbs} />
-      <h1 class="mb-6 text-4xl font-bold tracking-tight text-white sm:text-5xl">
-        Recursos para citar y compartir
-      </h1>
-      <p class="max-w-2xl text-xl text-gray-300">
-        Una selección de páginas públicas para consultar, enlazar o compartir cuando
-        sean relevantes para una conversación sobre desarrollo web, SEO local,
-        automatización o búsquedas con inteligencia artificial.
-      </p>
+  <main class="template-ground px-4 pt-24">
+    <div class="space-y-24">
+      <SectionContainer>
+        <Breadcrumbs items={breadcrumbs} />
+        <SeoLocalHero
+          keyword="Recursos para citar y compartir"
+          title={{
+            text: "Páginas útiles para enlazar con criterio",
+            accent: "con criterio",
+          }}
+          subtitle="Mi perfil, mis casos de éxito y mis guías sobre webs, SEO local, automatización y búsquedas con IA. Están pensadas para quien escriba sobre estos temas y quiera citarlas o compartirlas."
+        />
+      </SectionContainer>
 
-      <ul class="mt-12 grid gap-6 sm:grid-cols-2">
-        {resources.map((resource) => (
-          <li class="flex h-full flex-col rounded-xl border border-gray-700 bg-gray-800/50 p-6">
-            <h2 class="text-2xl font-semibold text-gray-100">
-              {resource.title}
-            </h2>
-            <p class="mt-3 flex-1 text-gray-300">
-              {resource.description}
-            </p>
-            <a
-              href={resource.href}
-              class="mt-6 font-medium text-blue-400 underline underline-offset-2"
+      <SectionContainer id="recursos-lista">
+        <SectionHeading
+          id="recursos-lista-title"
+          keyword="Páginas y guías para enlazar"
+          title={{
+            text: "Elige la que encaje con tu texto",
+            accent: "con tu texto",
+          }}
+        />
+        <ul class="resource-rows">
+          {resources.map((resource) => (
+            <li
+              class:list={[
+                "resource-row",
+                { featured: resource.kind === "Guía destacada" },
+              ]}
             >
-              {resource.label} →
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <aside class="mt-12 max-w-2xl rounded-xl border border-gray-700 p-6 text-gray-300">
-        <h2 class="text-xl font-semibold text-gray-100">
-          Criterio de transparencia
-        </h2>
-        <p class="mt-3">
-          Solo tiene sentido enlazar estos recursos cuando aportan contexto real.
-          No se compran enlaces, no se intercambian enlaces de forma artificial y
-          no se presentan métricas, testimonios o colaboraciones sin evidencia
+              <div class="row-head">
+                <p class="row-kind">{resource.kind}</p>
+                <h3 class="row-title">{resource.title}</h3>
+              </div>
+              <div class="row-body">
+                <p class="row-text">{resource.text}</p>
+                <a href={resource.href} class="tpl-link">
+                  {resource.label}
+                </a>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p class="resource-note">
+          No se compran enlaces ni se intercambian de forma artificial. Tampoco
+          publico cifras, testimonios ni colaboraciones sin evidencia
           verificable.
         </p>
-      </aside>
-    </SectionContainer>
+      </SectionContainer>
+
+      <SectionContainer>
+        <SeoLocalClosing
+          headingId="recursos-cierre-title"
+          keyword="Reserva una llamada"
+          title={{
+            text: "¿Necesitas algo más que un enlace?",
+            accent: "más que un enlace",
+          }}
+          text="Si tu negocio necesita una web, SEO local o automatizar tareas, lo hablamos directamente."
+        />
+      </SectionContainer>
+    </div>
   </main>
 </Layout>
+
+<style>
+  .resource-rows {
+    margin: 2.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .resource-row {
+    display: grid;
+    gap: 0.5rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .resource-row.featured {
+    padding-left: 1.25rem;
+    border-left: 1px solid var(--sky-signal);
+  }
+
+  .row-kind {
+    margin: 0 0 0.25rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .featured .row-kind {
+    color: var(--sky-accent);
+  }
+
+  .row-title {
+    margin: 0;
+    color: var(--text-strong);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+
+  .row-text {
+    max-width: 52ch;
+    margin: 0 0 0.75rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .resource-note {
+    max-width: 60ch;
+    margin: 1.5rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .resource-row {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      column-gap: 2.5rem;
+      align-items: baseline;
+    }
+
+    .row-title {
+      font-size: 1.375rem;
+    }
+  }
+</style>
