@@ -675,7 +675,7 @@ export const tiendaOnline: ServicePageData = {
   seo: {
     title: "Diseño de tienda online en Sevilla | Pasarela de pago propia",
     description:
-      "Diseño y creo tiendas online para negocios de Sevilla, con pasarela de pago propia y sin comisión de marketplace. Presupuesto cerrado según tu catálogo.",
+      "Diseño tiendas online para negocios de Sevilla desde 499 euros, con pasarela de pago propia y sin comisión de marketplace. Presupuesto cerrado.",
   },
   hero: {
     h1: "Diseño de tienda online en Sevilla para negocios que quieren vender",
@@ -746,7 +746,7 @@ export const tiendaOnline: ServicePageData = {
   faqs: [
     {
       q: "¿Cuánto cuesta una tienda online en Sevilla?",
-      a: `Una tienda online básica cuesta desde ${STORE_FROM}, con panel de gestión, en WooCommerce, Shopify o a medida. Incluye diseño con tu marca, pago con tarjeta, envíos, hasta unos 20 productos subidos por mí, formación y un mes de soporte.\n\nLo que se presupuesta aparte, como Redsys o Bizum, lo ves arriba, y el precio final se cierra por escrito.`,
+      a: `Una tienda online básica cuesta desde ${STORE_FROM}, con panel de gestión, en WooCommerce, Shopify o a medida. Incluye diseño con tu marca, pago con tarjeta, envíos, hasta unos 20 productos subidos por mí, formación y un mes de soporte.\n\nSe presupuestan aparte Redsys o Bizum, los catálogos grandes y los envíos por peso o por zona, y el precio final se cierra por escrito.`,
     },
     {
       q: "¿Cómo se crea o se monta una tienda online?",

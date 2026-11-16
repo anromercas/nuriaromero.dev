@@ -401,3 +401,57 @@ test(
     assert.ok(words >= 880 && words <= 1120, `${words} words`);
   },
 );
+
+// --- Review round (NRD-168) ---------------------------------------------------
+
+test("StoreMock paints the completed drawing at scroll 0 and without scroll support", () => {
+  const style =
+    read(mockPath).match(/<style[^>]*>([\s\S]*)<\/style>/)?.[1] ?? "";
+  for (const [, name, body] of style.matchAll(
+    /@keyframes\s+([\w-]+)\s*\{([\s\S]*?\n  \})/g,
+  )) {
+    const frames = [...body.matchAll(/(from|to|\d+%)\s*\{([^}]*)\}/g)];
+    for (const [, key, decl] of frames) {
+      if (key === "from" || key === "0%" || key === "to" || key === "100%") {
+        assert.doesNotMatch(
+          decl,
+          /opacity:\s*0?\.\d/,
+          `${name} ${key} opacity`,
+        );
+        assert.doesNotMatch(
+          decl,
+          /scale|translate/,
+          `${name} ${key} starts or ends displaced`,
+        );
+      }
+    }
+  }
+  const noSupport = style.match(/@supports not[\s\S]*?\n    \}\n/)?.[0] ?? "";
+  assert.equal(
+    noSupport,
+    "",
+    "no load-time animation without scroll timelines",
+  );
+});
+
+test("price FAQ names what is quoted apart", () => {
+  const second = tiendaOnline.faqs[0].a.split("\n\n")[1];
+  assert.doesNotMatch(second, /\barriba\b/);
+  for (const term of [
+    "Redsys",
+    "Bizum",
+    "catálogos grandes",
+    "peso o por zona",
+  ])
+    assert.ok(second.includes(term), term);
+  assert.match(second, /presupuestan aparte|aparte/);
+  assert.match(second, /por escrito/);
+});
+
+test("store meta description cites the starting price within 160 chars", () => {
+  const d = tiendaOnline.seo.description;
+  assert.ok(d.includes(STORE_FROM.replace(" €", "")), d);
+  assert.match(d, /desde 499/);
+  assert.ok(d.length >= 140 && d.length <= 160, `${d.length}`);
+  assert.ok(d.includes("pasarela de pago propia"));
+});
