@@ -3,7 +3,9 @@
 // dist/<route>/index.html for every entry.
 //   route:   pathname with trailing slash
 //   service: the page must emit a Service entity in JSON-LD
-//   words:   optional [min, max] visible word range of <main>
+//   words:   optional [min, max] visible word range of <main>, without elements marked
+//            data-word-budget="exclude" (the live Google review quote of RealProof):
+//            owner-controlled text only (ADR 0015)
 export const templatePages = [
   { route: "/seo-local-sevilla/", service: true },
   { route: "/", words: [900, 1100], service: false },
