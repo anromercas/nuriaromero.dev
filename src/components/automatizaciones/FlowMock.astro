@@ -1,0 +1,144 @@
+---
+import "@/styles/template.css";
+
+interface Props {
+  animate?: boolean;
+}
+
+const { animate = true } = Astro.props;
+---
+
+<figure
+  class:list={["mock", { animate }]}
+  aria-label="Ejemplo de automatización: un mensaje nuevo se apunta en tu hoja o CRM y te llega un aviso"
+>
+  <div class="drawing">
+    <svg
+      viewBox="0 0 300 190"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g class="node chat">
+        <path d="M14 36h68a8 8 0 0 1 8 8v36a8 8 0 0 1-8 8H44l-12 12V88h-18a8 8 0 0 1-8-8V44a8 8 0 0 1 8-8z"></path>
+        <rect x="22" y="50" width="52" height="6" rx="3" class="soft"></rect>
+        <rect x="22" y="64" width="34" height="6" rx="3" class="soft"></rect>
+      </g>
+      <path d="M96 62c6-8 8-8 14 0" class="soft"></path>
+      <g class="pulse">
+        <circle cx="103" cy="56" r="3" class="signal"></circle>
+      </g>
+      <path d="M96 62c6 8 8 8 14 0" class="signal"></path>
+      <path d="M106 58l4 4-4 4" class="signal"></path>
+      <g class="node sheet">
+        <rect x="116" y="30" width="76" height="76" rx="8"></rect>
+        <path d="M116 56h76M116 80h76" class="soft"></path>
+        <path d="M141 30v76M167 30v76" class="soft"></path>
+        <path
+          d="M116 80h76v18a8 8 0 0 1-8 8h-60a8 8 0 0 1-8-8z"
+          class="signal"
+        ></path>
+      </g>
+      <path d="M196 68c6-8 8-8 14 0" class="soft"></path>
+      <path d="M196 68c6 8 8 8 14 0" class="signal"></path>
+      <path d="M206 64l4 4-4 4" class="signal"></path>
+      <g class="node bell">
+        <path
+          d="M252 40a18 18 0 0 0-18 18v14l-6 10h48l-6-10V58a18 18 0 0 0-18-18z"
+          class="signal"
+        ></path>
+        <path d="M245 90a7 7 0 0 0 14 0" class="signal"></path>
+        <path d="M272 44a22 22 0 0 1 8 14" class="signal"></path>
+        <path d="M232 44a22 22 0 0 0-8 14" class="signal"></path>
+      </g>
+      <g class="labels">
+        <text x="48" y="150" text-anchor="middle" class="label">
+          Mensaje nuevo
+        </text>
+        <text x="154" y="150" text-anchor="middle" class="label">
+          Tu hoja o CRM
+        </text>
+        <text x="252" y="150" text-anchor="middle" class="label">
+          Aviso para ti
+        </text>
+      </g>
+    </svg>
+  </div>
+  <figcaption>Ejemplo ilustrativo</figcaption>
+</figure>
+
+<style>
+  .mock {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--hairline);
+    border-radius: 1.25rem;
+    color: var(--text-muted);
+    background: var(--card-surface);
+  }
+
+  .drawing {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--hairline-quiet);
+    background: var(--drawing-surface);
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    max-width: 26rem;
+    height: auto;
+    margin-inline: auto;
+  }
+
+  .signal {
+    stroke: var(--sky-signal);
+  }
+
+  .soft {
+    stroke: var(--drawing-soft);
+  }
+
+  .label {
+    font-family: inherit;
+    font-size: 13.5px;
+    stroke: none;
+    fill: var(--text-secondary);
+  }
+
+  figcaption {
+    padding: 0.55rem 1.25rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  /* The completed drawing is the resting state: at scroll 0, at the end of the
+     range and wherever scroll timelines are unsupported it is fully visible.
+     Motion only where motion is welcome: while scrolling, the pulse ring slides
+     along the first connector and settles back. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .animate .pulse {
+        animation: pulse-slide linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 220px;
+      }
+    }
+  }
+
+  @keyframes pulse-slide {
+    0% {
+      transform: none;
+    }
+    50% {
+      transform: translateX(3px);
+    }
+    100% {
+      transform: none;
+    }
+  }
+</style>

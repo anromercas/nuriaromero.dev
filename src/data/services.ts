@@ -280,53 +280,68 @@ export const automatizaciones: ServicePageData = {
   seo: {
     title: "Automatización de procesos en Sevilla para negocios | n8n y Make",
     description:
-      "Automatización de procesos en Sevilla con n8n y Make: facturas, correos, citas e informes que se hacen solos. Más de 10 años de experiencia.",
+      "Automatización de procesos en Sevilla con n8n y Make: facturas, citas e informes que se hacen solos, desde 149 euros. Más de 10 años de experiencia.",
   },
   hero: {
     h1: "Automatización de procesos en Sevilla: que tu negocio trabaje solo",
+    title: "Que las tareas repetitivas se hagan solas",
+    titleAccent: "se hagan solas",
     subtitle:
-      "¿Cuántas horas pierdes a la semana copiando datos, enviando los mismos correos o pasando pedidos de un sitio a otro? Conecto las herramientas que ya usas (correo, Excel, WhatsApp, facturación…) para que esas tareas se hagan solas.",
+      "Automatizar un proceso es que una tarea que haces siempre igual, como copiar datos o enviar el mismo aviso, la hagan solos tus programas conectados. Tú te quedas con lo que necesita a una persona.",
+    secondaryCta: { label: "Ver precio", href: "#precios" },
   },
   sectionTitles: {
-    benefits: "Qué consigue tu negocio automatizando procesos con n8n y Make",
+    benefits: "Ejemplos de automatización de procesos",
     process: "Así es el proceso de automatizar tus tareas repetitivas",
     pricing: "Cuánto cuesta automatizar un proceso",
     faq: "Preguntas frecuentes sobre automatización de procesos",
   },
   benefits: [
     {
-      title: "Recupera horas cada semana",
-      text: "Confirmaciones de cita, recordatorios a clientes, facturas recurrentes, informes de ventas… Todo lo que sigue un patrón se puede automatizar. Tú dedicas ese tiempo a vender.",
+      title: "Mensajes de WhatsApp",
+      text: "Las confirmaciones y los recordatorios salen solos, y lo que necesita respuesta te llega a ti.",
     },
     {
-      title: "Con las herramientas que ya usas",
-      text: "No hay que cambiar de programas: n8n y Make conectan Gmail, Google Sheets, WhatsApp, Holded, tu web y cientos de aplicaciones más entre sí.",
+      title: "Facturas",
+      text: "Al cerrar un pedido, la factura se crea y se guarda en su carpeta.",
     },
     {
-      title: "Menos errores humanos",
-      text: "Los datos copiados a mano se equivocan; las automatizaciones no. Cada pedido, cita o factura llega donde tiene que llegar, siempre.",
+      title: "Citas y recordatorios",
+      text: "Cada reserva entra en tu agenda y el cliente recibe su aviso el día antes.",
     },
     {
-      title: "Inversión pequeña, retorno rápido",
-      text: "Una automatización sencilla se amortiza en semanas. Es la forma más barata de ganar productividad en un negocio pequeño.",
+      title: "Formularios a tu hoja o CRM",
+      text: "Lo que te escriben desde la web llega ordenado a tu hoja de cálculo o a tu lista de clientes.",
+    },
+    {
+      title: "Avisos internos",
+      text: "Te enteras al momento de un pedido nuevo, una reseña o un pago pendiente.",
+    },
+    {
+      title: "Informes",
+      text: "Cada lunes recibes en tu correo un resumen de ventas o gastos, sin montarlo a mano.",
     },
   ],
   process: [
     {
-      title: "Auditoría de tareas",
-      text: "Repasamos juntas tu día a día y localizo qué tareas repetitivas se pueden automatizar y cuánto tiempo te ahorrarían.",
+      title: "Mapear la tarea",
+      text: "Me cuentas cómo la haces hoy y apuntamos cada paso.",
     },
     {
-      title: "Propuesta priorizada",
-      text: "Te propongo las automatizaciones ordenadas por impacto: primero las que más tiempo te devuelven.",
+      title: "Simplificarla antes de automatizarla",
+      text: "Quitamos los pasos que sobran, para no automatizar un desorden.",
     },
     {
-      title: "Implementación y pruebas",
-      text: "Monto los flujos, los pruebo con casos reales y los dejo funcionando con avisos si algo falla.",
+      title: "Elegir la herramienta",
+      text: "Uso n8n o Make, que conectan tus programas, según lo que haya que unir.",
     },
     {
-      title: "Documentación y control",
-      text: "Te entrego cada flujo documentado y te enseño a supervisarlo. Sin dependencia: lo entiendes y lo controlas.",
+      title: "Piloto con casos reales",
+      text: "La pruebo con pedidos, citas o mensajes de verdad antes de dejarla sola.",
+    },
+    {
+      title: "Dejarla funcionando",
+      text: "Queda activa, con avisos si algo falla y documentada para que sepas qué hace.",
     },
   ],
   pricing: {
@@ -342,43 +357,41 @@ export const automatizaciones: ServicePageData = {
   },
   faqs: [
     {
-      q: "¿Qué tipo de tareas se pueden automatizar en mi negocio?",
-      a: "Casi cualquier tarea repetitiva que hoy hagas igual cada vez entre distintos programas: enviar recordatorios de cita por WhatsApp o email, generar facturas al cerrar un pedido, volcar los formularios de tu web a una hoja de cálculo o a tu CRM, avisarte de reseñas nuevas en Google, crear informes semanales de ventas o gastos, o pasar datos de un pedido de tu tienda online a tu programa de facturación. La regla práctica es sencilla: si describes el proceso paso a paso y cada paso es siempre igual, casi seguro que se puede automatizar, liberándote de hacerlo a mano una y otra vez.",
+      q: "¿Qué es la automatización de procesos?",
+      a: "Es conseguir que una tarea que sigue siempre los mismos pasos la hagan tus programas conectados, en lugar de hacerla tú a mano. Por ejemplo, los datos del formulario de tu web pasan solos a tu hoja de clientes.",
     },
     {
-      q: "¿Qué son n8n y Make, y por qué se usan para automatizar en vez de programar desde cero?",
-      a: "n8n y Make son plataformas de automatización que conectan entre sí las aplicaciones que ya usas (Gmail, Google Sheets, WhatsApp, tu programa de facturación, tu web…) mediante flujos visuales, sin tener que programar una integración desde cero para cada herramienta. Son de las plataformas más usadas del sector, con conexiones ya preparadas para cientos de aplicaciones, lo que reduce mucho el tiempo de desarrollo frente a construir cada conexión a medida. Las uso a diario tanto en proyectos freelance como en entornos de empresa, y elijo una u otra según qué herramientas necesites conectar y qué tan compleja sea la lógica del proceso.",
+      q: "¿Cuál es la mejor IA para automatizar procesos?",
+      a: "No hay una sola mejor, y muchas automatizaciones no necesitan inteligencia artificial. Monto el flujo con n8n o Make y añado un modelo de IA solo en el paso que lee, clasifica o redacta texto.",
+      links: [
+        {
+          label: "Chatbots y soluciones con IA",
+          href: "/inteligencia-artificial/",
+        },
+      ],
     },
     {
-      q: "¿Necesito conocimientos técnicos para usar las automatizaciones después de que las montes?",
-      a: "No. Una vez montada, la automatización funciona sola en segundo plano: no tienes que abrir ninguna plataforma ni tocar nada para que las tareas se sigan haciendo. Te entrego cada flujo documentado con instrucciones sencillas por si en algún momento quieres entender qué hace, y configuro avisos automáticos para que te enteres si algo falla, en vez de descubrirlo semanas después porque un pedido no llegó donde debía. Si algo necesita revisión, puedes contactarme directamente en lugar de intentar arreglarlo tú misma dentro de la plataforma.",
+      q: "¿Qué ejemplos de automatización hay en una empresa?",
+      a: "Los más útiles son mensajes de WhatsApp, facturas, citas y recordatorios, formularios que llegan a tu hoja o CRM, avisos internos e informes. Todos repiten los mismos pasos.",
     },
     {
-      q: "¿Automatizar procesos es solo para empresas grandes?",
-      a: "Al contrario: suele notarse más en negocios pequeños, precisamente porque ahí cada hora cuenta más y no hay un equipo dedicado a tareas administrativas. Una clínica que confirma citas automáticamente por WhatsApp, una tienda que genera facturas solas al cerrar cada pedido o un despacho que recibe ya ordenados los formularios de contacto en una hoja de cálculo, son casos típicos de negocios pequeños donde la automatización libera tiempo real cada semana. No hace falta tener un departamento técnico ni un volumen enorme de operaciones para que compense.",
+      q: "¿Cómo se automatizan los mensajes de WhatsApp?",
+      a: "Se conecta el canal oficial de WhatsApp Business con tu agenda o tu formulario mediante n8n o Make, y las confirmaciones y los recordatorios salen solos. Lo que necesita a una persona te sigue llegando.",
     },
     {
-      q: "¿Cuánto cuesta automatizar un proceso de mi negocio?",
-      a: "El precio parte de 149 € por automatización, e incluye la auditoría de esa tarea concreta, el diseño e implementación del flujo, las pruebas con casos reales de tu negocio y la documentación. Si necesitas automatizar varias tareas a la vez, los packs de varias automatizaciones tienen descuento sobre el precio individual.\n\nEl coste final de cada automatización depende de cuántas herramientas hay que conectar y de qué tan compleja sea la lógica del proceso (por ejemplo, si hay que tomar decisiones distintas según el caso), algo que se concreta después de la auditoría inicial.",
+      q: "¿Se pueden automatizar las facturas y las tareas administrativas?",
+      a: "Sí: la factura puede crearse al cerrar un pedido, los datos pasar a tu programa de facturación y los documentos guardarse en su carpeta. Antes lo pruebo contigo con casos reales.",
     },
     {
-      q: "¿Cuánto tiempo se tarda en tener lista una automatización?",
-      a: "Depende de cuántas herramientas conecta y de qué tan compleja sea la lógica del proceso. Una automatización sencilla, como enviar un recordatorio de cita o volcar un formulario a una hoja de cálculo, suele estar lista en pocos días desde que se aprueba la propuesta.\n\nProcesos con varios pasos condicionales o que conectan tres o cuatro herramientas distintas necesitan algo más de tiempo, porque incluyen una fase de pruebas con casos reales antes de dejarlas funcionando en tu día a día. El plazo se concreta en la propuesta priorizada, junto con el precio.",
-    },
-    {
-      q: "¿Qué pasa si una automatización falla o hay un error a mitad de proceso?",
-      a: "Cada flujo se configura con avisos automáticos si algo no sale como estaba previsto, por ejemplo si una herramienta externa deja de responder o llega un dato en un formato inesperado. En vez de que el error pase desapercibido, recibes una notificación para que puedas revisarlo o contactarme. Antes de dejar cualquier automatización funcionando en tu día a día, la pruebo con casos reales de tu negocio para detectar la mayoría de los problemas antes de que afecten a un pedido o a un cliente real.",
-    },
-    {
-      q: "¿Se pueden automatizar procesos que usan varias herramientas distintas a la vez, como WhatsApp, Excel y facturación?",
-      a: "Sí, de hecho es donde más valor aporta automatizar: cuantas más aplicaciones distintas intervienen en un proceso (por ejemplo, un pedido que llega por WhatsApp, se apunta en una hoja de cálculo y termina generando una factura), más tiempo se pierde copiando datos a mano entre ellas y más fácil es que se cuele un error humano. n8n y Make están pensados precisamente para conectar varias aplicaciones dentro de un mismo flujo, así que el proceso completo se puede automatizar de principio a fin, no solo un paso suelto.",
-    },
-    {
-      q: "¿Automatizar con n8n o Make tiene algún coste aparte de tu servicio?",
-      a: "Puede tenerlo, y te lo explico con transparencia antes de proponerte la herramienta: n8n y Make tienen sus propios planes de uso según el volumen de tareas que ejecutes al mes, y para negocios pequeños suele bastar con un plan económico o incluso gratuito. Mi honorario cubre la auditoría, el diseño, la implementación y la documentación del flujo; el coste de la plataforma en sí, si lo hay, depende del volumen de tu negocio y se evalúa juntas antes de decidir qué herramienta usar, para que no haya sorpresas en tu factura mensual.",
+      q: "¿Cómo empiezo a automatizar los procesos de mi empresa?",
+      a: "Elige una sola tarea repetitiva y apunta sus pasos tal como los haces hoy. Después se simplifica y se prueba con casos reales antes de dejarla sola.",
     },
   ],
-}
+  cta: {
+    title: "Empecemos por una tarea",
+    text: "Cuéntame qué tarea repites cada semana y te digo si compensa automatizarla.",
+  },
+};
 
 export const inteligenciaArtificial: ServicePageData = {
   slug: "/inteligencia-artificial/",
