@@ -547,3 +547,46 @@ test("RealProof review quote carries the word budget marker", () => {
     assert.match(figure, new RegExp(part));
   }
 });
+
+test("Projects declares the legacy and ink variants and keeps legacy markup", () => {
+  const src = read("src/components/Projects.astro");
+  assert.match(src, /variant\?:\s*"legacy"\s*\|\s*"ink"/);
+  assert.match(src, /variant\s*=\s*"legacy"/);
+  for (const legacyClass of [
+    "shadow-xl",
+    "lg:border-gray-800",
+    "text-gray-100",
+    "md:group-hover:-translate-y-1",
+    "md:scale-110",
+    "LinkButton",
+  ]) {
+    assert.ok(src.includes(legacyClass), `legacy keeps ${legacyClass}`);
+  }
+});
+
+test("Projects ink branch uses the template tokens and none of the legacy world", () => {
+  const src = read("src/components/Projects.astro");
+  const markup = src.match(
+    /variant === "ink"([\s\S]*?)variant === "legacy"/,
+  )?.[1];
+  assert.ok(markup, "ink branch exists");
+  for (const banned of ["shadow-", "gray-", "scale-", "translate-", "rotate"]) {
+    assert.ok(!markup.includes(banned), `ink markup has no ${banned}`);
+  }
+  const style = src.match(/<style>([\s\S]*?)<\/style>/)?.[1] ?? "";
+  assert.match(style, /border-radius:\s*0\.9rem/);
+  assert.match(style, /var\(--hairline\)/);
+  assert.ok(!/box-shadow/.test(style), "ink styles have no box-shadow");
+  assert.match(markup, /<h3/);
+  assert.match(markup, /rel="noopener noreferrer"/);
+  assert.match(markup, /target="_blank"/);
+  assert.match(markup, /se abre en una pestaña nueva/);
+  assert.match(markup, /alt=\{title\}/);
+});
+
+test("RealProof forwards projectsVariant to Projects as variant", () => {
+  const src = read("src/components/seo-local/RealProof.astro");
+  assert.match(src, /projectsVariant\?:\s*"legacy"\s*\|\s*"ink"/);
+  assert.match(src, /<Projects[^>]*variant=\{projectsVariant\}/);
+  assert.match(src, /projectsVariant\s*=\s*"legacy"/);
+});

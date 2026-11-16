@@ -4,7 +4,7 @@ Prerequisite: rebase on `develop` after NRD-212 (word budget without the live re
 
 ## 1. Shared ink project cards
 
-- [ ] 1.1 [NRD-217 app] `variant?: "legacy" | "ink"` in `src/components/Projects.astro` (legacy unchanged, ink with 0.9rem screenshots, no shadows, hairlines, asymmetric layout) and `projectsVariant` in `src/components/seo-local/RealProof.astro`; tests: variant assertions in `tests/template-components.test.js` first; verify suite (incl. `casos-exito`), `pnpm build`, `pnpm check:seo:dist` (16) green
+- [x] 1.1 [NRD-217 app] `variant?: "legacy" | "ink"` in `src/components/Projects.astro` (legacy unchanged, ink with 0.9rem screenshots, no shadows, hairlines, asymmetric layout) and `projectsVariant` in `src/components/seo-local/RealProof.astro`; tests: variant assertions in `tests/template-components.test.js` first; verify suite (incl. `casos-exito`), `pnpm build`, `pnpm check:seo:dist` (16) green
 
 ## 2. Page on the template
 

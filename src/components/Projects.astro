@@ -8,6 +8,7 @@ import React from "./icons/React.astro";
 import Link from "./icons/Link.astro";
 import LinkButton from "./LinkButton.astro";
 import Wordpress from "./icons/Wordpress.astro";
+import "@/styles/template.css";
 
 const TAGS = {
   NEXT: {
@@ -51,9 +52,12 @@ interface Props {
   // (mismo orden que PROJECTS, no el de la lista). Sin esta prop se
   // muestran todos, igual que hasta ahora.
   only?: string[];
+  // "legacy" (por defecto) es el marcado de siempre; "ink" son las tarjetas del
+  // mundo ink de las páginas con plantilla (sin sombras, bordes hairline).
+  variant?: "legacy" | "ink";
 }
 
-const { only } = Astro.props;
+const { only, variant = "legacy" } = Astro.props;
 
 // Las imágenes viven en src/assets/ para que astro:assets (<Image>) pueda
 // optimizarlas (resize + reencode) en build time. Como las rutas están en un
@@ -87,83 +91,226 @@ const PROJECTS: Project[] = [
   },
   {
     key: "adfsevilla",
-    title:
-      "Adf Sevilla - Web de administración de fincas en Sevilla",
-    description:
-      `Web para empresa de administración de fincas en el barrio del Cerro del Águila, Sevilla. 
+    title: "Adf Sevilla - Web de administración de fincas en Sevilla",
+    description: `Web para empresa de administración de fincas en el barrio del Cerro del Águila, Sevilla. 
       Creado desde cero con Wordpress. Optimizada para SEO Local con palabras clave como "administradores de fincas en sevilla" o "gestión de fincas en sevilla"`,
     link: "https://adfsevilla.com/",
     image: "adfsevilla.webp",
     tags: [TAGS.WORDPRESS],
   },
 ];
+
+const hostnameOf = (link: string) =>
+  new URL(link).hostname.replace(/^www\./, "");
 ---
 
-<div class="flex flex-col gap-y-16">
-  {
-    PROJECTS.filter((project) => !only || only.includes(project.key)).map(
+{variant === "ink" && (
+  <div class="ink-projects">
+    {PROJECTS.filter((project) => !only || only.includes(project.key)).map(
       ({ image, title, description, tags, link, github }) => (
-      <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
-        <div class="w-full md:w-1/2">
-          <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
+        <article class="ink-project">
+          <div class="ink-shot">
             <Image
               alt={title}
-              class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105"
               src={getProjectImage(image)}
               width={400}
               height={224}
               widths={[400, 800]}
-              sizes="(min-width: 768px) 400px, 100vw"
+              sizes="(min-width: 768px) 420px, 100vw"
               loading="lazy"
               decoding="async"
-              style="display: block;"
             />
           </div>
-        </div>
-
-        <div class="w-full md:w-1/2 md:max-w-lg">
-          <h3 class="text-2xl font-bold text-gray-100">
-            {title}
-          </h3>
-          <div class="flex flex-wrap mt-2">
-            <ul class="flex flex-row mb-2 gap-x-2">
+          <div class="ink-body">
+            <h3>{title}</h3>
+            <p>{description}</p>
+            <ul class="ink-tags">
               {tags.map((tag) => (
-                <li>
-                  <span
-                    class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2 `}
-                  >
-                    <tag.icon class="size-4" />
-                    {tag.name}
-                  </span>
-                </li>
+                <li>{tag.name}</li>
               ))}
             </ul>
-
-            <div class="mt-2 text-gray-300">
-              {description}
+            <div class="ink-links">
+              {link && (
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="tpl-link"
+                >
+                  Visitar {hostnameOf(link)}
+                  <span class="sr-only"> (se abre en una pestaña nueva)</span>
+                </a>
+              )}
+              {github && (
+                <a
+                  href={github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="tpl-link"
+                >
+                  Ver el código en GitHub
+                  <span class="sr-only"> (se abre en una pestaña nueva)</span>
+                </a>
+              )}
             </div>
-            <!-- TODO: pedir a este cliente un testimonio/cita real (con su
+          </div>
+        </article>
+      ),
+    )}
+  </div>
+)}
+
+{variant === "legacy" && (
+  <div class="flex flex-col gap-y-16">
+    {PROJECTS.filter((project) => !only || only.includes(project.key)).map(
+      ({ image, title, description, tags, link, github }) => (
+        <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
+          <div class="w-full md:w-1/2">
+            <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
+              <Image
+                alt={title}
+                class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105"
+                src={getProjectImage(image)}
+                width={400}
+                height={224}
+                widths={[400, 800]}
+                sizes="(min-width: 768px) 400px, 100vw"
+                loading="lazy"
+                decoding="async"
+                style="display: block;"
+              />
+            </div>
+          </div>
+
+          <div class="w-full md:w-1/2 md:max-w-lg">
+            <h3 class="text-2xl font-bold text-gray-100">{title}</h3>
+            <div class="flex flex-wrap mt-2">
+              <ul class="flex flex-row mb-2 gap-x-2">
+                {tags.map((tag) => (
+                  <li>
+                    <span
+                      class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2 `}
+                    >
+                      <tag.icon class="size-4" />
+                      {tag.name}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <div class="mt-2 text-gray-300">{description}</div>
+              <!-- TODO: pedir a este cliente un testimonio/cita real (con su
             nombre y cargo) y una métrica de resultado verificable (tráfico,
             reservas, tiempo de carga medido, etc.) para mostrarla aquí.
             No añadir ninguna cita ni cifra hasta tenerla confirmada por la
             propietaria del negocio. -->
-            <footer class="flex items-end justify-start mt-4 gap-x-4">
-              {github && (
-                <LinkButton href={github}>
-                  <GitHub class="size-6" />
-                  Code
-                </LinkButton>
-              )}
-              {link && (
-                <LinkButton href={link}>
-                  <Link class="size-4" />
-                  Preview
-                </LinkButton>
-              )}
-            </footer>
+              <footer class="flex items-end justify-start mt-4 gap-x-4">
+                {github && (
+                  <LinkButton href={github}>
+                    <GitHub class="size-6" />
+                    Code
+                  </LinkButton>
+                )}
+                {link && (
+                  <LinkButton href={link}>
+                    <Link class="size-4" />
+                    Preview
+                  </LinkButton>
+                )}
+              </footer>
+            </div>
           </div>
-        </div>
-      </article>
-    ))
+        </article>
+      ),
+    )}
+  </div>
+)}
+
+<style>
+  .ink-projects {
+    display: grid;
+    gap: 1.5rem;
   }
-</div>
+
+  .ink-project {
+    display: grid;
+    gap: 1.25rem;
+    padding: 1rem;
+    border: 1px solid var(--hairline);
+    border-radius: 1.25rem;
+    background: var(--card-surface);
+  }
+
+  .ink-shot {
+    overflow: hidden;
+    border: 1px solid var(--hairline-quiet);
+    border-radius: 0.9rem;
+    background: var(--drawing-surface);
+  }
+
+  .ink-shot :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .ink-body h3 {
+    margin: 0;
+    color: var(--text-strong);
+    font-size: 1.25rem;
+    font-weight: 650;
+    line-height: 1.3;
+    text-wrap: pretty;
+  }
+
+  .ink-body p {
+    max-width: 65ch;
+    margin: 0.6rem 0 1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .ink-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ink-tags li {
+    padding: 0.2rem 0.7rem;
+    border: 1px solid var(--hairline);
+    border-radius: 9999px;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+  }
+
+  .ink-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .ink-project {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      align-items: center;
+      gap: 2rem;
+      padding: 1.25rem;
+    }
+
+    .ink-project:nth-child(even) {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    }
+
+    .ink-project:nth-child(even) .ink-shot {
+      order: 2;
+    }
+  }
+</style>
