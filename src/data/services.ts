@@ -14,6 +14,9 @@ const WEB_FROM = "399 €"
 // Precio único de software a medida: `pricing.from` y las respuestas lo toman de aquí.
 const SOFTWARE_FROM = "999 €"
 
+// Precio único del chatbot con IA: `pricing.from` y la respuesta de coste lo toman de aquí.
+const AI_FROM = "399 €"
+
 /** `from` label of a named pricing tier; throws so a renamed tier fails the build. */
 export function tierFrom(service: ServicePageData, tierName: string): string {
   const tier = service.pricing.tiers?.find((t) => t.name === tierName)
@@ -404,61 +407,76 @@ export const inteligenciaArtificial: ServicePageData = {
   },
   hero: {
     h1: "Inteligencia artificial aplicada a tu negocio",
+    title: "IA que responde con tu información",
+    titleAccent: "con tu información",
     subtitle:
-      "La IA ya no es cosa de grandes empresas. Un chatbot que responde a tus clientes a las 11 de la noche, un asistente que redacta respuestas a reseñas o clasifica tus correos: soluciones concretas, con retorno medible y sin humo.",
+      "Monto chatbots y agentes de inteligencia artificial para empresas y negocios de Sevilla. Atienden a tus clientes en tu web o WhatsApp con tu información y te pasan la conversación cuando hace falta una persona.",
+    secondaryCta: { label: "Ver precio", href: "#precios" },
   },
   sectionTitles: {
-    benefits: "Qué consigue tu negocio con IA aplicada, sin humo",
+    benefits: "Qué puede hacer la IA en tu negocio",
     process: "Así es el proceso de implantar IA en tu negocio",
     pricing: "Cuánto cuesta implementar IA en tu negocio",
     faq: "Preguntas frecuentes sobre inteligencia artificial para negocios",
   },
   benefits: [
     {
-      title: "Atención al cliente 24/7",
-      text: "Un chatbot entrenado con la información de tu negocio responde dudas frecuentes, toma datos de contacto y agenda citas mientras duermes. Tú solo atiendes lo importante.",
+      title: "Chatbot en tu web y WhatsApp",
+      text: "Responde las dudas frecuentes de tus clientes en tu web o en WhatsApp Business.",
     },
     {
-      title: "IA integrada en tus procesos",
-      text: "Combinada con automatizaciones: clasificar correos, resumir documentos, redactar respuestas a reseñas de Google, extraer datos de facturas… La IA como empleado incansable.",
+      title: "Agente que reserva o toma pedidos",
+      text: "Un agente de IA no solo contesta: apunta la cita o el pedido en tus herramientas.",
     },
     {
-      title: "Sin humo: casos con retorno",
-      text: "Solo propongo IA donde aporta valor real y medible. Si tu caso se resuelve mejor con una automatización simple, te lo diré y te costará menos.",
+      title: "Respuestas con tu información",
+      text: "Contesta con tus servicios, precios y horarios, no con lo que encuentra por internet.",
     },
     {
-      title: "Tus datos, protegidos",
-      text: "Configuro las soluciones cuidando la privacidad y el RGPD: qué datos se envían, a qué proveedor y con qué garantías. Todo explicado con claridad.",
+      title: "Pasa la conversación a una persona",
+      text: "Cuando no sabe la respuesta, te avisa y la conversación sigue contigo.",
+    },
+    {
+      title: "Resúmenes",
+      text: "Resume conversaciones, correos o documentos largos en unas pocas líneas.",
+    },
+    {
+      title: "Datos cuidados y RGPD",
+      text: "Te explico qué datos se envían y a quién, según el RGPD, la ley europea de datos.",
     },
   ],
   process: [
     {
-      title: "Detectamos el caso de uso",
-      text: "Analizo dónde la IA puede ahorrarte tiempo o mejorar tu atención al cliente, y te propongo el caso con mejor retorno.",
+      title: "Elegimos un caso de uso",
+      text: "Buscamos la tarea en la que la IA te ayuda de verdad, como las dudas que más se repiten.",
     },
     {
-      title: "Prueba piloto",
-      text: "Monto una versión inicial con tus datos reales para que compruebes cómo responde antes de decidir.",
+      title: "Piloto con tus datos",
+      text: "Lo monto con la información real de tu negocio y lo pruebas antes de decidir.",
     },
     {
-      title: "Ajuste y puesta en marcha",
-      text: "Refino las respuestas, conecto la IA con tu web o WhatsApp y la dejo funcionando con supervisión.",
+      title: "Ajuste con casos reales",
+      text: "Corregimos las respuestas con preguntas de verdad de tus clientes.",
     },
     {
-      title: "Medición y mejora",
-      text: "Revisamos qué está resolviendo y qué no, y la vamos mejorando con casos reales.",
+      title: "Conexión a tu web o WhatsApp",
+      text: "Lo dejo funcionando en tu canal, con supervisión y ajustes el primer mes.",
     },
   ],
   pricing: {
-    from: "399 €",
+    from: AI_FROM,
     includes: [
-      "Análisis del caso de uso con mejor retorno",
+      "Análisis de tu caso de uso",
       "Prueba piloto con datos reales de tu negocio",
       "Integración con tu web, WhatsApp o herramientas",
       "Configuración respetuosa con el RGPD",
       "Supervisión y ajustes el primer mes",
     ],
-    note: "El coste depende del caso de uso. La prueba piloto te permite decidir sin arriesgar.",
+    note: "El coste depende del caso de uso. Con la prueba piloto ves cómo responde con tus datos antes de seguir.",
+  },
+  cta: {
+    title: "Empecemos por tus clientes",
+    text: "Cuéntame qué te preguntan más tus clientes y te digo si un chatbot te ayuda de verdad.",
   },
   faqs: [
     {

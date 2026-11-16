@@ -114,3 +114,210 @@ test("AiTileArt offers one drawing per kind", () => {
     assert.match(source, new RegExp(`class="[^"]*\\b${cls}\\b`));
   }
 });
+
+// --- Task 2.1: page on the template (NRD-215) ----------------------------------
+
+const { inteligenciaArtificial } = await import(
+  new URL("../src/data/services.ts", import.meta.url)
+);
+const { internalLinksBySource } = await import(
+  new URL("../src/data/internal-links.ts", import.meta.url)
+);
+const pageSource = () => read("src/pages/inteligencia-artificial.astro");
+
+test("page uses the template variant and drops the legacy blocks", () => {
+  const page = pageSource();
+  assert.match(
+    page,
+    /<ServiceLayout\s+page=\{inteligenciaArtificial\}\s+variant="template"/,
+  );
+  assert.doesNotMatch(page, /RealProof|TitleSection|✓/);
+  assert.doesNotMatch(page, /text-gray-|bg-gray-/);
+});
+
+test("page composes the template components in reference slot order", () => {
+  const page = pageSource();
+  const order = [
+    'slot="hero"',
+    "<SeoLocalHero",
+    '<ChatMock slot="visual"',
+    "<ProofStrip",
+    'slot="benefits"',
+    "<ReviewBento",
+    "<AiTileArt",
+    'slot="process"',
+    "<SeoLocalProcess",
+    'slot="before-pricing"',
+    "<SeoLocalAgencia",
+    'slot="pricing"',
+    "<SeoLocalPlans",
+    'slot="faq"',
+    "<SeoLocalFaq",
+    'slot="related"',
+    "<SeoLocalRelated",
+    'slot="closing"',
+    "<SeoLocalClosing",
+    '<ChatMock slot="visual" animate={false}',
+    "<SeoLocalNap",
+  ];
+  let last = -1;
+  for (const token of order) {
+    const at = page.indexOf(token, last + 1);
+    assert.ok(at > last, `${token} appears after the previous section`);
+    last = at;
+  }
+});
+
+test("keyword headings are bound to inteligenciaArtificial.sectionTitles", () => {
+  const page = pageSource();
+  for (const key of ["benefits", "process", "pricing", "faq"]) {
+    assert.match(
+      page,
+      new RegExp(
+        `keyword=\\{inteligenciaArtificial\\.sectionTitles\\?\\.${key}\\b`,
+      ),
+      `sectionTitles.${key}`,
+    );
+  }
+  assert.match(page, /keyword=\{inteligenciaArtificial\.hero\.h1\}/);
+  assert.match(page, /secondaryLink=\{\{[^}]*href:\s*"#precios"/);
+  assert.match(page, /internalLinksBySource\[inteligenciaArtificial\.slug\]/);
+  assert.match(page, /keyword="¿IA a medida o ChatGPT tal cual\?"/);
+});
+
+test("the single plan is built from inteligenciaArtificial.pricing", () => {
+  const page = pageSource();
+  assert.match(page, /tiers=\{\[plan\]\}/);
+  for (const field of ["from", "includes", "note"]) {
+    assert.match(
+      page,
+      new RegExp(`inteligenciaArtificial\\.pricing\\.${field}\\b`),
+    );
+  }
+  assert.match(page, /desde \{inteligenciaArtificial\.pricing\.from\}/);
+  assert.doesNotMatch(page, /€/, "no price literal in the page");
+  assert.equal(inteligenciaArtificial.pricing.tiers, undefined);
+  assert.equal(inteligenciaArtificial.pricing.from, "399 €");
+});
+
+test("services.ts holds the AI price in one constant", () => {
+  const services = read("src/data/services.ts");
+  assert.match(services, /^const AI_FROM = "399 €"$/m);
+  assert.match(services, /^\s*from: AI_FROM,?$/m);
+  const block = services.slice(
+    services.indexOf("export const inteligenciaArtificial"),
+    services.indexOf("export const seoLocal"),
+  );
+  assert.doesNotMatch(block, /"399 €"/, "no second literal in the AI page");
+});
+
+test("proof strip shows the experience cell and the rating only", () => {
+  const page = pageSource();
+  assert.match(page, /SITE_PROOF\[0\]/);
+  assert.doesNotMatch(page, /SITE_PROOF\[1\]/);
+  assert.match(page, /reviewsData\s*\?/);
+});
+
+test("data: six tiles, four steps, hero and closing copy", () => {
+  assert.equal(inteligenciaArtificial.benefits.length, 6);
+  assert.equal(inteligenciaArtificial.process.length, 4);
+  const { title, titleAccent, secondaryCta } = inteligenciaArtificial.hero;
+  assert.ok(title.includes(titleAccent), "accent is a substring of the title");
+  assert.equal(secondaryCta.label, "Ver precio");
+  assert.equal(secondaryCta.href, "#precios");
+  assert.equal(
+    inteligenciaArtificial.sectionTitles.benefits,
+    "Qué puede hacer la IA en tu negocio",
+  );
+  assert.ok(inteligenciaArtificial.cta.title.length > 0);
+  assert.ok(inteligenciaArtificial.cta.text.length > 0);
+  for (const b of inteligenciaArtificial.benefits) {
+    assert.equal(
+      b.text.match(/[.!?](\s|$)/g)?.length,
+      1,
+      `one sentence: ${b.title}`,
+    );
+  }
+});
+
+test("plan copy: no 'mejor retorno' and the published price only", () => {
+  const { includes, note } = inteligenciaArtificial.pricing;
+  assert.equal(includes[0], "Análisis de tu caso de uso");
+  assert.equal(
+    note,
+    "El coste depende del caso de uso. Con la prueba piloto ves cómo responde con tus datos antes de seguir.",
+  );
+  assert.equal(includes.length, 5);
+});
+
+test("intent signals stay as they were", () => {
+  const { sectionTitles, hero, seo } = inteligenciaArtificial;
+  assert.equal(
+    sectionTitles.process,
+    "Así es el proceso de implantar IA en tu negocio",
+  );
+  assert.equal(
+    sectionTitles.pricing,
+    "Cuánto cuesta implementar IA en tu negocio",
+  );
+  assert.equal(hero.h1, "Inteligencia artificial aplicada a tu negocio");
+  assert.equal(
+    seo.title,
+    "IA para negocios en Sevilla | Chatbots y asistentes con IA",
+  );
+  assert.ok(seo.description.includes("chatbots que atienden clientes"));
+});
+
+test("the subtitle answers what and for whom in its first two sentences", () => {
+  const sentences =
+    inteligenciaArtificial.hero.subtitle.match(/[^.!?]+[.!?]/g) ?? [];
+  assert.ok(sentences.length >= 2, "at least two sentences");
+  const lead = sentences.slice(0, 2).join(" ");
+  assert.match(lead, /inteligencia artificial/i);
+  assert.match(lead, /empresas/i);
+  assert.doesNotMatch(lead, /\d/);
+});
+
+const copyStrings = (value, out = []) => {
+  if (typeof value === "string") out.push(value);
+  else if (Array.isArray(value)) value.forEach((v) => copyStrings(v, out));
+  else if (value && typeof value === "object")
+    Object.entries(value).forEach(([k, v]) => {
+      if (k !== "href" && k !== "slug") copyStrings(v, out);
+    });
+  return out;
+};
+
+test("no figure beyond the price, '10 años' and the pilot weeks", () => {
+  const { faqs, ...copy } = inteligenciaArtificial; // FAQ copy: task 2.2
+  for (const text of copyStrings(copy)) {
+    for (const digits of text.match(/\d+/g) ?? []) {
+      assert.ok(
+        ["399", "10", "1", "2"].includes(digits),
+        `unexpected figure ${digits} in "${text}"`,
+      );
+    }
+    assert.doesNotMatch(text, /ROI|retorno|amortiz|ahorr|%/i, text);
+  }
+});
+
+test("no H2 targets GEO or 'posicionamiento en IA'", () => {
+  const { sectionTitles } = inteligenciaArtificial;
+  for (const h2 of Object.values(sectionTitles)) {
+    assert.doesNotMatch(h2, /GEO|posicionamiento en IA/i, h2);
+  }
+  assert.doesNotMatch(pageSource(), /GEO|posicionamiento en IA/i);
+});
+
+test("related links add the GEO guide before the conversion link", () => {
+  const rows = internalLinksBySource["/inteligencia-artificial/"];
+  const geo = rows.findIndex(
+    (r) => r.path === "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
+  );
+  const conversion = rows.findIndex((r) => r.kind === "conversion");
+  assert.ok(geo >= 0, "GEO guide row exists");
+  assert.equal(rows[geo].anchor, "guía sobre cómo te encuentran las IA");
+  assert.equal(rows[geo].kind, "contextual");
+  assert.ok(geo < conversion, "before the conversion row");
+  assert.equal(rows.length, 5);
+});
