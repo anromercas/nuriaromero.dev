@@ -29,29 +29,33 @@ test("T1: serif accent font is installed and the layout exposes optional slots w
 })
 
 test("T2: hero, listing mock and proof strip honour the proof and label rules", async () => {
-  const [hero, mock, proof, route] = await Promise.all([
+  const [hero, heading, mock, proof, site, route] = await Promise.all([
     source("src/components/seo-local/SeoLocalHero.astro"),
+    source("src/components/seo-local/SectionHeading.astro"),
     source("src/components/seo-local/ListingMock.astro"),
     source("src/components/seo-local/ProofStrip.astro"),
+    source("src/data/site.ts"),
     source("src/pages/seo-local-sevilla.astro"),
   ])
 
-  assert.match(hero, /instrument-serif\/400-italic\.css/)
-  assert.match(hero, /titleAccent/)
+  assert.match(heading, /instrument-serif\/400-italic\.css/)
+  assert.match(hero, /<SectionHeading[^>]*level="h1"/)
+  assert.match(route, /titleAccent/)
   assert.match(hero, /<BookingButton/)
-  assert.match(hero, /Ver los planes/)
-  assert.match(hero, /href="#precios"/)
+  assert.match(route, /Ver los planes/)
+  assert.match(route, /href: "#precios"/)
   assert.match(mock, /Ejemplo ilustrativo/)
   assert.match(mock, /Tu negocio/)
   for (const label of ["Horarios actualizados", "Servicios claros", "Fotos nuevas", "Reseñas respondidas"]) {
     assert.ok(mock.includes(label), label)
   }
   assert.match(mock, /prefers-reduced-motion:\s*no-preference/)
-  assert.match(proof, /\+10 años/)
-  assert.match(proof, /de experiencia/)
-  assert.match(proof, /2 webs en Sevilla/)
-  assert.match(proof, /reviews\s*\?/)
-  assert.match(proof, /GoogleReviewsData \| null/)
+  assert.match(site, /\+10 años/)
+  assert.match(site, /de experiencia/)
+  assert.match(site, /2 webs en Sevilla/)
+  assert.match(proof, /items\.length > 0/)
+  assert.match(route, /reviewsData\s*\?/)
+  assert.match(route, /<ProofStrip items=\{proofItems\}/)
   assert.match(route, /getGoogleReviews\(\)/)
   assert.match(route, /<SeoLocalHero/)
   assert.match(route, /slot="hero"/)
@@ -81,12 +85,12 @@ test("T3: review bento is asymmetric, has six drawn tiles and one illustrative l
 })
 
 test("batch A review fixes: singular opinion, caption attached to grid, balanced ficha tile, one matched state per directory row", async () => {
-  const [proof, bento] = await Promise.all([
-    source("src/components/seo-local/ProofStrip.astro"),
+  const [route, bento] = await Promise.all([
+    source("src/pages/seo-local-sevilla.astro"),
     source("src/components/seo-local/ReviewBento.astro"),
   ])
 
-  assert.match(proof, /userRatingCount === 1 \? "opinión" : "opiniones"/)
+  assert.match(route, /userRatingCount === 1 \? "opinión" : "opiniones"/)
   assert.ok(bento.indexOf("Ejemplo ilustrativo") > bento.indexOf('class="bento"'), "caption must follow the grid")
   assert.match(bento, /class="bento-caption"/)
   assert.match(bento, /<svg viewBox="0 40 360 150"/)
@@ -200,11 +204,13 @@ test("finish review: FAQ, related links and closing CTA are bespoke and keep the
   assert.match(related, /links\.length > 0/)
   assert.doesNotMatch(related, /rounded-xl|bg-gray/)
 
-  assert.match(closing, /<ListingMock/)
+  assert.match(route, /<ListingMock slot="visual" animate=\{false\}/)
   assert.match(closing, /<BookingButton/)
-  assert.match(closing, /seoLocal\.cta/)
-  assert.match(closing, /<em>/)
-  assert.match(closing, /aria-labelledby="cierre-title"[\s\S]*?id="cierre-title"/)
+  assert.match(route, /seoLocal\.cta/)
+  assert.match(route, /accent: "tu presencia local"/)
+  assert.match(closing, /aria-labelledby=\{headingId\}/)
+  assert.match(closing, /<SectionHeading\s+id=\{headingId\}/)
+  assert.match(route, /headingId="cierre-title"/)
 
   for (const slot of ["faq", "related", "closing"]) assert.match(route, new RegExp(`slot="${slot}"`))
 })
@@ -234,19 +240,19 @@ test("finish review: bento is truly asymmetric, measurement reads side by side, 
 })
 
 test("finish review: real proof renders one pull-quote and the proof strip is a three-cell band", async () => {
-  const [proof, strip] = await Promise.all([
+  const [proof, strip, site] = await Promise.all([
     source("src/components/seo-local/RealProof.astro"),
     source("src/components/seo-local/ProofStrip.astro"),
+    source("src/data/site.ts"),
   ])
 
   assert.match(proof, /<blockquote/)
   assert.match(proof, /reviews\.reviews\[0\]|reviews\?\.reviews/)
   assert.doesNotMatch(proof, /import GoogleReviews/)
   assert.match(proof, /Projects only=\{\["arkady", "adfsevilla"\]\}/)
-  assert.match(strip, /<strong>\+10 años<\/strong>/)
-  assert.match(strip, /de experiencia/)
-  assert.match(strip, /2 webs en Sevilla/)
-  assert.match(strip, /de negocios locales/)
+  assert.match(site, /stat: "\+10 años", label: "de experiencia"/)
+  assert.match(site, /stat: "2 webs en Sevilla", label: "de negocios locales"/)
+  assert.match(strip, /<strong>\{item\.stat\}<\/strong>/)
   assert.match(strip, /border-left/)
 })
 
@@ -300,9 +306,10 @@ test("listing pending state keeps text legible (>= 4.5:1 needs at least 0.7 opac
 
 test("T7: every section has a small keyword heading above its display title, one h1 only", async () => {
   const read = (name) => source(`src/components/seo-local/${name}.astro`)
-  const [hero, bento, proc, proof, plans, faq, closing, data] = await Promise.all([
+  const [hero, bento, proc, proof, plans, faq, closing, data, route, css] = await Promise.all([
     read("SeoLocalHero"), read("ReviewBento"), read("SeoLocalProcess"), read("RealProof"),
     read("SeoLocalPlans"), read("SeoLocalFaq"), read("SeoLocalClosing"), seoLocalData(),
+    source("src/pages/seo-local-sevilla.astro"), source("src/styles/template.css"),
   ])
   const keyword = (text, id, label) => {
     const kw = text.indexOf(`<h2 id="${id}" class="kw">${label}</h2>`)
@@ -315,20 +322,25 @@ test("T7: every section has a small keyword heading above its display title, one
   keyword(proof, "prueba-title", "Webs de negocios locales en Sevilla")
   keyword(plans, "planes-title", "Cuánto cuesta el SEO local en Sevilla")
   keyword(faq, "faq-title", "Preguntas frecuentes sobre SEO local en Sevilla")
-  keyword(closing, "cierre-title", "Reserva una llamada sobre SEO local en Sevilla")
-  assert.match(hero, /<h1 class="kw">\{h1\}<\/h1>\s*<p class="display">/)
+  assert.match(route, /headingId="cierre-title"\s+keyword="Reserva una llamada sobre SEO local en Sevilla"/)
+  assert.match(closing, /<SectionHeading\s+id=\{headingId\}\s+keyword=\{keyword\}/)
+  assert.match(hero, /<SectionHeading[\s\S]*?level="h1"[\s\S]*?keyword=\{keyword\}/)
+  assert.match(route, /keyword=\{seoLocal\.hero\.h1\}/)
   assert.match(data, /h1:\s*"SEO local Sevilla y posicionamiento web"/)
   assert.match(data, /title:\s*"Tu negocio está en Sevilla\. La pregunta es si te encuentran cuando importa\."/)
   assert.match(data, /title:\s*"SEO local Sevilla y posicionamiento web \| Desde 300 €\/mes \+ IVA"/)
   for (const heading of ["Ficha de Google Business Profile", "Datos coherentes en directorios locales", "Búsquedas locales en Sevilla", "Reseñas de Google", "Web para negocios locales", "Medición de llamadas, clics y rutas"]) {
     assert.ok(bento.includes(`<h3>${heading}</h3>`), heading)
   }
-  for (const component of [bento, proc, proof, plans, faq, closing]) {
+  for (const component of [bento, proc, proof, plans, faq]) {
     assert.equal((component.match(/<h1/g) ?? []).length, 0)
     assert.doesNotMatch(component, /<h[1-3][^>]*>[^<]*agencia/i)
     assert.match(component, /\.kw \{[^}]*font-weight:\s*600[^}]*\}/)
     assert.doesNotMatch(component, /\.kw \{[^}]*(?:uppercase|letter-spacing)/)
   }
+  assert.equal((closing.match(/<h1/g) ?? []).length, 0)
+  assert.match(css, /\.tpl-kw \{[^}]*font-weight:\s*600[^}]*\}/)
+  assert.doesNotMatch(css, /\.tpl-kw \{[^}]*(?:uppercase|letter-spacing)/)
   assert.match(data, /¿Cómo puede aparecer mi negocio en Google Maps\?/)
   assert.match(data, /¿Eres una agencia de SEO local\?/)
   assert.match(data, /nadie puede prometer la primera posición/)
@@ -398,8 +410,9 @@ test("T8: llms.txt carries the real offer, schema opts in to two monthly offers,
   assert.match(check, /valueAddedTaxIncluded/)
 
   assert.ok(site.includes('full: "Camino Andalucía, 426, 41309 La Rinconada, Sevilla"'))
-  assert.match(nap, /<h2 id="nap-title" class="kw">SEO local desde La Rinconada, Sevilla<\/h2>/)
-  assert.match(nap, /aria-labelledby="nap-title"/)
+  assert.match(route, /<SeoLocalNap\s+headingId="nap-title"\s+keyword="SEO local desde La Rinconada, Sevilla"/)
+  assert.match(nap, /<h2 id=\{headingId\} class="tpl-kw nap-kw">\s*\{keyword\}\s*<\/h2>/)
+  assert.match(nap, /aria-labelledby=\{headingId\}/)
   assert.match(nap, /SITE\.address\.full/)
   assert.match(nap, /href=\{`tel:\+\$\{SITE\.whatsapp\}`\}/)
   assert.match(nap, /SITE\.phone/)

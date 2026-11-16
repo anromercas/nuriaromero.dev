@@ -112,3 +112,105 @@ test("SectionHeading declares its Props and renders a single optional em", () =>
   assert.match(src, /tpl-display/);
   assert.doesNotMatch(src, /@\/data\//);
 });
+
+const component = (name) => read(`src/components/seo-local/${name}.astro`);
+const page = () => read("src/pages/seo-local-sevilla.astro");
+
+function assertTemplateSection(src, name, fields) {
+  assert.match(src, /interface Props/, `${name} declares Props`);
+  for (const field of fields) {
+    assert.match(src, new RegExp(`\\b${field}\\??:`), `${name} Props.${field}`);
+  }
+  assert.doesNotMatch(src, /@\/data\/services/, `${name} imports no page data`);
+  assert.doesNotMatch(src, /\bseoLocal\b/, `${name} reads no seoLocal`);
+  assert.match(src, /var\(--/, `${name} uses tokens`);
+  assert.doesNotMatch(src, /\.display em\s*\{/, `${name} redefines the accent`);
+  assert.doesNotMatch(src, /\.band\s*\{/, `${name} redefines the band`);
+}
+
+test("hero takes copy by props and the drawing by the visual slot", async () => {
+  const src = await component("SeoLocalHero");
+  assertTemplateSection(src, "SeoLocalHero", [
+    "keyword",
+    "title",
+    "subtitle",
+    "primaryCtaLabel",
+    "secondaryLink",
+    "actionsAttrs",
+  ]);
+  assert.match(src, /<SectionHeading[^>]*level="h1"/);
+  assert.match(src, /<slot name="visual"/);
+  assert.match(src, /Astro\.slots\.has\("visual"\)/);
+  assert.match(src, /\{\.\.\.actionsAttrs\}/);
+  assert.doesNotMatch(src, /ListingMock/);
+});
+
+test("proof strip renders the items it is given and nothing when empty", async () => {
+  const src = await component("ProofStrip");
+  assertTemplateSection(src, "ProofStrip", ["items"]);
+  assert.match(src, /ProofItem\[\]/);
+  assert.match(src, /items\.length/);
+  assert.doesNotMatch(src, /\+10 años|2 webs en Sevilla|GoogleReviewsData/);
+  const site = read("src/data/site.ts");
+  assert.match(await site, /export const SITE_PROOF/);
+  assert.match(await site, /stat: "\+10 años", label: "de experiencia"/);
+  assert.match(
+    await site,
+    /stat: "2 webs en Sevilla", label: "de negocios locales"/,
+  );
+});
+
+test("closing takes copy by props and the drawing by the visual slot", async () => {
+  const src = await component("SeoLocalClosing");
+  assertTemplateSection(src, "SeoLocalClosing", [
+    "headingId",
+    "keyword",
+    "title",
+    "text",
+    "ctaLabel",
+    "meta",
+  ]);
+  assert.match(src, /<SectionHeading/);
+  assert.match(src, /<slot name="visual"/);
+  assert.match(src, /Astro\.slots\.has\("visual"\)/);
+  assert.match(src, /30 minutos · Sin compromiso · Directamente conmigo/);
+  assert.doesNotMatch(src, /ListingMock/);
+});
+
+test("NAP takes the heading by props and the lines from SITE", async () => {
+  const src = await component("SeoLocalNap");
+  assertTemplateSection(src, "SeoLocalNap", ["headingId", "keyword"]);
+  assert.match(src, /SITE\.address\.full/);
+  assert.match(src, /aria-labelledby=\{headingId\}/);
+});
+
+test("listing mock reads the shared tokens", async () => {
+  const src = await component("ListingMock");
+  assert.match(src, /var\(--/);
+  // rgb(100 116 139) is a drawing detail with no DESIGN.md token; it stays
+  // as is because this story introduces no new colour.
+  const literals = [...src.matchAll(/rgb\(\d+ \d+ \d+\)/g)].map((m) => m[0]);
+  assert.deepEqual([...new Set(literals)], ["rgb(100 116 139)"]);
+});
+
+test("the reference page passes the hero, proof, closing and NAP content", async () => {
+  const src = await page();
+  assert.match(src, /<SeoLocalHero[\s\S]*?keyword=\{seoLocal\.hero\.h1\}/);
+  assert.match(src, /accent: seoLocal\.hero\.titleAccent/);
+  assert.match(
+    src,
+    /secondaryLink=\{\{ label: "Ver los planes", href: "#precios" \}\}/,
+  );
+  assert.match(src, /<ListingMock slot="visual" \/>/);
+  assert.match(src, /<ListingMock slot="visual" animate=\{false\} \/>/);
+  assert.match(src, /SITE_PROOF/);
+  assert.match(src, /<ProofStrip items=\{proofItems\}/);
+  assert.match(src, /reviewsData\s*\?/);
+  assert.match(src, /userRatingCount === 1 \? "opinión" : "opiniones"/);
+  assert.match(src, /keyword="Reserva una llamada sobre SEO local en Sevilla"/);
+  assert.match(src, /accent: "tu presencia local"/);
+  assert.match(
+    src,
+    /<SeoLocalNap\s+headingId="nap-title"\s+keyword="SEO local desde La Rinconada, Sevilla"/,
+  );
+});

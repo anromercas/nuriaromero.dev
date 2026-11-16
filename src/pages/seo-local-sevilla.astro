@@ -12,16 +12,42 @@ import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro"
 import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro"
 import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro"
 import SeoLocalPlans from "@/components/seo-local/SeoLocalPlans.astro"
+import ListingMock from "@/components/seo-local/ListingMock.astro"
 import { seoLocal } from "@/data/services"
+import { SITE_PROOF } from "@/data/site"
 import { getGoogleReviews } from "@/lib/google-reviews"
 
 const reviewsData = await getGoogleReviews()
+
+const proofItems = [
+  SITE_PROOF[0],
+  ...(reviewsData
+    ? [
+        {
+          stat: `${reviewsData.rating.toFixed(1).replace(".", ",")} en Google`,
+          label: `${reviewsData.userRatingCount} ${reviewsData.userRatingCount === 1 ? "opinión" : "opiniones"}`,
+        },
+      ]
+    : []),
+  SITE_PROOF[1],
+]
 ---
 
 <ServiceLayout page={seoLocal}>
   <Fragment slot="hero">
-    <SeoLocalHero />
-    <ProofStrip reviews={reviewsData} />
+    <SeoLocalHero
+      keyword={seoLocal.hero.h1}
+      title={{
+        text: seoLocal.hero.title ?? seoLocal.hero.h1,
+        accent: seoLocal.hero.titleAccent,
+      }}
+      subtitle={seoLocal.hero.subtitle}
+      primaryCtaLabel={seoLocal.hero.primaryCtaLabel}
+      secondaryLink={{ label: "Ver los planes", href: "#precios" }}
+    >
+      <ListingMock slot="visual" />
+    </SeoLocalHero>
+    <ProofStrip items={proofItems} />
   </Fragment>
   <Fragment slot="benefits">
     <SectionContainer id="revision-local">
@@ -61,9 +87,20 @@ const reviewsData = await getGoogleReviews()
     </SectionContainer>
   </Fragment>
   <Fragment slot="closing">
-    <SeoLocalClosing />
+    <SeoLocalClosing
+      headingId="cierre-title"
+      keyword="Reserva una llamada sobre SEO local en Sevilla"
+      title={{ text: seoLocal.cta?.title ?? "", accent: "tu presencia local" }}
+      text={seoLocal.cta?.text ?? ""}
+      ctaLabel={seoLocal.cta?.buttonLabel}
+    >
+      <ListingMock slot="visual" animate={false} />
+    </SeoLocalClosing>
     <SectionContainer>
-      <SeoLocalNap />
+      <SeoLocalNap
+        headingId="nap-title"
+        keyword="SEO local desde La Rinconada, Sevilla"
+      />
     </SectionContainer>
   </Fragment>
 </ServiceLayout>
@@ -72,7 +109,11 @@ const reviewsData = await getGoogleReviews()
   /* Route-local ground: keep the ink-blue hue down the whole page. */
   main {
     background-color: rgb(5 10 24);
-    background-image: radial-gradient(ellipse 80% 30% at 50% 0%, rgb(56 189 248 / 0.1), transparent 70%);
+    background-image: radial-gradient(
+      ellipse 80% 30% at 50% 0%,
+      rgb(56 189 248 / 0.1),
+      transparent 70%
+    );
   }
 
   .band {

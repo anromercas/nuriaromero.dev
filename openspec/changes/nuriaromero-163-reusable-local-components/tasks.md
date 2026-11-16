@@ -7,7 +7,7 @@
 
 ## 2. Sections take content by props
 
-- [ ] 2.1 [NRD-181 app] Props and `visual` slot for `SeoLocalHero`, `ProofStrip` (`SITE_PROOF` in `src/data/site.ts`), `SeoLocalClosing`, `SeoLocalNap`; tokens in `ListingMock`; `/seo-local-sevilla/` passes today's data; tests: extend `tests/template-components.test.js` first, migrate the matching assertions of `tests/seo-local-ficha-redesign.test.js`; verify suite, build, `check:seo:dist`, `diff-main` clean
+- [x] 2.1 [NRD-181 app] Props and `visual` slot for `SeoLocalHero`, `ProofStrip` (`SITE_PROOF` in `src/data/site.ts`), `SeoLocalClosing`, `SeoLocalNap`; tokens in `ListingMock`; `/seo-local-sevilla/` passes today's data; tests: extend `tests/template-components.test.js` first, migrate the matching assertions of `tests/seo-local-ficha-redesign.test.js`; verify suite, build, `check:seo:dist`, `diff-main` clean
 - [ ] 2.2 [NRD-182 app] `ReviewBento` + new `BentoTile`, `SeoLocalProcess` + new `SeoLocalCycle` (slots `byline`, `aside`), `RealProof`, `SeoLocalAgencia` by props; the six tile SVGs move to the page verbatim; tests: extend `tests/template-components.test.js` first, migrate T7 and copy assertions of `tests/seo-local-ficha-redesign.test.js`, `tests/visibility-audit-graphics.test.js`, `tests/seo-local-sevilla-redesign.test.js`; verify suite, build, `check:seo:dist`, `diff-main` clean
 - [ ] 2.3 [NRD-183 app] `SeoLocalPlans` (slot `lede`), `SeoLocalFaq` (optional `links` per item, FAQPage unchanged), `SeoLocalRelated` by props; tests: extend `tests/template-components.test.js` first, migrate plan and FAQ assertions of `tests/seo-local-posicionamiento-web.test.js` and `tests/seo-local-ficha-redesign.test.js`; verify suite, build, `check:seo:dist` (15, 16, 17), `diff-main` clean
 

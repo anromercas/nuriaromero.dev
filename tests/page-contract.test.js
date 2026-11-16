@@ -117,3 +117,11 @@ test("baseline fixture holds JSON-LD and headings of the reference page", () => 
   assert.ok(Array.isArray(fixture.headings) && fixture.headings.length > 0);
   assert.equal(fixture.headings.filter((h) => h.level === 1).length, 1);
 });
+
+test("normalizedMain ignores whitespace-only gaps but not whitespace next to text", () => {
+  const a = normalizedMain("<main><p> Hola <em>a</em>. </p></main>");
+  const b = normalizedMain("<main><p>Hola <em>a</em>.</p></main>");
+  assert.equal(a, b);
+  const c = normalizedMain("<main><p>Hola <em>a</em> .</p></main>");
+  assert.notEqual(b, c);
+});

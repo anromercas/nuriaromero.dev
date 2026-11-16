@@ -1,49 +1,62 @@
 ---
-import "@fontsource/instrument-serif/400-italic.css"
-import BookingButton from "@/components/BookingButton.astro"
-import ListingMock from "@/components/seo-local/ListingMock.astro"
-import { seoLocal } from "@/data/services"
+import BookingButton from "@/components/BookingButton.astro";
+import SectionHeading from "@/components/seo-local/SectionHeading.astro";
+import "@/styles/template.css";
+import type { AccentTitle } from "./types";
 
-const cta = seoLocal.cta
-const title = cta?.title ?? ""
-const accent = "tu presencia local"
-const accentAt = title.indexOf(accent)
-const before = accentAt >= 0 ? title.slice(0, accentAt) : title
-const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
+interface Props {
+  headingId: string;
+  keyword: string;
+  title: AccentTitle;
+  text: string;
+  ctaLabel?: string;
+  meta?: string;
+}
+
+const {
+  headingId,
+  keyword,
+  title,
+  text,
+  ctaLabel = "Reservar una llamada",
+  meta = "30 minutos · Sin compromiso · Directamente conmigo",
+} = Astro.props;
+const hasVisual = Astro.slots.has("visual");
 ---
 
-<section class="closing" aria-labelledby="cierre-title">
+<section
+  class:list={["closing", { "closing-solo": !hasVisual }]}
+  aria-labelledby={headingId}
+>
   <div class="closing-inner">
     <div class="closing-copy">
-      <h2 id="cierre-title" class="kw">Reserva una llamada sobre SEO local en Sevilla</h2>
-      <p class="display">{before}{accentAt >= 0 && <em>{accent}</em>}{after}</p>
-      <p class="lede">{cta?.text}</p>
-      <BookingButton label={cta?.buttonLabel ?? "Reservar una llamada"} />
-      <p class="meta">30 minutos · Sin compromiso · Directamente conmigo</p>
+      <SectionHeading
+        id={headingId}
+        keyword={keyword}
+        title={title}
+        class="closing-display"
+      />
+      <p class="lede">{text}</p>
+      <BookingButton label={ctaLabel} />
+      <p class="meta">{meta}</p>
     </div>
-    <div class="closing-visual">
-      <ListingMock animate={false} />
-    </div>
+    {hasVisual && (
+      <div class="closing-visual">
+        <slot name="visual" />
+      </div>
+    )}
   </div>
 </section>
 
 <style>
-  .kw {
-    margin: 0 0 0.6rem;
-    color: rgb(203 213 225);
-    font-size: 1.0625rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
   .closing {
     position: relative;
     isolation: isolate;
     margin-inline: -1rem;
     padding: 4rem 1rem;
     overflow: hidden;
-    border-block: 1px solid rgb(30 41 59);
-    background: rgb(7 14 32);
+    border-block: 1px solid var(--hairline-quiet);
+    background: var(--ink-closing);
   }
 
   .closing::before {
@@ -51,8 +64,16 @@ const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
     position: absolute;
     inset: -30% -10%;
     z-index: -1;
-    background: radial-gradient(ellipse 50% 55% at 75% 50%, rgb(56 189 248 / 0.16), transparent 70%);
+    background: radial-gradient(
+      ellipse 50% 55% at 75% 50%,
+      rgb(var(--sky-signal-rgb) / 0.16),
+      transparent 70%
+    );
     pointer-events: none;
+  }
+
+  .closing-solo::before {
+    content: none;
   }
 
   .closing-inner {
@@ -63,37 +84,24 @@ const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
     margin-inline: auto;
   }
 
-  .display {
+  .closing-copy :global(.closing-display) {
     max-width: 16ch;
     margin: 0 0 1.25rem;
-    color: white;
     font-size: clamp(2.1rem, 5.5vw, 3.75rem);
-    font-weight: 700;
     line-height: 1.04;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  .display em {
-    color: rgb(125 211 252);
-    font-family: "Instrument Serif", Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 1.12em;
-    letter-spacing: -0.01em;
   }
 
   .closing-copy .lede {
     max-width: 48ch;
     margin: 0 0 1.75rem;
-    color: rgb(203 213 225);
+    color: var(--text-secondary);
     font-size: 1.125rem;
     line-height: 1.65;
   }
 
   .meta {
     margin: 1rem 0 0;
-    color: rgb(148 163 184);
+    color: var(--text-muted);
     font-size: 0.875rem;
   }
 
@@ -101,6 +109,10 @@ const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
     .closing-inner {
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
       gap: 3rem;
+    }
+
+    .closing-solo .closing-inner {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>

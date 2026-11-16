@@ -16,16 +16,11 @@ const Heading = level;
 
 const { text, accent } = title;
 const accentAt = accent ? text.indexOf(accent) : -1;
+const hasAccent = accentAt >= 0 && Boolean(accent);
 const before = accentAt >= 0 && accent ? text.slice(0, accentAt) : text;
 const after =
   accentAt >= 0 && accent ? text.slice(accentAt + accent.length) : "";
 ---
 
-<Heading id={id} class="tpl-kw">
-  {keyword}
-</Heading>
-<p class:list={["tpl-display", className]}>
-  {before}
-  {accentAt >= 0 && accent && <em class="tpl-accent">{accent}</em>}
-  {after}
-</p>
+<Heading id={id} class="tpl-kw">{keyword}</Heading>
+{hasAccent ? <p class:list={["tpl-display", className]}>{before}<em class="tpl-accent">{accent}</em>{after}</p> : <p class:list={["tpl-display", className]}>{text}</p>}

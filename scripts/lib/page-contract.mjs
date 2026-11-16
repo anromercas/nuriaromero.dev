@@ -57,6 +57,14 @@ export function headingOutline(html) {
   ].map((m) => ({ level: Number(m[1]), text: plainText(m[2]) }));
 }
 
+// Whitespace-only gaps are not visible differences between sections: the
+// browser collapses them at element edges and between flex or grid items.
+// Whitespace between text and a tag (for example "</em> .") is kept, so a
+// real change in the visible text still shows up.
+const EDGE_OPEN = /(<[a-z][\w-]*\b[^>]*>)\s+/gi;
+const EDGE_CLOSE = /\s+(<\/[a-z][\w-]*>)/gi;
+const BETWEEN = />\s+</g;
+
 /** <main> inner HTML without class and data-astro-cid-* attributes, whitespace collapsed. */
 export function normalizedMain(html) {
   return mainInner(html)
@@ -64,5 +72,8 @@ export function normalizedMain(html) {
     .replace(/\sdata-astro-cid-[\w-]+(\s*=\s*("[^"]*"|'[^']*'))?/gi, "")
     .replace(/\s+/g, " ")
     .replace(/\s+(\/?>)/g, "$1")
+    .replace(BETWEEN, "><")
+    .replace(EDGE_OPEN, "$1")
+    .replace(EDGE_CLOSE, "$1")
     .trim();
 }

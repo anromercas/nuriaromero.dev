@@ -53,3 +53,10 @@ export const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${encodeURICompo
 
 export const bookingUrl =
   "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3MCaXahzt3LtR0JLmotWCaTlTd2NAYgMsbewkRE-Kd7Zl-AuRcaI9gb8x1u_CGhGgEiTNQ0Xaq?gv=true"
+
+// Verified facts shown in the template proof strip (/seo-local-sevilla/ and
+// the pages composed from the same section components).
+export const SITE_PROOF = [
+  { stat: "+10 años", label: "de experiencia" },
+  { stat: "2 webs en Sevilla", label: "de negocios locales" },
+] as const
