@@ -1,7 +1,9 @@
 // Contenido de las 4 páginas de servicio.
 // Precios acordados: landing 149 €, web 5 páginas 399 €, automatización 149 €,
-// chatbot IA 399 €, software a medida 999 €. E-commerce: sin precio público.
+// chatbot IA 399 €, software a medida 999 €. Tienda online: precio y alcance en
+// src/data/store-offer.ts.
 import type { ServicePageData } from "@/data/types"
+import { STORE_FROM, STORE_FINAL_PRICE_NOTE, storeIncludes } from "./store-offer.ts"
 
 // Precios de diseño web para interpolar en el copy y el FAQ. Los `from` de los planes
 // (guardados por tests/single-price-source.test.js) quedan como literales; un test
@@ -680,7 +682,7 @@ export const tiendaOnline: ServicePageData = {
     subtitle:
       "Si tienes un negocio en Sevilla y quieres vender por internet con una tienda online propia, la diseño y la construyo a medida: pasarela de pago, gestión de productos y stock, sin comisión de marketplace y con precio cerrado antes de empezar.",
     secondaryCta: {
-      label: "Ver cómo se presupuesta",
+      label: "Ver precio y opciones",
       href: "#precios",
     },
   },
@@ -693,7 +695,7 @@ export const tiendaOnline: ServicePageData = {
   benefits: [
     {
       title: "Tienda propia, sin comisión de marketplace",
-      text: "Vender en un marketplace o en una plataforma de terceros suele significar pagar una comisión por cada venta o una cuota mensual por seguir estando ahí. Con una tienda propia, el dominio y el hosting se contratan a tu nombre y no dependes de las reglas de una plataforma externa. Sí pagarás la comisión propia de la pasarela de pago que elijas (Stripe, PayPal, Redsys…), la misma que pagarías en cualquier tienda online, pero sin una comisión adicional por vender en un espacio que no es tuyo.",
+      text: "En un marketplace pagas una comisión a la plataforma por cada venta y vendes en un espacio que no es tuyo. En tu tienda no hay comisión de marketplace: pagas la de la pasarela de pago y, si eliges Shopify, su cuota mensual directamente a Shopify.",
     },
     {
       title: "Gestión sencilla de tus productos, sin depender de mí para cada cambio",
@@ -707,7 +709,7 @@ export const tiendaOnline: ServicePageData = {
   process: [
     {
       title: "Auditoría de qué necesitas vender",
-      text: "Hablamos de tu catálogo: cuántos productos tienes, si son físicos o digitales, si necesitas gestionar stock, variantes (talla, color…) o envíos, y qué pasarela de pago encaja mejor con tu negocio. De ahí sale el alcance real de tu proyecto.",
+      text: "Hablamos de tu catálogo y de cómo vendes, y eliges entre WooCommerce, Shopify o una tienda a medida. De ahí sale el alcance real de tu proyecto.",
     },
     {
       title: "Propuesta con presupuesto cerrado",
@@ -723,27 +725,22 @@ export const tiendaOnline: ServicePageData = {
     },
   ],
   pricing: {
-    from: "399 €",
-    includes: [
-      "Web completa con estructura de tienda: categorías y fichas de producto",
-      "Textos optimizados para que te encuentren buscando tus productos",
-      "Creación y configuración del dominio y hosting",
-      "Un mes de soporte tras el lanzamiento",
-    ],
-    note: "399 € es el precio de partida de la web completa sobre la que se construye la tienda. La integración de la pasarela de pago, la gestión de stock, variantes o envíos se presupuestan aparte, según tu número de productos y necesidades concretas: no existe un precio único de tienda online, pero sí un presupuesto cerrado por escrito antes de empezar, sin cifras a ciegas.",
+    from: STORE_FROM,
+    includes: [...storeIncludes],
+    note: STORE_FINAL_PRICE_NOTE,
   },
   faqs: [
     {
       q: "¿Cuánto cuesta una tienda online en Sevilla?",
-      a: "No existe un precio único de tienda online, porque el coste depende directamente de cuántos productos vas a vender, si necesitas variantes (talla, color, modelo…), gestión de stock y qué pasarela de pago quieres usar.\n\nEl punto de partida es la web completa desde 399 €, sobre la que se construye la estructura de categorías y fichas de producto; la integración de la pasarela de pago y las funciones específicas de venta online se presupuestan aparte, siempre con precio cerrado por escrito después de conocer tu catálogo, antes de que empieces a pagar nada.",
+      a: `Una tienda online básica cuesta desde ${STORE_FROM}, con el panel de gestión incluido, en WooCommerce, Shopify o a medida, como prefieras. Incluye el diseño adaptado a tu marca, una pasarela de pago con tarjeta, envíos sencillos, la carga de hasta unos 20 productos, una sesión de formación y un mes de soporte.\n\nEl precio final se cierra por escrito después de conocer tu proyecto, antes de empezar. Redsys o Bizum, los catálogos grandes, los envíos por peso o zona y las conexiones con otros sistemas se presupuestan aparte.`,
     },
     {
       q: "¿Qué pasarelas de pago se pueden integrar en mi tienda online?",
-      a: "Las pasarelas más habituales para un negocio en España son Stripe, PayPal y Redsys (la pasarela de los bancos españoles, típica para pagos con tarjeta nacional). Cada una tiene su propia comisión por transacción, que pagas directamente a la pasarela y no a mí, igual que pagarías en cualquier tienda online del sector. En la fase de auditoría te ayudo a elegir la que mejor encaje con tu negocio según el tipo de cliente que tengas y si necesitas cobrar también con otros métodos, como transferencia o contrareembolso.",
+      a: "Una pasarela de pago con tarjeta, como Stripe, va incluida en el precio de partida. Redsys, la pasarela de los bancos españoles, y Bizum se presupuestan aparte.\n\nCada pasarela cobra su propia comisión por venta, que pagas tú directamente a la pasarela, no a mí. Te ayudo a elegir la que encaja con tus clientes.",
     },
     {
-      q: "¿Qué diferencia hay entre una tienda online a medida y usar Shopify o Wix?",
-      a: "Shopify y Wix son plataformas SaaS: te dan una tienda funcionando rápido, pero pagas una cuota mensual mientras sigas usando la plataforma, y tu tienda vive dentro de su sistema, con las limitaciones de diseño y funciones que ellos deciden. Una tienda a medida se construye para tu caso concreto, con el dominio y el hosting a tu nombre, sin una cuota de plataforma mensual obligatoria (el mantenimiento, si lo quieres, lo contratas solo si lo necesitas). A cambio, requiere más tiempo de desarrollo inicial que darte de alta en una plataforma ya hecha, porque se construye para tu catálogo concreto en vez de partir de una plantilla genérica.",
+      q: "¿WooCommerce, Shopify o una tienda a medida?",
+      a: `Las tres parten del mismo precio, desde ${STORE_FROM}, y eliges tú. Shopify es la más rápida de poner en marcha y no te ocupas del hosting, pero pagas a Shopify una cuota mensual. WooCommerce funciona sobre WordPress, tiene miles de extensiones y el hosting y el dominio quedan a tu nombre.\n\nUna tienda a medida, por ejemplo con Next.js y Supabase, lleva solo lo que necesitas y también queda a tu nombre. Si dudas, lo vemos en la llamada según lo que vendes.`,
     },
     {
       q: "¿Necesito tener ya una web para montar la tienda online, o se puede hacer desde cero?",
@@ -759,7 +756,7 @@ export const tiendaOnline: ServicePageData = {
     },
     {
       q: "¿Quién sube los productos a la tienda una vez está lista, tú o yo?",
-      a: "Después del lanzamiento, tú misma puedes añadir productos nuevos, cambiar precios, actualizar fotos o marcar algo como agotado desde un panel de gestión, sin necesidad de escribir código ni depender de mí para cada actualización. Te enseño a usarlo durante el lanzamiento, y el primer mes de soporte va incluido por si algo no te queda claro. Para la carga inicial del catálogo, si tienes muchos productos y prefieres que me encargue yo de subirlos la primera vez, también se puede acordar como parte del presupuesto cerrado.",
+      a: "La carga inicial de hasta unos 20 productos, con variantes simples de talla o color, la hago yo y va incluida. Después, tú añades productos, cambias precios o marcas algo como agotado desde el panel de gestión: te enseño en una sesión de formación.\n\nSi tienes un catálogo grande o necesitas importar muchos productos de golpe, esa carga se presupuesta aparte.",
     },
     {
       q: "¿Qué pasa con el IVA, la facturación y los aspectos legales de vender online?",
@@ -775,7 +772,7 @@ export const tiendaOnline: ServicePageData = {
     },
     {
       q: "¿La tienda gestiona el envío y el stock sola, o eso lo tengo que hacer yo?",
-      a: "La tienda lleva el control de qué productos tienes disponibles y puede avisar automáticamente cuando algo se queda sin stock, para que no vendas algo que ya no tienes. La logística del envío en sí (empaquetar, llevarlo a la agencia de transporte, elegir la mensajería) sigue siendo una gestión tuya o de tu proveedor logístico, porque es una parte operativa del negocio, no técnica de la web. Si usas un servicio externo de gestión de envíos, valoro en la auditoría si tiene sentido conectarlo con la tienda para automatizar ese paso también.",
+      a: "La tienda lleva el control de qué productos tienes disponibles y puede avisar automáticamente cuando algo se queda sin stock, para que no vendas algo que ya no tienes. La logística del envío en sí (empaquetar, llevarlo a la agencia de transporte, elegir la mensajería) sigue siendo una gestión tuya o de tu proveedor logístico, porque es una parte operativa del negocio, no técnica de la web. Los envíos con tarifa plana o recogida en tienda van incluidos; los envíos por peso o zona y las integraciones con transportistas se presupuestan aparte.",
     },
   ],
   cta: {
