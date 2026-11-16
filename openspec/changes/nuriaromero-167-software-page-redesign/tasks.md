@@ -4,7 +4,7 @@ Prerequisite: rebase on `develop` after NRD-195 (runtime-import price test) and 
 
 ## 1. Page illustrations
 
-- [ ] 1.1 [NRD-208 app] `src/components/software/AppMock.astro` and `SoftwareTileArt.astro` (web, movil, gestion, api, reservas, datos); tests: illustration assertions in `tests/software-template.test.js` first; verify suite and `pnpm build` green
+- [x] 1.1 [NRD-208 app] `src/components/software/AppMock.astro` and `SoftwareTileArt.astro` (web, movil, gestion, api, reservas, datos); tests: illustration assertions in `tests/software-template.test.js` first; verify suite and `pnpm build` green
 
 ## 2. Page on the template
 
