@@ -3,7 +3,7 @@
 ## 1. Guards and shared contract
 
 - [x] 1.1 [NRD-179 app] Template contract tooling and reference baseline: `scripts/lib/page-contract.mjs`, `scripts/lib/template-pages.mjs`, `scripts/check-seo-16.mjs` (with `--write`), `scripts/check-seo-17.mjs`, `scripts/diff-main.mjs`, `tests/fixtures/seo-local-sevilla.baseline.json` captured from unchanged `develop`, `package.json` scripts; tests: `tests/page-contract.test.js` first (RED), then `node --test tests/*.test.js`, `pnpm build`, `pnpm check:seo:dist` green
-- [ ] 1.2 [NRD-180 app] Shared ink tokens `src/styles/template.css`, `SectionHeading.astro`, `src/components/seo-local/types.ts`; tests: `tests/template-components.test.js` first (tokens equal `DESIGN.md` values, single accent `em`), then suite, build, `check:seo:dist` and `diff-main` against the baseline with no difference
+- [x] 1.2 [NRD-180 app] Shared ink tokens `src/styles/template.css`, `SectionHeading.astro`, `src/components/seo-local/types.ts`; tests: `tests/template-components.test.js` first (tokens equal `DESIGN.md` values, single accent `em`), then suite, build, `check:seo:dist` and `diff-main` against the baseline with no difference
 
 ## 2. Sections take content by props
 

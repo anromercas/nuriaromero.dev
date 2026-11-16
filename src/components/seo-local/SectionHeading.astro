@@ -1,0 +1,31 @@
+---
+import "@fontsource/instrument-serif/400-italic.css";
+import "@/styles/template.css";
+import type { AccentTitle } from "./types";
+
+interface Props {
+  id?: string;
+  keyword: string;
+  title: AccentTitle;
+  level?: "h1" | "h2";
+  class?: string;
+}
+
+const { id, keyword, title, level = "h2", class: className } = Astro.props;
+const Heading = level;
+
+const { text, accent } = title;
+const accentAt = accent ? text.indexOf(accent) : -1;
+const before = accentAt >= 0 && accent ? text.slice(0, accentAt) : text;
+const after =
+  accentAt >= 0 && accent ? text.slice(accentAt + accent.length) : "";
+---
+
+<Heading id={id} class="tpl-kw">
+  {keyword}
+</Heading>
+<p class:list={["tpl-display", className]}>
+  {before}
+  {accentAt >= 0 && accent && <em class="tpl-accent">{accent}</em>}
+  {after}
+</p>
