@@ -4,7 +4,7 @@ Prerequisite: rebase on `develop` after NRD-168 (`nuriaromero-168-store-page-red
 
 ## 1. Page illustrations
 
-- [ ] 1.1 [NRD-205 app] `src/components/automatizaciones/FlowMock.astro` and `AutomationTileArt.astro` (whatsapp, facturas, citas, formularios, avisos, informes; no brand logos); tests: illustration assertions in `tests/automatizaciones-template.test.js` first; verify suite and `pnpm build` green
+- [x] 1.1 [NRD-205 app] `src/components/automatizaciones/FlowMock.astro` and `AutomationTileArt.astro` (whatsapp, facturas, citas, formularios, avisos, informes; no brand logos); tests: illustration assertions in `tests/automatizaciones-template.test.js` first; verify suite and `pnpm build` green
 
 ## 2. Page on the template
 
