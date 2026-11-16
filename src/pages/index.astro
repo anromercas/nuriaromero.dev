@@ -1,94 +1,85 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import { Image } from "astro:assets"
-import Schema from "@/components/seo/Schema.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
-import TitleSection from "@/components/TitleSection.astro"
-import Projects from "@/components/Projects.astro"
-import GoogleReviews from "@/components/GoogleReviews.astro"
-import FAQ from "@/components/services/FAQ.astro"
-import ProcessSteps from "@/components/services/ProcessSteps.astro"
-import CTASection from "@/components/services/CTASection.astro"
-import InternalLinks from "@/components/InternalLinks.astro"
-import { internalLinksBySource } from "@/data/internal-links"
-import SocialPill from "@/components/SocialPill.astro"
-import BookingButton from "@/components/BookingButton.astro"
-import Badge from "@/components/Badge.astro"
-import WhatsAppIcon from "@/components/icons/WhatsApp.astro"
-import CodeIcon from "@/components/icons/Code.astro"
-import Briefcase from "@/components/icons/Briefcase.astro"
-import ProfileCheck from "@/components/icons/ProfileCheck.astro"
-import { faqSchema, personSchema, reviewsSchema } from "@/lib/schema"
-import { getGoogleReviews } from "@/lib/google-reviews"
-import { services, seoLocal, tierFrom } from "@/data/services"
-import { niches } from "@/data/niches"
-import profileHome from "@/assets/perfil-home.webp"
+import Layout from "@/layouts/Layout.astro";
+import Schema from "@/components/seo/Schema.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import ProofStrip from "@/components/seo-local/ProofStrip.astro";
+import ReviewBento from "@/components/seo-local/ReviewBento.astro";
+import BentoTile from "@/components/seo-local/BentoTile.astro";
+import SeoLocalProcess from "@/components/seo-local/SeoLocalProcess.astro";
+import RealProof from "@/components/seo-local/RealProof.astro";
+import SeoLocalAgencia from "@/components/seo-local/SeoLocalAgencia.astro";
+import SeoLocalFaq from "@/components/seo-local/SeoLocalFaq.astro";
+import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro";
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
+import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro";
+import HomeHeroMock from "@/components/home/HomeHeroMock.astro";
+import ServiceTileArt from "@/components/home/ServiceTileArt.astro";
+import type { ComparisonItem, Step } from "@/components/seo-local/types";
+import { internalLinksBySource } from "@/data/internal-links";
+import { SITE_PROOF } from "@/data/site";
+import { faqSchema, personSchema, reviewsSchema } from "@/lib/schema";
+import { getGoogleReviews } from "@/lib/google-reviews";
+import {
+  seoLocal,
+  disenoWeb,
+  tiendaOnline,
+  desarrolloSoftware,
+  automatizaciones,
+  inteligenciaArtificial,
+  tierFrom,
+} from "@/data/services";
 
-const reviewsData = await getGoogleReviews()
+const reviewsData = await getGoogleReviews();
 
-const homeDescription = `Consultor SEO en Sevilla para negocios locales: aparece en Google, Maps y en las respuestas de IA. SEO local desde ${tierFrom(seoLocal, "Local")} y trato directo.`
+const homeDescription = `Consultor SEO en Sevilla para negocios locales: aparece en Google, Maps y en las respuestas de IA. SEO local desde ${tierFrom(seoLocal, "Local")} y trato directo.`;
 
-const serviceOutcomes: Record<string, string> = {
-  "/seo-local-sevilla/": "Pon a punto cómo aparece tu negocio en Google y Maps.",
-  "/seo-para-clinicas-capilares-sevilla/": "Ordena la presencia local y el contacto de tu clínica.",
-  "/diseno-web-sevilla/": "Ten una web clara, rápida y preparada para que te encuentren.",
-  "/desarrollo-software-medida/": "Sustituye procesos que ya no caben en hojas de cálculo.",
-  "/automatizaciones/": "Deja que tus herramientas hagan las tareas repetitivas.",
-  "/inteligencia-artificial/": "Responde consultas frecuentes y agiliza el trabajo con IA.",
-  "/tienda-online-sevilla/": "Vende tus productos desde una tienda propia.",
-}
+const proofItems = [
+  SITE_PROOF[0],
+  ...(reviewsData
+    ? [
+        {
+          stat: `${reviewsData.rating.toFixed(1).replace(".", ",")} en Google`,
+          label: `${reviewsData.userRatingCount} ${reviewsData.userRatingCount === 1 ? "opinión" : "opiniones"}`,
+        },
+      ]
+    : []),
+  SITE_PROOF[1],
+];
 
-// Servicios de la home agrupados por el problema que resuelven, no por la
-// tecnología que usan. CAPILAR LOCAL queda fuera: es B2B de nicho con landing
-// propia, no encaja en este selector genérico.
-const serviceGroups: { title: string; text: string; slugs: string[] }[] = [
+const homeProcess: Step[] = [
   {
-    title: "Quiero conseguir más clientes",
-    text: "Que aparezcas en Google y Maps cuando alguien busca lo que ofreces.",
-    slugs: ["/seo-local-sevilla/"],
+    title: "Me cuentas tu caso",
+    text: "Una primera sesión para entender tu negocio y qué te frena hoy.",
   },
   {
-    title: "Necesito una web que venda",
-    text: "Diseño y desarrollo web, con tienda online si necesitas vender productos.",
-    slugs: ["/diseno-web-sevilla/", "/tienda-online-sevilla/"],
+    title: "Propuesta por escrito",
+    text: "Precio, alcance y plazos cerrados antes de empezar.",
   },
   {
-    title: "Quiero ahorrar tiempo",
-    text: "Software a medida, automatizaciones e inteligencia artificial para las tareas repetitivas.",
-    slugs: [
-      "/desarrollo-software-medida/",
-      "/automatizaciones/",
-      "/inteligencia-artificial/",
-    ],
+    title: "Avances a la vista",
+    text: "Ves cómo avanza el trabajo y opinas por el camino, no solo al final.",
   },
-]
+  {
+    title: "Lanzamiento y seguimiento",
+    text: "Publico, te enseño a manejarlo y sigo disponible; en SEO local, mes a mes.",
+  },
+];
 
-// Proceso genérico de trabajo, resumido a partir del patrón que ya se repite
-// en las páginas de /servicios/* (contacto -> presupuesto cerrado -> diseño y
-// desarrollo -> revisión -> lanzamiento y soporte). Sin plazos ni cifras que
-// no estén ya declarados en el resto del sitio.
-const homeProcess = [
+const comparison: ComparisonItem[] = [
   {
-    title: "Cuéntame tu proyecto",
-    text: "Reserva una primera sesión para contarme qué negocio tienes y qué necesitas. En esa conversación entiendo tu caso y después te envío una propuesta por escrito.",
+    lead: "Con una agencia, tu cuenta suele pasar por varias personas.",
+    text: "Conmigo hablas directamente con quien revisa tu ficha y trabaja tu web.",
   },
   {
-    title: "Propuesta con presupuesto cerrado",
-    text: "Tras conocer tu caso te envío una propuesta con precio y plazos por escrito: sabes el coste exacto antes de empezar, sin sorpresas después.",
+    lead: "Una agencia tiene más manos para campañas, redes y diseño a la vez.",
+    text: "Si lo que necesitas es que Google entienda bien tu negocio, una consultora con base técnica suele bastar.",
   },
   {
-    title: "Diseño y desarrollo",
-    text: "Trabajo compartiendo avances por el camino, no solo al final del proyecto: puedes ver cómo va tomando forma y dar tu opinión mientras se construye.",
+    lead: "Elijas lo que elijas, pide por escrito qué incluye cada mes.",
+    text: "Mis planes de SEO local están publicados, con precio y alcance, y sin promesas de posiciones.",
   },
-  {
-    title: "Revisión y ajustes",
-    text: "Antes de darlo por terminado revisamos juntas el resultado y afino lo que haga falta, para que el resultado final responda a lo que necesitabas.",
-  },
-  {
-    title: "Lanzamiento y mejora continua",
-    text: "Publico o entrego el proyecto y te enseño a manejarlo. Quedo disponible después del lanzamiento para resolver dudas y hacer ajustes, y si el servicio incluye trabajo recurrente (como el SEO local y el GEO), seguimos optimizando mes a mes.",
-  },
-]
+];
 
 const homeFaqs = [
   {
@@ -115,7 +106,7 @@ const homeFaqs = [
     q: "¿Trabajar con una freelance en vez de una agencia es un riesgo?",
     a: "Es una objeción razonable, y prefiero responderte con sinceridad en vez de venderte algo que no puedo garantizar al cien por cien: cualquier profesional, freelance o de agencia, puede dejar de estar disponible en algún momento. Lo que sí controlas trabajando conmigo es que no dependes técnicamente de mí. El dominio y el hosting de tu web quedan a tu nombre desde el primer año, y en software a medida y automatizaciones te lo dejo explícito por escrito: el código y la documentación son tuyos, y si algún día quieres que lo continúe otro profesional, podrá hacerlo sin problema. Además, cada proyecto incluye soporte tras el lanzamiento (un mes en el caso de las webs) y varias formas de contactarme: WhatsApp, teléfono, email o LinkedIn. Y llevo más de 10 años trabajando en desarrollo de software, con experiencia en consultoras como NTT DATA además de con negocios locales. No es la misma estructura que una agencia, pero tampoco te deja atada de manos.",
   },
-]
+];
 ---
 
 <Layout
@@ -130,244 +121,178 @@ const homeFaqs = [
       ...(reviewsData ? [reviewsSchema(reviewsData)] : []),
     ]}
   />
-  <main class="px-4">
-    <SectionContainer id="home-hero" class="seo12-home-hero pt-24 pb-10 md:pt-32 md:pb-16" data-seo12-hero="true">
-      <div class="grid items-center gap-4 sm:gap-6 lg:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,28rem)]">
-        <div class="contents lg:col-start-1 lg:block">
-          <div class="order-1 mb-3 flex flex-wrap items-center gap-3">
-            <h1 class="text-base font-semibold tracking-tight text-gray-200">
-              Consultor SEO en Sevilla para negocios locales
-            </h1>
-            <a href="/contacto/" rel="noopener" class="flex transition md:hover:scale-105">
-              <Badge>Aceptando nuevos proyectos</Badge>
-            </a>
-          </div>
-          <h2
-            class="order-1 text-3xl leading-tight font-bold tracking-tight text-white sm:text-5xl mb-4 sm:mb-6"
-          >
-            Haz que tu próximo cliente encuentre tu negocio
-          </h2>
-          <p
-            class="order-3 mt-0 text-base leading-snug sm:text-lg [&>strong]:text-yellow-200 [&>strong]:font-semibold text-gray-400 max-w-2xl lg:mt-6"
-          >
-            Soy Nuria Romero, <strong>desarrolladora con más de 10 años de experiencia</strong>
-            y consultor SEO en Sevilla. Trabajo para que tu negocio aparezca donde
-            buscan tus clientes y tenga más oportunidades de venta.
-          </p>
-          <nav class="order-4 flex flex-wrap gap-4 mt-0 sm:mt-2 lg:mt-6" data-seo12-primary-cta>
-            <BookingButton />
-                <SocialPill href="#servicios">
-                  <Briefcase class="size-4" />
-                  Ver servicios
-                </SocialPill>
-              </nav>
-        </div>
-        <Image
-          src={profileHome}
-          alt="Nuria Romero, consultor SEO en Sevilla y desarrolladora web"
-          class="order-2 mx-auto h-56 w-auto max-w-full object-contain sm:h-64 lg:col-start-2 lg:row-start-1 lg:h-auto lg:w-full lg:max-w-md"
-          loading="eager"
-          fetchpriority="high"
-        />
-      </div>
-    </SectionContainer>
-
-    <SectionContainer id="hitos" class="-mt-4 pb-12 md:-mt-6 md:pb-16">
-      <h2 class="sr-only">Así trabajo contigo</h2>
-      <ul class="grid grid-cols-2 gap-x-3 gap-y-7 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-4">
-        <li class="flex flex-col items-center text-center">
-          <ProfileCheck aria-hidden="true" class="mb-1 size-9 text-blue-400 sm:size-10" />
-          <div>
-            <h3 class="text-sm font-semibold text-gray-100 sm:text-base">Diseño personalizado</h3>
-            <p class="mt-1 text-xs leading-relaxed text-gray-400 sm:text-sm">
-              Cada web parte de tus objetivos, no de una plantilla
-            </p>
-          </div>
-        </li>
-        <li class="flex flex-col items-center text-center">
-          <CodeIcon aria-hidden="true" class="mb-1 size-9 text-blue-400 sm:size-10" />
-          <div>
-            <h3 class="text-sm font-semibold text-gray-100 sm:text-base">SEO desde la base</h3>
-            <p class="mt-1 text-xs leading-relaxed text-gray-400 sm:text-sm">
-              Estructura y contenidos pensados para ser encontrados
-            </p>
-          </div>
-        </li>
-        <li class="flex flex-col items-center text-center">
-          <Briefcase aria-hidden="true" class="mb-1 size-9 text-blue-400 sm:size-10" />
-          <div>
-            <h3 class="text-sm font-semibold text-gray-100 sm:text-base">Experiencia responsive</h3>
-            <p class="mt-1 text-xs leading-relaxed text-gray-400 sm:text-sm">
-              Una web cuidada en móvil, tablet y ordenador
-            </p>
-          </div>
-        </li>
-        <li class="flex flex-col items-center text-center">
-          <WhatsAppIcon aria-hidden="true" class="mb-1 size-9 text-blue-400 sm:size-10" />
-          <div>
-            <h3 class="text-sm font-semibold text-gray-100 sm:text-base">Trato directo</h3>
-            <p class="mt-1 text-xs leading-relaxed text-gray-400 sm:text-sm">
-              Comunicación cercana durante todo el proyecto
-            </p>
-          </div>
-        </li>
-      </ul>
-    </SectionContainer>
-
+  <main class="template-ground px-4 pt-24">
     <div class="space-y-24">
-      <SectionContainer id="servicios">
-        <TitleSection>
-          <Briefcase class="size-8" />
-          ¿Qué necesita tu negocio?
-        </TitleSection>
-        <p class="mb-8 text-gray-300 max-w-2xl">
-          Elige el problema que tienes ahora mismo: debajo te cuento cómo lo
-          resuelvo.
-        </p>
-        <div class="space-y-10">
-          {
-            serviceGroups.map((group) => (
-              <div>
-                <h3 class="text-lg font-semibold text-yellow-200">
-                  {group.title}
-                </h3>
-                <p class="mt-1 mb-4 text-sm text-gray-300">
-                  {group.text}
-                </p>
-                <ul class="grid gap-x-10 md:grid-cols-2">
-                  {services
-                    .filter((service) => group.slugs.includes(service.slug))
-                    .map((service) => (
-                      <li class="border-b border-gray-700">
-                        <a
-                          href={service.slug}
-                          class="group flex min-h-20 items-center justify-between gap-4 py-4 transition-colors focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
-                        >
-                          <span class="min-w-0">
-                            <span class="block font-semibold text-blue-400 transition-colors group-hover:text-white">
-                              {service.breadcrumbName}
-                            </span>
-                            <span class="mt-1 block text-sm leading-snug text-gray-300">
-                              {serviceOutcomes[service.slug]}
-                            </span>
-                          </span>
-                          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 text-blue-400 transition-transform group-hover:translate-x-1">
-                            <path d="M5 12h14m-6-6 6 6-6 6" />
-                          </svg>
-                        </a>
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            ))
-          }
-        </div>
-        <p class="mt-8 text-gray-300">
-          ¿Tienes un restaurante, una clínica, un comercio o un despacho?
-          Mira lo que puedo hacer por tu sector:
-        </p>
-        <ul class="mt-4 flex flex-wrap gap-3">
-          {
-            niches.map((niche) => (
-              <li>
-                <a
-                  href={niche.slug}
-                  class="inline-block rounded-full border border-gray-600 bg-gray-800/50 px-4 py-1.5 text-sm font-medium text-gray-200 transition"
-                >
-                  {niche.breadcrumbName}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
+      <SectionContainer
+        id="home-hero"
+        class="seo12-home-hero"
+        data-seo12-hero="true"
+      >
+        <SeoLocalHero
+          keyword="Consultor SEO en Sevilla para negocios locales"
+          title={{
+            text: "Que tu próximo cliente te encuentre a ti",
+            accent: "te encuentre a ti",
+          }}
+          subtitle="Soy Nuria Romero, consultor SEO en Sevilla y desarrolladora web. Trabajo tu ficha de Google, tu web y cómo apareces en las respuestas de IA, y hablas siempre conmigo."
+          secondaryLink={{ label: "Ver qué hago", href: "#que-hago" }}
+          actionsAttrs={{ "data-seo12-primary-cta": "" }}
+        >
+          <HomeHeroMock slot="visual" />
+        </SeoLocalHero>
+        <ProofStrip items={proofItems} />
       </SectionContainer>
 
-      <SectionContainer id="precios">
-        <TitleSection>
-          <CodeIcon class="size-7" />
-          Precios claros, sin sorpresas
-        </TitleSection>
-        <p class="mb-8 text-gray-300 max-w-2xl">
-          Este es el precio de salida de cada servicio, visible sin tener que
-          abrir nada: siempre trabajo con presupuesto cerrado, así que sabes
-          el importe exacto antes de que empecemos.
-        </p>
-        <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {
-            services.map((service) => (
-              <li class="flex h-full flex-col rounded-xl border border-gray-700 bg-gray-800/50 p-6">
-                <h3 class="text-sm font-semibold text-gray-400">
-                  {service.breadcrumbName}
-                </h3>
-                <p class="mt-2 text-3xl font-bold text-white">
-                  Desde <span class="whitespace-nowrap">{service.pricing.from}</span>
-                </p>
-                <a
-                  href={service.slug}
-                  class="mt-4 text-sm font-medium text-blue-400"
-                >
-                  Ver qué incluye →
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-        <p class="mt-6 text-sm text-gray-500">
-          Precio de entrada para el alcance más habitual: el presupuesto
-          final se ajusta a tu caso concreto. Más detalle en la
-          <a href="#faq" class="underline hover:text-blue-500">
-            pregunta frecuente sobre precios
-          </a>.
-        </p>
+      <SectionContainer id="que-hago">
+        <ReviewBento
+          headingId="que-hago-title"
+          keyword="Servicios para negocios locales en Sevilla"
+          title={{
+            text: "Lo que puedo hacer por tu negocio",
+            accent: "por tu negocio",
+          }}
+        >
+          <BentoTile
+            area="a"
+            title="Que te encuentren cerca"
+            text="Ordeno tu ficha de Google y tu web para que te encuentren en Google, en Maps y en las respuestas de IA."
+            link={{ label: seoLocal.breadcrumbName, href: seoLocal.slug }}
+          >
+            <ServiceTileArt kind="seo-local" />
+          </BentoTile>
+          <BentoTile
+            area="b"
+            title="Una web que se entiende"
+            text="Webs claras y rápidas, pensadas para el móvil y preparadas para que te encuentren."
+            link={{ label: disenoWeb.breadcrumbName, href: disenoWeb.slug }}
+          >
+            <ServiceTileArt kind="diseno-web" />
+          </BentoTile>
+          <BentoTile
+            area="c"
+            title="Vender por internet"
+            text="Vende tus productos desde una tienda propia, fácil de gestionar en tu día a día."
+            link={{
+              label: tiendaOnline.breadcrumbName,
+              href: tiendaOnline.slug,
+            }}
+          >
+            <ServiceTileArt kind="tienda-online" />
+          </BentoTile>
+          <BentoTile
+            area="d"
+            title="Herramientas a tu medida"
+            text="Programas hechos para tu negocio cuando las hojas de cálculo y el software genérico se quedan cortos."
+            link={{
+              label: desarrolloSoftware.breadcrumbName,
+              href: desarrolloSoftware.slug,
+            }}
+          >
+            <ServiceTileArt kind="software" />
+          </BentoTile>
+          <BentoTile
+            area="e"
+            title="Menos tareas repetitivas"
+            text="Conecto las aplicaciones que ya usas para que las tareas repetitivas se hagan solas."
+            link={{
+              label: automatizaciones.breadcrumbName,
+              href: automatizaciones.slug,
+            }}
+          >
+            <ServiceTileArt kind="automatizaciones" />
+          </BentoTile>
+          <BentoTile
+            area="f"
+            layout="row"
+            title="Respuestas a cualquier hora"
+            text="Asistentes con IA que responden las dudas frecuentes de tus clientes con la información de tu negocio."
+            link={{
+              label: inteligenciaArtificial.breadcrumbName,
+              href: inteligenciaArtificial.slug,
+            }}
+          >
+            <ServiceTileArt kind="ia" />
+          </BentoTile>
+        </ReviewBento>
       </SectionContainer>
 
-      <SectionContainer id="proceso">
-        <TitleSection>
-          <Briefcase class="size-8" />
-          Cómo trabajo, paso a paso
-        </TitleSection>
-        <p class="mb-8 text-gray-300 max-w-2xl">
-          Para el posicionamiento web de tu negocio, como para cualquier otro servicio, sigo el mismo proceso, adaptado a tu proyecto:
-        </p>
-        <ProcessSteps steps={homeProcess} />
-      </SectionContainer>
-
-      <div class="rounded-2xl border border-gray-800 bg-gray-900/60 px-4 py-12 sm:px-6 md:px-8 md:py-16">
-        <SectionContainer id="casos">
-          <TitleSection>
-            <CodeIcon class="size-7" />
-            Casos de éxito
-          </TitleSection>
-          <p class="mb-12 text-gray-300 max-w-2xl">
-            Webs de negocios de Sevilla que ya están funcionando y
-            posicionando en Google. Cada proyecto está en producción con su
-            propio dominio, así que puedes visitarlo y comprobar la velocidad
-            de carga y el diseño con tus propios ojos. Más allá de estos
-            casos, trabajo con WordPress, Astro, React, Next.js y otras
-            tecnologías según lo que mejor encaje con cada negocio.
-          </p>
-          <Projects />
+      <div class="band">
+        <SectionContainer id="proceso">
+          <SeoLocalProcess
+            headingId="proceso-title"
+            keyword="Cómo trabajo contigo, paso a paso"
+            title={{
+              text: "Sin intermediarios, de principio a fin",
+              accent: "de principio a fin",
+            }}
+            steps={homeProcess}
+            portraitAlt="Nuria Romero, consultor SEO en Sevilla y desarrolladora web"
+          >
+            <Fragment slot="byline">
+              Soy Nuria Romero: llevo más de 10 años desarrollando software y
+              ahora trabajo con negocios de Sevilla.
+            </Fragment>
+          </SeoLocalProcess>
         </SectionContainer>
       </div>
 
-      <GoogleReviews data={reviewsData} />
-
-      <SectionContainer>
-        <InternalLinks links={internalLinksBySource["/"]} />
-      </SectionContainer>
-
-      <SectionContainer id="faq">
-        <TitleSection>
-          <ProfileCheck class="size-8" />
-          Preguntas frecuentes
-        </TitleSection>
-        <FAQ faqs={homeFaqs} />
+      <SectionContainer id="trabajo-real">
+        <RealProof
+          headingId="prueba-title"
+          keyword="Opiniones y proyectos reales en Sevilla"
+          title={{ text: "Trabajo que puedes ver", accent: "puedes ver" }}
+          reviews={reviewsData}
+          note="Dos webs reales de negocios de Sevilla, hechas por mí. Visítalas y juzga el trabajo por ti."
+          projects={["arkady", "adfsevilla"]}
+        />
       </SectionContainer>
 
       <SectionContainer>
-        <CTASection
-          title="Cuéntame qué quieres mejorar de tu negocio"
-          text="En una primera sesión veremos qué está frenando tu web, SEO o procesos, y te diré qué opciones tienen sentido para solucionarlo. Sin compromiso."
+        <SeoLocalAgencia
+          id="consultor-o-agencia"
+          headingId="consultor-title"
+          keyword="¿Consultor SEO o agencia?"
+          title={{ text: "Dos formas de llevar tu SEO", accent: "tu SEO" }}
+          items={comparison}
+          link={{
+            label: "Ver los planes de SEO local",
+            href: "/seo-local-sevilla/#precios",
+          }}
+        />
+      </SectionContainer>
+
+      <SectionContainer>
+        <SeoLocalFaq
+          headingId="faq-title"
+          keyword="Preguntas frecuentes sobre SEO"
+          title={{ text: "Dudas antes de llamar", accent: "antes de llamar" }}
+          lede="Si tu duda no está aquí, la resolvemos en la llamada."
+          faqs={homeFaqs}
+          ctaLabel="Reserva una primera sesión"
+        />
+      </SectionContainer>
+
+      <SectionContainer>
+        <SeoLocalRelated links={internalLinksBySource["/"] ?? []} />
+      </SectionContainer>
+
+      <SeoLocalClosing
+        headingId="cierre-title"
+        keyword="Reserva una primera sesión conmigo"
+        title={{
+          text: "Hablemos de cómo te encuentran tus clientes",
+          accent: "tus clientes",
+        }}
+        text="Cuéntame cómo es tu negocio y te diré qué tiene sentido hacer primero, sin compromiso."
+        ctaLabel="Reserva una primera sesión"
+      >
+        <HomeHeroMock slot="visual" animate={false} />
+      </SeoLocalClosing>
+
+      <SectionContainer>
+        <SeoLocalNap
+          headingId="nap-title"
+          keyword="Dónde trabajo: La Rinconada, Sevilla"
         />
       </SectionContainer>
     </div>
