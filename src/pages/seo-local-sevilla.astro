@@ -51,7 +51,7 @@ const proofItems = [
 ]
 ---
 
-<ServiceLayout page={seoLocal}>
+<ServiceLayout page={seoLocal} variant="template">
   <Fragment slot="hero">
     <SeoLocalHero
       keyword={seoLocal.hero.h1}
@@ -288,22 +288,3 @@ const proofItems = [
     </SectionContainer>
   </Fragment>
 </ServiceLayout>
-
-<style is:global>
-  /* Route-local ground: keep the ink-blue hue down the whole page. */
-  main {
-    background-color: rgb(5 10 24);
-    background-image: radial-gradient(
-      ellipse 80% 30% at 50% 0%,
-      rgb(56 189 248 / 0.1),
-      transparent 70%
-    );
-  }
-
-  .band {
-    margin-inline: -1rem;
-    padding: 3rem 1rem;
-    border-block: 1px solid rgb(30 41 59);
-    background: rgb(8 16 36 / 0.85);
-  }
-</style>

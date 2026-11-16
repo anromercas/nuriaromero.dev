@@ -416,3 +416,51 @@ test("no section copies the shared heading styles or imports the serif font twic
     assert.equal(importsSerif, mayImport, `${file} serif import`);
   }
 });
+
+test("ServiceLayout has a template variant without slot fallbacks and the ink ground", () => {
+  const layout = read("src/layouts/ServiceLayout.astro");
+  assert.match(layout, /variant\?:\s*"legacy"\s*\|\s*"template"/);
+  assert.match(layout, /variant\s*=\s*"legacy"/);
+  assert.match(layout, /variant === "template"/);
+  assert.match(layout, /template-ground px-4 pt-24/);
+
+  const start = layout.indexOf('{variant === "template" ? (');
+  const templateBranch = layout.slice(layout.indexOf("(", start), layout.indexOf(") : (", start));
+  for (const name of [
+    "hero",
+    "benefits",
+    "process",
+    "pricing",
+    "faq",
+    "related",
+    "closing",
+  ]) {
+    assert.match(templateBranch, new RegExp(`<slot name="${name}"\\s*/>`), name);
+  }
+  assert.doesNotMatch(
+    templateBranch,
+    /ServiceHero|BenefitsGrid|ProcessSteps|PricingCard|<FAQ|InternalLinks|CTASection|TitleSection/,
+  );
+
+  const legacyBranch = layout.slice(layout.indexOf(") : (", start));
+  for (const fallback of [
+    "ServiceHero",
+    "BenefitsGrid",
+    "ProcessSteps",
+    "PricingCard",
+    "<FAQ",
+    "InternalLinks",
+    "CTASection",
+  ]) {
+    assert.ok(legacyBranch.includes(fallback), `legacy keeps ${fallback}`);
+  }
+  assert.match(layout, /faqSchema\(page\.faqs\)/);
+});
+
+test("the reference page uses the template variant and no route-local global style", () => {
+  const src = page();
+  assert.match(src, /<ServiceLayout page=\{seoLocal\} variant="template">/);
+  assert.doesNotMatch(src, /<style/);
+  assert.doesNotMatch(src, /rgb\(5 10 24\)/);
+  assert.equal((src.match(/<div class="band">/g) ?? []).length, 2);
+});

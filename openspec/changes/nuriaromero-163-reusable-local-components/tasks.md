@@ -13,7 +13,7 @@
 
 ## 3. Optional sections and documentation
 
-- [ ] 3.1 [NRD-184 app] `ServiceLayout` `variant="template"` (no slot fallbacks, `template-ground` on `<main>`), `/seo-local-sevilla/` drops its `<style is:global>`; tests: `ServiceLayout` and page source assertions first; verify suite, build, `check:seo:dist`, `diff-main` clean, a local build without the pricing slot shows no empty band or legacy pricing card, `/automatizaciones/` unchanged
+- [x] 3.1 [NRD-184 app] `ServiceLayout` `variant="template"` (no slot fallbacks, `template-ground` on `<main>`), `/seo-local-sevilla/` drops its `<style is:global>`; tests: `ServiceLayout` and page source assertions first; verify suite, build, `check:seo:dist`, `diff-main` clean, a local build without the pricing slot shows no empty band or legacy pricing card, `/automatizaciones/` unchanged
 - [ ] 3.2 [NRD-185 app] `DESIGN.md` "Known Drift" no longer describes page-scoped tokens and gains "Using the components on another page" (shared path routed to app); tests: `DESIGN.md` assertions in `tests/template-components.test.js` first; verify suite and build
 
 ## Workflow follow-up

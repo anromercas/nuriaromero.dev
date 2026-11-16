@@ -31,7 +31,7 @@ test("seo local composition is diagnostic-led, ordered and books a call", async 
   ])
   const seoLocal = services.slice(services.indexOf("export const seoLocal"), services.indexOf("export const capilarLocal"))
 
-  assert.match(route, /<ServiceLayout page=\{seoLocal\}>/)
+  assert.match(route, /<ServiceLayout page=\{seoLocal\} variant="template">/)
   assert.match(route, /<ReviewBento[\s>]/)
   const order = ["slot=\"hero\"", "<ReviewBento", "<SeoLocalProcess", "<RealProof", "<SeoLocalAgencia", "<SeoLocalPlans"].map((marker) => route.indexOf(marker))
   assert.ok(order.every((index) => index >= 0), "all sections composed")

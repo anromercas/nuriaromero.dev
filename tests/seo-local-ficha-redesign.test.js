@@ -285,8 +285,16 @@ test("finish review: ink-blue ground, cycle labels are large, plan buttons align
     source("src/components/seo-local/SeoLocalHero.astro"),
   ])
 
-  assert.match(route, /<style is:global>[\s\S]*?main\s*\{[\s\S]*?rgb\(5 10 24\)/)
-  assert.match(route, /\.band\b/)
+  const [css, layoutSrc] = await Promise.all([
+    source("src/styles/template.css"),
+    source("src/layouts/ServiceLayout.astro"),
+  ])
+  assert.match(css, /--ink-ground:\s*#050a18/)
+  assert.match(css, /\.template-ground\s*\{[^}]*background-color:\s*var\(--ink-ground\)/)
+  assert.match(layoutSrc, /template-ground px-4 pt-24/)
+  assert.match(route, /variant="template"/)
+  assert.match(route, /<div class="band">/)
+  assert.match(css, /\.band\s*\{/)
   assert.match(hero, /radial-gradient/)
   const cycle = [...proc.matchAll(/\.cycle-diagram :global\(\.(?:label|centre)\) \{[^}]*font-size:\s*(\d+)px/g)].map((m) => Number(m[1]))
   assert.ok(cycle.length === 2 && cycle.every((size) => size >= 19), `cycle sizes ${cycle}`)
