@@ -15,7 +15,11 @@ import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
 import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro";
 import HomeHeroMock from "@/components/home/HomeHeroMock.astro";
 import ServiceTileArt from "@/components/home/ServiceTileArt.astro";
-import type { ComparisonItem, Step } from "@/components/seo-local/types";
+import type {
+  ComparisonItem,
+  FaqItem,
+  Step,
+} from "@/components/seo-local/types";
 import { internalLinksBySource } from "@/data/internal-links";
 import { SITE_PROOF } from "@/data/site";
 import { faqSchema, personSchema, reviewsSchema } from "@/lib/schema";
@@ -81,30 +85,33 @@ const comparison: ComparisonItem[] = [
   },
 ];
 
-const homeFaqs = [
+const homeFaqs: FaqItem[] = [
   {
-    q: "¿Qué es el SEO local y el GEO, y en qué se diferencian de tener una web?",
-    a: "Es el trabajo que hace que tu negocio aparezca en Google y en Google Maps cuando alguien busca cerca de ti lo que ofreces — por ejemplo, cuando alguien escribe 'clínica dental Nervión' o 'restaurante cerca de mí'. Es lo mismo, pero para las nuevas formas de buscar: cuando alguien le pregunta a ChatGPT, al modo IA de Google o a otro asistente qué negocio de tu tipo hay en tu zona, trabajo para que el tuyo esté entre las respuestas que da. Tener una web es necesaria para que la gente te encuentre y pueda contactarte, pero no garantiza que aparezcas cuando alguien busca tu tipo de negocio: eso es precisamente el trabajo del SEO local y el GEO, que puedo hacer sobre la web que ya tengas.",
+    q: "¿Qué hace un consultor SEO?",
+    a: "Revisa cómo apareces en Google y mejora lo que hace que te encuentren: tu ficha de Google, tu web y tus reseñas. En mi caso también hago la parte técnica de la web, así que no necesitas a otra persona para aplicar los cambios.",
   },
   {
-    q: "¿Cuánto cuesta una página web para un negocio en Sevilla?",
-    a: "Una web completa de hasta 5 páginas parte de 399 €, e incluye diseño a medida adaptado a móvil, SEO local trabajado desde el código, creación y configuración del dominio y hosting (su coste corre por tu cuenta, porque quedan a tu nombre), botón de WhatsApp y formulario de contacto, alta en Google y Google Maps, y un mes de soporte tras el lanzamiento. Si solo necesitas una landing de una página optimizada para SEO y GEO, el precio de salida es de 149 €. En ambos casos trabajo siempre con presupuesto cerrado: te envío una propuesta por escrito con el precio y los plazos antes de empezar, así que sabes el coste exacto desde el primer momento y no hay sorpresas después. El presupuesto final se ajusta al alcance real de tu proyecto, pero ese ajuste también queda por escrito antes de que empecemos a trabajar. Si más adelante quieres automatizar tareas o añadir un chatbot con inteligencia artificial, esos servicios parten de 149 € y 399 € respectivamente.",
+    q: "¿Cuánto cobra un SEO al mes?",
+    a: `Depende del alcance, y lo habitual es una cuota mensual. Yo publico mis precios: el Plan Local cuesta ${tierFrom(seoLocal, "Local")} y el Local Pro, ${tierFrom(seoLocal, "Local Pro")}, facturados mes a mes.`,
+    links: [
+      { label: "Ver los planes de SEO local", href: "/seo-local-sevilla/" },
+    ],
   },
   {
-    q: "¿Qué diferencia hay entre tu trabajo y una web de plantilla?",
-    a: "Soy desarrolladora de software con más de 10 años de experiencia, no una plantilla montada en un día: he trabajado en proyectos para industria, salud y medioambiente, y como consultora en NTT DATA, antes de dedicarme a webs para negocios locales. Esa base técnica se traduce en un enfoque medible: construyo cada web pensando en la velocidad de carga y en los Core Web Vitals de Google desde el primer día, con el SEO local trabajado desde el código, con estructura, velocidad y datos estructurados pensados desde el principio, no añadidos después con un plugin. Una plantilla genérica suele arrastrar código innecesario que ralentiza la carga y complica el posicionamiento, y te deja atada a las limitaciones del constructor. Con tu web, el dominio y el hosting quedan a tu nombre desde el primer año, sin cuotas ocultas ni depender de una plataforma cerrada si el día de mañana quieres moverla. Esa diferencia técnica es la que ayuda a que tu web tenga más opciones frente a negocios con webs de plantilla.",
+    q: "¿Quién es el mejor consultor SEO?",
+    a: "No hay un mejor consultor SEO para todo el mundo: el adecuado es el que encaja con tu negocio y te explica lo que hace. Fíjate en que publique precios y alcance, en que hables con quien hace el trabajo, en que enseñe trabajos reales y en que no te prometa posiciones.",
   },
   {
-    q: "¿Trabajas solo el diseño web?",
-    a: "No: además del diseño web también desarrollo software a medida, automatizaciones con n8n y Make, y soluciones con inteligencia artificial como chatbots de atención al cliente. El software a medida, desde 999 €, sustituye a los Excels y programas genéricos que se quedan cortos, con herramientas de gestión de pedidos, reservas o facturación pensadas para tu negocio y no al revés. Las automatizaciones, desde 149 €, conectan las aplicaciones que ya usas (correo, WhatsApp, hojas de cálculo, facturación) para que tareas repetitivas como confirmar citas o generar facturas se hagan solas, sin errores. Y los chatbots con inteligencia artificial, desde 399 €, atienden a tus clientes fuera de horario, entrenados únicamente con la información de tu negocio. Muchos clientes empiezan pidiendo la web y, una vez ven cómo trabajo, deciden automatizar otras partes de su negocio en un segundo proyecto. Todos estos servicios siguen el mismo proceso de trabajo y el mismo presupuesto cerrado que la web.",
+    q: "¿Qué es el SEO?",
+    a: "Es el trabajo para que tu negocio aparezca en Google cuando alguien busca lo que ofreces, sin pagar por cada clic. Incluye tu web, tu ficha de Google y, cada vez más, cómo te mencionan los asistentes de IA.",
   },
   {
-    q: "¿Cómo empiezo?",
-    a: "Reserva una primera sesión y cuéntame qué negocio tienes y qué necesitas, con tus propias palabras y sin tecnicismos. En esa conversación entiendo tu caso y, después, te envío una propuesta por escrito con el precio y los plazos cerrados. Si la aceptas, empezamos el diseño y desarrollo compartiendo avances por el camino, revisamos juntas el resultado y ajusto lo que haga falta antes del lanzamiento.",
+    q: "¿El SEO se paga?",
+    a: "Aparecer en los resultados normales de Google es gratis: no pagas por cada clic ni por cada visita. Lo que se paga es el trabajo para conseguirlo, lo hagas tú, una agencia o una consultora.",
   },
   {
-    q: "¿Trabajar con una freelance en vez de una agencia es un riesgo?",
-    a: "Es una objeción razonable, y prefiero responderte con sinceridad en vez de venderte algo que no puedo garantizar al cien por cien: cualquier profesional, freelance o de agencia, puede dejar de estar disponible en algún momento. Lo que sí controlas trabajando conmigo es que no dependes técnicamente de mí. El dominio y el hosting de tu web quedan a tu nombre desde el primer año, y en software a medida y automatizaciones te lo dejo explícito por escrito: el código y la documentación son tuyos, y si algún día quieres que lo continúe otro profesional, podrá hacerlo sin problema. Además, cada proyecto incluye soporte tras el lanzamiento (un mes en el caso de las webs) y varias formas de contactarme: WhatsApp, teléfono, email o LinkedIn. Y llevo más de 10 años trabajando en desarrollo de software, con experiencia en consultoras como NTT DATA además de con negocios locales. No es la misma estructura que una agencia, pero tampoco te deja atada de manos.",
+    q: "¿Qué diferencia hay entre SEO y SEM?",
+    a: "El SEO trabaja para que aparezcas en los resultados normales de Google; el SEM son anuncios que pagas por cada clic. El SEO tarda más en notarse, pero lo que consigues no depende de seguir pagando cada clic.",
   },
 ];
 ---

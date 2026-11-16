@@ -342,3 +342,53 @@ test("home related links keep the five existing rows and add the four niche page
     },
   ]);
 });
+
+// --- FAQ, copy and template contract (task 1.3) ----------------------------
+
+const faqBlock = () =>
+  home().match(/const homeFaqs: FaqItem\[\] = \[([\s\S]*?)\n\];/)?.[1] ?? "";
+
+test("home FAQ has 6-8 questions and feeds both the component and FAQPage", () => {
+  const questions = [...faqBlock().matchAll(/\bq:\s*"([^"]+)"/g)].map(
+    (m) => m[1],
+  );
+  assert.ok(
+    questions.length >= 6 && questions.length <= 8,
+    `${questions.length} questions`,
+  );
+  assert.match(home(), /faqSchema\(homeFaqs\)/);
+  assert.match(home(), /faqs=\{homeFaqs\}/);
+});
+
+test("home price answers use the published plans and link to /seo-local-sevilla/", () => {
+  const block = faqBlock();
+  assert.match(block, /tierFrom\(seoLocal, "Local"\)/);
+  assert.match(block, /tierFrom\(seoLocal, "Local Pro"\)/);
+  assert.match(
+    block,
+    /links:\s*\[\s*\{\s*label: "Ver los planes de SEO local",\s*href: "\/seo-local-sevilla\/"/,
+  );
+  assert.doesNotMatch(home(), /€/, "no price literal in the page");
+  assert.doesNotMatch(home(), /\b\d{3}\s*(€|euros)/i);
+});
+
+test("home never claims to be the best consultant", () => {
+  assert.doesNotMatch(
+    home(),
+    /\b(soy|somos) (la|el) mejor\b|\bla mejor consultora\b/i,
+  );
+  const answer =
+    faqBlock().match(
+      /¿Quién es el mejor consultor SEO\?[\s\S]*?a:\s*"([^"]+)"/,
+    )?.[1] ?? "";
+  assert.match(answer, /^No hay un mejor consultor SEO/);
+});
+
+test("home registers in the template-page contract with a word budget", () => {
+  const pages = read("scripts/lib/template-pages.mjs");
+  assert.match(pages, /route: "\/",\s*words: \[900, 1100\],\s*service: false/);
+});
+
+test("home mentions 'posicionamiento web' at most once", () => {
+  assert.ok((home().match(/posicionamiento web/gi) ?? []).length <= 1);
+});
