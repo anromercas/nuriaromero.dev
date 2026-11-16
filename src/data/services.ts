@@ -480,40 +480,28 @@ export const inteligenciaArtificial: ServicePageData = {
   },
   faqs: [
     {
-      q: "¿Para qué puede usar la IA un negocio pequeño?",
-      a: "Los casos con mejor retorno para un negocio pequeño son: un chatbot que atiende dudas frecuentes y recoge datos de contacto en tu web o WhatsApp, asistentes que redactan respuestas a reseñas de Google o a correos habituales, clasificación automática de mensajes según su urgencia o tipo, y extracción de datos de documentos como facturas o pedidos para no teclearlos a mano. La clave para elegir bien no es usar IA porque esté de moda, sino identificar en qué tarea concreta de tu día a día te ahorra horas reales, algo que reviso contigo en la primera reunión antes de proponerte nada.",
+      q: "¿Cuál es la mejor IA para empresas?",
+      a: "No hay una sola mejor: depende de la tarea. Las empresas usan asistentes generales, como ChatGPT o Gemini, para redactar y resumir, y chatbots conectados a su información para atender clientes.",
     },
     {
-      q: "¿El chatbot con IA va a decir cosas raras o inventadas a mis clientes?",
-      a: "El chatbot se entrena únicamente con la información real de tu negocio (servicios, precios, horarios, políticas de tu empresa) y se configura para que, ante una pregunta que no sabe responder con esa información, derive el contacto hacia ti en lugar de inventar una respuesta. Antes de publicarlo, lo pruebas tú misma con preguntas reales de tus clientes durante la fase de prueba piloto, así que nada llega a producción sin que lo hayas revisado antes. Esta configuración reduce mucho el riesgo de respuestas inventadas, aunque como con cualquier sistema de IA no existe una garantía absoluta del cien por cien.",
+      q: "¿Qué diferencia hay entre ChatGPT y una IA para mi negocio?",
+      a: "ChatGPT es un asistente general. Una IA para tu negocio puede usar un modelo parecido, el motor que entiende y escribe texto, pero responde con tu información, en tu web o WhatsApp, con tus reglas y con una persona detrás.",
     },
     {
-      q: "¿Qué pasa con la privacidad de mis clientes y el RGPD al usar IA?",
-      a: "Antes de poner en marcha cualquier solución, defino con claridad qué datos se envían al proveedor de IA, con qué finalidad y bajo qué garantías, priorizando proveedores que ofrecen acuerdos de tratamiento de datos conformes con la normativa europea. Te entrego esa configuración documentada para que puedas incorporarla a tu registro de actividades de tratamiento si lo necesitas. No configuro ninguna solución que envíe datos personales de tus clientes sin que sepas exactamente a dónde van y por qué, porque en sectores como salud o servicios profesionales esto es especialmente delicado.",
+      q: "¿Cómo implantar IA en mi empresa?",
+      a: "Empieza por un solo caso de uso, como las dudas que más se repiten. Después se monta un piloto con tus datos, se ajusta con preguntas reales y, cuando funciona, se conecta a tu web o WhatsApp.",
     },
     {
-      q: "¿Cuánto cuesta implantar IA en mi negocio?",
-      a: "Un chatbot para web o WhatsApp parte de 399 €, incluyendo el análisis del caso de uso, la prueba piloto con tus datos reales, la integración con tu web o WhatsApp y la configuración respetuosa con el RGPD.\n\nLos proyectos que combinan IA con automatizaciones (por ejemplo, un chatbot que además genera un pedido o una cita automáticamente) se presupuestan según el caso concreto, porque el coste depende de cuántas herramientas hay que conectar. En todos los casos, la prueba piloto previa te permite ver cómo responde la IA con tu información real antes de decidir si sigues adelante.",
+      q: "¿Qué es un agente de IA para empresas?",
+      a: "Es una IA que no solo contesta: completa una tarea con tus herramientas, como reservar una cita o tomar un pedido. Actúa dentro de los límites que tú marcas y pasa a una persona lo que no puede resolver. Se presupuesta según el caso.",
     },
     {
-      q: "¿Qué diferencia hay entre un chatbot con IA y los chatbots clásicos de \"elige una opción\"?",
-      a: "Un chatbot clásico solo puede seguir un guion cerrado de botones y respuestas predefinidas: si la pregunta del cliente no encaja exactamente en una de esas opciones, se queda bloqueado. Un chatbot con IA entiende preguntas escritas con lenguaje natural, como las escribiría un cliente real, y puede responder combinando la información de tu negocio aunque la pregunta no esté formulada exactamente igual que en su base de datos. Esto se traduce en menos clientes frustrados por no encontrar la opción correcta y más consultas resueltas sin que tengas que intervenir tú misma.",
+      q: "¿Un chatbot puede atender a mis clientes?",
+      a: "Sí, atiende las preguntas frecuentes solo con la información de tu negocio. Cuando no sabe la respuesta, te pasa la conversación a una persona. Así se reducen mucho los errores, aunque no hay garantía absoluta de que acierte siempre.",
     },
     {
-      q: "¿Cuánto tiempo se tarda en tener un chatbot con IA funcionando?",
-      a: "El proceso empieza con el análisis del caso de uso y sigue con una prueba piloto montada con la información real de tu negocio, algo que suele tardar entre una y dos semanas según cuánta información haya que preparar (servicios, precios, horarios, preguntas frecuentes).\n\nA partir de ahí, ajustamos las respuestas con casos reales antes de conectarlo a tu web o WhatsApp de forma definitiva. El plazo exacto depende de si la información de tu negocio ya está organizada o hay que recopilarla primero, algo que se aclara en la primera reunión.",
-    },
-    {
-      q: "¿Puedo probar el chatbot antes de decidir si lo contrato de verdad?",
-      a: "Sí, y es justo el paso que recomiendo antes de comprometerte con nada: monto una prueba piloto con la información real de tu negocio para que compruebes cómo responde a preguntas de verdad, no a un ejemplo genérico de demostración. Con esa prueba delante decides si el resultado te convence y quieres seguir adelante con la integración definitiva en tu web o WhatsApp, o si prefieres ajustar el enfoque antes de continuar. Esto reduce el riesgo de pagar por una solución de IA que luego no encaja con cómo hablan realmente tus clientes.",
-    },
-    {
-      q: "¿Necesito tener ya una web para poner un chatbot con IA en mi negocio?",
-      a: "No es imprescindible: un chatbot con IA se puede integrar directamente en WhatsApp Business, que es donde ya habla contigo la mayoría de tus clientes, sin depender de que tengas una web previa. Si además tienes o vas a tener una web, también se puede integrar ahí como un widget de chat visible en cualquier página. En la primera reunión analizamos por dónde te contactan más tus clientes hoy en día, para proponerte el canal donde realmente va a tener uso, en vez de añadirlo en un sitio donde nadie lo va a encontrar.",
-    },
-    {
-      q: "¿La IA sustituye a mi equipo o a mí atendiendo a los clientes?",
-      a: "No está pensada para eso, sino para quitarte de encima las consultas repetitivas (horarios, precios, disponibilidad, dudas frecuentes) y dejarte a ti el tiempo para lo que de verdad necesita trato personal: cerrar una venta importante, resolver un caso delicado o atender a un cliente habitual. El chatbot se configura para reconocer cuándo una consulta necesita intervención humana y derivarla, en lugar de intentar resolverlo todo por su cuenta. La IA funciona mejor como un filtro que se encarga de lo rutinario, no como un reemplazo de la atención personal que diferencia a un negocio pequeño de uno grande.",
+      q: "¿Cuánto cuesta y cuánto se tarda en poner IA en marcha?",
+      a: `Un chatbot para tu web o WhatsApp cuesta desde ${AI_FROM}. El piloto con tus datos tarda de 1 a 2 semanas, según cuánta información haya que preparar.`,
     },
   ],
 }

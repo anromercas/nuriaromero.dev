@@ -321,3 +321,127 @@ test("related links add the GEO guide before the conversion link", () => {
   assert.ok(geo < conversion, "before the conversion row");
   assert.equal(rows.length, 5);
 });
+
+// --- Task 2.2: FAQ and word budget (NRD-216) -----------------------------------
+
+const norm = (s) =>
+  s
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const { automatizaciones } = await import(
+  new URL("../src/data/services.ts", import.meta.url)
+);
+
+test("template-pages lists the AI page with the word budget", () => {
+  assert.match(
+    read("scripts/lib/template-pages.mjs"),
+    /\{\s*route:\s*"\/inteligencia-artificial\/",\s*words:\s*\[750,\s*850\],\s*service:\s*true\s*\}/,
+  );
+});
+
+test("FAQ holds the six sourced questions in order", () => {
+  assert.deepEqual(
+    inteligenciaArtificial.faqs.map((f) => norm(f.q)),
+    [
+      "¿Cuál es la mejor IA para empresas?",
+      "¿Qué diferencia hay entre ChatGPT y una IA para mi negocio?",
+      "¿Cómo implantar IA en mi empresa?",
+      "¿Qué es un agente de IA para empresas?",
+      "¿Un chatbot puede atender a mis clientes?",
+      "¿Cuánto cuesta y cuánto se tarda en poner IA en marcha?",
+    ].map(norm),
+  );
+});
+
+test("no question repeats one of /automatizaciones/", () => {
+  const taken = automatizaciones.faqs.map((f) => norm(f.q));
+  for (const { q } of inteligenciaArtificial.faqs) {
+    assert.ok(!taken.includes(norm(q)), q);
+  }
+  assert.ok(
+    !inteligenciaArtificial.faqs
+      .map((f) => norm(f.q))
+      .includes(norm("¿Cuál es la mejor IA para automatizar procesos?")),
+  );
+});
+
+test("best-AI and ChatGPT answers give criteria and rank no brand", () => {
+  for (const { q, a } of inteligenciaArtificial.faqs.slice(0, 2)) {
+    assert.doesNotMatch(
+      a,
+      /(la|el) mejor (es|ia es)|te recomiendo|mejor que chatgpt es/i,
+      q,
+    );
+    assert.doesNotMatch(a, /\bmejor (que|IA)\b.*\b(ChatGPT|Gemini)\b/i, q);
+  }
+  assert.match(inteligenciaArtificial.faqs[0].a, /caso de uso|tarea/i);
+});
+
+test("agent answer mentions booking or orders and per-case quote", () => {
+  const { a } = inteligenciaArtificial.faqs[3];
+  assert.match(a, /reserv|pedido/i);
+  assert.match(a, /persona/i);
+});
+
+test("chatbot answer hands off to a person with no absolute guarantee", () => {
+  const { a } = inteligenciaArtificial.faqs[4];
+  assert.match(a, /persona/);
+  assert.match(a, /no .*garant/i);
+  assert.doesNotMatch(a, /siempre acierta|100 ?%/i);
+});
+
+test("price answer interpolates AI_FROM and the pilot time", () => {
+  assert.match(read("src/data/services.ts"), /cuesta desde \$\{AI_FROM\}/);
+  const { a } = inteligenciaArtificial.faqs[5];
+  assert.ok(a.includes(inteligenciaArtificial.pricing.from));
+  assert.match(a, /1 (a|y) 2 semanas/);
+});
+
+test("FAQ answers open with a direct answer and name no savings", () => {
+  for (const { q, a } of inteligenciaArtificial.faqs) {
+    assert.ok(a.split(/(?<=[.!?])\s+/).length >= 2, `${q} has two sentences`);
+    assert.doesNotMatch(a, /ROI|retorno|amortiz|ahorr|%/i, q);
+    assert.doesNotMatch(
+      a,
+      /\b(arriba|abajo|como ves|como has visto|de esta página|anterior)\b/i,
+      q,
+    );
+    for (const digits of a.match(/\d+/g) ?? []) {
+      assert.ok(["399", "1", "2"].includes(digits), `${digits} in "${q}"`);
+    }
+  }
+});
+
+test(
+  "built page stays within the word budget with matching FAQPage",
+  {
+    skip: !existsSync(new URL("dist/inteligencia-artificial/index.html", root)),
+  },
+  () => {
+    const html = read("dist/inteligencia-artificial/index.html");
+    const main = html.match(/<main\b[\s\S]*?<\/main>/)?.[0] ?? "";
+    const words = main
+      .replace(/<(script|style)\b[\s\S]*?<\/\1>/g, " ")
+      .replace(/<[^>]+>/g, " ")
+      .split(/\s+/)
+      .filter(Boolean).length;
+    assert.ok(words >= 750 && words <= 850, `${words} words`);
+    const ld = [
+      ...html.matchAll(
+        /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g,
+      ),
+    ]
+      .map((m) => JSON.parse(m[1]))
+      .flatMap((j) => j["@graph"] ?? [j]);
+    const faq = ld.find((n) => n["@type"] === "FAQPage");
+    assert.deepEqual(
+      faq.mainEntity.map((e) => e.name),
+      inteligenciaArtificial.faqs.map((f) => f.q),
+    );
+  },
+);
