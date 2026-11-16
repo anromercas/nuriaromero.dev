@@ -265,3 +265,96 @@ test("meta description carries the starting price from pricing.from", () => {
   assert.ok(description.includes(`desde ${price} euros`), description);
   assert.ok(description.length <= 160, `${description.length}`);
 });
+
+// --- Task 2.2: FAQ and word budget (NRD-210) -----------------------------------
+
+const norm = (s) =>
+  s
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+test("template-pages lists the software page with the word budget", () => {
+  assert.match(
+    read("scripts/lib/template-pages.mjs"),
+    /\{\s*route:\s*"\/desarrollo-software-medida\/",\s*words:\s*\[750,\s*850\],\s*service:\s*true\s*\}/,
+  );
+});
+
+test("FAQ holds the five sourced questions in order", () => {
+  assert.deepEqual(
+    desarrolloSoftware.faqs.map((f) => norm(f.q)),
+    [
+      "¿Qué es un software a medida?",
+      "¿Cuánto cuesta un software a medida?",
+      "¿Qué se puede desarrollar a medida: aplicación web, app móvil, ERP o API?",
+      "¿De quién es el código?",
+      "¿Qué empresas de desarrollo de software a medida hay en Sevilla?",
+    ].map(norm),
+  );
+});
+
+test("price answer interpolates SOFTWARE_FROM and speaks of phases", () => {
+  const services = read("src/data/services.ts");
+  assert.match(services, /`Desde \$\{SOFTWARE_FROM\}[^`]*`/);
+  const { a } = desarrolloSoftware.faqs[1];
+  assert.ok(a.startsWith(`Desde ${desarrolloSoftware.pricing.from}`), a);
+  assert.match(a, /fases/);
+});
+
+test("code answer repeats what the site already publishes", () => {
+  const { a } = desarrolloSoftware.faqs[3];
+  assert.match(a, /c[oó]digo/);
+  assert.match(a, /tuyos? desde el primer d[ií]a/);
+});
+
+test("companies answer holds no ranking and names Sevilla", () => {
+  const { a } = desarrolloSoftware.faqs[4];
+  assert.doesNotMatch(a, /mejores|ranking|top \d/i);
+  assert.match(a, /Sevilla/);
+});
+
+test("what-can-be-built answer names web, móvil, ERP and API", () => {
+  const { a } = desarrolloSoftware.faqs[2];
+  for (const term of [/web/, /móvil/, /ERP/, /API/, /reservas/]) {
+    assert.match(a, term);
+  }
+});
+
+test("FAQ answers are self-contained: two sentences, no reference to the page", () => {
+  for (const { q, a } of desarrolloSoftware.faqs) {
+    assert.doesNotMatch(
+      a,
+      /\b(arriba|abajo|como ves|como has visto|de esta página|anterior)\b/i,
+      `${q} refers to the page around it`,
+    );
+    assert.ok(a.split(/(?<=[.!?])\s+/).length >= 2, `${q} has two sentences`);
+  }
+});
+
+const builtWords = () => {
+  const main =
+    read("dist/desarrollo-software-medida/index.html").match(
+      /<main\b[\s\S]*?<\/main>/,
+    )?.[0] ?? "";
+  return main
+    .replace(/<(script|style)\b[\s\S]*?<\/\1>/g, " ")
+    .replace(/<[^>]+>/g, " ")
+    .split(/\s+/)
+    .filter(Boolean).length;
+};
+const hasBuild = existsSync(
+  new URL("dist/desarrollo-software-medida/index.html", root),
+);
+
+test(
+  "built page stays within the word budget, with headroom for the rating cell",
+  { skip: !hasBuild },
+  () => {
+    const words = builtWords();
+    assert.ok(words >= 750 && words <= 840, `${words} words`);
+  },
+);

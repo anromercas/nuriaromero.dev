@@ -183,7 +183,7 @@ export const desarrolloSoftware: ServicePageData = {
     h1: "Desarrollo de software a medida en Sevilla para tu empresa",
     title: "Software que trabaja como tu empresa",
     titleAccent: "como tu empresa",
-    subtitle: `Desarrollo aplicaciones web a medida para tus pedidos, reservas, presupuestos o clientes. Empezamos por una primera fase desde ${SOFTWARE_FROM}, con precio cerrado.`,
+    subtitle: `Desarrollo aplicaciones web a medida para tus pedidos, reservas o clientes. Primera fase desde ${SOFTWARE_FROM}, con precio cerrado.`,
     secondaryCta: { label: "Ver precio", href: "#precios" },
   },
   sectionTitles: {
@@ -195,45 +195,45 @@ export const desarrolloSoftware: ServicePageData = {
   benefits: [
     {
       title: "Aplicación web",
-      text: "Una herramienta que abres en el navegador desde cualquier ordenador, sin instalar nada.",
+      text: "Una herramienta que abres en el navegador, sin instalar nada.",
     },
     {
       title: "App para el móvil",
-      text: "Tu equipo la abre desde el móvil para consultar o apuntar datos esté donde esté.",
+      text: "Tu equipo consulta y apunta datos desde el móvil.",
     },
     {
       title: "Gestión interna o ERP",
-      text: "Pedidos, stock, presupuestos y facturas en un solo sitio: eso es un ERP, un programa de gestión.",
+      text: "Pedidos, stock y facturas en un solo sitio: un ERP.",
     },
     {
       title: "API e integraciones",
-      text: "Conecto tu herramienta con los programas que ya usas mediante una API, para que los datos pasen solos.",
+      text: "Conecto tus programas con una API para que los datos pasen solos.",
     },
     {
       title: "Reservas y citas",
-      text: "Tus clientes eligen día y hora, y tú ves la agenda completa sin llamadas ni papeles.",
+      text: "Tus clientes eligen día y hora y tú ves la agenda completa.",
     },
     {
       title: "Panel de datos",
-      text: "Ves de un vistazo cómo van tus pedidos, ventas o reservas, con datos que hoy tienes repartidos.",
+      text: "Ves cómo van tus pedidos, ventas o reservas de un vistazo.",
     },
   ],
   process: [
     {
       title: "Analizo tu forma de trabajar",
-      text: "Me cuentas cómo trabajas hoy y vemos juntos dónde se pierde más tiempo.",
+      text: "Me cuentas cómo trabajas y vemos dónde se pierde más tiempo.",
     },
     {
       title: "Primera fase con precio cerrado",
-      text: "Te envío por escrito qué incluye, cuánto cuesta y el plazo antes de empezar.",
+      text: "Te envío por escrito qué incluye, cuánto cuesta y el plazo.",
     },
     {
       title: "Entregas que ya puedes usar",
-      text: "Primero ves las pantallas y después versiones parciales que tu equipo usa desde el principio.",
+      text: "Ves las pantallas y después versiones parciales que ya usas.",
     },
     {
       title: "Ampliamos cuando toca",
-      text: "Si la primera fase funciona, añadimos la siguiente con su propio precio cerrado.",
+      text: "Si funciona, añadimos la siguiente fase con su precio cerrado.",
     },
   ],
   pricing: {
@@ -249,44 +249,28 @@ export const desarrolloSoftware: ServicePageData = {
   },
   cta: {
     title: "Empecemos por tu herramienta",
-    text: "Cuéntame cómo trabajas hoy y qué te gustaría resolver. Te respondo con una propuesta clara para la primera fase, sin compromiso.",
+    text: "Cuéntame cómo trabajas y te respondo con una propuesta clara, sin compromiso.",
   },
   faqs: [
     {
-      q: "¿Qué es exactamente el software a medida?",
-      a: "El software a medida es una aplicación creada específicamente para la forma de trabajar de tu empresa: una herramienta de gestión de pedidos, un sistema de reservas, un portal para tus clientes, un control de presupuestos o partes de trabajo… A diferencia de un programa genérico o de una licencia estándar, no viene con funciones de sobra que nunca usas ni te obliga a adaptar tu proceso al programa. Se construye pensando en cómo trabajas hoy: qué datos manejas, quién los necesita ver y en qué momento. Es especialmente útil cuando ya usas Excel o varios programas sueltos que no se hablan entre sí, y quieres una sola herramienta que haga exactamente lo que tu negocio necesita, ni más ni menos.",
+      q: "¿Qué es un software a medida?",
+      a: "Es una aplicación hecha para cómo trabaja tu empresa, en lugar de adaptarte tú a un programa genérico. Puede llevar tus pedidos, reservas o presupuestos.",
     },
     {
-      q: "¿Cuánto cuesta desarrollar software a medida en Sevilla?",
-      a: "El desarrollo de software a medida parte de 999 € para una herramienta interna sencilla, y los proyectos más completos se presupuestan por fases: primero analizo tu caso, y después te doy un precio cerrado para cada fase antes de empezarla, nunca una cifra global a ciegas.\n\nEsto te permite empezar por la parte que más tiempo o dinero te está haciendo perder, comprobar el resultado, y decidir después si amplías con nuevas funciones. El coste final depende de cuántas pantallas, integraciones con otras herramientas y usuarios necesita tu proyecto, algo que se concreta en la primera reunión de análisis.",
+      q: "¿Cuánto cuesta un software a medida?",
+      a: `Desde ${SOFTWARE_FROM} para una herramienta interna sencilla. Los proyectos más completos se presupuestan por fases, cada una con precio cerrado por escrito antes de empezarla.`,
     },
     {
-      q: "¿No me vale con un Excel o un programa estándar?",
-      a: "A veces sí, y te lo diré con sinceridad en la primera reunión: no todo negocio necesita software a medida. Compensa claramente cuando pierdes horas semanales copiando datos entre archivos, cuando varias personas necesitan trabajar a la vez con la misma información sin pisarse los cambios, o cuando el programa estándar que usas te obliga a cambiar tu forma de trabajar en vez de adaptarse a ella. Si tu caso se resuelve con una plantilla de Excel mejor organizada o una automatización sencilla, te lo propongo así, porque te sale más barato y más rápido que un desarrollo completo.",
+      q: "¿Qué se puede desarrollar a medida: aplicación web, app móvil, ERP o API?",
+      a: "Una aplicación web, una app que tu equipo usa desde el móvil, un ERP de gestión o una API que conecta tus programas. También reservas y paneles de datos.",
     },
     {
-      q: "¿Qué pasa si en el futuro necesito cambios o quiero ampliar la aplicación?",
-      a: "El software se entrega documentado y pensado para crecer por fases, no como un proyecto cerrado que se queda congelado el día de la entrega. Puedo encargarme yo misma del mantenimiento y de añadir nuevas funciones cuando las necesites, empezando siempre por lo que más impacto tenga en tu día a día. Y si en algún momento decides que continúe otro profesional, podrá hacerlo sin depender de mí: el código y la documentación son tuyos desde el primer día, sin cláusulas que te aten a que solo yo pueda tocar el proyecto.",
+      q: "¿De quién es el código?",
+      a: "El código es tuyo. El código y la documentación son tuyos desde el primer día, sin cláusulas que te aten a mí. Otro profesional puede continuarlo cuando quieras.",
     },
     {
-      q: "¿Cuánto tiempo se tarda en desarrollar una aplicación a medida?",
-      a: "El plazo depende del alcance que definimos en la fase de análisis. Una herramienta sencilla, con una o dos funciones concretas (por ejemplo, un sistema de reservas o un control de pedidos), suele estar lista en unas pocas semanas.\n\nUn sistema más completo, con varios módulos y usuarios distintos, se desarrolla y entrega por fases, de forma que puedas empezar a usar cada parte según va estando terminada, en vez de esperar meses para ver el resultado. El plazo exacto de cada fase se cierra por escrito junto con el precio, antes de empezar a desarrollar esa fase.",
-    },
-    {
-      q: "¿Qué diferencia hay entre contratar software a medida y usar un programa SaaS con licencia mensual?",
-      a: "Un SaaS (un programa por el que pagas una cuota mensual, como muchos CRM o ERP genéricos) es rápido de empezar a usar, pero rara vez encaja al cien por cien con tu proceso, y la cuota se repite mes tras mes mientras sigas usándolo, subas o no de plan. El software a medida no tiene esa licencia mensual recurrente: pagas por el desarrollo, y a partir de ahí la aplicación es tuya, con mantenimiento solo si lo contratas cuando lo necesitas. A cambio, el desarrollo a medida requiere más tiempo inicial que darte de alta en un SaaS, porque primero se analiza y se construye para tu caso concreto.",
-    },
-    {
-      q: "¿Puedo empezar solo por una parte del proyecto en vez de contratarlo todo de golpe?",
-      a: "Sí, de hecho es como recomiendo empezar casi siempre. En la primera reunión detectamos juntas qué tarea te está haciendo perder más tiempo o dinero ahora mismo, y desarrollamos primero esa parte con precio y plazo cerrados. Una vez la estás usando y compruebas el resultado, decides si quieres ampliar con la siguiente fase o si con eso ya te vale. Esto reduce el riesgo de invertir en un proyecto grande antes de comprobar que la forma de trabajar propuesta encaja de verdad con tu negocio.",
-    },
-    {
-      q: "¿Qué pasa si a mitad de desarrollo cambian los requisitos de mi negocio?",
-      a: "Es algo que ocurre con frecuencia y está previsto en la forma de trabajar por fases: lo ya acordado y presupuestado para la fase en curso no cambia de precio a mitad de camino. Si surge una necesidad nueva o cambia algo importante de tu proceso, la valoramos juntas y, si afecta al alcance, se convierte en una fase adicional con su propio presupuesto cerrado, en vez de meterla sin avisar dentro de lo ya pactado. Así sabes en todo momento qué estás pagando y por qué, sin sorpresas en la factura final.",
-    },
-    {
-      q: "¿En qué tecnologías desarrollas las aplicaciones y me quedo atada a ti como proveedora?",
-      a: "Desarrollo aplicaciones web modernas, accesibles desde el navegador en cualquier dispositivo sin instalar nada, usando tecnologías estándar de la industria y no herramientas propietarias cerradas. El código queda documentado y organizado para que cualquier profesional con conocimientos pueda continuarlo si algún día decides cambiar de desarrollador o de proveedor. No hay dependencia forzada de un único formato o plataforma mía: la idea es que la herramienta sea tuya de verdad, igual que el dominio y el hosting de una web se contratan a tu nombre y no al mío.",
+      q: "¿Qué empresas de desarrollo de software a medida hay en Sevilla?",
+      a: "Hay agencias, estudios y profesionales independientes, y conviene comparar más de uno. Mira quién programa, si hay precio cerrado por fases y si el código será tuyo. Yo trabajo en Sevilla y hablas conmigo.",
     },
   ],
 }
