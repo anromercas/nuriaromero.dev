@@ -65,6 +65,37 @@ test("HomeHeroMock is an honest illustrative figure with a reduced-motion guard"
   );
 });
 
+test("HomeHeroMock never fades text below full opacity", () => {
+  const source = read(heroMockPath);
+  const style = source.match(/<style[^>]*>([\s\S]*)<\/style>/)?.[1] ?? "";
+  const keyframes = [
+    ...style.matchAll(/@keyframes\s+([\w-]+)\s*\{([\s\S]*?\})\s*\}/g),
+  ];
+  const rowIn = keyframes.find((k) => k[1] === "row-in");
+  assert.ok(rowIn, "row-in keyframes exist");
+  assert.doesNotMatch(rowIn[2], /opacity/, "row-in animates no opacity");
+
+  const fading = keyframes
+    .filter((k) => /opacity\s*:/.test(k[2]))
+    .map((k) => k[1]);
+  assert.ok(fading.includes("art-in"), "art-in fades the decorative art");
+  for (const name of fading) {
+    const users = [...style.matchAll(/([^{}]+)\{([^{}]*)\}/g)].filter(
+      (rule) =>
+        new RegExp(`animation\\s*:[^;]*\\b${name}\\b`).test(rule[2]) &&
+        !rule[1].includes("@keyframes"),
+    );
+    assert.ok(users.length > 0, `${name} is applied somewhere`);
+    for (const [, selector] of users) {
+      assert.match(
+        selector.trim(),
+        /\.(art|check)\s*$/,
+        `${name} only fades .art or .check, got "${selector.trim()}"`,
+      );
+    }
+  }
+});
+
 test("ServiceTileArt offers one drawing per bento service", () => {
   const source = read(tileArtPath);
   for (const kind of [

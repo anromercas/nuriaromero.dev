@@ -232,6 +232,12 @@ const rows = [
         animation-range: calc(var(--i) * 40px) calc(var(--i) * 40px + 120px);
       }
 
+      .animate .rows .art {
+        animation: art-in linear both;
+        animation-timeline: scroll(root block);
+        animation-range: calc(var(--i) * 40px) calc(var(--i) * 40px + 120px);
+      }
+
       .animate .check path {
         stroke-dasharray: 14;
         animation: check-draw linear both;
@@ -246,17 +252,30 @@ const rows = [
         animation: row-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
         animation-delay: calc(0.3s + var(--i) * 0.25s);
       }
+
+      .animate .rows .art {
+        animation: art-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+        animation-delay: calc(0.3s + var(--i) * 0.25s);
+      }
     }
   }
 
   @keyframes row-in {
     from {
-      opacity: 0.6;
       transform: translateY(0.5rem);
     }
     to {
-      opacity: 1;
       transform: none;
+    }
+  }
+
+  /* Only the decorative art fades: text never drops below full opacity. */
+  @keyframes art-in {
+    from {
+      opacity: 0.6;
+    }
+    to {
+      opacity: 1;
     }
   }
 
