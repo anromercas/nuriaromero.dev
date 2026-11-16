@@ -31,11 +31,10 @@ test("centralizes the official booking URL in site data", async () => {
 });
 
 test("booking CTAs open the official schedule in a new tab accessibly", async () => {
-  const [button, homepage, contact, header, serviceHero] = await Promise.all([
+  const [button, templateHero, header, serviceHero] = await Promise.all([
     readSource("src/components/BookingButton.astro"),
-    // The home books through SeoLocalHero (template hero), which wraps BookingButton.
+    // The home and /contacto/ book through SeoLocalHero (template hero), which wraps BookingButton.
     readSource("src/components/seo-local/SeoLocalHero.astro"),
-    readSource("src/pages/contacto.astro"),
     readSource("src/components/Header.astro"),
     readSource("src/components/services/ServiceHero.astro"),
   ]);
@@ -45,7 +44,7 @@ test("booking CTAs open the official schedule in a new tab accessibly", async ()
   assert.match(button, /rel="noopener noreferrer"/);
   assert.match(button, /CalendarIcon[\s\S]*aria-hidden="true"/);
   assert.match(button, /Reserva una primera sesión/);
-  for (const source of [homepage, contact, header, serviceHero]) {
+  for (const source of [templateHero, header, serviceHero]) {
     assert.match(source, /BookingButton/);
   }
 });
