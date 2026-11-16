@@ -311,3 +311,93 @@ test("intent row swaps the legacy signal for the comparison heading", () => {
   assert.equal(row.titleSignal, "Diseño de tienda online en Sevilla");
   assert.equal(row.descriptionSignal, "pasarela de pago propia");
 });
+
+// --- Task 2.2: FAQ and word budget (NRD-204) ---------------------------------
+
+const norm = (s) =>
+  s
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+test("template-pages lists the store page with the word budget", () => {
+  const source = read("scripts/lib/template-pages.mjs");
+  assert.match(
+    source,
+    /\{\s*route:\s*"\/tienda-online-sevilla\/",\s*words:\s*\[900,\s*1100\],\s*service:\s*true\s*\}/,
+  );
+});
+
+test("FAQ holds the five sourced questions in order", () => {
+  assert.deepEqual(
+    tiendaOnline.faqs.map((f) => norm(f.q)),
+    [
+      "cuanto cuesta una tienda online en sevilla",
+      "como se crea o se monta una tienda online",
+      "woocommerce shopify o una tienda a medida",
+      "que plataforma conviene para un catalogo grande o con stock en varios almacenes",
+      "que requisitos legales y tecnicos tiene una tienda online",
+    ].map(norm),
+  );
+});
+
+test("FAQ keeps the NRD-195 price and platform questions verbatim", () => {
+  const qs = tiendaOnline.faqs.map((f) => f.q);
+  assert.ok(qs.includes("¿Cuánto cuesta una tienda online en Sevilla?"));
+  assert.ok(qs.includes("¿WooCommerce, Shopify o una tienda a medida?"));
+});
+
+test("FAQ answers: price from the source, no lead time", () => {
+  const [price] = tiendaOnline.faqs;
+  assert.ok(price.a.includes(STORE_FROM));
+  assert.match(price.a, /panel/);
+  assert.match(price.a, /por escrito/);
+  for (const f of tiendaOnline.faqs) {
+    assert.doesNotMatch(f.a, /semanas|d[ií]as|meses/i, f.q);
+  }
+  const block = read("src/data/services.ts");
+  const faqSource = block.slice(
+    block.indexOf("export const tiendaOnline"),
+    block.indexOf("export const services"),
+  );
+  assert.doesNotMatch(faqSource, /€/);
+});
+
+test("large catalogue answer quotes bulk work apart and links automations", () => {
+  const faq = tiendaOnline.faqs[3];
+  assert.match(faq.a, /presupuest/);
+  assert.match(faq.a, /aparte/);
+  assert.doesNotMatch(faq.a, /PrestaShop|Magento|BigCommerce|Wix|Squarespace/i);
+  assert.deepEqual(faq.links, [
+    { label: "Automatizaciones para tu negocio", href: "/automatizaciones/" },
+  ]);
+});
+
+test("legal answer names the basics, refers taxes and promises nothing", () => {
+  const { a } = tiendaOnline.faqs[4];
+  for (const term of ["dominio", "HTTPS", "pasarela", "aviso legal"]) {
+    assert.ok(a.includes(term), term);
+  }
+  assert.match(a, /gestoría/);
+  assert.doesNotMatch(a, /garantiz|cumple(s)? (con )?la ley/i);
+});
+
+test(
+  "built store page stays within the word budget with matching FAQPage",
+  {
+    skip: !existsSync(new URL("dist/tienda-online-sevilla/index.html", root)),
+  },
+  () => {
+    const html = read("dist/tienda-online-sevilla/index.html");
+    const main = html.match(/<main\b[\s\S]*?<\/main>/)?.[0] ?? "";
+    const words = main
+      .replace(/<(script|style)\b[\s\S]*?<\/\1>/g, " ")
+      .replace(/<[^>]+>/g, " ")
+      .split(/\s+/)
+      .filter(Boolean).length;
+    assert.ok(words >= 880 && words <= 1120, `${words} words`);
+  },
+);

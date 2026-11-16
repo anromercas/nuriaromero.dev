@@ -29,10 +29,8 @@ export const storeOptions: StoreOption[] = [
     id: "woocommerce",
     name: "WooCommerce",
     recurringCost: "El hosting y el dominio quedan a tu nombre y los pagas tú.",
-    bestFor:
-      "WooCommerce, si quieres tu tienda sobre WordPress, con miles de extensiones y a tu nombre.",
-    tradeOff:
-      "Necesita su propio hosting y alguna actualización de vez en cuando.",
+    bestFor: "WooCommerce, si quieres tu tienda sobre WordPress y a tu nombre.",
+    tradeOff: "Necesita su propio hosting y actualizaciones de vez en cuando.",
     panel: "Panel de gestión de WooCommerce",
   },
   {
@@ -40,9 +38,8 @@ export const storeOptions: StoreOption[] = [
     name: "Shopify",
     recurringCost:
       "La cuota mensual de la plataforma la pagas tú directamente a Shopify.",
-    bestFor:
-      "Shopify, si quieres empezar rápido sin ocuparte del hosting ni de las actualizaciones.",
-    tradeOff: "La tienda vive dentro de Shopify y le pagas su cuota cada mes.",
+    bestFor: "Shopify, si quieres empezar rápido sin ocuparte del hosting.",
+    tradeOff: "Vive dentro de Shopify y pagas su cuota cada mes.",
     panel: "Panel de gestión de Shopify",
   },
   {
@@ -51,9 +48,8 @@ export const storeOptions: StoreOption[] = [
     example: "por ejemplo, con Next.js y Supabase",
     recurringCost: "El hosting y el dominio quedan a tu nombre y los pagas tú.",
     bestFor:
-      "Una tienda a medida, si necesitas algo que las plataformas no hacen o quieres solo el código justo.",
-    tradeOff:
-      "Los cambios grandes los hace alguien que programe, yo u otra persona.",
+      "Una tienda a medida, si necesitas algo que las plataformas no hacen.",
+    tradeOff: "Los cambios grandes los hace quien programe, yo u otra persona.",
     panel: "Panel de gestión programado a medida",
   },
 ];
