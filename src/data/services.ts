@@ -3,6 +3,11 @@
 // chatbot IA 399 €, software a medida 999 €. E-commerce: sin precio público.
 import type { ServicePageData } from "@/data/types"
 
+// Precio de la landing para interpolar en el copy. Los `from` de los planes
+// (guardados por tests/single-price-source.test.js) quedan como literales; un test
+// de tests/diseno-web-template.test.js comprueba que ambos coinciden.
+const LANDING_FROM = "149 €"
+
 /** `from` label of a named pricing tier; throws so a renamed tier fails the build. */
 export function tierFrom(service: ServicePageData, tierName: string): string {
   const tier = service.pricing.tiers?.find((t) => t.name === tierName)
@@ -23,8 +28,9 @@ export const disenoWeb: ServicePageData = {
   },
   hero: {
     h1: "Diseño web Sevilla para negocios que quieren clientes, no solo una web bonita",
-    subtitle:
-      "Tu web trabaja 24 horas y es lo primero que ve un cliente antes de decidirse. Si buscan lo que ofreces en Sevilla, que te encuentren a ti.",
+    title: "Tu web, hecha a medida y a tu nombre",
+    titleAccent: "a tu nombre",
+    subtitle: `Diseño y programo la web de tu negocio en Sevilla: rápida en el móvil, lista para Google y con precio cerrado desde ${LANDING_FROM}.`,
     secondaryCta: {
       label: "Ver precios",
       href: "#precios",
@@ -38,39 +44,51 @@ export const disenoWeb: ServicePageData = {
   },
   benefits: [
     {
-      title: "Construida pensando en los Core Web Vitals de Google",
-      text: "Los Core Web Vitals miden qué tan rápido carga tu web, qué tan estable se ve y qué tan rápido responde a un clic. Diseño y programo cada proyecto para cumplir esos tres puntos desde el primer día, sin plugins de sobra que la frenen. Te importa aunque no seas programador: Google usa esas métricas para decidir qué webs muestra antes.",
+      title: "Alta en Google y Google Maps",
+      text: "Con la web completa, te doy de alta en Search Console y la conecto con tu ficha de Google Business Profile.",
     },
     {
-      title: "SEO local desde el primer día: apareces en Google y en Google Maps",
-      text: "Estructura y textos con las búsquedas que hace tu cliente en Sevilla, datos técnicos correctos (velocidad, etiquetas, estructura semántica), y alta y configuración de tu ficha de Google Business Profile conectada con tu web.",
+      title: "WhatsApp y formulario",
+      text: "Un botón de WhatsApp y un formulario para que te escriban sin buscar tu teléfono.",
     },
     {
-      title: "La web es tuya: dominio y hosting a tu nombre",
-      text: "Dominio y hosting se contratan a tu nombre, no al mío. Si algún día cambias de proveedor o prefieres no depender de nadie, puedes hacerlo sin pedir permiso. Sin contratos que te atan ni cuotas mensuales que aparecen a los seis meses.",
+      title: "Pensada primero para el móvil",
+      text: "Textos, botones y fotos se leen y se pulsan bien en cualquier pantalla, empezando por la del móvil.",
+    },
+    {
+      title: "SEO local básico",
+      text: "Títulos, textos y datos técnicos pensados para lo que buscan tus clientes en Sevilla.",
+    },
+    {
+      title: "Dominio y hosting a tu nombre",
+      text: "Los configuro yo y quedan a tu nombre: la web es tuya y puedes cambiar de proveedor cuando quieras.",
+    },
+    {
+      title: "Un mes de soporte",
+      text: "En los dos planes, el primer mes después de publicar resuelvo tus dudas y hago los pequeños ajustes.",
     },
   ],
   process: [
     {
-      title: "Hablamos de tu negocio",
-      text: "Una llamada o un café. Me cuentas qué vendes, quién es tu cliente y qué quieres conseguir. Hablamos en tu idioma, no en el mío.",
+      title: "Propuesta con precio cerrado",
+      text: "Hablamos de tu negocio y te envío por escrito qué incluye, cuánto cuesta y el plazo.",
     },
     {
-      title: "Presupuesto cerrado",
-      text: "Te envío una propuesta por escrito: precio, plazos y qué incluye. La apruebas y arrancamos. Si algo cambia por el camino, el precio de lo pactado no se mueve.",
+      title: "Diseño",
+      text: "Te enseño cómo quedará antes de programarla y ajustamos lo que haga falta.",
     },
     {
-      title: "Diseño y desarrollo",
-      text: "Construyo la web con textos orientados a Google y a tus clientes reales. Ves avances durante el proceso y ajustas lo que haga falta antes de la entrega.",
+      title: "Contenidos",
+      text: "Me pasas textos, fotos y logo; si lo necesitas, te ayudo con los textos.",
     },
     {
-      title: "Lanzamiento y primer mes de soporte",
-      text: "Publico la web, la doy de alta en Google y Google Maps, y te enseño a cambiar tú misma un texto, una foto o un precio. El primer mes de soporte va incluido.",
+      title: "Publicación",
+      text: "En 2 a 4 semanas desde que tengo los contenidos, la web está publicada, con un mes de soporte incluido.",
     },
   ],
   pricing: {
     from: "149 €",
-    note: "¿Cuál te conviene? Si necesitas estar online ya, con lo esencial: landing. Si tu negocio ya tiene definidos varios servicios y quieres posicionar cada uno por separado: web completa.",
+    note: "¿Quieres estar online ya, con lo esencial? Landing. ¿Tienes varios servicios y quieres explicar cada uno por separado? Web completa.",
     tiers: [
       {
         name: "Landing de una página",
@@ -80,6 +98,7 @@ export const disenoWeb: ServicePageData = {
           "Textos optimizados para SEO local en Sevilla",
           "Botón de WhatsApp y formulario de contacto",
           "Creación y configuración del dominio y hosting",
+          "Un mes de soporte tras el lanzamiento",
         ],
       },
       {
@@ -139,8 +158,8 @@ export const disenoWeb: ServicePageData = {
     },
   ],
   cta: {
-    title: "Empecemos con tu página web en Sevilla",
-    text: "Cuéntame en qué punto está tu negocio y qué necesitas conseguir. Te respondo con una propuesta clara, sin compromiso.",
+    title: "Empecemos por tu web",
+    text: "Cuéntame en qué punto está tu negocio y te respondo con una propuesta clara y un precio cerrado, sin compromiso.",
   },
 }
 

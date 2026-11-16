@@ -1,80 +1,214 @@
 ---
-import ServiceLayout from "@/layouts/ServiceLayout.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
-import TitleSection from "@/components/TitleSection.astro"
-import Projects from "@/components/Projects.astro"
-import { disenoWeb } from "@/data/services"
-import { niches } from "@/data/niches"
+import ServiceLayout from "@/layouts/ServiceLayout.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import ProofStrip from "@/components/seo-local/ProofStrip.astro";
+import ReviewBento from "@/components/seo-local/ReviewBento.astro";
+import BentoTile from "@/components/seo-local/BentoTile.astro";
+import SeoLocalProcess from "@/components/seo-local/SeoLocalProcess.astro";
+import RealProof from "@/components/seo-local/RealProof.astro";
+import SeoLocalAgencia from "@/components/seo-local/SeoLocalAgencia.astro";
+import SeoLocalFaq from "@/components/seo-local/SeoLocalFaq.astro";
+import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro";
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
+import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro";
+import SeoLocalPlans from "@/components/seo-local/SeoLocalPlans.astro";
+import WebMock from "@/components/diseno-web/WebMock.astro";
+import WebTileArt from "@/components/diseno-web/WebTileArt.astro";
+import { disenoWeb, tierFrom } from "@/data/services";
+import { internalLinksBySource } from "@/data/internal-links";
+import { SITE_PROOF } from "@/data/site";
+import { getGoogleReviews } from "@/lib/google-reviews";
+
+const reviewsData = await getGoogleReviews();
+
+// Tiles a-f in source order; disenoWeb.benefits holds them in the same order.
+const tiles = [
+  { area: "a", kind: "google", layout: "stack" },
+  { area: "b", kind: "contacto", layout: "stack" },
+  { area: "c", kind: "movil", layout: "stack" },
+  { area: "d", kind: "seo-local", layout: "stack" },
+  { area: "e", kind: "dominio", layout: "stack" },
+  { area: "f", kind: "soporte", layout: "row" },
+] as const;
+
+const agenciaItems = [
+  {
+    lead: "Una agencia suele repartir tu web entre varias personas: quien vende, quien diseña y quien programa.",
+    text: "Conmigo hablas desde el primer día con quien la diseña y la programa.",
+  },
+  {
+    lead: "Un estudio o una agencia tiene más manos si además necesitas campañas, redes o vídeo.",
+    text: "Si buscas una web clara, rápida y bien hecha para tu negocio, una freelance suele bastar.",
+  },
+  {
+    lead: "Elijas a quien elijas, pide por escrito qué incluye, cuánto cuesta y a nombre de quién quedan el dominio y el hosting.",
+    text: "Aquí lo tienes publicado: dos opciones con precio cerrado, y dominio y hosting a tu nombre.",
+  },
+];
+
+const proofItems = [
+  SITE_PROOF[0],
+  ...(reviewsData
+    ? [
+        {
+          stat: `${reviewsData.rating.toFixed(1).replace(".", ",")} en Google`,
+          label: `${reviewsData.userRatingCount} ${reviewsData.userRatingCount === 1 ? "opinión" : "opiniones"}`,
+        },
+      ]
+    : []),
+  SITE_PROOF[1],
+];
 ---
 
-<ServiceLayout page={disenoWeb}>
-  <Fragment slot="before-benefits">
-    <SectionContainer>
-      <TitleSection>¿Tu web actual no te trae clientes, o todavía no tienes una?</TitleSection>
-      <div class="space-y-4 text-gray-300">
-        <p>
-          Si ya tienes web, conoces esta sensación: entra gente, pero no
-          llama ni escribe.
-        </p>
-        <p>
-          Si todavía no tienes, el problema es otro: cada día, alguien busca
-          tu servicio en Sevilla y encuentra a tu competencia en tu lugar.
-        </p>
-        <p>
-          La causa suele ser la misma en los dos casos: una web pensada para
-          verse bien el día de la entrega, no para seguir trabajando por ti
-          a partir del día siguiente.
-        </p>
-      </div>
-      <p class="mt-8 text-gray-300">
-        ¿Tienes un restaurante, una clínica, un comercio o un despacho? Mira
-        la página dedicada a tu sector:
-      </p>
-      <ul class="mt-4 flex flex-wrap gap-3">
-        {
-          niches.map((niche) => (
-            <li>
-              <a
-                href={niche.slug}
-                class="inline-block rounded-full border border-gray-600 bg-gray-800/50 px-4 py-1.5 text-sm font-medium text-gray-200 transition"
-              >
-                {niche.breadcrumbName}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+<ServiceLayout page={disenoWeb} variant="template">
+  <Fragment slot="hero">
+    <SeoLocalHero
+      keyword={disenoWeb.hero.h1}
+      title={{
+        text: disenoWeb.hero.title ?? disenoWeb.hero.h1,
+        accent: disenoWeb.hero.titleAccent,
+      }}
+      subtitle={disenoWeb.hero.subtitle}
+      secondaryLink={{
+        label: disenoWeb.hero.secondaryCta?.label ?? "Ver precios",
+        href: "#precios",
+      }}
+    >
+      <WebMock slot="visual" />
+    </SeoLocalHero>
+    <ProofStrip items={proofItems} />
+  </Fragment>
+  <Fragment slot="benefits">
+    <SectionContainer id="que-incluye">
+      <ReviewBento
+        headingId="que-incluye-title"
+        keyword={disenoWeb.sectionTitles?.benefits ?? ""}
+        title={{
+          text: "Lo que lleva tu web desde el primer día",
+          accent: "desde el primer día",
+        }}
+      >
+        {disenoWeb.benefits.map((benefit, i) => (
+          <BentoTile
+            area={tiles[i].area}
+            layout={tiles[i].layout}
+            title={benefit.title}
+            text={benefit.text}
+          >
+            <WebTileArt kind={tiles[i].kind} />
+          </BentoTile>
+        ))}
+      </ReviewBento>
     </SectionContainer>
   </Fragment>
-
-  <SectionContainer>
-    <TitleSection>Webs reales de negocios de Sevilla</TitleSection>
-    <p class="mb-8 text-gray-300">
-      Nada de maquetas ni ejemplos genéricos. Estas son webs reales, de
-      negocios reales de Sevilla, que puedes visitar ahora mismo.
-    </p>
-    <Projects only={["arkady", "adfsevilla"]} />
-  </SectionContainer>
-
-  <SectionContainer>
-    <TitleSection>Por qué elegir a alguien de Sevilla para tu web</TitleSection>
-    <p class="mb-4 text-gray-300">
-      Trabajar con alguien de tu ciudad tiene ventajas que una agencia
-      grande o un freelance en remoto no te dan:
-    </p>
-    <ul class="space-y-2 text-gray-300">
-      <li class="flex gap-x-2">
-        <span class="text-green-400" aria-hidden="true">✓</span>
-        <span><strong class="text-white">Entiendo el mercado local</strong>: sé cómo busca tu cliente en Sevilla, qué zonas y qué palabras usa.</span>
-      </li>
-      <li class="flex gap-x-2">
-        <span class="text-green-400" aria-hidden="true">✓</span>
-        <span><strong class="text-white">Trato directo</strong>: hablas conmigo, quien diseña y programa tu web, no con un comercial.</span>
-      </li>
-      <li class="flex gap-x-2">
-        <span class="text-green-400" aria-hidden="true">✓</span>
-        <span><strong class="text-white">Reunión en persona si hace falta</strong>: un café en Sevilla resuelve lo que diez correos no resuelven.</span>
-      </li>
-    </ul>
-  </SectionContainer>
+  <Fragment slot="process">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalProcess
+          id="proceso"
+          headingId="proceso-title"
+          keyword={disenoWeb.sectionTitles?.process ?? ""}
+          title={{
+            text: "Hablas con quien diseña tu web",
+            accent: "quien diseña tu web",
+          }}
+          steps={disenoWeb.process}
+        >
+          <Fragment slot="byline">
+            Soy Nuria Romero, <a href="/">desarrolladora web en Sevilla</a>, y
+            hago tu web de principio a fin.
+          </Fragment>
+        </SeoLocalProcess>
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="before-pricing">
+    <SectionContainer id="trabajo-real">
+      <RealProof
+        headingId="prueba-title"
+        keyword="Webs de negocios locales en Sevilla"
+        title={{ text: "Trabajo que puedes ver", accent: "puedes ver" }}
+        reviews={reviewsData}
+        note="Dos webs reales de negocios de Sevilla, hechas por mí. Puedes visitarlas y juzgar el trabajo por ti."
+        projects={["arkady", "adfsevilla"]}
+      />
+    </SectionContainer>
+    <SectionContainer>
+      <SeoLocalAgencia
+        id="freelance-estudio-o-agencia"
+        headingId="freelance-title"
+        keyword="¿Freelance, estudio o agencia?"
+        title={{
+          text: "Tres maneras de encargar tu web",
+          accent: "encargar tu web",
+        }}
+        items={agenciaItems}
+        link={{ label: "Ver los planes y precios", href: "#precios" }}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="pricing">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalPlans
+          headingId="planes-title"
+          keyword={disenoWeb.sectionTitles?.pricing ?? ""}
+          title={{
+            text: "Dos opciones, con precio cerrado",
+            accent: "precio cerrado",
+          }}
+          tiers={disenoWeb.pricing.tiers ?? []}
+          note={disenoWeb.pricing.note}
+        >
+          <Fragment slot="lede">
+            Una landing de una página cuesta{" "}
+            <strong>
+              desde {tierFrom(disenoWeb, "Landing de una página")}
+            </strong>{" "}
+            y una web completa de hasta 5 páginas,{" "}
+            <strong>
+              desde {tierFrom(disenoWeb, "Web completa (hasta 5 páginas)")}
+            </strong>, con el precio cerrado por escrito antes de empezar.
+          </Fragment>
+        </SeoLocalPlans>
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="faq">
+    <SectionContainer>
+      <SeoLocalFaq
+        headingId="faq-title"
+        keyword={disenoWeb.sectionTitles?.faq ?? ""}
+        title={{
+          text: "Dudas antes de encargar tu web",
+          accent: "antes de encargar",
+        }}
+        lede="Si tu duda no está aquí, la resolvemos en la llamada."
+        faqs={disenoWeb.faqs}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="related">
+    <SectionContainer>
+      <SeoLocalRelated links={internalLinksBySource[disenoWeb.slug] ?? []} />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="closing">
+    <SeoLocalClosing
+      headingId="cierre-title"
+      keyword="Reserva una llamada sobre tu web en Sevilla"
+      title={{ text: disenoWeb.cta?.title ?? "", accent: "tu web" }}
+      text={disenoWeb.cta?.text ?? ""}
+      meta="30 minutos · Sin compromiso · Directamente conmigo"
+    >
+      <WebMock slot="visual" animate={false} />
+    </SeoLocalClosing>
+    <SectionContainer>
+      <SeoLocalNap
+        headingId="nap-title"
+        keyword="Diseño web desde La Rinconada, Sevilla"
+      />
+    </SectionContainer>
+  </Fragment>
 </ServiceLayout>

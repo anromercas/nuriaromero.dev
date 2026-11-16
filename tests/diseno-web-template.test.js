@@ -163,3 +163,153 @@ test("WebTileArt offers one drawing per kind and no panel", () => {
   assert.ok(source.includes("tunegocio.es"), "dominio address pill text");
   assert.ok(source.includes("Sevilla"), "seo-local pin label");
 });
+
+// --- Page on the template (task 2.1) -----------------------------------------
+
+const { disenoWeb } = await import("../src/data/services.ts");
+const pageSource = () => read("src/pages/diseno-web-sevilla.astro");
+
+const SELF_EDIT =
+  /\b(t[uú] mism[oa]|por tu cuenta|te enseño a (editar|cambiar)|editarla t[uú]|cambias (t[uú] )?(un|los) (texto|precio)|sin depender de m[ií])\b/i;
+const SUPPORT = "Un mes de soporte tras el lanzamiento";
+
+test("page uses the template variant and drops the legacy blocks", () => {
+  const page = pageSource();
+  assert.match(
+    page,
+    /<ServiceLayout\s+page=\{disenoWeb\}\s+variant="template"/,
+  );
+  assert.doesNotMatch(page, /TitleSection|niches|✓/);
+  assert.doesNotMatch(page, /<Projects\b/);
+  assert.doesNotMatch(page, /text-gray-|bg-gray-/);
+});
+
+test("page composes the template components in reference slot order", () => {
+  const page = pageSource();
+  const order = [
+    'slot="hero"',
+    "<SeoLocalHero",
+    '<WebMock slot="visual"',
+    "<ProofStrip",
+    'slot="benefits"',
+    "<ReviewBento",
+    "<WebTileArt",
+    'slot="process"',
+    "<SeoLocalProcess",
+    'slot="before-pricing"',
+    "<RealProof",
+    "<SeoLocalAgencia",
+    'slot="pricing"',
+    "<SeoLocalPlans",
+    'slot="faq"',
+    "<SeoLocalFaq",
+    'slot="related"',
+    "<SeoLocalRelated",
+    'slot="closing"',
+    "<SeoLocalClosing",
+    "<SeoLocalNap",
+  ];
+  let last = -1;
+  for (const token of order) {
+    const at = page.indexOf(token, last + 1);
+    assert.ok(at > last, `${token} appears after the previous section`);
+    last = at;
+  }
+});
+
+test("keyword headings are bound to disenoWeb.sectionTitles and CTA to prices", () => {
+  const page = pageSource();
+  for (const key of ["benefits", "process", "pricing", "faq"]) {
+    assert.match(
+      page,
+      new RegExp(`keyword=\\{disenoWeb\\.sectionTitles\\?\\.${key}\\b`),
+      `sectionTitles.${key}`,
+    );
+  }
+  assert.match(page, /keyword=\{disenoWeb\.hero\.h1\}/);
+  assert.match(page, /secondaryLink=\{\{[^}]*href:\s*"#precios"/);
+  assert.match(page, /tierFrom\(disenoWeb,\s*"Landing de una página"\)/);
+  assert.match(
+    page,
+    /tierFrom\(disenoWeb,\s*"Web completa \(hasta 5 páginas\)"\)/,
+  );
+  assert.match(page, /projects=\{\["arkady",\s*"adfsevilla"\]\}/);
+  assert.match(page, /internalLinksBySource\[disenoWeb\.slug\]/);
+});
+
+test("disenoWeb keeps its published identity", () => {
+  assert.equal(
+    disenoWeb.seo.title,
+    "Diseño web Sevilla | Diseñadora web, precio cerrado desde 149 €",
+  );
+  assert.equal(
+    disenoWeb.hero.h1,
+    "Diseño web Sevilla para negocios que quieren clientes, no solo una web bonita",
+  );
+  assert.deepEqual(disenoWeb.hero.secondaryCta, {
+    label: "Ver precios",
+    href: "#precios",
+  });
+  assert.deepEqual(
+    disenoWeb.pricing.tiers.map((t) => [t.name, t.from, !!t.recommended]),
+    [
+      ["Landing de una página", "149 €", false],
+      ["Web completa (hasta 5 páginas)", "399 €", true],
+    ],
+  );
+});
+
+test("disenoWeb hero has a display title with an accent inside it", () => {
+  const { title, titleAccent, subtitle } = disenoWeb.hero;
+  assert.ok(title && titleAccent, "hero.title and hero.titleAccent");
+  assert.ok(title.includes(titleAccent), "accent is a substring of the title");
+  assert.ok(subtitle.split(/\s+/).length <= 35, "short subtitle");
+});
+
+test("disenoWeb has six benefits, domain and hosting included, no panel", () => {
+  assert.equal(disenoWeb.benefits.length, 6);
+  assert.ok(
+    disenoWeb.benefits.some((b) => /dominio y hosting/i.test(b.title)),
+    "a tile titled with dominio y hosting",
+  );
+  for (const b of disenoWeb.benefits) {
+    assert.doesNotMatch(`${b.title} ${b.text}`, /panel/i, b.title);
+  }
+});
+
+test("disenoWeb has four short process steps with no self-editing promise", () => {
+  assert.equal(disenoWeb.process.length, 4);
+  for (const step of disenoWeb.process) {
+    assert.doesNotMatch(`${step.title} ${step.text}`, SELF_EDIT, step.title);
+    assert.doesNotMatch(`${step.title} ${step.text}`, /panel/i, step.title);
+  }
+});
+
+test("support month is listed in both plans", () => {
+  for (const tier of disenoWeb.pricing.tiers) {
+    assert.ok(tier.includes.includes(SUPPORT), `${tier.name} lists support`);
+    assert.equal(tier.includes.at(-1), SUPPORT, `${tier.name} lists it last`);
+  }
+});
+
+test("no benefit, step or plan frames support as full-website only", () => {
+  const strings = [
+    ...disenoWeb.benefits.map((b) => `${b.title}. ${b.text}`),
+    ...disenoWeb.process.map((s) => `${s.title}. ${s.text}`),
+  ];
+  for (const text of strings) {
+    for (const sentence of text.split(/(?<=[.!?])\s+/)) {
+      if (/soporte/i.test(sentence)) {
+        assert.doesNotMatch(sentence, /web completa/i, sentence);
+      }
+    }
+  }
+});
+
+test("hero subtitle interpolates the landing price published in the plan", () => {
+  const landing = disenoWeb.pricing.tiers.find(
+    (t) => t.name === "Landing de una página",
+  );
+  assert.ok(disenoWeb.hero.subtitle.includes(landing.from));
+  assert.equal(disenoWeb.pricing.from, landing.from);
+});
