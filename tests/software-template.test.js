@@ -101,3 +101,167 @@ test("SoftwareTileArt offers one drawing per kind", () => {
     assert.match(source, new RegExp(`class="[^"]*\\b${cls}\\b`));
   }
 });
+
+// --- Task 2.1: page on the template (NRD-209) ----------------------------------
+
+const { desarrolloSoftware } = await import(
+  new URL("../src/data/services.ts", import.meta.url)
+);
+const pageSource = () => read("src/pages/desarrollo-software-medida.astro");
+
+test("page uses the template variant and drops the legacy blocks", () => {
+  const page = pageSource();
+  assert.match(
+    page,
+    /<ServiceLayout\s+page=\{desarrolloSoftware\}\s+variant="template"/,
+  );
+  assert.doesNotMatch(page, /TitleSection|✓/);
+  assert.doesNotMatch(page, /text-gray-|bg-gray-/);
+});
+
+test("page composes the template components in reference slot order", () => {
+  const page = pageSource();
+  const order = [
+    'slot="hero"',
+    "<SeoLocalHero",
+    '<AppMock slot="visual"',
+    "<ProofStrip",
+    'slot="benefits"',
+    "<ReviewBento",
+    "<SoftwareTileArt",
+    'slot="process"',
+    "<SeoLocalProcess",
+    'slot="before-pricing"',
+    "<RealProof",
+    "<SeoLocalAgencia",
+    'slot="pricing"',
+    "<SeoLocalPlans",
+    'slot="faq"',
+    "<SeoLocalFaq",
+    'slot="related"',
+    "<SeoLocalRelated",
+    'slot="closing"',
+    "<SeoLocalClosing",
+    "<SeoLocalNap",
+  ];
+  let last = -1;
+  for (const token of order) {
+    const at = page.indexOf(token, last + 1);
+    assert.ok(at > last, `${token} appears after the previous section`);
+    last = at;
+  }
+});
+
+test("proof strip keeps experience, rating and the two real websites", () => {
+  const page = pageSource();
+  assert.match(page, /SITE_PROOF\[0\]/);
+  assert.match(page, /SITE_PROOF\[1\]/);
+  assert.match(page, /reviewsData\s*\?/);
+  assert.match(page, /projects=\{\["arkady", "adfsevilla"\]\}/);
+});
+
+test("keyword headings are bound to desarrolloSoftware.sectionTitles", () => {
+  const page = pageSource();
+  for (const key of ["benefits", "process", "pricing", "faq"]) {
+    assert.match(
+      page,
+      new RegExp(
+        `keyword=\\{desarrolloSoftware\\.sectionTitles\\?\\.${key}\\b`,
+      ),
+      `sectionTitles.${key}`,
+    );
+  }
+  assert.match(page, /keyword=\{desarrolloSoftware\.hero\.h1\}/);
+  assert.match(page, /secondaryLink=\{\{[^}]*href:\s*"#precios"/s);
+  assert.match(page, /internalLinksBySource\[desarrolloSoftware\.slug\]/);
+  assert.match(page, /keyword="¿Software a medida o estándar\?"/);
+});
+
+test("the single plan is built from desarrolloSoftware.pricing", () => {
+  const page = pageSource();
+  assert.match(page, /tiers=\{\[plan\]\}/);
+  for (const field of ["from", "includes", "note"]) {
+    assert.match(
+      page,
+      new RegExp(`desarrolloSoftware\\.pricing\\.${field}\\b`),
+    );
+  }
+  assert.match(page, /desde\s+\{desarrolloSoftware\.pricing\.from\}/);
+  assert.doesNotMatch(page, /€/, "no price literal in the page");
+  assert.equal(desarrolloSoftware.pricing.tiers, undefined, "no tiers in data");
+});
+
+test("services.ts holds the price once, as SOFTWARE_FROM", () => {
+  const services = read("src/data/services.ts");
+  assert.equal(services.match(/"999 €"/g)?.length, 1);
+  assert.match(services, /const SOFTWARE_FROM = "999 €"/);
+  assert.match(services, /pricing:\s*\{\s*from:\s*SOFTWARE_FROM/);
+  assert.equal(desarrolloSoftware.pricing.from, "999 €");
+});
+
+test("data: six tiles, four steps, hero and closing copy", () => {
+  assert.equal(desarrolloSoftware.benefits.length, 6);
+  assert.equal(desarrolloSoftware.process.length, 4);
+  const titles = desarrolloSoftware.benefits.map((b) => b.title).join(" ");
+  for (const term of [/web/i, /móvil/, /ERP/, /API/, /Reservas/, /datos/i]) {
+    assert.match(titles, term);
+  }
+  const { title, titleAccent, secondaryCta } = desarrolloSoftware.hero;
+  assert.ok(title.includes(titleAccent), "accent is a substring of the title");
+  assert.equal(secondaryCta.label, "Ver precio");
+  assert.equal(secondaryCta.href, "#precios");
+  assert.equal(
+    desarrolloSoftware.sectionTitles.benefits,
+    "Qué software a medida puedo hacer para tu empresa",
+  );
+  assert.ok(desarrolloSoftware.cta.title.length > 0);
+  assert.ok(desarrolloSoftware.cta.text.length > 0);
+  assert.ok(
+    desarrolloSoftware.hero.subtitle.includes("aplicaciones web a medida"),
+  );
+});
+
+test("intent signals and published price stay as they were", () => {
+  const { sectionTitles, hero, seo } = desarrolloSoftware;
+  assert.equal(
+    sectionTitles.process,
+    "Así es el proceso de desarrollar tu aplicación a medida",
+  );
+  assert.equal(
+    sectionTitles.pricing,
+    "Cuánto cuesta el software a medida en Sevilla",
+  );
+  assert.equal(
+    hero.h1,
+    "Desarrollo de software a medida en Sevilla para tu empresa",
+  );
+  assert.equal(
+    seo.title,
+    "Desarrollo de software a medida en Sevilla | Aplicaciones web",
+  );
+});
+
+const copyStrings = (value, out = []) => {
+  if (typeof value === "string") out.push(value);
+  else if (Array.isArray(value)) value.forEach((v) => copyStrings(v, out));
+  else if (value && typeof value === "object")
+    Object.entries(value).forEach(([k, v]) => {
+      if (k !== "href" && k !== "slug") copyStrings(v, out);
+    });
+  return out;
+};
+
+test("no figure other than the price and the experience in the page copy", () => {
+  for (const text of copyStrings(desarrolloSoftware)) {
+    for (const digits of text.match(/\d+/g) ?? []) {
+      assert.ok(["999", "10"].includes(digits), `"${digits}" in "${text}"`);
+    }
+  }
+});
+
+test("meta description carries the starting price from pricing.from", () => {
+  const { description } = desarrolloSoftware.seo;
+  const price = desarrolloSoftware.pricing.from.replace(/\s*€/, "");
+  assert.ok(description.includes(`desde ${price} euros`), description);
+  assert.ok(description.length <= 160, `${description.length}`);
+});

@@ -11,6 +11,9 @@ import { STORE_FROM, STORE_FINAL_PRICE_NOTE, storeIncludes } from "./store-offer
 const LANDING_FROM = "149 €"
 const WEB_FROM = "399 €"
 
+// Precio único de software a medida: `pricing.from` y las respuestas lo toman de aquí.
+const SOFTWARE_FROM = "999 €"
+
 /** `from` label of a named pricing tier; throws so a renamed tier fails the build. */
 export function tierFrom(service: ServicePageData, tierName: string): string {
   const tier = service.pricing.tiers?.find((t) => t.name === tierName)
@@ -174,57 +177,67 @@ export const desarrolloSoftware: ServicePageData = {
   seo: {
     title: "Desarrollo de software a medida en Sevilla | Aplicaciones web",
     description:
-      "Desarrollo de software y aplicaciones web a medida en Sevilla: gestión interna, reservas, presupuestos y portales de cliente. +10 años de experiencia.",
+      "Desarrollo de software y aplicaciones web a medida en Sevilla, desde 999 euros: gestión, reservas y portales de cliente. +10 años de experiencia.",
   },
   hero: {
     h1: "Desarrollo de software a medida en Sevilla para tu empresa",
-    subtitle:
-      "Cuando el Excel se queda corto y los programas genéricos no encajan con tu forma de trabajar, una aplicación hecha a tu medida ahorra horas cada semana. Desarrollo herramientas que se adaptan a tu negocio, y no al revés.",
+    title: "Software que trabaja como tu empresa",
+    titleAccent: "como tu empresa",
+    subtitle: `Desarrollo aplicaciones web a medida para tus pedidos, reservas, presupuestos o clientes. Empezamos por una primera fase desde ${SOFTWARE_FROM}, con precio cerrado.`,
+    secondaryCta: { label: "Ver precio", href: "#precios" },
   },
   sectionTitles: {
-    benefits: "Qué gana tu empresa con software a medida",
+    benefits: "Qué software a medida puedo hacer para tu empresa",
     process: "Así es el proceso de desarrollar tu aplicación a medida",
     pricing: "Cuánto cuesta el software a medida en Sevilla",
     faq: "Preguntas frecuentes sobre software a medida en Sevilla",
   },
   benefits: [
     {
-      title: "Adiós a las tareas repetitivas",
-      text: "Gestión de pedidos, reservas, presupuestos, partes de trabajo, facturación… Lo que hoy haces a mano en papel o en Excel, automatizado en una herramienta pensada para ti.",
+      title: "Aplicación web",
+      text: "Una herramienta que abres en el navegador desde cualquier ordenador, sin instalar nada.",
     },
     {
-      title: "Experiencia real en empresas",
-      text: "Más de 10 años desarrollando software para industria, salud y medioambiente, desde startups hasta consultoras como NTT DATA. Esa experiencia ahora al servicio de tu negocio.",
+      title: "App para el móvil",
+      text: "Tu equipo la abre desde el móvil para consultar o apuntar datos esté donde esté.",
     },
     {
-      title: "Empiezas pequeño, creces cuando toca",
-      text: "No necesitas un proyecto enorme: empezamos por lo que más te duele y ampliamos según resultados. Pagas por lo que necesitas.",
+      title: "Gestión interna o ERP",
+      text: "Pedidos, stock, presupuestos y facturas en un solo sitio: eso es un ERP, un programa de gestión.",
     },
     {
-      title: "Tecnología moderna y mantenible",
-      text: "Aplicaciones web que funcionan en cualquier dispositivo, sin instalar nada. Código limpio y documentado que cualquier profesional podría continuar.",
+      title: "API e integraciones",
+      text: "Conecto tu herramienta con los programas que ya usas mediante una API, para que los datos pasen solos.",
+    },
+    {
+      title: "Reservas y citas",
+      text: "Tus clientes eligen día y hora, y tú ves la agenda completa sin llamadas ni papeles.",
+    },
+    {
+      title: "Panel de datos",
+      text: "Ves de un vistazo cómo van tus pedidos, ventas o reservas, con datos que hoy tienes repartidos.",
     },
   ],
   process: [
     {
       title: "Analizo tu forma de trabajar",
-      text: "Me cuentas tus procesos y detecto dónde se pierde tiempo o dinero. De ahí sale una propuesta concreta con prioridades.",
+      text: "Me cuentas cómo trabajas hoy y vemos juntos dónde se pierde más tiempo.",
     },
     {
-      title: "Prototipo primero",
-      text: "Antes de desarrollar, ves pantallas de cómo será la herramienta. Ajustamos sobre el diseño, que es barato; no sobre el código, que es caro.",
+      title: "Primera fase con precio cerrado",
+      text: "Te envío por escrito qué incluye, cuánto cuesta y el plazo antes de empezar.",
     },
     {
-      title: "Desarrollo por fases",
-      text: "Entregas parciales que ya puedes usar. Cada fase tiene precio y plazo cerrados.",
+      title: "Entregas que ya puedes usar",
+      text: "Primero ves las pantallas y después versiones parciales que tu equipo usa desde el principio.",
     },
     {
-      title: "Formación y soporte",
-      text: "Te enseño a usarlo, dejo documentación y quedo disponible para mantenimiento y mejoras.",
+      title: "Ampliamos cuando toca",
+      text: "Si la primera fase funciona, añadimos la siguiente con su propio precio cerrado.",
     },
   ],
   pricing: {
-    from: "999 €",
+    from: SOFTWARE_FROM,
     includes: [
       "Análisis de procesos y propuesta de solución",
       "Prototipo de pantallas antes de desarrollar",
@@ -233,6 +246,10 @@ export const desarrolloSoftware: ServicePageData = {
       "Garantía y soporte tras la entrega",
     ],
     note: "Cada proyecto es distinto: tras la primera reunión te doy un presupuesto cerrado por fases.",
+  },
+  cta: {
+    title: "Empecemos por tu herramienta",
+    text: "Cuéntame cómo trabajas hoy y qué te gustaría resolver. Te respondo con una propuesta clara para la primera fase, sin compromiso.",
   },
   faqs: [
     {

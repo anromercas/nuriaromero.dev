@@ -1,6 +1,224 @@
 ---
-import ServiceLayout from "@/layouts/ServiceLayout.astro"
-import { desarrolloSoftware } from "@/data/services"
+import ServiceLayout from "@/layouts/ServiceLayout.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import ProofStrip from "@/components/seo-local/ProofStrip.astro";
+import ReviewBento from "@/components/seo-local/ReviewBento.astro";
+import BentoTile from "@/components/seo-local/BentoTile.astro";
+import SeoLocalProcess from "@/components/seo-local/SeoLocalProcess.astro";
+import RealProof from "@/components/seo-local/RealProof.astro";
+import SeoLocalAgencia from "@/components/seo-local/SeoLocalAgencia.astro";
+import SeoLocalPlans from "@/components/seo-local/SeoLocalPlans.astro";
+import SeoLocalFaq from "@/components/seo-local/SeoLocalFaq.astro";
+import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro";
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
+import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro";
+import AppMock from "@/components/software/AppMock.astro";
+import SoftwareTileArt from "@/components/software/SoftwareTileArt.astro";
+import { desarrolloSoftware } from "@/data/services";
+import { internalLinksBySource } from "@/data/internal-links";
+import { SITE_PROOF } from "@/data/site";
+import { getGoogleReviews } from "@/lib/google-reviews";
+
+const reviewsData = await getGoogleReviews();
+
+// Tiles a-f in source order; desarrolloSoftware.benefits holds them in the same order.
+const tiles = [
+  { area: "a", kind: "web", layout: "stack" },
+  { area: "b", kind: "movil", layout: "stack" },
+  { area: "c", kind: "gestion", layout: "stack" },
+  { area: "d", kind: "api", layout: "stack" },
+  { area: "e", kind: "reservas", layout: "stack" },
+  { area: "f", kind: "datos", layout: "row" },
+] as const;
+
+// The only published price is one plan built from the site data.
+const plan = {
+  name: "Primera fase",
+  from: desarrolloSoftware.pricing.from,
+  includes: desarrolloSoftware.pricing.includes ?? [],
+  note: desarrolloSoftware.pricing.note,
+};
+
+const comparisonItems = [
+  {
+    lead: "Si un programa estándar o una hoja de cálculo bien organizada te resuelve el trabajo, úsalo.",
+    text: "Te lo diré en la primera llamada: te sale más barato y más rápido.",
+  },
+  {
+    lead: "Compensa cuando pierdes horas copiando datos, cuando varias personas tocan la misma información o cuando tu programa te obliga a cambiar tu forma de trabajar.",
+    text: "Ahí una herramienta hecha para ti te devuelve ese tiempo.",
+  },
+  {
+    lead: "Elijas a quien elijas, empieza por una fase pequeña con precio cerrado y pide que el código sea tuyo.",
+    text: "Así trabajo yo: por fases, y con el código tuyo desde el primer día.",
+  },
+];
+
+const proofItems = [
+  SITE_PROOF[0],
+  ...(reviewsData
+    ? [
+        {
+          stat: `${reviewsData.rating.toFixed(1).replace(".", ",")} en Google`,
+          label: `${reviewsData.userRatingCount} ${reviewsData.userRatingCount === 1 ? "opinión" : "opiniones"}`,
+        },
+      ]
+    : []),
+  SITE_PROOF[1],
+];
 ---
 
-<ServiceLayout page={desarrolloSoftware} />
+<ServiceLayout page={desarrolloSoftware} variant="template">
+  <Fragment slot="hero">
+    <SeoLocalHero
+      keyword={desarrolloSoftware.hero.h1}
+      title={{
+        text: desarrolloSoftware.hero.title ?? desarrolloSoftware.hero.h1,
+        accent: desarrolloSoftware.hero.titleAccent,
+      }}
+      subtitle={desarrolloSoftware.hero.subtitle}
+      secondaryLink={{
+        label: desarrolloSoftware.hero.secondaryCta?.label ?? "Ver precio",
+        href: "#precios",
+      }}
+    >
+      <AppMock slot="visual" />
+    </SeoLocalHero>
+    <ProofStrip items={proofItems} />
+  </Fragment>
+  <Fragment slot="benefits">
+    <SectionContainer id="que-se-puede-hacer">
+      <ReviewBento
+        headingId="que-se-puede-hacer-title"
+        keyword={desarrolloSoftware.sectionTitles?.benefits ?? ""}
+        title={{
+          text: "Herramientas que encajan en tu día a día",
+          accent: "en tu día a día",
+        }}
+      >
+        {desarrolloSoftware.benefits.map((benefit, i) => (
+          <BentoTile
+            area={tiles[i].area}
+            layout={tiles[i].layout}
+            title={benefit.title}
+            text={benefit.text}
+          >
+            <SoftwareTileArt kind={tiles[i].kind} />
+          </BentoTile>
+        ))}
+      </ReviewBento>
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="process">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalProcess
+          id="proceso"
+          headingId="proceso-title"
+          keyword={desarrolloSoftware.sectionTitles?.process ?? ""}
+          title={{
+            text: "Empezamos por lo que más tiempo te quita",
+            accent: "más tiempo te quita",
+          }}
+          steps={desarrolloSoftware.process}
+        >
+          <Fragment slot="byline">
+            Soy Nuria Romero, <a href="/">desarrolladora web en Sevilla</a>, y
+            llevo más de 10 años haciendo software para empresas.
+          </Fragment>
+        </SeoLocalProcess>
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="before-pricing">
+    <SectionContainer id="trabajo-real">
+      <RealProof
+        headingId="prueba-title"
+        keyword="Trabajo real para negocios de Sevilla"
+        title={{
+          text: "Proyectos que puedes visitar",
+          accent: "puedes visitar",
+        }}
+        reviews={reviewsData}
+        note="Dos webs reales de negocios de Sevilla, hechas por mí. La de Arkady Celebraciones incluye un sistema de reservas programado desde cero."
+        projects={["arkady", "adfsevilla"]}
+      />
+    </SectionContainer>
+    <SectionContainer>
+      <SeoLocalAgencia
+        id="medida-o-estandar"
+        headingId="medida-title"
+        keyword="¿Software a medida o estándar?"
+        title={{
+          text: "Cuándo compensa hacerlo a medida",
+          accent: "compensa",
+        }}
+        items={comparisonItems}
+        link={{ label: "Ver el precio", href: "#precios" }}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="pricing">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalPlans
+          headingId="planes-title"
+          keyword={desarrolloSoftware.sectionTitles?.pricing ?? ""}
+          title={{
+            text: "Una primera fase, con precio cerrado",
+            accent: "precio cerrado",
+          }}
+          tiers={[plan]}
+        >
+          <Fragment slot="lede">
+            Empiezas por una primera fase{" "}
+            <strong>desde {desarrolloSoftware.pricing.from}</strong> y amplías
+            por fases cuando lo necesites, cada una con su precio por escrito.
+          </Fragment>
+        </SeoLocalPlans>
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="faq">
+    <SectionContainer>
+      <SeoLocalFaq
+        headingId="faq-title"
+        keyword={desarrolloSoftware.sectionTitles?.faq ?? ""}
+        title={{
+          text: "Lo que te preguntas antes de empezar",
+          accent: "antes de empezar",
+        }}
+        lede="Si tu duda no está aquí, la vemos en la llamada."
+        faqs={desarrolloSoftware.faqs}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="related">
+    <SectionContainer>
+      <SeoLocalRelated
+        links={internalLinksBySource[desarrolloSoftware.slug] ?? []}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="closing">
+    <SeoLocalClosing
+      headingId="cierre-title"
+      keyword="Reserva una llamada sobre tu proyecto"
+      title={{
+        text: desarrolloSoftware.cta?.title ?? "",
+        accent: "tu herramienta",
+      }}
+      text={desarrolloSoftware.cta?.text ?? ""}
+      meta="30 minutos · Sin compromiso · Directamente conmigo"
+    >
+      <AppMock slot="visual" animate={false} />
+    </SeoLocalClosing>
+    <SectionContainer>
+      <SeoLocalNap
+        headingId="nap-title"
+        keyword="Software a medida desde La Rinconada, Sevilla"
+      />
+    </SectionContainer>
+  </Fragment>
+</ServiceLayout>
