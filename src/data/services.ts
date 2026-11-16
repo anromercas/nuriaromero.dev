@@ -203,11 +203,11 @@ export const desarrolloSoftware: ServicePageData = {
     },
     {
       title: "Gestión interna o ERP",
-      text: "Pedidos, stock y facturas en un solo sitio: un ERP.",
+      text: "Pedidos, stock y facturas juntos: un ERP, tu programa de gestión.",
     },
     {
       title: "API e integraciones",
-      text: "Conecto tus programas con una API para que los datos pasen solos.",
+      text: "Conecto tus programas con una API, un enlace entre programas, para que los datos pasen solos.",
     },
     {
       title: "Reservas y citas",
@@ -262,11 +262,11 @@ export const desarrolloSoftware: ServicePageData = {
     },
     {
       q: "¿Qué se puede desarrollar a medida: aplicación web, app móvil, ERP o API?",
-      a: "Una aplicación web, una app que tu equipo usa desde el móvil, un ERP de gestión o una API que conecta tus programas. También reservas y paneles de datos.",
+      a: "Una aplicación web, una app que tu equipo usa desde el móvil, un ERP o una API que conecta tus programas. También reservas y paneles.",
     },
     {
       q: "¿De quién es el código?",
-      a: "El código es tuyo. El código y la documentación son tuyos desde el primer día, sin cláusulas que te aten a mí. Otro profesional puede continuarlo cuando quieras.",
+      a: "El código y la documentación son tuyos desde el primer día, sin cláusulas que te aten a mí. Otro profesional puede continuarlo cuando quieras.",
     },
     {
       q: "¿Qué empresas de desarrollo de software a medida hay en Sevilla?",

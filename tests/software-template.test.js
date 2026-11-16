@@ -358,3 +358,42 @@ test(
     assert.ok(words >= 750 && words <= 840, `${words} words`);
   },
 );
+
+// --- Review round (NRD-167) ----------------------------------------------------
+
+test("reservas tile draws the check inside the signal cell", () => {
+  const art = read(artPath);
+  const svg = art.match(/kind === "reservas"[\s\S]*?<\/svg>/)?.[0] ?? "";
+  const signal = svg.match(
+    /<rect x="(\d+)" y="(\d+)" width="(\d+)" height="(\d+)"[^>]*class="signal"/,
+  );
+  const check = svg.match(/<path d="M(\d+) (\d+)l[^"]*"[^>]*class="signal"/);
+  assert.ok(signal && check, "signal cell and check exist");
+  const [x, y, w, h] = signal.slice(1).map(Number);
+  assert.ok(Number(check[1]) >= x && Number(check[1]) <= x + w, "check x");
+  assert.ok(Number(check[2]) >= y && Number(check[2]) <= y + h, "check y");
+});
+
+test("ERP and API tiles carry a plain gloss", () => {
+  const [, , c, d] = desarrolloSoftware.benefits;
+  assert.match(c.text, /ERP, tu programa de gestión/);
+  assert.match(d.text, /API, un enlace entre programas/);
+});
+
+test("process keeps a short byline linking to the home page", () => {
+  assert.match(
+    pageSource(),
+    /slot="byline"[\s\S]*?<a href="\/">desarrolladora[^<]*Sevilla<\/a>/,
+  );
+});
+
+test("code answer is not redundant", () => {
+  const { a } = desarrolloSoftware.faqs[3];
+  assert.doesNotMatch(a, /^El código es tuyo\./);
+  assert.equal((a.match(/tuyos? desde el primer d[ií]a/g) ?? []).length, 1);
+});
+
+test("AppMock nav bars do not draw the active segment twice", () => {
+  const svg = read(mockPath);
+  assert.doesNotMatch(svg, /M22 52h36M22 74h36/);
+});

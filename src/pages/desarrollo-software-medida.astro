@@ -43,11 +43,11 @@ const plan = {
 const comparisonItems = [
   {
     lead: "Si un programa estándar o una hoja de cálculo te basta, úsalo.",
-    text: "Te sale más barato y más rápido.",
+    text: "Es más barato.",
   },
   {
     lead: "Compensa si pierdes horas copiando datos o tu programa te obliga a cambiar tu forma de trabajar.",
-    text: "Ahí recuperas ese tiempo.",
+    text: "Recuperas ese tiempo.",
   },
   {
     lead: "Elijas a quien elijas, empieza por una fase pequeña y pide que el código sea tuyo.",
@@ -122,7 +122,11 @@ const proofItems = [
             accent: "más tiempo te quita",
           }}
           steps={desarrolloSoftware.process}
-        />
+        >
+          <Fragment slot="byline">
+            Soy Nuria Romero, <a href="/">desarrolladora en Sevilla</a>.
+          </Fragment>
+        </SeoLocalProcess>
       </SectionContainer>
     </div>
   </Fragment>
