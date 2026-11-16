@@ -185,4 +185,27 @@ const { id = "precios", headingId, keyword, title, tiers, note } = Astro.props
       margin-top: -0.75rem;
     }
   }
+
+  /* One plan: a single left-aligned card at every width (NRD-168, 166, 167). */
+  .plan-list:has(> .plan:only-child) {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 36rem;
+    margin-inline: 0;
+  }
+
+  /* Three plans: one column up to 1023px (no 2 + 1 grid), three from 1024px. */
+  @media (min-width: 768px) {
+    .plan-list:has(> .plan:nth-child(3):last-child) {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: 36rem;
+      margin-inline: 0;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .plan-list:has(> .plan:nth-child(3):last-child) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-width: none;
+    }
+  }
 </style>
