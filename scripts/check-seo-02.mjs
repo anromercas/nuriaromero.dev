@@ -291,6 +291,49 @@ if (disenoWebHtml) {
   addFailure("/diseno-web-sevilla/: missing dist page for the one-time Offers check")
 }
 
+// NRD-195: /tienda-online-sevilla/ Service publishes exactly one Offer, 499 EUR, from the store offer source.
+const storeHtml = await readFile(path.join(distDir, "tienda-online-sevilla", "index.html"), "utf8").catch(() => null)
+if (storeHtml) {
+  const storeServices = []
+  for (const block of getJsonLdBlocks(storeHtml)) {
+    try {
+      const parsed = JSON.parse(block)
+      const entries = Array.isArray(parsed) ? parsed : Array.isArray(parsed?.["@graph"]) ? parsed["@graph"] : [parsed]
+      storeServices.push(...entries.filter((entry) => entry?.["@type"] === "Service"))
+    } catch {
+      // Malformed JSON-LD is owned by other checks.
+    }
+  }
+  const storeOffers = storeServices.flatMap((service) => (Array.isArray(service.offers) ? service.offers : service.offers ? [service.offers] : []))
+  if (storeOffers.length !== 1) {
+    addFailure(`/tienda-online-sevilla/: expected exactly one Offer in the Service, found ${storeOffers.length}`)
+  }
+  for (const offer of storeOffers) {
+    if (String(offer?.price) !== "499") addFailure(`/tienda-online-sevilla/: Offer price ${offer?.price} differs from 499`)
+    if (offer?.priceCurrency !== "EUR") addFailure(`/tienda-online-sevilla/: Offer priceCurrency ${offer?.priceCurrency} differs from EUR`)
+    if (offer?.priceSpecification) addFailure("/tienda-online-sevilla/: the Offer must not carry a priceSpecification")
+  }
+  // NRD-195: the built <main> shows the offer read from the store offer source.
+  const { STORE_FROM, storeOptions, storeIncludes, storeQuotedSeparately, STORE_FINAL_PRICE_NOTE } = await import("../src/data/store-offer.ts")
+  const storeMain = getSections(storeHtml, "main").join("\n")
+  const storeText = storeMain.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ")
+  const expectedTexts = [
+    `Desde ${STORE_FROM}`,
+    ...storeOptions.flatMap((option) => [option.name, option.recurringCost]),
+    ...storeIncludes,
+    ...storeQuotedSeparately.map((item) => item.text),
+    STORE_FINAL_PRICE_NOTE,
+  ]
+  for (const text of expectedTexts) {
+    if (!storeText.includes(text)) addFailure(`/tienda-online-sevilla/: <main> is missing "${text}"`)
+  }
+  for (const { link } of storeQuotedSeparately) {
+    if (link && !getHrefs(storeMain).includes(link.href)) addFailure(`/tienda-online-sevilla/: <main> is missing the link ${link.href}`)
+  }
+} else {
+  addFailure("/tienda-online-sevilla/: missing dist page for the store Offer check")
+}
+
 const home = await readFile(path.join(distDir, "index.html"), "utf8").catch(() => null)
 if (!home) {
   addFailure("/: missing dist/index.html")
