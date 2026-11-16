@@ -14,4 +14,5 @@ export const templatePages = [
   { route: "/tienda-online-sevilla/", words: [900, 1100], service: true },
   { route: "/automatizaciones/", words: [700, 800], service: true },
   { route: "/desarrollo-software-medida/", words: [750, 850], service: true },
+  { route: "/inteligencia-artificial/", words: [750, 850], service: true },
 ];
