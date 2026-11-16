@@ -1,14 +1,14 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import Schema from "@/components/seo/Schema.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
-import Breadcrumbs from "@/components/Breadcrumbs.astro"
-import { breadcrumbSchema } from "@/lib/schema"
+import Layout from "@/layouts/Layout.astro";
+import Schema from "@/components/seo/Schema.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import { breadcrumbSchema } from "@/lib/schema";
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
   { name: "Recursos", url: "/recursos/" },
-]
+];
 
 const resources = [
   {
@@ -39,7 +39,7 @@ const resources = [
     href: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
     label: "Abrir la guía",
   },
-]
+];
 ---
 
 <Layout
@@ -50,27 +50,25 @@ const resources = [
   <main class="px-4 pt-24">
     <SectionContainer>
       <Breadcrumbs items={breadcrumbs} />
-      <h1 class="mb-6 text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white">
+      <h1 class="mb-6 text-4xl font-bold tracking-tight text-white sm:text-5xl">
         Recursos para citar y compartir
       </h1>
-      <p class="max-w-2xl text-xl text-gray-800 dark:text-gray-300">
-        Una selección de páginas públicas para consultar, enlazar o compartir cuando
-        sean relevantes para una conversación sobre desarrollo web, SEO local,
-        automatización o búsquedas con inteligencia artificial.
+      <p class="max-w-2xl text-xl text-gray-300">
+        Una selección de páginas públicas para consultar, enlazar o compartir
+        cuando sean relevantes para una conversación sobre desarrollo web, SEO
+        local, automatización o búsquedas con inteligencia artificial.
       </p>
 
       <ul class="mt-12 grid gap-6 sm:grid-cols-2">
         {resources.map((resource) => (
-          <li class="flex h-full flex-col rounded-xl border border-gray-300 bg-gray-100/50 p-6 dark:border-gray-700 dark:bg-gray-800/50">
-            <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+          <li class="flex h-full flex-col rounded-xl border border-gray-700 bg-gray-800/50 p-6">
+            <h2 class="text-2xl font-semibold text-gray-100">
               {resource.title}
             </h2>
-            <p class="mt-3 flex-1 text-gray-300">
-              {resource.description}
-            </p>
+            <p class="mt-3 flex-1 text-gray-300">{resource.description}</p>
             <a
               href={resource.href}
-              class="mt-6 font-medium text-blue-600 underline underline-offset-2 dark:text-blue-400"
+              class="mt-6 font-medium text-blue-400 underline underline-offset-2"
             >
               {resource.label} →
             </a>
@@ -78,15 +76,15 @@ const resources = [
         ))}
       </ul>
 
-      <aside class="mt-12 max-w-2xl rounded-xl border border-gray-300 p-6 text-gray-700 dark:border-gray-700 dark:text-gray-300">
-        <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">
+      <aside class="mt-12 max-w-2xl rounded-xl border border-gray-700 p-6 text-gray-300">
+        <h2 class="text-xl font-semibold text-gray-100">
           Criterio de transparencia
         </h2>
         <p class="mt-3">
-          Solo tiene sentido enlazar estos recursos cuando aportan contexto real.
-          No se compran enlaces, no se intercambian enlaces de forma artificial y
-          no se presentan métricas, testimonios o colaboraciones sin evidencia
-          verificable.
+          Solo tiene sentido enlazar estos recursos cuando aportan contexto
+          real. No se compran enlaces, no se intercambian enlaces de forma
+          artificial y no se presentan métricas, testimonios o colaboraciones
+          sin evidencia verificable.
         </p>
       </aside>
     </SectionContainer>

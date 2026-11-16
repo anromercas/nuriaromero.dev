@@ -154,4 +154,4 @@ No other edited element has this problem. The blog cards already carry `dark:hov
 ## Tasks
 
 - [ ] 1.1 [NRD-157 app] Remove `dark:` from the home, service, capilares and niche pages; tests: add the five files to `tests/dark-variants.test.js` first (RED).
-- [ ] 1.2 [NRD-158 app] Remove `dark:` from contacto, recursos, blog index and portfolio, drop `darkMode: 'class'`, update the `odd/tasks` doc; tests: guard scope `src/` and the config assertion first (RED).
+- [x] 1.2 [NRD-158 app] Remove `dark:` from contacto, recursos, blog index and portfolio, drop `darkMode: 'class'`, update the `odd/tasks` doc; tests: guard scope `src/` and the config assertion first (RED).

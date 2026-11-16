@@ -7,16 +7,7 @@ import { fileURLToPath } from "node:url";
 const root = resolve(fileURLToPath(import.meta.url), "../..");
 
 // Files or directories that must stay free of `dark:` variants (the site is dark-only).
-const SCOPES = [
-  "src/layouts",
-  "src/components",
-  "src/scripts/contact-form.js",
-  "src/pages/index.astro",
-  "src/pages/diseno-web-sevilla.astro",
-  "src/pages/tienda-online-sevilla.astro",
-  "src/pages/seo-para-clinicas-capilares-sevilla.astro",
-  "src/pages/web-para-comercios-sevilla.astro",
-];
+const SCOPES = ["src"];
 
 // A class token, not a word like "dark-only" in a comment.
 const DARK = /(^|[\s"'`{(])dark:/;
@@ -26,7 +17,7 @@ function walk(path) {
   return readdirSync(path).flatMap((name) => walk(join(path, name)));
 }
 
-test("no dark: variant in layouts and components", () => {
+test("no dark: variant anywhere under src", () => {
   const hits = [];
   for (const scope of SCOPES) {
     for (const file of walk(join(root, scope))) {
@@ -40,4 +31,11 @@ test("no dark: variant in layouts and components", () => {
     }
   }
   assert.deepEqual(hits, [], `dark: variants found:\n${hits.join("\n")}`);
+});
+
+test("tailwind config has no darkMode setting", () => {
+  assert.doesNotMatch(
+    readFileSync(join(root, "tailwind.config.mjs"), "utf8"),
+    /\bdarkMode\s*:/,
+  );
 });
