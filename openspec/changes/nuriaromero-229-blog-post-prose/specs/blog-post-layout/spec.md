@@ -2,7 +2,7 @@
 
 ### Requirement: The post renders in the ink world
 
-The post page SHALL use the template ground, SHALL style headings, paragraphs, lists, tables, links, emphasis, rules, block quotes, inline code, code blocks and images of the body with the template tokens only, and MUST NOT use the old gray styles or `CTASection`. Table cell borders SHALL reach at least 3:1 contrast against the ground and the header cell surface through a shared token. Code blocks SHALL scroll horizontally inside the column and images SHALL never be wider than the column, so the page never overflows horizontally.
+The post page SHALL use the template ground, SHALL style every body element (headings, paragraphs, lists, tables, links, emphasis, rules, block quotes, inline code, code blocks and images) with the template tokens only, and MUST NOT use the old gray styles or `CTASection`.
 
 #### Scenario: Legacy styles removed
 
@@ -14,22 +14,30 @@ The post page SHALL use the template ground, SHALL style headings, paragraphs, l
 - **WHEN** a post with a table is viewed at 375 px
 - **THEN** the page has no horizontal overflow and body text and links meet WCAG 2.2 AA contrast
 
-#### Scenario: Table borders visible
-
-- **WHEN** the table cell border token is compared with the ink ground and the card surface
-- **THEN** both pairs reach at least 3:1, and the table stays readable at 320 px
-
-#### Scenario: Quote, code and image in the ink world
-
-- **WHEN** a post body holds a block quote, inline code, a code block and an image
-- **THEN** each is styled with template tokens only, its text (including every syntax-highlight colour of the code block) meets AA contrast, the code block scrolls horizontally inside the column and the image is at most the column width with its aspect ratio kept, with no horizontal page overflow at 320 px
-
 #### Scenario: Post text untouched
 
 - **WHEN** the change is applied
 - **THEN** no file under `src/content/blog/` is modified and the post contract baseline still matches
 
 ## ADDED Requirements
+
+### Requirement: Post table borders are visible
+
+Table cell borders of the post body SHALL reach at least 3:1 contrast against the ground and the header cell surface, through a shared token.
+
+#### Scenario: Table borders visible
+
+- **WHEN** the table cell border token is compared with the ink ground and the card surface
+- **THEN** both pairs reach at least 3:1, and the table stays readable at 320 px
+
+### Requirement: Post code and images stay inside the column
+
+Code blocks SHALL scroll horizontally inside the column, images SHALL never be wider than the column, and quote and code text SHALL meet AA contrast, so the page never overflows horizontally.
+
+#### Scenario: Quote, code and image in the ink world
+
+- **WHEN** a post body holds a block quote, inline code, a code block and an image
+- **THEN** each is styled with template tokens only, its text (including every syntax-highlight colour of the code block) meets AA contrast, the code block scrolls horizontally inside the column and the image is at most the column width with its aspect ratio kept, with no horizontal page overflow at 320 px
 
 ### Requirement: The post contract checks the post structure
 
