@@ -22,28 +22,37 @@ test("new VisibilityAudit icons follow the project's bare-spread SVG icon conven
 
 test("the retired VisibilityAudit is gone and its monthly cycle lives in the process section", async () => {
   await assert.rejects(source("src/components/seo-local/VisibilityAudit.astro"), { code: "ENOENT" })
-  const process = await source("src/components/seo-local/SeoLocalProcess.astro")
+  const [process, cycle, route] = await Promise.all([
+    source("src/components/seo-local/SeoLocalProcess.astro"),
+    source("src/components/seo-local/SeoLocalCycle.astro"),
+    source("src/pages/seo-local-sevilla.astro"),
+  ])
 
   for (const label of ["Trabajo revisable", "Prioridades acordadas", "Vídeo-informe mensual", "cada mes"]) {
-    assert.ok(process.includes(label), label)
+    assert.ok(route.includes(label), label)
   }
-  assert.match(process, /class="cycle-diagram"[\s\S]*?aria-hidden="true"/)
-  assert.match(process, /class="cycle-list"/)
-  assert.match(process, /aria-labelledby="proceso-title"[\s\S]*?id="proceso-title"/)
-  assert.doesNotMatch(process, /(?:transition|animation):/)
+  assert.match(cycle, /class="cycle-diagram"[\s\S]*?aria-hidden="true"/)
+  assert.match(cycle, /class="cycle-list"/)
+  assert.match(process, /aria-labelledby=\{headingId\}[\s\S]*?id=\{headingId\}/)
+  assert.match(route, /headingId="proceso-title"/)
+  assert.doesNotMatch(process + cycle, /(?:transition|animation):/)
 })
 
 test("each redesigned section pairs aria-labelledby with its heading id and keeps drawings decorative", async () => {
-  const [bento, proof, plans] = await Promise.all([
+  const [bento, proof, plans, route] = await Promise.all([
     source("src/components/seo-local/ReviewBento.astro"),
     source("src/components/seo-local/RealProof.astro"),
     source("src/components/seo-local/SeoLocalPlans.astro"),
+    source("src/pages/seo-local-sevilla.astro"),
   ])
 
-  assert.match(proof, /aria-labelledby="prueba-title"[\s\S]*?id="prueba-title"/)
-  assert.match(plans, /aria-labelledby="planes-title"[\s\S]*?id="planes-title"/)
-  assert.match(bento, /aria-labelledby="revision-title"[\s\S]*?id="revision-title"/)
-  const svgs = bento.match(/<svg[^>]*>/g) ?? []
+  assert.match(proof, /aria-labelledby=\{headingId\}[\s\S]*?id=\{headingId\}/)
+  assert.match(route, /headingId="prueba-title"/)
+  assert.match(plans, /aria-labelledby=\{headingId\}[\s\S]*?id=\{headingId\}/)
+  assert.match(route, /headingId="planes-title"/)
+  assert.match(bento, /aria-labelledby=\{headingId\}[\s\S]*?id=\{headingId\}/)
+  assert.match(route, /headingId="revision-title"/)
+  const svgs = route.match(/<svg[^>]*>/g) ?? []
   assert.ok(svgs.length >= 6)
   for (const svg of svgs) assert.match(svg, /aria-hidden="true"/)
 })

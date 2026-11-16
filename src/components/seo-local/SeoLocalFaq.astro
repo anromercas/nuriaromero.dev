@@ -1,13 +1,19 @@
 ---
-import "@fontsource/instrument-serif/400-italic.css"
 import BookingButton from "@/components/BookingButton.astro"
-import { seoLocal } from "@/data/services"
+import SectionHeading from "@/components/seo-local/SectionHeading.astro"
+import "@/styles/template.css"
+import type { AccentTitle, FaqItem } from "./types"
 
-const title = seoLocal.sectionTitles?.faq ?? "Preguntas antes de empezar"
-const accent = "antes de empezar"
-const accentAt = title.indexOf(accent)
-const before = accentAt >= 0 ? title.slice(0, accentAt) : title
-const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
+interface Props {
+  headingId: string
+  keyword: string
+  title: AccentTitle
+  lede: string
+  faqs: FaqItem[]
+  ctaLabel?: string
+}
+
+const { headingId, keyword, title, lede, faqs, ctaLabel = "Reservar una llamada" } = Astro.props
 
 const splitAnswer = (answer: string) => {
   const match = answer.match(/^[\s\S]*?[.!?](?=\s|$)/)
@@ -20,17 +26,16 @@ const splitAnswer = (answer: string) => {
 }
 ---
 
-<section class="faq" aria-labelledby="faq-title">
+<section class="faq" aria-labelledby={headingId}>
   <div class="faq-intro">
-    <h2 id="faq-title" class="kw">Preguntas frecuentes sobre SEO local en Sevilla</h2>
-    <p class="display">{before}{accentAt >= 0 && <em>{accent}</em>}{after}</p>
-    <p class="lede">Si tu duda no está aquí, la resolvemos en la llamada.</p>
-    <BookingButton label={seoLocal.cta?.buttonLabel ?? "Reservar una llamada"} />
+    <SectionHeading id={headingId} keyword={keyword} title={title} class="faq-display" />
+    <p class="lede">{lede}</p>
+    <BookingButton label={ctaLabel} />
   </div>
 
   <div class="faq-list">
     {
-      seoLocal.faqs.map((faq) => (
+      faqs.map((faq) => (
         <details>
           <summary>
             <span class="question">{faq.q}</span>
@@ -42,6 +47,18 @@ const splitAnswer = (answer: string) => {
           <div class="answer">
             <p><strong>{splitAnswer(faq.a).lead}</strong></p>
             {splitAnswer(faq.a).context.map((paragraph) => <p>{paragraph}</p>)}
+            {
+              faq.links && faq.links.length > 0 && (
+                <p class="answer-links">
+                  {faq.links.map((link, index) => (
+                    <Fragment>
+                      {index > 0 && <span aria-hidden="true"> · </span>}
+                      <a class="tpl-link" href={link.href}>{link.label}</a>
+                    </Fragment>
+                  ))}
+                </p>
+              )
+            }
           </div>
         </details>
       ))
@@ -50,53 +67,30 @@ const splitAnswer = (answer: string) => {
 </section>
 
 <style>
-  .kw {
-    margin: 0 0 0.6rem;
-    color: rgb(203 213 225);
-    font-size: 1.0625rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
   .faq {
     display: grid;
     gap: 2rem;
-    color: rgb(226 232 240);
+    color: var(--text-body);
   }
 
-  .display {
+  .faq-intro :global(.faq-display) {
     max-width: 14ch;
     margin: 0 0 1rem;
-    color: white;
-    font-size: clamp(1.9rem, 4.5vw, 3rem);
-    font-weight: 700;
-    line-height: 1.06;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  .display em {
-    color: rgb(125 211 252);
-    font-family: "Instrument Serif", Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 1.12em;
-    letter-spacing: -0.01em;
   }
 
   .faq-intro .lede {
     max-width: 32ch;
     margin: 0 0 1.5rem;
-    color: rgb(203 213 225);
+    color: var(--text-secondary);
     line-height: 1.6;
   }
 
   .faq-list {
-    border-top: 1px solid rgb(51 65 85);
+    border-top: 1px solid var(--hairline);
   }
 
   details {
-    border-bottom: 1px solid rgb(51 65 85);
+    border-bottom: 1px solid var(--hairline);
   }
 
   summary {
@@ -105,7 +99,7 @@ const splitAnswer = (answer: string) => {
     justify-content: space-between;
     gap: 1rem;
     padding: 1.1rem 0.25rem;
-    color: white;
+    color: var(--text-strong);
     font-weight: 600;
     line-height: 1.4;
     cursor: pointer;
@@ -118,7 +112,7 @@ const splitAnswer = (answer: string) => {
   }
 
   summary:focus-visible {
-    outline: 2px solid rgb(56 189 248);
+    outline: 2px solid var(--sky-signal);
     outline-offset: 2px;
   }
 
@@ -126,7 +120,7 @@ const splitAnswer = (answer: string) => {
     flex: none;
     width: 1.5rem;
     height: 1.5rem;
-    color: rgb(56 189 248);
+    color: var(--sky-signal);
   }
 
   details[open] .vertical {
@@ -136,7 +130,7 @@ const splitAnswer = (answer: string) => {
   .answer {
     max-width: 65ch;
     padding: 0 0.25rem 1.25rem;
-    color: rgb(203 213 225);
+    color: var(--text-secondary);
     line-height: 1.65;
   }
 
@@ -144,8 +138,12 @@ const splitAnswer = (answer: string) => {
     margin: 0 0 0.75rem;
   }
 
+  .answer .answer-links {
+    max-width: 65ch;
+  }
+
   .answer strong {
-    color: white;
+    color: var(--text-strong);
     font-weight: 600;
   }
 

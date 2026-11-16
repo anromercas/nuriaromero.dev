@@ -1,32 +1,25 @@
 ---
-import "@fontsource/instrument-serif/400-italic.css"
 import BookingButton from "@/components/BookingButton.astro"
-import { seoLocal } from "@/data/services"
+import SectionHeading from "@/components/seo-local/SectionHeading.astro"
+import "@/styles/template.css"
+import type { AccentTitle, Tier } from "./types"
 
-const { pricing, sectionTitles } = seoLocal
-const title = sectionTitles?.pricing ?? "Dos planes, con un alcance claro"
-const accent = "un alcance claro"
-const accentAt = title.indexOf(accent)
-const before = accentAt >= 0 ? title.slice(0, accentAt) : title
-const after = accentAt >= 0 ? title.slice(accentAt + accent.length) : ""
-const tiers = seoLocal.pricing.tiers ?? []
-const local = tiers.find((tier) => tier.name === "Local")
-const pro = tiers.find((tier) => tier.name === "Local Pro")
+interface Props {
+  id?: string
+  headingId: string
+  keyword: string
+  title: AccentTitle
+  tiers: Tier[]
+  note?: string
+}
+
+const { id = "precios", headingId, keyword, title, tiers, note } = Astro.props
 ---
 
-<section id="precios" class="plans scroll-m-20" aria-labelledby="planes-title">
-  <h2 id="planes-title" class="kw">Cuánto cuesta el SEO local en Sevilla</h2>
-  <p class="display">
-    {before}{accentAt >= 0 && <em>{accent}</em>}{after}
-  </p>
-  {
-    local && pro && (
-      <p class="plans-lede">
-        El SEO local en Sevilla cuesta <strong>{local.from}</strong> con el plan Local, centrado en tu ficha de Google, y <strong>{pro.from}</strong> con Local Pro, que suma el trabajo en tu web.
-      </p>
-    )
-  }
-  {pricing.note && <p class="plans-note">{pricing.note}</p>}
+<section id={id} class="plans scroll-m-20" aria-labelledby={headingId}>
+  <SectionHeading id={headingId} keyword={keyword} title={title} class="plans-display" />
+  {Astro.slots.has("lede") && <p class="plans-lede"><slot name="lede" /></p>}
+  {note && <p class="plans-note">{note}</p>}
 
   <div class="plan-list">
     {
@@ -56,48 +49,25 @@ const pro = tiers.find((tier) => tier.name === "Local Pro")
 </section>
 
 <style>
-  .kw {
-    margin: 0 0 0.6rem;
-    color: rgb(203 213 225);
-    font-size: 1.0625rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
   .plans {
-    color: rgb(226 232 240);
+    color: var(--text-body);
   }
 
-  .display {
+  .plans :global(.plans-display) {
     max-width: 20ch;
     margin: 0 0 1rem;
-    color: white;
-    font-size: clamp(1.9rem, 4.5vw, 3rem);
-    font-weight: 700;
-    line-height: 1.06;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  .display em {
-    color: rgb(125 211 252);
-    font-family: "Instrument Serif", Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 1.12em;
-    letter-spacing: -0.01em;
   }
 
   .plans-lede {
     max-width: 52ch;
     margin: 0 0 0.75rem;
-    color: rgb(226 232 240);
+    color: var(--text-body);
     font-size: 1.125rem;
     line-height: 1.6;
   }
 
-  .plans-lede strong {
-    color: white;
+  .plans-lede :global(strong) {
+    color: var(--text-strong);
     font-weight: 650;
     white-space: nowrap;
   }
@@ -105,7 +75,7 @@ const pro = tiers.find((tier) => tier.name === "Local Pro")
   .plans-note {
     max-width: 65ch;
     margin: 0 0 2rem;
-    color: rgb(203 213 225);
+    color: var(--text-secondary);
     line-height: 1.6;
   }
 
@@ -121,9 +91,9 @@ const pro = tiers.find((tier) => tier.name === "Local Pro")
     align-items: flex-start;
     gap: 1rem;
     padding: 1.5rem;
-    border: 1px solid rgb(51 65 85);
+    border: 1px solid var(--hairline);
     border-radius: 1.25rem;
-    background: rgb(8 15 32);
+    background: var(--card-surface);
   }
 
   .plan-cta {
@@ -132,8 +102,8 @@ const pro = tiers.find((tier) => tier.name === "Local Pro")
   }
 
   .plan.recommended {
-    border-color: rgb(250 204 21);
-    background: rgb(12 20 40);
+    border-color: var(--yellow-recommend);
+    background: var(--card-surface-recommended);
   }
 
   .plan-head {
@@ -145,7 +115,7 @@ const pro = tiers.find((tier) => tier.name === "Local Pro")
 
   h3 {
     margin: 0;
-    color: white;
+    color: var(--text-strong);
     font-size: 1.25rem;
     font-weight: 650;
   }
@@ -153,15 +123,15 @@ const pro = tiers.find((tier) => tier.name === "Local Pro")
   .badge {
     padding: 0.15rem 0.7rem;
     border-radius: 999px;
-    background: rgb(250 204 21);
-    color: rgb(17 24 39);
+    background: var(--yellow-recommend);
+    color: var(--yellow-ink);
     font-size: 0.75rem;
     font-weight: 700;
   }
 
   .price {
     margin: 0;
-    color: white;
+    color: var(--text-strong);
     font-size: 1.75rem;
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -173,14 +143,14 @@ const pro = tiers.find((tier) => tier.name === "Local Pro")
     margin: 0;
     padding: 1rem 0 0;
     list-style: none;
-    border-top: 1px solid rgb(51 65 85);
+    border-top: 1px solid var(--hairline);
     width: 100%;
   }
 
   li {
     display: flex;
     gap: 0.6rem;
-    color: rgb(203 213 225);
+    color: var(--text-secondary);
     font-size: 0.95rem;
     line-height: 1.5;
   }
@@ -190,17 +160,17 @@ const pro = tiers.find((tier) => tier.name === "Local Pro")
     width: 1.1rem;
     height: 1.1rem;
     margin-top: 0.2rem;
-    color: rgb(56 189 248);
+    color: var(--sky-signal);
   }
 
   .recommended li svg {
-    color: rgb(250 204 21);
+    color: var(--yellow-recommend);
   }
 
   .plan-note {
     max-width: 65ch;
     margin: 0;
-    color: rgb(148 163 184);
+    color: var(--text-muted);
     font-size: 0.875rem;
     line-height: 1.5;
   }

@@ -1,0 +1,116 @@
+---
+import "@fontsource/instrument-serif/400-italic.css"
+import "@/styles/template.css"
+
+interface Props {
+  items: string[]
+  centre: string
+  label?: string
+}
+
+const { items, centre, label = "Ciclo mensual" } = Astro.props
+const [first = "", secondItem = "", thirdItem = ""] = items
+const splitLabel = (text: string): [string, string] => {
+  const at = text.indexOf(" ")
+  return at < 0 ? [text, ""] : [text.slice(0, at), text.slice(at + 1)]
+}
+const second = splitLabel(secondItem)
+const third = splitLabel(thirdItem)
+---
+
+<div class="cycle">
+    <svg
+      class="cycle-diagram"
+      viewBox="0 0 440 300"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="220" cy="150" r="85" class="soft"></circle>
+      <path d="M247.7 69.6A85 85 0 0 1 303.4 166.2" class="signal"></path>
+      <path d="M311.0 156.9L303.4 166.2L300.0 154.7" class="signal arrow"></path>
+      <path d="M275.8 214.2A85 85 0 0 1 164.2 214.2" class="signal"></path>
+      <path d="M168.5 225.4L164.2 214.2L175.9 216.8" class="signal arrow"></path>
+      <path d="M136.6 166.2A85 85 0 0 1 192.3 69.6" class="signal"></path>
+      <path d="M180.5 67.8L192.3 69.6L184.1 78.4" class="signal arrow"></path>
+      <circle cx="220.0" cy="65.0" r="10" class="node"></circle>
+      <circle cx="293.6" cy="192.5" r="10" class="node"></circle>
+      <circle cx="146.4" cy="192.5" r="10" class="node"></circle>
+      <text x="220" y="40" text-anchor="middle" class="label">{first}</text>
+      <text x="293.6" y="262" text-anchor="middle" class="label">{second[0]}</text>
+      <text x="293.6" y="284" text-anchor="middle" class="label">{second[1]}</text>
+      <text x="146.4" y="262" text-anchor="middle" class="label">{third[0]}</text>
+      <text x="146.4" y="284" text-anchor="middle" class="label">{third[1]}</text>
+      <text x="220" y="158" text-anchor="middle" class="centre">{centre}</text>
+    </svg>
+  <ol class="cycle-list" aria-label={label}>
+    {items.map((item) => <li>{item}</li>)}
+    <li>y vuelta a empezar, {centre}</li>
+  </ol>
+</div>
+
+<style>
+  .cycle {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+    padding: 1.25rem;
+    border: 1px solid var(--hairline);
+    border-radius: 1.25rem;
+    background: var(--card-surface);
+  }
+
+  .cycle-diagram {
+    display: block;
+    width: 100%;
+    height: auto;
+    color: var(--text-muted);
+  }
+
+  .cycle-diagram :global(.signal) {
+    stroke: var(--sky-signal);
+  }
+
+  .cycle-diagram :global(.soft) {
+    stroke: var(--drawing-soft);
+    stroke-dasharray: 2 6;
+  }
+
+  .cycle-diagram :global(.node) {
+    fill: var(--card-surface);
+    stroke: var(--sky-signal);
+  }
+
+  .cycle-diagram :global(.label) {
+    fill: var(--text-body);
+    stroke: none;
+    font-size: 20px;
+    font-family: inherit;
+  }
+
+  .cycle-diagram :global(.centre) {
+    fill: var(--sky-accent);
+    stroke: none;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-size: 30px;
+  }
+
+  .cycle-list {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+    list-style: none;
+  }
+</style>

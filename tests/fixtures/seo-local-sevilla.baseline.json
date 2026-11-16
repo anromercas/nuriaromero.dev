@@ -1,0 +1,292 @@
+{
+  "jsonld": [
+    {
+      "@type": ["ProfessionalService", "Organization"],
+      "@id": "https://nuriaromero.dev/#business",
+      "name": "Nuria Romero",
+      "alternateName": "nuriaromero.dev",
+      "url": "https://nuriaromero.dev",
+      "description": "Diseño de páginas web, software a medida, automatizaciones e IA para negocios en Sevilla. Webs rápidas, optimizadas para Google y pensadas para conseguir clientes.",
+      "image": "https://nuriaromero.dev/og/og-default.png",
+      "logo": "https://nuriaromero.dev/logo.jpg",
+      "telephone": "+34611812431",
+      "email": "nuriaromero.dev@gmail.com",
+      "priceRange": "€€",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Camino Andalucía, 426",
+        "postalCode": "41309",
+        "addressLocality": "La Rinconada",
+        "addressRegion": "Sevilla",
+        "addressCountry": "ES"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Sevilla"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Área metropolitana de Sevilla"
+        }
+      ],
+      "sameAs": [
+        "https://linkedin.com/in/nuria-romero-castillo",
+        "https://github.com/anromercas",
+        "https://www.google.com/maps/place/?q=place_id:ChIJ8Uv-vM9f0CoR8J75dj4I0HM"
+      ],
+      "founder": {
+        "@id": "https://nuriaromero.dev/#person"
+      },
+      "hasMap": "https://maps.app.goo.gl/8eg71eAQJrfH7BGaA"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://nuriaromero.dev/#website",
+      "url": "https://nuriaromero.dev",
+      "name": "Nuria Romero",
+      "publisher": {
+        "@id": "https://nuriaromero.dev/#business"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://nuriaromero.dev/seo-local-sevilla/#service",
+      "name": "SEO local Sevilla y posicionamiento web",
+      "description": "Me dedico a posicionar negocios en Google y Google Maps con SEO local en Sevilla. Ficha desde 300 €/mes + IVA o ficha y web desde 500 €/mes + IVA.",
+      "url": "https://nuriaromero.dev/seo-local-sevilla/",
+      "serviceType": "SEO local en Sevilla",
+      "provider": {
+        "@id": "https://nuriaromero.dev/#business"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Sevilla"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Área metropolitana de Sevilla"
+        }
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Local",
+          "url": "https://nuriaromero.dev/seo-local-sevilla/",
+          "price": "300",
+          "priceCurrency": "EUR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": 300,
+            "priceCurrency": "EUR",
+            "unitText": "MON",
+            "valueAddedTaxIncluded": false
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "Local Pro",
+          "url": "https://nuriaromero.dev/seo-local-sevilla/",
+          "price": "500",
+          "priceCurrency": "EUR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": 500,
+            "priceCurrency": "EUR",
+            "unitText": "MON",
+            "valueAddedTaxIncluded": false
+          }
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Para qué tipo de negocio encaja este servicio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Está pensado para negocios de Sevilla donde cada cliente cuenta y la información local debe ser clara. En la llamada vemos si el alcance encaja con tu situación."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo puede aparecer mi negocio en Google Maps?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Con una ficha de Google Business Profile completa y coherente: categoría correcta, servicios y horarios al día, reseñas auténticas y datos que coinciden en directorios y en la web. También influye la distancia entre quien busca y tu negocio, así que nadie puede prometer la primera posición."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué diferencia hay entre Local y Local Pro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Local se centra en la ficha de Google y su mantenimiento. Local Pro incorpora además el trabajo necesario en la web para que ficha y web funcionen como un mismo sistema."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué ocurre en la llamada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hablamos de tu negocio, de la presencia que tienes ahora y de si este servicio encaja. El objetivo es aclarar el siguiente paso útil, no prometer un resultado."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué se mide y cómo se informa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cuando están disponibles, revisamos llamadas, clics y solicitudes de ruta. Cada mes recibes un vídeo-informe con el trabajo realizado, las prioridades y el siguiente paso."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Necesito tener web?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No para trabajar el plan Local. Si tu web necesita acompañar a la ficha, Local Pro incluye la revisión y el trabajo web que se acuerde para tu negocio."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Hay una puesta en marcha separada o una permanencia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No se cobra una puesta en marcha independiente. Los planes se facturan mes a mes y esta página no establece una permanencia contractual."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué papel tienen los sistemas de IA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Una información clara y estructurada puede ayudar a que buscadores y sistemas de IA entiendan el negocio. No implica una recomendación, cita ni aparición garantizada."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Eres una agencia de SEO local?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, soy consultora SEO y desarrolladora web freelance. El posicionamiento web en Sevilla de tu negocio lo hago yo misma: hablas directamente con la persona que hace el trabajo."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://nuriaromero.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "SEO local en Sevilla",
+          "item": "https://nuriaromero.dev/seo-local-sevilla/"
+        }
+      ]
+    }
+  ],
+  "headings": [
+    {
+      "level": 1,
+      "text": "SEO local Sevilla y posicionamiento web"
+    },
+    {
+      "level": 2,
+      "text": "Posicionamiento web en Sevilla: Google y Google Maps"
+    },
+    {
+      "level": 3,
+      "text": "Ficha de Google Business Profile"
+    },
+    {
+      "level": 3,
+      "text": "Datos coherentes en directorios locales"
+    },
+    {
+      "level": 3,
+      "text": "Búsquedas locales en Sevilla"
+    },
+    {
+      "level": 3,
+      "text": "Reseñas de Google"
+    },
+    {
+      "level": 3,
+      "text": "Web para negocios locales"
+    },
+    {
+      "level": 3,
+      "text": "Medición de llamadas, clics y rutas"
+    },
+    {
+      "level": 2,
+      "text": "Cómo trabajamos el SEO local en Sevilla"
+    },
+    {
+      "level": 3,
+      "text": "Revisión del punto de partida"
+    },
+    {
+      "level": 3,
+      "text": "Puesta en orden"
+    },
+    {
+      "level": 3,
+      "text": "Trabajo mensual"
+    },
+    {
+      "level": 3,
+      "text": "Informe y conversación directa"
+    },
+    {
+      "level": 2,
+      "text": "Webs de negocios locales en Sevilla"
+    },
+    {
+      "level": 3,
+      "text": "Arkady Celebraciones - Web de reservas para local de celebraciones en Sevilla"
+    },
+    {
+      "level": 3,
+      "text": "Adf Sevilla - Web de administración de fincas en Sevilla"
+    },
+    {
+      "level": 2,
+      "text": "¿Agencia SEO en Sevilla o consultora?"
+    },
+    {
+      "level": 2,
+      "text": "Cuánto cuesta el SEO local en Sevilla"
+    },
+    {
+      "level": 3,
+      "text": "Local"
+    },
+    {
+      "level": 3,
+      "text": "Local Pro"
+    },
+    {
+      "level": 2,
+      "text": "Preguntas frecuentes sobre SEO local en Sevilla"
+    },
+    {
+      "level": 2,
+      "text": "Reserva una llamada sobre SEO local en Sevilla"
+    },
+    {
+      "level": 2,
+      "text": "SEO local desde La Rinconada, Sevilla"
+    }
+  ]
+}
