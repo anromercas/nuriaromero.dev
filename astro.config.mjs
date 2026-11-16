@@ -70,5 +70,8 @@ export default defineConfig({
       ],
     }),
   ],
-  site: 'https://nuriaromero.dev/'
+  site: 'https://nuriaromero.dev/',
+  markdown: {
+    shikiConfig: { theme: "github-dark-dimmed" },
+  },
 })

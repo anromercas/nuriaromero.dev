@@ -147,3 +147,46 @@ test("hairline-strong reaches 3:1 on ground and card surfaces", () => {
   assert.ok(contrast(strong, token("ink-ground")) >= 3);
   assert.ok(contrast(strong, token("card-surface")) >= 3);
 });
+
+// --- Prose rules for quote, code, code block and image (NRD-233) -------------
+
+const proseRule = (selector) => {
+  const css = layout.slice(layout.indexOf("<style"));
+  const start = css.indexOf(`.post-prose :global(${selector}) {`);
+  assert.ok(start > -1, `rule for ${selector} not found`);
+  return css.slice(start, css.indexOf("}", start) + 1);
+};
+
+test("Shiki uses the github-dark-dimmed theme", () => {
+  assert.match(
+    read("astro.config.mjs"),
+    /shikiConfig:\s*\{\s*theme:\s*["']github-dark-dimmed["']/,
+  );
+});
+
+test("quote, code, code block and image rules exist with their guards", () => {
+  proseRule("blockquote");
+  proseRule(":not(pre) > code");
+  const pre = proseRule("pre");
+  assert.match(pre, /overflow-x:\s*auto/);
+  assert.match(pre, /max-width:\s*100%/);
+  assert.match(pre, /background-color:\s*var\(--card-surface\)\s*!important/);
+  proseRule("pre:focus-visible");
+  const img = proseRule("img");
+  assert.match(img, /max-width:\s*100%/);
+  assert.match(img, /height:\s*auto/);
+});
+
+test("the new prose rules use tokens only, no loose colours", () => {
+  for (const selector of [
+    "blockquote",
+    ":not(pre) > code",
+    "pre",
+    "pre:focus-visible",
+    "img",
+  ]) {
+    const body = proseRule(selector);
+    assert.ok(!/#[0-9a-fA-F]{3,8}\b/.test(body), `${selector} has a hex`);
+    assert.ok(!/rgba?\((?!var\()/.test(body), `${selector} has a raw rgb`);
+  }
+});
