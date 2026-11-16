@@ -1,0 +1,161 @@
+---
+import "@/styles/template.css";
+interface StoreScopeItem {
+  text: string;
+  link?: { label: string; href: string };
+}
+
+interface Props {
+  includes: string[];
+  quotedSeparately: StoreScopeItem[];
+  note: string;
+}
+
+const { includes, quotedSeparately, note } = Astro.props;
+---
+
+<div class="scope">
+  <div class="scope-grid">
+    <div class="scope-col">
+      <h3>Incluido en las tres opciones</h3>
+      <ul>
+        {includes.map((text) => (
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+              class="mark included"
+            >
+              <path d="M5 12.5l4.5 4.5L19 7.5" />
+            </svg>
+            <span>{text}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="scope-col">
+      <h3>Se presupuesta aparte</h3>
+      <ul>
+        {quotedSeparately.map((item) => (
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+              class="mark apart"
+            >
+              <path d="M7 12h10" />
+            </svg>
+            <span>
+              {item.text}
+              {item.link && (
+                <>
+                  {" "}
+                  <a class="scope-link" href={item.link.href}>
+                    {item.link.label}
+                  </a>
+                </>
+              )}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+  <p class="scope-note">{note}</p>
+</div>
+
+<style>
+  .scope {
+    margin-top: 2.5rem;
+    color: var(--text-body);
+  }
+
+  .scope-grid {
+    display: grid;
+    gap: 1.5rem 2rem;
+  }
+
+  h3 {
+    margin: 0 0 1rem;
+    color: var(--text-strong);
+    font-size: 1.125rem;
+    font-weight: 650;
+    line-height: 1.25;
+  }
+
+  ul {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 1rem 0 0;
+    list-style: none;
+    border-top: 1px solid var(--hairline);
+  }
+
+  li {
+    display: flex;
+    gap: 0.6rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .mark {
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0.2rem;
+  }
+
+  .included {
+    color: var(--sky-signal);
+  }
+
+  .apart {
+    color: var(--text-muted);
+  }
+
+  .scope-link {
+    color: var(--text-body);
+    text-decoration: underline;
+    text-decoration-color: rgb(var(--sky-signal-rgb) / 0.7);
+    text-underline-offset: 0.3em;
+    border-radius: 0.25rem;
+    transition: color 0.2s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+
+  .scope-link:hover {
+    color: var(--sky-accent);
+  }
+
+  .scope-link:focus-visible {
+    outline: 2px solid var(--sky-signal);
+    outline-offset: 4px;
+  }
+
+  .scope-note {
+    max-width: 65ch;
+    margin: 1.5rem 0 0;
+    color: var(--text-body);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .scope-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

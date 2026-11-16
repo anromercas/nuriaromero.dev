@@ -1,0 +1,222 @@
+---
+import "@/styles/template.css";
+
+interface Props {
+  animate?: boolean;
+}
+
+const { animate = true } = Astro.props;
+---
+
+<figure
+  class:list={["mock", { animate }]}
+  aria-label="Tienda online de ejemplo: ficha de producto y carrito"
+>
+  <div class="drawing">
+    <svg
+      viewBox="0 0 320 220"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g class="product">
+        <rect x="8" y="8" width="224" height="204" rx="10"></rect>
+        <rect x="24" y="24" width="88" height="104" rx="8" class="soft"></rect>
+        <rect x="44" y="64" width="48" height="48" rx="5"></rect>
+        <path d="M56 64v-8a12 12 0 0 1 24 0v8"></path>
+        <rect
+          x="124"
+          y="28"
+          width="84"
+          height="10"
+          rx="5"
+          class="strong"
+        ></rect>
+        <rect x="124" y="46" width="44" height="8" rx="4" class="signal"></rect>
+        <rect x="124" y="70" width="24" height="14" rx="7"></rect>
+        <rect
+          x="154"
+          y="70"
+          width="24"
+          height="14"
+          rx="7"
+          class="signal"
+        ></rect>
+        <rect x="184" y="70" width="24" height="14" rx="7"></rect>
+        <circle cx="132" cy="106" r="5"></circle>
+        <circle cx="152" cy="106" r="5"></circle>
+        <circle cx="152" cy="106" r="9" class="signal"></circle>
+        <rect
+          x="24"
+          y="148"
+          width="136"
+          height="24"
+          rx="12"
+          class="signal"
+        ></rect>
+        <rect x="40" y="157" width="10" height="9" rx="2" class="signal"></rect>
+        <path d="M42 157v-1a3 3 0 0 1 6 0v1" class="signal"></path>
+        <rect
+          x="24"
+          y="186"
+          width="148"
+          height="7"
+          rx="3.5"
+          class="soft"
+        ></rect>
+      </g>
+      <g class="cart">
+        <rect
+          x="200"
+          y="24"
+          width="112"
+          height="176"
+          rx="12"
+          class="drawer"
+        ></rect>
+        <rect x="214" y="40" width="52" height="8" rx="4" class="strong"></rect>
+        <rect x="214" y="62" width="24" height="24" rx="4"></rect>
+        <rect
+          x="246"
+          y="66"
+          width="52"
+          height="6"
+          rx="3"
+          class="soft line"
+        ></rect>
+        <rect
+          x="246"
+          y="78"
+          width="36"
+          height="6"
+          rx="3"
+          class="soft line"
+        ></rect>
+        <path d="M214 104h84" class="soft"></path>
+        <rect
+          x="214"
+          y="118"
+          width="40"
+          height="7"
+          rx="3.5"
+          class="strong"
+        ></rect>
+        <rect
+          x="270"
+          y="118"
+          width="28"
+          height="7"
+          rx="3.5"
+          class="signal"
+        ></rect>
+        <rect
+          x="214"
+          y="168"
+          width="84"
+          height="20"
+          rx="10"
+          class="signal"
+        ></rect>
+      </g>
+    </svg>
+  </div>
+  <figcaption>Ejemplo ilustrativo</figcaption>
+</figure>
+
+<style>
+  .mock {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--hairline);
+    border-radius: 1.25rem;
+    color: var(--text-muted);
+    background: var(--card-surface);
+  }
+
+  .drawing {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--hairline-quiet);
+    background: var(--drawing-surface);
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .signal {
+    stroke: var(--sky-signal);
+  }
+
+  .soft {
+    stroke: var(--drawing-soft);
+  }
+
+  .strong {
+    stroke: var(--text-secondary);
+  }
+
+  /* The cart drawer hides the product lines behind it. */
+  .drawer {
+    fill: var(--card-surface);
+  }
+
+  figcaption {
+    padding: 0.55rem 1.25rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  /* Completed state is the default and is fully visible at first paint.
+     Motion only where motion is welcome; nothing starts hidden. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .animate .cart {
+        animation: cart-in linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 220px;
+      }
+
+      .animate .line {
+        transform-box: fill-box;
+        transform-origin: left center;
+        animation: line-grow linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 220px;
+      }
+    }
+
+    @supports not (animation-timeline: scroll()) {
+      .animate .cart {
+        animation: cart-in 0.7s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+          both;
+        animation-delay: 0.3s;
+      }
+    }
+  }
+
+  @keyframes cart-in {
+    from {
+      transform: translateX(10px);
+      opacity: 0.75;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  @keyframes line-grow {
+    from {
+      transform: scaleX(0.6);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+</style>
