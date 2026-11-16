@@ -1,0 +1,243 @@
+---
+import "@/styles/template.css";
+
+interface Props {
+  animate?: boolean;
+}
+
+const { animate = true } = Astro.props;
+---
+
+<figure
+  class:list={["mock", { animate }]}
+  aria-label="Web de ejemplo de un negocio, en ordenador y en móvil"
+>
+  <div class="drawing">
+    <svg
+      viewBox="0 0 320 220"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g class="desktop">
+        <rect x="8" y="8" width="240" height="172" rx="10"></rect>
+        <path d="M8 34h240"></path>
+        <circle cx="22" cy="21" r="2.5"></circle>
+        <circle cx="34" cy="21" r="2.5"></circle>
+        <circle cx="46" cy="21" r="2.5"></circle>
+        <rect x="66" y="14" width="124" height="14" rx="7" class="soft"></rect>
+        <text x="128" y="24.5" text-anchor="middle" class="label">
+          tunegocio.es
+        </text>
+        <rect
+          x="24"
+          y="46"
+          width="132"
+          height="12"
+          rx="6"
+          class="signal draw"
+          pathLength="1"
+        ></rect>
+        <rect
+          x="24"
+          y="68"
+          width="160"
+          height="8"
+          rx="4"
+          class="soft draw"
+          pathLength="1"
+        ></rect>
+        <rect
+          x="24"
+          y="82"
+          width="132"
+          height="8"
+          rx="4"
+          class="soft draw"
+          pathLength="1"
+        ></rect>
+        <rect
+          x="24"
+          y="100"
+          width="72"
+          height="16"
+          rx="8"
+          class="signal cta"
+          pathLength="1"
+        ></rect>
+        <rect x="24" y="130" width="64" height="38" rx="6" class="soft"></rect>
+        <rect x="96" y="130" width="64" height="38" rx="6" class="soft"></rect>
+        <rect x="168" y="130" width="64" height="38" rx="6" class="soft"></rect>
+      </g>
+      <g class="phone">
+        <rect
+          x="196"
+          y="56"
+          width="108"
+          height="156"
+          rx="16"
+          class="screen"
+        ></rect>
+        <path d="M232 66h36"></path>
+        <rect
+          x="210"
+          y="82"
+          width="64"
+          height="10"
+          rx="5"
+          class="signal"
+        ></rect>
+        <rect
+          x="210"
+          y="100"
+          width="80"
+          height="7"
+          rx="3.5"
+          class="soft"
+        ></rect>
+        <rect
+          x="210"
+          y="113"
+          width="62"
+          height="7"
+          rx="3.5"
+          class="soft"
+        ></rect>
+        <rect
+          x="210"
+          y="130"
+          width="46"
+          height="13"
+          rx="6.5"
+          class="signal"
+        ></rect>
+        <path
+          d="M222 188c-5-6-9-9-9-14a9 9 0 0 1 18 0c0 5-4 8-9 14z"
+          class="soft"
+        ></path>
+        <circle cx="222" cy="174" r="3" class="soft"></circle>
+        <circle
+          cx="282"
+          cy="188"
+          r="12"
+          class="signal chat"
+          pathLength="1"
+        ></circle>
+        <path
+          d="M277 185h10a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 1-1.5 1.5h-5l-3.5 3v-3H277a1.5 1.5 0 0 1-1.5-1.5v-5A1.5 1.5 0 0 1 277 185z"
+          class="signal"
+        ></path>
+      </g>
+    </svg>
+  </div>
+  <figcaption>Ejemplo ilustrativo</figcaption>
+</figure>
+
+<style>
+  .mock {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--hairline);
+    border-radius: 1.25rem;
+    color: var(--text-muted);
+    background: var(--card-surface);
+  }
+
+  .drawing {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--hairline-quiet);
+    background: var(--drawing-surface);
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .signal {
+    stroke: var(--sky-signal);
+  }
+
+  .soft {
+    stroke: var(--drawing-soft);
+  }
+
+  .label {
+    fill: var(--text-secondary);
+    stroke: none;
+    font-size: 9.5px;
+    font-family: inherit;
+  }
+
+  /* The phone screen hides the desktop lines behind it. */
+  .screen {
+    fill: var(--card-surface);
+  }
+
+  figcaption {
+    padding: 0.55rem 1.25rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  /* Completed state is the default. Motion only where a scroll timeline exists
+     and motion is welcome; the phone has no text, so it is the only element
+     that fades. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .animate .draw {
+        stroke-dasharray: 1;
+        animation: draw linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 120px;
+      }
+
+      .animate .phone {
+        animation: phone-in linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 60px 180px;
+      }
+
+      .animate .cta,
+      .animate .chat {
+        stroke-dasharray: 1;
+        animation: draw linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 140px 260px;
+      }
+    }
+
+    @supports not (animation-timeline: scroll()) {
+      .animate .phone {
+        animation: phone-in 0.7s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+          both;
+        animation-delay: 0.3s;
+      }
+    }
+  }
+
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes phone-in {
+    from {
+      transform: translateY(6px);
+      opacity: 0.7;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+</style>

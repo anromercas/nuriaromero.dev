@@ -1,161 +1,36 @@
 ---
-import "@fontsource/instrument-serif/400-italic.css"
+import SectionHeading from "@/components/seo-local/SectionHeading.astro"
+import "@/styles/template.css"
+import type { AccentTitle } from "./types"
+
+interface Props {
+  headingId?: string
+  id?: string
+  keyword: string
+  title: AccentTitle
+  caption?: string
+}
+
+const { headingId = "revision-title", id, keyword, title, caption = "Ejemplo ilustrativo" } = Astro.props
 ---
 
-<section class="bento-wrap" aria-labelledby="revision-title">
-  <h2 id="revision-title" class="kw">Posicionamiento web en Sevilla: Google y Google Maps</h2>
-  <p class="display">Qué se revisa para que <em>te encuentren</em></p>
+<section id={id} class:list={["bento-wrap", { "scroll-m-20": id }]} aria-labelledby={headingId}>
+  <SectionHeading id={headingId} keyword={keyword} title={title} class="bento-display" />
 
   <div class="bento">
-    <article class="tile t-ficha">
-      <svg viewBox="0 40 360 150" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-        <path d="M44 120c-12-12-24-22-24-36a24 24 0 0 1 48 0c0 14-12 24-24 36z" class="signal"></path>
-        <circle cx="44" cy="84" r="8" class="signal"></circle>
-        <rect x="92" y="52" width="130" height="14" rx="7"></rect>
-        <rect x="92" y="76" width="96" height="10" rx="5" class="soft"></rect>
-        <rect x="236" y="46" width="112" height="30" rx="15" class="signal"></rect>
-        <text x="292" y="67" text-anchor="middle" class="label">Categoría</text>
-        <circle cx="104" cy="118" r="10"></circle>
-        <path d="M104 111v7l5 3"></path>
-        <rect x="124" y="113" width="110" height="10" rx="5" class="soft"></rect>
-        <rect x="20" y="152" width="84" height="26" rx="13"></rect>
-        <rect x="114" y="152" width="96" height="26" rx="13"></rect>
-        <rect x="220" y="152" width="76" height="26" rx="13"></rect>
-        <path d="M322 160l5 5 10-10" class="signal"></path>
-      </svg>
-      <h3>Ficha de Google Business Profile</h3>
-      <p>Categoría, servicios, horarios, descripción y señales visibles, revisados para que expliquen bien lo que haces.</p>
-    </article>
-
-    <article class="tile t-dir">
-      <svg viewBox="0 0 320 188" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-        <rect x="8" y="8" width="304" height="38" rx="8"></rect>
-        <text x="22" y="33" class="label">Misma dirección</text>
-        <circle cx="284" cy="27" r="10" class="signal"></circle>
-        <path d="M279 27l3.5 3.5 6-6.5" class="signal"></path>
-        <rect x="8" y="54" width="304" height="38" rx="8"></rect>
-        <text x="22" y="79" class="label">Mismo teléfono</text>
-        <circle cx="284" cy="73" r="10" class="signal"></circle>
-        <path d="M279 73l3.5 3.5 6-6.5" class="signal"></path>
-        <rect x="8" y="100" width="304" height="38" rx="8"></rect>
-        <text x="22" y="125" class="label">Mismo nombre</text>
-        <circle cx="284" cy="119" r="10" class="signal"></circle>
-        <path d="M279 119l3.5 3.5 6-6.5" class="signal"></path>
-        <rect x="8" y="146" width="304" height="34" rx="8" class="soft"></rect>
-        <rect x="22" y="159" width="120" height="8" rx="4" class="soft"></rect>
-      </svg>
-      <h3>Datos coherentes en directorios locales</h3>
-      <p>Que nombre, dirección y teléfono coincidan en los lugares públicos donde la gente consulta tu negocio.</p>
-    </article>
-
-    <article class="tile t-busq">
-      <svg viewBox="0 0 320 300" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-        <rect x="8" y="8" width="304" height="40" rx="20" class="signal"></rect>
-        <circle cx="32" cy="28" r="7" class="signal"></circle>
-        <path d="M37 33l6 6" class="signal"></path>
-        <text x="54" y="34" class="label strong">fontanero cerca de mí</text>
-        <rect x="8" y="60" width="304" height="232" rx="10"></rect>
-        <path d="M8 160c50-30 90 20 150-8s100-14 154-6" class="soft"></path>
-        <path d="M120 60c-8 60 18 100 8 232" class="soft"></path>
-        <path d="M220 60c10 50-12 90 6 232" class="soft"></path>
-        <path d="M70 150c-6-7-10-12-10-17a10 10 0 0 1 20 0c0 5-4 10-10 17z" class="signal"></path>
-        <path d="M170 210c-6-7-10-12-10-17a10 10 0 0 1 20 0c0 5-4 10-10 17z" class="signal"></path>
-        <path d="M260 250c-6-7-10-12-10-17a10 10 0 0 1 20 0c0 5-4 10-10 17z" class="signal"></path>
-        <path d="M240 110c-6-7-10-12-10-17a10 10 0 0 1 20 0c0 5-4 10-10 17z" class="signal"></path>
-      </svg>
-      <h3>Búsquedas locales en Sevilla</h3>
-      <p>Cómo explicar tus servicios y zonas con las palabras que usa tu cliente cuando busca cerca.</p>
-    </article>
-
-    <article class="tile t-op">
-      <svg viewBox="0 0 320 130" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-        <polygon points="24 12 28 22 38 23 31 30 33 40 24 35 15 40 17 30 10 23 20 22" class="signal"></polygon>
-        <polygon points="64 12 68 22 78 23 71 30 73 40 64 35 55 40 57 30 50 23 60 22" class="signal"></polygon>
-        <polygon points="104 12 108 22 118 23 111 30 113 40 104 35 95 40 97 30 90 23 100 22" class="signal"></polygon>
-        <polygon points="144 12 148 22 158 23 151 30 153 40 144 35 135 40 137 30 130 23 140 22" class="signal"></polygon>
-        <polygon points="184 12 188 22 198 23 191 30 193 40 184 35 175 40 177 30 170 23 180 22" class="signal"></polygon>
-        <rect x="8" y="56" width="190" height="20" rx="10" class="soft"></rect>
-        <path d="M30 76l-4 8 12-8" class="soft"></path>
-        <rect x="112" y="90" width="196" height="30" rx="12" class="signal"></rect>
-        <path d="M280 120l6 8 2-8" class="signal"></path>
-        <rect x="128" y="100" width="120" height="8" rx="4" class="signal"></rect>
-      </svg>
-      <h3>Reseñas de Google</h3>
-      <p>Un proceso para pedir reseñas auténticas y responderlas, sin atajos.</p>
-    </article>
-
-    <article class="tile t-web">
-      <svg viewBox="0 0 320 130" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-        <rect x="8" y="8" width="196" height="114" rx="10"></rect>
-        <path d="M8 30h196"></path>
-        <circle cx="22" cy="19" r="2.5"></circle>
-        <circle cx="34" cy="19" r="2.5"></circle>
-        <circle cx="46" cy="19" r="2.5"></circle>
-        <rect x="22" y="42" width="110" height="12" rx="6" class="signal"></rect>
-        <rect x="22" y="64" width="162" height="8" rx="4" class="soft"></rect>
-        <rect x="22" y="80" width="140" height="8" rx="4" class="soft"></rect>
-        <rect x="22" y="96" width="90" height="14" rx="7"></rect>
-        <rect x="222" y="44" width="90" height="38" rx="19" class="signal"></rect>
-        <text x="267" y="69" text-anchor="middle" class="label">datos</text>
-      </svg>
-      <h3>Web para negocios locales</h3>
-      <p>Qué conviene aclarar en la web para que personas y buscadores entiendan qué ofreces y dónde.</p>
-    </article>
-
-    <article class="tile t-med">
-      <svg viewBox="0 0 320 150" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-        <path d="M8 120h304"></path>
-        <rect x="24" y="44" width="56" height="76" rx="6" class="signal"></rect>
-        <text x="52" y="142" text-anchor="middle" class="label">llamadas</text>
-        <rect x="132" y="74" width="56" height="46" rx="6" class="signal"></rect>
-        <text x="160" y="142" text-anchor="middle" class="label">clics</text>
-        <rect x="240" y="20" width="56" height="100" rx="6" class="signal"></rect>
-        <text x="268" y="142" text-anchor="middle" class="label">rutas</text>
-      </svg>
-      <div class="tile-text">
-        <h3>Medición de llamadas, clics y rutas</h3>
-        <p>Qué acciones se pueden observar, como llamadas, clics y rutas, para decidir el siguiente paso.</p>
-      </div>
-    </article>
+    <slot />
   </div>
-  <p class="bento-caption">Ejemplo ilustrativo</p>
+  <p class="bento-caption">{caption}</p>
 </section>
 
 <style>
-  .kw {
-    margin: 0 0 0.6rem;
-    color: rgb(203 213 225);
-    font-size: 1.0625rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
   .bento-wrap {
-    color: rgb(226 232 240);
+    color: var(--text-body);
   }
 
-  .display {
+  .bento-wrap :global(.bento-display) {
     max-width: 20ch;
-    margin: 0;
-    color: white;
-    font-size: clamp(1.9rem, 4.5vw, 3rem);
-    font-weight: 700;
-    line-height: 1.06;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  .display em {
-    color: rgb(125 211 252);
-    font-family: "Instrument Serif", Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 1.12em;
-    letter-spacing: -0.01em;
-  }
-
-  .bento-wrap .display {
-    margin-bottom: 1.75rem;
+    margin: 0 0 1.75rem;
   }
 
   .bento-caption {
@@ -163,7 +38,7 @@ import "@fontsource/instrument-serif/400-italic.css"
     align-items: center;
     gap: 0.75rem;
     margin: 0.75rem 0 0;
-    color: rgb(148 163 184);
+    color: var(--text-muted);
     font-size: 0.8rem;
   }
 
@@ -171,7 +46,7 @@ import "@fontsource/instrument-serif/400-italic.css"
     content: "";
     flex: 1;
     height: 1px;
-    background: rgb(51 65 85);
+    background: var(--hairline);
   }
 
   .bento {
@@ -180,92 +55,9 @@ import "@fontsource/instrument-serif/400-italic.css"
     grid-template-columns: 1fr;
   }
 
-  .tile {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 1.25rem;
-    border: 1px solid rgb(51 65 85);
-    border-radius: 1.25rem;
-    background: rgb(8 15 32);
-  }
-
-  .tile svg {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin-bottom: 0.75rem;
-    color: rgb(148 163 184);
-  }
-
-  .tile :global(.signal) {
-    stroke: rgb(56 189 248);
-  }
-
-  .tile :global(.soft) {
-    stroke: rgb(71 85 105);
-  }
-
-  .tile :global(.label) {
-    fill: rgb(203 213 225);
-    stroke: none;
-    font-size: 19px;
-    font-family: inherit;
-  }
-
-  .tile :global(.strong) {
-    fill: white;
-    font-size: 19px;
-  }
-
-  h3 {
-    margin: 0;
-    color: white;
-    font-size: 1.125rem;
-    font-weight: 650;
-    line-height: 1.25;
-  }
-
-  .tile p {
-    max-width: 65ch;
-    margin: 0;
-    color: rgb(203 213 225);
-    font-size: 0.975rem;
-    line-height: 1.6;
-  }
-
-  .t-med .tile-text {
-    display: grid;
-    gap: 0.5rem;
-  }
-
-  .t-busq {
-    justify-content: center;
-  }
-
   @media (min-width: 768px) {
     .bento {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .t-ficha,
-    .t-med {
-      grid-column: 1 / -1;
-    }
-
-    .t-med {
-      flex-direction: row;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .t-med svg {
-      flex: 1 1 55%;
-      margin-bottom: 0;
-    }
-
-    .t-med .tile-text {
-      flex: 1 1 45%;
     }
   }
 
@@ -273,25 +65,10 @@ import "@fontsource/instrument-serif/400-italic.css"
     .bento {
       grid-template-columns: repeat(6, minmax(0, 1fr));
       grid-template-areas:
-        "ficha ficha ficha ficha dir dir"
-        "busq busq op op op op"
-        "busq busq web web web web"
-        "med med med med med med";
+        "a a a a b b"
+        "c c d d d d"
+        "c c e e e e"
+        "f f f f f f";
     }
-
-    .t-ficha { grid-area: ficha; }
-    .t-dir { grid-area: dir; }
-    .t-busq { grid-area: busq; }
-    .t-op { grid-area: op; }
-    .t-web { grid-area: web; }
-    .t-med { grid-area: med; }
-
-    .t-ficha svg {
-      max-height: 15rem;
-    }
-  }
-
-  @media (max-width: 767px) {
-    .tile { padding: 1rem; }
   }
 </style>

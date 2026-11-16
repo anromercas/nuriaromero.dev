@@ -1,14 +1,18 @@
 ---
-import { internalLinksBySource } from "@/data/internal-links"
-import { seoLocal } from "@/data/services"
+import "@/styles/template.css"
 
-const links = internalLinksBySource[seoLocal.slug] ?? []
+interface Props {
+  links: { path: string; anchor: string }[]
+  label?: string
+}
+
+const { links, label = "Sigue leyendo" } = Astro.props
 ---
 
 {
   links.length > 0 && (
     <nav class="related" aria-label="Contenido relacionado">
-      <span class="label">Sigue leyendo</span>
+      <span class="label">{label}</span>
       <ul>
         {links.map((link) => (
           <li>
@@ -27,11 +31,11 @@ const links = internalLinksBySource[seoLocal.slug] ?? []
     align-items: center;
     gap: 0.75rem 1rem;
     padding-top: 1.25rem;
-    border-top: 1px solid rgb(51 65 85);
+    border-top: 1px solid var(--hairline);
   }
 
   .label {
-    color: rgb(148 163 184);
+    color: var(--text-muted);
     font-size: 0.875rem;
   }
 
@@ -47,21 +51,21 @@ const links = internalLinksBySource[seoLocal.slug] ?? []
   a {
     display: inline-block;
     padding: 0.3rem 0.85rem;
-    border: 1px solid rgb(51 65 85);
+    border: 1px solid var(--hairline);
     border-radius: 9999px;
-    color: rgb(226 232 240);
+    color: var(--text-body);
     font-size: 0.9rem;
     text-decoration: none;
     transition: border-color 0.2s, color 0.2s;
   }
 
   a:hover {
-    border-color: rgb(56 189 248);
-    color: rgb(125 211 252);
+    border-color: var(--sky-signal);
+    color: var(--sky-accent);
   }
 
   a:focus-visible {
-    outline: 2px solid rgb(56 189 248);
+    outline: 2px solid var(--sky-signal);
     outline-offset: 3px;
   }
 </style>

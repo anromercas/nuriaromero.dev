@@ -1,32 +1,56 @@
 ---
-import "@fontsource/instrument-serif/400-italic.css"
 import { Image } from "astro:assets"
 import profileHome from "@/assets/perfil-home.webp"
-import { seoLocal } from "@/data/services"
+import SectionHeading from "@/components/seo-local/SectionHeading.astro"
+import "@/styles/template.css"
+import type { AccentTitle, Step } from "./types"
+
+interface Props {
+  headingId?: string
+  id?: string
+  keyword: string
+  title: AccentTitle
+  steps: Step[]
+  portrait?: boolean
+  portraitAlt?: string
+}
+
+const {
+  headingId = "proceso-title",
+  id,
+  keyword,
+  title,
+  steps,
+  portrait = true,
+  portraitAlt = "Nuria Romero, desarrolladora web freelance en Sevilla",
+} = Astro.props
 ---
 
-<section class="process" aria-labelledby="proceso-title">
-  <h2 id="proceso-title" class="kw">Cómo trabajamos el SEO local en Sevilla</h2>
-  <p class="display">Hablas con <em>quien hace el trabajo</em></p>
-  <p class="byline">Soy Nuria Romero, <a href="/">consultor SEO en Sevilla</a>, y llevo tu SEO local mes a mes.</p>
+<section id={id} class:list={["process", { "scroll-m-20": id }]} aria-labelledby={headingId}>
+  <SectionHeading id={headingId} keyword={keyword} title={title} class="process-display" />
+  {Astro.slots.has("byline") && <p class="byline"><slot name="byline" /></p>}
 
-  <div class="process-grid">
-    <figure class="person">
-      <Image
-        src={profileHome}
-        alt="Nuria Romero, desarrolladora web freelance en Sevilla"
-        widths={[320, 480, 640]}
-        sizes="(min-width: 1024px) 320px, 70vw"
-        loading="lazy"
-        decoding="async"
-      />
-      <figcaption>Nuria Romero, desarrolladora web freelance en Sevilla</figcaption>
-    </figure>
+  <div class:list={["process-grid", { "no-portrait": !portrait }]}>
+    {
+      portrait && (
+        <figure class="person">
+          <Image
+            src={profileHome}
+            alt={portraitAlt}
+            widths={[320, 480, 640]}
+            sizes="(min-width: 1024px) 320px, 70vw"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>{portraitAlt}</figcaption>
+        </figure>
+      )
+    }
 
     <div class="steps">
       <ol class="timeline">
         {
-          seoLocal.process.map((step) => (
+          steps.map((step) => (
             <li>
               <h3>{step.title}</h3>
               <p>{step.text}</p>
@@ -35,94 +59,36 @@ import { seoLocal } from "@/data/services"
         }
       </ol>
 
-      <div class="cycle">
-        <svg
-          class="cycle-diagram"
-          viewBox="0 0 440 300"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <circle cx="220" cy="150" r="85" class="soft"></circle>
-          <path d="M247.7 69.6A85 85 0 0 1 303.4 166.2" class="signal"></path>
-          <path d="M311.0 156.9L303.4 166.2L300.0 154.7" class="signal arrow"></path>
-          <path d="M275.8 214.2A85 85 0 0 1 164.2 214.2" class="signal"></path>
-          <path d="M168.5 225.4L164.2 214.2L175.9 216.8" class="signal arrow"></path>
-          <path d="M136.6 166.2A85 85 0 0 1 192.3 69.6" class="signal"></path>
-          <path d="M180.5 67.8L192.3 69.6L184.1 78.4" class="signal arrow"></path>
-          <circle cx="220.0" cy="65.0" r="10" class="node"></circle>
-          <circle cx="293.6" cy="192.5" r="10" class="node"></circle>
-          <circle cx="146.4" cy="192.5" r="10" class="node"></circle>
-          <text x="220" y="40" text-anchor="middle" class="label">Trabajo revisable</text>
-          <text x="293.6" y="262" text-anchor="middle" class="label">Prioridades</text>
-          <text x="293.6" y="284" text-anchor="middle" class="label">acordadas</text>
-          <text x="146.4" y="262" text-anchor="middle" class="label">Vídeo-informe</text>
-          <text x="146.4" y="284" text-anchor="middle" class="label">mensual</text>
-          <text x="220" y="158" text-anchor="middle" class="centre">cada mes</text>
-        </svg>
-        <ol class="cycle-list" aria-label="Ciclo mensual">
-          <li>Trabajo revisable</li>
-          <li>Prioridades acordadas</li>
-          <li>Vídeo-informe mensual</li>
-          <li>y vuelta a empezar, cada mes</li>
-        </ol>
-      </div>
+      <slot name="aside" />
     </div>
   </div>
 </section>
 
 <style>
-  .kw {
-    margin: 0 0 0.6rem;
-    color: rgb(203 213 225);
-    font-size: 1.0625rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
   .process {
-    color: rgb(226 232 240);
+    color: var(--text-body);
   }
 
-  .display {
+  .process :global(.process-display) {
     max-width: 20ch;
     margin: 0 0 2.25rem;
-    color: white;
-    font-size: clamp(1.9rem, 4.5vw, 3rem);
-    font-weight: 700;
-    line-height: 1.06;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  .display em {
-    color: rgb(125 211 252);
-    font-family: "Instrument Serif", Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 1.12em;
-    letter-spacing: -0.01em;
   }
 
   .byline {
     max-width: 40rem;
     margin: -1.25rem 0 2.25rem;
-    color: rgb(203 213 225);
+    color: var(--text-secondary);
     font-size: 1.0625rem;
     line-height: 1.5;
   }
 
-  .byline a {
-    color: rgb(125 211 252);
+  .byline :global(a) {
+    color: var(--sky-accent);
     text-underline-offset: 0.25em;
   }
 
-  .byline a:hover {
-    color: white;
+  .byline :global(a:hover) {
+    color: var(--text-strong);
   }
 
   .process-grid {
@@ -135,9 +101,9 @@ import { seoLocal } from "@/data/services"
     flex-direction: column;
     margin: 0;
     padding: 1rem;
-    border: 1px solid rgb(51 65 85);
+    border: 1px solid var(--hairline);
     border-radius: 1.25rem;
-    background: rgb(8 15 32);
+    background: var(--card-surface);
   }
 
   .person :global(img) {
@@ -151,7 +117,7 @@ import { seoLocal } from "@/data/services"
 
   figcaption {
     margin-top: 0.9rem;
-    color: rgb(203 213 225);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     line-height: 1.5;
   }
@@ -175,7 +141,7 @@ import { seoLocal } from "@/data/services"
     bottom: 0.5rem;
     left: 0.3rem;
     width: 1px;
-    background: rgb(56 189 248 / 0.55);
+    background: rgb(var(--sky-signal-rgb) / 0.55);
   }
 
   .timeline li {
@@ -194,14 +160,14 @@ import { seoLocal } from "@/data/services"
     left: -1.75rem;
     width: 0.65rem;
     height: 0.65rem;
-    border: 1.5px solid rgb(56 189 248);
+    border: 1.5px solid var(--sky-signal);
     border-radius: 50%;
-    background: rgb(3 7 18);
+    background: var(--site-ground);
   }
 
   h3 {
     margin: 0 0 0.35rem;
-    color: white;
+    color: var(--text-strong);
     font-size: 1.125rem;
     font-weight: 650;
     line-height: 1.3;
@@ -210,69 +176,9 @@ import { seoLocal } from "@/data/services"
   .timeline p {
     max-width: 65ch;
     margin: 0;
-    color: rgb(203 213 225);
+    color: var(--text-secondary);
     font-size: 0.975rem;
     line-height: 1.6;
-  }
-
-  .cycle {
-    position: relative;
-    display: grid;
-    gap: 1rem;
-    justify-items: center;
-    padding: 1.25rem;
-    border: 1px solid rgb(51 65 85);
-    border-radius: 1.25rem;
-    background: rgb(8 15 32);
-  }
-
-  .cycle-diagram {
-    display: block;
-    width: 100%;
-    height: auto;
-    color: rgb(148 163 184);
-  }
-
-  .cycle-diagram :global(.signal) {
-    stroke: rgb(56 189 248);
-  }
-
-  .cycle-diagram :global(.soft) {
-    stroke: rgb(71 85 105);
-    stroke-dasharray: 2 6;
-  }
-
-  .cycle-diagram :global(.node) {
-    fill: rgb(8 15 32);
-    stroke: rgb(56 189 248);
-  }
-
-  .cycle-diagram :global(.label) {
-    fill: rgb(226 232 240);
-    stroke: none;
-    font-size: 20px;
-    font-family: inherit;
-  }
-
-  .cycle-diagram :global(.centre) {
-    fill: rgb(125 211 252);
-    stroke: none;
-    font-family: "Instrument Serif", Georgia, serif;
-    font-style: italic;
-    font-size: 30px;
-  }
-
-  .cycle-list {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-    list-style: none;
   }
 
   @media (min-width: 1024px) {
@@ -280,6 +186,10 @@ import { seoLocal } from "@/data/services"
       grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
       gap: 3rem;
       align-items: stretch;
+    }
+
+    .process-grid.no-portrait {
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .person :global(img) {
