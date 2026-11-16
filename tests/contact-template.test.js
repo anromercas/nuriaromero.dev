@@ -201,3 +201,20 @@ test("every status class the script toggles is remapped in #form-status", () => 
   }
   assert.ok(initial.length > 0, "initial neutral class kept on #form-status");
 });
+
+// --- NRD-197: keyboard focus outline on form controls ------------------------
+
+test("ContactForm does not suppress the focus outline", () => {
+  const style = form.match(/<style>([\s\S]*?)<\/style>/)?.[1] ?? "";
+  assert.ok(style.includes("scroll-margin-top"), "scoped style kept");
+  assert.doesNotMatch(style, /outline:\s*none/);
+});
+
+test("every form control carries the 2px sky focus-visible outline", () => {
+  for (const id of ["name", "email", "phone", "message", "privacy"]) {
+    const tag = form.match(new RegExp(`<(?:input|textarea)\\s[^>]*?id="${id}"[^>]*?>`, "s"))?.[0] ?? "";
+    assert.ok(tag, `#${id} found`);
+    assert.match(tag, /focus-visible:outline-2/, `#${id} outline width`);
+    assert.match(tag, /focus-visible:outline-sky-400/, `#${id} outline colour`);
+  }
+});
