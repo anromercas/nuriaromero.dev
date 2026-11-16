@@ -113,3 +113,80 @@ for (const slug of slugs) {
     );
   });
 }
+
+// --- Table borders (NRD-232) ---------------------------------------------------
+
+const luminance = (hex) => {
+  const [r, g, b] = [1, 3, 5].map((i) => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+const contrast = (a, b) => {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+};
+const token = (name) =>
+  read("src/styles/template.css").match(
+    new RegExp(`--${name}:\\s*(#[0-9a-fA-F]{6})`),
+  )?.[1];
+
+test("table cell borders use the hairline-strong token", () => {
+  const css = layout.slice(layout.indexOf("<style"));
+  const rule = css.match(
+    /\.post-prose :global\(th\),\s*\.post-prose :global\(td\)\s*\{[^}]*\}/,
+  )?.[0];
+  assert.ok(rule, "th/td rule not found");
+  assert.match(rule, /border:\s*1px solid var\(--hairline-strong\)/);
+});
+
+test("hairline-strong reaches 3:1 on ground and card surfaces", () => {
+  const strong = token("hairline-strong");
+  assert.ok(strong, "--hairline-strong missing in template.css");
+  assert.ok(contrast(strong, token("ink-ground")) >= 3);
+  assert.ok(contrast(strong, token("card-surface")) >= 3);
+});
+
+// --- Prose rules for quote, code, code block and image (NRD-233) -------------
+
+const proseRule = (selector) => {
+  const css = layout.slice(layout.indexOf("<style"));
+  const start = css.indexOf(`.post-prose :global(${selector}) {`);
+  assert.ok(start > -1, `rule for ${selector} not found`);
+  return css.slice(start, css.indexOf("}", start) + 1);
+};
+
+test("Shiki uses the github-dark-dimmed theme", () => {
+  assert.match(
+    read("astro.config.mjs"),
+    /shikiConfig:\s*\{\s*theme:\s*["']github-dark-dimmed["']/,
+  );
+});
+
+test("quote, code, code block and image rules exist with their guards", () => {
+  proseRule("blockquote");
+  proseRule(":not(pre) > code");
+  const pre = proseRule("pre");
+  assert.match(pre, /overflow-x:\s*auto/);
+  assert.match(pre, /max-width:\s*100%/);
+  assert.match(pre, /background-color:\s*var\(--card-surface\)\s*!important/);
+  proseRule("pre:focus-visible");
+  const img = proseRule("img");
+  assert.match(img, /max-width:\s*100%/);
+  assert.match(img, /height:\s*auto/);
+});
+
+test("the new prose rules use tokens only, no loose colours", () => {
+  for (const selector of [
+    "blockquote",
+    ":not(pre) > code",
+    "pre",
+    "pre:focus-visible",
+    "img",
+  ]) {
+    const body = proseRule(selector);
+    assert.ok(!/#[0-9a-fA-F]{3,8}\b/.test(body), `${selector} has a hex`);
+    assert.ok(!/rgba?\((?!var\()/.test(body), `${selector} has a raw rgb`);
+  }
+});

@@ -11,6 +11,7 @@ colors:
   site-ground: "#030712"
   hairline: "#334155"
   hairline-quiet: "#1e293b"
+  hairline-strong: "#64748b"
   sky-signal: "#38bdf8"
   sky-accent: "#7dd3fc"
   yellow-recommend: "#facc15"
@@ -143,6 +144,7 @@ Near-black navy grounds, slate text steps, one cool signal hue and one warm rese
 - **Card Surface** / **Card Surface Recommended**: the panel fill for cards, tiles, quote and listing; the recommended plan steps one tone lighter.
 - **Drawing Surface**: the storefront illustration header only.
 - **Hairline** (`hairline`) for card and list borders; **Hairline Quiet** for band edges and internal dividers.
+- **Hairline Strong** (`hairline-strong`) for data-table cell borders, at least 3:1 on ground and card.
 - **Text**: `text-strong` for headings and key figures, `text-body` section default, `text-secondary` paragraphs, `text-muted` captions and meta, `drawing-soft` for de-emphasised illustration strokes.
 - **Site Ground** (`site-ground`): the global body ground from Layout (gray-950) under the page ground.
 - **Action Blue** (`action-blue` fill, `action-blue-border` border): the shared booking button, inherited from the older site; the only solid-fill control.
@@ -194,7 +196,7 @@ Flat. Depth comes from tonal steps (ground, band, card, recommended card) and 1p
 
 ## Shapes
 
-Soft, rounded containers drawn with a thin line. Cards, tiles, the listing and the quote use 1.25rem corners; portraits 0.9rem; interactive rows 0.5rem; chips, badges, buttons and link pills are fully round. All borders are 1px `hairline`. Illustration geometry uses 1.5 stroke, round caps/joins, rounded rects (rx 3-20), and pill-shaped bars standing in for text.
+Soft, rounded containers drawn with a thin line. Cards, tiles, the listing and the quote use 1.25rem corners; portraits 0.9rem; interactive rows 0.5rem; chips, badges, buttons and link pills are fully round. All borders are 1px `hairline`, except data-table cell borders, which use `hairline-strong`. Illustration geometry uses 1.5 stroke, round caps/joins, rounded rects (rx 3-20), and pill-shaped bars standing in for text.
 
 ## Components
 

@@ -261,7 +261,7 @@ const relatedLinks = internalLinksBySource[url] ?? [];
   .post-prose :global(th),
   .post-prose :global(td) {
     padding: 0.75rem 0.875rem;
-    border: 1px solid var(--hairline);
+    border: 1px solid var(--hairline-strong);
     vertical-align: top;
     overflow-wrap: anywhere;
     hyphens: auto;
@@ -282,6 +282,65 @@ const relatedLinks = internalLinksBySource[url] ?? [];
     font-weight: 600;
   }
 
+  .post-prose :global(blockquote) {
+    max-width: 68ch;
+    margin: 2rem 0;
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    border-left: 2px solid var(--sky-signal);
+    color: var(--text-body);
+  }
+
+  .post-prose :global(blockquote p) {
+    color: inherit;
+  }
+
+  .post-prose :global(blockquote > :last-child) {
+    margin-bottom: 0;
+  }
+
+  .post-prose :global(:not(pre) > code) {
+    padding: 0.1em 0.35em;
+    border: 1px solid var(--hairline);
+    border-radius: 0.25rem;
+    background: var(--card-surface);
+    color: var(--text-body);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9em;
+    overflow-wrap: anywhere;
+  }
+
+  .post-prose :global(a code) {
+    color: inherit;
+  }
+
+  .post-prose :global(pre) {
+    max-width: 100%;
+    margin: 2rem 0;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    border: 1px solid var(--hairline);
+    border-radius: 0.9rem;
+    /* Shiki writes the background inline; the ink surface must win. */
+    background-color: var(--card-surface) !important;
+    color: var(--text-body);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .post-prose :global(pre:focus-visible) {
+    outline: 2px solid var(--sky-signal);
+    outline-offset: 4px;
+  }
+
+  .post-prose :global(img) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 2rem 0;
+    border-radius: 0.9rem;
+  }
+
   @media (max-width: 479px) {
     .post-prose :global(table) {
       font-size: 0.875rem;
@@ -290,6 +349,10 @@ const relatedLinks = internalLinksBySource[url] ?? [];
     .post-prose :global(th),
     .post-prose :global(td) {
       padding: 0.5rem 0.625rem;
+    }
+
+    .post-prose :global(pre) {
+      padding: 0.875rem 1rem;
     }
   }
 
