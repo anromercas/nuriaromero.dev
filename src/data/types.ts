@@ -29,6 +29,9 @@ export interface ServicePageData {
   // Opt-in: emite una Offer por plan (UnitPriceSpecification mensual) en el JSON-LD
   // del Service. Sin esta marca, el JSON-LD sigue con una única Offer.
   offersFromTiers?: boolean
+  // Solo se lee junto con `offersFromTiers`. Por defecto "monthly" (UnitPriceSpecification
+  // mensual); "one-time" emite Offers de pago único, sin precio por unidad.
+  tierBilling?: "monthly" | "one-time"
   pricing: {
     from: string
     includes?: string[]
@@ -55,6 +58,7 @@ export interface ServicePageData {
   faqs: {
     q: string
     a: string
+    links?: { label: string; href: string }[]
   }[]
   cta?: {
     title: string

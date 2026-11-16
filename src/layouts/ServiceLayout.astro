@@ -42,7 +42,7 @@ const breadcrumbs = [
         serviceType: page.breadcrumbName,
         price: page.pricing.from,
         ...(page.offersFromTiers && page.pricing.tiers
-          ? { tiers: page.pricing.tiers, id: "service" }
+          ? { tiers: page.pricing.tiers, billing: page.tierBilling, id: "service" }
           : {}),
       }),
       faqSchema(page.faqs),
