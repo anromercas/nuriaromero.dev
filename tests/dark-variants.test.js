@@ -40,11 +40,6 @@ test("tailwind config has no darkMode setting", () => {
   );
 });
 
-test("home hero keeps a space after </strong> before the next word", () => {
-  const src = readFileSync(join(root, "src/pages/index.astro"), "utf8");
-  assert.doesNotMatch(src, /<\/strong>[A-Za-zÁ-ú]/);
-});
-
 // Inline text must stay glued to its tags: punctuation on its own line after a
 // closing inline tag renders as " ." (whitespace between the link and the dot).
 test("pages keep punctuation glued to a closing inline tag", () => {

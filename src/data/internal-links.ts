@@ -13,6 +13,10 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
     { path: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/", anchor: "cómo calcular el precio de una web", kind: "contextual" },
     { path: "/recursos/", anchor: "recursos y herramientas para mejorar tu web", kind: "contextual" },
     { path: "/portfolio/", anchor: "casos de éxito de webs para negocios en Sevilla", kind: "contextual" },
+    { path: "/web-para-restaurantes-sevilla/", anchor: "web para restaurantes en Sevilla", kind: "contextual" },
+    { path: "/web-para-clinicas-sevilla/", anchor: "web para clínicas y consultas", kind: "contextual" },
+    { path: "/web-para-comercios-sevilla/", anchor: "web para comercios y tiendas", kind: "contextual" },
+    { path: "/web-para-abogados-gestorias-sevilla/", anchor: "web para despachos y gestorías", kind: "contextual" },
   ],
   "/diseno-web-sevilla/": [
     { path: "/seo-local-sevilla/", anchor: "SEO local y GEO para tu negocio", kind: "contextual" },

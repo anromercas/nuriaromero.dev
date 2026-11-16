@@ -91,10 +91,10 @@ test("normalizedMain collapses whitespace and ignores the main tag attributes", 
   assert.equal(a, b);
 });
 
-test("templatePages entries have routes ending in / and ordered word ranges", () => {
+test("templatePages entries have routes starting and ending in / and ordered word ranges", () => {
   assert.ok(templatePages.length >= 1);
   for (const entry of templatePages) {
-    assert.match(entry.route, /^\/.*\/$/);
+    assert.match(entry.route, /^\/(.*\/)?$/);
     assert.equal(typeof entry.service, "boolean");
     if (entry.words) {
       assert.equal(entry.words.length, 2);

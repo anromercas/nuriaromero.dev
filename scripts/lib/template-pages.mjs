@@ -4,4 +4,7 @@
 //   route:   pathname with trailing slash
 //   service: the page must emit a Service entity in JSON-LD
 //   words:   optional [min, max] visible word range of <main>
-export const templatePages = [{ route: "/seo-local-sevilla/", service: true }];
+export const templatePages = [
+  { route: "/seo-local-sevilla/", service: true },
+  { route: "/", words: [900, 1100], service: false },
+];
