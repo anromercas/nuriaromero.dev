@@ -35,7 +35,8 @@ test("booking CTAs open the official schedule in a new tab accessibly", async ()
     readSource("src/components/BookingButton.astro"),
     // The home books through SeoLocalHero (template hero), which wraps BookingButton.
     readSource("src/components/seo-local/SeoLocalHero.astro"),
-    readSource("src/pages/contacto.astro"),
+    // /contacto/ also books through SeoLocalHero (NRD-171).
+    readSource("src/components/seo-local/SeoLocalHero.astro"),
     readSource("src/components/Header.astro"),
     readSource("src/components/services/ServiceHero.astro"),
   ]);

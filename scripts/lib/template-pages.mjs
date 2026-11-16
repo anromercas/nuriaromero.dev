@@ -8,4 +8,5 @@ export const templatePages = [
   { route: "/seo-local-sevilla/", service: true },
   { route: "/", words: [900, 1100], service: false },
   { route: "/diseno-web-sevilla/", words: [1000, 1200], service: true },
+  { route: "/contacto/", words: [150, 450], service: false },
 ];

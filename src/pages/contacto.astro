@@ -1,111 +1,108 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import Schema from "@/components/seo/Schema.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
-import Breadcrumbs from "@/components/Breadcrumbs.astro"
-import ContactForm from "@/components/ContactForm.astro"
-import BookingButton from "@/components/BookingButton.astro"
-import MailIcon from "@/components/icons/Mail.astro"
-import LinkedInIcon from "@/components/icons/LinkedIn.astro"
-import { breadcrumbSchema } from "@/lib/schema"
-import { SITE } from "@/data/site"
+import Layout from "@/layouts/Layout.astro";
+import Schema from "@/components/seo/Schema.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ContactForm from "@/components/ContactForm.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import SeoLocalFaq from "@/components/seo-local/SeoLocalFaq.astro";
+import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro";
+import type { FaqItem } from "@/components/seo-local/types";
+import { breadcrumbSchema, faqSchema } from "@/lib/schema";
+import { disenoWeb, seoLocal, tierFrom } from "@/data/services";
+import { SITE } from "@/data/site";
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
   { name: "Contacto", url: "/contacto/" },
-]
+];
+
+const contactFaqs: FaqItem[] = [
+  {
+    q: "¿Cuánto cobra un SEO al mes?",
+    a: `El plan Local cuesta ${tierFrom(seoLocal, "Local")} y el Local Pro, ${tierFrom(seoLocal, "Local Pro")}. Los dos son mensuales y en la página de SEO local tienes lo que incluye cada uno.`,
+    links: [{ label: "Planes de SEO local", href: "/seo-local-sevilla/" }],
+  },
+  {
+    q: "¿Cuánto cuesta hacer una página web?",
+    a: `Una landing de una página parte de ${tierFrom(disenoWeb, "Landing de una página")} y una web completa de hasta 5 páginas, de ${tierFrom(disenoWeb, "Web completa (hasta 5 páginas)")}. El precio queda cerrado y pactado por escrito antes de empezar.`,
+    links: [
+      { label: "Diseño web en Sevilla", href: "/diseno-web-sevilla/" },
+      {
+        label: "Guía para entender el precio de una web",
+        href: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
+      },
+    ],
+  },
+  {
+    q: "¿Cuánto se tarda?",
+    a: "Una web de negocio local suele estar lista en 2 a 4 semanas desde que tengo todos los contenidos. Si me escribes, te respondo en menos de 24 horas laborables, y el plazo exacto de tu proyecto se cierra en la propuesta.",
+    links: [{ label: "Diseño web en Sevilla", href: "/diseno-web-sevilla/" }],
+  },
+  {
+    q: "¿Mejor un freelance o una agencia?",
+    a: "Conmigo hablas directamente con quien hace el trabajo, sin nadie en medio. Una agencia tiene más manos para llevar a la vez campañas, redes y diseño, así que depende de lo que necesites.",
+    links: [
+      {
+        label: "Agencia o consultora",
+        href: "/seo-local-sevilla/#agencia-o-consultora",
+      },
+    ],
+  },
+];
+
+const textLink =
+  "rounded-sm text-sky-300 underline decoration-sky-400/70 underline-offset-4 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400";
 ---
 
 <Layout
   title="Contacto — Pide presupuesto para tu web en Sevilla"
   description="Cuéntame qué necesita tu negocio: te respondo con una propuesta clara y sin compromiso. WhatsApp, teléfono o formulario, como prefieras."
 >
-  <Schema slot="head" schema={breadcrumbSchema(breadcrumbs)} />
-  <main class="px-4 pt-24">
-    <SectionContainer>
-      <Breadcrumbs items={breadcrumbs} />
-      <h1
-        class="text-4xl font-bold tracking-tight text-white sm:text-5xl mb-6"
-      >
-        Hablemos de tu proyecto
-      </h1>
-      <p class="text-xl text-gray-300 max-w-2xl mb-12">
-        Cuéntame qué necesita tu negocio con tus palabras: yo me encargo de
-        traducirlo a una propuesta clara, con precio y plazos cerrados. Sin
-        compromiso.
-      </p>
-
-      <div class="grid gap-12 md:grid-cols-2">
-        <div>
+  <Schema
+    slot="head"
+    schema={[breadcrumbSchema(breadcrumbs), faqSchema(contactFaqs)]}
+  />
+  <main class="template-ground px-4 pt-24 pb-24">
+    <div class="space-y-24">
+      <SectionContainer>
+        <Breadcrumbs items={breadcrumbs} />
+        <SeoLocalHero
+          keyword="Contacto"
+          title={{ text: "Hablemos de tu proyecto", accent: "tu proyecto" }}
+          subtitle="Reserva una llamada de 30 minutos o escríbeme en el formulario. Te respondo en menos de 24 horas laborables, sin compromiso."
+          secondaryLink={{ label: "Ver precios y plazos", href: "#preguntas" }}
+        >
           <ContactForm
+            slot="visual"
             title="Escríbeme"
             description="Rellena el formulario y te respondo en menos de 24 horas laborables."
           />
-        </div>
+        </SeoLocalHero>
+      </SectionContainer>
 
-        <div class="space-y-6">
-          <div class="rounded-xl border border-blue-900 bg-blue-950/30 p-5">
-            <h2 class="mb-2 text-2xl font-semibold text-gray-100">
-              Empieza por una primera sesión
-            </h2>
-            <p class="mb-4 text-sm text-gray-300">
-              En la primera conversación entiendo tu caso y después te envío una propuesta clara, con precio y plazos.
-            </p>
-            <BookingButton />
-          </div>
-          <h2 class="text-2xl font-semibold text-white">
-            Datos de contacto
-          </h2>
-          <ul class="space-y-4 text-gray-300">
-            <li>
-              <a
-                href={`tel:+${SITE.whatsapp}`}
-                class="flex items-center gap-x-3 hover:text-blue-500"
-              >
-                <MailIcon class="size-5" />
-                Teléfono: {SITE.phone}
-              </a>
-            </li>
-            <li>
-              <a
-                href={SITE.sameAs[0]}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-x-3 hover:text-blue-500"
-              >
-                <LinkedInIcon class="size-5" />
-                LinkedIn
-              </a>
-            </li>
-          </ul>
+      <SectionContainer id="preguntas">
+        <SeoLocalFaq
+          headingId="contacto-faq-title"
+          keyword="Preguntas antes de contactar"
+          title={{
+            text: "Precio, plazos y con quién hablas",
+            accent: "con quién hablas",
+          }}
+          lede="Si tu duda no está aquí, la resolvemos en la llamada."
+          faqs={contactFaqs}
+        />
+      </SectionContainer>
 
-          <div
-            class="rounded-xl border border-gray-700 bg-gray-800/50 p-5"
-          >
-            <h3 class="mb-2 font-semibold text-gray-100">
-              {SITE.name}
-            </h3>
-            <address class="not-italic text-gray-300">
-              <a
-                href={SITE.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hover:text-blue-500 hover:underline"
-              >
-                {SITE.address.full}
-              </a><br />
-              <a href={`mailto:${SITE.email}`} class="hover:text-blue-500 hover:underline">
-                {SITE.email}
-              </a>
-            </address>
-            <p class="mt-2 text-sm text-gray-500">
-              Trabajo con negocios de Sevilla y su área metropolitana, y en
-              remoto para el resto de España.
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </SectionContainer>
+      <SectionContainer>
+        <SeoLocalNap
+          headingId="contacto-nap-title"
+          keyword="Datos de contacto"
+        />
+        <p class="mt-4 max-w-[65ch] text-base leading-relaxed text-slate-300">
+          También puedes escribirme a <a href={`mailto:${SITE.email}`} class={textLink}>{SITE.email}</a> o encontrarme en <a href={SITE.sameAs[0]} target="_blank" rel="noopener noreferrer" class={textLink}>LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>. Trabajo con negocios de Sevilla y su área metropolitana, y en remoto para el resto de España.
+        </p>
+      </SectionContainer>
+    </div>
   </main>
 </Layout>

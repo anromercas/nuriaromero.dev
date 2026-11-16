@@ -86,3 +86,88 @@ test("contact-form.js is untouched by the restyle", () => {
   assert.match(script, /text-red-600/);
   assert.match(script, /text-green-600/);
 });
+
+// --- /contacto/ on the template (NRD-194) ------------------------------------
+
+const page = read("src/pages/contacto.astro");
+const templatePages = read("scripts/lib/template-pages.mjs");
+
+const faqBlock = () => {
+  const start = page.indexOf("const contactFaqs");
+  assert.ok(start > -1, "contactFaqs is declared in the page");
+  return page.slice(start, page.indexOf("\n]", start) + 2);
+};
+
+test("/contacto/ is registered as a template page without Service", () => {
+  assert.match(
+    templatePages,
+    /route:\s*"\/contacto\/",\s*words:\s*\[150,\s*450\],\s*service:\s*false/,
+  );
+});
+
+test("contactFaqs has 3 or 4 items and feeds both FAQPage and the FAQ", () => {
+  const questions = faqBlock().match(/\bq:\s*"/g) ?? [];
+  assert.ok(
+    questions.length >= 3 && questions.length <= 4,
+    `3-4 questions, found ${questions.length}`,
+  );
+  assert.match(page, /faqSchema\(contactFaqs\)/);
+  assert.match(page, /faqs=\{contactFaqs\}/);
+  assert.match(page, /breadcrumbSchema\(breadcrumbs\)/);
+});
+
+test("the page has no Service entity", () => {
+  assert.doesNotMatch(page, /serviceSchema/);
+});
+
+test("main uses the ink ground and the template sections", () => {
+  assert.match(page, /<main class="template-ground[^"]*"/);
+  assert.match(page, /<SeoLocalHero/);
+  assert.match(page, /<SeoLocalFaq/);
+  assert.match(page, /<SeoLocalNap/);
+  assert.match(page, /id="preguntas"/);
+});
+
+test("the form sits in the hero visual slot and booking comes from the hero", () => {
+  assert.match(page, /<ContactForm\s+slot="visual"/);
+  const hero = read("src/components/seo-local/SeoLocalHero.astro");
+  assert.match(hero, /<BookingButton/);
+  assert.doesNotMatch(page, /<BookingButton/);
+});
+
+test("prices come only from tierFrom and no euro literal is in the page", () => {
+  assert.match(page, /tierFrom\(seoLocal, "Local"\)/);
+  assert.match(page, /tierFrom\(seoLocal, "Local Pro"\)/);
+  assert.match(page, /tierFrom\(disenoWeb, "Landing de una página"\)/);
+  assert.match(
+    page,
+    /tierFrom\(disenoWeb, "Web completa \(hasta 5 páginas\)"\)/,
+  );
+  assert.doesNotMatch(page, /€/);
+});
+
+test("FAQ answers link to the owner pages", () => {
+  const faqs = faqBlock();
+  for (const href of [
+    "/seo-local-sevilla/",
+    "/diseno-web-sevilla/",
+    "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
+  ]) {
+    assert.ok(faqs.includes(`href: "${href}"`), `links to ${href}`);
+  }
+});
+
+test("NAP block plus email and LinkedIn routes are present", () => {
+  assert.match(page, /mailto:\$\{SITE\.email\}/);
+  assert.match(page, /SITE\.sameAs\[0\]/);
+  assert.match(page, /target="_blank" rel="noopener noreferrer"/);
+});
+
+test("the page has one H1 through the hero and no old-world classes", () => {
+  assert.doesNotMatch(page, /<h1/);
+  assert.match(page, /keyword="Contacto"/);
+  assert.doesNotMatch(
+    page,
+    /MailIcon|LinkedInIcon|text-gray-|bg-gray-|blue-950/,
+  );
+});
