@@ -1,17 +1,22 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import Schema from "@/components/seo/Schema.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
-import Breadcrumbs from "@/components/Breadcrumbs.astro"
-import Projects from "@/components/Projects.astro"
-import CTASection from "@/components/services/CTASection.astro"
-import CodeIcon from "@/components/icons/Code.astro"
-import { breadcrumbSchema } from "@/lib/schema"
+import Layout from "@/layouts/Layout.astro";
+import Schema from "@/components/seo/Schema.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import RealProof from "@/components/seo-local/RealProof.astro";
+import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro";
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
+import { breadcrumbSchema } from "@/lib/schema";
+import { internalLinksBySource } from "@/data/internal-links";
+import { getGoogleReviews } from "@/lib/google-reviews";
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
   { name: "Casos de éxito", url: "/portfolio/" },
-]
+];
+
+const reviewsData = await getGoogleReviews();
 ---
 
 <Layout
@@ -19,25 +24,54 @@ const breadcrumbs = [
   description="Proyectos reales de Nuria Romero: webs para negocios de Sevilla optimizadas para SEO local, aplicaciones a medida y más."
 >
   <Schema slot="head" schema={breadcrumbSchema(breadcrumbs)} />
-  <main class="px-4 pt-24">
-    <SectionContainer>
-      <Breadcrumbs items={breadcrumbs} />
-      <h1 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-white">
-        <CodeIcon class="size-7" />
-        Casos de éxito
-      </h1>
-      <p class="mb-12 text-gray-300 max-w-2xl">
-        Una selección de webs para negocios locales de Sevilla, optimizadas
-        para aparecer en Google. Puedes visitar cada proyecto en su dominio.
-      </p>
-      <Projects />
-    </SectionContainer>
+  <main class="template-ground px-4 pt-24">
+    <div class="space-y-24">
+      <SectionContainer>
+        <Breadcrumbs items={breadcrumbs} />
+        <SeoLocalHero
+          keyword="Casos de éxito"
+          title={{
+            text: "Negocios de Sevilla con su web en marcha",
+            accent: "en marcha",
+          }}
+          subtitle="Aquí tienes webs reales que he hecho para negocios de Sevilla: un local de celebraciones y una administración de fincas. Puedes visitar cada una en su propio dominio."
+          secondaryLink={{ label: "Ver los proyectos", href: "#trabajo-real" }}
+        />
+      </SectionContainer>
 
-    <SectionContainer class="mt-24">
-      <CTASection
-        title="¿Quieres que tu negocio sea el siguiente?"
-        text="Cuéntame tu proyecto y te enseño cómo podría ser tu web."
-      />
-    </SectionContainer>
+      <SectionContainer id="trabajo-real">
+        <RealProof
+          headingId="proyectos-title"
+          keyword="Proyectos reales en Sevilla"
+          title={{
+            text: "Dos negocios, dos webs a medida",
+            accent: "a medida",
+          }}
+          reviews={reviewsData}
+          note="Cada tarjeta enlaza a la web publicada; la de Arkady incluye un sistema de reservas hecho desde cero."
+          projects={["arkady", "adfsevilla"]}
+          projectsVariant="ink"
+        />
+      </SectionContainer>
+
+      <SectionContainer>
+        <SeoLocalRelated
+          label="Si buscas algo parecido"
+          links={internalLinksBySource["/portfolio/"] ?? []}
+        />
+      </SectionContainer>
+
+      <SectionContainer>
+        <SeoLocalClosing
+          headingId="cierre-title"
+          keyword="Reserva una llamada sobre tu web"
+          title={{
+            text: "¿Quieres que tu negocio sea el siguiente?",
+            accent: "el siguiente",
+          }}
+          text="Cuéntame qué necesita tu negocio y te digo qué web encaja, con precio cerrado por escrito."
+        />
+      </SectionContainer>
+    </div>
   </main>
 </Layout>

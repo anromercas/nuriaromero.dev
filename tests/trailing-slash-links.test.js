@@ -49,9 +49,8 @@ test("every internal-links path ends in a trailing slash", () => {
   assert.deepEqual(offenders, []);
 });
 
-test("contact links in Hero, home and aviso legal end in a trailing slash", () => {
+test("contact links in home and aviso legal end in a trailing slash", () => {
   const offenders = [
-    "src/components/Hero.astro",
     "src/pages/index.astro",
     "src/pages/aviso-legal.astro",
   ].filter((file) => /href="\/contacto"/.test(read(file)));

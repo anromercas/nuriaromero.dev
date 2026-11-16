@@ -37,7 +37,7 @@ test("case labels identify success stories while preserving the existing route",
   assert.match(header, /aria-label=\{link\.label\}/);
   assert.match(portfolio, /\{ name: "Casos de éxito", url: "\/portfolio\/" \}/);
   assert.match(portfolio, /title="Casos de éxito —/);
-  assert.match(portfolio, /<h1[^>]*>[\s\S]*?Casos de éxito[\s\S]*?<\/h1>/);
+  assert.match(portfolio, /<SeoLocalHero[^>]*keyword="Casos de éxito"/);
   assert.doesNotMatch(portfolio, /proyectos propios/i);
   assert.match(
     resources,

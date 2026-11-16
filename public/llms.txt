@@ -11,7 +11,7 @@
 - [SEO local en Sevilla](https://nuriaromero.dev/seo-local-sevilla/): SEO local y GEO para negocios de Sevilla: Google Maps, datos estructurados y FAQs para buscadores con IA. Dos planes mensuales: Local 300 €/mes + IVA y Local Pro 500 €/mes + IVA, facturados mes a mes y sin cuota de puesta en marcha aparte. Sin promesas de posiciones.
 - [Desarrollo de software a medida](https://nuriaromero.dev/desarrollo-software-medida/): Aplicaciones web para empresas en Sevilla: gestión interna, reservas, presupuestos y portales de cliente.
 - [Automatizaciones](https://nuriaromero.dev/automatizaciones/): Automatización de tareas repetitivas con n8n y Make.
-- [Inteligencia artificial](https://nuriaromero.dev/inteligencia-artificial/): Chatbots y asistentes con IA integrados en los procesos de un negocio.
+- [Inteligencia artificial](https://nuriaromero.dev/inteligencia-artificial/): Chatbots y agentes de IA para empresas de Sevilla: atienden clientes con la información del negocio y pasan la conversación a una persona. Piloto con tus datos antes de decidir. Desde 399 €.
 - [Diseño de tienda online en Sevilla](https://nuriaromero.dev/tienda-online-sevilla/): Tienda online desde 499 €, con panel de gestión incluido, en WooCommerce, Shopify o a medida, a elegir. El precio final se cierra por escrito según el proyecto.
 
 ## Sectores

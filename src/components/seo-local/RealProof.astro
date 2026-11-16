@@ -13,9 +13,10 @@ interface Props {
   reviews: GoogleReviewsData | null
   note: string
   projects: string[]
+  projectsVariant?: "legacy" | "ink"
 }
 
-const { headingId = "prueba-title", id, keyword, title, reviews, note, projects } = Astro.props
+const { headingId = "prueba-title", id, keyword, title, reviews, note, projects, projectsVariant = "legacy" } = Astro.props
 const quote = reviews && reviews.reviews.length > 0 ? reviews.reviews[0] : null
 const stars = quote ? Math.round(quote.rating) : 0
 const starPoints = "12 3 14.6 9 21 9.6 16.2 13.9 17.6 20.2 12 17 6.4 20.2 7.8 13.9 3 9.6 9.4 9"
@@ -26,7 +27,7 @@ const starPoints = "12 3 14.6 9 21 9.6 16.2 13.9 17.6 20.2 12 17 6.4 20.2 7.8 13
 
   {
     quote && reviews && (
-      <figure class="quote">
+      <figure class="quote" data-word-budget="exclude">
         <blockquote>
           <p>{quote.text}</p>
         </blockquote>
@@ -52,7 +53,7 @@ const starPoints = "12 3 14.6 9 21 9.6 16.2 13.9 17.6 20.2 12 17 6.4 20.2 7.8 13
 
   <div class="sites">
     <p class="sites-note">{note}</p>
-    <Projects only={projects} />
+    <Projects only={projects} variant={projectsVariant} />
   </div>
 </section>
 
