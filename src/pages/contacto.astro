@@ -1,19 +1,19 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import Schema from "@/components/seo/Schema.astro";
-import SectionContainer from "@/components/SectionContainer.astro";
-import Breadcrumbs from "@/components/Breadcrumbs.astro";
-import ContactForm from "@/components/ContactForm.astro";
-import BookingButton from "@/components/BookingButton.astro";
-import MailIcon from "@/components/icons/Mail.astro";
-import LinkedInIcon from "@/components/icons/LinkedIn.astro";
-import { breadcrumbSchema } from "@/lib/schema";
-import { SITE } from "@/data/site";
+import Layout from "@/layouts/Layout.astro"
+import Schema from "@/components/seo/Schema.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import Breadcrumbs from "@/components/Breadcrumbs.astro"
+import ContactForm from "@/components/ContactForm.astro"
+import BookingButton from "@/components/BookingButton.astro"
+import MailIcon from "@/components/icons/Mail.astro"
+import LinkedInIcon from "@/components/icons/LinkedIn.astro"
+import { breadcrumbSchema } from "@/lib/schema"
+import { SITE } from "@/data/site"
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
   { name: "Contacto", url: "/contacto/" },
-];
+]
 ---
 
 <Layout
@@ -24,7 +24,9 @@ const breadcrumbs = [
   <main class="px-4 pt-24">
     <SectionContainer>
       <Breadcrumbs items={breadcrumbs} />
-      <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl mb-6">
+      <h1
+        class="text-4xl font-bold tracking-tight text-white sm:text-5xl mb-6"
+      >
         Hablemos de tu proyecto
       </h1>
       <p class="text-xl text-gray-300 max-w-2xl mb-12">
@@ -47,12 +49,13 @@ const breadcrumbs = [
               Empieza por una primera sesión
             </h2>
             <p class="mb-4 text-sm text-gray-300">
-              En la primera conversación entiendo tu caso y después te envío una
-              propuesta clara, con precio y plazos.
+              En la primera conversación entiendo tu caso y después te envío una propuesta clara, con precio y plazos.
             </p>
             <BookingButton />
           </div>
-          <h2 class="text-2xl font-semibold text-white">Datos de contacto</h2>
+          <h2 class="text-2xl font-semibold text-white">
+            Datos de contacto
+          </h2>
           <ul class="space-y-4 text-gray-300">
             <li>
               <a
@@ -76,8 +79,12 @@ const breadcrumbs = [
             </li>
           </ul>
 
-          <div class="rounded-xl border border-gray-700 bg-gray-800/50 p-5">
-            <h3 class="mb-2 font-semibold text-gray-100">{SITE.name}</h3>
+          <div
+            class="rounded-xl border border-gray-700 bg-gray-800/50 p-5"
+          >
+            <h3 class="mb-2 font-semibold text-gray-100">
+              {SITE.name}
+            </h3>
             <address class="not-italic text-gray-300">
               <a
                 href={SITE.mapsUrl}
@@ -86,12 +93,8 @@ const breadcrumbs = [
                 class="hover:text-blue-500 hover:underline"
               >
                 {SITE.address.full}
-              </a>
-              <br />
-              <a
-                href={`mailto:${SITE.email}`}
-                class="hover:text-blue-500 hover:underline"
-              >
+              </a><br />
+              <a href={`mailto:${SITE.email}`} class="hover:text-blue-500 hover:underline">
                 {SITE.email}
               </a>
             </address>
@@ -100,6 +103,7 @@ const breadcrumbs = [
               remoto para el resto de España.
             </p>
           </div>
+
         </div>
       </div>
     </SectionContainer>

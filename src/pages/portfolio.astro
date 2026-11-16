@@ -1,17 +1,17 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import Schema from "@/components/seo/Schema.astro";
-import SectionContainer from "@/components/SectionContainer.astro";
-import Breadcrumbs from "@/components/Breadcrumbs.astro";
-import Projects from "@/components/Projects.astro";
-import CTASection from "@/components/services/CTASection.astro";
-import CodeIcon from "@/components/icons/Code.astro";
-import { breadcrumbSchema } from "@/lib/schema";
+import Layout from "@/layouts/Layout.astro"
+import Schema from "@/components/seo/Schema.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import Breadcrumbs from "@/components/Breadcrumbs.astro"
+import Projects from "@/components/Projects.astro"
+import CTASection from "@/components/services/CTASection.astro"
+import CodeIcon from "@/components/icons/Code.astro"
+import { breadcrumbSchema } from "@/lib/schema"
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
   { name: "Casos de éxito", url: "/portfolio/" },
-];
+]
 ---
 
 <Layout
@@ -27,8 +27,8 @@ const breadcrumbs = [
         Casos de éxito
       </h1>
       <p class="mb-12 text-gray-300 max-w-2xl">
-        Una selección de webs para negocios locales de Sevilla, optimizadas para
-        aparecer en Google. Puedes visitar cada proyecto en su dominio.
+        Una selección de webs para negocios locales de Sevilla, optimizadas
+        para aparecer en Google. Puedes visitar cada proyecto en su dominio.
       </p>
       <Projects />
     </SectionContainer>

@@ -1,24 +1,21 @@
 ---
-import ServiceLayout from "@/layouts/ServiceLayout.astro";
-import SectionContainer from "@/components/SectionContainer.astro";
-import TitleSection from "@/components/TitleSection.astro";
-import BookingButton from "@/components/BookingButton.astro";
-import { capilarLocal } from "@/data/services";
+import ServiceLayout from "@/layouts/ServiceLayout.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import BookingButton from "@/components/BookingButton.astro"
+import { capilarLocal } from "@/data/services"
 ---
 
 <ServiceLayout page={capilarLocal}>
   <Fragment slot="before-benefits">
     <SectionContainer>
-      <TitleSection>
-        Cuando una clínica depende de búsquedas locales, la base importa
-      </TitleSection>
+      <TitleSection>Cuando una clínica depende de búsquedas locales, la base importa</TitleSection>
       <div class="max-w-3xl space-y-4 text-gray-300">
         <p>
           Esta página es para propietarias y responsables de clínicas de injerto
-          capilar en Sevilla, no para pacientes que buscan un tratamiento.
-          CAPILAR LOCAL ordena la información pública de Google y una página
-          clave para que la clínica pueda explicar mejor qué hace y cómo
-          contactarla.
+          capilar en Sevilla, no para pacientes que buscan un tratamiento. CAPILAR
+          LOCAL ordena la información pública de Google y una página clave para
+          que la clínica pueda explicar mejor qué hace y cómo contactarla.
         </p>
         <p>
           No vende atajos ni resultados médicos. Parte de datos reales de la
@@ -33,18 +30,9 @@ import { capilarLocal } from "@/data/services";
     <TitleSection>Qué no incluye</TitleSection>
     <ul class="max-w-3xl space-y-3 text-gray-300">
       <li>Gestión mensual de reseñas o respuestas en nombre de la clínica.</li>
-      <li>
-        SEO completo de toda la web, rediseño integral o varias páginas
-        optimizadas.
-      </li>
-      <li>
-        Publicidad, captación de pacientes o garantía de posiciones,
-        solicitudes, citas o resultados médicos.
-      </li>
-      <li>
-        Datos estructurados cuando la plataforma o el contenido real no los
-        hagan viables.
-      </li>
+      <li>SEO completo de toda la web, rediseño integral o varias páginas optimizadas.</li>
+      <li>Publicidad, captación de pacientes o garantía de posiciones, solicitudes, citas o resultados médicos.</li>
+      <li>Datos estructurados cuando la plataforma o el contenido real no los hagan viables.</li>
     </ul>
   </SectionContainer>
 
@@ -59,20 +47,9 @@ import { capilarLocal } from "@/data/services";
       </p>
       <p>
         Si tu prioridad es una web nueva para la clínica, mira también el
-        <a
-          href="/web-para-clinicas-sevilla/"
-          class="text-blue-400 underline underline-offset-4"
-        >
-          diseño web para clínicas en Sevilla
-        </a>
-        . Para una visión no sectorial, tienes el
-        <a
-          href="/seo-local-sevilla/"
-          class="text-blue-400 underline underline-offset-4"
-        >
-          servicio general de SEO local en Sevilla
-        </a>
-        .
+        <a href="/web-para-clinicas-sevilla/" class="text-blue-400 underline underline-offset-4">diseño web para clínicas en Sevilla</a>.
+        Para una visión no sectorial, tienes el
+        <a href="/seo-local-sevilla/" class="text-blue-400 underline underline-offset-4">servicio general de SEO local en Sevilla</a>.
       </p>
     </div>
   </SectionContainer>
@@ -81,13 +58,10 @@ import { capilarLocal } from "@/data/services";
     <TitleSection>Contacto inicial sin datos clínicos</TitleSection>
     <div class="max-w-3xl space-y-4 text-gray-300">
       <p>
-        Para valorar el proyecto basta con conocer la web, la zona y quién puede
-        validar la información pública. No envíes historiales, diagnósticos ni
-        información identificable de pacientes antes de la primera sesión. La{" "}
-        <a href="/contacto/" class="underline underline-offset-4">
-          página de contacto
-        </a>{" "}
-        sigue disponible para consultas informativas.
+          Para valorar el proyecto basta con conocer la web, la zona y quién puede
+          validar la información pública. No envíes historiales, diagnósticos ni
+          información identificable de pacientes antes de la primera sesión.
+          La <a href="/contacto/" class="underline underline-offset-4">página de contacto</a> sigue disponible para consultas informativas.
       </p>
       <div class="flex flex-wrap gap-4">
         <BookingButton />

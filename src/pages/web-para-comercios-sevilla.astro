@@ -1,33 +1,26 @@
 ---
-import ServiceLayout from "@/layouts/ServiceLayout.astro";
-import SectionContainer from "@/components/SectionContainer.astro";
-import TitleSection from "@/components/TitleSection.astro";
-import { comercios } from "@/data/niches";
+import ServiceLayout from "@/layouts/ServiceLayout.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import { comercios } from "@/data/niches"
 ---
 
 <ServiceLayout page={comercios}>
   <Fragment slot="before-benefits">
     <SectionContainer>
-      <TitleSection>
-        ¿Solo necesitas catálogo, o también quieres cobrar online?
-      </TitleSection>
+      <TitleSection>¿Solo necesitas catálogo, o también quieres cobrar online?</TitleSection>
       <div class="space-y-4 text-gray-300">
         <p>
-          Esta página cubre las dos opciones para tu comercio: catálogo para que
-          tus clientes vean qué vendes, tus horarios y cómo contactarte por
-          WhatsApp o pasando por tienda, y tienda online completa con pasarela
-          de pago si ya quieres vender sin salir de la web.
+          Esta página cubre las dos opciones para tu comercio: catálogo para
+          que tus clientes vean qué vendes, tus horarios y cómo contactarte
+          por WhatsApp o pasando por tienda, y tienda online completa con
+          pasarela de pago si ya quieres vender sin salir de la web.
         </p>
         <p>
           Si tu prioridad es la venta online -- pasarela de pago, gestión de
           stock, productos digitales, envíos -- entra en la
-          <a
-            href="/tienda-online-sevilla/"
-            class="text-blue-400 underline-offset-4 hover:underline"
-          >
-            tienda online en Sevilla
-          </a>
-          , la página donde profundizo en todo eso.
+          <a href="/tienda-online-sevilla/" class="text-blue-400 underline-offset-4 hover:underline">tienda online en Sevilla</a>,
+          la página donde profundizo en todo eso.
         </p>
       </div>
     </SectionContainer>

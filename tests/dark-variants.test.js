@@ -44,3 +44,22 @@ test("home hero keeps a space after </strong> before the next word", () => {
   const src = readFileSync(join(root, "src/pages/index.astro"), "utf8");
   assert.doesNotMatch(src, /<\/strong>[A-Za-zÁ-ú]/);
 });
+
+// Inline text must stay glued to its tags: punctuation on its own line after a
+// closing inline tag renders as " ." (whitespace between the link and the dot).
+test("pages keep punctuation glued to a closing inline tag", () => {
+  const hits = [];
+  for (const file of walk(join(root, "src/pages"))) {
+    if (!file.endsWith(".astro")) continue;
+    const lines = readFileSync(file, "utf8").split("\n");
+    lines.forEach((line, i) => {
+      if (
+        i > 0 &&
+        /^\s*[.,:;]/.test(line) &&
+        /<\/(a|strong|em|b|span)>\s*$/.test(lines[i - 1])
+      )
+        hits.push(`${relative(root, file)}:${i + 1}: ${line.trim()}`);
+    });
+  }
+  assert.deepEqual(hits, [], `detached punctuation:\n${hits.join("\n")}`);
+});
