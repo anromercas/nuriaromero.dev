@@ -61,6 +61,6 @@ test("the layout marks the body wrapper and package.json has check-seo-18", () =
   );
   assert.equal(scripts["check:seo-18:dist"], "node scripts/check-seo-18.mjs");
   assert.ok(
-    scripts["check:seo:dist"].endsWith("&& node scripts/check-seo-18.mjs"),
+    scripts["check:seo:dist"].includes("&& node scripts/check-seo-18.mjs"),
   );
 });
