@@ -39,7 +39,7 @@ Alternatives considered: rendering the home through `ServiceLayout variant="temp
 | 5b  | Comparison       | `SeoLocalAgencia id="consultor-o-agencia"`                                                         | keyword heading "¿Consultor SEO o agencia?" (no "agencia seo sevilla" in the H2), 3 `ComparisonItem`s, `link={{ label: "Ver los planes de SEO local", href: "/seo-local-sevilla/#precios" }}`                                                                                            |
 | 6   | (no plans)       | none                                                                                               | plans live on `/seo-local-sevilla/`                                                                                                                                                                                                                                                      |
 | 7a  | FAQ              | `SeoLocalFaq`                                                                                      | `homeFaqs: FaqItem[]` (6-8 sourced questions)                                                                                                                                                                                                                                            |
-| 7b  | Related          | `SeoLocalRelated`                                                                                  | `internalLinksBySource["/"]` (unchanged rows)                                                                                                                                                                                                                                            |
+| 7b  | Related          | `SeoLocalRelated`                                                                                  | `internalLinksBySource["/"]` (+4 niche rows)                                                                                                                                                                                                                                             |
 | 7c  | Closing + NAP    | `SeoLocalClosing` + `SeoLocalNap`                                                                  | closing copy and `<HomeHeroMock slot="visual" animate={false} />`; NAP keyword heading without terms owned by other pages                                                                                                                                                                |
 
 Keyword headings: sentence case, the real `h2`; none may contain a term owned by another page (`keywordOwners`); "consultor SEO" may appear in at most the H1 and one H2 to avoid stuffing. "posicionamiento web" appears at most once on the page and never in a heading (existing tests).
@@ -68,12 +68,13 @@ Modify:
 
 - `src/pages/index.astro` (app): rewritten as above; keeps `homeDescription` exactly, the `Layout title` exactly, `getGoogleReviews()` called once, Person/FAQPage/reviews JSON-LD.
 - `scripts/lib/template-pages.mjs` (app): add `{ route: "/", words: [900, 1100], service: false }`.
+- `src/data/internal-links.ts` (app, task 1.2): append four contextual rows to `"/"`, after the existing five, reusing the anchors of the `"/diseno-web-sevilla/"` row: `/web-para-restaurantes-sevilla/` "web para restaurantes en Sevilla", `/web-para-clinicas-sevilla/` "web para clínicas y consultas", `/web-para-comercios-sevilla/` "web para comercios y tiendas", `/web-para-abogados-gestorias-sevilla/` "web para despachos y gestorías". Reason: `scripts/check-seo-02.mjs` (home section) requires the home `<main>` to link the four niche pages in trailing-slash form; the old niche pills did it and are removed. The niche pages are parked (PRD section 6), not retired: they stay public and indexed, so the home keeps its contextual links to them through the existing related row, with no new section or copy and no change to the guard. Existing rows and their order stay as they are.
 - `tests/seo-meta-titles.test.js` (app): the first-paragraph assertion reads the `subtitle` passed to `SeoLocalHero` instead of `</h2>\s*<p`; the H1 assertion reads the `keyword` prop (or the dist H1 if simpler); title, alt and "posicionamiento web" assertions keep their meaning.
 - `tests/home-services-list.test.js` (app): retired (the grouped list and price cards are removed by this story); its accessibility intent (linked rows with focus outline) is replaced in `tests/home-template.test.js` by "each service tile has a link to its route ending in `/`".
 - `tests/technology-copy.test.js` (app): the casos-copy test is replaced by an assertion on the `RealProof` usage; the Person `knowsAbout` test stays.
 - `tests/dark-variants.test.js` (app): the "space after `</strong>` in the home hero" test targets nothing now; replace it with the generic punctuation test that already exists, or point it at the new hero subtitle if it keeps inline tags.
 
-Unchanged and must stay green: `scripts/check-seo-12.mjs`, `tests/single-price-source.test.js`, `tests/google-reviews-error.test.js`, `tests/trailing-slash-links.test.js`, `tests/seo-local-posicionamiento-web.test.js`, `tests/main-links.test.js`, `scripts/check-seo-07.mjs`, `public/llms.txt` (no home entry changes), `src/data/internal-links.ts` row `"/"`.
+Unchanged and must stay green: `scripts/check-seo-12.mjs`, `tests/single-price-source.test.js`, `tests/google-reviews-error.test.js`, `tests/trailing-slash-links.test.js`, `tests/seo-local-posicionamiento-web.test.js`, `tests/main-links.test.js`, `scripts/check-seo-07.mjs`, `scripts/check-seo-02.mjs` (not relaxed), `scripts/check-seo-06.mjs`, `public/llms.txt` (no home entry changes), the existing five rows of `src/data/internal-links.ts` `"/"`.
 
 ### Interfaces
 
@@ -96,12 +97,12 @@ const tileServices = services.filter((s) => s !== capilarLocal); // 6 entries, o
 
 ### Data
 
-None: no schema, storage or settings change. FAQ copy stays in the page (as today); prices only via `tierFrom`; `src/data/services.ts`, `site.ts`, `internal-links.ts`, `seo-intents.ts` unchanged.
+None: no schema, storage or settings change. FAQ copy stays in the page (as today); prices only via `tierFrom`; `src/data/services.ts`, `site.ts`, `seo-intents.ts` unchanged; `internal-links.ts` only gains the four niche rows of `"/"` (task 1.2).
 
 ### Test plan (TDD order)
 
 1. Task 1.1: `tests/home-template.test.js` first asserts `ServiceTileArt.astro` and `HomeHeroMock.astro` exist, every `<svg` has `aria-hidden="true"` and `stroke-width="1.5"`, no `fill=` other than `none`/`currentColor`, and the hero mock has "Ejemplo ilustrativo" and a reduced-motion guard. RED, then draw.
-2. Task 1.2: extend `tests/home-template.test.js` first: the home imports `SeoLocalHero`, `ProofStrip`, `ReviewBento`, `BentoTile`, `SeoLocalProcess`, `RealProof`, `SeoLocalAgencia`, `SeoLocalFaq`, `SeoLocalRelated`, `SeoLocalClosing`, `SeoLocalNap`; no `TitleSection`, `ProcessSteps`, `GoogleReviews`, `CTASection`, `InternalLinks`, `Badge`, glyph icon imports; no `SeoLocalPlans`; `data-seo12-hero` and `data-seo12-primary-cta` present; `<main` has `template-ground`; sections in reference order (index of each component tag increasing); six tiles each with `href={service.slug}` style links; the H2 of the comparison does not contain "Sevilla". Migrate the four old tests listed in Files in the same task. Scenarios: "Sections in reference order", "No plans on the home", "Service tiles", "Hero markers present", "Owned term in title and H1".
+2. Task 1.2: extend `tests/home-template.test.js` first: the home imports `SeoLocalHero`, `ProofStrip`, `ReviewBento`, `BentoTile`, `SeoLocalProcess`, `RealProof`, `SeoLocalAgencia`, `SeoLocalFaq`, `SeoLocalRelated`, `SeoLocalClosing`, `SeoLocalNap`; no `TitleSection`, `ProcessSteps`, `GoogleReviews`, `CTASection`, `InternalLinks`, `Badge`, glyph icon imports; no `SeoLocalPlans`; `data-seo12-hero` and `data-seo12-primary-cta` present; `<main` has `template-ground`; sections in reference order (index of each component tag increasing); six tiles each with `href={service.slug}` style links; the H2 of the comparison does not contain "Sevilla"; `internalLinksBySource["/"]` contains the four niche paths (trailing slash, `kind: "contextual"`) and still contains the five existing rows (scenario "Niche pages stay linked from the home"). Migrate the four old tests listed in Files in the same task. Scenarios: "Sections in reference order", "No plans on the home", "Service tiles", "Hero markers present", "Owned term in title and H1".
 3. Task 1.3: first add `/` to `templatePages` and run `pnpm build && pnpm check:seo-17:dist` to observe RED (words over 1,100, FAQ count); extend `tests/home-template.test.js`: `homeFaqs` has 6-8 items, every price answer uses `tierFrom(seoLocal` and has a `/seo-local-sevilla/` link, no "€" literal in the page outside `tierFrom` results, `faqSchema(homeFaqs)` and `faqs={homeFaqs}` both present, no "la mejor"/"el mejor" self-claim. Then write the copy. Scenarios: "Word budget", "FAQ equals FAQPage", "Price questions use published plans", "Honest answer about the best consultant", "Reviews unavailable at build time" (`ProofStrip`/`RealProof` with `null`, already covered by NRD-163 components; verify a local build without the Places key).
 4. Every task: `node --test tests/*.test.js`, `pnpm build`, `pnpm check:seo:dist` green; `node scripts/check-seo-16.mjs` still green (the reference page must not change).
 
@@ -126,7 +127,7 @@ None: no schema, storage or settings change. FAQ copy stays in the page (as toda
 
 ## Risks / Trade-offs
 
-- [Removing the all-services price grid and the services list cuts internal links from the home to service pages] → the bento links every service page; related links unchanged; the inbound-link inventory (`scripts/seo-inventory.mjs`) is re-run by QA to confirm every service page keeps an inbound link from `/`.
+- [Removing the all-services price grid and the services list cuts internal links from the home to service pages] → the bento links every service page; related links keep their rows and gain the four parked niche pages (replacing the niche pills, so `check-seo-02` stays green without relaxing it); the inbound-link inventory (`scripts/seo-inventory.mjs`) is re-run by QA to confirm every service page keeps an inbound link from `/`.
 - [Removing the eager raster portrait changes LCP] → expected improvement; verify against the NRD-18 baseline; the portrait stays `loading="lazy"` in the process band.
 - [Copy budget vs. FAQ: 8 short answers can eat 400+ words] → choose 6-7 questions, merge 5 and 6, keep answers near 60 words.
 - [Price answers could drift from data] → interpolation through `tierFrom` and the "no € literal" test.
@@ -231,13 +232,13 @@ Thesis: the home sells the consultant, not one listing, so the drawing shows the
 
 ### 10. Related, closing and NAP
 
-- `SeoLocalRelated`: `links={internalLinksBySource["/"]}`, default label `Sigue leyendo`.
+- `SeoLocalRelated`: `links={internalLinksBySource["/"]}`, default label `Sigue leyendo`. Nine pills: the five existing rows, then the four niche rows (see Files). No other markup.
 - `SeoLocalClosing`: `headingId="cierre-title"`, keyword `Reserva una primera sesión conmigo`, `title: { text: "Hablemos de cómo te encuentran tus clientes", accent: "tus clientes" }`, `text`: `Cuéntame cómo es tu negocio y te diré qué tiene sentido hacer primero, sin compromiso.`, `ctaLabel="Reserva una primera sesión"`, default `meta` (`30 minutos · Sin compromiso · Directamente conmigo`), `<HomeHeroMock slot="visual" animate={false} />`. Assumption on copy.
 - `SeoLocalNap`: `headingId="nap-title"`, keyword `Dónde trabajo: La Rinconada, Sevilla`. Assumption.
 
 ### 11. Text budget
 
-Estimated visible words: hero ~50, proof ~15, bento ~170, process ~85, real proof ~30 plus the live review and project cards (~120), comparison ~95, FAQ ~300, related ~35, closing ~40, NAP ~20: about 960-1,000. If `check-seo-17` reports more than 1,100 (long live review), trim FAQ second sentences first, never the first sentence of an answer; below 900, nothing is added to tiles (25-word cap).
+Estimated visible words: hero ~50, proof ~15, bento ~170, process ~85, real proof ~30 plus the live review and project cards (~120), comparison ~95, FAQ ~300, related ~35, closing ~40, NAP ~20: about 960-1,000 (the four niche pills add ~20 words to related). If `check-seo-17` reports more than 1,100 (long live review), trim FAQ second sentences first, never the first sentence of an answer; below 900, nothing is added to tiles (25-word cap).
 
 ### 12. States
 

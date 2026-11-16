@@ -34,6 +34,11 @@ The home SHALL render, in this order: hero with a drawn illustration and the boo
 - **WHEN** the built home is inspected
 - **THEN** it shows no plan cards and contains a link to `/seo-local-sevilla/` from the plans-related copy
 
+#### Scenario: Niche pages stay linked from the home
+
+- **WHEN** the site-architecture check reads the built home `<main>`
+- **THEN** it finds a trailing-slash link to each of the four niche pages (`/web-para-restaurantes-sevilla/`, `/web-para-clinicas-sevilla/`, `/web-para-comercios-sevilla/`, `/web-para-abogados-gestorias-sevilla/`) in the related links
+
 ### Requirement: Each service tile links to its owner page
 
 The bento SHALL show one tile per public service page listed in `services` except the parked niche service, each with one sentence and a link to that service's route in trailing-slash form.
