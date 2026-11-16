@@ -89,7 +89,7 @@ export const intentMatrix: SeoIntentRow[] = [
     titleSignal: "Diseño de tienda online en Sevilla",
     descriptionSignal: "pasarela de pago propia",
     h1Signal: "Diseño de tienda online en Sevilla",
-    contentSignals: ["Así es el proceso de crear tu tienda online", "Pasarela de pago integrada y probada"],
+    contentSignals: ["Así es el proceso de crear tu tienda online", "¿WooCommerce, Shopify o a medida?"],
   },
   {
     url: "/desarrollo-software-medida/",

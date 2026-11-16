@@ -164,7 +164,7 @@ export const disenoWeb: ServicePageData = {
   ],
   cta: {
     title: "Empecemos por tu web",
-    text: "Cuéntame en qué punto está tu negocio y te respondo con una propuesta clara y un precio cerrado, sin compromiso.",
+    text: "Cuéntame en qué punto está tu negocio y te respondo con una propuesta clara y un precio cerrado.",
   },
 }
 
@@ -675,53 +675,67 @@ export const tiendaOnline: ServicePageData = {
   seo: {
     title: "Diseño de tienda online en Sevilla | Pasarela de pago propia",
     description:
-      "Diseño y creo tiendas online para negocios de Sevilla, con pasarela de pago propia y sin comisión de marketplace. Presupuesto cerrado según tu catálogo.",
+      "Diseño tiendas online para negocios de Sevilla desde 499 euros, con pasarela de pago propia y sin comisión de marketplace. Presupuesto cerrado.",
   },
   hero: {
     h1: "Diseño de tienda online en Sevilla para negocios que quieren vender",
+    title: "Tu tienda online, lista para vender",
+    titleAccent: "lista para vender",
     subtitle:
-      "Si tienes un negocio en Sevilla y quieres vender por internet con una tienda online propia, la diseño y la construyo a medida: pasarela de pago, gestión de productos y stock, sin comisión de marketplace y con precio cerrado antes de empezar.",
+      "Diseño y monto tu tienda online en WooCommerce, Shopify o a medida, con panel de gestión, pago con tarjeta y precio cerrado por escrito.",
     secondaryCta: {
       label: "Ver precio y opciones",
       href: "#precios",
     },
   },
   sectionTitles: {
-    benefits: "Tienda online en Sevilla hecha por una programadora, no con plantillas de marketplace",
+    benefits: "Qué incluye tu tienda online en Sevilla",
     process: "Así es el proceso de crear tu tienda online",
     pricing: "Cuánto cuesta una tienda online en Sevilla",
     faq: "Preguntas frecuentes sobre tiendas online en Sevilla",
   },
   benefits: [
     {
-      title: "Tienda propia, sin comisión de marketplace",
-      text: "En un marketplace pagas una comisión a la plataforma por cada venta y vendes en un espacio que no es tuyo. En tu tienda no hay comisión de marketplace: pagas la de la pasarela de pago y, si eliges Shopify, su cuota mensual directamente a Shopify.",
+      title: "Tu catálogo, ya subido",
+      text: "Subo yo hasta unos 20 productos con sus fotos y precios.",
     },
     {
-      title: "Gestión sencilla de tus productos, sin depender de mí para cada cambio",
-      text: "Te entrego un panel donde puedes añadir productos nuevos, cambiar precios, actualizar fotos o marcar algo como agotado tú misma, sin escribir código ni llamarme para cada actualización pequeña. Te enseño a usarlo en el lanzamiento. Para cambios más grandes, como reorganizar categorías o añadir una función nueva de venta, sí que suelo encargarme yo, pero el día a día de mantener tu catálogo actualizado queda en tus manos.",
+      title: "Pago con tarjeta",
+      text: "Tus clientes pagan con tarjeta a través de una pasarela como Stripe.",
     },
     {
-      title: "SEO para que te encuentren buscando tus productos, no solo tu marca",
-      text: "Cada ficha de producto y cada categoría se estructura y se redacta pensando en las búsquedas reales que hace alguien cuando quiere comprar lo que tú vendes, no solo cuando ya conoce el nombre de tu negocio. Aplico el mismo criterio técnico de SEO local que uso en el resto de mis proyectos: estructura correcta, datos técnicos cuidados y textos orientados a Google, para que tu tienda tenga una base sólida desde el primer día.",
+      title: "Tallas y colores",
+      text: "Variantes simples de talla o color sin repetir fichas.",
+    },
+    {
+      title: "Envíos sencillos",
+      text: "Tarifa plana, recogida en tienda o las dos.",
+    },
+    {
+      title: "Un panel para el día a día",
+      text: "Subes productos, cambias precios y ves tus pedidos desde el panel.",
+    },
+    {
+      title: "Fichas preparadas para Google",
+      text: "Cada producto y categoría se escriben pensando en lo que busca quien compra.",
     },
   ],
   process: [
     {
-      title: "Auditoría de qué necesitas vender",
-      text: "Hablamos de tu catálogo y de cómo vendes, y eliges entre WooCommerce, Shopify o una tienda a medida. De ahí sale el alcance real de tu proyecto.",
+      title: "Alcance",
+      text: "Hablamos de lo que vendes y eliges WooCommerce, Shopify o una tienda a medida.",
     },
     {
-      title: "Propuesta con presupuesto cerrado",
-      text: "Con el alcance claro, te envío una propuesta por escrito: qué incluye, plazos y precio cerrado antes de empezar. La apruebas y arrancamos, sin sorpresas a mitad de camino.",
+      title: "Propuesta cerrada por escrito",
+      text: "Te envío qué incluye y cuánto cuesta antes de empezar.",
     },
     {
-      title: "Desarrollo con pasarela de pago",
-      text: "Construyo tu tienda, integro la pasarela de pago elegida y pruebo todo el proceso de compra de principio a fin (desde que alguien añade un producto al carrito hasta que recibe la confirmación del pedido) antes de publicarla.",
+      title: "Construcción",
+      text: "Monto la tienda con tu marca y pruebo una compra completa, del carrito al pedido.",
     },
     {
-      title: "Lanzamiento y formación para gestionar productos",
-      text: "Publico la tienda y te enseño a añadir productos, gestionar pedidos y hacer los cambios básicos tú misma. El primer mes de soporte tras el lanzamiento va incluido.",
+      title: "Formación y lanzamiento",
+      text: "Te enseño a gestionar productos y pedidos, publicamos y tienes un mes de soporte.",
     },
   ],
   pricing: {
@@ -732,52 +746,29 @@ export const tiendaOnline: ServicePageData = {
   faqs: [
     {
       q: "¿Cuánto cuesta una tienda online en Sevilla?",
-      a: `Una tienda online básica cuesta desde ${STORE_FROM}, con el panel de gestión incluido, en WooCommerce, Shopify o a medida, como prefieras. Incluye el diseño adaptado a tu marca, una pasarela de pago con tarjeta, envíos sencillos, la carga de hasta unos 20 productos, una sesión de formación y un mes de soporte.\n\nEl precio final se cierra por escrito después de conocer tu proyecto, antes de empezar. Redsys o Bizum, los catálogos grandes, los envíos por peso o zona y las conexiones con otros sistemas se presupuestan aparte.`,
+      a: `Una tienda online básica cuesta desde ${STORE_FROM}, con panel de gestión, en WooCommerce, Shopify o a medida. Incluye diseño con tu marca, pago con tarjeta, envíos, hasta unos 20 productos subidos por mí, formación y un mes de soporte.\n\nSe presupuestan aparte Redsys o Bizum, los catálogos grandes y los envíos por peso o por zona, y el precio final se cierra por escrito.`,
     },
     {
-      q: "¿Qué pasarelas de pago se pueden integrar en mi tienda online?",
-      a: "Una pasarela de pago con tarjeta, como Stripe, va incluida en el precio de partida. Redsys, la pasarela de los bancos españoles, y Bizum se presupuestan aparte.\n\nCada pasarela cobra su propia comisión por venta, que pagas tú directamente a la pasarela, no a mí. Te ayudo a elegir la que encaja con tus clientes.",
+      q: "¿Cómo se crea o se monta una tienda online?",
+      a: "Se empieza por lo que vendes: productos, fotos y precios. Eliges la plataforma, yo la monto con tu marca, hago una compra de prueba y te enseño el panel.",
     },
     {
       q: "¿WooCommerce, Shopify o una tienda a medida?",
-      a: `Las tres parten del mismo precio, desde ${STORE_FROM}, y eliges tú. Shopify es la más rápida de poner en marcha y no te ocupas del hosting, pero pagas a Shopify una cuota mensual. WooCommerce funciona sobre WordPress, tiene miles de extensiones y el hosting y el dominio quedan a tu nombre.\n\nUna tienda a medida, por ejemplo con Next.js y Supabase, lleva solo lo que necesitas y también queda a tu nombre. Si dudas, lo vemos en la llamada según lo que vendes.`,
+      a: `Las tres parten del mismo precio, desde ${STORE_FROM}, y eliges tú. Shopify es la más rápida y sin hosting, pero pagas su cuota mensual a Shopify.\n\nWooCommerce y una tienda a medida quedan a tu nombre.`,
     },
     {
-      q: "¿Necesito tener ya una web para montar la tienda online, o se puede hacer desde cero?",
-      a: "Se puede hacer de las dos formas. Si ya tienes una web, valoro en la auditoría si su base técnica permite añadir la tienda o si conviene construirla de nuevo para evitar arrastrar problemas de la web anterior. Si todavía no tienes ninguna web, la tienda se construye desde cero como una web completa con estructura de venta desde el primer día, sin tener que integrar después una tienda sobre una base que no se pensó para eso. En ambos casos, el punto de partida es conocer tu catálogo antes de decidir el enfoque técnico.",
+      q: "¿Qué plataforma conviene para un catálogo grande o con stock en varios almacenes?",
+      a: "Depende de tu catálogo y de los programas que uses. Las tres opciones admiten un catálogo grande, pero importarlo de golpe o sincronizar el stock con otros sistemas se presupuesta aparte.",
+      links: [{ label: "Automatizaciones para tu negocio", href: "/automatizaciones/" }],
     },
     {
-      q: "¿Puedo vender online si no tengo tienda física?",
-      a: "Sí, sin ningún problema: muchos de los negocios que montan una tienda online no tienen local físico o venden solo por internet. Lo importante para la tienda online es tener claro qué productos vas a vender, cómo los vas a gestionar (stock propio, bajo pedido, con proveedor externo…) y cómo vas a hacer llegar el pedido al cliente, no si tienes un local a pie de calle. Si además tienes tienda física y quieres combinar venta online con venta presencial, también se puede plantear la gestión de stock para que ambos canales estén coordinados.",
-    },
-    {
-      q: "¿Cuánto tiempo se tarda en tener la tienda online lista?",
-      a: "Una tienda online suele necesitar algo más de tiempo que una web informativa, porque hay que cargar y revisar cada ficha de producto además de construir la estructura general. El plazo concreto depende de cuántos productos tengas y de si tu catálogo ya está preparado (fotos, descripciones, precios) o hay que organizarlo primero.\n\nEl plazo exacto, igual que el precio, se cierra por escrito en la propuesta inicial después de conocer el alcance de tu catálogo, así que lo sabes desde el primer día y no a mitad de proyecto.",
-    },
-    {
-      q: "¿Quién sube los productos a la tienda una vez está lista, tú o yo?",
-      a: "La carga inicial de hasta unos 20 productos, con variantes simples de talla o color, la hago yo y va incluida. Después, tú añades productos, cambias precios o marcas algo como agotado desde el panel de gestión: te enseño en una sesión de formación.\n\nSi tienes un catálogo grande o necesitas importar muchos productos de golpe, esa carga se presupuesta aparte.",
-    },
-    {
-      q: "¿Qué pasa con el IVA, la facturación y los aspectos legales de vender online?",
-      a: "La tienda se construye preparada para trabajar con los requisitos habituales de una venta online en España: aviso legal, política de cookies, condiciones de venta y proceso de compra transparente sobre precios e IVA. Dicho esto, no soy asesora fiscal ni gestoría, así que para decidir cómo declarar el IVA de tus ventas online o qué régimen fiscal te conviene, te recomiendo confirmarlo con tu gestoría o asesor fiscal antes de lanzar la tienda, para que la parte legal y la parte técnica estén alineadas desde el principio.",
-    },
-    {
-      q: "¿Puedo vender productos digitales, como cursos o ebooks, además de productos físicos?",
-      a: "Sí, es algo que se valora en la fase de auditoría inicial, porque los productos digitales tienen necesidades distintas a los físicos: no requieren gestión de stock ni envío, pero sí una entrega automática segura del archivo o del acceso al curso tras el pago. Si tu catálogo combina productos físicos y digitales, o si de momento solo quieres vender digitales, lo tengo en cuenta al plantear la estructura de la tienda y al elegir la pasarela de pago más adecuada para ese tipo de venta.",
-    },
-    {
-      q: "¿Qué pasa si más adelante quiero añadir más productos o nuevas funciones a la tienda?",
-      a: "La tienda se construye pensada para crecer: puedes seguir añadiendo productos tú misma sin límite desde el panel de gestión, y si más adelante quieres una función nueva (como descuentos automáticos, una zona de clientes registrados o integrarla con tu programa de facturación), se presupuesta como una ampliación aparte, con su propio precio cerrado. No hace falta acertar con todo el alcance desde el primer día: empiezas con lo esencial para vender y amplías según lo vaya pidiendo tu negocio.",
-    },
-    {
-      q: "¿La tienda gestiona el envío y el stock sola, o eso lo tengo que hacer yo?",
-      a: "La tienda lleva el control de qué productos tienes disponibles y puede avisar automáticamente cuando algo se queda sin stock, para que no vendas algo que ya no tienes. La logística del envío en sí (empaquetar, llevarlo a la agencia de transporte, elegir la mensajería) sigue siendo una gestión tuya o de tu proveedor logístico, porque es una parte operativa del negocio, no técnica de la web. Los envíos con tarifa plana o recogida en tienda van incluidos; los envíos por peso o zona y las integraciones con transportistas se presupuestan aparte.",
+      q: "¿Qué requisitos legales y técnicos tiene una tienda online?",
+      a: "Necesitas un dominio, conexión segura HTTPS, una pasarela de pago y los textos legales: aviso legal, privacidad, cookies y condiciones de venta. Te la entrego preparada para todo ello.\n\nSu contenido y los impuestos, mejor con tu gestoría o un abogado: no doy asesoramiento jurídico.",
     },
   ],
   cta: {
-    title: "Empecemos con tu tienda online en Sevilla",
-    text: "Cuéntame qué quieres vender y cuántos productos tienes en mente. Te respondo con una propuesta clara y un presupuesto cerrado, sin compromiso.",
+    title: "Empecemos por tu tienda",
+    text: "Cuéntame qué vendes y te respondo con una propuesta clara y un precio cerrado.",
   },
 }
 
