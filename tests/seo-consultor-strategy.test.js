@@ -40,7 +40,7 @@ test('Person schema presents the SEO consultant role and expertise', async () =>
 test('pages link to the home with the exact anchor "consultor SEO en Sevilla", once per page', async () => {
   const anchorLink = /<a href="\/"[^>]*>consultor SEO en Sevilla<\/a>/g
   const proc = await source('src/pages/seo-local-sevilla.astro')
-  const about = await source('src/components/AboutMe.astro')
+  const about = await source('src/pages/sobre-mi.astro')
   assert.equal((proc.match(anchorLink) ?? []).length, 1, 'seo-local-sevilla')
   assert.equal((about.match(anchorLink) ?? []).length, 1, 'sobre-mi')
 

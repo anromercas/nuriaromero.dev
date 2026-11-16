@@ -45,6 +45,7 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
     { path: "/automatizaciones/", anchor: "automatizaciones conectadas con tu negocio", kind: "contextual" },
     { path: "/seo-local-sevilla/", anchor: "SEO local y GEO en Sevilla", kind: "contextual" },
     { path: "/desarrollo-software-medida/", anchor: "desarrollo de software a medida para empresas", kind: "contextual" },
+    { path: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/", anchor: "guía sobre cómo te encuentran las IA", kind: "contextual" },
     { path: "/contacto/", anchor: "cuéntame qué solución de IA necesitas", kind: "conversion" },
   ],
   "/seo-local-sevilla/": [

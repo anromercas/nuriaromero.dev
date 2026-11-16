@@ -17,9 +17,57 @@ function plainText(fragment) {
     .trim();
 }
 
-/** Visible word count of <main>, same method as the page story targets. */
+export const WORD_BUDGET_EXCLUDE = "data-word-budget";
+
+const MARKED_OPEN = new RegExp(
+  `<([a-z][\\w-]*)\\b[^>]*\\s${WORD_BUDGET_EXCLUDE}\\s*=\\s*("exclude"|'exclude')[^>]*>`,
+  "i",
+);
+const VOID_TAGS = new Set([
+  "area",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "link",
+  "meta",
+  "source",
+  "track",
+  "wbr",
+]);
+
+/** html without every element (and its subtree) whose opening tag has data-word-budget="exclude". */
+export function withoutWordBudgetExcluded(html) {
+  let out = html;
+  for (let m = MARKED_OPEN.exec(out); m; m = MARKED_OPEN.exec(out)) {
+    const name = m[1].toLowerCase();
+    const start = m.index;
+    const afterOpen = start + m[0].length;
+    if (VOID_TAGS.has(name) || m[0].endsWith("/>")) {
+      out = out.slice(0, start) + out.slice(afterOpen);
+      continue;
+    }
+    const tag = new RegExp(`<(/?)${name}\\b[^>]*>`, "gi");
+    tag.lastIndex = afterOpen;
+    let depth = 1;
+    let end = out.length;
+    for (let t = tag.exec(out); t; t = tag.exec(out)) {
+      depth += t[1] ? -1 : t[0].endsWith("/>") ? 0 : 1;
+      if (depth === 0) {
+        end = t.index + t[0].length;
+        break;
+      }
+    }
+    out = out.slice(0, start) + out.slice(end);
+  }
+  return out;
+}
+
+/** Visible word count of <main>, without elements marked data-word-budget="exclude". */
 export function mainWordCount(html) {
-  return parsePage(html).mainWordCount;
+  return parsePage(withoutWordBudgetExcluded(html)).mainWordCount;
 }
 
 /** Flat array of entities from every ld+json block, @graph unwrapped. */

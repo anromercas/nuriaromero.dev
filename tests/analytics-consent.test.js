@@ -199,10 +199,10 @@ test('cookie policy links use the canonical trailing-slash path', async () => {
 
 test('about portrait imports and renders the Astro WebP asset', async () => {
   const { access, readFile } = await import('node:fs/promises')
-  const about = await readFile(new URL('../src/components/AboutMe.astro', import.meta.url), 'utf8')
-  assert.match(about, /import\s+portrait\s+from\s+['"]@\/assets\/me\.webp['"]/)
+  const about = await readFile(new URL('../src/pages/sobre-mi.astro', import.meta.url), 'utf8')
+  assert.match(about, /import\s+portrait\s+from\s+['"]@\/assets\/perfil-profesional\.webp['"]/)
   assert.match(about, /<Image[\s\S]*?src=\{portrait\}/)
-  await access(new URL('../src/assets/me.webp', import.meta.url))
+  await access(new URL('../src/assets/perfil-profesional.webp', import.meta.url))
 })
 
 test('every import.meta.env variable read in src is declared in env.d.ts', async () => {
