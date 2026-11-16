@@ -128,8 +128,8 @@ function assertTemplateSection(src, name, fields) {
   assert.doesNotMatch(src, /\.band\s*\{/, `${name} redefines the band`);
 }
 
-test("hero takes copy by props and the drawing by the visual slot", async () => {
-  const src = await component("SeoLocalHero");
+test("hero takes copy by props and the drawing by the visual slot", () => {
+  const src = component("SeoLocalHero");
   assertTemplateSection(src, "SeoLocalHero", [
     "keyword",
     "title",
@@ -145,23 +145,23 @@ test("hero takes copy by props and the drawing by the visual slot", async () => 
   assert.doesNotMatch(src, /ListingMock/);
 });
 
-test("proof strip renders the items it is given and nothing when empty", async () => {
-  const src = await component("ProofStrip");
+test("proof strip renders the items it is given and nothing when empty", () => {
+  const src = component("ProofStrip");
   assertTemplateSection(src, "ProofStrip", ["items"]);
   assert.match(src, /ProofItem\[\]/);
   assert.match(src, /items\.length/);
   assert.doesNotMatch(src, /\+10 años|2 webs en Sevilla|GoogleReviewsData/);
   const site = read("src/data/site.ts");
-  assert.match(await site, /export const SITE_PROOF/);
-  assert.match(await site, /stat: "\+10 años", label: "de experiencia"/);
+  assert.match(site, /export const SITE_PROOF/);
+  assert.match(site, /stat: "\+10 años", label: "de experiencia"/);
   assert.match(
-    await site,
+    site,
     /stat: "2 webs en Sevilla", label: "de negocios locales"/,
   );
 });
 
-test("closing takes copy by props and the drawing by the visual slot", async () => {
-  const src = await component("SeoLocalClosing");
+test("closing takes copy by props and the drawing by the visual slot", () => {
+  const src = component("SeoLocalClosing");
   assertTemplateSection(src, "SeoLocalClosing", [
     "headingId",
     "keyword",
@@ -177,15 +177,15 @@ test("closing takes copy by props and the drawing by the visual slot", async () 
   assert.doesNotMatch(src, /ListingMock/);
 });
 
-test("NAP takes the heading by props and the lines from SITE", async () => {
-  const src = await component("SeoLocalNap");
+test("NAP takes the heading by props and the lines from SITE", () => {
+  const src = component("SeoLocalNap");
   assertTemplateSection(src, "SeoLocalNap", ["headingId", "keyword"]);
   assert.match(src, /SITE\.address\.full/);
   assert.match(src, /aria-labelledby=\{headingId\}/);
 });
 
-test("listing mock reads the shared tokens", async () => {
-  const src = await component("ListingMock");
+test("listing mock reads the shared tokens", () => {
+  const src = component("ListingMock");
   assert.match(src, /var\(--/);
   // rgb(100 116 139) is a drawing detail with no DESIGN.md token; it stays
   // as is because this story introduces no new colour.
@@ -193,8 +193,8 @@ test("listing mock reads the shared tokens", async () => {
   assert.deepEqual([...new Set(literals)], ["rgb(100 116 139)"]);
 });
 
-test("the reference page passes the hero, proof, closing and NAP content", async () => {
-  const src = await page();
+test("the reference page passes the hero, proof, closing and NAP content", () => {
+  const src = page();
   assert.match(src, /<SeoLocalHero[\s\S]*?keyword=\{seoLocal\.hero\.h1\}/);
   assert.match(src, /accent: seoLocal\.hero\.titleAccent/);
   assert.match(
@@ -213,4 +213,128 @@ test("the reference page passes the hero, proof, closing and NAP content", async
     src,
     /<SeoLocalNap\s+headingId="nap-title"\s+keyword="SEO local desde La Rinconada, Sevilla"/,
   );
+});
+
+test("bento wrapper takes the heading by props and tiles by children", () => {
+  const src = component("ReviewBento");
+  assertTemplateSection(src, "ReviewBento", [
+    "headingId",
+    "id",
+    "keyword",
+    "title",
+    "caption",
+  ]);
+  assert.match(src, /<SectionHeading/);
+  assert.match(src, /<slot\s*\/>/);
+  assert.match(src, /Ejemplo ilustrativo/);
+  assert.match(src, /"a a a a b b"\s+"c c d d d d"\s+"c c e e e e"\s+"f f f f f f"/);
+  assert.doesNotMatch(src, /<svg|<h3/);
+});
+
+test("bento tile takes text and link by props and the drawing by slot", () => {
+  const src = component("BentoTile");
+  assertTemplateSection(src, "BentoTile", [
+    "area",
+    "title",
+    "text",
+    "layout",
+    "link",
+    "class",
+  ]);
+  assert.match(src, /BentoArea/);
+  assert.match(src, /<slot\s*\/>/);
+  assert.match(src, /tpl-link/);
+  for (const strokeClass of ["signal", "soft", "label", "strong"]) {
+    assert.match(src, new RegExp(`:global\\(\\.${strokeClass}\\)`));
+  }
+  assert.match(src, /\.tile :global\(svg\)/);
+  assert.doesNotMatch(src, /<svg/);
+});
+
+test("process takes steps by props with byline and aside slots", () => {
+  const src = component("SeoLocalProcess");
+  assertTemplateSection(src, "SeoLocalProcess", [
+    "headingId",
+    "id",
+    "keyword",
+    "title",
+    "steps",
+    "portrait",
+    "portraitAlt",
+  ]);
+  assert.match(src, /<slot name="byline"/);
+  assert.match(src, /<slot name="aside"/);
+  assert.match(src, /<SectionHeading/);
+  assert.match(src, /@\/assets\/perfil-home\.webp/);
+  assert.doesNotMatch(src, /<svg|cycle-diagram/);
+});
+
+test("cycle diagram takes its labels by props", () => {
+  const src = component("SeoLocalCycle");
+  assertTemplateSection(src, "SeoLocalCycle", ["items", "centre", "label"]);
+  assert.match(src, /class="cycle-diagram"/);
+  assert.match(src, /aria-hidden="true"/);
+  assert.match(src, /class="cycle-list"/);
+  assert.match(src, /instrument-serif\/400-italic\.css/);
+  assert.doesNotMatch(src, /Trabajo revisable|Vídeo-informe|cada mes/);
+});
+
+test("real proof and comparison take their copy by props", () => {
+  const proof = component("RealProof");
+  assertTemplateSection(proof, "RealProof", [
+    "headingId",
+    "id",
+    "keyword",
+    "title",
+    "reviews",
+    "note",
+    "projects",
+  ]);
+  assert.match(proof, /<SectionHeading/);
+  assert.match(proof, /<Projects only=\{projects\}/);
+  assert.doesNotMatch(proof, /arkady|adfsevilla|Dos webs reales/);
+
+  const agencia = component("SeoLocalAgencia");
+  assertTemplateSection(agencia, "SeoLocalAgencia", [
+    "id",
+    "headingId",
+    "keyword",
+    "title",
+    "items",
+    "link",
+  ]);
+  assert.match(agencia, /<SectionHeading/);
+  assert.doesNotMatch(agencia, /consultora SEO|Una agencia SEO|Conmigo/);
+});
+
+test("the reference page draws its own bento tiles and passes the section copy", () => {
+  const src = page();
+  assert.equal((src.match(/<BentoTile\b/g) ?? []).length, 6);
+  for (const area of ["a", "b", "c", "d", "e", "f"]) {
+    assert.match(src, new RegExp(`<BentoTile[^>]*area="${area}"`));
+  }
+  assert.match(src, /<BentoTile[^>]*area="f"[^>]*layout="row"/);
+  assert.ok((src.match(/<svg\b/g) ?? []).length >= 6);
+  for (const heading of [
+    "Ficha de Google Business Profile",
+    "Datos coherentes en directorios locales",
+    "Búsquedas locales en Sevilla",
+    "Reseñas de Google",
+    "Web para negocios locales",
+    "Medición de llamadas, clics y rutas",
+  ]) {
+    assert.ok(src.includes(`title="${heading}"`), heading);
+  }
+  assert.match(src, /<ReviewBento[\s\S]*?headingId="revision-title"/);
+  assert.match(src, /accent: "te encuentren"/);
+  assert.match(src, /accent: "quien hace el trabajo"/);
+  assert.match(src, /accent: "puedes ver"/);
+  assert.match(src, /accent: "tu SEO local"/);
+  assert.match(src, /<Fragment slot="byline">/);
+  assert.match(src, /<a href="\/">consultor SEO en Sevilla<\/a>/);
+  assert.match(src, /<SeoLocalCycle[\s\S]*?slot="aside"/);
+  assert.match(src, /steps=\{seoLocal\.process\}/);
+  assert.match(src, /projects=\{\["arkady", "adfsevilla"\]\}/);
+  assert.match(src, /Dos webs reales de negocios de Sevilla/);
+  assert.match(src, /Una agencia SEO suele repartir tu cuenta/);
 });
