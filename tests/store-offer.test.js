@@ -185,3 +185,41 @@ test(
     assert.ok(text.includes(STORE_FINAL_PRICE_NOTE), "note");
   },
 );
+
+// Task 1.3: other store mentions read the source.
+const { disenoWeb } = await import(
+  new URL("../src/data/services.ts", import.meta.url)
+);
+const { comercios } = await import(
+  new URL("../src/data/niches.ts", import.meta.url)
+);
+
+test("design-web full-website plan note gives the store price from the source", () => {
+  const note = disenoWeb.pricing.tiers.find((t) =>
+    /Web completa/.test(t.name),
+  )?.note;
+  assert.ok(note, "nota del plan Web completa no encontrada");
+  assert.ok(note.includes(STORE_FROM));
+  assert.match(note, /tienda online/);
+  assert.doesNotMatch(note, /presupuesta aparte/);
+  assert.doesNotMatch(note, /panel/);
+});
+
+test("commerce niche gives the store price from the source", () => {
+  assert.ok(comercios.pricing.note.includes(STORE_FROM));
+  assert.match(comercios.pricing.note, /tienda online/);
+  const faq = comercios.faqs.find((f) =>
+    f.q.startsWith("Catálogo o tienda online completa"),
+  );
+  assert.ok(faq, "FAQ de precio de comercios no encontrada");
+  const second = faq.a.split("\n\n")[1];
+  assert.ok(second.includes(STORE_FROM));
+  assert.match(second, /\/tienda-online-sevilla\//);
+  for (const s of strings(comercios)) {
+    assert.doesNotMatch(s, /tienda online[^.]*se presupuesta (aparte|según)/i);
+  }
+});
+
+test("niches.ts keeps its ten panel sentences untouched", () => {
+  assert.equal(read("src/data/niches.ts").match(/panel/g).length, 10);
+});

@@ -1,6 +1,7 @@
 // Contenido de las 4 páginas de nicho sectorial.
 // Precios: web completa de hasta 5 páginas desde 399 € (landing desde 149 €).
 import type { ServicePageData } from "@/data/types"
+import { STORE_FROM } from "./store-offer.ts"
 
 export const restaurantes: ServicePageData = {
   slug: "/web-para-restaurantes-sevilla/",
@@ -272,7 +273,7 @@ export const comercios: ServicePageData = {
       "Conexión con Google Maps",
       "Creación y configuración del dominio y hosting",
     ],
-    note: "La tienda online completa con pago y envíos se presupuesta según el número de productos.",
+    note: `¿Quieres vender online con pago y envíos? La tienda online parte de ${STORE_FROM}: lo tienes en la página de tienda online.`,
   },
   faqs: [
     {
@@ -281,7 +282,7 @@ export const comercios: ServicePageData = {
     },
     {
       q: "Catálogo o tienda online completa: ¿qué precio tiene cada opción?",
-      a: "Depende de cuál de las dos opciones elijas, porque son dos productos con alcance distinto. Una web de catálogo (fotos, precios y encargos por WhatsApp) parte de 399 €, e incluye la creación y configuración del dominio y el hosting (su coste corre por tu cuenta, porque quedan a tu nombre).\n\nUna tienda online completa con pasarela de pago y gestión de envíos se presupuesta aparte según el número de productos y las funciones que necesites (variantes de talla o color, descuentos, gestión de stock…), porque el trabajo cambia mucho entre un catálogo de 20 productos y uno de 500. En ambos casos el precio se cierra por escrito antes de empezar.\n\nSi no tienes claro cuántos productos vas a subir al principio, podemos arrancar con un catálogo reducido de los productos que más vendes e ir ampliándolo con el tiempo, en vez de intentar meterlo todo desde el primer día.",
+      a: `Depende de cuál de las dos opciones elijas, porque son dos productos con alcance distinto. Una web de catálogo (fotos, precios y encargos por WhatsApp) parte de 399 €, e incluye la creación y configuración del dominio y el hosting (su coste corre por tu cuenta, porque quedan a tu nombre).\n\nUna tienda online completa con pasarela de pago y envíos parte de ${STORE_FROM}, en WooCommerce, Shopify o a medida; lo tienes explicado en https://nuriaromero.dev/tienda-online-sevilla/. Un catálogo muy grande se presupuesta aparte, y en ambos casos el precio se cierra por escrito antes de empezar.\n\nSi no tienes claro cuántos productos vas a subir al principio, podemos arrancar con un catálogo reducido de los productos que más vendes e ir ampliándolo con el tiempo, en vez de intentar meterlo todo desde el primer día.`,
     },
     {
       q: "¿Podré gestionar los productos yo mismo?",

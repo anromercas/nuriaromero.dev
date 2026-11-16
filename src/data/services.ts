@@ -114,7 +114,7 @@ export const disenoWeb: ServicePageData = {
           "Alta en Google Search Console y en Google Business Profile",
           "Un mes de soporte tras el lanzamiento",
         ],
-        note: "¿Necesitas una tienda online completa? Se presupuesta aparte.",
+        note: `¿Necesitas una tienda online? Desde ${STORE_FROM}: lo tienes en la página de tienda online.`,
       },
     ],
   },
