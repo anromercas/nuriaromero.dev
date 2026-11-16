@@ -5,9 +5,11 @@ import { readFileSync } from "node:fs";
 const root = new URL("../", import.meta.url);
 const read = (path) => readFileSync(new URL(path, root), "utf8");
 
-// Same normalisation used to capture tests/fixtures/contact-form.markup.txt.
+// Same normalisation used to capture tests/fixtures/contact-form.markup.txt,
+// plus the one frontmatter import added later (the template tokens).
 const withoutClasses = (source) =>
   source
+    .replace('import "@/styles/template.css";\n', "")
     .replace(/\s(class|class:list)=(\{[^}]*\}|"[^"]*")/g, "")
     .replace(/\s+/g, " ")
     .trim();
@@ -170,4 +172,32 @@ test("the page has one H1 through the hero and no old-world classes", () => {
     page,
     /MailIcon|LinkedInIcon|text-gray-|bg-gray-|blue-950/,
   );
+});
+
+// --- Review round: self-sufficient form and script/remap binding -------------
+
+test("ContactForm loads the template tokens it depends on", () => {
+  assert.match(form, /import\s+["']@\/styles\/template\.css["']/);
+});
+
+test("every status class the script toggles is remapped in #form-status", () => {
+  const script = read("src/scripts/contact-form.js");
+  const toggled = new Set(
+    [...script.matchAll(/text-(?:red|green|gray)-\d+/g)].map((m) => m[0]),
+  );
+  assert.ok(toggled.size >= 3, "script toggles its status classes");
+  const status = form.match(/<p id="form-status"\s+class="([^"]*)"/)?.[1] ?? "";
+  assert.ok(status, "#form-status class found");
+  const remapped = new Set(
+    [...status.matchAll(/\[&\.(text-[\w-]+)\]:/g)].map((m) => m[1]),
+  );
+  const initial = status.split(/\s+/).filter((c) => /^text-gray-\d+$/.test(c));
+  for (const cls of toggled) {
+    if (initial.includes(cls)) continue;
+    assert.ok(remapped.has(cls), `${cls} toggled by the script has no remap`);
+  }
+  for (const cls of remapped) {
+    assert.ok(toggled.has(cls), `remap for ${cls} is never toggled by the script`);
+  }
+  assert.ok(initial.length > 0, "initial neutral class kept on #form-status");
 });
