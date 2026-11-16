@@ -39,3 +39,8 @@ test("tailwind config has no darkMode setting", () => {
     /\bdarkMode\s*:/,
   );
 });
+
+test("home hero keeps a space after </strong> before the next word", () => {
+  const src = readFileSync(join(root, "src/pages/index.astro"), "utf8");
+  assert.doesNotMatch(src, /<\/strong>[A-Za-zÁ-ú]/);
+});
