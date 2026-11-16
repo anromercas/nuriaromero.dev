@@ -25,11 +25,11 @@ const breadcrumbs = [
     <SectionContainer>
       <Breadcrumbs items={breadcrumbs} />
       <h1
-        class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white mb-6"
+        class="text-4xl font-bold tracking-tight text-white sm:text-5xl mb-6"
       >
         Blog
       </h1>
-      <p class="text-xl text-gray-800 dark:text-gray-300 max-w-2xl mb-12">
+      <p class="text-xl text-gray-300 max-w-2xl mb-12">
         Guías prácticas, sin tecnicismos, para que tu negocio saque partido a
         internet: precios reales, SEO local y automatización.
       </p>
@@ -40,11 +40,11 @@ const breadcrumbs = [
             <li>
               <a
                 href={`/blog/${post.slug}/`}
-                class="block rounded-xl border border-gray-300 bg-gray-100/50 p-6 transition hover:border-blue-500 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800/50 dark:hover:border-blue-500"
+                class="block rounded-xl border border-gray-700 bg-gray-800/50 p-6 transition hover:border-blue-500 hover:shadow-lg"
               >
                 <time
                   datetime={post.data.pubDate.toISOString()}
-                  class="text-sm text-gray-600 dark:text-gray-500"
+                  class="text-sm text-gray-500"
                 >
                   {post.data.pubDate.toLocaleDateString("es-ES", {
                     year: "numeric",
@@ -52,13 +52,13 @@ const breadcrumbs = [
                     day: "numeric",
                   })}
                 </time>
-                <h2 class="mt-1 mb-2 text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                <h2 class="mt-1 mb-2 text-2xl font-semibold text-gray-100">
                   {post.data.title}
                 </h2>
                 <p class="text-gray-300">
                   {post.data.description}
                 </p>
-                <span class="mt-4 inline-block font-medium text-blue-600 dark:text-blue-400">
+                <span class="mt-4 inline-block font-medium text-blue-400">
                   Leer artículo →
                 </span>
               </a>
