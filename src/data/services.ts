@@ -679,49 +679,63 @@ export const tiendaOnline: ServicePageData = {
   },
   hero: {
     h1: "Diseño de tienda online en Sevilla para negocios que quieren vender",
+    title: "Tu tienda online, lista para vender",
+    titleAccent: "lista para vender",
     subtitle:
-      "Si tienes un negocio en Sevilla y quieres vender por internet con una tienda online propia, la diseño y la construyo a medida: pasarela de pago, gestión de productos y stock, sin comisión de marketplace y con precio cerrado antes de empezar.",
+      "Diseño y monto tu tienda online en WooCommerce, Shopify o a medida, con panel de gestión, pago con tarjeta y precio cerrado por escrito.",
     secondaryCta: {
       label: "Ver precio y opciones",
       href: "#precios",
     },
   },
   sectionTitles: {
-    benefits: "Tienda online en Sevilla hecha por una programadora, no con plantillas de marketplace",
+    benefits: "Qué incluye tu tienda online en Sevilla",
     process: "Así es el proceso de crear tu tienda online",
     pricing: "Cuánto cuesta una tienda online en Sevilla",
     faq: "Preguntas frecuentes sobre tiendas online en Sevilla",
   },
   benefits: [
     {
-      title: "Tienda propia, sin comisión de marketplace",
-      text: "En un marketplace pagas una comisión a la plataforma por cada venta y vendes en un espacio que no es tuyo. En tu tienda no hay comisión de marketplace: pagas la de la pasarela de pago y, si eliges Shopify, su cuota mensual directamente a Shopify.",
+      title: "Tu catálogo, ya subido",
+      text: "Subo yo hasta unos 20 productos con sus fotos y precios, para que abras lista para vender.",
     },
     {
-      title: "Gestión sencilla de tus productos, sin depender de mí para cada cambio",
-      text: "Te entrego un panel donde puedes añadir productos nuevos, cambiar precios, actualizar fotos o marcar algo como agotado tú misma, sin escribir código ni llamarme para cada actualización pequeña. Te enseño a usarlo en el lanzamiento. Para cambios más grandes, como reorganizar categorías o añadir una función nueva de venta, sí que suelo encargarme yo, pero el día a día de mantener tu catálogo actualizado queda en tus manos.",
+      title: "Pago con tarjeta",
+      text: "Tus clientes pagan con tarjeta a través de una pasarela como Stripe.",
     },
     {
-      title: "SEO para que te encuentren buscando tus productos, no solo tu marca",
-      text: "Cada ficha de producto y cada categoría se estructura y se redacta pensando en las búsquedas reales que hace alguien cuando quiere comprar lo que tú vendes, no solo cuando ya conoce el nombre de tu negocio. Aplico el mismo criterio técnico de SEO local que uso en el resto de mis proyectos: estructura correcta, datos técnicos cuidados y textos orientados a Google, para que tu tienda tenga una base sólida desde el primer día.",
+      title: "Tallas y colores",
+      text: "Cada producto puede tener variantes simples de talla o color sin repetir fichas.",
+    },
+    {
+      title: "Envíos sencillos",
+      text: "Tarifa plana, recogida en tienda o las dos, configuradas desde el primer día.",
+    },
+    {
+      title: "Un panel para el día a día",
+      text: "Desde el panel subes productos, cambias precios y ves tus pedidos; te enseño a usarlo.",
+    },
+    {
+      title: "Fichas preparadas para Google",
+      text: "Cada producto y cada categoría se escriben pensando en lo que busca quien quiere comprarlo.",
     },
   ],
   process: [
     {
-      title: "Auditoría de qué necesitas vender",
-      text: "Hablamos de tu catálogo y de cómo vendes, y eliges entre WooCommerce, Shopify o una tienda a medida. De ahí sale el alcance real de tu proyecto.",
+      title: "Alcance",
+      text: "Hablamos de lo que vendes y de cómo lo vendes, y eliges WooCommerce, Shopify o una tienda a medida.",
     },
     {
-      title: "Propuesta con presupuesto cerrado",
-      text: "Con el alcance claro, te envío una propuesta por escrito: qué incluye, plazos y precio cerrado antes de empezar. La apruebas y arrancamos, sin sorpresas a mitad de camino.",
+      title: "Propuesta cerrada por escrito",
+      text: "Te envío qué incluye y cuánto cuesta antes de empezar, sin sorpresas a mitad de camino.",
     },
     {
-      title: "Desarrollo con pasarela de pago",
-      text: "Construyo tu tienda, integro la pasarela de pago elegida y pruebo todo el proceso de compra de principio a fin (desde que alguien añade un producto al carrito hasta que recibe la confirmación del pedido) antes de publicarla.",
+      title: "Construcción",
+      text: "Monto la tienda con tu marca y pruebo una compra completa, del carrito a la confirmación del pedido.",
     },
     {
-      title: "Lanzamiento y formación para gestionar productos",
-      text: "Publico la tienda y te enseño a añadir productos, gestionar pedidos y hacer los cambios básicos tú misma. El primer mes de soporte tras el lanzamiento va incluido.",
+      title: "Formación y lanzamiento",
+      text: "Te enseño a gestionar productos y pedidos, publicamos y tienes un mes de soporte incluido.",
     },
   ],
   pricing: {
@@ -776,8 +790,8 @@ export const tiendaOnline: ServicePageData = {
     },
   ],
   cta: {
-    title: "Empecemos con tu tienda online en Sevilla",
-    text: "Cuéntame qué quieres vender y cuántos productos tienes en mente. Te respondo con una propuesta clara y un presupuesto cerrado, sin compromiso.",
+    title: "Empecemos por tu tienda",
+    text: "Cuéntame qué vendes y cómo lo vendes ahora, y te respondo con una propuesta clara y un precio cerrado, sin compromiso.",
   },
 }
 

@@ -180,3 +180,134 @@ test("StoreScope renders two headed lists and imports no data", () => {
     assert.match(tag, /focusable="false"/);
   }
 });
+
+// --- Task 2.1: page on the template (NRD-203) --------------------------------
+
+const { tiendaOnline } = await import(
+  new URL("../src/data/services.ts", import.meta.url)
+);
+const { intentMatrix } = await import(
+  new URL("../src/data/seo-intents.ts", import.meta.url)
+);
+const pageSource = () => read("src/pages/tienda-online-sevilla.astro");
+
+test("page uses the template variant and drops the legacy blocks", () => {
+  const page = pageSource();
+  assert.match(
+    page,
+    /<ServiceLayout\s+page=\{tiendaOnline\}\s+variant="template"/,
+  );
+  assert.doesNotMatch(page, /TitleSection|StoreOffer|✓/);
+  assert.doesNotMatch(page, /text-gray-|bg-gray-/);
+  assert.equal(
+    existsSync(new URL("src/components/tienda-online/StoreOffer.astro", root)),
+    false,
+    "StoreOffer.astro is deleted",
+  );
+});
+
+test("page composes the template components in reference slot order", () => {
+  const page = pageSource();
+  const order = [
+    'slot="hero"',
+    "<SeoLocalHero",
+    '<StoreMock slot="visual"',
+    "<ProofStrip",
+    'slot="benefits"',
+    "<ReviewBento",
+    "<StoreTileArt",
+    'slot="process"',
+    "<SeoLocalProcess",
+    'slot="before-pricing"',
+    "<RealProof",
+    "<SeoLocalAgencia",
+    'slot="pricing"',
+    "<SeoLocalPlans",
+    "<StoreScope",
+    'slot="faq"',
+    "<SeoLocalFaq",
+    'slot="related"',
+    "<SeoLocalRelated",
+    'slot="closing"',
+    "<SeoLocalClosing",
+    "<SeoLocalNap",
+  ];
+  let last = -1;
+  for (const token of order) {
+    const at = page.indexOf(token, last + 1);
+    assert.ok(at > last, `${token} appears after the previous section`);
+    last = at;
+  }
+});
+
+test("keyword headings are bound to tiendaOnline.sectionTitles", () => {
+  const page = pageSource();
+  for (const key of ["benefits", "process", "pricing", "faq"]) {
+    assert.match(
+      page,
+      new RegExp(`keyword=\\{tiendaOnline\\.sectionTitles\\?\\.${key}\\b`),
+      `sectionTitles.${key}`,
+    );
+  }
+  assert.match(page, /keyword=\{tiendaOnline\.hero\.h1\}/);
+  assert.match(page, /secondaryLink=\{\{[^}]*href:\s*"#precios"/);
+  assert.match(page, /projects=\{\["arkady",\s*"adfsevilla"\]\}/);
+  assert.match(page, /internalLinksBySource\[tiendaOnline\.slug\]/);
+});
+
+test("comparison, plans and scope are built from the store source", () => {
+  const page = pageSource();
+  assert.match(page, /keyword="¿WooCommerce, Shopify o a medida\?"/);
+  assert.match(
+    page,
+    /storeOptions\.map\(\(o\)\s*=>\s*\(\{\s*lead:\s*o\.bestFor,\s*text:\s*o\.tradeOff,?\s*\}\)\)/,
+  );
+  assert.match(page, /tiers=\{storeTiers\}/);
+  assert.match(page, /storeOptions\.find\(\(o\)\s*=>\s*o\.id === "a-medida"\)/);
+  assert.match(page, /Desde \{STORE_FROM\}/);
+  assert.match(page, /includes=\{storeIncludes\}/);
+  assert.match(page, /quotedSeparately=\{storeQuotedSeparately\}/);
+  assert.match(page, /note=\{STORE_FINAL_PRICE_NOTE\}/);
+  assert.doesNotMatch(page, /€/, "no price literal in the page");
+});
+
+test("tiendaOnline has six benefits and four steps without digits", () => {
+  assert.equal(tiendaOnline.benefits.length, 6);
+  assert.equal(tiendaOnline.process.length, 4);
+  for (const item of [...tiendaOnline.benefits, ...tiendaOnline.process]) {
+    const digits = `${item.title} ${item.text}`.match(/\d+/g) ?? [];
+    for (const d of digits) assert.equal(d, "20", `unexpected figure ${d}`);
+  }
+  assert.deepEqual(
+    tiendaOnline.process.map((s) => s.title),
+    [
+      "Alcance",
+      "Propuesta cerrada por escrito",
+      "Construcción",
+      "Formación y lanzamiento",
+    ],
+  );
+  assert.equal(
+    tiendaOnline.sectionTitles.benefits,
+    "Qué incluye tu tienda online en Sevilla",
+  );
+});
+
+test("hero copy: display title with accent, short subtitle, no price", () => {
+  const { title, titleAccent, subtitle } = tiendaOnline.hero;
+  assert.ok(title.includes(titleAccent), "accent is a substring of the title");
+  assert.match(subtitle, /tienda online/);
+  assert.doesNotMatch(subtitle, /\d|€/);
+  assert.ok(subtitle.split(/\s+/).length <= 30, "short subtitle");
+  assert.ok(tiendaOnline.cta.title.length > 0);
+});
+
+test("intent row swaps the legacy signal for the comparison heading", () => {
+  const row = intentMatrix.find((r) => r.url === "/tienda-online-sevilla/");
+  assert.deepEqual(row.contentSignals, [
+    "Así es el proceso de crear tu tienda online",
+    "¿WooCommerce, Shopify o a medida?",
+  ]);
+  assert.equal(row.titleSignal, "Diseño de tienda online en Sevilla");
+  assert.equal(row.descriptionSignal, "pasarela de pago propia");
+});

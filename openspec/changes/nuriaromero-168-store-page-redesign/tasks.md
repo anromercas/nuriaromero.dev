@@ -9,7 +9,7 @@ Prerequisite: NRD-195 (`nuriaromero-195-store-offer-pricing`) merged into `devel
 
 ## 2. Page on the template
 
-- [ ] 2.1 [NRD-203 app] Recompose `src/pages/tienda-online-sevilla.astro` on `ServiceLayout variant="template"` in reference order, shorten `tiendaOnline` (hero title/accent, subtitle, benefits keyword, six benefits, four steps, cta), swap the intent content signal, delete `StoreOffer.astro`; tests: structure assertions first; verify suite (incl. NRD-195 and `tienda-online-retarget` tests unchanged), `pnpm build`, `pnpm check:seo:dist` (02, 07, 16) green
+- [x] 2.1 [NRD-203 app] Recompose `src/pages/tienda-online-sevilla.astro` on `ServiceLayout variant="template"` in reference order, shorten `tiendaOnline` (hero title/accent, subtitle, benefits keyword, six benefits, four steps, cta), swap the intent content signal, delete `StoreOffer.astro`; tests: structure assertions first; verify suite (incl. NRD-195 and `tienda-online-retarget` tests unchanged), `pnpm build`, `pnpm check:seo:dist` (02, 07, 16) green
 - [ ] 2.2 [NRD-204 app] Five sourced FAQ items (price and platform questions kept from NRD-195, no lead time), copy within 900-1,100 words and the `/tienda-online-sevilla/` entry in `scripts/lib/template-pages.mjs`; tests: observe `check:seo-17:dist` RED, FAQ assertions first; verify suite, `pnpm build`, `pnpm check:seo:dist` green incl. 17
 
 ## Workflow follow-up

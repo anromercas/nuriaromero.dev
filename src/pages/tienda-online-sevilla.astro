@@ -1,81 +1,211 @@
 ---
-import ServiceLayout from "@/layouts/ServiceLayout.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
-import TitleSection from "@/components/TitleSection.astro"
-import CodeIcon from "@/components/icons/Code.astro"
-import StoreOffer from "@/components/tienda-online/StoreOffer.astro"
-import { tiendaOnline } from "@/data/services"
+import ServiceLayout from "@/layouts/ServiceLayout.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import ProofStrip from "@/components/seo-local/ProofStrip.astro";
+import ReviewBento from "@/components/seo-local/ReviewBento.astro";
+import BentoTile from "@/components/seo-local/BentoTile.astro";
+import SeoLocalProcess from "@/components/seo-local/SeoLocalProcess.astro";
+import RealProof from "@/components/seo-local/RealProof.astro";
+import SeoLocalAgencia from "@/components/seo-local/SeoLocalAgencia.astro";
+import SeoLocalPlans from "@/components/seo-local/SeoLocalPlans.astro";
+import SeoLocalFaq from "@/components/seo-local/SeoLocalFaq.astro";
+import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro";
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
+import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro";
+import StoreMock from "@/components/tienda-online/StoreMock.astro";
+import StoreTileArt from "@/components/tienda-online/StoreTileArt.astro";
+import StoreScope from "@/components/tienda-online/StoreScope.astro";
+import { tiendaOnline } from "@/data/services";
+import { internalLinksBySource } from "@/data/internal-links";
+import { SITE_PROOF } from "@/data/site";
 import {
   STORE_FROM,
   STORE_FINAL_PRICE_NOTE,
   storeIncludes,
   storeOptions,
   storeQuotedSeparately,
-} from "@/data/store-offer"
+  storeTiers,
+} from "@/data/store-offer";
+import { getGoogleReviews } from "@/lib/google-reviews";
+
+const reviewsData = await getGoogleReviews();
+
+// Tiles a-f in source order; tiendaOnline.benefits holds them in the same order.
+const tiles = [
+  { area: "a", kind: "catalogo", layout: "stack" },
+  { area: "b", kind: "pago", layout: "stack" },
+  { area: "c", kind: "variantes", layout: "stack" },
+  { area: "d", kind: "envios", layout: "stack" },
+  { area: "e", kind: "panel", layout: "stack" },
+  { area: "f", kind: "seo", layout: "row" },
+] as const;
+
+const comparisonItems = storeOptions.map((o) => ({
+  lead: o.bestFor,
+  text: o.tradeOff,
+}));
+const customExample = storeOptions.find((o) => o.id === "a-medida")?.example;
+
+const proofItems = [
+  SITE_PROOF[0],
+  ...(reviewsData
+    ? [
+        {
+          stat: `${reviewsData.rating.toFixed(1).replace(".", ",")} en Google`,
+          label: `${reviewsData.userRatingCount} ${reviewsData.userRatingCount === 1 ? "opinión" : "opiniones"}`,
+        },
+      ]
+    : []),
+  SITE_PROOF[1],
+];
 ---
 
-<ServiceLayout page={tiendaOnline}>
-  <SectionContainer slot="pricing" id="precios">
-    <TitleSection>
-      <CodeIcon class="size-7" />
-      {tiendaOnline.sectionTitles?.pricing}
-    </TitleSection>
-    <StoreOffer
-      from={STORE_FROM}
-      options={storeOptions}
-      includes={storeIncludes}
-      quotedSeparately={storeQuotedSeparately}
-      note={STORE_FINAL_PRICE_NOTE}
-    />
-  </SectionContainer>
-
-  <Fragment slot="before-benefits">
-    <SectionContainer>
-      <TitleSection>¿Ya vendes por Instagram o WhatsApp, o quieres empezar a vender online desde cero?</TitleSection>
-      <div class="space-y-4 text-gray-300">
-        <p>
-          Si ya vendes por redes sociales o mensajes directos, conoces el
-          problema: cada pedido se gestiona a mano, cada pago se confirma por
-          separado y es fácil perder el hilo cuando el negocio crece.
-        </p>
-        <p>
-          Si todavía no vendes online, el problema es otro: cada día alguien
-          busca lo que tú vendes y termina comprándoselo a otro negocio que sí
-          tiene una tienda donde pagar sin salir de la web.
-        </p>
-        <p>
-          Una tienda online propia resuelve los dos casos: cobras de forma
-          automática y segura, tu catálogo queda ordenado y vendes con tu
-          marca, no dentro de un marketplace.
-        </p>
-        <p>
-          Si lo único que necesitas es mostrar tu catálogo y tus horarios,
-          sin cobrar online todavía, seguramente te encaja mejor la
-          <a href="/web-para-comercios-sevilla/" class="text-blue-400 underline-offset-4 hover:underline">web para comercios</a>.
-        </p>
-      </div>
+<ServiceLayout page={tiendaOnline} variant="template">
+  <Fragment slot="hero">
+    <SeoLocalHero
+      keyword={tiendaOnline.hero.h1}
+      title={{
+        text: tiendaOnline.hero.title ?? tiendaOnline.hero.h1,
+        accent: tiendaOnline.hero.titleAccent,
+      }}
+      subtitle={tiendaOnline.hero.subtitle}
+      secondaryLink={{
+        label: tiendaOnline.hero.secondaryCta?.label ?? "Ver precio y opciones",
+        href: "#precios",
+      }}
+    >
+      <StoreMock slot="visual" />
+    </SeoLocalHero>
+    <ProofStrip items={proofItems} />
+  </Fragment>
+  <Fragment slot="benefits">
+    <SectionContainer id="que-incluye">
+      <ReviewBento
+        headingId="que-incluye-title"
+        keyword={tiendaOnline.sectionTitles?.benefits ?? ""}
+        title={{
+          text: "Lo que lleva tu tienda al abrir",
+          accent: "al abrir",
+        }}
+      >
+        {tiendaOnline.benefits.map((benefit, i) => (
+          <BentoTile
+            area={tiles[i].area}
+            layout={tiles[i].layout}
+            title={benefit.title}
+            text={benefit.text}
+          >
+            <StoreTileArt kind={tiles[i].kind} />
+          </BentoTile>
+        ))}
+      </ReviewBento>
     </SectionContainer>
   </Fragment>
-
-  <SectionContainer>
-    <TitleSection>Por qué elegir a alguien que programa, no una plantilla de marketplace</TitleSection>
-    <p class="mb-4 text-gray-300">
-      Una tienda online no es solo un catálogo bonito: hay decisiones técnicas
-      detrás (pasarela de pago, stock, seguridad) que marcan la diferencia:
-    </p>
-    <ul class="space-y-2 text-gray-300">
-      <li class="flex gap-x-2">
-        <span class="text-green-400" aria-hidden="true">✓</span>
-        <span><strong class="text-white">Pasarela de pago integrada y probada</strong>: compruebo todo el proceso de compra de principio a fin antes de publicar la tienda.</span>
-      </li>
-      <li class="flex gap-x-2">
-        <span class="text-green-400" aria-hidden="true">✓</span>
-        <span><strong class="text-white">Presupuesto cerrado según tu catálogo</strong>: sabes qué vas a pagar antes de empezar, sin cifras a ciegas ni sorpresas a mitad de proyecto.</span>
-      </li>
-      <li class="flex gap-x-2">
-        <span class="text-green-400" aria-hidden="true">✓</span>
-        <span><strong class="text-white">Trato directo</strong>: hablas conmigo, quien diseña, programa e integra tu pasarela de pago, no con un comercial.</span>
-      </li>
-    </ul>
-  </SectionContainer>
+  <Fragment slot="process">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalProcess
+          id="proceso"
+          headingId="proceso-title"
+          keyword={tiendaOnline.sectionTitles?.process ?? ""}
+          title={{
+            text: "Del catálogo a tu tienda publicada",
+            accent: "tu tienda publicada",
+          }}
+          steps={tiendaOnline.process}
+        >
+          <Fragment slot="byline">
+            Soy Nuria Romero, <a href="/">desarrolladora web en Sevilla</a>, y
+            monto tu tienda de principio a fin: vendes con tu marca, no dentro
+            de un marketplace.
+          </Fragment>
+        </SeoLocalProcess>
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="before-pricing">
+    <SectionContainer id="trabajo-real">
+      <RealProof
+        headingId="prueba-title"
+        keyword="Trabajo real para negocios de Sevilla"
+        title={{ text: "Trabajo que puedes ver", accent: "puedes ver" }}
+        reviews={reviewsData}
+        note="Dos webs reales de negocios de Sevilla, hechas por mí. No son tiendas: te las enseño para que veas cómo trabajo."
+        projects={["arkady", "adfsevilla"]}
+      />
+    </SectionContainer>
+    <SectionContainer>
+      <SeoLocalAgencia
+        id="woocommerce-shopify-o-a-medida"
+        headingId="plataforma-title"
+        keyword="¿WooCommerce, Shopify o a medida?"
+        title={{ text: "Elige tu plataforma", accent: "tu plataforma" }}
+        items={comparisonItems}
+        link={{ label: "Ver precio y opciones", href: "#precios" }}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="pricing">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalPlans
+          headingId="planes-title"
+          keyword={tiendaOnline.sectionTitles?.pricing ?? ""}
+          title={{
+            text: "Tres opciones, el mismo precio",
+            accent: "el mismo precio",
+          }}
+          tiers={storeTiers}
+        >
+          <Fragment slot="lede">
+            <strong>Desde {STORE_FROM}</strong> las tres: eliges WooCommerce,
+            Shopify o una tienda a medida
+            {customExample ? ` (${customExample})` : ""}.
+          </Fragment>
+        </SeoLocalPlans>
+        <StoreScope
+          includes={storeIncludes}
+          quotedSeparately={storeQuotedSeparately}
+          note={STORE_FINAL_PRICE_NOTE}
+        />
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="faq">
+    <SectionContainer>
+      <SeoLocalFaq
+        headingId="faq-title"
+        keyword={tiendaOnline.sectionTitles?.faq ?? ""}
+        title={{
+          text: "Dudas antes de montar tu tienda",
+          accent: "antes de montar",
+        }}
+        lede="Si tu duda no está aquí, la vemos en la llamada."
+        faqs={tiendaOnline.faqs}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="related">
+    <SectionContainer>
+      <SeoLocalRelated links={internalLinksBySource[tiendaOnline.slug] ?? []} />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="closing">
+    <SeoLocalClosing
+      headingId="cierre-title"
+      keyword="Reserva una llamada sobre tu tienda online"
+      title={{ text: tiendaOnline.cta?.title ?? "", accent: "tu tienda" }}
+      text={tiendaOnline.cta?.text ?? ""}
+      meta="30 minutos · Sin compromiso · Directamente conmigo"
+    >
+      <StoreMock slot="visual" animate={false} />
+    </SeoLocalClosing>
+    <SectionContainer>
+      <SeoLocalNap
+        headingId="nap-title"
+        keyword="Tiendas online desde La Rinconada, Sevilla"
+      />
+    </SectionContainer>
+  </Fragment>
 </ServiceLayout>
