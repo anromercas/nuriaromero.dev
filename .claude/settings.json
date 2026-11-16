@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in *.astro|*.ts|*.js|*.mjs|*.css|*.json|*.md) pnpm exec prettier --write \"$f\" >/dev/null 2>&1 || true;; esac"
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); root=$(git -C \"${CLAUDE_PROJECT_DIR:-.}\" rev-parse --show-toplevel 2>/dev/null); d=$(cd \"$(dirname \"$f\")\" 2>/dev/null && pwd -P); [ -n \"$f\" ] && [ -n \"$root\" ] && [ -n \"$d\" ] || exit 0; case \"$d/\" in \"$root\"/*) case \"$f\" in *.astro|*.ts|*.js|*.mjs|*.css|*.json|*.md) pnpm exec prettier --write \"$f\" >/dev/null 2>&1 || true;; esac;; esac"
           }
         ]
       }
