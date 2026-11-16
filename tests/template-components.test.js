@@ -154,10 +154,7 @@ test("proof strip renders the items it is given and nothing when empty", () => {
   const site = read("src/data/site.ts");
   assert.match(site, /export const SITE_PROOF/);
   assert.match(site, /stat: "\+10 años", label: "de experiencia"/);
-  assert.match(
-    site,
-    /stat: "2 webs en Sevilla", label: "de negocios locales"/,
-  );
+  assert.match(site, /stat: "2 webs en Sevilla", label: "de negocios locales"/);
 });
 
 test("closing takes copy by props and the drawing by the visual slot", () => {
@@ -227,7 +224,10 @@ test("bento wrapper takes the heading by props and tiles by children", () => {
   assert.match(src, /<SectionHeading/);
   assert.match(src, /<slot\s*\/>/);
   assert.match(src, /Ejemplo ilustrativo/);
-  assert.match(src, /"a a a a b b"\s+"c c d d d d"\s+"c c e e e e"\s+"f f f f f f"/);
+  assert.match(
+    src,
+    /"a a a a b b"\s+"c c d d d d"\s+"c c e e e e"\s+"f f f f f f"/,
+  );
   assert.doesNotMatch(src, /<svg|<h3/);
 });
 
@@ -377,7 +377,10 @@ test("FAQ takes questions by props and renders the optional links of an item", (
 
 test("faqSchema ignores FAQ item links and keeps its signature", () => {
   const schema = read("src/lib/schema.ts");
-  assert.match(schema, /export function faqSchema\(faqs: \{ q: string; a: string \}\[\]\)/);
+  assert.match(
+    schema,
+    /export function faqSchema\(faqs: \{ q: string; a: string \}\[\]\)/,
+  );
   assert.doesNotMatch(schema, /\.links/);
 });
 
@@ -390,17 +393,32 @@ test("related links take the list by props", () => {
 
 test("the reference page passes plans, FAQ and related content", () => {
   const src = page();
-  assert.match(src, /<SeoLocalPlans[\s\S]*?headingId="planes-title"[\s\S]*?keyword="Cuánto cuesta el SEO local en Sevilla"/);
+  assert.match(
+    src,
+    /<SeoLocalPlans[\s\S]*?headingId="planes-title"[\s\S]*?keyword="Cuánto cuesta el SEO local en Sevilla"/,
+  );
   assert.match(src, /tiers=\{seoLocal\.pricing\.tiers \?\? \[\]\}/);
   assert.match(src, /note=\{seoLocal\.pricing\.note\}/);
-  assert.match(src, /<Fragment slot="lede">[\s\S]*?tierFrom\(seoLocal, "Local"\)[\s\S]*?tierFrom\(seoLocal, "Local Pro"\)/);
+  assert.match(
+    src,
+    /<Fragment slot="lede">[\s\S]*?tierFrom\(seoLocal, "Local"\)[\s\S]*?tierFrom\(seoLocal, "Local Pro"\)/,
+  );
   assert.doesNotMatch(src, /(?:300|500)\s*€/);
-  assert.match(src, /<SeoLocalFaq[\s\S]*?headingId="faq-title"[\s\S]*?keyword="Preguntas frecuentes sobre SEO local en Sevilla"/);
+  assert.match(
+    src,
+    /<SeoLocalFaq[\s\S]*?headingId="faq-title"[\s\S]*?keyword="Preguntas frecuentes sobre SEO local en Sevilla"/,
+  );
   assert.match(src, /faqs=\{seoLocal\.faqs\}/);
   assert.match(src, /accent: "antes de empezar"/);
   assert.match(src, /accent: "un alcance claro"/);
-  assert.match(src, /lede="Si tu duda no está aquí, la resolvemos en la llamada\."/);
-  assert.match(src, /links=\{internalLinksBySource\[seoLocal\.slug\] \?\? \[\]\}/);
+  assert.match(
+    src,
+    /lede="Si tu duda no está aquí, la resolvemos en la llamada\."/,
+  );
+  assert.match(
+    src,
+    /links=\{internalLinksBySource\[seoLocal\.slug\] \?\? \[\]\}/,
+  );
 });
 
 test("no section copies the shared heading styles or imports the serif font twice", () => {
@@ -409,10 +427,16 @@ test("no section copies the shared heading styles or imports the serif font twic
   assert.ok(files.length >= 15);
   for (const file of files) {
     const src = readFileSync(new URL(file, dir), "utf8");
-    assert.doesNotMatch(src, /^ {2}\.(?:kw|display)(?: em)? \{/m, `${file} redefines heading styles`);
+    assert.doesNotMatch(
+      src,
+      /^ {2}\.(?:kw|display)(?: em)? \{/m,
+      `${file} redefines heading styles`,
+    );
     assert.doesNotMatch(src, /^ {2}\.band \{/m, `${file} redefines the band`);
     const importsSerif = /@fontsource\/instrument-serif/.test(src);
-    const mayImport = ["SectionHeading.astro", "SeoLocalCycle.astro"].includes(file);
+    const mayImport = ["SectionHeading.astro", "SeoLocalCycle.astro"].includes(
+      file,
+    );
     assert.equal(importsSerif, mayImport, `${file} serif import`);
   }
 });
@@ -425,7 +449,10 @@ test("ServiceLayout has a template variant without slot fallbacks and the ink gr
   assert.match(layout, /template-ground px-4 pt-24/);
 
   const start = layout.indexOf('{variant === "template" ? (');
-  const templateBranch = layout.slice(layout.indexOf("(", start), layout.indexOf(") : (", start));
+  const templateBranch = layout.slice(
+    layout.indexOf("(", start),
+    layout.indexOf(") : (", start),
+  );
   for (const name of [
     "hero",
     "benefits",
@@ -435,7 +462,11 @@ test("ServiceLayout has a template variant without slot fallbacks and the ink gr
     "related",
     "closing",
   ]) {
-    assert.match(templateBranch, new RegExp(`<slot name="${name}"\\s*/>`), name);
+    assert.match(
+      templateBranch,
+      new RegExp(`<slot name="${name}"\\s*/>`),
+      name,
+    );
   }
   assert.doesNotMatch(
     templateBranch,
@@ -463,4 +494,45 @@ test("the reference page uses the template variant and no route-local global sty
   assert.doesNotMatch(src, /<style/);
   assert.doesNotMatch(src, /rgb\(5 10 24\)/);
   assert.equal((src.match(/<div class="band">/g) ?? []).length, 2);
+});
+
+test("DESIGN.md describes the shared tokens and how to use the components on another page", () => {
+  const drift = design.slice(design.indexOf("## Known Drift"));
+  assert.doesNotMatch(drift, /Page-scoped tokens/);
+  assert.doesNotMatch(drift, /defined per component/);
+  assert.doesNotMatch(drift, /copy-pasted per component/);
+  assert.match(drift, /gray-950/, "the timeline dot note stays");
+
+  assert.match(design, /src\/styles\/template\.css/);
+  assert.match(design, /theme\.extend/);
+  assert.match(design, /ADR 0014|0014-template-section-components/);
+
+  const guide = design.slice(
+    design.indexOf("## Using the components on another page"),
+  );
+  assert.ok(design.includes("## Using the components on another page"));
+  for (const term of [
+    'variant="template"',
+    "SectionHeading",
+    "BentoTile",
+    "visual",
+    "templatePages",
+    "FaqItem",
+    "diff-main",
+  ]) {
+    assert.ok(guide.includes(term), `guide mentions ${term}`);
+  }
+  for (const section of [
+    "hero",
+    "proof strip",
+    "bento",
+    "process",
+    "real proof",
+    "plans",
+    "FAQ",
+    "related",
+    "closing",
+  ]) {
+    assert.match(guide, new RegExp(section, "i"), section);
+  }
 });
