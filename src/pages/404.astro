@@ -1,0 +1,61 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro";
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
+import { focusServices } from "@/data/services";
+import "@/styles/template.css";
+
+const exits = [
+  { path: "/", anchor: "Inicio" },
+  ...focusServices.map((s) => ({ path: s.slug, anchor: s.breadcrumbName })),
+];
+---
+
+<Layout
+  title="Página no encontrada — Nuria Romero"
+  description="La página que buscas no existe o ha cambiado de dirección. Desde aquí puedes volver al inicio, ver los servicios o reservar una llamada."
+  noindex
+>
+  <main class="template-ground px-4 pt-24">
+    <div class="nf-wrap">
+      <SeoLocalHero
+        keyword="Esta página no existe o ha cambiado de dirección"
+        title={{
+          text: "Elige por dónde seguir",
+          accent: "por dónde seguir",
+        }}
+        subtitle="Si has llegado por un enlace antiguo o con una errata, aquí abajo tienes el inicio y los servicios; si lo prefieres, reserva una llamada y lo vemos juntos."
+        secondaryLink={{ label: "Volver al inicio", href: "/" }}
+      />
+      <SeoLocalRelated
+        label="Páginas principales"
+        ariaLabel="Páginas principales"
+        links={exits}
+      />
+    </div>
+    <SeoLocalClosing
+      headingId="nf-cierre-title"
+      keyword="Reserva una llamada"
+      title={{
+        text: "¿No encuentras lo que buscabas?",
+        accent: "lo que buscabas",
+      }}
+      text="Cuéntame qué necesita tu negocio y te digo si puedo ayudarte con la web, el SEO local o la automatización de tareas."
+    />
+  </main>
+</Layout>
+
+<style>
+  .nf-wrap {
+    max-width: 56rem;
+    margin-inline: auto;
+    padding-bottom: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .nf-wrap {
+      padding-bottom: 6rem;
+    }
+  }
+</style>
