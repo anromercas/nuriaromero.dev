@@ -105,3 +105,182 @@ test("AutomationTileArt offers one drawing per kind", () => {
     assert.match(source, new RegExp(`class="[^"]*\\b${cls}\\b`));
   }
 });
+
+// --- Task 2.1: page on the template (NRD-206) ----------------------------------
+
+const { automatizaciones } = await import(
+  new URL("../src/data/services.ts", import.meta.url)
+);
+const pageSource = () => read("src/pages/automatizaciones.astro");
+const claims = /ROI|retorno|amortiz|%|\d+\s*(horas|semanas)/i;
+
+test("page uses the template variant and drops the legacy blocks", () => {
+  const page = pageSource();
+  assert.match(
+    page,
+    /<ServiceLayout\s+page=\{automatizaciones\}\s+variant="template"/,
+  );
+  assert.doesNotMatch(page, /RealProof|TitleSection|✓/);
+  assert.doesNotMatch(page, /text-gray-|bg-gray-/);
+});
+
+test("page composes the template components in reference slot order", () => {
+  const page = pageSource();
+  const order = [
+    'slot="hero"',
+    "<SeoLocalHero",
+    '<FlowMock slot="visual"',
+    "<ProofStrip",
+    'slot="benefits"',
+    "<ReviewBento",
+    "<AutomationTileArt",
+    'slot="process"',
+    "<SeoLocalProcess",
+    'slot="before-pricing"',
+    "<SeoLocalAgencia",
+    'slot="pricing"',
+    "<SeoLocalPlans",
+    'slot="faq"',
+    "<SeoLocalFaq",
+    'slot="related"',
+    "<SeoLocalRelated",
+    'slot="closing"',
+    "<SeoLocalClosing",
+    "<SeoLocalNap",
+  ];
+  let last = -1;
+  for (const token of order) {
+    const at = page.indexOf(token, last + 1);
+    assert.ok(at > last, `${token} appears after the previous section`);
+    last = at;
+  }
+});
+
+test("keyword headings are bound to automatizaciones.sectionTitles", () => {
+  const page = pageSource();
+  for (const key of ["benefits", "process", "pricing", "faq"]) {
+    assert.match(
+      page,
+      new RegExp(`keyword=\\{automatizaciones\\.sectionTitles\\?\\.${key}\\b`),
+      `sectionTitles.${key}`,
+    );
+  }
+  assert.match(page, /keyword=\{automatizaciones\.hero\.h1\}/);
+  assert.match(page, /secondaryLink=\{\{[^}]*href:\s*"#precios"/);
+  assert.match(page, /internalLinksBySource\[automatizaciones\.slug\]/);
+  assert.match(page, /keyword="¿Qué conviene automatizar primero y qué no\?"/);
+});
+
+test("the single plan is built from automatizaciones.pricing", () => {
+  const page = pageSource();
+  assert.match(page, /tiers=\{\[plan\]\}/);
+  for (const field of ["from", "includes", "note"]) {
+    assert.match(page, new RegExp(`automatizaciones\\.pricing\\.${field}\\b`));
+  }
+  assert.match(page, /desde \{automatizaciones\.pricing\.from\}/);
+  assert.doesNotMatch(page, /€/, "no price literal in the page");
+  assert.equal(automatizaciones.pricing.tiers, undefined, "no tiers in data");
+  assert.equal(automatizaciones.pricing.from, "149 €");
+});
+
+test("proof strip shows the experience cell and the rating only", () => {
+  const page = pageSource();
+  assert.match(page, /SITE_PROOF\[0\]/);
+  assert.doesNotMatch(
+    page,
+    /SITE_PROOF\[1\]/,
+    "websites are not automation proof",
+  );
+  assert.match(page, /reviewsData\s*\?/);
+});
+
+test("data: six examples, five steps, hero and closing copy", () => {
+  assert.equal(automatizaciones.benefits.length, 6);
+  assert.equal(automatizaciones.process.length, 5);
+  const titles = automatizaciones.benefits.map((b) => b.title).join(" ");
+  for (const term of [
+    /WhatsApp/,
+    /Facturas/,
+    /Citas/,
+    /Formularios/,
+    /Avisos/,
+    /Informes/,
+  ]) {
+    assert.match(titles, term);
+  }
+  const { title, titleAccent, secondaryCta } = automatizaciones.hero;
+  assert.ok(title.includes(titleAccent), "accent is a substring of the title");
+  assert.equal(secondaryCta.label, "Ver precio");
+  assert.equal(secondaryCta.href, "#precios");
+  assert.equal(
+    automatizaciones.sectionTitles.benefits,
+    "Ejemplos de automatización de procesos",
+  );
+  assert.ok(automatizaciones.cta.title.length > 0);
+  assert.ok(automatizaciones.cta.text.length > 0);
+});
+
+test("intent signals and published price stay as they were", () => {
+  const { sectionTitles, hero, seo } = automatizaciones;
+  assert.equal(
+    sectionTitles.process,
+    "Así es el proceso de automatizar tus tareas repetitivas",
+  );
+  assert.equal(sectionTitles.pricing, "Cuánto cuesta automatizar un proceso");
+  assert.equal(
+    hero.h1,
+    "Automatización de procesos en Sevilla: que tu negocio trabaje solo",
+  );
+  assert.ok(seo.title.includes("Automatización de procesos en Sevilla"));
+});
+
+test("the subtitle defines process automation in its first two sentences", () => {
+  const sentences = automatizaciones.hero.subtitle.match(/[^.!?]+[.!?]/g) ?? [];
+  assert.ok(sentences.length >= 2, "at least two sentences");
+  const lead = sentences.slice(0, 2).join(" ");
+  assert.match(lead, /automatiz/i);
+  assert.doesNotMatch(lead, /\d/);
+  assert.doesNotMatch(lead, /\b(n8n|Make|Zapier)\b/);
+  assert.doesNotMatch(sentences[0].trim(), /^(n8n|Make)\b/);
+});
+
+const copyStrings = (value, out = []) => {
+  if (typeof value === "string") out.push(value);
+  else if (Array.isArray(value)) value.forEach((v) => copyStrings(v, out));
+  else if (value && typeof value === "object")
+    Object.entries(value).forEach(([k, v]) => {
+      if (k !== "href" && k !== "slug") copyStrings(v, out);
+    });
+  return out;
+};
+
+test("no savings guard: only the price digits in the page copy", () => {
+  const { seo, ...copy } = automatizaciones;
+  for (const text of copyStrings(copy)) {
+    const stripped = text.replace(/n8n/gi, "");
+    assert.doesNotMatch(stripped, claims, text);
+    for (const digits of stripped.match(/\d+/g) ?? []) {
+      assert.equal(digits, "149", `unexpected figure in "${text}"`);
+    }
+  }
+  assert.doesNotMatch(seo.description, claims);
+});
+
+test("meta description mentions the starting price within 160 chars", () => {
+  const d = automatizaciones.seo.description;
+  assert.match(d, /desde 149/);
+  assert.ok(d.length <= 160, `${d.length}`);
+  assert.ok(d.includes("años de experiencia"));
+});
+
+test(
+  "built page <main> holds no savings claim",
+  { skip: !existsSync(new URL("dist/automatizaciones/index.html", root)) },
+  () => {
+    const html = read("dist/automatizaciones/index.html");
+    const main = (html.match(/<main\b[\s\S]*?<\/main>/)?.[0] ?? "")
+      .replace(/<(script|style)\b[\s\S]*?<\/\1>/g, " ")
+      .replace(/<[^>]+>/g, " ");
+    assert.doesNotMatch(main, claims);
+  },
+);

@@ -280,53 +280,68 @@ export const automatizaciones: ServicePageData = {
   seo: {
     title: "Automatización de procesos en Sevilla para negocios | n8n y Make",
     description:
-      "Automatización de procesos en Sevilla con n8n y Make: facturas, correos, citas e informes que se hacen solos. Más de 10 años de experiencia.",
+      "Automatización de procesos en Sevilla con n8n y Make: facturas, citas e informes que se hacen solos, desde 149 euros. Más de 10 años de experiencia.",
   },
   hero: {
     h1: "Automatización de procesos en Sevilla: que tu negocio trabaje solo",
+    title: "Que las tareas repetitivas se hagan solas",
+    titleAccent: "se hagan solas",
     subtitle:
-      "¿Cuántas horas pierdes a la semana copiando datos, enviando los mismos correos o pasando pedidos de un sitio a otro? Conecto las herramientas que ya usas (correo, Excel, WhatsApp, facturación…) para que esas tareas se hagan solas.",
+      "Automatizar un proceso es que una tarea que haces siempre igual, como copiar datos o enviar el mismo aviso, la hagan solos tus programas conectados. Tú te quedas con lo que necesita a una persona.",
+    secondaryCta: { label: "Ver precio", href: "#precios" },
   },
   sectionTitles: {
-    benefits: "Qué consigue tu negocio automatizando procesos con n8n y Make",
+    benefits: "Ejemplos de automatización de procesos",
     process: "Así es el proceso de automatizar tus tareas repetitivas",
     pricing: "Cuánto cuesta automatizar un proceso",
     faq: "Preguntas frecuentes sobre automatización de procesos",
   },
   benefits: [
     {
-      title: "Recupera horas cada semana",
-      text: "Confirmaciones de cita, recordatorios a clientes, facturas recurrentes, informes de ventas… Todo lo que sigue un patrón se puede automatizar. Tú dedicas ese tiempo a vender.",
+      title: "Mensajes de WhatsApp",
+      text: "Las confirmaciones y los recordatorios salen solos, y lo que necesita respuesta te llega a ti.",
     },
     {
-      title: "Con las herramientas que ya usas",
-      text: "No hay que cambiar de programas: n8n y Make conectan Gmail, Google Sheets, WhatsApp, Holded, tu web y cientos de aplicaciones más entre sí.",
+      title: "Facturas",
+      text: "Al cerrar un pedido, la factura se crea y se guarda en su carpeta.",
     },
     {
-      title: "Menos errores humanos",
-      text: "Los datos copiados a mano se equivocan; las automatizaciones no. Cada pedido, cita o factura llega donde tiene que llegar, siempre.",
+      title: "Citas y recordatorios",
+      text: "Cada reserva entra en tu agenda y el cliente recibe su aviso el día antes.",
     },
     {
-      title: "Inversión pequeña, retorno rápido",
-      text: "Una automatización sencilla se amortiza en semanas. Es la forma más barata de ganar productividad en un negocio pequeño.",
+      title: "Formularios a tu hoja o CRM",
+      text: "Lo que te escriben desde la web llega ordenado a tu hoja de cálculo o a tu lista de clientes.",
+    },
+    {
+      title: "Avisos internos",
+      text: "Te enteras al momento de un pedido nuevo, una reseña o un pago pendiente.",
+    },
+    {
+      title: "Informes",
+      text: "Cada lunes recibes en tu correo un resumen de ventas o gastos, sin montarlo a mano.",
     },
   ],
   process: [
     {
-      title: "Auditoría de tareas",
-      text: "Repasamos juntas tu día a día y localizo qué tareas repetitivas se pueden automatizar y cuánto tiempo te ahorrarían.",
+      title: "Mapear la tarea",
+      text: "Me cuentas cómo la haces hoy y apuntamos cada paso.",
     },
     {
-      title: "Propuesta priorizada",
-      text: "Te propongo las automatizaciones ordenadas por impacto: primero las que más tiempo te devuelven.",
+      title: "Simplificarla antes de automatizarla",
+      text: "Quitamos los pasos que sobran, para no automatizar un desorden.",
     },
     {
-      title: "Implementación y pruebas",
-      text: "Monto los flujos, los pruebo con casos reales y los dejo funcionando con avisos si algo falla.",
+      title: "Elegir la herramienta",
+      text: "Uso n8n o Make, que conectan tus programas, según lo que haya que unir.",
     },
     {
-      title: "Documentación y control",
-      text: "Te entrego cada flujo documentado y te enseño a supervisarlo. Sin dependencia: lo entiendes y lo controlas.",
+      title: "Piloto con casos reales",
+      text: "La pruebo con pedidos, citas o mensajes de verdad antes de dejarla sola.",
+    },
+    {
+      title: "Dejarla funcionando",
+      text: "Queda activa, con avisos si algo falla y documentada para que sepas qué hace.",
     },
   ],
   pricing: {
@@ -378,7 +393,11 @@ export const automatizaciones: ServicePageData = {
       a: "Puede tenerlo, y te lo explico con transparencia antes de proponerte la herramienta: n8n y Make tienen sus propios planes de uso según el volumen de tareas que ejecutes al mes, y para negocios pequeños suele bastar con un plan económico o incluso gratuito. Mi honorario cubre la auditoría, el diseño, la implementación y la documentación del flujo; el coste de la plataforma en sí, si lo hay, depende del volumen de tu negocio y se evalúa juntas antes de decidir qué herramienta usar, para que no haya sorpresas en tu factura mensual.",
     },
   ],
-}
+  cta: {
+    title: "Empecemos por una tarea",
+    text: "Cuéntame qué tarea repites cada semana y te digo si compensa automatizarla y cuánto costaría, sin compromiso.",
+  },
+};
 
 export const inteligenciaArtificial: ServicePageData = {
   slug: "/inteligencia-artificial/",

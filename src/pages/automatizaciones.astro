@@ -1,6 +1,203 @@
 ---
-import ServiceLayout from "@/layouts/ServiceLayout.astro"
-import { automatizaciones } from "@/data/services"
+import ServiceLayout from "@/layouts/ServiceLayout.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import ProofStrip from "@/components/seo-local/ProofStrip.astro";
+import ReviewBento from "@/components/seo-local/ReviewBento.astro";
+import BentoTile from "@/components/seo-local/BentoTile.astro";
+import SeoLocalProcess from "@/components/seo-local/SeoLocalProcess.astro";
+import SeoLocalAgencia from "@/components/seo-local/SeoLocalAgencia.astro";
+import SeoLocalPlans from "@/components/seo-local/SeoLocalPlans.astro";
+import SeoLocalFaq from "@/components/seo-local/SeoLocalFaq.astro";
+import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro";
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
+import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro";
+import FlowMock from "@/components/automatizaciones/FlowMock.astro";
+import AutomationTileArt from "@/components/automatizaciones/AutomationTileArt.astro";
+import { automatizaciones } from "@/data/services";
+import { internalLinksBySource } from "@/data/internal-links";
+import { SITE_PROOF } from "@/data/site";
+import { getGoogleReviews } from "@/lib/google-reviews";
+
+const reviewsData = await getGoogleReviews();
+
+// Tiles a-f in source order; automatizaciones.benefits holds them in the same order.
+const tiles = [
+  { area: "a", kind: "whatsapp", layout: "stack" },
+  { area: "b", kind: "facturas", layout: "stack" },
+  { area: "c", kind: "citas", layout: "stack" },
+  { area: "d", kind: "formularios", layout: "stack" },
+  { area: "e", kind: "avisos", layout: "stack" },
+  { area: "f", kind: "informes", layout: "row" },
+] as const;
+
+// The only published price is one plan built from the site data.
+const plan = {
+  name: "Por automatización",
+  from: automatizaciones.pricing.from,
+  includes: automatizaciones.pricing.includes ?? [],
+  note: automatizaciones.pricing.note,
+};
+
+// No automation project is published, so the strip carries only the
+// experience cell and the live Google rating when it exists.
+const proofItems = [
+  SITE_PROOF[0],
+  ...(reviewsData
+    ? [
+        {
+          stat: `${reviewsData.rating.toFixed(1).replace(".", ",")} en Google`,
+          label: `${reviewsData.userRatingCount} ${reviewsData.userRatingCount === 1 ? "opinión" : "opiniones"}`,
+        },
+      ]
+    : []),
+];
+
+const comparisonItems = [
+  {
+    lead: "Empieza por lo repetitivo.",
+    text: "Una tarea que sigue siempre los mismos pasos y te quita tiempo cada semana, como confirmar citas o pasar datos de un programa a otro.",
+  },
+  {
+    lead: "Deja fuera lo que cambia cada vez.",
+    text: "Si una tarea necesita tu criterio, como responder una queja o cerrar un presupuesto, es mejor que la siga haciendo una persona.",
+  },
+  {
+    lead: "Simplifica antes de automatizar.",
+    text: "Un proceso con pasos de más sigue siendo lento aunque lo haga una máquina: primero lo ordenamos y luego lo automatizamos.",
+  },
+];
 ---
 
-<ServiceLayout page={automatizaciones} />
+<ServiceLayout page={automatizaciones} variant="template">
+  <Fragment slot="hero">
+    <SeoLocalHero
+      keyword={automatizaciones.hero.h1}
+      title={{
+        text: automatizaciones.hero.title ?? automatizaciones.hero.h1,
+        accent: automatizaciones.hero.titleAccent,
+      }}
+      subtitle={automatizaciones.hero.subtitle}
+      secondaryLink={{
+        label: automatizaciones.hero.secondaryCta?.label ?? "Ver precio",
+        href: "#precios",
+      }}
+    >
+      <FlowMock slot="visual" />
+    </SeoLocalHero>
+    <ProofStrip items={proofItems} />
+  </Fragment>
+  <Fragment slot="benefits">
+    <SectionContainer id="ejemplos">
+      <ReviewBento
+        headingId="ejemplos-title"
+        keyword={automatizaciones.sectionTitles?.benefits ?? ""}
+        title={{
+          text: "Lo que puede hacerse solo en tu negocio",
+          accent: "hacerse solo",
+        }}
+      >
+        {automatizaciones.benefits.map((benefit, i) => (
+          <BentoTile
+            area={tiles[i].area}
+            layout={tiles[i].layout}
+            title={benefit.title}
+            text={benefit.text}
+          >
+            <AutomationTileArt kind={tiles[i].kind} />
+          </BentoTile>
+        ))}
+      </ReviewBento>
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="process">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalProcess
+          id="proceso"
+          headingId="proceso-title"
+          keyword={automatizaciones.sectionTitles?.process ?? ""}
+          title={{
+            text: "Primero se simplifica, luego se automatiza",
+            accent: "luego se automatiza",
+          }}
+          steps={automatizaciones.process}
+        />
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="before-pricing">
+    <SectionContainer>
+      <SeoLocalAgencia
+        id="que-automatizar-primero"
+        headingId="que-automatizar-primero-title"
+        keyword="¿Qué conviene automatizar primero y qué no?"
+        title={{
+          text: "Por dónde empezar a automatizar",
+          accent: "empezar",
+        }}
+        items={comparisonItems}
+        link={{ label: "Ver el precio", href: "#precios" }}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="pricing">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalPlans
+          headingId="planes-title"
+          keyword={automatizaciones.sectionTitles?.pricing ?? ""}
+          title={{
+            text: "Sabes lo que cuesta antes de empezar",
+            accent: "antes de empezar",
+          }}
+          tiers={[plan]}
+        >
+          <Fragment slot="lede">
+            Cada automatización cuesta{" "}
+            <strong>desde {automatizaciones.pricing.from}</strong>, con las
+            pruebas, los avisos y la documentación incluidos.
+          </Fragment>
+        </SeoLocalPlans>
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="faq">
+    <SectionContainer>
+      <SeoLocalFaq
+        headingId="faq-title"
+        keyword={automatizaciones.sectionTitles?.faq ?? ""}
+        title={{
+          text: "Lo que preguntan antes de automatizar",
+          accent: "antes de automatizar",
+        }}
+        lede="Si tu duda no está aquí, la vemos en la llamada."
+        faqs={automatizaciones.faqs}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="related">
+    <SectionContainer>
+      <SeoLocalRelated
+        links={internalLinksBySource[automatizaciones.slug] ?? []}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="closing">
+    <SeoLocalClosing
+      headingId="cierre-title"
+      keyword="Reserva una llamada sobre tus procesos"
+      title={{ text: automatizaciones.cta?.title ?? "", accent: "una tarea" }}
+      text={automatizaciones.cta?.text ?? ""}
+      meta="30 minutos · Sin compromiso · Directamente conmigo"
+    >
+      <FlowMock slot="visual" animate={false} />
+    </SeoLocalClosing>
+    <SectionContainer>
+      <SeoLocalNap
+        headingId="nap-title"
+        keyword="Automatizaciones desde La Rinconada, Sevilla"
+      />
+    </SectionContainer>
+  </Fragment>
+</ServiceLayout>
