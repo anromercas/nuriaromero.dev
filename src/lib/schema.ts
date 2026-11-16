@@ -120,6 +120,8 @@ export function serviceSchema(service: {
   price: string
   // Opt-in: un Offer mensual por plan. Si no se pasa, el JSON-LD queda como siempre.
   tiers?: { name: string; from: string }[]
+  // "monthly" (por defecto) emite UnitPriceSpecification mensual; "one-time" emite Offers simples.
+  billing?: "monthly" | "one-time"
   id?: string
 }) {
   const priceValue = service.price.replace(/[^\d,.]/g, "").replace(",", ".")
@@ -132,13 +134,17 @@ export function serviceSchema(service: {
     url: serviceUrl,
     price: parsePrice(tier.from),
     priceCurrency: "EUR",
-    priceSpecification: {
-      "@type": "UnitPriceSpecification",
-      price: Number(parsePrice(tier.from)),
-      priceCurrency: "EUR",
-      unitText: "MON",
-      valueAddedTaxIncluded: false,
-    },
+    ...(service.billing === "one-time"
+      ? {}
+      : {
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: Number(parsePrice(tier.from)),
+            priceCurrency: "EUR",
+            unitText: "MON",
+            valueAddedTaxIncluded: false,
+          },
+        }),
   }))
 
   return {

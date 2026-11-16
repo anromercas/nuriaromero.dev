@@ -258,6 +258,39 @@ for (const { url: page, breadcrumbName } of pages) {
   }
 }
 
+// NRD-189: /diseno-web-sevilla/ Service offers equal the visible plans as one-time Offers.
+const disenoWebHtml = await readFile(path.join(distDir, "diseno-web-sevilla", "index.html"), "utf8").catch(() => null)
+if (disenoWebHtml) {
+  const expectedOneTime = [
+    { name: "Landing de una página", price: "149" },
+    { name: "Web completa (hasta 5 páginas)", price: "399" },
+  ]
+  const services = []
+  for (const block of getJsonLdBlocks(disenoWebHtml)) {
+    try {
+      const parsed = JSON.parse(block)
+      const entries = Array.isArray(parsed) ? parsed : Array.isArray(parsed?.["@graph"]) ? parsed["@graph"] : [parsed]
+      services.push(...entries.filter((entry) => entry?.["@type"] === "Service"))
+    } catch {
+      // Malformed JSON-LD is owned by other checks.
+    }
+  }
+  const offers = services.flatMap((service) => (Array.isArray(service.offers) ? service.offers : service.offers ? [service.offers] : []))
+  if (offers.length !== expectedOneTime.length) {
+    addFailure(`/diseno-web-sevilla/: expected ${expectedOneTime.length} one-time Offers in the Service, found ${offers.length}`)
+  }
+  for (const { name, price } of expectedOneTime) {
+    const offer = offers.find((entry) => entry?.name === name)
+    if (!offer) addFailure(`/diseno-web-sevilla/: missing one-time Offer "${name}"`)
+    else if (String(offer.price) !== price) addFailure(`/diseno-web-sevilla/: Offer "${name}" price ${offer.price} differs from ${price}`)
+  }
+  for (const offer of offers) {
+    if (offer?.priceSpecification) addFailure(`/diseno-web-sevilla/: one-time Offer "${offer.name}" must not carry a priceSpecification`)
+  }
+} else {
+  addFailure("/diseno-web-sevilla/: missing dist page for the one-time Offers check")
+}
+
 const home = await readFile(path.join(distDir, "index.html"), "utf8").catch(() => null)
 if (!home) {
   addFailure("/: missing dist/index.html")

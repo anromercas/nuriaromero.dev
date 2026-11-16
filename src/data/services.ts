@@ -13,6 +13,8 @@ export function tierFrom(service: ServicePageData, tierName: string): string {
 
 export const disenoWeb: ServicePageData = {
   slug: "/diseno-web-sevilla/",
+  offersFromTiers: true,
+  tierBilling: "one-time",
   breadcrumbName: "Diseño web en Sevilla",
   seo: {
     title: "Diseño web Sevilla | Diseñadora web, precio cerrado desde 149 €",
