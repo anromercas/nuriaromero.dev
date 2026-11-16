@@ -1,32 +1,48 @@
 ---
-import "@fontsource/instrument-serif/400-italic.css"
-import BookingButton from "@/components/BookingButton.astro"
-import ListingMock from "@/components/seo-local/ListingMock.astro"
-import { seoLocal } from "@/data/services"
+import BookingButton from "@/components/BookingButton.astro";
+import SectionHeading from "@/components/seo-local/SectionHeading.astro";
+import "@/styles/template.css";
+import type { AccentTitle, TextLink } from "./types";
 
-const { h1, title = h1, titleAccent, subtitle, primaryCtaLabel } = seoLocal.hero
+interface Props {
+  keyword: string;
+  title: AccentTitle;
+  subtitle: string;
+  primaryCtaLabel?: string;
+  secondaryLink?: TextLink;
+  actionsAttrs?: Record<string, string>;
+}
 
-const accentAt = titleAccent ? title.indexOf(titleAccent) : -1
-const before = accentAt >= 0 && titleAccent ? title.slice(0, accentAt) : title
-const accent = accentAt >= 0 && titleAccent ? titleAccent : ""
-const after = accentAt >= 0 && titleAccent ? title.slice(accentAt + titleAccent.length) : ""
+const {
+  keyword,
+  title,
+  subtitle,
+  primaryCtaLabel,
+  secondaryLink,
+  actionsAttrs,
+} = Astro.props;
+const hasVisual = Astro.slots.has("visual");
 ---
 
-<div class="hero">
+<div class:list={["hero", { "hero-solo": !hasVisual }]}>
   <div class="hero-copy">
-    <h1 class="kw">{h1}</h1>
-    <p class="display">
-      {before}{accent && <em class="accent">{accent}</em>}{after}
-    </p>
+    <SectionHeading
+      level="h1"
+      keyword={keyword}
+      title={title}
+      class="hero-display"
+    />
     <p class="hero-subtitle">{subtitle}</p>
-    <div class="hero-actions">
+    <div class="hero-actions" {...actionsAttrs}>
       <BookingButton label={primaryCtaLabel} />
-      <a class="hero-link" href="#precios">Ver los planes</a>
+      {secondaryLink && <a class="hero-link" href={secondaryLink.href}>{secondaryLink.label}</a>}
     </div>
   </div>
-  <div class="hero-visual">
-    <ListingMock />
-  </div>
+  {hasVisual && (
+    <div class="hero-visual">
+      <slot name="visual" />
+    </div>
+  )}
 </div>
 
 <style>
@@ -37,38 +53,17 @@ const after = accentAt >= 0 && titleAccent ? title.slice(accentAt + titleAccent.
     align-items: center;
   }
 
-  .kw {
-    margin: 0 0 0.6rem;
-    color: rgb(203 213 225);
-    font-size: 1.0625rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
-  .display {
-    margin: 0 0 1.5rem;
+  .hero-copy :global(.hero-display) {
     max-width: 16ch;
-    color: white;
+    margin: 0 0 1.5rem;
     font-size: clamp(2.25rem, 6vw, 3.5rem);
-    font-weight: 700;
     line-height: 1.04;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  .accent {
-    color: rgb(125 211 252);
-    font-family: "Instrument Serif", Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 1.12em;
-    letter-spacing: -0.01em;
   }
 
   .hero-subtitle {
     max-width: 52ch;
     margin: 0;
-    color: rgb(203 213 225);
+    color: var(--text-secondary);
     font-size: 1.125rem;
     line-height: 1.65;
   }
@@ -82,20 +77,20 @@ const after = accentAt >= 0 && titleAccent ? title.slice(accentAt + titleAccent.
   }
 
   .hero-link {
-    color: rgb(226 232 240);
+    color: var(--text-body);
     text-decoration: underline;
-    text-decoration-color: rgb(56 189 248 / 0.7);
+    text-decoration-color: rgb(var(--sky-signal-rgb) / 0.7);
     text-underline-offset: 0.3em;
     border-radius: 0.25rem;
     transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .hero-link:hover {
-    color: rgb(125 211 252);
+    color: var(--sky-accent);
   }
 
   .hero-link:focus-visible {
-    outline: 2px solid rgb(56 189 248);
+    outline: 2px solid var(--sky-signal);
     outline-offset: 4px;
   }
 
@@ -109,7 +104,11 @@ const after = accentAt >= 0 && titleAccent ? title.slice(accentAt + titleAccent.
     position: absolute;
     inset: -25% -1rem;
     z-index: -1;
-    background: radial-gradient(closest-side, rgb(56 189 248 / 0.18), transparent);
+    background: radial-gradient(
+      closest-side,
+      rgb(var(--sky-signal-rgb) / 0.18),
+      transparent
+    );
     pointer-events: none;
   }
 
@@ -117,6 +116,10 @@ const after = accentAt >= 0 && titleAccent ? title.slice(accentAt + titleAccent.
     .hero {
       grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
       gap: 2rem;
+    }
+
+    .hero.hero-solo {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>
