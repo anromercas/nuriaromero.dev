@@ -72,3 +72,11 @@ test("endpoint source filters drafts and stays prerendered", () => {
 test("sitemap filter excludes rss.xml", () => {
   assert.match(read("astro.config.mjs"), /rss\.xml/);
 });
+
+test("SEO.astro declares the feed alternate link once, after the canonical", () => {
+  const src = read("src/components/seo/SEO.astro");
+  const link =
+    '<link rel="alternate" type="application/rss+xml" title="Blog de Nuria Romero" href="/rss.xml" />';
+  assert.equal(src.split(link).length - 1, 1);
+  assert.ok(src.indexOf(link) > src.indexOf('rel="canonical"'));
+});
