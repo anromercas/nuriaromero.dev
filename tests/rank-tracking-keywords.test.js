@@ -21,6 +21,26 @@ test('"tienda online sevilla" is only a navigational reference', () => {
   assert.equal(row.group, "Referencia (navegacional)");
 });
 
+test('"posicionamiento en ia" and "seo para ia" are tracked for /seo-para-ia/ in group GEO / IA', () => {
+  for (const keyword of ["posicionamiento en ia", "seo para ia"]) {
+    const row = find(keyword);
+    assert.ok(row, `${keyword} no encontrada`);
+    assert.equal(row.page, "/seo-para-ia/");
+    assert.equal(row.group, "GEO / IA");
+  }
+});
+
+test("every keywordOwners term owned by /seo-para-ia/ is tracked for that page", async () => {
+  const { keywordOwners } = await import(
+    new URL("../src/data/seo-intents.ts", import.meta.url)
+  );
+  const owned = keywordOwners.filter((o) => o.url === "/seo-para-ia/");
+  assert.ok(owned.length >= 2);
+  for (const { keyword } of owned) {
+    assert.equal(find(keyword)?.page, "/seo-para-ia/", keyword);
+  }
+});
+
 test("keywords are unique and within maxCallsPerRun", () => {
   const names = keywords.map((k) => k.keyword);
   assert.equal(new Set(names).size, names.length);

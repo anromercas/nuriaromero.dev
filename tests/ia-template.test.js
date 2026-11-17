@@ -319,7 +319,12 @@ test("related links add the GEO guide before the conversion link", () => {
   assert.equal(rows[geo].anchor, "guía sobre cómo te encuentran las IA");
   assert.equal(rows[geo].kind, "contextual");
   assert.ok(geo < conversion, "before the conversion row");
-  assert.equal(rows.length, 5);
+  assert.equal(rows.length, 6);
+  const page = rows.findIndex((r) => r.path === "/seo-para-ia/");
+  assert.ok(
+    page >= 0 && page < conversion,
+    "SEO para IA row before conversion",
+  );
 });
 
 // --- Task 2.2: FAQ and word budget (NRD-216) -----------------------------------
