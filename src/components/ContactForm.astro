@@ -46,9 +46,11 @@ const showReviewInvite =
           id="name"
           name="name"
           required
+          aria-describedby="name-error"
           class="w-full rounded-lg border border-slate-400/60 bg-[var(--ink-ground)] px-4 py-2.5 text-base text-white placeholder:text-slate-400 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-slate-400 focus:border-sky-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
           placeholder="Tu nombre completo"
         />
+        <p id="name-error" class="field-error mt-1.5 text-sm leading-snug text-[var(--status-error)]" hidden></p>
       </div>
 
       <div class="grid grid-cols-1 gap-4">
@@ -61,9 +63,11 @@ const showReviewInvite =
             id="email"
             name="email"
             required
+            aria-describedby="email-error"
             class="w-full rounded-lg border border-slate-400/60 bg-[var(--ink-ground)] px-4 py-2.5 text-base text-white placeholder:text-slate-400 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-slate-400 focus:border-sky-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
             placeholder="tu@email.com"
           />
+          <p id="email-error" class="field-error mt-1.5 text-sm leading-snug text-[var(--status-error)]" hidden></p>
         </div>
 
         <div>
@@ -89,9 +93,11 @@ const showReviewInvite =
           name="message"
           rows={4}
           required
+          aria-describedby="message-error"
           class="w-full rounded-lg border border-slate-400/60 bg-[var(--ink-ground)] px-4 py-2.5 text-base text-white placeholder:text-slate-400 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-slate-400 focus:border-sky-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
           placeholder="¿En qué puedo ayudarte?"
         ></textarea>
+        <p id="message-error" class="field-error mt-1.5 text-sm leading-snug text-[var(--status-error)]" hidden></p>
       </div>
 
       <div class="flex items-start gap-3">
@@ -100,6 +106,7 @@ const showReviewInvite =
           id="privacy"
           name="privacy"
           required
+          aria-describedby="privacy-error"
           class="mt-1 size-4 shrink-0 accent-sky-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
         />
         <label for="privacy" class="text-sm leading-relaxed text-slate-300">
@@ -109,6 +116,7 @@ const showReviewInvite =
           </a>. <span class="text-slate-400">*</span>
         </label>
       </div>
+      <p id="privacy-error" class="field-error mt-1.5 text-sm leading-snug text-[var(--status-error)]" hidden></p>
     </div>
 
     <div class="space-y-3">
@@ -116,6 +124,11 @@ const showReviewInvite =
         <p id="form-status"
            class="text-sm text-gray-300 [&.text-red-600]:text-[var(--status-error)] [&.text-green-600]:text-[var(--status-success)]"
            aria-live="polite"
+           aria-atomic="true"></p>
+
+        <p id="form-error"
+           class="text-sm font-medium text-[var(--status-error)]"
+           role="alert"
            aria-atomic="true"></p>
 
         <button

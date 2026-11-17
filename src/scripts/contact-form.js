@@ -12,6 +12,8 @@
 // inicial, igual que en WhatsAppButton) elimina la redeclaración de raíz y
 // además reengancha el listener de submit al nuevo nodo #contact-form tras
 // cada navegación (el formulario no usa transition:persist).
+import { validateContactFields } from './contact-form-validation.js';
+
 function initContactForm() {
   const ENDPOINT = 'https://formspree.io/f/mdklbyaz';
 
@@ -24,11 +26,13 @@ function initContactForm() {
   if (!form) return;
 
   const statusEl = document.getElementById('form-status');
+  // NRD-247: errors go to a role="alert" region; #form-status stays polite.
+  const errorEl = document.getElementById('form-error');
   const submitBtn = document.getElementById('submit-btn');
   // Optional: only rendered when the GBP is verified (see ContactForm.astro).
   const reviewInvite = document.getElementById('form-review-invite');
 
-  if (!statusEl || !submitBtn) {
+  if (!statusEl || !errorEl || !submitBtn) {
     console.warn('[ContactForm] Elementos no encontrados en el DOM.');
     return;
   }
@@ -39,6 +43,50 @@ function initContactForm() {
     if (type === 'success') statusEl.classList.add('text-green-600');
     else if (type === 'error') statusEl.classList.add('text-red-600');
     else statusEl.classList.add('text-gray-300');
+  }
+
+  function setError(msg) {
+    errorEl.textContent = msg;
+  }
+
+  const FIELDS = ['name', 'email', 'message', 'privacy'];
+
+  function clearFieldError(field) {
+    const control = document.getElementById(field);
+    const errorP = document.getElementById(`${field}-error`);
+    if (control) control.removeAttribute('aria-invalid');
+    if (errorP) {
+      errorP.textContent = '';
+      errorP.hidden = true;
+    }
+  }
+
+  function showFieldError(field, message) {
+    const control = document.getElementById(field);
+    const errorP = document.getElementById(`${field}-error`);
+    if (control) control.setAttribute('aria-invalid', 'true');
+    if (errorP) {
+      errorP.textContent = `Error: ${message}`;
+      errorP.hidden = false;
+    }
+  }
+
+  function readValues() {
+    const data = new FormData(form);
+    return {
+      name: String(data.get('name') ?? ''),
+      email: String(data.get('email') ?? ''),
+      message: String(data.get('message') ?? ''),
+      privacy: form.elements.privacy?.checked === true,
+    };
+  }
+
+  // Correcting a field clears its own error straight away.
+  for (const field of FIELDS) {
+    const control = document.getElementById(field);
+    if (!control) continue;
+    control.addEventListener('input', () => clearFieldError(field));
+    control.addEventListener('change', () => clearFieldError(field));
   }
 
   function setReviewInvite(visible) {
@@ -65,10 +113,17 @@ function initContactForm() {
 
     if (submitBtn.disabled) return;
 
-    if (!form.checkValidity()) {
+    const errors = validateContactFields(readValues());
+    const invalid = new Map(errors.map((e) => [e.field, e.message]));
+    for (const field of FIELDS) {
+      if (invalid.has(field)) showFieldError(field, invalid.get(field));
+      else clearFieldError(field);
+    }
+    if (errors.length) {
       setReviewInvite(false);
-      setStatus('Por favor, completa los campos requeridos.', 'error');
-      if (form.reportValidity) form.reportValidity();
+      setStatus('');
+      setError('Revisa los campos marcados.');
+      document.getElementById(errors[0].field)?.focus();
       return;
     }
 
@@ -76,6 +131,7 @@ function initContactForm() {
     const originalText = submitBtn.textContent || 'Enviar mensaje';
     submitBtn.textContent = 'Enviando…';
     setStatus('');
+    setError('');
     setReviewInvite(false);
 
     try {
@@ -102,12 +158,12 @@ function initContactForm() {
           if (text) msg += ' · ' + text.slice(0, 200);
         }
         setReviewInvite(false);
-        setStatus(msg, 'error');
+        setError(msg);
       }
     } catch (err) {
       console.error('[ContactForm] Error de red/JS:', err);
       setReviewInvite(false);
-      setStatus('⚠️ Error de conexión. Inténtalo de nuevo en unos minutos.', 'error');
+      setError('⚠️ Error de conexión. Inténtalo de nuevo en unos minutos.');
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
