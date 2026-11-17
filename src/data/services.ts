@@ -256,7 +256,7 @@ export const desarrolloSoftware: ServicePageData = {
       "Formación para tu equipo",
       "Garantía y soporte tras la entrega",
     ],
-    note: "Tras la primera reunión te doy un presupuesto cerrado.",
+    note: "Tras la primera reunión te doy un presupuesto cerrado por fases.",
   },
   cta: {
     title: "Empecemos por tu herramienta",
@@ -322,8 +322,8 @@ export const automatizaciones: ServicePageData = {
       text: "Cada reserva entra en tu agenda y el cliente recibe aviso.",
     },
     {
-      title: "Formularios a tu hoja o CRM",
-      text: "Lo que te escriben desde la web llega ordenado a tu hoja o CRM.",
+      title: "Formularios a tu hoja",
+      text: "Lo que te escriben desde la web llega ordenado a tu hoja de cálculo.",
     },
     {
       title: "Avisos internos",
@@ -477,7 +477,7 @@ export const inteligenciaArtificial: ServicePageData = {
       "Análisis de tu caso de uso",
       "Piloto con datos reales",
       "Integración con tu web o WhatsApp",
-      "Configuración conforme al RGPD",
+      "Configuración respetuosa con el RGPD",
       "Supervisión y ajustes el primer mes",
     ],
     note: "El coste depende del caso de uso. Con la prueba piloto ves cómo responde con tus datos antes de seguir.",
@@ -718,7 +718,7 @@ export const seoParaIa: ServicePageData = {
     },
     {
       title: "Implementación",
-      text: "Textos, preguntas frecuentes, datos estructurados y acceso, en tu web.",
+      text: "Textos, preguntas frecuentes, datos estructurados y acceso, en tu web y en tu perfil.",
     },
     {
       title: "Seguimiento",
@@ -841,7 +841,7 @@ export const tiendaOnline: ServicePageData = {
     },
     {
       title: "Tallas y colores",
-      text: "Variantes de talla o color sin repetir fichas.",
+      text: "Variantes simples de talla o color sin repetir fichas.",
     },
     {
       title: "Envíos sencillos",
@@ -863,7 +863,7 @@ export const tiendaOnline: ServicePageData = {
     },
     {
       title: "Propuesta cerrada por escrito",
-      text: "Te envío qué incluye y cuánto cuesta antes de empezar.",
+      text: "Te envío qué incluye y cuánto cuesta.",
     },
     {
       title: "Construcción",
@@ -871,7 +871,7 @@ export const tiendaOnline: ServicePageData = {
     },
     {
       title: "Formación y lanzamiento",
-      text: "Te enseño a gestionar productos y pedidos, y publicamos con un mes de soporte.",
+      text: "Te enseño a gestionar productos y pedidos, y publicamos.",
     },
   ],
   pricing: {

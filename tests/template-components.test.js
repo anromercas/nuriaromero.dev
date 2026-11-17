@@ -647,3 +647,21 @@ test("Price answer reads the site data", () => {
     }
   }
 });
+
+test("FAQ intro sticks only on tall desktop viewports", () => {
+  const src = component("SeoLocalFaq");
+  assert.match(
+    src,
+    /@media \(min-width: 1024px\) and \(min-height: 800px\)\s*\{\s*\.faq-intro\s*\{\s*position: sticky/,
+  );
+  assert.equal((src.match(/position: sticky/g) ?? []).length, 1);
+});
+
+test("no page answer or plan note claims a Landing-tier feature for every web plan", () => {
+  const src = read("src/pages/diseno-web-sevilla.astro");
+  const answer = src.match(
+    /headingId="que-incluye-title"[\s\S]*?answer="([^"]*)"/,
+  )[1];
+  assert.doesNotMatch(answer, /alta en Google(?!\.)/);
+  assert.match(answer, /la web completa suma el alta en Google/);
+});

@@ -87,7 +87,7 @@ const proofItems = [
           text: "Lo que lleva tu tienda al abrir",
           accent: "al abrir",
         }}
-        answer="Tu tienda abre con catálogo subido, pago con tarjeta, variantes de talla y color, envíos sencillos y panel de gestión."
+        answer="Tu tienda abre con catálogo subido, pago con tarjeta, variantes simples de talla y color, envíos sencillos y panel de gestión."
       >
         {tiendaOnline.benefits.map((benefit, i) => (
           <BentoTile
@@ -158,7 +158,7 @@ const proofItems = [
             accent: "el mismo precio",
           }}
           tiers={storeTiers}
-          answer={`Desde ${STORE_FROM} las tres opciones: WooCommerce, Shopify o una tienda a medida, a elegir.`}
+          answer={`Una tienda online cuesta desde ${STORE_FROM}, con WooCommerce, Shopify o a medida: tú eliges.`}
         />
         <StoreScope
           includes={storeIncludes}
@@ -177,7 +177,7 @@ const proofItems = [
           text: "Dudas antes de montar tu tienda",
           accent: "antes de montar",
         }}
-        answer={`Una tienda online básica cuesta desde ${STORE_FROM}, con panel de gestión, en WooCommerce, Shopify o a medida.`}
+        answer={`Desde ${STORE_FROM} tienes una tienda online con panel de gestión, pago con tarjeta y un mes de soporte.`}
         faqs={tiendaOnline.faqs}
       />
     </SectionContainer>

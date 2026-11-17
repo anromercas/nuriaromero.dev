@@ -162,7 +162,10 @@ const splitAnswer = (answer: string) => {
       gap: 4rem;
       align-items: start;
     }
+  }
 
+  /* Sticky only when the viewport is tall enough to hold the intro with its answer. */
+  @media (min-width: 1024px) and (min-height: 800px) {
     .faq-intro {
       position: sticky;
       top: 6rem;
