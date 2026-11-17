@@ -65,12 +65,12 @@ const relatedLinks = internalLinksBySource[url] ?? [];
               {" · "}
               <span>
                 Publicado el{" "}
-                <time datetime={pubDate.toISOString()}>{formattedPubDate}</time>
+                <time datetime={pubDate.toISOString()} data-post-published>{formattedPubDate}</time>
               </span>
               {updatedDate && formattedUpdatedDate && (
                 <span>
                   {" · "}Actualizado el{" "}
-                  <time datetime={updatedDate.toISOString()}>
+                  <time datetime={updatedDate.toISOString()} data-post-updated>
                     {formattedUpdatedDate}
                   </time>
                 </span>

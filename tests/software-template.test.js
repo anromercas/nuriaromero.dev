@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
+import { withoutWordBudgetExcluded } from "../scripts/lib/page-contract.mjs";
 
 const root = new URL("../", import.meta.url);
 const read = (path) => readFileSync(new URL(path, root), "utf8");
@@ -340,7 +341,7 @@ const builtWords = () => {
     read("dist/desarrollo-software-medida/index.html").match(
       /<main\b[\s\S]*?<\/main>/,
     )?.[0] ?? "";
-  return main
+  return withoutWordBudgetExcluded(main)
     .replace(/<(script|style)\b[\s\S]*?<\/\1>/g, " ")
     .replace(/<[^>]+>/g, " ")
     .split(/\s+/)

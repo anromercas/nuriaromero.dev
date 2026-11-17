@@ -1,0 +1,32 @@
+---
+import "@/styles/template.css";
+import { formatMonthYear } from "@/lib/freshness";
+
+interface Props {
+  date?: string;
+}
+
+const { date } = Astro.props;
+---
+
+{date && (
+  <p class="page-updated" data-word-budget="exclude">
+    Actualizado:{" "}
+    <time datetime={date} data-page-updated>
+      {formatMonthYear(date)}
+    </time>
+  </p>
+)}
+
+<style>
+  .page-updated {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .page-updated time {
+    color: var(--text-secondary);
+  }
+</style>
