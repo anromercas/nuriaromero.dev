@@ -29,6 +29,8 @@ test("keywordOwners records the local head terms", () => {
     "desarrollo de software a medida sevilla": "/desarrollo-software-medida/",
     "inteligencia artificial para empresas sevilla":
       "/inteligencia-artificial/",
+    "posicionamiento en ia": "/seo-para-ia/",
+    "seo para ia": "/seo-para-ia/",
     "como aparecer en google maps":
       "/blog/como-aparecer-en-google-maps-negocio-sevilla/",
     "cuanto cuesta una pagina web en sevilla":

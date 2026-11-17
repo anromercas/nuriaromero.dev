@@ -8,7 +8,7 @@ const { reciprocalLinks } = await import(
   new URL("../src/data/seo-intents.ts", import.meta.url)
 );
 
-// ADR 0013 table A, rows 1-7 (rows 8-11 belong to NRD-25).
+// ADR 0013 table A, rows 1-11.
 const rows = [
   [
     "/diseno-web-sevilla/",
@@ -41,9 +41,29 @@ const rows = [
     "/seo-local-sevilla/",
     "SEO para que encuentren tu tienda online en Sevilla",
   ],
+  [
+    "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
+    "/seo-para-ia/",
+    "servicio de SEO para IA",
+  ],
+  [
+    "/seo-para-ia/",
+    "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
+    "guía sobre qué es el GEO",
+  ],
+  [
+    "/seo-para-ia/",
+    "/seo-local-sevilla/",
+    "SEO local para negocios en Sevilla",
+  ],
+  [
+    "/seo-local-sevilla/",
+    "/seo-para-ia/",
+    "SEO para IA y visibilidad en respuestas generativas",
+  ],
 ];
 
-test("ADR 0013 table A rows 1-7 exist as contextual links", () => {
+test("ADR 0013 table A rows 1-11 exist as contextual links", () => {
   rows.forEach(([source, path, anchor], index) => {
     const found = (internalLinksBySource[source] ?? []).filter(
       (link) => link.path === path && link.anchor === anchor,
@@ -94,6 +114,18 @@ test("ADR 0013 table D pairs exist", () => {
       target: "/inteligencia-artificial/",
       sourceAnchor: "chatbots y soluciones con IA",
       targetAnchor: "automatizaciones conectadas con tu negocio",
+    },
+    {
+      source: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
+      target: "/seo-para-ia/",
+      sourceAnchor: "servicio de SEO para IA",
+      targetAnchor: "guía sobre qué es el GEO",
+    },
+    {
+      source: "/seo-local-sevilla/",
+      target: "/seo-para-ia/",
+      sourceAnchor: "SEO para IA y visibilidad en respuestas generativas",
+      targetAnchor: "SEO local para negocios en Sevilla",
     },
   ];
   for (const pair of pairs) {
