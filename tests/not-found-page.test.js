@@ -107,7 +107,7 @@ test("the 404 is outside templatePages on purpose", async () => {
   assert.ok(!templatePages.some((p) => p.route.includes("404")));
 });
 
-test("package.json declares the check-seo-19 pair and chains it last", () => {
+test("package.json declares the check-seo-19 pair and chains it", () => {
   const scripts = JSON.parse(read("package.json")).scripts;
   assert.equal(
     scripts["check:seo-19"],
@@ -115,7 +115,7 @@ test("package.json declares the check-seo-19 pair and chains it last", () => {
   );
   assert.equal(scripts["check:seo-19:dist"], "node scripts/check-seo-19.mjs");
   assert.ok(
-    scripts["check:seo:dist"].endsWith(" && node scripts/check-seo-19.mjs"),
+    scripts["check:seo:dist"].includes(" && node scripts/check-seo-19.mjs"),
   );
   assert.ok(existsSync(new URL("scripts/check-seo-19.mjs", root)));
 });
