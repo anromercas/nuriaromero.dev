@@ -1,5 +1,6 @@
 ---
 import { SITE } from "@/data/site"
+import { brandedTitle } from "@/lib/seo-title"
 
 interface Props {
   title: string
@@ -22,9 +23,10 @@ const {
 const ogImageUrl = new URL(ogImage, Astro.site).href
 ---
 
-<title>{title}</title>
+<title>{brandedTitle(title)}</title>
 <meta name="description" content={description} />
 {!noindex && <link rel="canonical" href={canonical} />}
+<link rel="alternate" type="application/rss+xml" title="Blog de Nuria Romero" href="/rss.xml" />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
 <meta property="og:title" content={title} />

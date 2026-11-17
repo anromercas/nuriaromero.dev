@@ -1,25 +1,47 @@
 ---
-import "@fontsource-variable/onest"
+import "@fontsource-variable/onest";
 
-import Header from "../components/Header.astro"
-import Footer from "../components/Footer.astro"
-import WhatsAppButton from "../components/WhatsAppButton.astro"
-import AnalyticsConsent from "../components/AnalyticsConsent.astro"
-import SEO from "../components/seo/SEO.astro"
-import Schema from "../components/seo/Schema.astro"
-import { localBusinessSchema, websiteSchema } from "@/lib/schema"
-import { ViewTransitions } from "astro:transitions"
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import AnalyticsConsent from "../components/AnalyticsConsent.astro";
+import SEO from "../components/seo/SEO.astro";
+import Schema from "../components/seo/Schema.astro";
+import {
+  localBusinessSchema,
+  websiteSchema,
+  webPageSchema,
+} from "@/lib/schema";
+import { getPageDateModified } from "@/data/page-freshness";
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
-  title: string
-  description: string
-  canonical?: string
-  ogImage?: string
-  ogType?: "website" | "article"
-  noindex?: boolean
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: "website" | "article";
+  noindex?: boolean;
 }
 
-const { title, description, canonical, ogImage, ogType, noindex } = Astro.props
+const { title, description, canonical, ogImage, ogType, noindex } = Astro.props;
+
+// Build-derived freshness (ADR 0017): the WebPage node exists only for
+// indexable pages whose last change the version history can prove.
+const dateModified = getPageDateModified(Astro.url.pathname);
+const schemas = [
+  localBusinessSchema(),
+  websiteSchema(),
+  ...(!noindex && dateModified
+    ? [
+        webPageSchema({
+          url: canonical ?? new URL(Astro.url.pathname, Astro.site).href,
+          name: title,
+          dateModified,
+        }),
+      ]
+    : []),
+];
 ---
 
 <!doctype html>
@@ -37,7 +59,7 @@ const { title, description, canonical, ogImage, ogType, noindex } = Astro.props
       ogType={ogType}
       noindex={noindex}
     />
-    <Schema schema={[localBusinessSchema(), websiteSchema()]} />
+    <Schema schema={schemas} />
     <slot name="head" />
     <ViewTransitions />
   </head>
@@ -47,8 +69,7 @@ const { title, description, canonical, ogImage, ogType, noindex } = Astro.props
     <div
       class="absolute top-0 bottom-0 z-[-2] min-h-screen w-full bg-gray-950
       bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
-    >
-    </div>
+    ></div>
     <Header />
     <slot />
     <Footer />

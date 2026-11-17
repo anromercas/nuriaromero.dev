@@ -1,8 +1,8 @@
 // Constructores de JSON-LD (schema.org). Cada página inyecta los suyos
 // con <Schema slot="head" schema={...} />; el de negocio va global en Layout.
-import { SITE } from "@/data/site"
-import { localTrust } from "@/data/local-trust"
-import type { GoogleReviewsData } from "@/lib/google-reviews"
+import { SITE } from "../data/site.ts"
+import { localTrust } from "../data/local-trust.ts"
+import type { GoogleReviewsData } from "./google-reviews.ts"
 
 const BUSINESS_ID = `${SITE.url}/#business`
 const PERSON_ID = `${SITE.url}/#person`
@@ -53,6 +53,8 @@ export function reviewsSchema(data: GoogleReviewsData) {
     "@context": "https://schema.org",
     "@type": ["ProfessionalService", "Organization"],
     "@id": BUSINESS_ID,
+    name: SITE.name,
+    url: SITE.url,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: data.rating,
@@ -181,6 +183,25 @@ export function websiteSchema() {
     url: SITE.url,
     name: SITE.name,
     publisher: { "@id": BUSINESS_ID },
+  }
+}
+
+/** Build-derived freshness node: only emitted when the date comes from the version history. */
+export function webPageSchema(page: {
+  url: string
+  name: string
+  dateModified: string
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${page.url}#webpage`,
+    url: page.url,
+    name: page.name,
+    dateModified: page.dateModified,
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": BUSINESS_ID },
+    inLanguage: "es",
   }
 }
 

@@ -15,7 +15,9 @@ const fixtureUrl = new URL(
 
 const html = await readFile(page, "utf8");
 const current = {
-  jsonld: jsonLdEntities(html),
+  // WebPage is build-derived freshness (NRD-242): present or absent with the
+  // build's version history, so it never belongs to the baseline.
+  jsonld: jsonLdEntities(html).filter((e) => e["@type"] !== "WebPage"),
   headings: headingOutline(html),
 };
 

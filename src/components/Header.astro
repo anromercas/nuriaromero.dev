@@ -48,14 +48,10 @@ const navLinkClass =
 
 <header class="fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2 px-3">
   <nav class="relative flex px-3 text-base font-medium rounded-full text-gray-200 justify-center items-center">
-    <a
-      href="/"
-      class="flex min-h-12 items-center px-2"
-      aria-label="Ir al inicio"
-    >
+    <a href="/" class="flex min-h-12 items-center px-2">
       <Image
         src={logoLight}
-        alt="Nuria Romero"
+        alt="Nuria Romero, nuriaromero.dev"
         class="block h-10 w-auto"
         loading="eager"
       />
@@ -64,20 +60,23 @@ const navLinkClass =
     <ul class="hidden md:flex items-center">
       {navItems.map((link) =>
         link.label === "servicios" ? (
-          <li class="relative group">
+          <li class="relative" data-services-menu>
             <button
               type="button"
               class:list={[
                 navLinkClass,
                 { "text-blue-500": isServiciosActive },
               ]}
-              aria-label={link.label}
-              aria-haspopup="true"
+              aria-expanded="false"
+              aria-controls="servicios-menu"
               aria-current={isServiciosActive ? "page" : undefined}
             >
               {link.title}
             </button>
-            <div class="absolute left-1/2 hidden -translate-x-1/2 pt-2 group-hover:block group-focus-within:block">
+            <div
+              id="servicios-menu"
+              class="servicios-panel absolute left-1/2 -translate-x-1/2 pt-2"
+            >
               <ul class="min-w-56 rounded-xl border border-gray-700 bg-gray-800/95 py-2 shadow-lg backdrop-blur">
                 {serviceMenuGroups.map((group, i) => (
                   <li
@@ -115,7 +114,6 @@ const navLinkClass =
                 navLinkClass,
                 { "text-blue-500": isActive(link.url) },
               ]}
-              aria-label={link.label}
               aria-current={isActive(link.url) ? "page" : undefined}
               href={link.url ?? undefined}
             >
@@ -155,7 +153,20 @@ const navLinkClass =
 <div
   id="mobile-menu"
   class="fixed top-0 right-0 z-50 flex w-[min(340px,85vw)] flex-col overflow-y-auto overscroll-contain border-l border-gray-700 bg-gray-800/95 py-3 shadow-lg backdrop-blur md:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menú de navegación"
 >
+  <div class="flex justify-end px-3 pb-2">
+    <button
+      id="mobile-menu-close"
+      type="button"
+      class="flex min-h-11 min-w-11 items-center justify-center"
+      aria-label="Cerrar menú"
+    >
+      <X class="size-5" />
+    </button>
+  </div>
   <ul class="flex flex-1 flex-col gap-0.5 px-3">
     <li class="mb-2 border-b border-gray-700 pb-3">
       <BookingButton class="w-full" />
@@ -194,9 +205,10 @@ const navLinkClass =
               </svg>
             </button>
           </div>
-          <ul
+          <div
             id="mobile-submenu-servicios"
             class="mobile-accordion-panel ml-3 border-l border-gray-700"
+            inert
           >
             <ul class="min-h-0 overflow-hidden">
               {serviceMenuGroups.map((group, i) => (
@@ -225,7 +237,7 @@ const navLinkClass =
                 </li>
               ))}
             </ul>
-          </ul>
+          </div>
         </li>
       ) : (
         <li>
@@ -247,6 +259,7 @@ const navLinkClass =
 </div>
 
 <script>
+  import "../scripts/header-services-menu.js";
   import "../scripts/header-mobile-menu.js";
 </script>
 
@@ -268,6 +281,14 @@ const navLinkClass =
     to {
       @apply shadow-lg ring-1 backdrop-blur ring-white/10;
     }
+  }
+
+  .servicios-panel {
+    display: none;
+  }
+
+  [data-services-menu][data-open] .servicios-panel {
+    display: block;
   }
 
   #mobile-menu {
