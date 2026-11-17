@@ -330,7 +330,7 @@ test("home keeps Person, FAQPage and review JSON-LD with one reviews fetch", () 
   assert.equal((src.match(/getGoogleReviews\(\)/g) ?? []).length, 1);
   assert.match(
     src,
-    /portraitAlt="Nuria Romero, consultor SEO en Sevilla y desarrolladora web"/,
+    /portraitAlt="Nuria Romero, consultor SEO y desarrolladora web"/,
   );
 });
 
@@ -418,7 +418,10 @@ test("home never claims to be the best consultant", () => {
 
 test("home registers in the template-page contract with a word budget", () => {
   const pages = read("scripts/lib/template-pages.mjs");
-  assert.match(pages, /route: "\/",\s*words: \[900, 1100\],\s*service: false/);
+  assert.match(
+    pages,
+    /route: "\/",\s*words: \[900, 1100\],\s*termCaps: \{ sevilla: 14 \},\s*service: false/,
+  );
 });
 
 test("home mentions 'posicionamiento web' at most once", () => {

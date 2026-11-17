@@ -157,7 +157,7 @@ const homeDateModified = getPageDateModified(Astro.url.pathname);
       <SectionContainer id="que-hago">
         <ReviewBento
           headingId="que-hago-title"
-          keyword="Servicios para negocios locales en Sevilla"
+          keyword="Servicios para negocios locales"
           title={{
             text: "Lo que puedo hacer por tu negocio",
             accent: "por tu negocio",
@@ -239,11 +239,11 @@ const homeDateModified = getPageDateModified(Astro.url.pathname);
             }}
             answer="Trabajo en cuatro pasos: me cuentas tu caso, te envío una propuesta por escrito, ves los avances mientras trabajo y, al lanzar, te enseño a manejarlo y sigo disponible."
             steps={homeProcess}
-            portraitAlt="Nuria Romero, consultor SEO en Sevilla y desarrolladora web"
+            portraitAlt="Nuria Romero, consultor SEO y desarrolladora web"
           >
             <Fragment slot="byline">
-              Soy Nuria Romero: más de 10 años desarrollando software, ahora
-              para negocios de Sevilla.
+              Soy Nuria Romero: llevo más de 10 años desarrollando software y
+              ahora trabajo con negocios locales.
             </Fragment>
           </SeoLocalProcess>
         </SectionContainer>
@@ -252,10 +252,10 @@ const homeDateModified = getPageDateModified(Astro.url.pathname);
       <SectionContainer id="trabajo-real">
         <RealProof
           headingId="prueba-title"
-          keyword="Opiniones y proyectos reales en Sevilla"
+          keyword="Opiniones y proyectos reales"
           title={{ text: "Trabajo que puedes ver", accent: "puedes ver" }}
           reviews={reviewsData}
-          note="Dos webs reales de negocios de Sevilla, hechas por mí. Visítalas y juzga el trabajo por ti."
+          note="Dos webs reales de negocios locales, hechas por mí. Visítalas y juzga el trabajo por ti."
           projects={["arkady", "adfsevilla"]}
         />
       </SectionContainer>
@@ -306,7 +306,7 @@ const homeDateModified = getPageDateModified(Astro.url.pathname);
       <SectionContainer>
         <SeoLocalNap
           headingId="nap-title"
-          keyword="Dónde trabajo: La Rinconada, Sevilla"
+          keyword="Dónde trabajo: La Rinconada"
         />
         {homeDateModified && (
           <div class="home-updated">

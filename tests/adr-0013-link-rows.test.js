@@ -30,7 +30,7 @@ const rows = [
     "/portfolio/",
     "casos de éxito de webs para negocios en Sevilla",
   ],
-  ["/", "/portfolio/", "casos de éxito de webs para negocios en Sevilla"],
+  ["/", "/portfolio/", "casos de éxito de webs para negocios locales"],
   [
     "/blog/pagina-web-para-restaurantes-que-necesita/",
     "/diseno-web-sevilla/",

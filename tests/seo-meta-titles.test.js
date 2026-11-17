@@ -163,12 +163,12 @@ test('home owns the "consultor SEO Sevilla" keyword in title, description, H1 an
   );
 });
 
-test('home profile photo alt uses the "consultor SEO en Sevilla" wording', async () => {
+test('home profile photo alt uses the "consultor SEO" wording', async () => {
   const home = await source("src/pages/index.astro");
   // The portrait now lives in the process band (SeoLocalProcess), so the alt is a prop.
   assert.match(
     home,
-    /portraitAlt="Nuria Romero, consultor SEO en Sevilla y desarrolladora web"/,
+    /portraitAlt="Nuria Romero, consultor SEO y desarrolladora web"/,
   );
   assert.doesNotMatch(home, /alt="[^"]*consultora SEO/i);
 });
