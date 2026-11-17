@@ -94,10 +94,11 @@ test("contact-form.js is untouched by the restyle", () => {
 const page = read("src/pages/contacto.astro");
 const templatePages = read("scripts/lib/template-pages.mjs");
 
+const faqsSource = read("src/data/page-faqs.ts");
 const faqBlock = () => {
-  const start = page.indexOf("const contactFaqs");
-  assert.ok(start > -1, "contactFaqs is declared in the page");
-  return page.slice(start, page.indexOf("\n]", start) + 2);
+  const start = faqsSource.indexOf("export const contactFaqs");
+  assert.ok(start > -1, "contactFaqs is declared in src/data/page-faqs.ts");
+  return faqsSource.slice(start, faqsSource.indexOf("\n]", start) + 2);
 };
 
 test("/contacto/ is registered as a template page without Service", () => {
@@ -138,11 +139,11 @@ test("the form sits in the hero visual slot and booking comes from the hero", ()
 });
 
 test("prices come only from tierFrom and no euro literal is in the page", () => {
-  assert.match(page, /tierFrom\(seoLocal, "Local"\)/);
-  assert.match(page, /tierFrom\(seoLocal, "Local Pro"\)/);
-  assert.match(page, /tierFrom\(disenoWeb, "Landing de una página"\)/);
+  assert.match(faqsSource, /tierFrom\(seoLocal, "Local"\)/);
+  assert.match(faqsSource, /tierFrom\(seoLocal, "Local Pro"\)/);
+  assert.match(faqsSource, /tierFrom\(disenoWeb, "Landing de una página"\)/);
   assert.match(
-    page,
+    faqsSource,
     /tierFrom\(disenoWeb, "Web completa \(hasta 5 páginas\)"\)/,
   );
   assert.doesNotMatch(page, /€/);
@@ -197,7 +198,10 @@ test("every status class the script toggles is remapped in #form-status", () => 
     assert.ok(remapped.has(cls), `${cls} toggled by the script has no remap`);
   }
   for (const cls of remapped) {
-    assert.ok(toggled.has(cls), `remap for ${cls} is never toggled by the script`);
+    assert.ok(
+      toggled.has(cls),
+      `remap for ${cls} is never toggled by the script`,
+    );
   }
   assert.ok(initial.length > 0, "initial neutral class kept on #form-status");
 });
@@ -212,7 +216,10 @@ test("ContactForm does not suppress the focus outline", () => {
 
 test("every form control carries the 2px sky focus-visible outline", () => {
   for (const id of ["name", "email", "phone", "message", "privacy"]) {
-    const tag = form.match(new RegExp(`<(?:input|textarea)\\s[^>]*?id="${id}"[^>]*?>`, "s"))?.[0] ?? "";
+    const tag =
+      form.match(
+        new RegExp(`<(?:input|textarea)\\s[^>]*?id="${id}"[^>]*?>`, "s"),
+      )?.[0] ?? "";
     assert.ok(tag, `#${id} found`);
     assert.match(tag, /focus-visible:outline-2/, `#${id} outline width`);
     assert.match(tag, /focus-visible:outline-sky-400/, `#${id} outline colour`);

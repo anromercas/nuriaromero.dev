@@ -1,16 +1,12 @@
 // Constructores de JSON-LD (schema.org). Cada página inyecta los suyos
 // con <Schema slot="head" schema={...} />; el de negocio va global en Layout.
-import { SITE } from "../data/site.ts"
+import { SERVICE_AREA, SITE } from "../data/site.ts"
 import { localTrust } from "../data/local-trust.ts"
 import type { GoogleReviewsData } from "./google-reviews.ts"
 
 const BUSINESS_ID = `${SITE.url}/#business`
 const PERSON_ID = `${SITE.url}/#person`
 const WEBSITE_ID = `${SITE.url}/#website`
-const SERVICE_AREA = [
-  { "@type": "City", name: "Sevilla" },
-  { "@type": "AdministrativeArea", name: "Área metropolitana de Sevilla" },
-]
 
 export function localBusinessSchema() {
   return {
@@ -205,6 +201,13 @@ export function webPageSchema(page: {
   }
 }
 
+// Answers may use \n\n paragraph breaks for visual scannability (SEO-20, see
+// FAQ.astro's splitAnswer). Collapse that whitespace convention so structured
+// data and the AI discovery files carry clean, continuous prose.
+export function faqAnswerText(answer: string): string {
+  return answer.replace(/\s+/g, " ").trim()
+}
+
 export function faqSchema(faqs: { q: string; a: string }[]) {
   return {
     "@context": "https://schema.org",
@@ -214,11 +217,7 @@ export function faqSchema(faqs: { q: string; a: string }[]) {
       name: faq.q,
       acceptedAnswer: {
         "@type": "Answer",
-        // Answers may use \n\n paragraph breaks for visual scannability
-        // (SEO-20, see FAQ.astro's splitAnswer). Collapse that whitespace
-        // convention here so structured-data text stays clean, continuous
-        // prose instead of leaking literal newlines (SEO-20 follow-up).
-        text: faq.a.replace(/\s+/g, " ").trim(),
+        text: faqAnswerText(faq.a),
       },
     })),
   }

@@ -302,7 +302,7 @@ test("every assistant named in thisSiteItems maps to an allowed crawler", () => 
     page.indexOf("const thisSiteItems"),
     page.indexOf("---", page.indexOf("const thisSiteItems")),
   );
-  const config = read("astro.config.mjs");
+  const config = read("src/data/crawler-policy.ts");
   const map = {
     ChatGPT: ["GPTBot", "OAI-SearchBot"],
     Claude: ["ClaudeBot"],
@@ -316,7 +316,7 @@ test("every assistant named in thisSiteItems maps to an allowed crawler", () => 
     for (const agent of agents) {
       assert.match(
         config,
-        new RegExp(`userAgent:\\s*'${agent}',\\s*allow:\\s*'/'`),
+        new RegExp(`userAgent:\\s*['"]${agent}['"],\\s*allow:\\s*['"]/['"]`),
       );
     }
   }

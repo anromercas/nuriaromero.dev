@@ -7,48 +7,13 @@ import ContactForm from "@/components/ContactForm.astro";
 import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
 import SeoLocalFaq from "@/components/seo-local/SeoLocalFaq.astro";
 import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro";
-import type { FaqItem } from "@/components/seo-local/types";
 import { breadcrumbSchema, faqSchema } from "@/lib/schema";
-import { disenoWeb, seoLocal, tierFrom } from "@/data/services";
+import { contactFaqs } from "@/data/page-faqs";
 import { SITE } from "@/data/site";
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
   { name: "Contacto", url: "/contacto/" },
-];
-
-const contactFaqs: FaqItem[] = [
-  {
-    q: "¿Cuánto cobra un SEO al mes?",
-    a: `El plan Local cuesta ${tierFrom(seoLocal, "Local")} y el Local Pro, ${tierFrom(seoLocal, "Local Pro")}. Los dos son mensuales y en la página de SEO local tienes lo que incluye cada uno.`,
-    links: [{ label: "Planes de SEO local", href: "/seo-local-sevilla/" }],
-  },
-  {
-    q: "¿Cuánto cuesta hacer una página web?",
-    a: `Una landing de una página parte de ${tierFrom(disenoWeb, "Landing de una página")} y una web completa de hasta 5 páginas, de ${tierFrom(disenoWeb, "Web completa (hasta 5 páginas)")}. El precio queda cerrado y pactado por escrito antes de empezar.`,
-    links: [
-      { label: "Diseño web en Sevilla", href: "/diseno-web-sevilla/" },
-      {
-        label: "Guía para entender el precio de una web",
-        href: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
-      },
-    ],
-  },
-  {
-    q: "¿Cuánto se tarda?",
-    a: "Una web de negocio local suele estar lista en 2 a 4 semanas desde que tengo todos los contenidos. Si me escribes, te respondo en menos de 24 horas laborables, y el plazo exacto de tu proyecto se cierra en la propuesta.",
-    links: [{ label: "Diseño web en Sevilla", href: "/diseno-web-sevilla/" }],
-  },
-  {
-    q: "¿Mejor un freelance o una agencia?",
-    a: "Conmigo hablas directamente con quien hace el trabajo, sin nadie en medio. Una agencia tiene más manos para llevar a la vez campañas, redes y diseño, así que depende de lo que necesites.",
-    links: [
-      {
-        label: "Agencia o consultora",
-        href: "/seo-local-sevilla/#agencia-o-consultora",
-      },
-    ],
-  },
 ];
 
 const textLink =
