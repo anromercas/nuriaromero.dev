@@ -179,10 +179,10 @@ Se apoya en lo mismo que el SEO de siempre, una web clara, rápida y bien estruc
 
 ### Cómo trabajamos el SEO para IA (`sectionTitles.process`)
 
-1. **Revisión de cómo te ven hoy.** Pregunto a los principales asistentes por tu sector y tu zona, y miro qué información tuya encuentran, qué falta y qué se contradice. `[PENDIENTE: confirmar que este es el método real de revisión que quiere ofrecer]`
+1. **Revisión de cómo te ven hoy.** Pregunto a los principales asistentes de IA por tu sector y tu zona con una batería fija de preguntas, y reviso qué saben de ti, qué falta y qué se contradice; además compruebo que tu web deja entrar a sus rastreadores y se entiende bien.
 2. **Plan de prioridades.** Te explico en lenguaje claro qué corregir primero y por qué, sin jerga.
 3. **Implementación.** Actualizo tu web y tu ficha: textos, preguntas frecuentes, datos estructurados y accesos.
-4. **Seguimiento.** Reviso cada cierto tiempo qué responden los asistentes y qué visitas llegan desde ellos, y ajusto el siguiente paso. `[PENDIENTE: frecuencia y formato real del seguimiento; en SEO local es un vídeo-informe mensual, confirmar si aplica aquí]`
+4. **Seguimiento.** Cada mes repito esas mismas preguntas, comparo los resultados y las visitas que llegan desde los asistentes, y te envío un informe con lo que ha cambiado y el siguiente paso.
 
 ### Esta web aplica lo que te propongo
 
@@ -335,7 +335,7 @@ Cuidado: `tests/seo-local-sevilla-redesign.test.js` y `tests/seo-consultor-strat
 
 - **D1 (bloqueante para T3): resuelta 2026-11-17 → variante A.** El servicio va incluido en Local Pro (500 €/mes + IVA, ya publicado). Se descarta la variante B y su `[PENDIENTE]` de precio propio.
 - **D2: resuelta 2026-11-17 → "SEO para IA", slug `/seo-para-ia/`.**
-- **D3: pendiente.** La usuaria aún no tiene método propio y pidió una recomendación rápida y automatizable con Claude. Propuesta en revisión: batería fija de 10-15 preguntas por cliente lanzada a ChatGPT, Perplexity, Gemini y Claude vía DataForSEO (endpoints de AI optimization), 2-3 repeticiones por pregunta, registro de mención, competidores, fuentes citadas y datos erróneos; revisión técnica (rastreadores de IA permitidos, llms.txt, datos estructurados, NAP); seguimiento mensual repitiendo la misma batería con tarea programada más visitas de asistentes en GA4, e informe escrito mensual. Sin confirmación, los pasos 1 y 4 del proceso se publican con redacción genérica.
+- **D3: resuelta 2026-11-17 → método mixto automatizado.** Revisión inicial: auditoría técnica con `geo audit` de geo-optimizer-skill (gratis, sin clave; probado sobre la home 2026-11-17: 77/100) más una batería fija de 10-15 preguntas por cliente lanzada a ChatGPT, Perplexity, Gemini y Claude vía DataForSEO (endpoints de AI optimization), 3-5 repeticiones por pregunta, registrando mención, competidores, fuentes citadas y datos erróneos. Seguimiento: mensual, con tarea programada que repite ambas, compara con el mes anterior, añade las visitas desde asistentes en GA4 y genera un informe escrito con la marca de la usuaria. Los pasos 1 y 4 del proceso quedan redactados con este método; el copy nunca promete posiciones ni que un asistente recomiende el negocio.
 - **D4: resuelta 2026-11-17 → B, hero editorial (`SeoLocalHero`).** Regla general para todas las páginas, recogida en `DESIGN.md` ("The Editorial Hero Rule"). T9 deja de ser opcional y reutiliza `SeoLocalHero` en lugar de crear `SeoParaIaHero.astro`.
 
 ## Dependencias y riesgos
