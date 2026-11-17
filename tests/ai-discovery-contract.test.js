@@ -68,7 +68,12 @@ test("aiTxtFailures flags an agent present only in robots.txt", () => {
   assert.ok(failures.some((f) => f.includes("ClaudeBot")));
 });
 
-for (const link of ["llms.txt", "ai/summary.json", "ai/faq.json"]) {
+for (const link of [
+  "llms.txt",
+  "ai/summary.json",
+  "ai/faq.json",
+  "sitemap-index.xml",
+]) {
   test(`aiTxtFailures flags a missing link to ${link}`, () => {
     const aiTxt = AI_TXT.split("\n")
       .filter((line) => !line.includes(link))
@@ -77,6 +82,25 @@ for (const link of ["llms.txt", "ai/summary.json", "ai/faq.json"]) {
     assert.ok(failures.some((f) => f.includes(link)));
   });
 }
+
+test("aiTxtFailures requires absolute URLs on the site origin", () => {
+  const aiTxt = AI_TXT.replaceAll(
+    "https://nuriaromero.dev/",
+    "https://other.example/",
+  );
+  const failures = aiTxtFailures({ aiTxt, robotsTxt: ROBOTS });
+  for (const link of [
+    "llms.txt",
+    "ai/summary.json",
+    "ai/faq.json",
+    "sitemap-index.xml",
+  ]) {
+    assert.ok(
+      failures.some((f) => f.includes(link)),
+      link,
+    );
+  }
+});
 
 // --- faqFailures -------------------------------------------------------------
 

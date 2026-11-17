@@ -48,11 +48,15 @@ export default defineConfig({
   integrations: [
     tailwind(),
     sitemap({
-      filter: (page) =>
-        !page.includes('/components') &&
-        !page.endsWith('/rss.xml') &&
-        !page.includes('/ai/') &&
-        !page.includes('/.well-known/'),
+      filter: (page) => {
+        const { pathname } = new URL(page)
+        return (
+          !page.includes('/components') &&
+          !page.endsWith('/rss.xml') &&
+          !pathname.startsWith('/ai/') &&
+          !pathname.startsWith('/.well-known/')
+        )
+      },
       serialize(item) {
         const match = item.url.match(/\/blog\/([^/]+)\/?$/)
         const lastmod = match ? blogLastmodBySlug.get(match[1]) : undefined

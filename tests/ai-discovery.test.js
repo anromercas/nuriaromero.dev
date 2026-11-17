@@ -225,12 +225,12 @@ for (const [file, builder] of endpoints) {
   });
 }
 
-test("the sitemap filter excludes the AI discovery routes", () => {
+test("the sitemap filter excludes the AI discovery routes by path prefix", () => {
   const config = read("astro.config.mjs");
   const filter =
     config.match(/filter:\s*\(page\)\s*=>([\s\S]*?),\s*serialize/)?.[1] ?? "";
-  assert.ok(filter.includes("/ai/"), "excludes /ai/");
-  assert.ok(filter.includes("/.well-known/"), "excludes /.well-known/");
+  assert.match(filter, /pathname\.startsWith\(["']\/ai\/["']\)/);
+  assert.match(filter, /pathname\.startsWith\(["']\/\.well-known\/["']\)/);
   assert.ok(filter.includes("/rss.xml"), "still excludes /rss.xml");
 });
 

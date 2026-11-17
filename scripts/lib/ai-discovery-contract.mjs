@@ -30,7 +30,13 @@ export function parseRobotsGroups(text) {
   return groups;
 }
 
-const RESOURCE_LINKS = ["llms.txt", "ai/summary.json", "ai/faq.json"];
+const SITE_ORIGIN = "https://nuriaromero.dev";
+const RESOURCE_LINKS = [
+  "llms.txt",
+  "ai/summary.json",
+  "ai/faq.json",
+  "sitemap-index.xml",
+];
 
 export function aiTxtFailures({ aiTxt, robotsTxt }) {
   const failures = [];
@@ -56,9 +62,10 @@ export function aiTxtFailures({ aiTxt, robotsTxt }) {
         );
     }
   }
+  const urls = aiTxt.match(/https?:\/\/\S+/g) ?? [];
   for (const link of RESOURCE_LINKS) {
-    if (!aiTxt.includes(`/${link}`))
-      failures.push(`ai.txt does not link to ${link}`);
+    if (!urls.includes(`${SITE_ORIGIN}/${link}`))
+      failures.push(`ai.txt does not link to ${SITE_ORIGIN}/${link}`);
   }
   return failures;
 }
