@@ -1,9 +1,10 @@
 // NRD-236: every built page keeps a consistent og:url (indexable) or none (noindex).
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { isNoindex, ogUrlProblems } from "./lib/og-url.mjs";
 
-const dist = new URL("../dist/", import.meta.url).pathname;
+const dist = fileURLToPath(new URL("../dist/", import.meta.url));
 
 async function walk(dir) {
   const out = [];

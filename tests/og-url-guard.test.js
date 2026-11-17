@@ -3,6 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { isNoindex, ogUrlProblems } from "../scripts/lib/og-url.mjs";
 
 const root = new URL("../", import.meta.url);
@@ -57,6 +58,18 @@ test("clean noindex pages have no problems", () => {
   assert.equal(isNoindex(page()), false);
 });
 
+test("robots none is treated as noindex", () => {
+  assert.equal(isNoindex(notFound("none")), true);
+  assert.equal(isNoindex(notFound("none, nofollow")), true);
+  assert.equal(isNoindex(notFound("NONE")), true);
+  assert.deepEqual(ogUrlProblems(notFound("none")), []);
+  assert.ok(
+    ogUrlProblems(page({ canonical: null, og: [URL_OK], robots: "none" }))
+      .length > 0,
+  );
+  assert.equal(isNoindex(page({ robots: "index, follow" })), false);
+});
+
 test("noindex page with og:url or canonical is reported", () => {
   const withOg = page({
     canonical: null,
@@ -101,7 +114,7 @@ test(
         const p = path.join(dir, e.name);
         return e.isDirectory() ? walk(p) : p.endsWith(".html") ? [p] : [];
       });
-    const files = walk(distDir.pathname);
+    const files = walk(fileURLToPath(distDir));
     let indexable = 0;
     for (const f of files) {
       const html = readFileSync(f, "utf8");
