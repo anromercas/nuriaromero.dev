@@ -200,3 +200,51 @@ test("buildAiTxt links the four resources", () => {
   }
   assert.ok(txt.endsWith("\n"));
 });
+
+// --- Task 1.3: endpoints and sitemap filter (NRD-282) ------------------------
+
+import { existsSync, readFileSync } from "node:fs";
+
+const read = (path) =>
+  readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+
+const endpoints = [
+  ["src/pages/.well-known/ai.txt.ts", "buildAiTxt"],
+  ["src/pages/ai/summary.json.ts", "buildAiSummary"],
+  ["src/pages/ai/faq.json.ts", "buildAiFaq"],
+];
+
+for (const [file, builder] of endpoints) {
+  test(`${file} is a prerendered endpoint over ${builder}`, () => {
+    const src = read(file);
+    assert.match(src, /from "@\/lib\/ai-discovery"/);
+    assert.match(src, new RegExp(`\\b${builder}\\b`));
+    assert.match(src, /export const GET: APIRoute/);
+    assert.doesNotMatch(src, /prerender\s*=\s*false/);
+    assert.doesNotMatch(src, /request/);
+  });
+}
+
+test("the sitemap filter excludes the AI discovery routes", () => {
+  const config = read("astro.config.mjs");
+  const filter =
+    config.match(/filter:\s*\(page\)\s*=>([\s\S]*?),\s*serialize/)?.[1] ?? "";
+  assert.ok(filter.includes("/ai/"), "excludes /ai/");
+  assert.ok(filter.includes("/.well-known/"), "excludes /.well-known/");
+  assert.ok(filter.includes("/rss.xml"), "still excludes /rss.xml");
+});
+
+const dist = new URL("../dist/", import.meta.url);
+
+test(
+  "the build emits the three files and the sitemap omits them",
+  { skip: !existsSync(new URL("ai/summary.json", dist)) },
+  () => {
+    const file = (p) => readFileSync(new URL(p, dist), "utf8");
+    assert.ok(file(".well-known/ai.txt").includes("User-agent: *"));
+    assert.equal(JSON.parse(file("ai/summary.json")).name, "Nuria Romero");
+    assert.ok(JSON.parse(file("ai/faq.json")).pages.length > 0);
+    const sitemap = file("sitemap-0.xml");
+    assert.doesNotMatch(sitemap, /\/ai\/|\.well-known/);
+  },
+);
