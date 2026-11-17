@@ -11,13 +11,14 @@ interface Props {
   title: AccentTitle
   tiers: Tier[]
   note?: string
+  answer?: string
 }
 
-const { id = "precios", headingId, keyword, title, tiers, note } = Astro.props
+const { id = "precios", headingId, keyword, title, tiers, note, answer } = Astro.props
 ---
 
 <section id={id} class="plans scroll-m-20" aria-labelledby={headingId}>
-  <SectionHeading id={headingId} keyword={keyword} title={title} class="plans-display" />
+  <SectionHeading id={headingId} keyword={keyword} title={title} class="plans-display" answer={answer} />
   {Astro.slots.has("lede") && <p class="plans-lede"><slot name="lede" /></p>}
   {note && <p class="plans-note">{note}</p>}
 
@@ -56,6 +57,14 @@ const { id = "precios", headingId, keyword, title, tiers, note } = Astro.props
   .plans :global(.plans-display) {
     max-width: 20ch;
     margin: 0 0 1rem;
+  }
+
+  .plans :global(.tpl-answer) {
+    margin-bottom: 2rem;
+  }
+
+  .plans :global(.tpl-answer:has(+ .plans-lede, + .plans-note)) {
+    margin-bottom: 0.75rem;
   }
 
   .plans-lede {

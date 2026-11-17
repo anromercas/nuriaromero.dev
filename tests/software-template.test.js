@@ -187,7 +187,7 @@ test("the single plan is built from desarrolloSoftware.pricing", () => {
       new RegExp(`desarrolloSoftware\\.pricing\\.${field}\\b`),
     );
   }
-  assert.match(page, /desde\s+\{desarrolloSoftware\.pricing\.from\}/);
+  assert.match(page, /desde\s+\$\{desarrolloSoftware\.pricing\.from\}/);
   assert.doesNotMatch(page, /€/, "no price literal in the page");
   assert.equal(desarrolloSoftware.pricing.tiers, undefined, "no tiers in data");
 });
@@ -281,7 +281,7 @@ const norm = (s) =>
 test("template-pages lists the software page with the word budget", () => {
   assert.match(
     read("scripts/lib/template-pages.mjs"),
-    /\{\s*route:\s*"\/desarrollo-software-medida\/",\s*words:\s*\[750,\s*850\],\s*service:\s*true\s*\}/,
+    /\{\s*route:\s*"\/desarrollo-software-medida\/",\s*words:\s*\[750,\s*850\],\s*service:\s*true,(\s*keySections:\s*\[[^\]]*\],)?\s*\}/,
   );
 });
 

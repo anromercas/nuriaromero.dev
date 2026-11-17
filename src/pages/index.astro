@@ -162,11 +162,12 @@ const homeDateModified = getPageDateModified(Astro.url.pathname);
             text: "Lo que puedo hacer por tu negocio",
             accent: "por tu negocio",
           }}
+          answer="Ayudo a negocios de Sevilla con SEO local, diseño web, tienda online, software a medida, automatizaciones e inteligencia artificial, para que te encuentren más clientes y trabajes con menos tareas repetitivas."
         >
           <BentoTile
             area="a"
             title="Que te encuentren cerca"
-            text="Ordeno tu ficha de Google y tu web para que te encuentren en Google, en Maps y en las respuestas de IA."
+            text="Ordeno tu ficha de Google y tu web para que te encuentren en Google, Maps y la IA."
             link={{ label: seoLocal.breadcrumbName, href: seoLocal.slug }}
           >
             <ServiceTileArt kind="seo-local" />
@@ -174,7 +175,7 @@ const homeDateModified = getPageDateModified(Astro.url.pathname);
           <BentoTile
             area="b"
             title="Una web que se entiende"
-            text="Webs claras y rápidas, pensadas para el móvil y preparadas para que te encuentren."
+            text="Webs claras y rápidas, pensadas para el móvil."
             link={{ label: disenoWeb.breadcrumbName, href: disenoWeb.slug }}
           >
             <ServiceTileArt kind="diseno-web" />
@@ -182,7 +183,7 @@ const homeDateModified = getPageDateModified(Astro.url.pathname);
           <BentoTile
             area="c"
             title="Vender por internet"
-            text="Vende tus productos desde una tienda propia, fácil de gestionar en tu día a día."
+            text="Vende desde una tienda propia, fácil de gestionar."
             link={{
               label: tiendaOnline.breadcrumbName,
               href: tiendaOnline.slug,
@@ -193,7 +194,7 @@ const homeDateModified = getPageDateModified(Astro.url.pathname);
           <BentoTile
             area="d"
             title="Herramientas a tu medida"
-            text="Programas hechos para tu negocio cuando las hojas de cálculo y el software genérico se quedan cortos."
+            text="Programas hechos para tu negocio cuando las hojas de cálculo se quedan cortas."
             link={{
               label: desarrolloSoftware.breadcrumbName,
               href: desarrolloSoftware.slug,
@@ -216,7 +217,7 @@ const homeDateModified = getPageDateModified(Astro.url.pathname);
             area="f"
             layout="row"
             title="Respuestas a cualquier hora"
-            text="Asistentes con IA que responden las dudas frecuentes de tus clientes con la información de tu negocio."
+            text="Asistentes con IA que responden a tus clientes con la información de tu negocio."
             link={{
               label: inteligenciaArtificial.breadcrumbName,
               href: inteligenciaArtificial.slug,
@@ -236,12 +237,13 @@ const homeDateModified = getPageDateModified(Astro.url.pathname);
               text: "Sin intermediarios, de principio a fin",
               accent: "de principio a fin",
             }}
+            answer="Trabajo en cuatro pasos: me cuentas tu caso, te envío una propuesta por escrito, ves los avances mientras trabajo y, al lanzar, te enseño a manejarlo y sigo disponible."
             steps={homeProcess}
             portraitAlt="Nuria Romero, consultor SEO en Sevilla y desarrolladora web"
           >
             <Fragment slot="byline">
-              Soy Nuria Romero: llevo más de 10 años desarrollando software y
-              ahora trabajo con negocios de Sevilla.
+              Soy Nuria Romero: más de 10 años desarrollando software, ahora
+              para negocios de Sevilla.
             </Fragment>
           </SeoLocalProcess>
         </SectionContainer>
@@ -264,6 +266,7 @@ const homeDateModified = getPageDateModified(Astro.url.pathname);
           headingId="consultor-title"
           keyword="¿Consultor SEO o agencia?"
           title={{ text: "Dos formas de llevar tu SEO", accent: "tu SEO" }}
+          answer="Te conviene un consultor si quieres hablar directamente con quien hace el trabajo; una agencia encaja si necesitas llevar a la vez campañas, redes sociales y diseño."
           items={comparison}
           link={{
             label: "Ver los planes de SEO local",
@@ -277,7 +280,7 @@ const homeDateModified = getPageDateModified(Astro.url.pathname);
           headingId="faq-title"
           keyword="Preguntas frecuentes sobre SEO"
           title={{ text: "Dudas antes de llamar", accent: "antes de llamar" }}
-          lede="Si tu duda no está aquí, la resolvemos en la llamada."
+          answer="Un consultor SEO revisa cómo apareces en Google y mejora tu ficha, tu web y tus reseñas; en mi caso también aplico los cambios técnicos, así que no necesitas a otra persona."
           faqs={homeFaqs}
           ctaLabel="Reserva una primera sesión"
         />

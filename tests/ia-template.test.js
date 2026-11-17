@@ -195,7 +195,7 @@ test("the single plan is built from inteligenciaArtificial.pricing", () => {
       new RegExp(`inteligenciaArtificial\\.pricing\\.${field}\\b`),
     );
   }
-  assert.match(page, /desde \{inteligenciaArtificial\.pricing\.from\}/);
+  assert.match(page, /desde \$\{inteligenciaArtificial\.pricing\.from\}/);
   assert.doesNotMatch(page, /€/, "no price literal in the page");
   assert.equal(inteligenciaArtificial.pricing.tiers, undefined);
   assert.equal(inteligenciaArtificial.pricing.from, "399 €");
@@ -346,7 +346,7 @@ const { automatizaciones } = await import(
 test("template-pages lists the AI page with the word budget", () => {
   assert.match(
     read("scripts/lib/template-pages.mjs"),
-    /\{\s*route:\s*"\/inteligencia-artificial\/",\s*words:\s*\[750,\s*850\],\s*service:\s*true\s*\}/,
+    /\{\s*route:\s*"\/inteligencia-artificial\/",\s*words:\s*\[750,\s*850\],\s*service:\s*true,(\s*keySections:\s*\[[^\]]*\],)?\s*\}/,
   );
 });
 

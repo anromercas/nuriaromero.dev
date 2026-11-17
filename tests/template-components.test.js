@@ -401,7 +401,7 @@ test("the reference page passes plans, FAQ and related content", () => {
   assert.match(src, /note=\{seoLocal\.pricing\.note\}/);
   assert.match(
     src,
-    /<Fragment slot="lede">[\s\S]*?tierFrom\(seoLocal, "Local"\)[\s\S]*?tierFrom\(seoLocal, "Local Pro"\)/,
+    /answer=\{`[^`]*\$\{tierFrom\(seoLocal, "Local"\)\}[^`]*\$\{tierFrom\(seoLocal, "Local Pro"\)\}/,
   );
   assert.doesNotMatch(src, /(?:300|500)\s*€/);
   assert.match(
@@ -411,10 +411,8 @@ test("the reference page passes plans, FAQ and related content", () => {
   assert.match(src, /faqs=\{seoLocal\.faqs\}/);
   assert.match(src, /accent: "antes de empezar"/);
   assert.match(src, /accent: "un alcance claro"/);
-  assert.match(
-    src,
-    /lede="Si tu duda no está aquí, la resolvemos en la llamada\."/,
-  );
+  assert.match(src, /<SeoLocalFaq[\s\S]*?answer="[^"]+"/);
+  assert.doesNotMatch(src, /lede="Si tu duda no está aquí/);
   assert.match(
     src,
     /links=\{internalLinksBySource\[seoLocal\.slug\] \?\? \[\]\}/,
@@ -589,4 +587,81 @@ test("RealProof forwards projectsVariant to Projects as variant", () => {
   assert.match(src, /projectsVariant\?:\s*"legacy"\s*\|\s*"ink"/);
   assert.match(src, /<Projects[^>]*variant=\{projectsVariant\}/);
   assert.match(src, /projectsVariant\s*=\s*"legacy"/);
+});
+
+test("SectionHeading renders the direct answer only when set, after the display title", () => {
+  const src = component("SectionHeading");
+  assert.match(src, /answer\??:\s*string/);
+  assert.match(src, /answer\?\.trim\(\)/);
+  assert.match(src, /\\u00a0/);
+  const display = src.indexOf("tpl-display");
+  const answer = src.indexOf("data-direct-answer");
+  assert.ok(display >= 0 && answer > display, "answer after tpl-display");
+  assert.match(src, /<p class="tpl-answer" data-direct-answer>/);
+  assert.match(src, /hasAnswer && /);
+});
+
+test("the five key-section components declare and forward answer", () => {
+  for (const name of [
+    "ReviewBento",
+    "SeoLocalProcess",
+    "SeoLocalAgencia",
+    "SeoLocalPlans",
+    "SeoLocalFaq",
+  ]) {
+    const src = component(name);
+    assert.match(src, /\banswer\??:\s*string/, `${name} Props.answer`);
+    assert.match(src, /answer=\{answer\}/, `${name} forwards answer`);
+  }
+});
+
+test("FAQ renders the lede only when present, so an answer can replace it", () => {
+  const src = component("SeoLocalFaq");
+  assert.match(src, /\blede\?:\s*string/);
+  assert.match(src, /\{lede &&/);
+});
+
+test(".tpl-answer is plain lead copy in the shared stylesheet", () => {
+  const body = ruleBody(".tpl-answer");
+  assert.ok(body, ".tpl-answer rule exists");
+  assert.match(body, /max-width:\s*52ch/);
+  assert.match(body, /color:\s*var\(--text-body\)/);
+  assert.match(body, /font-size:\s*1\.125rem/);
+  assert.match(body, /line-height:\s*1\.6/);
+  assert.match(body, /text-wrap:\s*pretty/);
+  assert.doesNotMatch(body, /italic|Instrument|sky-accent|background|border/);
+});
+
+test("Price answer reads the site data", () => {
+  // No page passes an answer literal with a figure followed by the euro sign.
+  for (const file of readdirSync(new URL("src/pages/", root))) {
+    if (!file.endsWith(".astro")) continue;
+    const src = read(`src/pages/${file}`);
+    for (const m of src.matchAll(/\banswer=(?:"([^"]*)"|\{`([^`]*)`\})/g)) {
+      const text = m[1] ?? m[2];
+      assert.doesNotMatch(
+        text,
+        /\d\s*€/,
+        `${file}: answer holds a price literal: ${text}`,
+      );
+    }
+  }
+});
+
+test("FAQ intro sticks only on tall desktop viewports", () => {
+  const src = component("SeoLocalFaq");
+  assert.match(
+    src,
+    /@media \(min-width: 1024px\) and \(min-height: 800px\)\s*\{\s*\.faq-intro\s*\{\s*position: sticky/,
+  );
+  assert.equal((src.match(/position: sticky/g) ?? []).length, 1);
+});
+
+test("no page answer or plan note claims a Landing-tier feature for every web plan", () => {
+  const src = read("src/pages/diseno-web-sevilla.astro");
+  const answer = src.match(
+    /headingId="que-incluye-title"[\s\S]*?answer="([^"]*)"/,
+  )[1];
+  assert.doesNotMatch(answer, /alta en Google(?!\.)/);
+  assert.match(answer, /la web completa suma el alta en Google/);
 });
