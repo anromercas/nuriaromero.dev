@@ -32,6 +32,9 @@ export interface ServicePageData {
   // Solo se lee junto con `offersFromTiers`. Por defecto "monthly" (UnitPriceSpecification
   // mensual); "one-time" emite Offers de pago único, sin precio por unidad.
   tierBilling?: "monthly" | "one-time"
+  // Default true. False means the service has no price of its own and its
+  // Service JSON-LD has no `offers`.
+  ownOffer?: boolean
   pricing: {
     from: string
     includes?: string[]

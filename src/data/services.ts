@@ -17,12 +17,19 @@ const SOFTWARE_FROM = "999 €"
 // Precio único del chatbot con IA: `pricing.from` y la respuesta de coste lo toman de aquí.
 const AI_FROM = "399 €"
 
-/** `from` label of a named pricing tier; throws so a renamed tier fails the build. */
-export function tierFrom(service: ServicePageData, tierName: string): string {
+type Tier = NonNullable<ServicePageData["pricing"]["tiers"]>[number]
+
+/** Named pricing tier; throws so a renamed tier fails the build. */
+export function pricingTier(service: ServicePageData, tierName: string): Tier {
   const tier = service.pricing.tiers?.find((t) => t.name === tierName)
   if (!tier)
     throw new Error(`Pricing tier "${tierName}" not found in ${service.slug}`)
-  return tier.from
+  return tier
+}
+
+/** `from` label of a named pricing tier; throws so a renamed tier fails the build. */
+export function tierFrom(service: ServicePageData, tierName: string): string {
+  return pricingTier(service, tierName).from
 }
 
 export const disenoWeb: ServicePageData = {

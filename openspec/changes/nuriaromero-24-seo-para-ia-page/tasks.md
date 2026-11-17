@@ -4,7 +4,7 @@ Dependencies: none upstream. This change blocks NRD-25 (links, intent registry, 
 
 ## 1. Service JSON-LD without an own offer (contract)
 
-- [ ] 1.1 [NRD-249 app] `ownOffer?: boolean` in `ServicePageData`, `serviceSchema` with optional `price` (offers spread last only when present), `ServiceLayout` passes no price when `ownOffer === false`, `pricingTier()` exported from `src/data/services.ts` with `tierFrom` delegating; tests: schema/type/layout source assertions and `tierFrom(seoLocal, "Local Pro")` runtime assertion in `tests/seo-para-ia.test.js` first; verify suite, `pnpm build`, `check-seo-02` and `check-seo-16` green (other pages unchanged)
+- [x] 1.1 [NRD-249 app] `ownOffer?: boolean` in `ServicePageData`, `serviceSchema` with optional `price` (offers spread last only when present), `ServiceLayout` passes no price when `ownOffer === false`, `pricingTier()` exported from `src/data/services.ts` with `tierFrom` delegating; tests: schema/type/layout source assertions and `tierFrom(seoLocal, "Local Pro")` runtime assertion in `tests/seo-para-ia.test.js` first; verify suite, `pnpm build`, `check-seo-02` and `check-seo-16` green (other pages unchanged)
 
 ## 2. The page
 
