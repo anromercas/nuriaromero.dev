@@ -60,6 +60,70 @@ test("breadcrumb tokens keep AA contrast on both grounds", () => {
   }
 });
 
+const remToPx = (value) => {
+  const m = value.trim().match(/^([\d.]+)(rem|px)$/);
+  assert.ok(m, `unsupported length: ${value}`);
+  return m[2] === "rem" ? parseFloat(m[1]) * 16 : parseFloat(m[1]);
+};
+
+const composite = ([r, g, b, a], groundHex) => {
+  const out = [1, 3, 5].map((i, idx) => {
+    const ground = parseInt(groundHex.slice(i, i + 2), 16);
+    const src = [r, g, b][idx];
+    return Math.round(src * a + ground * (1 - a))
+      .toString(16)
+      .padStart(2, "0");
+  });
+  return `#${out.join("")}`;
+};
+
+test("current breadcrumb item keeps the default cursor", () => {
+  const rule = style.match(/\.crumbs-current\s*\{([^}]*)\}/)?.[1] ?? "";
+  assert.match(rule, /cursor:\s*default/);
+});
+
+test("breadcrumb row gap clears the focus ring", () => {
+  const ol = style.match(/\.crumbs ol\s*\{([^}]*)\}/)?.[1] ?? "";
+  let row;
+  let column;
+  const shorthand = ol.match(
+    /(?:^|[;\s])gap:\s*([^;\s]+)(?:\s+([^;\s]+))?\s*;/,
+  );
+  if (shorthand) {
+    row = shorthand[1];
+    column = shorthand[2] ?? shorthand[1];
+  } else {
+    row = ol.match(/row-gap:\s*([^;]+);/)?.[1];
+    column = ol.match(/column-gap:\s*([^;]+);/)?.[1];
+  }
+  assert.ok(row && column, "gap is declared on .crumbs ol");
+  const focus = css.match(/\.tpl-link:focus-visible\s*\{([^}]*)\}/)?.[1] ?? "";
+  const width = parseFloat(focus.match(/outline:\s*([\d.]+)px/)?.[1]);
+  const offset = parseFloat(focus.match(/outline-offset:\s*([\d.]+)px/)?.[1]);
+  assert.ok(
+    width > 0 && offset >= 0,
+    "focus ring values read from template.css",
+  );
+  assert.ok(
+    remToPx(row) >= width + offset,
+    `row gap ${remToPx(row)}px must clear ring extent ${width + offset}px`,
+  );
+  assert.equal(column.trim(), "0.5rem", "column gap unchanged");
+});
+
+test("breadcrumb tokens keep AA contrast on the purple radial", () => {
+  const layout = read("src/layouts/Layout.astro");
+  assert.match(layout, /bg-gray-950/);
+  const radial = layout.match(/radial-gradient\([^)]*?rgba\(([^)]*)\)/);
+  assert.ok(radial, "backdrop radial-gradient with rgba stop");
+  const [r, g, b, a] = radial[1].split(",").map((v) => parseFloat(v));
+  const bg = composite([r, g, b, a], token("--site-ground"));
+  for (const t of ["--text-muted", "--text-secondary", "--text-body"]) {
+    assert.ok(contrast(token(t), bg) >= 4.5, `${t} on radial ${bg}`);
+  }
+  assert.ok(contrast(token("--sky-signal"), bg) >= 3, `sky-signal on ${bg}`);
+});
+
 test("breadcrumb semantics are kept", () => {
   assert.match(component, /aria-label="Miga de pan"/);
   assert.match(component, /aria-current="page"/);
