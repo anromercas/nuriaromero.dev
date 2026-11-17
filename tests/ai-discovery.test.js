@@ -248,3 +248,42 @@ test(
     assert.doesNotMatch(sitemap, /\/ai\/|\.well-known/);
   },
 );
+
+// --- Task 1.1 (NRD-285): llms.txt links ---------------------------------------
+
+const AI_LINKS = [
+  "https://nuriaromero.dev/ai/summary.json",
+  "https://nuriaromero.dev/ai/faq.json",
+  "https://nuriaromero.dev/.well-known/ai.txt",
+];
+
+test("llms.txt links the three AI discovery files", () => {
+  const text = readFileSync(
+    new URL("../public/llms.txt", import.meta.url),
+    "utf8",
+  );
+  const start = text.indexOf("\n## Datos para asistentes de IA\n");
+  assert.notEqual(start, -1, "section heading is missing");
+  const body = text.slice(start + 1).split("\n## ")[0];
+  const lines = body.split("\n").slice(1).filter(Boolean);
+  const links = [...body.matchAll(/\]\((https:\/\/[^)]+)\)/g)].map((m) => m[1]);
+  assert.deepEqual(links, AI_LINKS);
+  for (const line of lines) {
+    assert.match(line, /^- \[[^\]]+\]\([^)]+\): .+\.$/);
+    assert.doesNotMatch(
+      line,
+      /garantiz|citar|citación|posicion|prioridad|tratamiento especial/i,
+    );
+  }
+});
+
+test(
+  "every llms.txt AI link exists in dist",
+  { skip: !existsSync(new URL("ai/summary.json", dist)) },
+  () => {
+    for (const url of AI_LINKS) {
+      const path = new URL(url).pathname.slice(1);
+      assert.ok(existsSync(new URL(path, dist)), `${path} missing in dist`);
+    }
+  },
+);
