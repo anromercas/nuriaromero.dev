@@ -361,3 +361,57 @@ test("no placeholder markers under src", () => {
   }
   assert.doesNotMatch(wholePage(), /\[PENDIENTE|\[VERIFICAR/);
 });
+
+// --- Task 2.3: FAQ and word budget (NRD-252) ----------------------------------
+
+const faqQuestions = [
+  "¿Qué es el SEO para IA o GEO?",
+  "¿En qué se diferencia el SEO para IA del SEO tradicional?",
+  "¿Es lo mismo GEO que AEO?",
+  "¿Cómo hago que ChatGPT recomiende mi negocio?",
+  "¿Qué hay que trabajar para aparecer en las respuestas de IA?",
+  "¿Cuánto cuesta el SEO para IA?",
+];
+// Same split as SeoLocalFaq: the lead is the first sentence.
+const firstSentence = (answer) =>
+  answer.match(/^[\s\S]*?[.!?](?=\s|$)/)?.[0] ?? answer;
+
+test("the FAQ holds the six sourced questions in order", () => {
+  assert.deepEqual(
+    seoParaIa.faqs.map((f) => f.q),
+    faqQuestions,
+  );
+});
+
+test("every FAQ answer opens with a direct sentence of at most 220 characters", () => {
+  for (const { q, a } of seoParaIa.faqs) {
+    const lead = firstSentence(a);
+    assert.ok(lead.length <= 220, `${q}: ${lead.length} characters`);
+    assert.doesNotMatch(a, /\n/, "one paragraph, no links");
+  }
+  for (const faq of seoParaIa.faqs) assert.equal(faq.links, undefined);
+});
+
+test("the recommendation answer promises nothing, then says what can be done", () => {
+  const answer = seoParaIa.faqs[3].a;
+  assert.ok(
+    answer.startsWith(
+      "Nadie puede prometerte que un asistente recomiende o cite tu negocio: no lo controlas tú ni lo controlo yo.",
+    ),
+  );
+  assert.ok(answer.length > firstSentence(answer).length, "it continues");
+});
+
+test("the price answer reads the Local Pro tier and the billing note", () => {
+  assert.match(
+    entryBlock,
+    /`El SEO para IA va incluido en el plan Local Pro, que cuesta \$\{LOCAL_PRO_TIER\.from\}\.`/,
+  );
+  const answer = seoParaIa.faqs[5].a;
+  assert.match(answer, /que cuesta 500 €\/mes \+ IVA\./);
+  assert.ok(
+    answer.endsWith(
+      `que cuesta ${seoLocal.pricing.tiers.find((t) => t.name === "Local Pro").from}.`,
+    ),
+  );
+});

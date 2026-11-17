@@ -252,7 +252,7 @@ Every item below is radical under PRD section 9 (new page or service, removing, 
 
 Recommendation: **A**, sequenced last (demand is small, the page is gated by D1, and the existing stories already cover it). Until the user decides, nothing changes and the GEO post keeps its role.
 
-**Outcome (2026-11-17): option A accepted.** The owner answered D1 = A (the work is included in Local Pro, no price of its own), D2 = "SEO para IA" with slug `/seo-para-ia/` and D4 = B (editorial hero), which the PO reads as acceptance of P1 (PRD decision log 2026-11-17). D3 stays open and does not block. The conditional rows of tables A and B and the `keywordOwners` row are applied by NRD-25; the page by NRD-24; its `dist/` check by NRD-26.
+**Outcome (2026-11-17): option A accepted.** The owner answered D1 = A (the work is included in Local Pro, no price of its own), D2 = "SEO para IA" with slug `/seo-para-ia/` and D4 = B (editorial hero), which the PO reads as acceptance of P1 (PRD decision log 2026-11-17). D3 (review and follow-up method) was also answered by the owner on 2026-11-17 and is used in the page copy (NRD-24). The conditional rows of tables A and B and the `keywordOwners` row are applied by NRD-25; the page by NRD-24; its `dist/` check by NRD-26.
 
 **P2. A page for `mantenimiento web sevilla` (DW-3), only if a maintenance service is offered.**
 

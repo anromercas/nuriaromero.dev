@@ -733,16 +733,32 @@ export const seoParaIa: ServicePageData = {
   faqs: [
     {
       q: "¿Qué es el SEO para IA o GEO?",
-      a: "Es preparar la información de tu negocio para que asistentes como ChatGPT, Gemini o Perplexity, y los resúmenes con IA de Google, la entiendan y puedan citarla cuando encaje. GEO (Generative Engine Optimization) es su nombre técnico.",
+      a: "Es preparar la información de tu negocio para que asistentes como ChatGPT, Gemini o Perplexity, y los resúmenes con IA de Google, la entiendan y puedan citarla cuando encaje.",
+    },
+    {
+      q: "¿En qué se diferencia el SEO para IA del SEO tradicional?",
+      a: "El SEO de siempre busca un buen puesto en la lista de resultados; el SEO para IA cuida que un asistente encuentre datos claros sobre ti cuando escribe su respuesta.",
+    },
+    {
+      q: "¿Es lo mismo GEO que AEO?",
+      a: "Casi. El AEO se centra en las respuestas directas y el GEO en los buscadores que generan respuestas con IA.",
+    },
+    {
+      q: "¿Cómo hago que ChatGPT recomiende mi negocio?",
+      a: "Nadie puede prometerte que un asistente recomiende o cite tu negocio: no lo controlas tú ni lo controlo yo. Sí se puede trabajar una información clara, coherente y citable.",
+    },
+    {
+      q: "¿Qué hay que trabajar para aparecer en las respuestas de IA?",
+      a: "Datos que coincidan en todas partes, respuestas directas, datos estructurados, el acceso de rastreadores, un índice llms.txt y señales fuera de tu web.",
     },
     {
       q: "¿Cuánto cuesta el SEO para IA?",
-      a: `El SEO para IA va incluido en el plan Local Pro, que cuesta ${LOCAL_PRO_TIER.from}. ${seoLocal.pricing.note}`,
+      a: `El SEO para IA va incluido en el plan Local Pro, que cuesta ${LOCAL_PRO_TIER.from}.`,
     },
   ],
   cta: {
     title: "Veamos qué sabe hoy una IA de tu negocio",
-    text: "En una llamada revisamos qué información tuya hay y cuál sería el siguiente paso útil.",
+    text: "En una llamada vemos qué información tuya hay y el siguiente paso útil.",
   },
 }
 

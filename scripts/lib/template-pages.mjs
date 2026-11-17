@@ -15,6 +15,7 @@ export const templatePages = [
   { route: "/automatizaciones/", words: [700, 800], service: true },
   { route: "/desarrollo-software-medida/", words: [750, 850], service: true },
   { route: "/inteligencia-artificial/", words: [750, 850], service: true },
+  { route: "/seo-para-ia/", words: [750, 850], service: true },
   { route: "/sobre-mi/", words: [550, 600], service: false },
   { route: "/portfolio/", words: [100, 250], service: false },
   { route: "/recursos/", words: [100, 250], service: false },
