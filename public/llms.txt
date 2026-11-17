@@ -30,6 +30,11 @@
 - [Guía sobre GEO para negocios en Sevilla](https://nuriaromero.dev/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/): Definiciones y acciones prácticas, con límites explícitos sobre lo que el GEO puede garantizar.
 - [Portfolio](https://nuriaromero.dev/portfolio/): Proyectos publicados en el sitio.
 
+## Datos para asistentes de IA
+- [Resumen del negocio](https://nuriaromero.dev/ai/summary.json): Resumen en JSON del negocio, sus datos de contacto y sus servicios con precios, generado desde los datos de la web.
+- [Preguntas frecuentes](https://nuriaromero.dev/ai/faq.json): Preguntas frecuentes publicadas en las páginas de la web, en JSON, con el mismo texto que muestra cada página.
+- [Política para agentes de IA](https://nuriaromero.dev/.well-known/ai.txt): Reglas de acceso para rastreadores y agentes de IA, las mismas que robots.txt, con enlaces a estos recursos.
+
 ## Perfiles oficiales
 - [LinkedIn de Nuria Romero Castillo](https://linkedin.com/in/nuria-romero-castillo)
 - [GitHub de Nuria Romero Castillo](https://github.com/anromercas)
