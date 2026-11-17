@@ -68,3 +68,21 @@ test("reviewsSchema node carries name and url for the shared business id", async
   assert.equal(node.url, "https://nuriaromero.dev")
   assert.equal(localBusinessSchema().alternateName, "nuriaromero.dev")
 })
+
+test("header logo link is named with the brand and the visible wordmark", async () => {
+  const { SITE } = await import("../src/data/site.ts")
+  const header = await source("src/components/Header.astro")
+  const link = header.match(/<a\s+href="\/"[^>]*>[\s\S]*?<\/a>/)?.[0] ?? ""
+  assert.ok(link, "logo link not found")
+  assert.doesNotMatch(link, /aria-label/)
+  const alt = link.match(/<Image[\s\S]*?alt="([^"]*)"/)?.[1]
+  assert.equal(alt, "Nuria Romero, nuriaromero.dev")
+  assert.ok(alt.startsWith(SITE.name))
+  assert.ok(alt.includes(SITE.shortName))
+})
+
+test("llms.txt introduces the site as the website of the canonical brand", async () => {
+  const lines = (await source("public/llms.txt")).split("\n")
+  assert.equal(lines[0], "# Nuria Romero")
+  assert.match(lines[2], /la web de Nuria Romero \(nuriaromero\.dev\)/)
+})
