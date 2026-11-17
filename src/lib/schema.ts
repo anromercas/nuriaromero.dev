@@ -186,6 +186,25 @@ export function websiteSchema() {
   }
 }
 
+/** Build-derived freshness node: only emitted when the date comes from the version history. */
+export function webPageSchema(page: {
+  url: string
+  name: string
+  dateModified: string
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${page.url}#webpage`,
+    url: page.url,
+    name: page.name,
+    dateModified: page.dateModified,
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": BUSINESS_ID },
+    inLanguage: "es",
+  }
+}
+
 export function faqSchema(faqs: { q: string; a: string }[]) {
   return {
     "@context": "https://schema.org",
