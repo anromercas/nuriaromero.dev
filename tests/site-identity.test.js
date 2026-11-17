@@ -1,0 +1,56 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+
+const source = (path) =>
+  readFile(new URL(`../${path}`, import.meta.url), "utf8");
+const titleProp = (src) => src.match(/^\s*title="([^"]*)"/m)?.[1];
+
+test("brandedTitle appends the canonical brand once", async () => {
+  const { brandedTitle } = await import("../src/lib/seo-title.ts");
+  assert.equal(brandedTitle("Aviso legal"), "Aviso legal | Nuria Romero");
+  assert.equal(
+    brandedTitle(
+      "Diseño web Sevilla | Diseñadora web, precio cerrado desde 149 €",
+    ),
+    "Diseño web Sevilla | Diseñadora web, precio cerrado desde 149 € | Nuria Romero",
+  );
+});
+
+test("brandedTitle leaves a title already ending with the brand unchanged", async () => {
+  const { brandedTitle } = await import("../src/lib/seo-title.ts");
+  const title = "Recursos para citar y compartir — Nuria Romero";
+  assert.equal(brandedTitle(title), title);
+  assert.equal(
+    brandedTitle(brandedTitle("Cookies")).match(/Nuria Romero/g).length,
+    1,
+  );
+});
+
+test("home title keeps the keyword first and has no mid-string brand", async () => {
+  const title = titleProp(await source("src/pages/index.astro"));
+  assert.ok(title.startsWith("Consultor SEO en Sevilla"));
+  assert.doesNotMatch(title, /Nuria Romero/);
+});
+
+test("sobre-mi title does not contain the brand", async () => {
+  const title = titleProp(await source("src/pages/sobre-mi.astro"));
+  assert.equal(title, "Sobre mí — Desarrolladora web en Sevilla");
+});
+
+test("legal pages stop using the domain as brand", async () => {
+  for (const [page, expected] of [
+    ["aviso-legal", "Aviso legal"],
+    ["privacidad", "Política de privacidad"],
+    ["cookies", "Política de cookies"],
+  ]) {
+    assert.equal(titleProp(await source(`src/pages/${page}.astro`)), expected);
+  }
+});
+
+test("SEO.astro renders <title> branded and og/twitter titles raw", async () => {
+  const seo = await source("src/components/seo/SEO.astro");
+  assert.match(seo, /<title>\{brandedTitle\(title\)\}<\/title>/);
+  assert.match(seo, /property="og:title" content=\{title\}/);
+  assert.match(seo, /name="twitter:title" content=\{title\}/);
+});

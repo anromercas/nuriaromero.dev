@@ -98,6 +98,17 @@ if (!Array.isArray(business.sameAs) || business.sameAs.join("|") !== VERIFIED_SA
   if (html.includes('<meta property="og:site_name" content="nuriaromero.dev"')) {
     fail(`metadata uses the domain as the primary brand in ${file}`)
   }
+  const siteName = html.match(/<meta property="og:site_name" content="([^"]*)"/)?.[1]
+  if (siteName !== SITE.name) {
+    fail(`og:site_name "${siteName}" is not the canonical brand "${SITE.name}" in ${file}`)
+  }
+  // ADR 0016: every indexable page title ends with the canonical brand.
+  if (!/<meta name="robots" content="noindex/.test(html)) {
+    const pageTitle = html.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim()
+    if (!pageTitle?.endsWith(SITE.name)) {
+      fail(`title "${pageTitle}" does not end with the brand "${SITE.name}" in ${file}`)
+    }
+  }
   if (person) {
     if (person.name !== "Nuria Romero" || person.alternateName !== "Nuria Romero Castillo") {
       fail(`person naming is not canonical in ${file}`)
