@@ -26,6 +26,7 @@ export const templatePages = [
   {
     route: "/",
     words: [900, 1100],
+    termCaps: { sevilla: 14 },
     service: false,
     keySections: [
       "que-hago-title",
