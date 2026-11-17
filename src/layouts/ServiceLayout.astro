@@ -40,7 +40,7 @@ const breadcrumbs = [
         description: page.seo.description,
         url: page.slug,
         serviceType: page.breadcrumbName,
-        price: page.pricing.from,
+        price: page.ownOffer === false ? undefined : page.pricing.from,
         ...(page.offersFromTiers && page.pricing.tiers
           ? { tiers: page.pricing.tiers, billing: page.tierBilling, id: "service" }
           : {}),

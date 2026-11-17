@@ -11,6 +11,7 @@ const { bookingUrl } = await import("../src/data/site.ts");
 const PAGE = "src/pages/404.astro";
 const SLUGS = [
   "/seo-local-sevilla/",
+  "/seo-para-ia/",
   "/diseno-web-sevilla/",
   "/tienda-online-sevilla/",
   "/desarrollo-software-medida/",
@@ -20,7 +21,7 @@ const SLUGS = [
 
 // --- Source (NRD-223) --------------------------------------------------------
 
-test("focusServices holds exactly the six in-focus slugs, parked pages excluded", () => {
+test("focusServices holds exactly the seven in-focus slugs, parked pages excluded", () => {
   assert.deepEqual(
     focusServices.map((s) => s.slug),
     SLUGS,

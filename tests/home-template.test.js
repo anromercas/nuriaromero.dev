@@ -334,23 +334,24 @@ test("home keeps Person, FAQPage and review JSON-LD with one reviews fetch", () 
   );
 });
 
-test("home related links keep the five existing rows and add the four niche pages", () => {
+test("home related links keep the existing rows, the SEO para IA row at index 1, and add the four niche pages", () => {
   const src = read("src/data/internal-links.ts");
   const row = src.match(/^ {2}"\/": \[([\s\S]*?)^ {2}\],/m)?.[1] ?? "";
   const entries = [
     ...row.matchAll(/path: "([^"]+)", anchor: "([^"]+)", kind: "(\w+)"/g),
   ].map((m) => ({ path: m[1], anchor: m[2], kind: m[3] }));
   assert.deepEqual(
-    entries.slice(0, 5).map((e) => e.path),
+    entries.slice(0, 6).map((e) => e.path),
     [
       "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
+      "/seo-para-ia/",
       "/blog/como-aparecer-en-google-maps-negocio-sevilla/",
       "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
       "/recursos/",
       "/portfolio/",
     ],
   );
-  assert.deepEqual(entries.slice(5), [
+  assert.deepEqual(entries.slice(6), [
     {
       path: "/web-para-restaurantes-sevilla/",
       anchor: "web para restaurantes en Sevilla",
