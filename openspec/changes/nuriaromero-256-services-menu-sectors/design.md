@@ -20,7 +20,7 @@ See proposal.md - Why. Current state on `develop` (after NRD-24 and NRD-25):
 
 **Non-Goals:**
 
-- Touching the `services`, `focusServices` or `niches` arrays, page data, page bodies, JSON-LD, `llms.txt`, redirects or check-seo scripts.
+- Touching the `services`, `focusServices` or `niches` arrays, page data, page bodies, JSON-LD, `llms.txt`, redirects, or any check-seo script other than the navigation rule of `check-seo-02`.
 - New menu interactions (Escape on desktop, click-to-open) or a visual redesign beyond adding group headings (the UI spec, if added by the ux-designer, governs the visual detail).
 
 ## Decisions
@@ -41,6 +41,7 @@ Alternatives considered: (a) moving `capilarLocal` from `services.ts` to `niches
 | modify | `src/components/Header.astro` | imports, `dropdownItems` removed, `isServiciosActive`, desktop dropdown and mobile accordion markup | app |
 | modify | `src/components/Footer.astro` | imports, "Servicios" and "Por sector" columns | app |
 | modify | `scripts/check-capilar-local.mjs` | shared-navigation expectation (line 44) | app |
+| modify | `scripts/check-seo-02.mjs` | `pages` entries 14-17 get `sector: true`; home/navigation/footer loop (line ~345): sector pages required in home and footer, rejected in the header | app |
 | modify (done in this design) | `docs/adr/0013-seo-site-architecture.md` | amendment of "Menu and breadcrumbs" | design path |
 
 ### Interfaces
@@ -114,7 +115,7 @@ Task 1.2, components (RED before the Header/Footer change):
 10. Mobile service links keep `min-h-12`; the accordion button keeps `min-h-11 min-w-11` (scenario "Keyboard and touch").
 11. `Footer.astro` contains "Por sector", not "Webs por sector", renders `sectorLinks` and `serviceMenuLinks`, and does not import `@/data/niches` (scenario "Footer on any page").
 
-Fakes/fixtures: none; the real data modules are pure. Existing tests that must stay green unchanged: `header-booking-cta`, `casos-exito`, `google-calendar-reserva`, `nap-consistency`, `dark-only-cleanup`, `seo-para-ia` (services order), `single-price-source`. Then `pnpm build`, `pnpm check:seo:dist` (02 header structure, 06 link map) and `pnpm check:capilar-local`.
+Fakes/fixtures: none; the real data modules are pure. Existing tests that must stay green unchanged: `header-booking-cta`, `casos-exito`, `google-calendar-reserva`, `nap-consistency`, `dark-only-cleanup`, `seo-para-ia` (services order), `single-price-source`. Then `pnpm build` and `pnpm check:seo:dist` (02 now rejects sector pages in the header and still requires them in home and footer; 06 link map). `pnpm check:capilar-local` already fails on the base branch (price and copy assertions, pre-existing, tracked as a separate bug); for this change it is enough that its output no longer reports "present in shared services navigation".
 
 ### Real-browser / e2e checks (QA)
 
