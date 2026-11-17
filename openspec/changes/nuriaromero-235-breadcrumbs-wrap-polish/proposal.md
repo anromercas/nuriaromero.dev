@@ -18,7 +18,7 @@
 
 ### Modified Capabilities
 
-- `page-template`: requirement "Breadcrumbs render in the ink world with a visible focus" gains the default cursor, the row gap rule and the purple-radial contrast.
+- `page-template`: requirement "Breadcrumbs render in the ink world with a visible focus" (MODIFIED) gains the purple-radial contrast; new requirement "Breadcrumbs keep the current item inert and wrapped rows clear of the focus ring" (ADDED) holds the default cursor and the row gap rule.
 
 ## Impact
 
