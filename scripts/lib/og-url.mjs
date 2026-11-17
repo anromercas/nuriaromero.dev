@@ -14,12 +14,15 @@ const attr = (tag, name) => {
 const tags = (html, name) =>
   html.match(new RegExp(`<${name}\\b[^>]*>`, "gi")) ?? [];
 
-/** True when a robots meta contains noindex (with or without spaces). */
+/** True when a robots meta has the token noindex or none (comma/space separated). */
 export function isNoindex(html) {
   return tags(strip(html), "meta").some(
     (t) =>
       (attr(t, "name") ?? "").toLowerCase() === "robots" &&
-      /noindex/i.test(attr(t, "content") ?? ""),
+      (attr(t, "content") ?? "")
+        .toLowerCase()
+        .split(/[\s,]+/)
+        .some((token) => token === "noindex" || token === "none"),
   );
 }
 

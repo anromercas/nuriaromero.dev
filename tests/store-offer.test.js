@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const root = new URL("../", import.meta.url);
 const read = (path) => readFileSync(new URL(path, root), "utf8");
@@ -72,10 +73,12 @@ test('the literal "499 €" lives only in src/data/store-offer.ts', () => {
         /\.(ts|astro)$/.test(name) &&
         readFileSync(full, "utf8").includes("499 €")
       )
-        hits.push(full.replace(new URL("../", import.meta.url).pathname, ""));
+        hits.push(
+          full.replace(fileURLToPath(new URL("../", import.meta.url)), ""),
+        );
     }
   };
-  walk(new URL("src", root).pathname);
+  walk(fileURLToPath(new URL("src", root)));
   assert.deepEqual(hits, ["src/data/store-offer.ts"]);
 });
 
@@ -153,7 +156,9 @@ test("the store page reads the lists from the source and writes none of them", (
 
 test("components under tienda-online are props only", () => {
   const dir = new URL("src/components/tienda-online/", root);
-  const files = readdirSync(dir.pathname).filter((f) => f.endsWith(".astro"));
+  const files = readdirSync(fileURLToPath(dir)).filter((f) =>
+    f.endsWith(".astro"),
+  );
   assert.ok(files.length > 0);
   for (const f of files) {
     assert.doesNotMatch(
