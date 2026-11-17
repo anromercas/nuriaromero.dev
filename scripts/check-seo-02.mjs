@@ -11,10 +11,10 @@ const pages = [
   { url: "/inteligencia-artificial/", breadcrumbName: "Inteligencia artificial" },
   { url: "/seo-local-sevilla/", breadcrumbName: "SEO local en Sevilla" },
   { url: "/tienda-online-sevilla/", breadcrumbName: "Tienda online en Sevilla" },
-  { url: "/web-para-restaurantes-sevilla/", breadcrumbName: "Web para restaurantes" },
-  { url: "/web-para-clinicas-sevilla/", breadcrumbName: "Web para clínicas" },
-  { url: "/web-para-comercios-sevilla/", breadcrumbName: "Web para comercios" },
-  { url: "/web-para-abogados-gestorias-sevilla/", breadcrumbName: "Web para despachos y gestorías" },
+  { url: "/web-para-restaurantes-sevilla/", sector: true, breadcrumbName: "Web para restaurantes" },
+  { url: "/web-para-clinicas-sevilla/", sector: true, breadcrumbName: "Web para clínicas" },
+  { url: "/web-para-comercios-sevilla/", sector: true, breadcrumbName: "Web para comercios" },
+  { url: "/web-para-abogados-gestorias-sevilla/", sector: true, breadcrumbName: "Web para despachos y gestorías" },
 ]
 
 // SEO-15: shared Header/Footer nav routes that must also carry a trailing
@@ -342,11 +342,15 @@ if (!home) {
   const header = getHeaderSections(home).join("\n")
   const footer = getSections(home, "footer").join("\n")
 
-  for (const { url: page } of pages) {
+  for (const { url: page, sector } of pages) {
     const bareHref = withoutSlash(page)
     for (const [name, section] of [["home", homeContent], ["navigation", header], ["footer", footer]]) {
       const hrefs = getHrefs(section)
-      if (!hrefs.includes(page)) {
+      if (sector && name === "navigation") {
+        if (hrefs.includes(page)) {
+          addFailure(`navigation: sector page must not be in the header menu (${page})`)
+        }
+      } else if (!hrefs.includes(page)) {
         addFailure(`${name}: missing canonical internal href (${page})`)
       }
       if (hrefs.some((href) => isBareTargetUrl(href, bareHref))) {

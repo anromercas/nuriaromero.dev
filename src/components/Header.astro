@@ -3,8 +3,7 @@ import { Image } from "astro:assets";
 import Menu from "./icons/Menu.astro";
 import X from "./icons/X.astro";
 import BookingButton from "./BookingButton.astro";
-import { services } from "@/data/services";
-import { niches } from "@/data/niches";
+import { serviceMenuGroups, serviceMenuLinks } from "@/data/navigation";
 import logoLight from "@/assets/nuriaromerodev-logo-blanco.svg";
 
 const navItems = [
@@ -40,24 +39,15 @@ const isActive = (url: string | null) => {
   return currentPath === target || currentPath.startsWith(`${target}/`);
 };
 
-const dropdownItems = [...services, ...niches].map((page) => ({
-  title: page.breadcrumbName,
-  url: page.slug,
-}));
-
-const isServiciosActive = dropdownItems.some((item) => isActive(item.url));
+const isServiciosActive = serviceMenuLinks.some((item) => isActive(item.url));
 
 // Área táctil mínima recomendada (WCAG 2.5.5 / Material): 44x44px.
 const navLinkClass =
   "relative flex min-h-12 items-center whitespace-nowrap px-2.5 lg:px-3.5 transition hover:text-blue-500";
 ---
 
-<header
-  class="fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2 px-3"
->
-  <nav
-    class="relative flex px-3 text-base font-medium rounded-full text-gray-200 justify-center items-center"
-  >
+<header class="fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2 px-3">
+  <nav class="relative flex px-3 text-base font-medium rounded-full text-gray-200 justify-center items-center">
     <a
       href="/"
       class="flex min-h-12 items-center px-2"
@@ -72,48 +62,68 @@ const navLinkClass =
     </a>
 
     <ul class="hidden md:flex items-center">
-      {
-        navItems.map((link) =>
-          link.label === "servicios" ? (
-            <li class="relative group">
-              <button
-                type="button"
-                class:list={[navLinkClass, { "text-blue-500": isServiciosActive }]}
-                aria-label={link.label}
-                aria-haspopup="true"
-                aria-current={isServiciosActive ? "page" : undefined}
-              >
-                {link.title}
-              </button>
-              <div class="absolute left-1/2 hidden -translate-x-1/2 pt-2 group-hover:block group-focus-within:block">
-                <ul class="min-w-56 rounded-xl border border-gray-700 bg-gray-800/95 py-2 shadow-lg backdrop-blur">
-                  {dropdownItems.map((item) => (
-                    <li>
-                      <a
-                        href={item.url}
-                        class="block px-4 py-2.5 hover:text-blue-500"
-                      >
-                        {item.title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          ) : (
-            <li>
-              <a
-                class:list={[navLinkClass, { "text-blue-500": isActive(link.url) }]}
-                aria-label={link.label}
-                aria-current={isActive(link.url) ? "page" : undefined}
-                href={link.url ?? undefined}
-              >
-                {link.title}
-              </a>
-            </li>
-          )
-        )
-      }
+      {navItems.map((link) =>
+        link.label === "servicios" ? (
+          <li class="relative group">
+            <button
+              type="button"
+              class:list={[
+                navLinkClass,
+                { "text-blue-500": isServiciosActive },
+              ]}
+              aria-label={link.label}
+              aria-haspopup="true"
+              aria-current={isServiciosActive ? "page" : undefined}
+            >
+              {link.title}
+            </button>
+            <div class="absolute left-1/2 hidden -translate-x-1/2 pt-2 group-hover:block group-focus-within:block">
+              <ul class="min-w-56 rounded-xl border border-gray-700 bg-gray-800/95 py-2 shadow-lg backdrop-blur">
+                {serviceMenuGroups.map((group, i) => (
+                  <li
+                    class={
+                      i > 0 ? "mt-2 border-t border-gray-700 pt-2" : undefined
+                    }
+                  >
+                    <p
+                      id={`servicios-grupo-${i}`}
+                      class="px-4 pt-2 pb-1 text-sm font-semibold text-gray-400"
+                    >
+                      {group.heading}
+                    </p>
+                    <ul aria-labelledby={`servicios-grupo-${i}`}>
+                      {group.items.map((item) => (
+                        <li>
+                          <a
+                            href={item.url}
+                            class="block px-4 py-2.5 hover:text-blue-500"
+                          >
+                            {item.title}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ) : (
+          <li>
+            <a
+              class:list={[
+                navLinkClass,
+                { "text-blue-500": isActive(link.url) },
+              ]}
+              aria-label={link.label}
+              aria-current={isActive(link.url) ? "page" : undefined}
+              href={link.url ?? undefined}
+            >
+              {link.title}
+            </a>
+          </li>
+        ),
+      )}
     </ul>
 
     <BookingButton
@@ -140,8 +150,7 @@ const navLinkClass =
   id="mobile-menu-overlay"
   class="fixed inset-0 z-40 bg-black/50 md:hidden"
   aria-hidden="true"
->
-</div>
+></div>
 
 <div
   id="mobile-menu"
@@ -151,81 +160,94 @@ const navLinkClass =
     <li class="mb-2 border-b border-gray-700 pb-3">
       <BookingButton class="w-full" />
     </li>
-    {
-      navItems.map((link) =>
-        link.label === "servicios" ? (
-          <li>
-            <div class="flex items-stretch">
-              <span
-                class:list={[
-                  "flex min-h-12 flex-1 items-center px-4 py-3 leading-[1.5rem]",
-                  { "text-blue-500": isServiciosActive },
-                ]}
-                aria-current={isServiciosActive ? "page" : undefined}
-              >
-                {link.title}
-              </span>
-              <button
-                type="button"
-                class="mobile-accordion-btn flex min-h-11 min-w-11 items-center justify-center text-gray-400 transition hover:text-blue-500"
-                aria-expanded="false"
-                aria-controls="mobile-submenu-servicios"
-                aria-label="Mostrar submenú de Servicios"
-              >
-                <svg
-                  class="mobile-accordion-chevron size-4 transition-transform duration-200"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </button>
-            </div>
-            <ul
-              id="mobile-submenu-servicios"
-              class="mobile-accordion-panel ml-3 border-l border-gray-700"
-            >
-              <ul class="min-h-0 overflow-hidden">
-                {dropdownItems.map((item) => (
-                  <li>
-                    <a
-                      href={item.url}
-                      class="flex min-h-12 items-center px-4 py-2.5 text-sm text-gray-400 hover:text-blue-500"
-                    >
-                      {item.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </ul>
-          </li>
-        ) : (
-          <li>
-            <a
+    {navItems.map((link) =>
+      link.label === "servicios" ? (
+        <li>
+          <div class="flex items-stretch">
+            <span
               class:list={[
-                "block min-h-12 px-4 py-3 leading-[1.5rem] flex items-center",
-                "hover:text-blue-500",
-                { "text-blue-500": isActive(link.url) },
+                "flex min-h-12 flex-1 items-center px-4 py-3 leading-[1.5rem]",
+                { "text-blue-500": isServiciosActive },
               ]}
-              aria-current={isActive(link.url) ? "page" : undefined}
-              href={link.url ?? undefined}
+              aria-current={isServiciosActive ? "page" : undefined}
             >
               {link.title}
-            </a>
-          </li>
-        )
-      )
-    }
+            </span>
+            <button
+              type="button"
+              class="mobile-accordion-btn flex min-h-11 min-w-11 items-center justify-center text-gray-400 transition hover:text-blue-500"
+              aria-expanded="false"
+              aria-controls="mobile-submenu-servicios"
+              aria-label="Mostrar submenú de Servicios"
+            >
+              <svg
+                class="mobile-accordion-chevron size-4 transition-transform duration-200"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </div>
+          <ul
+            id="mobile-submenu-servicios"
+            class="mobile-accordion-panel ml-3 border-l border-gray-700"
+          >
+            <ul class="min-h-0 overflow-hidden">
+              {serviceMenuGroups.map((group, i) => (
+                <li>
+                  <p
+                    id={`servicios-movil-grupo-${i}`}
+                    class:list={[
+                      "px-4 pb-1 text-xs font-semibold text-gray-300",
+                      i === 0 ? "pt-2" : "pt-3",
+                    ]}
+                  >
+                    {group.heading}
+                  </p>
+                  <ul aria-labelledby={`servicios-movil-grupo-${i}`}>
+                    {group.items.map((item) => (
+                      <li>
+                        <a
+                          href={item.url}
+                          class="flex min-h-12 items-center px-4 py-2.5 text-sm text-gray-400 hover:text-blue-500"
+                        >
+                          {item.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </ul>
+        </li>
+      ) : (
+        <li>
+          <a
+            class:list={[
+              "block min-h-12 px-4 py-3 leading-[1.5rem] flex items-center",
+              "hover:text-blue-500",
+              { "text-blue-500": isActive(link.url) },
+            ]}
+            aria-current={isActive(link.url) ? "page" : undefined}
+            href={link.url ?? undefined}
+          >
+            {link.title}
+          </a>
+        </li>
+      ),
+    )}
   </ul>
 </div>
 
 <script>
-  import "../scripts/header-mobile-menu.js"
+  import "../scripts/header-mobile-menu.js";
 </script>
 
 <style>

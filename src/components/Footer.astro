@@ -1,66 +1,57 @@
 ---
 import { SITE } from "@/data/site";
-import { services } from "@/data/services";
-import { niches } from "@/data/niches";
+import { serviceMenuLinks, sectorLinks } from "@/data/navigation";
 import { localTrust } from "@/data/local-trust";
 
 const currentYear = new Date().getFullYear();
 ---
 
-<footer
-  class="opacity-80 my-4 px-4 md:px-0 mt-16 w-full mx-auto container lg:max-w-4xl md:max-w-2xl mb-10"
->
+<footer class="opacity-80 my-4 px-4 md:px-0 mt-16 w-full mx-auto container lg:max-w-4xl md:max-w-2xl mb-10">
   <div class="grid gap-8 border-t border-gray-700 pt-8 sm:grid-cols-3">
     <div>
-      <h2 class="mb-3 text-sm font-semibold text-zinc-100">
-        Servicios
-      </h2>
+      <h2 class="mb-3 text-sm font-semibold text-zinc-100">Servicios</h2>
       <ul class="space-y-1.5 text-sm text-zinc-200/90">
-        {
-          services.map((service) => (
-            <li>
-              <a href={service.slug} class="hover:text-blue-500 hover:underline">
-                {service.breadcrumbName}
-              </a>
-            </li>
-          ))
-        }
+        {serviceMenuLinks.map((service) => (
+          <li>
+            <a href={service.url} class="hover:text-blue-500 hover:underline">
+              {service.title}
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
 
     <div>
-      <h2 class="mb-3 text-sm font-semibold text-zinc-100">
-        Webs por sector
-      </h2>
+      <h2 class="mb-3 text-sm font-semibold text-zinc-100">Por sector</h2>
       <ul class="space-y-1.5 text-sm text-zinc-200/90">
-        {
-          niches.map((niche) => (
-            <li>
-              <a href={niche.slug} class="hover:text-blue-500 hover:underline">
-                {niche.breadcrumbName}
-              </a>
-            </li>
-          ))
-        }
+        {sectorLinks.map((sector) => (
+          <li>
+            <a href={sector.url} class="hover:text-blue-500 hover:underline">
+              {sector.title}
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
 
     <div>
-      <h2 class="mb-3 text-sm font-semibold text-zinc-100">
-        {SITE.name}
-      </h2>
-      <address
-        class="space-y-1.5 text-sm not-italic text-zinc-200/90"
-      >
+      <h2 class="mb-3 text-sm font-semibold text-zinc-100">{SITE.name}</h2>
+      <address class="space-y-1.5 text-sm not-italic text-zinc-200/90">
         <p>{SITE.address.full}</p>
         <p>Zona de servicio: {localTrust.gbp.serviceArea}</p>
         <p>
-          <a href={`mailto:${SITE.email}`} class="hover:text-blue-500 hover:underline">
+          <a
+            href={`mailto:${SITE.email}`}
+            class="hover:text-blue-500 hover:underline"
+          >
             {SITE.email}
           </a>
         </p>
         <p>
-          <a href={`tel:+${SITE.whatsapp}`} class="hover:text-blue-500 hover:underline">
+          <a
+            href={`tel:+${SITE.whatsapp}`}
+            class="hover:text-blue-500 hover:underline"
+          >
             {SITE.phone}
           </a>
         </p>
@@ -88,27 +79,41 @@ const currentYear = new Date().getFullYear();
   </div>
 
   <div class="mt-8 flex flex-wrap items-center justify-between gap-2">
-    <span class="text-sm text-zinc-200/90"
-      >&copy; {currentYear}
+    <span class="text-sm text-zinc-200/90">
+      &copy; {currentYear}
       Nuria Romero. Todos los derechos reservados
     </span>
     <ul class="flex flex-wrap items-center gap-4 text-sm text-zinc-200/90">
       <li>
-        <a href="/sobre-mi/" class="hover:underline">Sobre mí</a>
+        <a href="/sobre-mi/" class="hover:underline">
+          Sobre mí
+        </a>
       </li>
       <li>
-        <a href="/blog/" class="hover:underline">Blog</a>
+        <a href="/blog/" class="hover:underline">
+          Blog
+        </a>
       </li>
       <li>
-        <a href="/contacto/" class="hover:underline">Contacto</a>
+        <a href="/contacto/" class="hover:underline">
+          Contacto
+        </a>
       </li>
     </ul>
   </div>
 
   <div class="mt-4 flex flex-wrap items-center gap-4 text-xs text-zinc-300/80">
-    <button id="cookie-settings" type="button" class="hover:underline">Configuración de cookies</button>
-    <a href="/aviso-legal/" class="hover:underline">Aviso legal</a>
-    <a href="/privacidad/" class="hover:underline">Política de privacidad</a>
-    <a href="/cookies/" class="hover:underline">Política de cookies</a>
+    <button id="cookie-settings" type="button" class="hover:underline">
+      Configuración de cookies
+    </button>
+    <a href="/aviso-legal/" class="hover:underline">
+      Aviso legal
+    </a>
+    <a href="/privacidad/" class="hover:underline">
+      Política de privacidad
+    </a>
+    <a href="/cookies/" class="hover:underline">
+      Política de cookies
+    </a>
   </div>
 </footer>
