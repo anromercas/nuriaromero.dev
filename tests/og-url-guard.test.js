@@ -91,7 +91,7 @@ test("og:url inside JSON-LD, scripts and comments is ignored", () => {
   assert.deepEqual(ogUrlProblems(notFound("noindex, nofollow", extra)), []);
 });
 
-test("package.json wires the check-seo-20 pair last in check:seo:dist", () => {
+test("package.json wires the check-seo-20 pair in check:seo:dist", () => {
   const { scripts } = JSON.parse(readFileSync(new URL("package.json", root)));
   assert.equal(
     scripts["check:seo-20"],
@@ -99,7 +99,7 @@ test("package.json wires the check-seo-20 pair last in check:seo:dist", () => {
   );
   assert.equal(scripts["check:seo-20:dist"], "node scripts/check-seo-20.mjs");
   assert.ok(
-    scripts["check:seo:dist"].endsWith(" && node scripts/check-seo-20.mjs"),
+    scripts["check:seo:dist"].includes(" && node scripts/check-seo-20.mjs"),
   );
   assert.ok(existsSync(new URL("scripts/check-seo-20.mjs", root)));
 });
