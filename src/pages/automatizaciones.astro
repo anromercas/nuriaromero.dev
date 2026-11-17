@@ -56,15 +56,15 @@ const proofItems = [
 const comparisonItems = [
   {
     lead: "Empieza por lo repetitivo.",
-    text: "Una tarea que sigue siempre los mismos pasos y te quita tiempo cada semana.",
+    text: "Una tarea de siempre los mismos pasos que te quita tiempo.",
   },
   {
     lead: "Deja fuera lo que cambia cada vez.",
-    text: "Si una tarea necesita tu criterio, que la siga haciendo una persona.",
+    text: "Si necesita tu criterio, que la haga una persona.",
   },
   {
     lead: "Simplifica antes de automatizar.",
-    text: "Un proceso con pasos de más sigue siendo lento aunque lo haga una máquina.",
+    text: "Un proceso con pasos de más sigue siendo lento.",
   },
 ];
 ---
@@ -96,6 +96,7 @@ const comparisonItems = [
           text: "Lo que puede hacerse solo",
           accent: "hacerse solo",
         }}
+        answer="Puedes automatizar mensajes de WhatsApp, facturas, citas, formularios, avisos e informes: tareas que repites igual."
       >
         {automatizaciones.benefits.map((benefit, i) => (
           <BentoTile
@@ -121,6 +122,7 @@ const comparisonItems = [
             text: "Primero se simplifica, luego se automatiza",
             accent: "luego se automatiza",
           }}
+          answer="Trabajo en cinco pasos: mapear, simplificar, elegir la herramienta, probar con casos reales y dejar la tarea funcionando."
           steps={automatizaciones.process}
         />
       </SectionContainer>
@@ -136,6 +138,7 @@ const comparisonItems = [
           text: "Por dónde empezar a automatizar",
           accent: "empezar",
         }}
+        answer="Empieza por la tarea que repites siempre igual y deja fuera lo que necesita tu criterio."
         items={comparisonItems}
         link={{ label: "Ver el precio", href: "#precios" }}
       />
@@ -152,12 +155,8 @@ const comparisonItems = [
             accent: "antes de empezar",
           }}
           tiers={[plan]}
-        >
-          <Fragment slot="lede">
-            Cada automatización cuesta{" "}
-            <strong>desde {automatizaciones.pricing.from}</strong>.
-          </Fragment>
-        </SeoLocalPlans>
+          answer={`Cada automatización cuesta desde ${automatizaciones.pricing.from}, con pruebas con casos reales, avisos si algo falla y documentación.`}
+        />
       </SectionContainer>
     </div>
   </Fragment>
@@ -170,7 +169,7 @@ const comparisonItems = [
           text: "Lo que preguntan antes de automatizar",
           accent: "antes de automatizar",
         }}
-        lede="Lo vemos en la llamada."
+        answer="Automatizar es que una tarea repetida la hagan tus programas conectados en lugar de hacerla tú a mano."
         faqs={automatizaciones.faqs}
       />
     </SectionContainer>

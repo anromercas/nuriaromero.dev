@@ -75,6 +75,17 @@
   text-wrap: balance;
 }
 
+/* Direct answer under a section heading: lead copy. Sections own the bottom margin. */
+.tpl-answer {
+  max-width: 52ch;
+  margin: 0 0 2rem;
+  color: var(--text-body);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
 /* The single serif phrase of a heading. */
 .tpl-accent {
   color: var(--sky-accent);

@@ -73,6 +73,7 @@ const proofItems = [
         headingId="revision-title"
         keyword="Posicionamiento web en Sevilla: Google y Google Maps"
         title={{ text: "Qué se revisa para que te encuentren", accent: "te encuentren" }}
+        answer="El SEO local en Sevilla consiste en revisar tu ficha de Google, los datos de tu negocio en directorios y tu web, para que Google entienda qué haces y dónde y te encuentre quien te busca."
       >
         <BentoTile
           area="a"
@@ -199,6 +200,7 @@ const proofItems = [
           headingId="proceso-title"
           keyword="Cómo trabajamos el SEO local en Sevilla"
           title={{ text: "Hablas con quien hace el trabajo", accent: "quien hace el trabajo" }}
+          answer="Trabajo en cuatro pasos: reviso tu punto de partida, pongo en orden tu presencia local, la mantengo cada mes y te cuento el trabajo en un vídeo-informe mensual."
           steps={seoLocal.process}
         >
           <Fragment slot="byline">Soy Nuria Romero, <a href="/">consultor SEO en Sevilla</a>, y llevo tu SEO local mes a mes.</Fragment>
@@ -227,6 +229,7 @@ const proofItems = [
         headingId="agencia-title"
         keyword="¿Agencia SEO en Sevilla o consultora?"
         title={{ text: "Dos maneras de llevar tu SEO local", accent: "tu SEO local" }}
+        answer="Te conviene una consultora si quieres hablar directamente con quien trabaja tu ficha y tu web; una agencia encaja si necesitas llevar a la vez campañas, redes sociales y diseño."
         items={agenciaItems}
         link={{ label: "Ver los planes y precios", href: "#precios" }}
       />
@@ -244,9 +247,8 @@ const proofItems = [
           }}
           tiers={seoLocal.pricing.tiers ?? []}
           note={seoLocal.pricing.note}
-        >
-          <Fragment slot="lede">El SEO local en Sevilla cuesta <strong>{tierFrom(seoLocal, "Local")}</strong> con el plan Local, centrado en tu ficha de Google, y <strong>{tierFrom(seoLocal, "Local Pro")}</strong> con Local Pro, que suma el trabajo en tu web.</Fragment>
-        </SeoLocalPlans>
+          answer={`El SEO local en Sevilla cuesta desde ${tierFrom(seoLocal, "Local")} con el plan Local, centrado en tu ficha de Google, y desde ${tierFrom(seoLocal, "Local Pro")} con Local Pro, que suma el trabajo en tu web.`}
+        />
       </SectionContainer>
     </div>
   </Fragment>
@@ -259,7 +261,7 @@ const proofItems = [
           text: seoLocal.sectionTitles?.faq ?? "Preguntas antes de empezar",
           accent: "antes de empezar",
         }}
-        lede="Si tu duda no está aquí, la resolvemos en la llamada."
+        answer="Tu negocio puede aparecer en Google Maps con una ficha completa y coherente, pero nadie puede prometer la primera posición, porque también influye la distancia entre quien busca y tu negocio."
         faqs={seoLocal.faqs}
         ctaLabel={seoLocal.cta?.buttonLabel}
       />

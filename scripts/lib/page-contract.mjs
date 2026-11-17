@@ -125,3 +125,35 @@ export function normalizedMain(html) {
     .replace(EDGE_CLOSE, "$1")
     .trim();
 }
+
+const ANSWER_BLOCKS = /<(ul|ol|article|details|figure|table)\b/i;
+
+/**
+ * Direct answer of the section labelled by headingId (NRD-245), or null when
+ * the section has none. The answer is the first <p data-direct-answer> after
+ * the heading and before the next h2. precededByBlock is true when a list,
+ * card, FAQ item, figure, table or bento tile opens before it.
+ */
+export function directAnswer(html, headingId) {
+  const main = mainInner(html);
+  const heading = new RegExp(
+    `<h2\\b[^>]*\\sid\\s*=\\s*["']${headingId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["'][^>]*>[\\s\\S]*?</h2>`,
+    "i",
+  ).exec(main);
+  if (!heading) return null;
+  let rest = main.slice(heading.index + heading[0].length);
+  const next = rest.search(/<h2\b/i);
+  if (next >= 0) rest = rest.slice(0, next);
+  const answer =
+    /<p\b[^>]*\sdata-direct-answer(?=[\s=>])[^>]*>([\s\S]*?)<\/p>/i.exec(rest);
+  if (!answer) return null;
+  const text = plainText(answer[1]);
+  return {
+    text,
+    words: text ? text.split(" ").length : 0,
+    sentences: (text.match(/[^.?!]+(?:[.?!]+(?=\s|$)|$)/g) ?? []).filter((s) =>
+      s.trim(),
+    ).length,
+    precededByBlock: ANSWER_BLOCKS.test(rest.slice(0, answer.index)),
+  };
+}

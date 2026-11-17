@@ -55,11 +55,11 @@ export const storeOptions: StoreOption[] = [
 ];
 
 export const storeIncludes: string[] = [
-  "Tienda montada en tu web, con un diseño adaptado a tu marca",
+  "Tienda montada en tu web, con diseño adaptado a tu marca",
   "Una pasarela de pago con tarjeta, como Stripe",
   "Envíos sencillos: tarifa plana y/o recogida en tienda",
   "Hasta unos 20 productos cargados por mí, con variantes simples de talla o color",
-  "Una sesión de formación para subir productos y gestionar pedidos desde el panel",
+  "Una sesión de formación para gestionar productos y pedidos",
   "Un mes de soporte tras el lanzamiento",
 ];
 
@@ -74,7 +74,7 @@ export const storeQuotedSeparately: StoreScopeItem[] = [
 ];
 
 export const STORE_FINAL_PRICE_NOTE =
-  "El precio final se cierra por escrito después de conocer tu proyecto, antes de empezar.";
+  "El precio final se cierra por escrito tras conocer tu proyecto, antes de empezar.";
 
 type Tier = NonNullable<ServicePageData["pricing"]["tiers"]>[number];
 

@@ -46,7 +46,7 @@ const comparisonItems = [
     text: "Es más barato.",
   },
   {
-    lead: "Compensa si pierdes horas copiando datos o tu programa te obliga a cambiar tu forma de trabajar.",
+    lead: "Compensa si pierdes horas copiando datos o tu programa te frena.",
     text: "Recuperas ese tiempo.",
   },
   {
@@ -96,6 +96,7 @@ const proofItems = [
           text: "Herramientas que encajan en tu día a día",
           accent: "en tu día a día",
         }}
+        answer="Hago aplicaciones web y móviles, sistemas de gestión o ERP, integraciones por API, reservas y paneles de datos."
       >
         {desarrolloSoftware.benefits.map((benefit, i) => (
           <BentoTile
@@ -121,6 +122,7 @@ const proofItems = [
             text: "Empezamos por lo que más tiempo te quita",
             accent: "más tiempo te quita",
           }}
+          answer="Trabajo en cuatro pasos: analizo tu trabajo, cierro una primera fase, entrego versiones y amplío si funciona."
           steps={desarrolloSoftware.process}
         >
           <Fragment slot="byline">
@@ -140,7 +142,7 @@ const proofItems = [
           accent: "puedes visitar",
         }}
         reviews={reviewsData}
-        note="Dos webs reales de negocios de Sevilla; la de Arkady incluye un sistema de reservas hecho desde cero."
+        note="Dos webs reales de Sevilla; la de Arkady incluye reservas."
         projects={["arkady", "adfsevilla"]}
       />
     </SectionContainer>
@@ -153,6 +155,7 @@ const proofItems = [
           text: "Cuándo compensa hacerlo a medida",
           accent: "compensa",
         }}
+        answer="Te conviene a medida si pierdes horas copiando datos o tu programa te obliga a cambiar cómo trabajas."
         items={comparisonItems}
         link={{ label: "Ver el precio", href: "#precios" }}
       />
@@ -169,13 +172,8 @@ const proofItems = [
             accent: "precio cerrado",
           }}
           tiers={[plan]}
-        >
-          <Fragment slot="lede">
-            Primera fase{" "}
-            <strong>desde {desarrolloSoftware.pricing.from}</strong>, ampliable
-            por fases con precio por escrito.
-          </Fragment>
-        </SeoLocalPlans>
+          answer={`La primera fase de tu software cuesta desde ${desarrolloSoftware.pricing.from}, ampliable por fases con precio por escrito.`}
+        />
       </SectionContainer>
     </div>
   </Fragment>
@@ -188,7 +186,7 @@ const proofItems = [
           text: "Lo que te preguntas antes de empezar",
           accent: "antes de empezar",
         }}
-        lede="Lo vemos en la llamada."
+        answer="Un software a medida es una aplicación hecha para cómo trabaja tu empresa, no un programa genérico."
         faqs={desarrolloSoftware.faqs}
       />
     </SectionContainer>
