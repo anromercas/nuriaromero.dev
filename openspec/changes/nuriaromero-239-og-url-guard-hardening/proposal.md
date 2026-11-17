@@ -17,7 +17,7 @@ None.
 
 ### Modified Capabilities
 
-- `not-found-page`: the requirement "Canonical is omitted only on noindex pages" now defines a noindex page as one whose robots meta carries `noindex` or `none`, and the guard runs from any checkout path.
+- `not-found-page`: two added requirements next to "Canonical is omitted only on noindex pages" (left unchanged): the og:url guard treats a page as noindex when its robots meta carries `noindex` or `none`, and it finds built pages from any checkout path.
 
 ## Impact
 
