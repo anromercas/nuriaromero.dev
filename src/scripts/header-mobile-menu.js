@@ -2,14 +2,15 @@
 // 'unsafe-inline' de script-src en la CSP. Comportamiento idéntico: menú
 // móvil (abrir/cerrar, acordeón de "Servicios", cierre por click fuera /
 // Escape / navegación).
+import { focusableIn, nextFocusIndex } from "./focus-trap.js";
+import { shouldCloseDrawerOnResize } from "./menu-logic.js";
+
 function setAccordion(panel, btn, open) {
   if (!panel || !btn) return;
   btn.setAttribute("aria-expanded", String(open));
-  if (open) {
-    panel.classList.add("open");
-  } else {
-    panel.classList.remove("open");
-  }
+  // `inert` keeps the closed panel's links out of the tab order (NRD-259).
+  panel.toggleAttribute("inert", !open);
+  panel.classList.toggle("open", open);
 }
 
 function closeAllAccordions() {
@@ -22,7 +23,9 @@ function closeAllAccordions() {
     });
 }
 
-function setMobileMenu(open) {
+// `returnFocus`: send focus back to the toggle button (Escape, close button,
+// overlay). Navigation passes false because the page is being replaced.
+function setMobileMenu(open, returnFocus = false) {
   const menu = document.getElementById("mobile-menu");
   const overlay = document.getElementById("mobile-menu-overlay");
   const btn = document.getElementById("mobile-menu-btn");
@@ -35,6 +38,21 @@ function setMobileMenu(open) {
   document.documentElement.classList.toggle("overflow-hidden", open);
   document.body.classList.toggle("overflow-hidden", open);
   if (!open) closeAllAccordions();
+  if (open) {
+    focusableIn(menu)[0]?.focus();
+  } else if (returnFocus) {
+    btn.focus();
+  }
+}
+
+function trapTab(event, menu) {
+  const items = focusableIn(menu);
+  if (items.length === 0) return;
+  const current = items.indexOf(document.activeElement);
+  const wraps = event.shiftKey ? current <= 0 : current === items.length - 1;
+  if (current !== -1 && !wraps) return;
+  event.preventDefault();
+  items[nextFocusIndex(items.length, current, event.shiftKey)].focus();
 }
 
 if (!window.__mobileMenuInit) {
@@ -48,7 +66,13 @@ if (!window.__mobileMenuInit) {
     if (!menu) return;
 
     if (target.closest("#mobile-menu-btn")) {
-      setMobileMenu(!menu.classList.contains("open"));
+      const open = !menu.classList.contains("open");
+      setMobileMenu(open, !open);
+      return;
+    }
+
+    if (target.closest("#mobile-menu-close")) {
+      setMobileMenu(false, true);
       return;
     }
 
@@ -62,13 +86,26 @@ if (!window.__mobileMenuInit) {
     }
 
     if (!target.closest("#mobile-menu") && menu.classList.contains("open")) {
-      setMobileMenu(false);
+      setMobileMenu(false, true);
     }
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") setMobileMenu(false);
+    const menu = document.getElementById("mobile-menu");
+    if (!menu?.classList.contains("open")) return;
+    if (event.key === "Escape") setMobileMenu(false, true);
+    else if (event.key === "Tab") trapTab(event, menu);
   });
 
   document.addEventListener("astro:after-swap", () => setMobileMenu(false));
+
+  // Past md the drawer is display:none; close it so the Tab trap and the
+  // scroll lock do not outlive it.
+  window
+    .matchMedia("(min-width: 768px)")
+    .addEventListener("change", (event) => {
+      const menu = document.getElementById("mobile-menu");
+      const open = !!menu?.classList.contains("open");
+      if (shouldCloseDrawerOnResize(open, event.matches)) setMobileMenu(false);
+    });
 }

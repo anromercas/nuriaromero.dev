@@ -7,7 +7,7 @@ context: |
   Layers: one layer `app` (src/, public/, tests/, scripts/, docs/, CLAUDE.md, root config) owned by team-harness:developer. CI/deploy config (.github/workflows/, public/_headers, public/_redirects, .gitignore) belongs to infra.
   Conventions: Conventional Commits in English without AI attribution, one subtask per commit; TDD is on (observed RED before implementation); branches {type}/{KEY}-{slug} cut from develop and merged into develop with a merge commit, never main.
   Invariants (full list in .claude/harness/invariants.md):
-  - Fully static output: no SSR adapter, endpoints or netlify.toml; third-party APIs only at build time.
+  - Fully static output: no SSR adapter, server endpoints or netlify.toml (prerendered build-time endpoints such as rss.xml are allowed); third-party APIs only at build time.
   - Site facts live in src/data and are never duplicated in pages.
   - SEO head only through src/components/seo/SEO.astro; JSON-LD only through Schema.astro and src/lib/schema.ts.
   - Every page uses a layout from src/layouts; only Layout.astro writes <html>/<head>.
