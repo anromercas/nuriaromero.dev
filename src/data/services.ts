@@ -206,7 +206,7 @@ export const desarrolloSoftware: ServicePageData = {
   benefits: [
     {
       title: "Aplicación web",
-      text: "Una herramienta que abres en el navegador, sin instalar nada.",
+      text: "Una herramienta en el navegador, sin instalar nada.",
     },
     {
       title: "App para el móvil",
@@ -222,17 +222,17 @@ export const desarrolloSoftware: ServicePageData = {
     },
     {
       title: "Reservas y citas",
-      text: "Tus clientes eligen día y hora y tú ves la agenda completa.",
+      text: "Tus clientes eligen día y hora y tú ves la agenda.",
     },
     {
       title: "Panel de datos",
-      text: "Ves cómo van tus pedidos, ventas o reservas de un vistazo.",
+      text: "Ves tus pedidos, ventas o reservas de un vistazo.",
     },
   ],
   process: [
     {
       title: "Analizo tu forma de trabajar",
-      text: "Me cuentas cómo trabajas y vemos dónde se pierde más tiempo.",
+      text: "Me cuentas cómo trabajas y vemos dónde pierdes tiempo.",
     },
     {
       title: "Primera fase con precio cerrado",
@@ -240,27 +240,27 @@ export const desarrolloSoftware: ServicePageData = {
     },
     {
       title: "Entregas que ya puedes usar",
-      text: "Ves las pantallas y después versiones parciales que ya usas.",
+      text: "Ves las pantallas y luego versiones que ya usas.",
     },
     {
       title: "Ampliamos cuando toca",
-      text: "Si funciona, añadimos la siguiente fase con su precio cerrado.",
+      text: "Si funciona, añadimos otra fase con precio cerrado.",
     },
   ],
   pricing: {
     from: SOFTWARE_FROM,
     includes: [
-      "Análisis de procesos y propuesta de solución",
-      "Prototipo de pantallas antes de desarrollar",
-      "Aplicación web accesible desde cualquier dispositivo",
+      "Análisis de procesos y propuesta",
+      "Prototipo de pantallas",
+      "Aplicación web para cualquier dispositivo",
       "Formación para tu equipo",
       "Garantía y soporte tras la entrega",
     ],
-    note: "Cada proyecto es distinto: tras la primera reunión te doy un presupuesto cerrado por fases.",
+    note: "Tras la primera reunión te doy un presupuesto cerrado.",
   },
   cta: {
     title: "Empecemos por tu herramienta",
-    text: "Cuéntame cómo trabajas y te respondo con una propuesta clara, sin compromiso.",
+    text: "Cuéntame cómo trabajas y te respondo con una propuesta clara.",
   },
   faqs: [
     {
@@ -299,7 +299,7 @@ export const automatizaciones: ServicePageData = {
     title: "Que las tareas repetitivas se hagan solas",
     titleAccent: "se hagan solas",
     subtitle:
-      "Automatizar un proceso es que una tarea que haces siempre igual, como copiar datos o enviar el mismo aviso, la hagan solos tus programas conectados. Tú te quedas con lo que necesita a una persona.",
+      "Automatizar un proceso es que una tarea que haces siempre igual, como copiar datos, la hagan solos tus programas conectados. Tú te quedas con lo que necesita criterio.",
     secondaryCta: { label: "Ver precio", href: "#precios" },
   },
   sectionTitles: {
@@ -311,61 +311,61 @@ export const automatizaciones: ServicePageData = {
   benefits: [
     {
       title: "Mensajes de WhatsApp",
-      text: "Las confirmaciones y los recordatorios salen solos, y lo que necesita respuesta te llega a ti.",
+      text: "Confirmaciones y recordatorios salen solos; lo demás te llega a ti.",
     },
     {
       title: "Facturas",
-      text: "Al cerrar un pedido, la factura se crea y se guarda en su carpeta.",
+      text: "Al cerrar un pedido, la factura se crea sola.",
     },
     {
       title: "Citas y recordatorios",
-      text: "Cada reserva entra en tu agenda y el cliente recibe su aviso el día antes.",
+      text: "Cada reserva entra en tu agenda y el cliente recibe aviso.",
     },
     {
       title: "Formularios a tu hoja o CRM",
-      text: "Lo que te escriben desde la web llega ordenado a tu hoja de cálculo o a tu lista de clientes.",
+      text: "Lo que te escriben desde la web llega ordenado a tu hoja o CRM.",
     },
     {
       title: "Avisos internos",
-      text: "Te enteras al momento de un pedido nuevo, una reseña o un pago pendiente.",
+      text: "Te enteras al momento de un pedido, reseña o pago pendiente.",
     },
     {
       title: "Informes",
-      text: "Cada lunes recibes en tu correo un resumen de ventas o gastos, sin montarlo a mano.",
+      text: "Cada lunes, un resumen de ventas o gastos en tu correo.",
     },
   ],
   process: [
     {
       title: "Mapear la tarea",
-      text: "Me cuentas cómo la haces hoy y apuntamos cada paso.",
+      text: "Me cuentas cómo la haces y apuntamos cada paso.",
     },
     {
       title: "Simplificarla antes de automatizarla",
-      text: "Quitamos los pasos que sobran, para no automatizar un desorden.",
+      text: "Quitamos pasos sobrantes para no automatizar un desorden.",
     },
     {
       title: "Elegir la herramienta",
-      text: "Uso n8n o Make, que conectan tus programas, según lo que haya que unir.",
+      text: "Uso n8n o Make para conectar tus programas.",
     },
     {
       title: "Piloto con casos reales",
-      text: "La pruebo con pedidos, citas o mensajes de verdad antes de dejarla sola.",
+      text: "La pruebo con casos de verdad antes de dejarla sola.",
     },
     {
       title: "Dejarla funcionando",
-      text: "Queda activa, con avisos si algo falla y documentada para que sepas qué hace.",
+      text: "Queda activa, con avisos si algo falla y documentada.",
     },
   ],
   pricing: {
     from: "149 €",
     includes: [
-      "Auditoría de procesos automatizables",
-      "Diseño e implementación del flujo con n8n o Make",
-      "Pruebas con casos reales de tu negocio",
-      "Avisos automáticos si algo falla",
+      "Auditoría de procesos",
+      "Diseño y montaje del flujo con n8n o Make",
+      "Pruebas con casos reales",
+      "Avisos si algo falla",
       "Documentación y formación",
     ],
-    note: "Precio por automatización. Los packs de varias automatizaciones tienen descuento.",
+    note: "Precio por automatización; los packs tienen descuento.",
   },
   faqs: [
     {
