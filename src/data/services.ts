@@ -908,6 +908,8 @@ export const tiendaOnline: ServicePageData = {
   },
 }
 
+// Registry of all service-template pages (prices, llms.txt). Menus and footer
+// columns are built from `navigation.ts`, not from this array.
 export const services = [
   seoLocal,
   seoParaIa,
