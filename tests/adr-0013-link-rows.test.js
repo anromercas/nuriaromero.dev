@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 
 const { internalLinksBySource } = await import(
   new URL("../src/data/internal-links.ts", import.meta.url)
@@ -134,4 +135,45 @@ test("ADR 0013 table D pairs exist", () => {
       `missing pair ${pair.source} <-> ${pair.target}`,
     );
   }
+});
+
+function parseTableA(markdown) {
+  const lines = markdown.split("\n");
+  const start = lines.findIndex((line) =>
+    line.startsWith("_A. `internalLinksBySource`"),
+  );
+  assert.notEqual(start, -1, "ADR 0013 section A not found");
+  const end = lines.findIndex(
+    (line, index) => index > start && line.startsWith("_B."),
+  );
+  const clean = (cell) =>
+    cell
+      .replace(/`/g, "")
+      .replace(/\s*\((edit existing row|P1)\)\s*$/, "")
+      .trim();
+  const parsed = new Map();
+  for (const line of lines.slice(start, end === -1 ? undefined : end)) {
+    const cells = line.split("|").map((cell) => cell.trim());
+    if (!/^\d+$/.test(cells[1] ?? "")) continue;
+    const n = Number(cells[1]);
+    if (n < 1 || n > 11) continue;
+    parsed.set(n, [clean(cells[2]), clean(cells[3]), clean(cells[5])]);
+  }
+  return parsed;
+}
+
+test("ADR 0013 table A matches the pinned rows", () => {
+  const adr = readFileSync(
+    new URL("../docs/adr/0013-seo-site-architecture.md", import.meta.url),
+    "utf8",
+  );
+  const parsed = parseTableA(adr);
+  assert.equal(parsed.size, 11, "ADR table A must list rows 1-11");
+  rows.forEach((expected, index) => {
+    assert.deepEqual(
+      parsed.get(index + 1),
+      expected,
+      `ADR 0013 table A row ${index + 1} differs from the pinned row`,
+    );
+  });
 });
