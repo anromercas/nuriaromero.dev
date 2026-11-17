@@ -204,6 +204,8 @@ Soft, rounded containers drawn with a thin line. Cards, tiles, the listing and t
 
 Left: h1 with the serif phrase, 52ch subtitle, booking button plus an underlined secondary text link (`sky-signal` underline at 70%, `sky-accent` on hover). Right: the Listing mock, a card holding a storefront line drawing, rating row, hours, service chips, three photo thumbnails and a four-item check list, captioned "Ejemplo ilustrativo". Sky halo behind.
 
+**The Editorial Hero Rule.** Every page, new or redesigned, uses the editorial hero (`SeoLocalHero` from `src/components/seo-local/`: small sentence-case keyword `h1`, large display title with one serif-italic accent phrase, page-specific drawing in the `visual` slot). The legacy `ServiceHero` (plain visible `h1` with the keyword) is never chosen for a page, and a design or plan never offers it as an alternative. Owner decision of 2026-11-17 (NRD-24, decision D4).
+
 ### Proof band (three cells)
 
 A row of three figure-plus-label cells between hairlines (no cards, no icons): stat in `text-strong`, label in `text-secondary`. Stacked with top rules on mobile, columns with left rules from 640px. Figures must be true and sourced (e.g. the live Google rating); a cell is omitted when its data is absent.
