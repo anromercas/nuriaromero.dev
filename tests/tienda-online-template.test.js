@@ -264,8 +264,7 @@ test("comparison, plans and scope are built from the store source", () => {
     /storeOptions\.map\(\(o\)\s*=>\s*\(\{\s*lead:\s*o\.bestFor,\s*text:\s*o\.tradeOff,?\s*\}\)\)/,
   );
   assert.match(page, /tiers=\{storeTiers\}/);
-  assert.match(page, /storeOptions\.find\(\(o\)\s*=>\s*o\.id === "a-medida"\)/);
-  assert.match(page, /Desde \{STORE_FROM\}/);
+  assert.match(page, /answer=\{`Desde \$\{STORE_FROM\}/);
   assert.match(page, /includes=\{storeIncludes\}/);
   assert.match(page, /quotedSeparately=\{storeQuotedSeparately\}/);
   assert.match(page, /note=\{STORE_FINAL_PRICE_NOTE\}/);
@@ -328,7 +327,7 @@ test("template-pages lists the store page with the word budget", () => {
   const source = read("scripts/lib/template-pages.mjs");
   assert.match(
     source,
-    /\{\s*route:\s*"\/tienda-online-sevilla\/",\s*words:\s*\[900,\s*1100\],\s*service:\s*true\s*\}/,
+    /\{\s*route:\s*"\/tienda-online-sevilla\/",\s*words:\s*\[900,\s*1100\],\s*service:\s*true,(\s*keySections:\s*\[[^\]]*\],)?\s*\}/,
   );
 });
 

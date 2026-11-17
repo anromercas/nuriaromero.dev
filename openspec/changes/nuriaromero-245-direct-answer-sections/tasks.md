@@ -9,7 +9,7 @@ Order: 1.1 blocks 1.2-1.5 (NRD-271 blocks NRD-272, NRD-273, NRD-274, NRD-275); 1
 ## 2. Answers per page
 
 - [x] 2.1 [NRD-272 app] Register `keySections` and write the answers for `/` and `/seo-local-sevilla/` in `src/pages/index.astro` and `src/pages/seo-local-sevilla.astro` (trims per design.md); tests: `check-seo-17` RED after registering, the no-price-literal source test in `tests/template-components.test.js`, then full suite, `pnpm build` and `pnpm check:seo:dist` (word ranges, `check-seo-16`) green
-- [ ] 2.2 [NRD-273 app] Register `keySections` and write the answers for `/diseno-web-sevilla/` and `/tienda-online-sevilla/` (prices from `tierFrom` / `src/data/store-offer.ts`); tests: `check-seo-17` RED after registering, then full suite, `pnpm build` and `pnpm check:seo:dist` green
+- [x] 2.2 [NRD-273 app] Register `keySections` and write the answers for `/diseno-web-sevilla/` and `/tienda-online-sevilla/` (prices from `tierFrom` / `src/data/store-offer.ts`); tests: `check-seo-17` RED after registering, then full suite, `pnpm build` and `pnpm check:seo:dist` green
 - [ ] 2.3 [NRD-274 app] Register `keySections` and write the answers for `/automatizaciones/` and `/desarrollo-software-medida/` (trims to stay within 700-800 and 750-850); tests: `check-seo-17` RED after registering, then full suite, `pnpm build` and `pnpm check:seo:dist` green
 - [ ] 2.4 [NRD-275 app] Register `keySections` and write the answers for `/inteligencia-artificial/` and `/seo-para-ia/` (Local Pro price from `src/data`, trims to stay within 750-850); tests: `check-seo-17` RED after registering, then full suite, `pnpm build` and `pnpm check:seo:dist` green
 

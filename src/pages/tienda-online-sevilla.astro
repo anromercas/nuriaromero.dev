@@ -45,7 +45,6 @@ const comparisonItems = storeOptions.map((o) => ({
   lead: o.bestFor,
   text: o.tradeOff,
 }));
-const customExample = storeOptions.find((o) => o.id === "a-medida")?.example;
 
 const proofItems = [
   SITE_PROOF[0],
@@ -88,6 +87,7 @@ const proofItems = [
           text: "Lo que lleva tu tienda al abrir",
           accent: "al abrir",
         }}
+        answer="Tu tienda abre con catálogo subido, pago con tarjeta, variantes de talla y color, envíos sencillos y panel de gestión."
       >
         {tiendaOnline.benefits.map((benefit, i) => (
           <BentoTile
@@ -113,6 +113,7 @@ const proofItems = [
             text: "Del catálogo a tu tienda publicada",
             accent: "tu tienda publicada",
           }}
+          answer="Trabajo en cuatro pasos: alcance, propuesta cerrada por escrito, construcción con tu marca y formación antes de publicar."
           steps={tiendaOnline.process}
         >
           <Fragment slot="byline">
@@ -140,6 +141,7 @@ const proofItems = [
         headingId="plataforma-title"
         keyword="¿WooCommerce, Shopify o a medida?"
         title={{ text: "Elige tu plataforma", accent: "tu plataforma" }}
+        answer="Te conviene WooCommerce si usas WordPress, Shopify si quieres empezar rápido y una tienda a medida si necesitas algo especial."
         items={comparisonItems}
         link={{ label: "Ver precio y opciones", href: "#precios" }}
       />
@@ -156,13 +158,8 @@ const proofItems = [
             accent: "el mismo precio",
           }}
           tiers={storeTiers}
-        >
-          <Fragment slot="lede">
-            <strong>Desde {STORE_FROM}</strong> las tres: eliges WooCommerce,
-            Shopify o una tienda a medida
-            {customExample ? ` (${customExample})` : ""}.
-          </Fragment>
-        </SeoLocalPlans>
+          answer={`Desde ${STORE_FROM} las tres opciones: WooCommerce, Shopify o una tienda a medida, a elegir.`}
+        />
         <StoreScope
           includes={storeIncludes}
           quotedSeparately={storeQuotedSeparately}
@@ -180,7 +177,7 @@ const proofItems = [
           text: "Dudas antes de montar tu tienda",
           accent: "antes de montar",
         }}
-        lede="Si no está aquí, lo vemos en la llamada."
+        answer={`Una tienda online básica cuesta desde ${STORE_FROM}, con panel de gestión, en WooCommerce, Shopify o a medida.`}
         faqs={tiendaOnline.faqs}
       />
     </SectionContainer>

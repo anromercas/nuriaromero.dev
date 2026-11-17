@@ -62,7 +62,7 @@ export const disenoWeb: ServicePageData = {
   benefits: [
     {
       title: "Alta en Google y Google Maps",
-      text: "Con la web completa, te doy de alta en Search Console y la conecto con tu ficha de Google Business Profile.",
+      text: "Con la web completa, alta en Search Console y en tu ficha de Google Business Profile.",
     },
     {
       title: "WhatsApp y formulario",
@@ -70,25 +70,25 @@ export const disenoWeb: ServicePageData = {
     },
     {
       title: "Pensada primero para el móvil",
-      text: "Textos, botones y fotos se leen y se pulsan bien en cualquier pantalla, empezando por la del móvil.",
+      text: "Textos, botones y fotos se leen y se pulsan bien en cualquier pantalla.",
     },
     {
       title: "SEO local básico",
-      text: "Títulos, textos y datos técnicos pensados para lo que buscan tus clientes en Sevilla.",
+      text: "Títulos, textos y datos técnicos pensados para las búsquedas de tus clientes.",
     },
     {
       title: "Dominio y hosting a tu nombre",
-      text: "Los configuro yo y quedan a tu nombre: la web es tuya y puedes cambiar de proveedor cuando quieras.",
+      text: "Los configuro yo y quedan a tu nombre: la web es tuya.",
     },
     {
       title: "Un mes de soporte",
-      text: "En los dos planes, el primer mes después de publicar resuelvo tus dudas y hago los pequeños ajustes.",
+      text: "El primer mes tras publicar resuelvo dudas y hago pequeños ajustes.",
     },
   ],
   process: [
     {
       title: "Propuesta con precio cerrado",
-      text: "Hablamos de tu negocio y te envío por escrito qué incluye, cuánto cuesta y el plazo.",
+      text: "Te envío por escrito qué incluye, cuánto cuesta y el plazo.",
     },
     {
       title: "Diseño",
@@ -100,12 +100,12 @@ export const disenoWeb: ServicePageData = {
     },
     {
       title: "Publicación",
-      text: "En 2 a 4 semanas desde que tengo los contenidos, la web está publicada, con un mes de soporte incluido.",
+      text: "En 2 a 4 semanas desde que tengo los contenidos, la web está publicada.",
     },
   ],
   pricing: {
     from: "149 €",
-    note: "¿Quieres estar online ya, con lo esencial? Landing. ¿Tienes varios servicios y quieres explicar cada uno por separado? Web completa.",
+    note: "Landing para estar online ya con lo esencial; web completa si tienes varios servicios que explicar por separado.",
     tiers: [
       {
         name: "Landing de una página",
@@ -128,7 +128,7 @@ export const disenoWeb: ServicePageData = {
           "Alta en Google Search Console y en Google Business Profile",
           "Un mes de soporte tras el lanzamiento",
         ],
-        note: `¿Necesitas una tienda online? Desde ${STORE_FROM}: lo tienes en la página de tienda online.`,
+        note: `¿Necesitas una tienda online? Desde ${STORE_FROM}: en su página.`,
       },
     ],
   },
@@ -833,15 +833,15 @@ export const tiendaOnline: ServicePageData = {
   benefits: [
     {
       title: "Tu catálogo, ya subido",
-      text: "Subo yo hasta unos 20 productos con sus fotos y precios.",
+      text: "Subo hasta unos 20 productos con fotos y precios.",
     },
     {
       title: "Pago con tarjeta",
-      text: "Tus clientes pagan con tarjeta a través de una pasarela como Stripe.",
+      text: "Pagan con tarjeta en una pasarela como Stripe.",
     },
     {
       title: "Tallas y colores",
-      text: "Variantes simples de talla o color sin repetir fichas.",
+      text: "Variantes de talla o color sin repetir fichas.",
     },
     {
       title: "Envíos sencillos",
@@ -849,17 +849,17 @@ export const tiendaOnline: ServicePageData = {
     },
     {
       title: "Un panel para el día a día",
-      text: "Subes productos, cambias precios y ves tus pedidos desde el panel.",
+      text: "Subes productos, cambias precios y ves pedidos desde el panel.",
     },
     {
       title: "Fichas preparadas para Google",
-      text: "Cada producto y categoría se escriben pensando en lo que busca quien compra.",
+      text: "Productos y categorías escritos para lo que busca quien compra.",
     },
   ],
   process: [
     {
       title: "Alcance",
-      text: "Hablamos de lo que vendes y eliges WooCommerce, Shopify o una tienda a medida.",
+      text: "Eliges WooCommerce, Shopify o una tienda a medida.",
     },
     {
       title: "Propuesta cerrada por escrito",
@@ -867,11 +867,11 @@ export const tiendaOnline: ServicePageData = {
     },
     {
       title: "Construcción",
-      text: "Monto la tienda con tu marca y pruebo una compra completa, del carrito al pedido.",
+      text: "Monto la tienda con tu marca y pruebo una compra completa.",
     },
     {
       title: "Formación y lanzamiento",
-      text: "Te enseño a gestionar productos y pedidos, publicamos y tienes un mes de soporte.",
+      text: "Te enseño a gestionar productos y pedidos, y publicamos con un mes de soporte.",
     },
   ],
   pricing: {
