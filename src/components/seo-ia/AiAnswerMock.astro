@@ -1,0 +1,148 @@
+---
+import "@/styles/template.css";
+
+interface Props {
+  animate?: boolean;
+}
+
+const { animate = true } = Astro.props;
+---
+
+<figure
+  class:list={["mock", { animate }]}
+  aria-label="Ejemplo de la información de un negocio, ordenada y con datos estructurados, que un asistente de IA usa al escribir su respuesta"
+>
+  <div class="drawing">
+    <svg
+      viewBox="0 0 320 220"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <rect x="8" y="12" width="134" height="196" rx="12"></rect>
+      <circle cx="26" cy="31" r="7" class="soft"></circle>
+      <text x="40" y="36" class="label">
+        Tu negocio
+      </text>
+      <path d="M8 50h134" class="soft"></path>
+      <rect x="20" y="62" width="96" height="9" rx="4.5" class="soft"></rect>
+      <rect x="20" y="82" width="70" height="9" rx="4.5" class="signal"></rect>
+      <rect x="20" y="102" width="84" height="9" rx="4.5" class="soft"></rect>
+      <rect x="20" y="122" width="58" height="9" rx="4.5" class="soft"></rect>
+      <path d="M20 148h110" class="soft"></path>
+      <path
+        d="M30 158q-6 0-6 6v4q0 6-6 6q6 0 6 6v4q0 6 6 6"
+        class="signal"
+      ></path>
+      <rect x="40" y="166" width="28" height="6" rx="3" class="soft"></rect>
+      <rect x="40" y="180" width="40" height="6" rx="3" class="soft"></rect>
+      <path
+        d="M132 158q6 0 6 6v4q0 6 6 6q-6 0-6 6v4q0 6-6 6"
+        class="signal"
+        transform="translate(-6 0)"
+      ></path>
+      <path d="M142 87h28" class="soft" stroke-dasharray="3 5"></path>
+      <g class="link">
+        <path d="M90 87h60" class="signal"></path>
+        <path d="M144 81l6 6-6 6" class="signal"></path>
+        <rect
+          x="182"
+          y="108"
+          width="70"
+          height="9"
+          rx="4.5"
+          class="signal"
+        ></rect>
+      </g>
+      <rect x="160" y="12" width="152" height="196" rx="12"></rect>
+      <circle cx="176" cy="27" r="3" class="soft"></circle>
+      <circle cx="188" cy="27" r="3" class="soft"></circle>
+      <circle cx="200" cy="27" r="3" class="soft"></circle>
+      <path d="M160 42h152" class="soft"></path>
+      <rect x="226" y="52" width="76" height="18" rx="9" class="soft"></rect>
+      <rect x="170" y="82" width="132" height="76" rx="10"></rect>
+      <rect x="182" y="92" width="100" height="9" rx="4.5" class="soft"></rect>
+      <rect x="182" y="124" width="84" height="9" rx="4.5" class="soft"></rect>
+      <rect x="170" y="176" width="108" height="16" rx="8" class="soft"></rect>
+      <path d="M288 184h12m-4-4l4 4-4 4" class="signal"></path>
+    </svg>
+  </div>
+  <figcaption>Ejemplo ilustrativo</figcaption>
+</figure>
+
+<style>
+  .mock {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--hairline);
+    border-radius: 1.25rem;
+    color: var(--text-muted);
+    background: var(--card-surface);
+  }
+
+  .drawing {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--hairline-quiet);
+    background: var(--drawing-surface);
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    max-width: 26rem;
+    height: auto;
+    margin-inline: auto;
+  }
+
+  .signal {
+    stroke: var(--sky-signal);
+  }
+
+  .soft {
+    stroke: var(--drawing-soft);
+  }
+
+  /* 15 viewBox units render at 11 px or more at a 320 px viewport. */
+  .label {
+    font-family: inherit;
+    font-size: 15px;
+    stroke: none;
+    fill: var(--text-secondary);
+  }
+
+  figcaption {
+    padding: 0.55rem 1.25rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  /* The completed drawing is the resting state: at scroll 0, at the end of the
+     range and wherever scroll timelines are unsupported it is fully visible.
+     Motion only where motion is welcome: while scrolling, the connector and
+     the answer bar rise a pixel or two and settle back. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .animate .link {
+        animation: link-nudge linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 220px;
+      }
+    }
+  }
+
+  @keyframes link-nudge {
+    0% {
+      transform: none;
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+    100% {
+      transform: none;
+    }
+  }
+</style>
