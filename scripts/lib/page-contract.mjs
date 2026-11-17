@@ -70,6 +70,26 @@ export function mainWordCount(html) {
   return parsePage(withoutWordBudgetExcluded(html)).mainWordCount;
 }
 
+const normalizeWord = (word) =>
+  word
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+/**
+ * Number of visible <main> words (word-budget-excluded blocks removed, tokenized
+ * like mainWordCount) whose normalized form (NFD, no diacritics, lowercase)
+ * contains the normalized term.
+ */
+export function termOccurrences(html, term) {
+  const needle = normalizeWord(term);
+  const text = plainText(mainInner(withoutWordBudgetExcluded(html)));
+  if (!needle || !text) return 0;
+  return text
+    .split(/\s+/)
+    .filter((word) => normalizeWord(word).includes(needle)).length;
+}
+
 /** Flat array of entities from every ld+json block, @graph unwrapped. */
 export function jsonLdEntities(html) {
   const entities = [];

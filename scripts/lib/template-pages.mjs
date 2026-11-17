@@ -9,6 +9,8 @@
 //   words:   optional [min, max] visible word range of <main>, without elements marked
 //            data-word-budget="exclude" (the live Google review quote of RealProof):
 //            owner-controlled text only (ADR 0015)
+//   termCaps: optional { [term]: max }: visible <main> words (same exclusions as words)
+//            containing the term, case and accent insensitive, must not exceed max
 export const templatePages = [
   {
     route: "/seo-local-sevilla/",

@@ -10,6 +10,7 @@ import {
   headingOutline,
   normalizedMain,
   directAnswer,
+  termOccurrences,
 } from "../scripts/lib/page-contract.mjs";
 import { templatePages } from "../scripts/lib/template-pages.mjs";
 import { parsePage } from "../scripts/lib/seo-inventory.mjs";
@@ -230,5 +231,39 @@ test("templatePages keySections, when present, are heading ids", () => {
     if (!entry.keySections) continue;
     assert.ok(Array.isArray(entry.keySections));
     for (const id of entry.keySections) assert.match(id, /^[a-z0-9-]+-title$/);
+  }
+});
+
+test("termOccurrences counts words containing the term, case and accent insensitive", () => {
+  const html = mainOf(
+    "<h1>Consultor en Sevilla</h1><p>SEVILLA, sevilla. Sevillano y sevilla, otra</p>",
+  );
+  assert.equal(termOccurrences(html, "sevilla"), 5);
+  assert.equal(termOccurrences(html, "Sevilla"), 5);
+});
+
+test("termOccurrences matches accented variants of the term", () => {
+  const html = mainOf("<p>Dónde trabajo, donde vivo y DÓNDE voy</p>");
+  assert.equal(termOccurrences(html, "donde"), 3);
+  assert.equal(termOccurrences(html, "dónde"), 3);
+});
+
+test("termOccurrences ignores text outside main, marked blocks and attributes", () => {
+  const html = `<html><body><header><p>Sevilla</p></header><main><img alt="Sevilla" src="x.png"><a href="/sevilla/" title="Sevilla">enlace</a>${quote().replace("Una reseña", "Una reseña de Sevilla")}<p>Sevilla</p></main><footer>Sevilla</footer></body></html>`;
+  assert.equal(termOccurrences(html, "sevilla"), 1);
+});
+
+test("termOccurrences is zero without main or without matches", () => {
+  assert.equal(termOccurrences("<p>Sevilla</p>", "sevilla"), 0);
+  assert.equal(termOccurrences(mainOf("<p>nada</p>"), "sevilla"), 0);
+});
+
+test("templatePages termCaps, when present, map a lowercase term to a positive integer", () => {
+  for (const { route, termCaps } of templatePages) {
+    if (!termCaps) continue;
+    for (const [term, max] of Object.entries(termCaps)) {
+      assert.equal(term, term.toLowerCase(), `${route}: ${term}`);
+      assert.ok(Number.isInteger(max) && max > 0, `${route}: ${term} cap`);
+    }
   }
 });
