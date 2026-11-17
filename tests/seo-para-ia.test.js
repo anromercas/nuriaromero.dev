@@ -145,3 +145,219 @@ test("AiAnswerMock rests in the completed drawing at scroll 0", () => {
   assert.ok(shifts.length > 0);
   for (const px of shifts) assert.ok(px <= 4, `nudge of ${px}px`);
 });
+
+// --- Task 2.2: data entry and page (NRD-251) -----------------------------------
+
+const { seoParaIa, seoLocal, services, focusServices, tierFrom, pricingTier } =
+  await import(new URL("src/data/services.ts", root).href);
+const pagePath = "src/pages/seo-para-ia.astro";
+const pageSource = () => read(pagePath);
+const dataSource = read("src/data/services.ts");
+const entryBlock = dataSource.slice(
+  dataSource.indexOf("const LOCAL_PRO_TIER"),
+  dataSource.indexOf("export const capilarLocal"),
+);
+const walk = (value, out = []) => {
+  if (typeof value === "string") out.push(value);
+  else if (Array.isArray(value)) for (const v of value) walk(v, out);
+  else if (value && typeof value === "object")
+    for (const v of Object.values(value)) walk(v, out);
+  return out;
+};
+const entryStrings = () => walk(seoParaIa);
+const pageText = () => pageSource().replace(/^---[\s\S]*?---/, "");
+const wholePage = () => pageSource();
+
+test("seoParaIa has a national placement within the limits", () => {
+  assert.equal(seoParaIa.slug, "/seo-para-ia/");
+  assert.equal(seoParaIa.breadcrumbName, "SEO para IA");
+  assert.ok(seoParaIa.seo.title.length <= 60);
+  const d = seoParaIa.seo.description.length;
+  assert.ok(d >= 140 && d <= 160, `description ${d}`);
+  for (const text of [
+    seoParaIa.seo.title,
+    seoParaIa.seo.description,
+    seoParaIa.hero.h1,
+  ]) {
+    assert.match(text, /SEO para IA/);
+    assert.doesNotMatch(text, /Sevilla/);
+  }
+});
+
+test("title, H1 and section headings carry no term of the home or the local page", () => {
+  const headings = [
+    seoParaIa.seo.title,
+    seoParaIa.hero.h1,
+    ...Object.values(seoParaIa.sectionTitles),
+  ];
+  for (const text of headings) {
+    assert.doesNotMatch(text, /consultor/i);
+    assert.doesNotMatch(text, /seo local sevilla/i);
+  }
+});
+
+test("seoParaIa has no own offer and reads the Local Pro tier", () => {
+  assert.equal(seoParaIa.ownOffer, false);
+  assert.equal(seoParaIa.pricing.from, tierFrom(seoLocal, "Local Pro"));
+  assert.equal(seoParaIa.pricing.note, seoLocal.pricing.note);
+  assert.doesNotMatch(
+    entryBlock,
+    /€/,
+    "no euro literal in the seoParaIa source",
+  );
+  assert.doesNotMatch(pageSource(), /€/, "no euro literal in the page");
+  assert.match(entryBlock, /pricingTier\(seoLocal, "Local Pro"\)/);
+});
+
+test("the plan includes are the Local Pro includes without the Local pointer", () => {
+  const tier = pricingTier(seoLocal, "Local Pro");
+  const includes = seoParaIa.pricing.includes;
+  assert.equal(includes.length, tier.includes.length - 1);
+  for (const item of includes) {
+    assert.doesNotMatch(item, /^Todo lo incluido/);
+    assert.ok(tier.includes.includes(item));
+  }
+});
+
+test("seoParaIa has six benefits, four steps and the D3 method in steps 1 and 4", () => {
+  assert.equal(seoParaIa.benefits.length, 6);
+  assert.equal(seoParaIa.process.length, 4);
+  assert.match(seoParaIa.process[0].text, /asistentes de IA/);
+  assert.match(seoParaIa.process[0].text, /pregunt/i);
+  assert.match(seoParaIa.process[3].text, /cada mes/i);
+  assert.match(seoParaIa.process[3].text, /informe/i);
+  for (const text of [seoParaIa.process[0].text, seoParaIa.process[3].text]) {
+    assert.doesNotMatch(text, /dataforseo|geo-optimizer|ga4/i);
+  }
+});
+
+test("one booking label everywhere on the page", () => {
+  assert.equal(seoParaIa.hero.primaryCtaLabel, "Reservar una llamada");
+  const page = pageSource();
+  assert.match(page, /primaryCtaLabel=\{seoParaIa\.hero\.primaryCtaLabel\}/);
+  assert.match(page, /ctaLabel:\s*seoParaIa\.hero\.primaryCtaLabel/);
+  assert.doesNotMatch(page, /Reserva una primera sesión/);
+});
+
+test("services and focusServices list the page right after seoLocal", () => {
+  for (const list of [services, focusServices]) {
+    const slugs = list.map((s) => s.slug);
+    const i = slugs.indexOf("/seo-local-sevilla/");
+    assert.equal(slugs[i + 1], "/seo-para-ia/");
+  }
+});
+
+test("the page is on the template with the editorial hero, never ServiceHero", () => {
+  const page = pageSource();
+  assert.match(
+    page,
+    /<ServiceLayout\s+page=\{seoParaIa\}\s+variant="template"/,
+  );
+  assert.match(page, /<SeoLocalHero[\s\S]*?<AiAnswerMock slot="visual"/);
+  assert.doesNotMatch(page, /ServiceHero|TitleSection|RealProof/);
+  assert.doesNotMatch(page, /text-gray-|bg-gray-/);
+});
+
+test("the page composes the template components in section-map order", () => {
+  const page = pageSource();
+  const order = [
+    "<SeoLocalHero",
+    "<ProofStrip",
+    "<ReviewBento",
+    "<SeoLocalProcess",
+    "<SeoLocalAgencia",
+    "<SeoLocalPlans",
+    "<SeoLocalFaq",
+    "<SeoLocalRelated",
+    "<SeoLocalClosing",
+    "<SeoLocalNap",
+  ].map((tag) => page.indexOf(`${tag}`, page.indexOf("<ServiceLayout")));
+  assert.ok(
+    order.every((i) => i > -1),
+    "all sections present",
+  );
+  assert.deepEqual(
+    [...order].sort((a, b) => a - b),
+    order,
+  );
+  assert.equal(
+    (page.match(/<BentoTile/g) ?? []).length,
+    1,
+    "tiles mapped from data",
+  );
+  assert.match(page, /id="que-trabajo"/);
+});
+
+test("exactly one home link with the owner anchor and no other consultor", () => {
+  const page = pageSource();
+  const links = page.match(/<a href="\/">consultor SEO en Sevilla<\/a>/g) ?? [];
+  assert.equal(links.length, 1);
+  assert.equal((page.match(/consultor/gi) ?? []).length, 1);
+  for (const text of entryStrings()) assert.doesNotMatch(text, /consultor/i);
+});
+
+test("every assistant named in thisSiteItems maps to an allowed crawler", () => {
+  const page = pageSource();
+  const block = page.slice(
+    page.indexOf("const thisSiteItems"),
+    page.indexOf("---", page.indexOf("const thisSiteItems")),
+  );
+  const config = read("astro.config.mjs");
+  const map = {
+    ChatGPT: ["GPTBot", "OAI-SearchBot"],
+    Claude: ["ClaudeBot"],
+    Perplexity: ["PerplexityBot"],
+    Gemini: ["Google-Extended"],
+  };
+  let named = 0;
+  for (const [assistant, agents] of Object.entries(map)) {
+    if (!block.includes(assistant)) continue;
+    named++;
+    for (const agent of agents) {
+      assert.match(
+        config,
+        new RegExp(`userAgent:\\s*'${agent}',\\s*allow:\\s*'/'`),
+      );
+    }
+  }
+  assert.ok(named > 0, "the section names at least one assistant");
+  for (const name of [
+    "ChatGPT",
+    "Claude",
+    "Perplexity",
+    "Gemini",
+    "Copilot",
+    "Grok",
+    "DeepSeek",
+  ]) {
+    if (block.includes(name))
+      assert.ok(name in map, `${name} has a crawler mapping`);
+  }
+});
+
+test("no promise phrase outside the negated recommendation answer", () => {
+  const promise =
+    /garantiz|primeras posiciones|te sale en|te recomendar|asegur/i;
+  for (const text of [...entryStrings(), pageText()]) {
+    assert.doesNotMatch(text, promise);
+  }
+});
+
+test("digits are only the Local Pro price or the experience figure", () => {
+  const strip = (text) => text.replace(/\bLocal Pro\b/g, "");
+  for (const text of entryStrings()) {
+    const clean = strip(text).replace(seoParaIa.pricing.from, "");
+    assert.doesNotMatch(clean, /\d/, `digit in "${text}"`);
+  }
+  const copy = pageText()
+    .replace(/<style[\s\S]*?<\/style>/g, "")
+    .replace(/\{[^}]*\}/g, "");
+  assert.doesNotMatch(copy.replace(/\bh[1-6]\b/g, ""), />[^<]*\d[^<]*</);
+});
+
+test("no placeholder markers under src", () => {
+  for (const path of [pagePath, "src/data/services.ts", mockPath, artPath]) {
+    assert.doesNotMatch(read(path), /\[PENDIENTE|\[VERIFICAR/);
+  }
+  assert.doesNotMatch(wholePage(), /\[PENDIENTE|\[VERIFICAR/);
+});

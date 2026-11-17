@@ -1,7 +1,8 @@
 // Contenido de las 4 páginas de servicio.
 // Precios acordados: landing 149 €, web 5 páginas 399 €, automatización 149 €,
 // chatbot IA 399 €, software a medida 999 €. Tienda online: precio y alcance en
-// src/data/store-offer.ts.
+// src/data/store-offer.ts. SEO para IA (/seo-para-ia/) has no price of its own: it
+// shows the Local Pro plan of the local SEO page and its Service JSON-LD has no offers.
 import type { ServicePageData } from "@/data/types"
 import { STORE_FROM, STORE_FINAL_PRICE_NOTE, storeIncludes } from "./store-offer.ts"
 
@@ -653,6 +654,98 @@ export const seoLocal: ServicePageData = {
   },
 }
 
+// Local Pro tier of the local SEO page: the only price SEO para IA shows, read and never typed.
+const LOCAL_PRO_TIER = pricingTier(seoLocal, "Local Pro")
+
+export const seoParaIa: ServicePageData = {
+  slug: "/seo-para-ia/",
+  breadcrumbName: "SEO para IA",
+  ownOffer: false,
+  seo: {
+    title: "SEO para IA y GEO: que la IA entienda tu negocio",
+    description:
+      "SEO para IA (GEO): preparo la información de tu negocio para que ChatGPT, Gemini y los resúmenes con IA de Google la entiendan y puedan citarla. Sin promesas.",
+  },
+  hero: {
+    h1: "SEO para IA: que ChatGPT, Gemini y Google entiendan tu negocio",
+    title: "Datos claros que una IA pueda entender",
+    titleAccent: "pueda entender",
+    subtitle:
+      "Preparo la información de tu negocio para que ChatGPT, Gemini o los resúmenes con IA de Google la entiendan y puedan citarla. Es el SEO para IA, también llamado GEO, y va incluido en el plan Local Pro.",
+    primaryCtaLabel: "Reservar una llamada",
+    secondaryCta: { label: "Ver qué trabajo", href: "#que-trabajo" },
+  },
+  sectionTitles: {
+    benefits: "Qué trabajo para que una IA entienda tu negocio",
+    process: "Cómo trabajamos el SEO para IA",
+    pricing: "Cuánto cuesta el SEO para IA",
+    faq: "Preguntas frecuentes sobre SEO para IA",
+  },
+  benefits: [
+    {
+      title: "Datos que no se contradicen",
+      text: "Nombre, servicios, zona, horario y precios dicen lo mismo en tu web, en tu perfil de Google y en tus redes.",
+    },
+    {
+      title: "Respuestas directas",
+      text: "Cada página y cada pregunta frecuente responde en sus primeras líneas, sin rodeos.",
+    },
+    {
+      title: "Datos estructurados",
+      text: "Marcado schema.org para tu negocio, tus servicios, tus preguntas y la ruta de cada página.",
+    },
+    {
+      title: "Acceso para los rastreadores",
+      text: "Tu robots.txt no bloquea a los rastreadores de los asistentes de IA.",
+    },
+    {
+      title: "Un índice llms.txt",
+      text: "Un archivo con tus páginas más útiles, como apoyo para que los sistemas de IA se orienten.",
+    },
+    {
+      title: "Señales fuera de tu web",
+      text: "Perfil de Google completo, perfiles enlazados y reseñas reales que confirman quién eres.",
+    },
+  ],
+  process: [
+    {
+      title: "Revisión de cómo te ven hoy",
+      text: "Pregunto a los principales asistentes de IA lo que preguntaría un cliente de tu sector y tu zona, anoto qué saben de ti, qué falta y qué se contradice, y reviso que sus rastreadores puedan entrar y entender tu web.",
+    },
+    {
+      title: "Plan de prioridades",
+      text: "Qué corregir primero y por qué, explicado sin tecnicismos.",
+    },
+    {
+      title: "Implementación",
+      text: "Textos, preguntas frecuentes, datos estructurados y acceso, en tu web y en tu perfil.",
+    },
+    {
+      title: "Seguimiento",
+      text: "Cada mes repito las mismas preguntas, comparo los resultados y las visitas que llegan desde los asistentes, y recibes un informe con lo que ha cambiado y el siguiente paso.",
+    },
+  ],
+  pricing: {
+    from: LOCAL_PRO_TIER.from,
+    includes: LOCAL_PRO_TIER.includes.filter((item) => !item.startsWith("Todo lo incluido en")),
+    note: seoLocal.pricing.note,
+  },
+  faqs: [
+    {
+      q: "¿Qué es el SEO para IA o GEO?",
+      a: "Es preparar la información de tu negocio para que asistentes como ChatGPT, Gemini o Perplexity, y los resúmenes con IA de Google, la entiendan y puedan citarla cuando encaje. GEO (Generative Engine Optimization) es su nombre técnico.",
+    },
+    {
+      q: "¿Cuánto cuesta el SEO para IA?",
+      a: `El SEO para IA va incluido en el plan Local Pro, que cuesta ${LOCAL_PRO_TIER.from}. ${seoLocal.pricing.note}`,
+    },
+  ],
+  cta: {
+    title: "Veamos qué sabe hoy una IA de tu negocio",
+    text: "En una llamada revisamos qué información tuya hay y cuál sería el siguiente paso útil.",
+  },
+}
+
 export const capilarLocal: ServicePageData = {
   slug: "/seo-para-clinicas-capilares-sevilla/",
   breadcrumbName: "SEO para clínicas capilares en Sevilla",
@@ -801,6 +894,7 @@ export const tiendaOnline: ServicePageData = {
 
 export const services = [
   seoLocal,
+  seoParaIa,
   capilarLocal,
   disenoWeb,
   desarrolloSoftware,
@@ -812,6 +906,7 @@ export const services = [
 // In-focus service pages per PRD section 5, local SEO first; parked pages excluded.
 export const focusServices: ServicePageData[] = [
   seoLocal,
+  seoParaIa,
   disenoWeb,
   tiendaOnline,
   desarrolloSoftware,
