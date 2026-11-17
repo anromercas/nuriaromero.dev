@@ -54,3 +54,17 @@ test("SEO.astro renders <title> branded and og/twitter titles raw", async () => 
   assert.match(seo, /property="og:title" content=\{title\}/);
   assert.match(seo, /name="twitter:title" content=\{title\}/);
 });
+
+test("reviewsSchema node carries name and url for the shared business id", async () => {
+  const { reviewsSchema, localBusinessSchema } = await import("../src/lib/schema.ts")
+  const node = reviewsSchema({
+    rating: 5,
+    userRatingCount: 1,
+    placeId: "fixture",
+    reviews: [{ author: "Ana", rating: 5, text: "Muy bien" }],
+  })
+  assert.equal(node["@id"], "https://nuriaromero.dev/#business")
+  assert.equal(node.name, "Nuria Romero")
+  assert.equal(node.url, "https://nuriaromero.dev")
+  assert.equal(localBusinessSchema().alternateName, "nuriaromero.dev")
+})

@@ -115,6 +115,15 @@ if (!Array.isArray(business.sameAs) || business.sameAs.join("|") !== VERIFIED_SA
     }
     if (person.worksFor?.["@id"] !== business["@id"]) fail(`person is not linked to business in ${file}`)
   }
+  // Every Organization-typed node (not only the first with the business @id,
+  // e.g. the reviews node) must carry the canonical name and the site url.
+  for (const schema of schemas) {
+    const types = Array.isArray(schema["@type"]) ? schema["@type"] : [schema["@type"]]
+    if (!types.some((type) => ["Organization", "ProfessionalService", "LocalBusiness"].includes(type))) continue
+    if (schema.name !== SITE.name || schema.url !== SITE.url) {
+      fail(`Organization node ${schema["@id"] ?? "(no @id)"} lacks canonical name or url in ${file}`)
+    }
+  }
   for (const schema of schemas) {
     if (schema["@type"] === "Service") {
       serviceCount += 1
