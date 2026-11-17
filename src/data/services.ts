@@ -801,3 +801,13 @@ export const services = [
   inteligenciaArtificial,
   tiendaOnline,
 ]
+
+// In-focus service pages per PRD section 5, local SEO first; parked pages excluded.
+export const focusServices: ServicePageData[] = [
+  seoLocal,
+  disenoWeb,
+  tiendaOnline,
+  desarrolloSoftware,
+  automatizaciones,
+  inteligenciaArtificial,
+]

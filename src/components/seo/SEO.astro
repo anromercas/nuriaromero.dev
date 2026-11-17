@@ -24,12 +24,12 @@ const ogImageUrl = new URL(ogImage, Astro.site).href
 
 <title>{title}</title>
 <meta name="description" content={description} />
-<link rel="canonical" href={canonical} />
+{!noindex && <link rel="canonical" href={canonical} />}
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:url" content={canonical} />
+{!noindex && <meta property="og:url" content={canonical} />}
 <meta property="og:image" content={ogImageUrl} />
 <meta property="og:type" content={ogType} />
 <meta property="og:locale" content="es_ES" />

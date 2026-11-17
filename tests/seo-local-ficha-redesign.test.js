@@ -218,7 +218,8 @@ test("finish review: FAQ, related links and closing CTA are bespoke and keep the
   assert.match(faq, /:focus-visible/)
 
   assert.match(route, /links=\{internalLinksBySource\[seoLocal\.slug\] \?\? \[\]\}/)
-  assert.match(related, /<nav[^>]*aria-label="Contenido relacionado"/)
+  assert.match(related, /<nav[^>]*aria-label=\{ariaLabel\}/)
+  assert.match(related, /ariaLabel = "Contenido relacionado"/)
   assert.match(related, /links\.length > 0/)
   assert.doesNotMatch(related, /rounded-xl|bg-gray/)
 
