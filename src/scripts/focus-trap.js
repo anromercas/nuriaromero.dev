@@ -9,10 +9,14 @@ const FOCUSABLE_SELECTOR = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(",");
 
-/** Focusable elements inside `root`, skipping disabled and inert ones. */
+/** Focusable elements inside `root`, skipping disabled, inert and unrendered ones. */
 export function focusableIn(root) {
   return Array.from(root.querySelectorAll(FOCUSABLE_SELECTOR)).filter(
-    (el) => !el.disabled && !el.closest("[inert]"),
+    (el) =>
+      !el.disabled &&
+      !el.closest("[inert]") &&
+      // null offsetParent: display:none / not rendered (undefined in tests).
+      el.offsetParent !== null,
   );
 }
 

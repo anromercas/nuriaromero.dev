@@ -2,6 +2,13 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { focusableIn, nextFocusIndex } from "../src/scripts/focus-trap.js";
+import {
+  escapeAction,
+  nextOpenOnClick,
+  shouldCloseDrawerOnResize,
+  shouldCloseOnOutsidePointer,
+  shouldCloseOnPointerLeave,
+} from "../src/scripts/menu-logic.js";
 
 const readSource = (path) =>
   readFile(new URL(`../${path}`, import.meta.url), "utf8");
@@ -79,7 +86,7 @@ test("nextFocusIndex handles unknown focus and empty lists", () => {
   assert.equal(nextFocusIndex(0, -1, false), -1);
 });
 
-test("focusableIn skips disabled, hidden and inert-contained elements", () => {
+test("focusableIn skips disabled and inert-contained elements", () => {
   const make = (id, { inert = false, disabled = false } = {}) => ({
     id,
     disabled,
@@ -96,4 +103,55 @@ test("focusableIn skips disabled, hidden and inert-contained elements", () => {
     focusableIn(root).map((el) => el.id),
     ["a", "d"],
   );
+});
+
+test("focusableIn skips elements that are not rendered", () => {
+  const make = (id, offsetParent) => ({
+    id,
+    disabled: false,
+    offsetParent,
+    closest: () => null,
+  });
+  const root = {
+    querySelectorAll: () => [make("a", {}), make("b", null)],
+  };
+  assert.deepEqual(
+    focusableIn(root).map((el) => el.id),
+    ["a"],
+  );
+});
+
+test("click state: mouse click keeps a hover-opened panel open", () => {
+  assert.equal(nextOpenOnClick(true, "mouse"), true);
+  assert.equal(nextOpenOnClick(false, "mouse"), true);
+});
+
+test("click state: keyboard and touch clicks toggle", () => {
+  for (const type of ["", "touch", "pen"]) {
+    assert.equal(nextOpenOnClick(true, type), false);
+    assert.equal(nextOpenOnClick(false, type), true);
+  }
+});
+
+test("pointerleave does not close while focus is inside", () => {
+  assert.equal(shouldCloseOnPointerLeave(true), false);
+  assert.equal(shouldCloseOnPointerLeave(false), true);
+});
+
+test("Escape closes only when open and returns focus only from inside", () => {
+  assert.deepEqual(escapeAction(false, true), { close: false, refocus: false });
+  assert.deepEqual(escapeAction(true, true), { close: true, refocus: true });
+  assert.deepEqual(escapeAction(true, false), { close: true, refocus: false });
+});
+
+test("outside pointerdown closes only an open panel", () => {
+  assert.equal(shouldCloseOnOutsidePointer(true, false), true);
+  assert.equal(shouldCloseOnOutsidePointer(true, true), false);
+  assert.equal(shouldCloseOnOutsidePointer(false, false), false);
+});
+
+test("drawer closes when the viewport grows to md while open", () => {
+  assert.equal(shouldCloseDrawerOnResize(true, true), true);
+  assert.equal(shouldCloseDrawerOnResize(false, true), false);
+  assert.equal(shouldCloseDrawerOnResize(true, false), false);
 });

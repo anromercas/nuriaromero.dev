@@ -3,6 +3,7 @@
 // móvil (abrir/cerrar, acordeón de "Servicios", cierre por click fuera /
 // Escape / navegación).
 import { focusableIn, nextFocusIndex } from "./focus-trap.js";
+import { shouldCloseDrawerOnResize } from "./menu-logic.js";
 
 function setAccordion(panel, btn, open) {
   if (!panel || !btn) return;
@@ -97,4 +98,14 @@ if (!window.__mobileMenuInit) {
   });
 
   document.addEventListener("astro:after-swap", () => setMobileMenu(false));
+
+  // Past md the drawer is display:none; close it so the Tab trap and the
+  // scroll lock do not outlive it.
+  window
+    .matchMedia("(min-width: 768px)")
+    .addEventListener("change", (event) => {
+      const menu = document.getElementById("mobile-menu");
+      const open = !!menu?.classList.contains("open");
+      if (shouldCloseDrawerOnResize(open, event.matches)) setMobileMenu(false);
+    });
 }
