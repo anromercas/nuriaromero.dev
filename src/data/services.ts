@@ -692,7 +692,7 @@ export const seoParaIa: ServicePageData = {
     },
     {
       title: "Datos estructurados",
-      text: "Marcado schema.org para tu negocio, tus servicios, tus preguntas y la ruta de cada página.",
+      text: "Marcado schema.org para tu negocio, servicios, preguntas y la ruta de cada página.",
     },
     {
       title: "Acceso para los rastreadores",
@@ -700,7 +700,7 @@ export const seoParaIa: ServicePageData = {
     },
     {
       title: "Un índice llms.txt",
-      text: "Un archivo con tus páginas más útiles, como apoyo para que los sistemas de IA se orienten.",
+      text: "Un archivo con tus páginas más útiles, como apoyo para los sistemas de IA.",
     },
     {
       title: "Señales fuera de tu web",
@@ -749,7 +749,7 @@ export const seoParaIa: ServicePageData = {
     },
     {
       q: "¿Qué hay que trabajar para aparecer en las respuestas de IA?",
-      a: "Datos que coincidan en todas partes, respuestas directas, datos estructurados, el acceso de rastreadores, un índice llms.txt y señales fuera de tu web.",
+      a: "Seis frentes: datos coherentes, respuestas directas, datos estructurados, acceso de rastreadores, llms.txt y señales externas. Ayuda a que te entiendan, pero aparecer no depende solo de ti.",
     },
     {
       q: "¿Cuánto cuesta el SEO para IA?",

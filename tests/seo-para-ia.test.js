@@ -402,7 +402,7 @@ test("the recommendation answer promises nothing, then says what can be done", (
   assert.ok(answer.length > firstSentence(answer).length, "it continues");
 });
 
-test("the price answer reads the Local Pro tier and the billing note", () => {
+test("the price answer reads the Local Pro tier", () => {
   assert.match(
     entryBlock,
     /`El SEO para IA va incluido en el plan Local Pro, que cuesta \$\{LOCAL_PRO_TIER\.from\}\.`/,
@@ -414,4 +414,10 @@ test("the price answer reads the Local Pro tier and the billing note", () => {
       `que cuesta ${seoLocal.pricing.tiers.find((t) => t.name === "Local Pro").from}.`,
     ),
   );
+});
+
+test("the work answer keeps its disclaimer after the direct opening", () => {
+  const answer = seoParaIa.faqs[4].a;
+  assert.ok(answer.length > firstSentence(answer).length);
+  assert.match(answer, /aparecer no depende solo de ti\.$/);
 });
