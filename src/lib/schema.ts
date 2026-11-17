@@ -1,16 +1,12 @@
 // Constructores de JSON-LD (schema.org). Cada página inyecta los suyos
 // con <Schema slot="head" schema={...} />; el de negocio va global en Layout.
-import { SITE } from "../data/site.ts"
+import { SERVICE_AREA, SITE } from "../data/site.ts"
 import { localTrust } from "../data/local-trust.ts"
 import type { GoogleReviewsData } from "./google-reviews.ts"
 
 const BUSINESS_ID = `${SITE.url}/#business`
 const PERSON_ID = `${SITE.url}/#person`
 const WEBSITE_ID = `${SITE.url}/#website`
-const SERVICE_AREA = [
-  { "@type": "City", name: "Sevilla" },
-  { "@type": "AdministrativeArea", name: "Área metropolitana de Sevilla" },
-]
 
 export function localBusinessSchema() {
   return {

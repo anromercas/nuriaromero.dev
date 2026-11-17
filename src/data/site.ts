@@ -60,3 +60,9 @@ export const SITE_PROOF = [
   { stat: "+10 años", label: "de experiencia" },
   { stat: "2 webs en Sevilla", label: "de negocios locales" },
 ] as const
+
+// Area served: single source for the JSON-LD `areaServed` and the AI discovery files.
+export const SERVICE_AREA = [
+  { "@type": "City", name: "Sevilla" },
+  { "@type": "AdministrativeArea", name: "Área metropolitana de Sevilla" },
+] as const

@@ -378,7 +378,12 @@ test("home related links keep the existing rows, the SEO para IA row at index 1,
 // --- FAQ, copy and template contract (task 1.3) ----------------------------
 
 const faqBlock = () =>
-  home().match(/const homeFaqs: FaqItem\[\] = \[([\s\S]*?)\n\];/)?.[1] ?? "";
+  readFileSync(
+    new URL("../src/data/page-faqs.ts", import.meta.url),
+    "utf8",
+  ).match(
+    /export const homeFaqs: ServicePageData\["faqs"\] = \[([\s\S]*?)\n\];/,
+  )?.[1] ?? "";
 
 test("home FAQ has 6-8 questions and feeds both the component and FAQPage", () => {
   const questions = [...faqBlock().matchAll(/\bq:\s*"([^"]+)"/g)].map(

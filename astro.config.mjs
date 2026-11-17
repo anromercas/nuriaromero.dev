@@ -6,6 +6,8 @@ import sitemap from "@astrojs/sitemap"
 
 import robotsTxt from "astro-robots-txt"
 
+import { CRAWLER_POLICY } from "./src/data/crawler-policy.ts"
+
 // Lee `pubDate`/`updatedDate` del frontmatter de los posts del blog para poder
 // asignar un `lastmod` real por URL en el sitemap (no la fecha de build).
 // No se usa `astro:content` porque no está disponible en el contexto de este
@@ -57,18 +59,7 @@ export default defineConfig({
         return lastmod ? { ...item, lastmod } : item
       },
     }),
-    robotsTxt({
-      policy: [
-        { userAgent: '*', allow: '/' },
-        { userAgent: 'GPTBot', allow: '/' },
-        { userAgent: 'OAI-SearchBot', allow: '/' },
-        { userAgent: 'ClaudeBot', allow: '/' },
-        { userAgent: 'Claude-Web', allow: '/' },
-        { userAgent: 'anthropic-ai', allow: '/' },
-        { userAgent: 'PerplexityBot', allow: '/' },
-        { userAgent: 'Google-Extended', allow: '/' },
-      ],
-    }),
+    robotsTxt({ policy: CRAWLER_POLICY }),
   ],
   site: 'https://nuriaromero.dev/',
   markdown: {
