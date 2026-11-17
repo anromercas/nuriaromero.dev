@@ -27,7 +27,7 @@ See proposal.md - Why. Current state on `develop`:
 
 ## Decisions
 
-**Approach.** `src/lib/freshness.ts` runs `git log -1 --format=%H %cI -- <paths>` with `execFileSync` (no shell) from the repository root, returns the committer date in ISO 8601 with offset, and returns `undefined` on any error, empty output, or when the found commit is listed in the repository's `shallow` file (`git rev-parse --git-path shallow`), because a boundary commit only proves "this or earlier". Results are memoized per path list. `src/data/page-freshness.ts` maps each indexable route (trailing slash) to its repo-relative sources: the page file plus the `src/data` modules holding its copy or prices; blog posts are not in the map (their dates come from frontmatter). `Layout.astro` looks up `Astro.url.pathname`, and when the page is not `noindex` and a date exists, appends `webPageSchema({ url, name: title, dateModified })` to its global `<Schema>`. `PageUpdated.astro` renders the visible label from the same lookup; `ServiceLayout` (both variants) and `index.astro` render it, at the place the UI spec chooses. The label carries `data-word-budget="exclude"` (it is build-derived and absent in shallow builds, the same CI/production parity reason as ADR 0015). `scripts/check-seo-21.mjs` validates everything on `dist/`; `check-seo-16` drops `WebPage` entities before comparing. Alternatives rejected: build time (forbidden by the story and the GEO rules), a hand-kept `updatedDate` per page in `src/data` (manual, drifts, bumps without content change), a per-page `import.meta.url` lookup (points to the compiled chunk at build time, not the source file).
+**Approach.** `src/lib/freshness.ts` runs `git log -1 --format=%H %cI -- <paths>` with `execFileSync` (no shell) from the repository root, returns the committer date in ISO 8601 with offset, and returns `undefined` on any error, empty output, or when the found commit is listed in the repository's `shallow` file (`git rev-parse --git-path shallow`), because a boundary commit only proves "this or earlier". Results are memoized per path list. `src/data/page-freshness.ts` maps each indexable route (trailing slash) to its repo-relative sources: the page file plus the `src/data` modules holding its copy or prices; blog posts are not in the map (their dates come from frontmatter). `Layout.astro` looks up `Astro.url.pathname`, and when the page is not `noindex` and a date exists, appends `webPageSchema({ url, name: title, dateModified })` to its global `<Schema>`. `PageUpdated.astro` renders the visible label from the same lookup; `ServiceLayout` (both variants) and `index.astro` render it, at the place the UI spec chooses. The label carries `data-word-budget="exclude"` (it is build-derived and absent in shallow builds, the same CI/production parity reason as ADR 0015). `scripts/check-seo-22.mjs` (rules in `scripts/lib/freshness-contract.mjs`; 21 is taken by the NRD-26 check) validates everything on `dist/`; `check-seo-16` drops `WebPage` entities before comparing. Alternatives rejected: build time (forbidden by the story and the GEO rules), a hand-kept `updatedDate` per page in `src/data` (manual, drifts, bumps without content change), a per-page `import.meta.url` lookup (points to the compiled chunk at build time, not the source file).
 
 **Route-to-sources map** (`src/data/page-freshness.ts`):
 
@@ -56,9 +56,10 @@ Excluded: `/404.html` (noindex), `/blog/<slug>/` (frontmatter dates), `public/in
 | create | `src/components/PageUpdated.astro` | props `{ date?: string }` | app |
 | modify | `src/layouts/ServiceLayout.astro`, `src/pages/index.astro` | render `<PageUpdated date={getPageDateModified(Astro.url.pathname)} />` per the UI spec | app |
 | modify | `src/layouts/BlogPostLayout.astro` | `data-post-published` / `data-post-updated` on the two `<time>` elements (no visible change) | app |
-| create | `scripts/check-seo-21.mjs` | dist check (below) | app |
+| create | `scripts/check-seo-22.mjs` | dist check entry point (below) | app |
+| create | `scripts/lib/freshness-contract.mjs` | pure freshness rules used by `check-seo-22` and its tests | app |
 | modify | `scripts/check-seo-16.mjs` | filter out `@type === "WebPage"` before comparing; regenerate the fixture only if it changes | app |
-| modify | `package.json` | `check:seo-21`, `check:seo-21:dist`, append `node scripts/check-seo-21.mjs` to `check:seo:dist` | app |
+| modify | `package.json` | `check:seo-22`, `check:seo-22:dist`, append `node scripts/check-seo-22.mjs` to `check:seo:dist` | app |
 | create | `tests/freshness.test.js`, `tests/page-freshness.test.js` | unit tests below | app |
 | modify | `docs/adr/README.md` index, new `docs/adr/0017-build-derived-freshness.md` | written with this design | app |
 
@@ -87,7 +88,7 @@ export function webPageSchema(page: { url: string; name: string; dateModified: s
 
 `PageUpdated.astro` markup (styling per UI spec): `<p class="page-updated" data-word-budget="exclude">Actualizado: <time datetime={date} data-page-updated>{formatMonthYear(date)}</time></p>`; renders nothing when `date` is undefined.
 
-`scripts/check-seo-21.mjs` (reads `dist/`, skips `informes/`):
+`scripts/check-seo-22.mjs` with `scripts/lib/freshness-contract.mjs` (reads `dist/`, skips `informes/`):
 
 - every `dateModified`/`datePublished` found in JSON-LD matches `^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$` and is not later than the HTML file's mtime (plus 5 minutes tolerance);
 - a `time[data-page-updated]` requires a `WebPage` `dateModified` with the identical `datetime`; legal routes have no `data-page-updated`; `noindex` pages have no `WebPage` node;
@@ -109,7 +110,7 @@ No schema or storage change. Dates are computed at build time from git history; 
    - `formatMonthYear("2026-11-10T09:30:00+01:00") === "noviembre de 2026"`.
 2. `tests/page-freshness.test.js`: every `src/pages/**/*.astro` route except `404.astro` and `blog/[slug].astro` has a `pageSources` entry and every listed source exists ("Unregistered page"); `getPageDateModified("/diseno-web-sevilla")` and `("/diseno-web-sevilla/")` use the same entry; `webPageSchema` returns the shape above (import `src/lib/schema.ts`; it needs relative imports: if NRD-241 is not merged yet, merge `develop` first or make the same relative-import change).
 3. Source assertions in `tests/page-freshness.test.js`: `Layout.astro` adds `webPageSchema` only when not `noindex`; `PageUpdated.astro` carries `data-word-budget="exclude"` and `data-page-updated`; `LegalLayout.astro` does not render `PageUpdated` ("Legal page").
-4. `scripts/check-seo-21.mjs` written against the current `dist/`: RED on the label/JSON-LD rule with a hand-edited copy of a built page (mismatched `datetime`), GREEN on the real build; `check-seo-16` passes with and without the node (build once normally, once from a `git clone --depth 1` of the branch).
+4. `scripts/check-seo-22.mjs` (and `tests/check-seo-22.test.js` over `scripts/lib/freshness-contract.mjs`) written against the current `dist/`: RED on the label/JSON-LD rule with a hand-edited copy of a built page (mismatched `datetime`), GREEN on the real build; `check-seo-16` passes with and without the node (build once normally, once from a `git clone --depth 1` of the branch).
 5. Full suite, `pnpm build`, `pnpm check:seo:dist` green.
 
 ### Real-browser / e2e checks
@@ -134,7 +135,7 @@ ADR 0001 (static output, build-time work only), ADR 0004 (JSON-LD only through `
 - [Commits that only reformat a page bump its date] → accepted; the repo formats only edited files, so whole-repo reformat commits do not happen (CLAUDE.md).
 - [Build time grows] → about 25 `git log` calls, memoized; negligible.
 - [Legal pages carry a JSON-LD `dateModified` that may differ from their visible legal-version date] → different meanings (page vs legal text version); the legal label is not touched (legal pages are owner territory).
-- [`check-seo-21` compares against file mtime] → tolerance of 5 minutes; `dist/` is always freshly built in CI and `pnpm check:seo`.
+- [`check-seo-22` compares against file mtime] → tolerance of 5 minutes; `dist/` is always freshly built in CI and `pnpm check:seo`.
 
 ## Migration Plan
 

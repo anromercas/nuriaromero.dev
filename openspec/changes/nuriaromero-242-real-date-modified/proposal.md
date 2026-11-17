@@ -10,7 +10,7 @@ Perplexity and Google AI favour sources with a visible, verifiable update date. 
 - Every indexable page registered in a route-to-sources map emits a `WebPage` JSON-LD node with `dateModified` (only when the date is known).
 - Service pages and the home show a discreet "Actualizado: <mes año>" label with a `<time datetime>` equal to the JSON-LD value; legal pages show no label (they keep their own "Última actualización" legal text).
 - Blog posts keep their current behaviour; their `<time>` elements gain markers so a build check can compare them with the Article JSON-LD and the sitemap `lastmod`.
-- New build check `scripts/check-seo-21.mjs` in `check:seo:dist`; `scripts/check-seo-16.mjs` ignores the freshness node when comparing the reference page JSON-LD with its fixture.
+- New build check `scripts/check-seo-22.mjs` (rules in `scripts/lib/freshness-contract.mjs`) in `check:seo:dist` (number 21 is already taken by the NRD-26 `/seo-para-ia/` check); `scripts/check-seo-16.mjs` ignores the freshness node when comparing the reference page JSON-LD with its fixture.
 - ADR 0017 records the freshness source and the word-budget marker on the label.
 
 ## Out of scope
@@ -32,7 +32,7 @@ Perplexity and Google AI favour sources with a visible, verifiable update date. 
 
 ## Impact
 
-- New `src/lib/freshness.ts`, `src/data/page-freshness.ts`, `src/components/PageUpdated.astro`, `scripts/check-seo-21.mjs`, tests.
-- Modified `src/lib/schema.ts` (`webPageSchema`), `src/layouts/Layout.astro`, `src/layouts/ServiceLayout.astro`, `src/pages/index.astro`, `src/layouts/BlogPostLayout.astro` (markers only), `scripts/check-seo-16.mjs`, `package.json` (`check:seo:dist`, `check:seo-21`, `check:seo-21:dist`).
+- New `src/lib/freshness.ts`, `src/data/page-freshness.ts`, `src/components/PageUpdated.astro`, `scripts/check-seo-22.mjs`, `scripts/lib/freshness-contract.mjs`, tests.
+- Modified `src/lib/schema.ts` (`webPageSchema`), `src/layouts/Layout.astro`, `src/layouts/ServiceLayout.astro`, `src/pages/index.astro`, `src/layouts/BlogPostLayout.astro` (markers only), `scripts/check-seo-16.mjs`, `package.json` (`check:seo:dist`, `check:seo-22`, `check:seo-22:dist`).
 - Builds run `git` at build time (already present on Netlify and CI); CI checks out with depth 1, so CI builds omit the dates, and the checks accept omission.
 - No new dependency, no network call, no radical change.
