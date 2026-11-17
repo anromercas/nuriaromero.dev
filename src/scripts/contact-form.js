@@ -59,6 +59,8 @@ function initContactForm() {
       errorP.textContent = '';
       errorP.hidden = true;
     }
+    // Drop the summary once no field is left flagged.
+    if (!form.querySelector('[aria-invalid="true"]')) setError('');
   }
 
   function showFieldError(field, message) {
@@ -122,7 +124,10 @@ function initContactForm() {
     if (errors.length) {
       setReviewInvite(false);
       setStatus('');
-      setError('Revisa los campos marcados.');
+      // Clear first, then set on the next frame: identical text would not be
+      // re-announced by screen readers on a repeated invalid submit.
+      setError('');
+      requestAnimationFrame(() => setError('Revisa los campos marcados.'));
       document.getElementById(errors[0].field)?.focus();
       return;
     }
@@ -145,7 +150,7 @@ function initContactForm() {
         form.reset();
         document.dispatchEvent(new CustomEvent('site:analytics', { detail: { name: 'form_submit', params: { placement: 'contact_form' } } }));
       } else {
-        let msg = `❌ Error ${res.status}`;
+        let msg = `Error ${res.status}`;
         try {
           const json = await res.json();
           if (Array.isArray(json?.errors) && json.errors.length) {
@@ -163,7 +168,7 @@ function initContactForm() {
     } catch (err) {
       console.error('[ContactForm] Error de red/JS:', err);
       setReviewInvite(false);
-      setError('⚠️ Error de conexión. Inténtalo de nuevo en unos minutos.');
+      setError('Error de conexión. Inténtalo de nuevo en unos minutos.');
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;

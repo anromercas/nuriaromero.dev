@@ -128,10 +128,38 @@ test("contact-form.js clears a field error on input/change", () => {
 test("network and Formspree errors go to #form-error", () => {
   assert.match(script, /getElementById\(['"]form-error['"]\)/);
   assert.match(script, /setError\(\s*msg\s*\)/);
-  assert.match(script, /setError\(\s*['"]⚠️ Error de conexión/);
+  assert.match(script, /setError\(\s*['"]Error de conexión/);
 });
 
 test("submitted data and endpoint are unchanged", () => {
   assert.match(script, /https:\/\/formspree\.io\/f\/mdklbyaz/);
   assert.match(script, /new FormData\(form\)/);
+});
+
+// --- review round ---------------------------------------------------------
+
+test("clearing the last invalid field clears the #form-error summary", () => {
+  assert.match(script, /querySelector\(\s*['"]\[aria-invalid="true"\]['"]\s*\)/);
+  assert.match(script, /if \(!form\.querySelector\([^)]*\)\) setError\(''\)/);
+});
+
+test("a repeated invalid submit re-announces the summary", () => {
+  assert.match(script, /requestAnimationFrame/);
+});
+
+test("name, email and phone declare autocomplete tokens (WCAG 1.3.5)", () => {
+  for (const [id, token] of [
+    ["name", "name"],
+    ["email", "email"],
+    ["phone", "tel"],
+  ]) {
+    const tag =
+      form.match(new RegExp(`<input\\s[^>]*?id="${id}"[^>]*?>`, "s"))?.[0] ?? "";
+    assert.match(tag, new RegExp(`autocomplete="${token}"`), id);
+  }
+});
+
+test("error messages carry no emoji", () => {
+  assert.doesNotMatch(script, /⚠️|❌/);
+  assert.match(script, /Error de conexión\. Inténtalo de nuevo en unos minutos\./);
 });
