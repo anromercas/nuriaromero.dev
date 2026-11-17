@@ -1,8 +1,8 @@
 // Constructores de JSON-LD (schema.org). Cada página inyecta los suyos
 // con <Schema slot="head" schema={...} />; el de negocio va global en Layout.
-import { SITE } from "@/data/site"
-import { localTrust } from "@/data/local-trust"
-import type { GoogleReviewsData } from "@/lib/google-reviews"
+import { SITE } from "../data/site.ts"
+import { localTrust } from "../data/local-trust.ts"
+import type { GoogleReviewsData } from "./google-reviews.ts"
 
 const BUSINESS_ID = `${SITE.url}/#business`
 const PERSON_ID = `${SITE.url}/#person`
@@ -53,6 +53,8 @@ export function reviewsSchema(data: GoogleReviewsData) {
     "@context": "https://schema.org",
     "@type": ["ProfessionalService", "Organization"],
     "@id": BUSINESS_ID,
+    name: SITE.name,
+    url: SITE.url,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: data.rating,

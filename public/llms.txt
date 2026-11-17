@@ -1,6 +1,6 @@
 # Nuria Romero
 
-> Índice curado de información pública de nuriaromero.dev. Nuria Romero Castillo desarrolla webs, software a medida, automatizaciones e inteligencia artificial para negocios en Sevilla. Este archivo orienta hacia páginas públicas del sitio; no garantiza indexación, posicionamiento, citación ni un tratamiento especial por parte de ningún crawler o asistente.
+> Índice curado de información pública de la web de Nuria Romero (nuriaromero.dev). Nuria Romero Castillo desarrolla webs, software a medida, automatizaciones e inteligencia artificial para negocios en Sevilla. Este archivo orienta hacia páginas públicas del sitio; no garantiza indexación, posicionamiento, citación ni un tratamiento especial por parte de ningún crawler o asistente.
 
 ## Perfil y contacto
 - [Sobre mí](https://nuriaromero.dev/sobre-mi/): Perfil público de Nuria Romero Castillo y experiencia que ella misma describe.

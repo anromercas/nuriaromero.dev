@@ -57,7 +57,7 @@ test("header renders a single white logo image", () => {
     /import\s+\w+\s+from\s+"@\/assets\/nuriaromerodev-logo-blanco\.svg"/,
   );
   assert.doesNotMatch(header, /dark:hidden|dark:block|logo-negro/);
-  assert.match(header, /alt="Nuria Romero"/);
+  assert.match(header, /alt="Nuria Romero, nuriaromero\.dev"/);
   assert.match(header, /loading="eager"/);
 });
 
