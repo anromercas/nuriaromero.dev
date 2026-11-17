@@ -103,6 +103,7 @@ const thisSiteItems = [
           text: "Lo que una IA lee de tu negocio",
           accent: "de tu negocio",
         }}
+        answer="Trabajo seis frentes para que una IA te entienda: datos coherentes, respuestas directas, datos estructurados, rastreadores, llms.txt y señales externas."
       >
         {seoParaIa.benefits.map((benefit, i) => (
           <BentoTile
@@ -128,11 +129,12 @@ const thisSiteItems = [
             text: "Primero mirar, después corregir",
             accent: "después corregir",
           }}
+          answer="Trabajo en cuatro pasos: reviso cómo te ven hoy las IA, te propongo prioridades, lo implemento y hago seguimiento cada mes."
           steps={seoParaIa.process}
         >
           <Fragment slot="byline">
             Soy Nuria Romero, <a href="/">consultor SEO en Sevilla</a>, y lo
-            hago contigo, sin intermediarios.
+            hago contigo.
           </Fragment>
         </SeoLocalProcess>
       </SectionContainer>
@@ -164,13 +166,8 @@ const thisSiteItems = [
             accent: "Local Pro",
           }}
           tiers={[plan]}
-        >
-          <Fragment slot="lede">
-            El SEO para IA no tiene precio aparte: forma parte del plan Local
-            Pro, <strong>{seoParaIa.pricing.from}</strong>, que también cubre tu
-            perfil de Google.
-          </Fragment>
-        </SeoLocalPlans>
+          answer={`El SEO para IA no tiene precio aparte: va dentro del plan Local Pro, ${seoParaIa.pricing.from}, que también cubre tu perfil de Google.`}
+        />
       </SectionContainer>
     </div>
   </Fragment>
@@ -183,7 +180,7 @@ const thisSiteItems = [
           text: "Dudas antes de empezar",
           accent: "antes de empezar",
         }}
-        lede="Si tu duda no está aquí, la vemos en la llamada."
+        answer="El SEO para IA o GEO es preparar la información de tu negocio para que ChatGPT o Gemini la entiendan y puedan citarla."
         faqs={seoParaIa.faqs}
       />
     </SectionContainer>

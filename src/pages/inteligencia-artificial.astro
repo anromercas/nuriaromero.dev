@@ -55,15 +55,15 @@ const proofItems = [
 
 const comparisonItems = [
   {
-    lead: "Para redactar, buscar ideas o tu propio trabajo, ChatGPT tal cual te basta.",
-    text: "Te lo diré en la primera llamada.",
+    lead: "Para redactar o buscar ideas, ChatGPT tal cual te basta.",
+    text: "Te lo digo en la llamada.",
   },
   {
-    lead: "Si tiene que atender a tus clientes, compensa una solución para tu negocio.",
-    text: "Con tu información y con una persona detrás.",
+    lead: "Si atiende a tus clientes, compensa una solución para tu negocio.",
+    text: "Con tu información y una persona detrás.",
   },
   {
-    lead: "Empieza por un solo caso de uso y un piloto.",
+    lead: "Empieza por un caso de uso y un piloto.",
     text: "Así ves cómo responde antes de decidir.",
   },
 ];
@@ -97,6 +97,7 @@ const comparisonItems = [
           text: "Lo que puede hacer por ti",
           accent: "por ti",
         }}
+        answer="La IA puede atender dudas en tu web o WhatsApp, reservar citas, tomar pedidos y resumir textos."
       >
         {inteligenciaArtificial.benefits.map((benefit, i) => (
           <BentoTile
@@ -122,6 +123,7 @@ const comparisonItems = [
             text: "Primero un piloto con tus datos",
             accent: "con tus datos",
           }}
+          answer="Trabajo en cuatro pasos: caso de uso, piloto con tus datos, ajuste con casos reales y conexión a tu canal."
           steps={inteligenciaArtificial.process}
         />
       </SectionContainer>
@@ -137,6 +139,7 @@ const comparisonItems = [
           text: "Cuándo basta con ChatGPT y cuándo no",
           accent: "cuándo no",
         }}
+        answer="Para redactar o buscar ideas te basta ChatGPT; para atender a tus clientes compensa una solución con tu información."
         items={comparisonItems}
         link={{ label: "Ver el precio", href: "#precios" }}
       />
@@ -153,12 +156,8 @@ const comparisonItems = [
             accent: "un chatbot",
           }}
           tiers={[plan]}
-        >
-          <Fragment slot="lede">
-            Tu chatbot con IA, con piloto incluido,{" "}
-            <strong>desde {inteligenciaArtificial.pricing.from}</strong>.
-          </Fragment>
-        </SeoLocalPlans>
+          answer={`Tu chatbot con IA, con piloto incluido, cuesta desde ${inteligenciaArtificial.pricing.from}; depende del caso de uso.`}
+        />
       </SectionContainer>
     </div>
   </Fragment>
@@ -171,7 +170,7 @@ const comparisonItems = [
           text: "Lo que preguntan las empresas sobre IA",
           accent: "sobre IA",
         }}
-        lede="Si tu duda no está aquí, la vemos en la llamada."
+        answer="Un chatbot atiende a tus clientes con tu información y, si no sabe, te pasa la conversación."
         faqs={inteligenciaArtificial.faqs}
       />
     </SectionContainer>

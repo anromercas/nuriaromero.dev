@@ -418,7 +418,7 @@ export const inteligenciaArtificial: ServicePageData = {
     title: "IA que responde con tu información",
     titleAccent: "con tu información",
     subtitle:
-      "Monto chatbots y agentes de inteligencia artificial para empresas y negocios de Sevilla. Atienden a tus clientes en tu web o WhatsApp con tu información y te pasan la conversación cuando hace falta una persona.",
+      "Monto chatbots y agentes de inteligencia artificial para empresas y negocios de Sevilla. Atienden a tus clientes en tu web o WhatsApp con tu información.",
     secondaryCta: { label: "Ver precio", href: "#precios" },
   },
   sectionTitles: {
@@ -430,61 +430,61 @@ export const inteligenciaArtificial: ServicePageData = {
   benefits: [
     {
       title: "Chatbot en tu web y WhatsApp",
-      text: "Responde las dudas frecuentes de tus clientes en tu web o en WhatsApp Business.",
+      text: "Responde dudas frecuentes en tu web o WhatsApp Business.",
     },
     {
       title: "Agente que reserva o toma pedidos",
-      text: "Un agente de IA no solo contesta: apunta la cita o el pedido en tus herramientas.",
+      text: "No solo contesta: apunta la cita o el pedido en tus herramientas.",
     },
     {
       title: "Respuestas con tu información",
-      text: "Contesta con tus servicios, precios y horarios, no con lo que encuentra por internet.",
+      text: "Contesta con tus servicios, precios y horarios, no con lo de internet.",
     },
     {
       title: "Pasa la conversación a una persona",
-      text: "Cuando no sabe la respuesta, te avisa y la conversación sigue contigo.",
+      text: "Si no sabe la respuesta, te avisa y sigues tú.",
     },
     {
       title: "Resúmenes",
-      text: "Resume conversaciones, correos o documentos largos en unas pocas líneas.",
+      text: "Resume conversaciones, correos o documentos largos.",
     },
     {
       title: "Datos cuidados y RGPD",
-      text: "Te explico qué datos se envían y a quién, según el RGPD, la ley europea de datos.",
+      text: "Te explico qué datos se envían y a quién, según el RGPD.",
     },
   ],
   process: [
     {
       title: "Elegimos un caso de uso",
-      text: "Buscamos la tarea en la que la IA te ayuda de verdad, como las dudas que más se repiten.",
+      text: "Buscamos la tarea donde la IA te ayuda de verdad.",
     },
     {
       title: "Piloto con tus datos",
-      text: "Lo monto con la información real de tu negocio y lo pruebas antes de decidir.",
+      text: "Lo monto con tus datos y lo pruebas antes de decidir.",
     },
     {
       title: "Ajuste con casos reales",
-      text: "Corregimos las respuestas con preguntas de verdad de tus clientes.",
+      text: "Corregimos respuestas con preguntas reales.",
     },
     {
       title: "Conexión a tu web o WhatsApp",
-      text: "Lo dejo funcionando en tu canal, con supervisión y ajustes el primer mes.",
+      text: "Lo dejo funcionando en tu canal, con supervisión el primer mes.",
     },
   ],
   pricing: {
     from: AI_FROM,
     includes: [
       "Análisis de tu caso de uso",
-      "Prueba piloto con datos reales de tu negocio",
-      "Integración con tu web, WhatsApp o herramientas",
-      "Configuración respetuosa con el RGPD",
+      "Piloto con datos reales",
+      "Integración con tu web o WhatsApp",
+      "Configuración conforme al RGPD",
       "Supervisión y ajustes el primer mes",
     ],
     note: "El coste depende del caso de uso. Con la prueba piloto ves cómo responde con tus datos antes de seguir.",
   },
   cta: {
     title: "Empecemos por tus clientes",
-    text: "Cuéntame qué te preguntan más tus clientes y te digo si un chatbot te ayuda de verdad.",
+    text: "Cuéntame qué te preguntan más tus clientes y te digo si un chatbot te ayuda.",
   },
   faqs: [
     {
@@ -684,7 +684,7 @@ export const seoParaIa: ServicePageData = {
   benefits: [
     {
       title: "Datos que no se contradicen",
-      text: "Nombre, servicios, zona, horario y precios dicen lo mismo en tu web, en tu perfil de Google y en tus redes.",
+      text: "Nombre, servicios, zona, horario y precios coinciden en tu web, tu perfil de Google y tus redes.",
     },
     {
       title: "Respuestas directas",
@@ -692,7 +692,7 @@ export const seoParaIa: ServicePageData = {
     },
     {
       title: "Datos estructurados",
-      text: "Marcado schema.org para tu negocio, servicios, preguntas y la ruta de cada página.",
+      text: "Marcado schema.org para tu negocio, servicios y preguntas.",
     },
     {
       title: "Acceso para los rastreadores",
@@ -700,17 +700,17 @@ export const seoParaIa: ServicePageData = {
     },
     {
       title: "Un índice llms.txt",
-      text: "Un archivo con tus páginas más útiles, como apoyo para los sistemas de IA.",
+      text: "Un archivo con tus páginas más útiles para los sistemas de IA.",
     },
     {
       title: "Señales fuera de tu web",
-      text: "Perfil de Google completo, perfiles enlazados y reseñas reales que confirman quién eres.",
+      text: "Perfil de Google completo, perfiles enlazados y reseñas reales.",
     },
   ],
   process: [
     {
       title: "Revisión de cómo te ven hoy",
-      text: "Pregunto a los principales asistentes de IA lo que preguntaría un cliente de tu sector y tu zona, anoto qué saben de ti, qué falta y qué se contradice, y reviso que sus rastreadores puedan entrar y entender tu web.",
+      text: "Pregunto a los asistentes de IA lo que preguntaría un cliente de tu zona y anoto qué saben de ti, qué falta y qué se contradice.",
     },
     {
       title: "Plan de prioridades",
@@ -718,11 +718,11 @@ export const seoParaIa: ServicePageData = {
     },
     {
       title: "Implementación",
-      text: "Textos, preguntas frecuentes, datos estructurados y acceso, en tu web y en tu perfil.",
+      text: "Textos, preguntas frecuentes, datos estructurados y acceso, en tu web.",
     },
     {
       title: "Seguimiento",
-      text: "Cada mes repito las mismas preguntas, comparo los resultados y las visitas que llegan desde los asistentes, y recibes un informe con lo que ha cambiado y el siguiente paso.",
+      text: "Cada mes repito las mismas preguntas y recibes un informe con lo que ha cambiado y el siguiente paso.",
     },
   ],
   pricing: {
