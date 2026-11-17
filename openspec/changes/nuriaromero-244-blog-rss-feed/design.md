@@ -10,7 +10,7 @@ See proposal.md - Why. Current state on `develop`:
 - The invariant "Static output" (`.claude/harness/invariants.md:9`) lists "an endpoint under `src/pages/`" as a violation; its purpose is "no server runtime, SSR adapter or API routes". `openspec/config.yaml` context repeats "no SSR adapter, endpoints or netlify.toml".
 - `tests/package-scripts.test.js` derives the expected `check:seo-NN` / `check:seo-NN:dist` scripts from the `scripts/check-seo-*.mjs` files, so a new check file must be wired in `package.json`.
 - `src/data/navigation.ts` shows how a module stays importable by `node --test` (relative `.ts` imports).
-- NRD-242 (same sprint) adds `scripts/check-seo-21.mjs`; this story uses `check-seo-22`.
+- Check numbering: `scripts/check-seo-21.mjs` already exists on `develop` (NRD-26, `/seo-para-ia/`), and NRD-242 (same sprint, PR #108, open) adds `scripts/check-seo-22.mjs` plus `scripts/lib/freshness-contract.mjs` with `check:seo-22`/`check:seo-22:dist`. `tests/package-scripts.test.js` requires one script per number, so this story uses `check-seo-23` (`check:seo-23`, `check:seo-23:dist`), appended to `check:seo:dist` after the `check-seo-22` wiring.
 
 ## Goals / Non-Goals
 
@@ -31,18 +31,18 @@ See proposal.md - Why. Current state on `develop`:
 
 ### Files
 
-| Action | Path | Symbols | Layer |
-| --- | --- | --- | --- |
-| create | `src/lib/rss.ts` | `RssChannel`, `RssItem`, `escapeXml`, `buildRssFeed` | app |
-| create | `src/pages/rss.xml.ts` | `GET: APIRoute` | app |
-| modify | `astro.config.mjs` | sitemap `filter` also excludes `/rss.xml` | app |
-| modify | `.claude/harness/invariants.md` | "Static output" item wording (shared path, tracked `.claude/` file) | app |
-| modify | `openspec/config.yaml` | context line "Fully static output: ..." wording (design path, shared) | app |
-| modify | `src/components/seo/SEO.astro` | `<link rel="alternate" type="application/rss+xml" title="Blog de Nuria Romero" href="/rss.xml" />` | app |
-| create | `scripts/check-seo-22.mjs` | dist check (below) | app |
-| modify | `package.json` | `check:seo-22`, `check:seo-22:dist`, append to `check:seo:dist` | app |
-| create | `tests/rss-feed.test.js` | unit and source tests | app |
-| create | `docs/adr/0018-build-time-endpoints.md`, index row in `docs/adr/README.md` | written with this design | app |
+| Action | Path                                                                       | Symbols                                                                                            | Layer |
+| ------ | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ----- |
+| create | `src/lib/rss.ts`                                                           | `RssChannel`, `RssItem`, `escapeXml`, `buildRssFeed`                                               | app   |
+| create | `src/pages/rss.xml.ts`                                                     | `GET: APIRoute`                                                                                    | app   |
+| modify | `astro.config.mjs`                                                         | sitemap `filter` also excludes `/rss.xml`                                                          | app   |
+| modify | `.claude/harness/invariants.md`                                            | "Static output" item wording (shared path, tracked `.claude/` file)                                | app   |
+| modify | `openspec/config.yaml`                                                     | context line "Fully static output: ..." wording (design path, shared)                              | app   |
+| modify | `src/components/seo/SEO.astro`                                             | `<link rel="alternate" type="application/rss+xml" title="Blog de Nuria Romero" href="/rss.xml" />` | app   |
+| create | `scripts/check-seo-23.mjs`                                                 | dist check (below)                                                                                 | app   |
+| modify | `package.json`                                                             | `check:seo-23`, `check:seo-23:dist`, append to `check:seo:dist`                                    | app   |
+| create | `tests/rss-feed.test.js`                                                   | unit and source tests                                                                              | app   |
+| create | `docs/adr/0018-build-time-endpoints.md`, index row in `docs/adr/README.md` | written with this design                                                                           | app   |
 
 New invariant text (replace the "Static output" item):
 
@@ -56,15 +56,29 @@ New invariant text (replace the "Static output" item):
 
 ```ts
 // src/lib/rss.ts (no imports from astro:*, so node --test can import it)
-export interface RssChannel { title: string; link: string; description: string; language: string; selfUrl: string }
-export interface RssItem { title: string; link: string; description: string; pubDate: Date }
-export function escapeXml(text: string): string
+export interface RssChannel {
+  title: string;
+  link: string;
+  description: string;
+  language: string;
+  selfUrl: string;
+}
+export interface RssItem {
+  title: string;
+  link: string;
+  description: string;
+  pubDate: Date;
+}
+export function escapeXml(text: string): string;
 /** RSS 2.0 string; items sorted by pubDate descending; no lastBuildDate. */
-export function buildRssFeed(channel: RssChannel, items: readonly RssItem[]): string
+export function buildRssFeed(
+  channel: RssChannel,
+  items: readonly RssItem[],
+): string;
 
 // src/pages/rss.xml.ts
-export const GET: APIRoute // channel: title "Blog de Nuria Romero", link `${SITE.url}/blog/`, language "es-ES",
-                           // description "Artículos sobre SEO local, webs y GEO para negocios locales.", selfUrl `${SITE.url}/rss.xml`
+export const GET: APIRoute; // channel: title "Blog de Nuria Romero", link `${SITE.url}/blog/`, language "es-ES",
+// description "Artículos sobre SEO local, webs y GEO para negocios locales.", selfUrl `${SITE.url}/rss.xml`
 ```
 
 Feed shape (one item shown):
@@ -89,7 +103,7 @@ Feed shape (one item shown):
 </rss>
 ```
 
-`scripts/check-seo-22.mjs` (reads `dist/` and `src/content/blog/*.md` frontmatter, like `astro.config.mjs` does): `dist/rss.xml` exists, starts with the XML declaration and has one `<rss version="2.0">` and one `<channel>`; every non-draft post has exactly one item with link `https://nuriaromero.dev/blog/<slug>/` and non-empty title, description and pubDate; no draft slug appears; item `pubDate`s are non-increasing; every `dist/**/*.html` (skip `informes/`) contains the alternate link once; no `dist/sitemap-*.xml` contains `rss.xml`; `dist/robots.txt` has no `Disallow` matching `/rss.xml`.
+`scripts/check-seo-23.mjs` (reads `dist/` and `src/content/blog/*.md` frontmatter, like `astro.config.mjs` does): `dist/rss.xml` exists, starts with the XML declaration and has one `<rss version="2.0">` and one `<channel>`; every non-draft post has exactly one item with link `https://nuriaromero.dev/blog/<slug>/` and non-empty title, description and pubDate; no draft slug appears; item `pubDate`s are non-increasing; every `dist/**/*.html` (skip `informes/`) contains the alternate link once; no `dist/sitemap-*.xml` contains `rss.xml`; `dist/robots.txt` has no `Disallow` matching `/rss.xml`.
 
 ### Data
 
@@ -102,8 +116,8 @@ None: no schema or storage change; the feed is derived from the existing collect
    - `escapeXml('A & B <c> "d"')` and a title with `&` produce escaped, well-formed output ("Special characters");
    - links keep the trailing slash; `guid isPermaLink="true"` equals the link; no `lastBuildDate`;
    - source assertions: `src/pages/rss.xml.ts` filters `!data.draft`, does not set `prerender = false`; `astro.config.mjs` filter excludes `rss.xml` ("Draft post", "Sitemap and robots").
-2. Task 1.2 adds: source assertion that `SEO.astro` contains the alternate link once ("Discovery link on a post and on the home"); `tests/package-scripts.test.js` turns RED when `scripts/check-seo-22.mjs` exists without its scripts, GREEN after wiring.
-3. `scripts/check-seo-22.mjs` RED on the current `dist/` (no feed, no link), GREEN after `pnpm build` ("Every published post is in the feed", "Post missing from the feed fails the build check", "Missing discovery link fails the build check").
+2. Task 1.2 adds: source assertion that `SEO.astro` contains the alternate link once ("Discovery link on a post and on the home"); `tests/package-scripts.test.js` turns RED when `scripts/check-seo-23.mjs` exists without its scripts, GREEN after wiring.
+3. `scripts/check-seo-23.mjs` RED on the current `dist/` (no feed, no link), GREEN after `pnpm build` ("Every published post is in the feed", "Post missing from the feed fails the build check", "Missing discovery link fails the build check").
 4. Full suite, `pnpm build`, `pnpm check:seo:dist` green.
 
 ### Real-browser / e2e checks
@@ -121,7 +135,7 @@ ADR 0001 (static output), ADR 0004 (SEO head in one component), ADR 0005 (sitema
 - [Invariant reworded by a story] → wording only, intent unchanged (no runtime); recorded in ADR 0018 and reported to the human for confirmation.
 - [Netlify serves `rss.xml` as `application/xml` instead of `application/rss+xml`] → feed readers accept both; adding a header rule is infra territory (`public/_headers`) and not needed.
 - [Date-only frontmatter becomes midnight UTC] → `pubDate` shows 00:00 GMT, same instant the blog already uses in `toISOString()`; consistent.
-- [Merge conflict with NRD-241 in `SEO.astro` and with NRD-242 in `package.json` `check:seo:dist`] → different lines in `SEO.astro`; in `package.json` append `check-seo-22` after whatever `check-seo-21` wiring exists when merging `develop`.
+- [Merge conflict with NRD-241 in `SEO.astro` and with NRD-242 in `package.json` `check:seo:dist`] → different lines in `SEO.astro`; in `package.json` the NRD-244 wiring (`check:seo-23`, `check:seo-23:dist`, `check:seo:dist`) touches the same lines as PR #108 (`check:seo-22`, `check:seo-22:dist`, `check:seo:dist`), so whichever lands second needs a trivial merge: keep both script pairs and keep `check:seo:dist` in numeric order, `check-seo-22` then `check-seo-23`.
 
 ## Migration Plan
 
