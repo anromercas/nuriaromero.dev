@@ -1,6 +1,8 @@
 # Feature: página de servicio "SEO para IA / GEO" (`/seo-para-ia/`)
 
-## Estado: PENDIENTE DE EJECUCIÓN — no iniciado
+## Estado: En ejecución (NRD-24, NRD-25, NRD-26)
+
+> Diseño vigente: `openspec/changes/nuriaromero-24-seo-para-ia-page/`. Donde este documento choque con ese cambio, manda el cambio: D1 = A (sin precio propio, `Offer` omitido) y D4 = B (hero editorial con `SeoLocalHero`) están resueltas. Las líneas sustituidas se marcan abajo con "(Sustituido ...)".
 
 Documento de planificación creado el 2026-10-09 en la rama `feat/seo-consultor-sevilla-home`. No se ha escrito código, test ni contenido en `src/`. Nada de lo que sigue está aprobado por la usuaria hasta que ella diga "vamos a hacer esto" y resuelva las decisiones de la sección "Decisiones pendientes de la usuaria".
 
@@ -41,7 +43,7 @@ Dentro:
 ## Out of scope
 
 - Tocar la home, `/seo-local-sevilla/`, `sobre-mi` o el post GEO más allá de añadir enlaces a la página nueva (y solo vía `internal-links.ts` / el enlace único ya acordado). No se cambian sus titles, H1, H2 ni metas.
-- Componentes visuales nuevos (hero editorial propio, mock, bento): opcional T9, no obligatorio.
+- Componentes visuales nuevos (hero editorial propio, mock, bento): opcional T9, no obligatorio. (Sustituido por D4 = B y NRD-24: el hero editorial es obligatorio y se reutiliza `SeoLocalHero`; los dibujos están en `src/components/seo-ia/`.)
 - Versión por nicho (`/seo-para-ia-clinicas/`, etc.): fuera hasta tener medición.
 - Estrategia de enlaces entrantes (backlinks): es la palanca principal pero es otro trabajo (acción 3 del informe).
 - Cualquier commit, push o PR sin que la usuaria lo decida.
@@ -100,13 +102,13 @@ Reglas: no copiar párrafos del post; la página enlaza al post con anchor "guí
 
 Patrón actual: cada página de servicio es un objeto `ServicePageData` en `src/data/services.ts` + un `.astro` en `src/pages/` que usa `ServiceLayout` (que ya inyecta `Schema` con `serviceSchema` + `faqSchema` + `breadcrumbSchema`, breadcrumbs, FAQ, enlaces internos y CTA). `seo-local-sevilla.astro` añade slots con componentes propios; es la versión cara.
 
-**Recomendado (A):** `seoParaIa: ServicePageData` en `services.ts` + `src/pages/seo-para-ia.astro` mínimo (`<ServiceLayout page={seoParaIa} />` con slot `pricing` sustituido). Hero por defecto (`ServiceHero`: H1 visible con la keyword). Esfuerzo ~250 líneas, cero componentes nuevos, sitemap automático (`@astrojs/sitemap`).
+**Recomendado (A):** `seoParaIa: ServicePageData` en `services.ts` + `src/pages/seo-para-ia.astro` mínimo (`<ServiceLayout page={seoParaIa} />` con slot `pricing` sustituido). Hero por defecto (`ServiceHero`: H1 visible con la keyword). Esfuerzo ~250 líneas, cero componentes nuevos, sitemap automático (`@astrojs/sitemap`). (Sustituido por D4 = B y NRD-24: la página usa la plantilla con `SeoLocalHero`, nunca `ServiceHero`.)
 
-Alternativa (B, opcional T9): replicar el patrón de `SeoLocalHero` (H1 pequeño con keyword + titular grande editorial, campos `hero.title` / `hero.titleAccent` del tipo) con un `SeoParaIaHero.astro`. Más diseño, +100 líneas, ninguna mejora de SEO. Solo si la usuaria quiere continuidad visual con seo-local.
+Alternativa (B, opcional T9): replicar el patrón de `SeoLocalHero` (H1 pequeño con keyword + titular grande editorial, campos `hero.title` / `hero.titleAccent` del tipo) con un `SeoParaIaHero.astro`. Más diseño, +100 líneas, ninguna mejora de SEO. Solo si la usuaria quiere continuidad visual con seo-local. (Sustituido por D4 = B: no se crea `SeoParaIaHero.astro`; se reutiliza `SeoLocalHero`.)
 
 Puntos de atención detectados al explorar:
 
-- `ServiceLayout` siempre pinta el bloque `pricing`; si no hay precio propio hay que sobreescribir el slot `pricing` (variante A de precio: sin tarjeta; variante B: tarjeta con precio).
+- `ServiceLayout` siempre pinta el bloque `pricing`; si no hay precio propio hay que sobreescribir el slot `pricing` (variante A de precio: sin tarjeta; variante B: tarjeta con precio). (Sustituido por D1 = A y NRD-24: la tarjeta es la del plan Local Pro, leída de `seoLocal`, y el Service no emite `Offer`; la variante B queda descartada.)
 - `serviceSchema` exige `price` (calcula `priceValue` desde el string y emite `Offer`). Sin precio habría que hacerlo opcional → T2 con test.
 - `ServicePageData.pricing.from` es obligatorio en el tipo; con "sin precio" se rellena con el precio de Local Pro o se hace opcional (decidir en T2/T3).
 
@@ -179,10 +181,10 @@ Se apoya en lo mismo que el SEO de siempre, una web clara, rápida y bien estruc
 
 ### Cómo trabajamos el SEO para IA (`sectionTitles.process`)
 
-1. **Revisión de cómo te ven hoy.** Pregunto a los principales asistentes por tu sector y tu zona, y miro qué información tuya encuentran, qué falta y qué se contradice. `[PENDIENTE: confirmar que este es el método real de revisión que quiere ofrecer]`
+1. **Revisión de cómo te ven hoy.** Pregunto a los principales asistentes de IA por tu sector y tu zona con una batería fija de preguntas, y reviso qué saben de ti, qué falta y qué se contradice; además compruebo que tu web deja entrar a sus rastreadores y se entiende bien.
 2. **Plan de prioridades.** Te explico en lenguaje claro qué corregir primero y por qué, sin jerga.
 3. **Implementación.** Actualizo tu web y tu ficha: textos, preguntas frecuentes, datos estructurados y accesos.
-4. **Seguimiento.** Reviso cada cierto tiempo qué responden los asistentes y qué visitas llegan desde ellos, y ajusto el siguiente paso. `[PENDIENTE: frecuencia y formato real del seguimiento; en SEO local es un vídeo-informe mensual, confirmar si aplica aquí]`
+4. **Seguimiento.** Cada mes repito esas mismas preguntas, comparo los resultados y las visitas que llegan desde los asistentes, y te envío un informe con lo que ha cambiado y el siguiente paso.
 
 ### Esta web aplica lo que te propongo
 
@@ -197,7 +199,7 @@ Para negocios de Sevilla y su área metropolitana que ya tienen web, o van a ten
 **Variante A (recomendada, usa solo precios publicados):**
 El trabajo de SEO para IA no tiene tarifa propia: forma parte del plan Local Pro, desde 500 €/mes + IVA, que incluye información estructurada para que buscadores y sistemas de IA entiendan el negocio y el trabajo de web que acompaña a la ficha. Se factura mes a mes y no hay cuota de puesta en marcha aparte. Cuéntame tu caso en la llamada y vemos si encaja.
 
-**Variante B (servicio propio):** `[PENDIENTE: precio y alcance reales de un plan o revisión puntual de SEO para IA; no existe precio publicado]`
+**Variante B (servicio propio):** `[PENDIENTE: precio y alcance reales de un plan o revisión puntual de SEO para IA; no existe precio publicado]` (Sustituido por D1 = A: variante descartada.)
 
 ### Preguntas frecuentes (`faqs`, 8; respuesta directa en las dos primeras frases)
 
@@ -335,7 +337,7 @@ Cuidado: `tests/seo-local-sevilla-redesign.test.js` y `tests/seo-consultor-strat
 
 - **D1 (bloqueante para T3): resuelta 2026-11-17 → variante A.** El servicio va incluido en Local Pro (500 €/mes + IVA, ya publicado). Se descarta la variante B y su `[PENDIENTE]` de precio propio.
 - **D2: resuelta 2026-11-17 → "SEO para IA", slug `/seo-para-ia/`.**
-- **D3: pendiente.** La usuaria aún no tiene método propio y pidió una recomendación rápida y automatizable con Claude. Propuesta en revisión: batería fija de 10-15 preguntas por cliente lanzada a ChatGPT, Perplexity, Gemini y Claude vía DataForSEO (endpoints de AI optimization), 2-3 repeticiones por pregunta, registro de mención, competidores, fuentes citadas y datos erróneos; revisión técnica (rastreadores de IA permitidos, llms.txt, datos estructurados, NAP); seguimiento mensual repitiendo la misma batería con tarea programada más visitas de asistentes en GA4, e informe escrito mensual. Sin confirmación, los pasos 1 y 4 del proceso se publican con redacción genérica.
+- **D3: resuelta 2026-11-17 → método mixto automatizado.** Revisión inicial: auditoría técnica con `geo audit` de geo-optimizer-skill (gratis, sin clave; probado sobre la home 2026-11-17: 77/100) más una batería fija de 10-15 preguntas por cliente lanzada a ChatGPT, Perplexity, Gemini y Claude vía DataForSEO (endpoints de AI optimization), 3-5 repeticiones por pregunta, registrando mención, competidores, fuentes citadas y datos erróneos. Seguimiento: mensual, con tarea programada que repite ambas, compara con el mes anterior, añade las visitas desde asistentes en GA4 y genera un informe escrito con la marca de la usuaria. Los pasos 1 y 4 del proceso quedan redactados con este método; el copy nunca promete posiciones ni que un asistente recomiende el negocio.
 - **D4: resuelta 2026-11-17 → B, hero editorial (`SeoLocalHero`).** Regla general para todas las páginas, recogida en `DESIGN.md` ("The Editorial Hero Rule"). T9 deja de ser opcional y reutiliza `SeoLocalHero` en lugar de crear `SeoParaIaHero.astro`.
 
 ## Dependencias y riesgos
@@ -362,14 +364,14 @@ Convenciones: ruta = inline (1-3 ficheros, entendido) o delegada (2+ ficheros no
 
 - [ ] **T0 — Resolver D1-D4 con la usuaria.** Ficheros: este documento (actualizar "Decisiones"). Ruta: inline. Aceptación: las 4 decisiones registradas; los `[PENDIENTE]` de proceso resueltos o aceptados como redacción genérica; variante de precio elegida. Bloquea T3.
 - [ ] **T1 — Test de contrato (RED).** Ficheros: `tests/seo-para-ia.test.js`. Ruta: inline (un fichero). Test primero (es el test): (a) `seoParaIa` existe con `slug "/seo-para-ia/"`; title ≤ 60 y meta 140-160; ninguno ni `hero.h1` ni `sectionTitles` contienen `/consultor/i` ni `/seo local sevilla/i`; (b) 6-8 FAQs, cada respuesta con una primera frase ≤ 220 car.; (c) regex anti-promesa `/garantiz|primeras posiciones|te sale en|te recomendar[aá]|asegur/i` sin coincidencias; (d) lista blanca de cifras: solo `500 €`, `300 €`, `10 años`, `2026` y similares; (e) existe `src/pages/seo-para-ia.astro` con `ServiceLayout`; (f) enlace a la home con anchor exacto una sola vez. Aceptación: test ejecutado y fallando por las razones correctas (RED observado: 100% de los casos de datos/página fallan al no existir `seoParaIa`).
-- [ ] **T2 — `serviceSchema` con precio opcional.** Ficheros: `src/lib/schema.ts`, `src/data/types.ts` (si `pricing.from` pasa a opcional), caso nuevo en `tests/seo-para-ia.test.js` o `tests/seo-consultor-strategy.test.js`. Ruta: inline (cambio pequeño y entendido). Test primero: `serviceSchema` sin `price` no emite `offers`; con `price` se comporta como hoy (las demás páginas no cambian; snapshot de `diseno-web-sevilla`). Aceptación: RED→GREEN, `astro check` sin errores de tipos en todas las páginas de servicio. Omitir si D1 = variante A con `from: "500 €"` (en ese caso el `Offer` actual sale con el precio de Local Pro; valorar si es correcto semánticamente antes de omitir).
+- [ ] **T2 — `serviceSchema` con precio opcional.** Ficheros: `src/lib/schema.ts`, `src/data/types.ts` (si `pricing.from` pasa a opcional), caso nuevo en `tests/seo-para-ia.test.js` o `tests/seo-consultor-strategy.test.js`. Ruta: inline (cambio pequeño y entendido). Test primero: `serviceSchema` sin `price` no emite `offers`; con `price` se comporta como hoy (las demás páginas no cambian; snapshot de `diseno-web-sevilla`). Aceptación: RED→GREEN, `astro check` sin errores de tipos en todas las páginas de servicio. Omitir si D1 = variante A con `from: "500 €"` (en ese caso el `Offer` actual sale con el precio de Local Pro; valorar si es correcto semánticamente antes de omitir). (Sustituido por NRD-24: la cláusula "omitir si" ya no aplica; D1 = A no emite `Offer`, así que el precio opcional se implementa en NRD-249.)
 - [ ] **T3 — Entrada `seoParaIa` y página.** Ficheros: `src/data/services.ts`, `src/pages/seo-para-ia.astro`. Ruta: **delegada** (copy extenso + 2 ficheros; el escritor recibe este documento como especificación del copy). Test primero: los casos de T1 (a), (b), (c), (d), (e) pasan de RED a GREEN. Aceptación: `node --test tests/*.test.js` verde; `npm run build` exit 0; copy literal del documento con los `[PENDIENTE]` resueltos según T0 (ninguno `[PENDIENTE` ni `[VERIFICAR` queda en `src/`); verificación de la frase de "Esta web aplica..." contra la config real de rastreadores.
 - [ ] **T4 — Enlazado interno e intent matrix.** Ficheros: `src/data/internal-links.ts`, `src/data/seo-intents.ts`, caso de test nuevo. Ruta: delegada (2 ficheros + leer tests de seo-local). Test primero: cada fila de la tabla de enlazado existe con su anchor exacto; la home y las demás páginas no enlazan "consultor SEO en Sevilla" a otra URL que `/`; la fila de `seo-intents.ts` existe y la de seo-local no cambia. Aceptación: suite completa verde (incluidos `seo-consultor-strategy` y `seo-local-sevilla-redesign`); `git diff` no toca `seoLocal.seo` ni títulos/H1/H2 de home y seo-local.
 - [ ] **T5 — `llms.txt`.** Ficheros: `public/llms.txt`. Ruta: inline. Test primero: caso que lee el fichero y exige la URL y la línea de honestidad (sin "garantiza"/"posiciona primero"). Aceptación: RED→GREEN; formato idéntico a las demás entradas.
 - [ ] **T6 — Check sobre `dist/`.** Ficheros: `scripts/check-seo-para-ia.mjs`, `package.json` (scripts `check:seo-para-ia` y `check:seo-para-ia:dist`). Ruta: inline. Test primero: ejecutar el script antes de que exista la página (falla). Comprueba en `dist/seo-para-ia/index.html`: un solo `<h1>` con "SEO para IA"; canonical correcto; JSON-LD con `Service`, `FAQPage` y `BreadcrumbList`; ausencia de `/consultor/i` fuera del único anchor a la home; ausencia de promesas; `sitemap-0.xml` contiene la URL. Aceptación: `npm run check:seo-para-ia` exit 0.
 - [ ] **T7 — Verificación integral.** Ficheros: ninguno. Ruta: **delegada** (ejecución de tests/build/visual). Aceptación: `node --test tests/*.test.js` y `npm run build` verdes; revisión visual desktop y móvil (hero, secciones, FAQ, CTA, sin scroll horizontal); `git diff --check` limpio; confirmar que ningún título/H1/H2 de home ni seo-local cambió.
 - [ ] **T8 — Post-publicación (medición).** Ficheros: este documento (registro). Ruta: inline. Aceptación: URL enviada a indexar en Search Console; línea base registrada (impresiones/clics = 0 para las queries objetivo); fechas de seguimiento a 4, 8 y 12 semanas anotadas; snapshot de SERP de "seo para ia" y "geo seo" con DataForSEO (≈0,03 USD por consulta, dentro del límite de 0,15 USD; solo con aprobación).
-- [ ] **T9 (opcional) — Hero editorial.** Ficheros: `src/components/seo-ia/SeoParaIaHero.astro` (nuevo) y `src/pages/seo-para-ia.astro`. Ruta: delegada. Solo si D4 = B. Test primero: H1 pequeño con la keyword + `<p class="display">` con el titular; un único `<h1>`. Aceptación: build y tests verdes, sin cambios en el copy.
+- [ ] **T9 (opcional) — Hero editorial.** Ficheros: `src/components/seo-ia/SeoParaIaHero.astro` (nuevo) y `src/pages/seo-para-ia.astro`. Ruta: delegada. Solo si D4 = B. Test primero: H1 pequeño con la keyword + `<p class="display">` con el titular; un único `<h1>`. Aceptación: build y tests verdes, sin cambios en el copy. (Sustituido por D4 = B y NRD-24: no se crea `SeoParaIaHero.astro`; se usa `SeoLocalHero` con el dibujo `AiAnswerMock`, NRD-250 y NRD-251.)
 
 ## Métricas de éxito
 
