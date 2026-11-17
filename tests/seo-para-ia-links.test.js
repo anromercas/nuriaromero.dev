@@ -1,12 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 
 const { internalLinksBySource } = await import(
   new URL("../src/data/internal-links.ts", import.meta.url)
 );
 const { intentMatrix, keywordOwners, serviceRoutes, reciprocalLinks } =
   await import(new URL("../src/data/seo-intents.ts", import.meta.url));
-const { seoParaIa } = await import(
+const { seoParaIa, seoLocal, tierFrom } = await import(
   new URL("../src/data/services.ts", import.meta.url)
 );
 
@@ -181,4 +182,25 @@ test("both reciprocal pairs exist", () => {
       `missing pair ${pair.source} <-> ${pair.target}`,
     );
   }
+});
+
+test("llms.txt lists /seo-para-ia/ once under Servicios, honest and with the published price", async () => {
+  const txt = await readFile(
+    new URL("../public/llms.txt", import.meta.url),
+    "utf8",
+  );
+  const section = txt.split(/^## /m).find((s) => s.startsWith("Servicios"));
+  assert.ok(section, "Servicios section exists");
+  const lines = section
+    .split("\n")
+    .filter((l) => l.includes("https://nuriaromero.dev/seo-para-ia/"));
+  assert.equal(lines.length, 1);
+  const [line] = lines;
+  assert.ok(line.startsWith(`- [${seoParaIa.breadcrumbName}](`), line);
+  assert.ok(line.startsWith("- [SEO para IA]("));
+  assert.ok(line.includes("Local Pro"));
+  assert.ok(line.includes(tierFrom(seoLocal, "Local Pro")));
+  assert.ok(line.includes("Sin garantía"));
+  assert.doesNotMatch(line, /garantiza/i);
+  assert.doesNotMatch(line, /posiciona primero/i);
 });
