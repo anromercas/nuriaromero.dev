@@ -1,6 +1,8 @@
 import assert from "node:assert/strict"
 import { readFile } from "node:fs/promises"
 
+const { SITE } = await import(new URL("../src/data/site.ts", import.meta.url))
+
 const html = await readFile("dist/seo-local-sevilla/index.html", "utf8")
 const text = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ")
 const legacyOrUnsafe = /299\s*€|199\s*€|349\s*€|proyecto inicial|mínimo de tres meses|pacientes|tratamientos/i
@@ -12,7 +14,11 @@ assert.match(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "", /posicionami
 const pageTitle = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? ""
 assert.match(pageTitle, /SEO local Sevilla/)
 assert.match(pageTitle, /posicionamiento web/i)
-assert.ok(pageTitle.length <= 65, `title is ${pageTitle.length} chars`)
+// ADR 0016: the brand suffix is mandatory and the 65-char limit applies to the page-owned part.
+const brandSuffix = ` | ${SITE.name}`
+assert.ok(pageTitle.endsWith(brandSuffix), `title must end with "${brandSuffix}"`)
+const ownTitle = pageTitle.slice(0, -brandSuffix.length)
+assert.ok(ownTitle.length <= 65, `page-owned title is ${ownTitle.length} chars`)
 assert.match(text, /300 €\/mes \+ IVA/)
 assert.match(text, /500 €\/mes \+ IVA/)
 assert.match(text, /Recomendado/)
