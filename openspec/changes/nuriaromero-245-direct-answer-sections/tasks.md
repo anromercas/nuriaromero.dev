@@ -4,7 +4,7 @@ Order: 1.1 blocks 1.2-1.5 (NRD-271 blocks NRD-272, NRD-273, NRD-274, NRD-275); 1
 
 ## 1. Direct-answer contract
 
-- [ ] 1.1 [NRD-271 app] Add `answer?` to `src/components/seo-local/SectionHeading.astro` and forward it from `ReviewBento`, `SeoLocalProcess`, `SeoLocalAgencia`, `SeoLocalPlans`, `SeoLocalFaq` (lede optional), style `.tpl-answer` in `src/styles/template.css` per the UI spec, add `directAnswer` to `scripts/lib/page-contract.mjs`, the `keySections` field to `scripts/lib/template-pages.mjs` and its assertions to `scripts/check-seo-17.mjs`; tests: `directAnswer` fixtures in `tests/page-contract.test.js` and component source tests in `tests/template-components.test.js` first (RED), then full suite, `pnpm build` and `pnpm check:seo:dist` green with no visible page change
+- [x] 1.1 [NRD-271 app] Add `answer?` to `src/components/seo-local/SectionHeading.astro` and forward it from `ReviewBento`, `SeoLocalProcess`, `SeoLocalAgencia`, `SeoLocalPlans`, `SeoLocalFaq` (lede optional), style `.tpl-answer` in `src/styles/template.css` per the UI spec, add `directAnswer` to `scripts/lib/page-contract.mjs`, the `keySections` field to `scripts/lib/template-pages.mjs` and its assertions to `scripts/check-seo-17.mjs`; tests: `directAnswer` fixtures in `tests/page-contract.test.js` and component source tests in `tests/template-components.test.js` first (RED), then full suite, `pnpm build` and `pnpm check:seo:dist` green with no visible page change
 
 ## 2. Answers per page
 
