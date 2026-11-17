@@ -401,7 +401,7 @@ test("the reference page passes plans, FAQ and related content", () => {
   assert.match(src, /note=\{seoLocal\.pricing\.note\}/);
   assert.match(
     src,
-    /<Fragment slot="lede">[\s\S]*?tierFrom\(seoLocal, "Local"\)[\s\S]*?tierFrom\(seoLocal, "Local Pro"\)/,
+    /answer=\{`[^`]*\$\{tierFrom\(seoLocal, "Local"\)\}[^`]*\$\{tierFrom\(seoLocal, "Local Pro"\)\}/,
   );
   assert.doesNotMatch(src, /(?:300|500)\s*€/);
   assert.match(
@@ -411,10 +411,8 @@ test("the reference page passes plans, FAQ and related content", () => {
   assert.match(src, /faqs=\{seoLocal\.faqs\}/);
   assert.match(src, /accent: "antes de empezar"/);
   assert.match(src, /accent: "un alcance claro"/);
-  assert.match(
-    src,
-    /lede="Si tu duda no está aquí, la resolvemos en la llamada\."/,
-  );
+  assert.match(src, /<SeoLocalFaq[\s\S]*?answer="[^"]+"/);
+  assert.doesNotMatch(src, /lede="Si tu duda no está aquí/);
   assert.match(
     src,
     /links=\{internalLinksBySource\[seoLocal\.slug\] \?\? \[\]\}/,
@@ -632,4 +630,20 @@ test(".tpl-answer is plain lead copy in the shared stylesheet", () => {
   assert.match(body, /line-height:\s*1\.6/);
   assert.match(body, /text-wrap:\s*pretty/);
   assert.doesNotMatch(body, /italic|Instrument|sky-accent|background|border/);
+});
+
+test("Price answer reads the site data", () => {
+  // No page passes an answer literal with a figure followed by the euro sign.
+  for (const file of readdirSync(new URL("src/pages/", root))) {
+    if (!file.endsWith(".astro")) continue;
+    const src = read(`src/pages/${file}`);
+    for (const m of src.matchAll(/\banswer=(?:"([^"]*)"|\{`([^`]*)`\})/g)) {
+      const text = m[1] ?? m[2];
+      assert.doesNotMatch(
+        text,
+        /\d\s*€/,
+        `${file}: answer holds a price literal: ${text}`,
+      );
+    }
+  }
 });

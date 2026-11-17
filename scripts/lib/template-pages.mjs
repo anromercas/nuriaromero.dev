@@ -10,8 +10,28 @@
 //            data-word-budget="exclude" (the live Google review quote of RealProof):
 //            owner-controlled text only (ADR 0015)
 export const templatePages = [
-  { route: "/seo-local-sevilla/", service: true },
-  { route: "/", words: [900, 1100], service: false },
+  {
+    route: "/seo-local-sevilla/",
+    service: true,
+    keySections: [
+      "revision-title",
+      "agencia-title",
+      "planes-title",
+      "proceso-title",
+      "faq-title",
+    ],
+  },
+  {
+    route: "/",
+    words: [900, 1100],
+    service: false,
+    keySections: [
+      "que-hago-title",
+      "consultor-title",
+      "proceso-title",
+      "faq-title",
+    ],
+  },
   { route: "/diseno-web-sevilla/", words: [1000, 1200], service: true },
   { route: "/contacto/", words: [150, 450], service: false },
   { route: "/tienda-online-sevilla/", words: [900, 1100], service: true },
