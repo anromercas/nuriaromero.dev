@@ -92,3 +92,53 @@ test("check-seo-16 ignores the build-derived WebPage entity", async () => {
   const check = await source("scripts/check-seo-16.mjs");
   assert.match(check, /"WebPage"/);
 });
+
+test("PageUpdated renders the build-derived label outside the word budget", async () => {
+  const component = await source("src/components/PageUpdated.astro");
+  assert.match(component, /data-word-budget="exclude"/);
+  assert.match(component, /data-page-updated/);
+  assert.match(component, /Actualizado:/);
+  assert.match(component, /formatMonthYear/);
+  assert.match(component, /import "@\/styles\/template\.css"/);
+  assert.match(component, /white-space:\s*nowrap/);
+  assert.match(component, /\{date &&/);
+});
+
+test("ServiceLayout renders the label next to the breadcrumbs in both variants", async () => {
+  const layout = await source("src/layouts/ServiceLayout.astro");
+  assert.match(layout, /getPageDateModified\(Astro\.url\.pathname\)/);
+  const metaRows = layout.match(
+    /<div class="page-meta">\s*<Breadcrumbs items=\{breadcrumbs\} \/>\s*<PageUpdated date=\{dateModified\} \/>\s*<\/div>/g,
+  );
+  assert.equal(metaRows?.length, 2);
+  assert.doesNotMatch(layout, /<SectionContainer>\s*<Breadcrumbs/);
+  assert.match(layout, /\.page-meta\s*\{[^}]*justify-content:\s*space-between/);
+  assert.match(layout, /margin-bottom:\s*1\.5rem/);
+});
+
+test("home renders the label after the NAP block only when dated", async () => {
+  const home = await source("src/pages/index.astro");
+  assert.match(home, /getPageDateModified\(Astro\.url\.pathname\)/);
+  assert.match(
+    home,
+    /<SeoLocalNap[\s\S]*?\/>\s*\{homeDateModified && \(\s*<div class="home-updated">\s*<PageUpdated date=\{homeDateModified\} \/>/,
+  );
+});
+
+test("Legal page: LegalLayout does not render PageUpdated", async () => {
+  const legal = await source("src/layouts/LegalLayout.astro");
+  assert.doesNotMatch(legal, /PageUpdated/);
+  assert.match(legal, /Última actualización: \{updated\}/);
+});
+
+test("BlogPostLayout marks both post dates for the build check", async () => {
+  const post = await source("src/layouts/BlogPostLayout.astro");
+  assert.match(
+    post,
+    /<time datetime=\{pubDate\.toISOString\(\)\} data-post-published>/,
+  );
+  assert.match(
+    post,
+    /<time datetime=\{updatedDate\.toISOString\(\)\} data-post-updated>/,
+  );
+});
