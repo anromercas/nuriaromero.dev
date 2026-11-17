@@ -590,3 +590,46 @@ test("RealProof forwards projectsVariant to Projects as variant", () => {
   assert.match(src, /<Projects[^>]*variant=\{projectsVariant\}/);
   assert.match(src, /projectsVariant\s*=\s*"legacy"/);
 });
+
+test("SectionHeading renders the direct answer only when set, after the display title", () => {
+  const src = component("SectionHeading");
+  assert.match(src, /answer\??:\s*string/);
+  assert.match(src, /answer\?\.trim\(\)/);
+  assert.match(src, /\\u00a0/);
+  const display = src.indexOf("tpl-display");
+  const answer = src.indexOf("data-direct-answer");
+  assert.ok(display >= 0 && answer > display, "answer after tpl-display");
+  assert.match(src, /<p class="tpl-answer" data-direct-answer>/);
+  assert.match(src, /hasAnswer && /);
+});
+
+test("the five key-section components declare and forward answer", () => {
+  for (const name of [
+    "ReviewBento",
+    "SeoLocalProcess",
+    "SeoLocalAgencia",
+    "SeoLocalPlans",
+    "SeoLocalFaq",
+  ]) {
+    const src = component(name);
+    assert.match(src, /\banswer\??:\s*string/, `${name} Props.answer`);
+    assert.match(src, /answer=\{answer\}/, `${name} forwards answer`);
+  }
+});
+
+test("FAQ renders the lede only when present, so an answer can replace it", () => {
+  const src = component("SeoLocalFaq");
+  assert.match(src, /\blede\?:\s*string/);
+  assert.match(src, /\{lede &&/);
+});
+
+test(".tpl-answer is plain lead copy in the shared stylesheet", () => {
+  const body = ruleBody(".tpl-answer");
+  assert.ok(body, ".tpl-answer rule exists");
+  assert.match(body, /max-width:\s*52ch/);
+  assert.match(body, /color:\s*var\(--text-body\)/);
+  assert.match(body, /font-size:\s*1\.125rem/);
+  assert.match(body, /line-height:\s*1\.6/);
+  assert.match(body, /text-wrap:\s*pretty/);
+  assert.doesNotMatch(body, /italic|Instrument|sky-accent|background|border/);
+});

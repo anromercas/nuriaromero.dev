@@ -2,6 +2,9 @@
 // story appends its entry; scripts/check-seo-17.mjs asserts the contract on
 // dist/<route>/index.html for every entry.
 //   route:   pathname with trailing slash
+//   keySections: optional heading ids of the key sections (what it is, who/which option,
+//            price, how I work, FAQ); each must open with a 15-45 word, 1-2 sentence direct
+//            answer (NRD-245)
 //   service: the page must emit a Service entity in JSON-LD
 //   words:   optional [min, max] visible word range of <main>, without elements marked
 //            data-word-budget="exclude" (the live Google review quote of RealProof):

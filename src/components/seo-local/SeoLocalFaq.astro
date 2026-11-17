@@ -8,12 +8,13 @@ interface Props {
   headingId: string
   keyword: string
   title: AccentTitle
-  lede: string
+  lede?: string
+  answer?: string
   faqs: FaqItem[]
   ctaLabel?: string
 }
 
-const { headingId, keyword, title, lede, faqs, ctaLabel = "Reservar una llamada" } = Astro.props
+const { headingId, keyword, title, lede, answer, faqs, ctaLabel = "Reservar una llamada" } = Astro.props
 
 const splitAnswer = (answer: string) => {
   const match = answer.match(/^[\s\S]*?[.!?](?=\s|$)/)
@@ -28,8 +29,8 @@ const splitAnswer = (answer: string) => {
 
 <section class="faq" aria-labelledby={headingId}>
   <div class="faq-intro">
-    <SectionHeading id={headingId} keyword={keyword} title={title} class="faq-display" />
-    <p class="lede">{lede}</p>
+    <SectionHeading id={headingId} keyword={keyword} title={title} class="faq-display" answer={answer} />
+    {lede && <p class="lede">{lede}</p>}
     <BookingButton label={ctaLabel} />
   </div>
 
@@ -76,6 +77,14 @@ const splitAnswer = (answer: string) => {
   .faq-intro :global(.faq-display) {
     max-width: 14ch;
     margin: 0 0 1rem;
+  }
+
+  .faq-intro :global(.tpl-answer) {
+    margin-bottom: 1.5rem;
+  }
+
+  .faq-intro :global(.tpl-answer:has(+ .lede)) {
+    margin-bottom: 0.75rem;
   }
 
   .faq-intro .lede {
