@@ -136,9 +136,9 @@ export const intentMatrix: SeoIntentRow[] = [
     intent: "Commercial: contract AI chatbots and assistants for a business",
     topic: "inteligencia artificial para empresas en Sevilla",
     cta: "Request an AI solution proposal",
-    titleSignal: "IA para negocios en Sevilla",
+    titleSignal: "Inteligencia artificial para empresas en Sevilla",
     descriptionSignal: "chatbots que atienden clientes",
-    h1Signal: "Inteligencia artificial aplicada a tu negocio",
+    h1Signal: "Inteligencia artificial para empresas en Sevilla",
     contentSignals: [
       "Así es el proceso de implantar IA en tu negocio",
       "Cuánto cuesta implementar IA en tu negocio",

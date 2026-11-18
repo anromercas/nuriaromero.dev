@@ -409,12 +409,12 @@ export const inteligenciaArtificial: ServicePageData = {
   slug: "/inteligencia-artificial/",
   breadcrumbName: "Inteligencia artificial",
   seo: {
-    title: "IA para negocios en Sevilla | Chatbots y asistentes con IA",
+    title: "Inteligencia artificial para empresas en Sevilla | Chatbots",
     description:
-      "Llevo la IA a tu negocio en Sevilla con más de 10 años de experiencia en desarrollo: chatbots que atienden clientes y agentes que reservan o toman pedidos.",
+      "Inteligencia artificial para empresas en Sevilla: chatbots que atienden clientes y agentes que reservan o toman pedidos. Más de 10 años de experiencia.",
   },
   hero: {
-    h1: "Inteligencia artificial aplicada a tu negocio",
+    h1: "Inteligencia artificial para empresas en Sevilla",
     title: "IA que responde con tu información",
     titleAccent: "con tu información",
     subtitle:

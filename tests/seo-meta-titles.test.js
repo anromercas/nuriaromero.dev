@@ -73,7 +73,7 @@ test("services.ts: los seo.title de los 4 servicios no cambian (blindaje del pat
     automatizaciones:
       "Automatización de procesos en Sevilla para negocios | n8n y Make",
     inteligenciaArtificial:
-      "IA para negocios en Sevilla | Chatbots y asistentes con IA",
+      "Inteligencia artificial para empresas en Sevilla | Chatbots",
   };
 
   for (const [name, expectedTitle] of Object.entries(expectedTitles)) {

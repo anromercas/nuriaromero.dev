@@ -261,10 +261,10 @@ test("intent signals stay as they were", () => {
     sectionTitles.pricing,
     "Cuánto cuesta implementar IA en tu negocio",
   );
-  assert.equal(hero.h1, "Inteligencia artificial aplicada a tu negocio");
+  assert.equal(hero.h1, "Inteligencia artificial para empresas en Sevilla");
   assert.equal(
     seo.title,
-    "IA para negocios en Sevilla | Chatbots y asistentes con IA",
+    "Inteligencia artificial para empresas en Sevilla | Chatbots",
   );
   assert.ok(seo.description.includes("chatbots que atienden clientes"));
 });

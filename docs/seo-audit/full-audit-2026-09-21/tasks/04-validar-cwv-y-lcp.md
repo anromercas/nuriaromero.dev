@@ -1,4 +1,5 @@
 # Validar CWV de campo y priorización LCP
+
 - **ID:** SEO-04
 - **Prioridad:** P1
 - **Estado:** parcial — baseline de laboratorio en producción medida el 2026-11-14 (NRD-18): las 7 URLs en foco cumplen umbrales; datos de campo (CrUX) sin obtener por cuota de PSI agotada
@@ -7,12 +8,14 @@
 - **Scope:** Medición real de LCP/INP/CLS y revisión del elemento LCP de home y páginas de servicio.
 
 ## Baseline verificada
+
 - `npm run build`: OK; 22 páginas generadas, 0 errores, 0 warnings y 1 hint preexistente.
 - Preview local: home y 10 plantillas de servicio/nicho respondieron `HTTP 200`.
 - URLs/contexto revisados: `https://nuriaromero.dev/`, `/diseno-web-sevilla/`, `/desarrollo-software-medida/`, `/automatizaciones/`, `/inteligencia-artificial/`, `/seo-local-sevilla/`, `/tienda-online-sevilla/`, `/web-para-restaurantes-sevilla/`, `/web-para-clinicas-sevilla/`, `/web-para-comercios-sevilla/` y `/web-para-abogados-gestorias-sevilla/`. El contexto de preview fue local y no representa datos de campo de usuarios reales.
 - El hero de servicios es textual. No existe evidencia suficiente para declarar un recurso `fetchpriority="high"`, `loading="eager"` o `preload` como candidato LCP.
 
 ## Métricas no disponibles y limitaciones
+
 - LCP: no disponible; no se ejecutaron Lighthouse, Playwright ni PSI porque no están instalados en el entorno.
 - INP: no disponible por la misma limitación de tooling.
 - CLS: no disponible por la misma limitación de tooling.
@@ -20,9 +23,11 @@
 - No se identificó el elemento LCP real de home ni de las plantillas mediante medición de laboratorio o de campo.
 
 ## Decisión
+
 No se cambia código en SEO-04. No se añaden `fetchpriority="high"`, `loading="eager"`, `<link rel="preload">` ni otras optimizaciones de imágenes/fuentes por intuición. El baseline local queda documentado como completado; la medición real de CWV/LCP permanece pendiente hasta disponer de PSI/CrUX/GA4 o de un entorno con Lighthouse/Playwright y una metodología reproducible.
 
 ## Criterios de aceptación
+
 - [x] Fuente, fecha, URLs y contexto quedan registrados.
 - [x] LCP y CLS medidos con Lighthouse de laboratorio y TBT como proxy de INP (2026-11-14, ver «Medición 2026-11-14»). INP de campo: pendiente (sin datos de campo; PSI devolvió 429).
 - [x] Elemento LCP real de home y de las 6 páginas de servicio identificado (ver «Medición 2026-11-14»).
@@ -30,6 +35,7 @@ No se cambia código en SEO-04. No se añaden `fetchpriority="high"`, `loading="
 - [x] No se modifica el código ni el lazy loading/dimensiones existentes.
 
 ## Reproducibilidad y checks ejecutados
+
 - Build exacto: `npm run build` (OK; 22 páginas, 0 errores, 0 warnings y 1 hint preexistente).
 - Preview exacto: `BROWSER=none netlify dev --offline --no-open --dir dist --port 8888`.
 - Host/puerto: `localhost:8888`.
@@ -41,6 +47,7 @@ No se cambia código en SEO-04. No se añaden `fetchpriority="high"`, `loading="
 - No se registran métricas LCP/INP/CLS ni se identifica el elemento LCP: quedan pendientes.
 
 ## Próximo paso bloqueado por acceso
+
 Obtener acceso o exportación autorizada de PSI/CrUX/GA4, o ejecutar medición de laboratorio móvil y desktop con tooling instalado, registrar LCP/INP/CLS y el elemento LCP por URL, y solo entonces decidir si procede una optimización puntual.
 
 ## Medición 2026-11-14 (NRD-18, baseline de producción antes de NRD-15)
@@ -61,15 +68,15 @@ Esta sección reemplaza, para las 7 URLs en foco, la «Baseline verificada» loc
 
 ### Resultados (medianas de 3 ejecuciones, móvil)
 
-| URL | Fecha | Herramienta y versión | Dispositivo / throttling | LCP | CLS | TBT | Score | Elemento LCP | Campo LCP / INP / CLS (p75) | Veredicto |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `/` | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 2,08 s | 0,000 | 2 ms | 99 | `img` de perfil del hero (`section#home-hero img`, `perfil-home.*.webp`) | sin datos de campo (PSI 429) | Cumple |
-| `/seo-local-sevilla/` | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 1,78 s | 0,000 | 72 ms | 99 | `p.hero-subtitle` (texto) | sin datos de campo (PSI 429) | Cumple |
-| `/diseno-web-sevilla/` | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 1,78 s | 0,000 | 12 ms | 100 | `h1.text-4xl` (texto) | sin datos de campo (PSI 429) | Cumple |
-| `/tienda-online-sevilla/` | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 1,78 s | 0,000 | 0 ms | 100 | `p.text-xl` (texto) | sin datos de campo (PSI 429) | Cumple |
-| `/desarrollo-software-medida/` | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 1,74 s | 0,000 | 0 ms | 100 | `p.text-xl` (texto) | sin datos de campo (PSI 429) | Cumple |
-| `/automatizaciones/` | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 0,94 s | 0,001 | 0 ms | 100 | `p.text-xl` (texto) | sin datos de campo (PSI 429) | Cumple |
-| `/inteligencia-artificial/` | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 0,93 s | 0,000 | 0 ms | 100 | `p.text-xl` (texto) | sin datos de campo (PSI 429) | Cumple |
+| URL                            | Fecha      | Herramienta y versión         | Dispositivo / throttling        | LCP    | CLS   | TBT   | Score | Elemento LCP                                                             | Campo LCP / INP / CLS (p75)  | Veredicto |
+| ------------------------------ | ---------- | ----------------------------- | ------------------------------- | ------ | ----- | ----- | ----- | ------------------------------------------------------------------------ | ---------------------------- | --------- |
+| `/`                            | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 2,08 s | 0,000 | 2 ms  | 99    | `img` de perfil del hero (`section#home-hero img`, `perfil-home.*.webp`) | sin datos de campo (PSI 429) | Cumple    |
+| `/seo-local-sevilla/`          | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 1,78 s | 0,000 | 72 ms | 99    | `p.hero-subtitle` (texto)                                                | sin datos de campo (PSI 429) | Cumple    |
+| `/diseno-web-sevilla/`         | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 1,78 s | 0,000 | 12 ms | 100   | `h1.text-4xl` (texto)                                                    | sin datos de campo (PSI 429) | Cumple    |
+| `/tienda-online-sevilla/`      | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 1,78 s | 0,000 | 0 ms  | 100   | `p.text-xl` (texto)                                                      | sin datos de campo (PSI 429) | Cumple    |
+| `/desarrollo-software-medida/` | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 1,74 s | 0,000 | 0 ms  | 100   | `p.text-xl` (texto)                                                      | sin datos de campo (PSI 429) | Cumple    |
+| `/automatizaciones/`           | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 0,94 s | 0,001 | 0 ms  | 100   | `p.text-xl` (texto)                                                      | sin datos de campo (PSI 429) | Cumple    |
+| `/inteligencia-artificial/`    | 2026-11-14 | Lighthouse 12.8.2, Chrome 157 | móvil, simulado 150 ms / CPU x4 | 0,93 s | 0,000 | 0 ms  | 100   | `p.text-xl` (texto)                                                      | sin datos de campo (PSI 429) | Cumple    |
 
 Ejecuciones individuales (LCP en s, 3 runs): `/` 2,33 / 2,08 / 2,08; `/seo-local-sevilla/` 1,79 / 1,78 / 1,78; `/diseno-web-sevilla/` 1,68 / 1,79 / 1,78; `/tienda-online-sevilla/` 1,78 / 1,06 / 1,78; `/desarrollo-software-medida/` 1,68 / 1,79 / 1,74; `/automatizaciones/` 0,93 / 0,94 / 1,71; `/inteligencia-artificial/` 0,93 / 0,93 / 1,68. El peor run individual (2,33 s en la home) sigue dentro del umbral.
 
@@ -84,6 +91,7 @@ Ejecuciones individuales (LCP en s, 3 runs): `/` 2,33 / 2,08 / 2,08; `/seo-local
 ## Seguimientos (NRD-37)
 
 Todas las URLs en foco están dentro de los umbrales de laboratorio (LCP <= 2,5 s, CLS <= 0,1, TBT <= 200 ms) el 2026-11-14. No se requiere ningún issue de seguimiento ni ninguna optimización. Salvedad: INP de campo y p75 de LCP/CLS no evaluables hoy (sin datos de campo por cuota de PSI); conviene repetir la consulta de PSI/CrUX más adelante y compararla con la medición posterior a NRD-15.
+
 ## Medición posterior a NRD-15 (NRD-50) 2026-11-15
 
 Solo medición: no se ha modificado código ni se ha aplicado ninguna optimización, y no se ha lanzado ningún despliegue. TDD no aplica (medición, sin cambio de comportamiento).
@@ -143,3 +151,46 @@ Regla: regresión si CLS mediano > 0,1, o si LCP mediano menos baseline supera e
 - `/seo-local-sevilla/`: CLS 0,000 (<= 0,1); Δ LCP -0,297 s (no supera 0,01 s; el LCP mejora). Sin regresión. No procede la confirmación con 6 ejecuciones porque ninguna regla se activa.
 
 **No se requiere seguimiento.** Ninguna de las dos URLs supera CLS 0,1 ni empeora el LCP respecto al baseline de NRD-18; el CTA de reserva de la cabecera no introduce desplazamientos de diseño medibles en producción. Salvedad: el elemento LCP de `/seo-local-sevilla/` cambió de `p.hero-subtitle` a `p.display` por los cambios de texto de NRD-52, por lo que la comparación de LCP es entre elementos distintos; sigue siendo texto y mejora. INP y datos de campo siguen sin evaluarse.
+
+## Medición 2026-11-18 (NRD-126)
+
+Baseline de `/inteligencia-artificial/` antes de editar título, H1 y descripción (tarea NRD-286). Solo medición: sin cambio de código. TDD no aplica. La medición posterior a la edición (tarea NRD-287) se añade al final de esta sección.
+
+### Condiciones
+
+- **Fecha:** 2026-11-18.
+- **Herramienta:** Lighthouse CLI 12.8.2 (`npx -y lighthouse@12.8.2 <url> --form-factor=mobile --output=json --chrome-flags="--headless=new" --quiet`), el mismo comando que NRD-18; no se añade a `package.json`.
+- **Navegador:** Google Chrome 157.0.8103.79 (headless nuevo), Node v24.22.0, macOS (Darwin 25.5.0), misma máquina.
+- **Dispositivo / throttling:** móvil (Moto G Power por defecto), throttling simulado por defecto (RTT 150 ms, CPU x4, 1,6 Mbps).
+- **Muestra:** 3 ejecuciones por URL, secuenciales; se registra la mediana.
+- **Producción:** `https://nuriaromero.dev/inteligencia-artificial/` (referencia). El H1 en producción es el actual («Inteligencia artificial aplicada a tu negocio»).
+- **Preview:** `pnpm build && pnpm preview` de la rama `feat/NRD-126-ia-intent-serp` sin editar (HEAD `5fd7a0a`), `http://localhost:4398/inteligencia-artificial/`. El par antes/después en preview decide la regresión; producción es la referencia.
+- **Datos de campo:** no se consultan (fuera de alcance).
+- **Informes JSON:** fuera del repo (no se commitean).
+
+### Resultados antes de la edición (medianas de 3 ejecuciones, móvil)
+
+| URL                         | Entorno                   | Fecha      | LCP     | CLS    | TBT   | Score | Elemento LCP              |
+| --------------------------- | ------------------------- | ---------- | ------- | ------ | ----- | ----- | ------------------------- |
+| `/inteligencia-artificial/` | producción                | 2026-11-18 | 1,608 s | 0,000  | 23 ms | 100   | `p.hero-subtitle` (texto) |
+| `/inteligencia-artificial/` | preview (rama sin editar) | 2026-11-18 | 2,104 s | 0,2073 | 0 ms  | 88    | `p.hero-subtitle` (texto) |
+
+Ejecuciones individuales (1 / 2 / 3): producción LCP 1,615 / 1,483 / 1,608 s, CLS 0 / 0 / 0, TBT 24 / 21 / 23 ms, score 99 / 100 / 100; preview LCP 2,106 / 2,104 / 2,103 s, CLS 0,2074 / 0,2073 / 0,2073, TBT 0 / 0 / 0 ms, score 88 / 88 / 88.
+
+### Observaciones
+
+- El elemento LCP es texto (`p.hero-subtitle`) en ambos entornos, como en NRD-18 (`p.text-xl`); no hay recurso de imagen que priorizar.
+- **El preview ya supera CLS 0,1 antes de editar** (0,207 estable en las 3 ejecuciones; el informe de Lighthouse lista el desplazamiento sin nodo asociado), mientras que producción da 0,000. Diferencias conocidas entre ambos: `pnpm preview` sirve `dist/` sin `public/_headers` ni la compresión/caché de Netlify, y la medición de producción puede reflejar un despliegue anterior al HEAD actual. No se investiga la causa en esta historia (alcance: copy). Es el valor de partida del par antes/después en preview; la regla de regresión de la tarea NRD-287 compara el preview editado con este 0,2073, no con producción.
+
+### Resultados después de la edición (NRD-287, preview, medianas de 3 ejecuciones, móvil)
+
+Misma máquina, mismo Chrome 157.0.8103.79, mismo comando y condiciones que el antes. `pnpm build && pnpm preview` de la rama con el copy nuevo (title, H1 y description de `/inteligencia-artificial/`), 2026-11-18.
+
+| URL                         | Entorno                   | Momento | LCP     | CLS    | TBT  | Score | Elemento LCP              |
+| --------------------------- | ------------------------- | ------- | ------- | ------ | ---- | ----- | ------------------------- |
+| `/inteligencia-artificial/` | preview (rama sin editar) | antes   | 2,104 s | 0,2073 | 0 ms | 88    | `p.hero-subtitle` (texto) |
+| `/inteligencia-artificial/` | preview (copy nuevo)      | después | 2,103 s | 0,1985 | 0 ms | 89    | `p.hero-subtitle` (texto) |
+
+Ejecuciones individuales después (1 / 2 / 3): LCP 2,103 / 2,103 / 1,953 s, CLS 0,1987 / 0,1985 / 0,1985, TBT 0 / 0 / 0 ms, score 89 / 89 / 89.
+
+Veredicto: sin regresión. Δ LCP -0,001 s, Δ CLS -0,0088; el elemento LCP sigue siendo el mismo texto. El CLS del preview (~0,2) ya estaba por encima de 0,1 antes de editar y no cambia con el copy; no se investiga aquí (el desplazamiento no tiene nodo asociado y producción mide 0,000), queda como observación para el seguimiento de CWV si se reproduce en producción tras la promoción.
