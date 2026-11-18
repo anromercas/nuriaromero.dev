@@ -49,6 +49,21 @@ export const SITE = {
   logo: "/logo.jpg",
 } as const
 
+export const PROFILE_HOSTS = { linkedin: "linkedin.com", github: "github.com" } as const
+export type ProfileNetwork = keyof typeof PROFILE_HOSTS
+
+/** First URL of `list` whose hostname (without "www.") is the network's host; throws if none. */
+export function findProfileUrl(list: readonly string[], network: ProfileNetwork): string {
+  const host = PROFILE_HOSTS[network]
+  const found = list.find((url) => new URL(url).hostname.replace(/^www\./, "") === host)
+  if (!found) throw new Error(`No ${network} profile found in the profile list`)
+  return found
+}
+
+export function profileUrl(network: ProfileNetwork): string {
+  return findProfileUrl(SITE.sameAs, network)
+}
+
 export const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.whatsappMessage)}`
 
 export const bookingUrl =

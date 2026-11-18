@@ -1,5 +1,5 @@
 ---
-import { SITE } from "@/data/site";
+import { SITE, profileUrl } from "@/data/site";
 import { serviceMenuLinks, sectorLinks } from "@/data/navigation";
 import { localTrust } from "@/data/local-trust";
 
@@ -57,7 +57,7 @@ const currentYear = new Date().getFullYear();
         </p>
         <p>
           <a
-            href={SITE.sameAs[0]}
+            href={profileUrl("linkedin")}
             target="_blank"
             rel="noopener noreferrer"
             class="hover:text-blue-500 hover:underline"
@@ -66,7 +66,7 @@ const currentYear = new Date().getFullYear();
           </a>
           ·
           <a
-            href={SITE.sameAs[1]}
+            href={profileUrl("github")}
             target="_blank"
             rel="noopener noreferrer"
             class="hover:text-blue-500 hover:underline"

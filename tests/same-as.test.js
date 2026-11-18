@@ -1,0 +1,56 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+
+const footer = readFileSync(
+  new URL("../src/components/Footer.astro", import.meta.url),
+  "utf8",
+);
+const contact = readFileSync(
+  new URL("../src/pages/contacto.astro", import.meta.url),
+  "utf8",
+);
+
+const normalize = (url) =>
+  url
+    .toLowerCase()
+    .replace(/^(https:\/\/)www\./, "$1")
+    .replace(/\/$/, "");
+
+// --- Task 1.1: profile links resolved by network (NRD-294) ------------------
+
+test("profileUrl resolves LinkedIn and GitHub by network", async () => {
+  const { profileUrl } = await import("../src/data/site.ts");
+  assert.equal(
+    profileUrl("linkedin"),
+    "https://linkedin.com/in/nuria-romero-castillo",
+  );
+  assert.equal(profileUrl("github"), "https://github.com/anromercas");
+});
+
+test("findProfileUrl throws when the network has no profile", async () => {
+  const { findProfileUrl } = await import("../src/data/site.ts");
+  assert.throws(() =>
+    findProfileUrl(["https://github.com/anromercas"], "linkedin"),
+  );
+  assert.equal(
+    findProfileUrl(["https://www.linkedin.com/in/x"], "linkedin"),
+    "https://www.linkedin.com/in/x",
+  );
+});
+
+test("footer and contact page resolve profiles by network, not by index", () => {
+  assert.match(footer, /href=\{profileUrl\("linkedin"\)\}[\s\S]*?LinkedIn/);
+  assert.match(footer, /href=\{profileUrl\("github"\)\}[\s\S]*?GitHub/);
+  assert.doesNotMatch(footer, /sameAs\[/);
+  assert.match(contact, /href=\{profileUrl\("linkedin"\)\}/);
+  assert.doesNotMatch(contact, /sameAs\[/);
+});
+
+test("every sameAs entry is a valid, unique https URL", async () => {
+  const { SITE } = await import("../src/data/site.ts");
+  for (const url of SITE.sameAs) {
+    assert.equal(new URL(url).protocol, "https:", url);
+  }
+  assert.equal(new Set(SITE.sameAs.map(normalize)).size, SITE.sameAs.length);
+});
