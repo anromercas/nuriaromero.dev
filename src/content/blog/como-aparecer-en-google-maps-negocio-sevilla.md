@@ -1,7 +1,8 @@
 ---
 title: "Cómo aparecer en Google Maps si tienes un negocio en Sevilla (guía práctica)"
-description: "Guía práctica para gestionar tu Perfil de Empresa en Google: completar la ficha, responder reseñas y mejorar la información local de tu negocio en Sevilla."
+description: "Pasos para aparecer en Google Maps con tu negocio en Sevilla: crea y verifica tu Perfil de Empresa, complétalo, consigue reseñas y conéctalo con tu web."
 pubDate: 2026-07-01
+updatedDate: 2026-11-18
 tags: ["seo local", "google maps", "sevilla"]
 ---
 
@@ -9,13 +10,17 @@ Cuando alguien busca "cerrajero cerca de mí" o "cafetería en Nervión", Google
 
 ## Respuesta corta
 
-Para aparecer en Google Maps necesitas crear o reclamar tu ficha de Google Business Profile, completarla al 100 % con información real y coherente con tu web, y mantenerla activa con reseñas y novedades. Ninguna de estas acciones garantiza una posición concreta, pero sí mejora la información disponible sobre tu negocio.
+Para aparecer en Google Maps, crea o reclama tu ficha en Google Business Profile, verifícala y complétala con datos reales y coherentes con tu web. Ninguna acción garantiza una posición, pero una ficha completa y activa da mejor información a Google.
 
 ## ¿Qué es Google Business Profile y por qué es gratis?
 
-Google Business Profile (antes Google My Business) es la ficha de tu negocio en Google: la tarjeta con fotos, horario, reseñas y teléfono que puede aparecer en Maps y en las búsquedas. Mantenerla actualizada ayuda a que los clientes encuentren información práctica del negocio.
+Google Business Profile (Perfil de Empresa en español; antes, Google My Business) es la ficha gratuita de tu negocio: la tarjeta con fotos, horario, reseñas y teléfono que puede salir en Maps y en la Búsqueda. Crearla y mantenerla es gratis.
+
+Mantenerla actualizada ayuda a que los clientes encuentren información práctica del negocio.
 
 ## ¿Cómo creo o reclamo mi ficha de Google Business Profile?
+
+Busca tu negocio en Google Business Profile con tu cuenta de Google: si ya tiene ficha, reclámala; si no, créala. Después verifícala con uno de los métodos que Google te ofrezca.
 
 1. Entra en [google.com/business](https://www.google.com/business/) con una cuenta de Google.
 2. Busca tu negocio: puede que Google ya haya creado una ficha automática. Si existe, reclámala; si no, créala.
@@ -43,6 +48,8 @@ Las reseñas pueden ayudar a que el negocio destaque y aportan información a po
 
 ## ¿Cómo conecto la ficha con mi página web?
 
+Usa en la web exactamente el mismo nombre, dirección y teléfono que en la ficha, enlaza cada una desde la otra y describe el negocio con datos estructurados.
+
 La ficha y la web se refuerzan mutuamente. Para que Google confíe:
 
 - El **nombre, dirección y teléfono** deben ser idénticos en ficha y web (lo que en SEO llamamos NAP)
@@ -53,12 +60,22 @@ Este último punto es donde una web bien hecha marca la diferencia: [así las co
 
 ## ¿Cómo mantengo la ficha actualizada?
 
-Mantén la información de la ficha al día:
+Revisa la ficha cada vez que cambie algo del negocio, como el horario de festivos, las fotos o los servicios, y responde a las preguntas y reseñas que vayan llegando.
+
+Una rutina sencilla:
 
 - Publica novedades u ofertas cuando tengas información útil que compartir
 - Actualiza el horario en festivos y fechas especiales, como Semana Santa o Feria
 - Añade fotos nuevas periódicamente
 - Responde las preguntas que deja la gente
+
+## ¿Por qué no aparece mi negocio en Google Maps?
+
+Lo más habitual es que la ficha no esté verificada, que esté suspendida por incumplir las directrices o que, para esa búsqueda, Google vea otras fichas más relevantes, más cercanas o más conocidas.
+
+- **Ficha sin verificar**: puede no mostrarse en Maps ni en la Búsqueda hasta que la verifiques ([cómo verificar la ficha](https://support.google.com/business/answer/7107242?hl=es)).
+- **Ficha suspendida**: revisa que el nombre, la dirección y la categoría cumplan las [directrices de Google](https://support.google.com/business/answer/3038177?hl=es).
+- **Otras fichas más relevantes**: Google ordena los resultados locales por relevancia, distancia y prominencia ([cómo funciona el posicionamiento local](https://support.google.com/business/answer/7091?hl=es)).
 
 ## ¿Cuánto tarda en notarse?
 
@@ -66,4 +83,4 @@ No hay un plazo fiable para notar cambios en visibilidad: depende de la búsqued
 
 ## ¿Prefieres que te lo deje montado?
 
-Puedo ayudarte a completar la ficha, conectarla con tu web y preparar un enlace para solicitar reseñas. [Cuéntame tu caso](/contacto/) y revisamos qué necesita tu negocio.
+Puedo ayudarte a completar la ficha, conectarla con tu web y preparar un enlace para pedir reseñas, dentro de mi [servicio de SEO local y GEO](/seo-local-sevilla/). [Cuéntame tu caso](/contacto/) y revisamos qué necesita tu negocio.

@@ -175,4 +175,13 @@ El elemento LCP es el primer párrafo del cuerpo (`p` de `div.post-prose`, el p�
 
 ### Después de la edición
 
-Pendiente (subtarea 1.2, `pnpm preview` tras el commit de contenido).
+Medición de la subtarea 1.2 (NRD-127), 2026-11-18, `pnpm build && pnpm preview` con el post editado (nueva sección, párrafos de entrada, enlace al hub). Mismas condiciones y mismo comando; mediana de 3 ejecuciones, móvil.
+
+| URL                          | LCP     | CLS   | TBT  | Score | Elemento LCP                                     |
+| ---------------------------- | ------- | ----- | ---- | ----- | ------------------------------------------------ |
+| `pnpm preview` (rama, antes)  | 1,953 s | 0,021 | 0 ms | 99    | `section.section > article > div.post-prose > p` |
+| `pnpm preview` (rama, después) | 1,952 s | 0,021 | 0 ms | 99    | `section.section > article > div.post-prose > p` |
+
+Ejecuciones individuales después (1 / 2 / 3): LCP 1,804 / 1,952 / 1,952 s; CLS 0,0213 en las tres; TBT 0 ms en las tres; score 99 en las tres.
+
+Veredicto: sin cambio medible. El elemento LCP sigue siendo el primer párrafo del cuerpo (texto) y el CLS no se mueve (0,021, por debajo de 0,1). La producción no se vuelve a medir hasta que la rama se promocione.
