@@ -107,7 +107,7 @@ test("contact-form.js shows the invite only on success and hides it elsewhere", 
 
   const submit = src.slice(src.indexOf("form.addEventListener('submit'"));
   const validation = submit.slice(
-    submit.indexOf("!form.checkValidity()"),
+    submit.indexOf("if (errors.length)"),
     submit.indexOf("submitBtn.disabled = true"),
   );
   assert.match(validation, /setReviewInvite\(false\)/);

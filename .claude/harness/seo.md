@@ -26,3 +26,7 @@ Win local organic visibility in Seville (Google, Google Maps and AI answers) for
 - No promises of concrete rankings in proposed copy.
 - Compare with the previous report: say what changed (new competitors, moved positions, new opportunities) instead of repeating it.
 - Respect `seo.dataforseo.maxCallsPerRun`: it runs daily, so plan calls carefully and report the calls used.
+
+## Pending checks
+
+- Check whether ChatGPT and Perplexity cite nuriaromero.dev (or the Sortlist profile `https://www.sortlist.es/agency/nuria-romero`) when answering `aplicaciones web a medida sevilla` and `desarrollo de software a medida sevilla`. Baseline 2026-11-15: not cited (NRD-124). The Sortlist profile was confirmed public in a real browser on 2026-11-18 (NRD-160 QA). Origin: NRD-160 and the Sortlist citation of 2026-11-18. Report the result once, without promising any, and remove this entry.

@@ -100,13 +100,14 @@ test("exactly one H2 works agencia seo sevilla and it lives in SeoLocalAgencia.a
   assert.equal(matching[0].file, "SeoLocalAgencia.astro")
 })
 
-test("the price lede is composed from tiers, with no price literal in the component", async () => {
+test("the price answer is composed from tiers, with no price literal in the component", async () => {
   const [plans, route] = await Promise.all([
     source("src/components/seo-local/SeoLocalPlans.astro"),
     source("src/pages/seo-local-sevilla.astro"),
   ])
 
-  assert.match(route, /<Fragment slot="lede">/)
+  assert.match(route, /<SeoLocalPlans[\s\S]*?answer=\{`[^`]*\$\{tierFrom\(seoLocal, "Local"\)\}/)
+  assert.doesNotMatch(route, /<Fragment slot="lede">/)
   assert.match(route, /tierFrom\(seoLocal, "Local"\)/)
   assert.match(route, /tierFrom\(seoLocal, "Local Pro"\)/)
   assert.match(plans, /class="plans-lede"/)

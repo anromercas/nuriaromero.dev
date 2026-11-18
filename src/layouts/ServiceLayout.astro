@@ -4,6 +4,8 @@ import Schema from "@/components/seo/Schema.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
 import TitleSection from "@/components/TitleSection.astro"
 import Breadcrumbs from "@/components/Breadcrumbs.astro"
+import PageUpdated from "@/components/PageUpdated.astro"
+import { getPageDateModified } from "@/data/page-freshness"
 import ServiceHero from "@/components/services/ServiceHero.astro"
 import BenefitsGrid from "@/components/services/BenefitsGrid.astro"
 import ProcessSteps from "@/components/services/ProcessSteps.astro"
@@ -24,6 +26,7 @@ interface Props {
 }
 
 const { page, variant = "legacy" } = Astro.props
+const dateModified = getPageDateModified(Astro.url.pathname)
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
@@ -40,7 +43,7 @@ const breadcrumbs = [
         description: page.seo.description,
         url: page.slug,
         serviceType: page.breadcrumbName,
-        price: page.pricing.from,
+        price: page.ownOffer === false ? undefined : page.pricing.from,
         ...(page.offersFromTiers && page.pricing.tiers
           ? { tiers: page.pricing.tiers, billing: page.tierBilling, id: "service" }
           : {}),
@@ -53,7 +56,10 @@ const breadcrumbs = [
     {variant === "template" ? (
       <Fragment>
         <SectionContainer>
-          <Breadcrumbs items={breadcrumbs} />
+          <div class="page-meta">
+            <Breadcrumbs items={breadcrumbs} />
+            <PageUpdated date={dateModified} />
+          </div>
           <slot name="hero" />
         </SectionContainer>
 
@@ -72,7 +78,10 @@ const breadcrumbs = [
     ) : (
       <Fragment>
         <SectionContainer>
-          <Breadcrumbs items={breadcrumbs} />
+          <div class="page-meta">
+            <Breadcrumbs items={breadcrumbs} />
+            <PageUpdated date={dateModified} />
+          </div>
           <slot name="hero"><ServiceHero
               h1={page.hero.h1}
               subtitle={page.hero.subtitle}
@@ -136,3 +145,17 @@ const breadcrumbs = [
     )}
   </main>
 </Layout>
+
+<style>
+  .page-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .page-meta :global(.crumbs) {
+    margin-bottom: 0;
+  }
+</style>

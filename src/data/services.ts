@@ -1,7 +1,8 @@
 // Contenido de las 4 páginas de servicio.
 // Precios acordados: landing 149 €, web 5 páginas 399 €, automatización 149 €,
 // chatbot IA 399 €, software a medida 999 €. Tienda online: precio y alcance en
-// src/data/store-offer.ts.
+// src/data/store-offer.ts. SEO para IA (/seo-para-ia/) has no price of its own: it
+// shows the Local Pro plan of the local SEO page and its Service JSON-LD has no offers.
 import type { ServicePageData } from "@/data/types"
 import { STORE_FROM, STORE_FINAL_PRICE_NOTE, storeIncludes } from "./store-offer.ts"
 
@@ -17,12 +18,19 @@ const SOFTWARE_FROM = "999 €"
 // Precio único del chatbot con IA: `pricing.from` y la respuesta de coste lo toman de aquí.
 const AI_FROM = "399 €"
 
-/** `from` label of a named pricing tier; throws so a renamed tier fails the build. */
-export function tierFrom(service: ServicePageData, tierName: string): string {
+type Tier = NonNullable<ServicePageData["pricing"]["tiers"]>[number]
+
+/** Named pricing tier; throws so a renamed tier fails the build. */
+export function pricingTier(service: ServicePageData, tierName: string): Tier {
   const tier = service.pricing.tiers?.find((t) => t.name === tierName)
   if (!tier)
     throw new Error(`Pricing tier "${tierName}" not found in ${service.slug}`)
-  return tier.from
+  return tier
+}
+
+/** `from` label of a named pricing tier; throws so a renamed tier fails the build. */
+export function tierFrom(service: ServicePageData, tierName: string): string {
+  return pricingTier(service, tierName).from
 }
 
 export const disenoWeb: ServicePageData = {
@@ -54,7 +62,7 @@ export const disenoWeb: ServicePageData = {
   benefits: [
     {
       title: "Alta en Google y Google Maps",
-      text: "Con la web completa, te doy de alta en Search Console y la conecto con tu ficha de Google Business Profile.",
+      text: "Con la web completa, alta en Search Console y en tu ficha de Google Business Profile.",
     },
     {
       title: "WhatsApp y formulario",
@@ -62,25 +70,25 @@ export const disenoWeb: ServicePageData = {
     },
     {
       title: "Pensada primero para el móvil",
-      text: "Textos, botones y fotos se leen y se pulsan bien en cualquier pantalla, empezando por la del móvil.",
+      text: "Textos, botones y fotos se leen y se pulsan bien en cualquier pantalla.",
     },
     {
       title: "SEO local básico",
-      text: "Títulos, textos y datos técnicos pensados para lo que buscan tus clientes en Sevilla.",
+      text: "Títulos, textos y datos técnicos pensados para las búsquedas de tus clientes.",
     },
     {
       title: "Dominio y hosting a tu nombre",
-      text: "Los configuro yo y quedan a tu nombre: la web es tuya y puedes cambiar de proveedor cuando quieras.",
+      text: "Los configuro yo y quedan a tu nombre: la web es tuya.",
     },
     {
       title: "Un mes de soporte",
-      text: "En los dos planes, el primer mes después de publicar resuelvo tus dudas y hago los pequeños ajustes.",
+      text: "El primer mes tras publicar resuelvo dudas y hago pequeños ajustes.",
     },
   ],
   process: [
     {
       title: "Propuesta con precio cerrado",
-      text: "Hablamos de tu negocio y te envío por escrito qué incluye, cuánto cuesta y el plazo.",
+      text: "Te envío por escrito qué incluye, cuánto cuesta y el plazo.",
     },
     {
       title: "Diseño",
@@ -92,12 +100,12 @@ export const disenoWeb: ServicePageData = {
     },
     {
       title: "Publicación",
-      text: "En 2 a 4 semanas desde que tengo los contenidos, la web está publicada, con un mes de soporte incluido.",
+      text: "En 2 a 4 semanas desde que tengo los contenidos, la web está publicada.",
     },
   ],
   pricing: {
     from: "149 €",
-    note: "¿Quieres estar online ya, con lo esencial? Landing. ¿Tienes varios servicios y quieres explicar cada uno por separado? Web completa.",
+    note: "Landing para estar online ya con lo esencial; web completa si tienes varios servicios que explicar por separado.",
     tiers: [
       {
         name: "Landing de una página",
@@ -120,7 +128,7 @@ export const disenoWeb: ServicePageData = {
           "Alta en Google Search Console y en Google Business Profile",
           "Un mes de soporte tras el lanzamiento",
         ],
-        note: `¿Necesitas una tienda online? Desde ${STORE_FROM}: lo tienes en la página de tienda online.`,
+        note: `¿Necesitas una tienda online? Desde ${STORE_FROM}: en su página.`,
       },
     ],
   },
@@ -198,7 +206,7 @@ export const desarrolloSoftware: ServicePageData = {
   benefits: [
     {
       title: "Aplicación web",
-      text: "Una herramienta que abres en el navegador, sin instalar nada.",
+      text: "Una herramienta en el navegador, sin instalar nada.",
     },
     {
       title: "App para el móvil",
@@ -214,17 +222,17 @@ export const desarrolloSoftware: ServicePageData = {
     },
     {
       title: "Reservas y citas",
-      text: "Tus clientes eligen día y hora y tú ves la agenda completa.",
+      text: "Tus clientes eligen día y hora y tú ves la agenda.",
     },
     {
       title: "Panel de datos",
-      text: "Ves cómo van tus pedidos, ventas o reservas de un vistazo.",
+      text: "Ves tus pedidos, ventas o reservas de un vistazo.",
     },
   ],
   process: [
     {
       title: "Analizo tu forma de trabajar",
-      text: "Me cuentas cómo trabajas y vemos dónde se pierde más tiempo.",
+      text: "Me cuentas cómo trabajas y vemos dónde pierdes tiempo.",
     },
     {
       title: "Primera fase con precio cerrado",
@@ -232,27 +240,27 @@ export const desarrolloSoftware: ServicePageData = {
     },
     {
       title: "Entregas que ya puedes usar",
-      text: "Ves las pantallas y después versiones parciales que ya usas.",
+      text: "Ves las pantallas y luego versiones que ya usas.",
     },
     {
       title: "Ampliamos cuando toca",
-      text: "Si funciona, añadimos la siguiente fase con su precio cerrado.",
+      text: "Si funciona, añadimos otra fase con precio cerrado.",
     },
   ],
   pricing: {
     from: SOFTWARE_FROM,
     includes: [
-      "Análisis de procesos y propuesta de solución",
-      "Prototipo de pantallas antes de desarrollar",
-      "Aplicación web accesible desde cualquier dispositivo",
+      "Análisis de procesos y propuesta",
+      "Prototipo de pantallas",
+      "Aplicación web para cualquier dispositivo",
       "Formación para tu equipo",
       "Garantía y soporte tras la entrega",
     ],
-    note: "Cada proyecto es distinto: tras la primera reunión te doy un presupuesto cerrado por fases.",
+    note: "Tras la primera reunión te doy un presupuesto cerrado por fases.",
   },
   cta: {
     title: "Empecemos por tu herramienta",
-    text: "Cuéntame cómo trabajas y te respondo con una propuesta clara, sin compromiso.",
+    text: "Cuéntame cómo trabajas y te respondo con una propuesta clara.",
   },
   faqs: [
     {
@@ -291,7 +299,7 @@ export const automatizaciones: ServicePageData = {
     title: "Que las tareas repetitivas se hagan solas",
     titleAccent: "se hagan solas",
     subtitle:
-      "Automatizar un proceso es que una tarea que haces siempre igual, como copiar datos o enviar el mismo aviso, la hagan solos tus programas conectados. Tú te quedas con lo que necesita a una persona.",
+      "Automatizar un proceso es que una tarea que haces siempre igual, como copiar datos, la hagan solos tus programas conectados. Tú te quedas con lo que necesita criterio.",
     secondaryCta: { label: "Ver precio", href: "#precios" },
   },
   sectionTitles: {
@@ -303,61 +311,61 @@ export const automatizaciones: ServicePageData = {
   benefits: [
     {
       title: "Mensajes de WhatsApp",
-      text: "Las confirmaciones y los recordatorios salen solos, y lo que necesita respuesta te llega a ti.",
+      text: "Confirmaciones y recordatorios salen solos; lo demás te llega a ti.",
     },
     {
       title: "Facturas",
-      text: "Al cerrar un pedido, la factura se crea y se guarda en su carpeta.",
+      text: "Al cerrar un pedido, la factura se crea sola.",
     },
     {
       title: "Citas y recordatorios",
-      text: "Cada reserva entra en tu agenda y el cliente recibe su aviso el día antes.",
+      text: "Cada reserva entra en tu agenda y el cliente recibe aviso.",
     },
     {
-      title: "Formularios a tu hoja o CRM",
-      text: "Lo que te escriben desde la web llega ordenado a tu hoja de cálculo o a tu lista de clientes.",
+      title: "Formularios a tu hoja",
+      text: "Lo que te escriben desde la web llega ordenado a tu hoja de cálculo.",
     },
     {
       title: "Avisos internos",
-      text: "Te enteras al momento de un pedido nuevo, una reseña o un pago pendiente.",
+      text: "Te enteras al momento de un pedido, reseña o pago pendiente.",
     },
     {
       title: "Informes",
-      text: "Cada lunes recibes en tu correo un resumen de ventas o gastos, sin montarlo a mano.",
+      text: "Cada lunes, un resumen de ventas o gastos en tu correo.",
     },
   ],
   process: [
     {
       title: "Mapear la tarea",
-      text: "Me cuentas cómo la haces hoy y apuntamos cada paso.",
+      text: "Me cuentas cómo la haces y apuntamos cada paso.",
     },
     {
       title: "Simplificarla antes de automatizarla",
-      text: "Quitamos los pasos que sobran, para no automatizar un desorden.",
+      text: "Quitamos pasos sobrantes para no automatizar un desorden.",
     },
     {
       title: "Elegir la herramienta",
-      text: "Uso n8n o Make, que conectan tus programas, según lo que haya que unir.",
+      text: "Uso n8n o Make para conectar tus programas.",
     },
     {
       title: "Piloto con casos reales",
-      text: "La pruebo con pedidos, citas o mensajes de verdad antes de dejarla sola.",
+      text: "La pruebo con casos de verdad antes de dejarla sola.",
     },
     {
       title: "Dejarla funcionando",
-      text: "Queda activa, con avisos si algo falla y documentada para que sepas qué hace.",
+      text: "Queda activa, con avisos si algo falla y documentada.",
     },
   ],
   pricing: {
     from: "149 €",
     includes: [
-      "Auditoría de procesos automatizables",
-      "Diseño e implementación del flujo con n8n o Make",
-      "Pruebas con casos reales de tu negocio",
-      "Avisos automáticos si algo falla",
+      "Auditoría de procesos",
+      "Diseño y montaje del flujo con n8n o Make",
+      "Pruebas con casos reales",
+      "Avisos si algo falla",
       "Documentación y formación",
     ],
-    note: "Precio por automatización. Los packs de varias automatizaciones tienen descuento.",
+    note: "Precio por automatización; los packs tienen descuento.",
   },
   faqs: [
     {
@@ -401,16 +409,16 @@ export const inteligenciaArtificial: ServicePageData = {
   slug: "/inteligencia-artificial/",
   breadcrumbName: "Inteligencia artificial",
   seo: {
-    title: "IA para negocios en Sevilla | Chatbots y asistentes con IA",
+    title: "Inteligencia artificial para empresas en Sevilla | Chatbots",
     description:
-      "Llevo la IA a tu negocio en Sevilla con más de 10 años de experiencia en desarrollo: chatbots que atienden clientes y agentes que reservan o toman pedidos.",
+      "Inteligencia artificial para empresas en Sevilla: chatbots que atienden clientes y agentes que reservan o toman pedidos. Más de 10 años de experiencia.",
   },
   hero: {
-    h1: "Inteligencia artificial aplicada a tu negocio",
+    h1: "Inteligencia artificial para empresas en Sevilla",
     title: "IA que responde con tu información",
     titleAccent: "con tu información",
     subtitle:
-      "Monto chatbots y agentes de inteligencia artificial para empresas y negocios de Sevilla. Atienden a tus clientes en tu web o WhatsApp con tu información y te pasan la conversación cuando hace falta una persona.",
+      "Monto chatbots y agentes de inteligencia artificial para empresas y negocios de Sevilla. Atienden a tus clientes en tu web o WhatsApp con tu información.",
     secondaryCta: { label: "Ver precio", href: "#precios" },
   },
   sectionTitles: {
@@ -422,53 +430,53 @@ export const inteligenciaArtificial: ServicePageData = {
   benefits: [
     {
       title: "Chatbot en tu web y WhatsApp",
-      text: "Responde las dudas frecuentes de tus clientes en tu web o en WhatsApp Business.",
+      text: "Responde dudas frecuentes en tu web o WhatsApp Business.",
     },
     {
       title: "Agente que reserva o toma pedidos",
-      text: "Un agente de IA no solo contesta: apunta la cita o el pedido en tus herramientas.",
+      text: "No solo contesta: apunta la cita o el pedido en tus herramientas.",
     },
     {
       title: "Respuestas con tu información",
-      text: "Contesta con tus servicios, precios y horarios, no con lo que encuentra por internet.",
+      text: "Contesta con tus servicios, precios y horarios, no con lo de internet.",
     },
     {
       title: "Pasa la conversación a una persona",
-      text: "Cuando no sabe la respuesta, te avisa y la conversación sigue contigo.",
+      text: "Si no sabe la respuesta, te avisa y sigues tú.",
     },
     {
       title: "Resúmenes",
-      text: "Resume conversaciones, correos o documentos largos en unas pocas líneas.",
+      text: "Resume conversaciones, correos o documentos largos.",
     },
     {
       title: "Datos cuidados y RGPD",
-      text: "Te explico qué datos se envían y a quién, según el RGPD, la ley europea de datos.",
+      text: "Te explico qué datos se envían y a quién, según el RGPD.",
     },
   ],
   process: [
     {
       title: "Elegimos un caso de uso",
-      text: "Buscamos la tarea en la que la IA te ayuda de verdad, como las dudas que más se repiten.",
+      text: "Buscamos la tarea donde la IA te ayuda de verdad.",
     },
     {
       title: "Piloto con tus datos",
-      text: "Lo monto con la información real de tu negocio y lo pruebas antes de decidir.",
+      text: "Lo monto con tus datos y lo pruebas antes de decidir.",
     },
     {
       title: "Ajuste con casos reales",
-      text: "Corregimos las respuestas con preguntas de verdad de tus clientes.",
+      text: "Corregimos respuestas con preguntas reales.",
     },
     {
       title: "Conexión a tu web o WhatsApp",
-      text: "Lo dejo funcionando en tu canal, con supervisión y ajustes el primer mes.",
+      text: "Lo dejo funcionando en tu canal, con supervisión el primer mes.",
     },
   ],
   pricing: {
     from: AI_FROM,
     includes: [
       "Análisis de tu caso de uso",
-      "Prueba piloto con datos reales de tu negocio",
-      "Integración con tu web, WhatsApp o herramientas",
+      "Piloto con datos reales",
+      "Integración con tu web o WhatsApp",
       "Configuración respetuosa con el RGPD",
       "Supervisión y ajustes el primer mes",
     ],
@@ -476,7 +484,7 @@ export const inteligenciaArtificial: ServicePageData = {
   },
   cta: {
     title: "Empecemos por tus clientes",
-    text: "Cuéntame qué te preguntan más tus clientes y te digo si un chatbot te ayuda de verdad.",
+    text: "Cuéntame qué te preguntan más tus clientes y te digo si un chatbot te ayuda.",
   },
   faqs: [
     {
@@ -646,6 +654,114 @@ export const seoLocal: ServicePageData = {
   },
 }
 
+// Local Pro tier of the local SEO page: the only price SEO para IA shows, read and never typed.
+const LOCAL_PRO_TIER = pricingTier(seoLocal, "Local Pro")
+
+export const seoParaIa: ServicePageData = {
+  slug: "/seo-para-ia/",
+  breadcrumbName: "SEO para IA",
+  ownOffer: false,
+  seo: {
+    title: "SEO para IA y GEO: que la IA entienda tu negocio",
+    description:
+      "SEO para IA (GEO): preparo la información de tu negocio para que ChatGPT, Gemini y los resúmenes con IA de Google la entiendan y puedan citarla. Sin promesas.",
+  },
+  hero: {
+    h1: "SEO para IA: que ChatGPT, Gemini y Google entiendan tu negocio",
+    title: "Datos claros que una IA pueda entender",
+    titleAccent: "pueda entender",
+    subtitle:
+      "Preparo la información de tu negocio para que ChatGPT, Gemini o los resúmenes con IA de Google la entiendan y puedan citarla. Es el SEO para IA, también llamado GEO, y va incluido en el plan Local Pro.",
+    primaryCtaLabel: "Reservar una llamada",
+    secondaryCta: { label: "Ver qué trabajo", href: "#que-trabajo" },
+  },
+  sectionTitles: {
+    benefits: "Qué trabajo para que una IA entienda tu negocio",
+    process: "Cómo trabajamos el SEO para IA",
+    pricing: "Cuánto cuesta el SEO para IA",
+    faq: "Preguntas frecuentes sobre SEO para IA",
+  },
+  benefits: [
+    {
+      title: "Datos que no se contradicen",
+      text: "Nombre, servicios, zona, horario y precios coinciden en tu web, tu perfil de Google y tus redes.",
+    },
+    {
+      title: "Respuestas directas",
+      text: "Cada página y cada pregunta frecuente responde en sus primeras líneas, sin rodeos.",
+    },
+    {
+      title: "Datos estructurados",
+      text: "Marcado schema.org para tu negocio, servicios y preguntas.",
+    },
+    {
+      title: "Acceso para los rastreadores",
+      text: "Tu robots.txt no bloquea a los rastreadores de los asistentes de IA.",
+    },
+    {
+      title: "Un índice llms.txt",
+      text: "Un archivo con tus páginas más útiles para los sistemas de IA.",
+    },
+    {
+      title: "Señales fuera de tu web",
+      text: "Perfil de Google completo, perfiles enlazados y reseñas reales.",
+    },
+  ],
+  process: [
+    {
+      title: "Revisión de cómo te ven hoy",
+      text: "Pregunto a los asistentes de IA lo que preguntaría un cliente de tu zona y anoto qué saben de ti, qué falta y qué se contradice.",
+    },
+    {
+      title: "Plan de prioridades",
+      text: "Qué corregir primero y por qué, explicado sin tecnicismos.",
+    },
+    {
+      title: "Implementación",
+      text: "Textos, preguntas frecuentes, datos estructurados y acceso, en tu web y en tu perfil.",
+    },
+    {
+      title: "Seguimiento",
+      text: "Cada mes repito las mismas preguntas y recibes un informe con lo que ha cambiado y el siguiente paso.",
+    },
+  ],
+  pricing: {
+    from: LOCAL_PRO_TIER.from,
+    includes: LOCAL_PRO_TIER.includes.filter((item) => !item.startsWith("Todo lo incluido en")),
+    note: seoLocal.pricing.note,
+  },
+  faqs: [
+    {
+      q: "¿Qué es el SEO para IA o GEO?",
+      a: "Es preparar la información de tu negocio para que asistentes como ChatGPT, Gemini o Perplexity, y los resúmenes con IA de Google, la entiendan y puedan citarla cuando encaje.",
+    },
+    {
+      q: "¿En qué se diferencia el SEO para IA del SEO tradicional?",
+      a: "El SEO de siempre busca un buen puesto en la lista de resultados; el SEO para IA cuida que un asistente encuentre datos claros sobre ti cuando escribe su respuesta.",
+    },
+    {
+      q: "¿Es lo mismo GEO que AEO?",
+      a: "Casi. El AEO se centra en las respuestas directas y el GEO en los buscadores que generan respuestas con IA.",
+    },
+    {
+      q: "¿Cómo hago que ChatGPT recomiende mi negocio?",
+      a: "Nadie puede prometerte que un asistente recomiende o cite tu negocio: no lo controlas tú ni lo controlo yo. Sí se puede trabajar una información clara, coherente y citable.",
+    },
+    {
+      q: "¿Qué hay que trabajar para aparecer en las respuestas de IA?",
+      a: "Seis frentes: datos coherentes, respuestas directas, datos estructurados, acceso de rastreadores, llms.txt y señales externas. Ayuda a que te entiendan, pero aparecer no depende solo de ti.",
+    },
+    {
+      q: "¿Cuánto cuesta el SEO para IA?",
+      a: `El SEO para IA va incluido en el plan Local Pro, que cuesta ${LOCAL_PRO_TIER.from}.`,
+    },
+  ],
+  cta: {
+    title: "Veamos qué sabe hoy una IA de tu negocio",
+    text: "En una llamada vemos qué información tuya hay y el siguiente paso útil.",
+  },
+}
+
 export const capilarLocal: ServicePageData = {
   slug: "/seo-para-clinicas-capilares-sevilla/",
   breadcrumbName: "SEO para clínicas capilares en Sevilla",
@@ -717,11 +833,11 @@ export const tiendaOnline: ServicePageData = {
   benefits: [
     {
       title: "Tu catálogo, ya subido",
-      text: "Subo yo hasta unos 20 productos con sus fotos y precios.",
+      text: "Subo hasta unos 20 productos con fotos y precios.",
     },
     {
       title: "Pago con tarjeta",
-      text: "Tus clientes pagan con tarjeta a través de una pasarela como Stripe.",
+      text: "Pagan con tarjeta en una pasarela como Stripe.",
     },
     {
       title: "Tallas y colores",
@@ -733,29 +849,29 @@ export const tiendaOnline: ServicePageData = {
     },
     {
       title: "Un panel para el día a día",
-      text: "Subes productos, cambias precios y ves tus pedidos desde el panel.",
+      text: "Subes productos, cambias precios y ves pedidos desde el panel.",
     },
     {
       title: "Fichas preparadas para Google",
-      text: "Cada producto y categoría se escriben pensando en lo que busca quien compra.",
+      text: "Productos y categorías escritos para lo que busca quien compra.",
     },
   ],
   process: [
     {
       title: "Alcance",
-      text: "Hablamos de lo que vendes y eliges WooCommerce, Shopify o una tienda a medida.",
+      text: "Eliges WooCommerce, Shopify o una tienda a medida.",
     },
     {
       title: "Propuesta cerrada por escrito",
-      text: "Te envío qué incluye y cuánto cuesta antes de empezar.",
+      text: "Te envío qué incluye y cuánto cuesta.",
     },
     {
       title: "Construcción",
-      text: "Monto la tienda con tu marca y pruebo una compra completa, del carrito al pedido.",
+      text: "Monto la tienda con tu marca y pruebo una compra completa.",
     },
     {
       title: "Formación y lanzamiento",
-      text: "Te enseño a gestionar productos y pedidos, publicamos y tienes un mes de soporte.",
+      text: "Te enseño a gestionar productos y pedidos, y publicamos.",
     },
   ],
   pricing: {
@@ -792,8 +908,11 @@ export const tiendaOnline: ServicePageData = {
   },
 }
 
+// Registry of all service-template pages (prices, llms.txt). Menus and footer
+// columns are built from `navigation.ts`, not from this array.
 export const services = [
   seoLocal,
+  seoParaIa,
   capilarLocal,
   disenoWeb,
   desarrolloSoftware,
@@ -805,6 +924,7 @@ export const services = [
 // In-focus service pages per PRD section 5, local SEO first; parked pages excluded.
 export const focusServices: ServicePageData[] = [
   seoLocal,
+  seoParaIa,
   disenoWeb,
   tiendaOnline,
   desarrolloSoftware,

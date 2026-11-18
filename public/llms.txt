@@ -1,6 +1,6 @@
 # Nuria Romero
 
-> Índice curado de información pública de nuriaromero.dev. Nuria Romero Castillo desarrolla webs, software a medida, automatizaciones e inteligencia artificial para negocios en Sevilla. Este archivo orienta hacia páginas públicas del sitio; no garantiza indexación, posicionamiento, citación ni un tratamiento especial por parte de ningún crawler o asistente.
+> Índice curado de información pública de la web de Nuria Romero (nuriaromero.dev). Nuria Romero Castillo desarrolla webs, software a medida, automatizaciones e inteligencia artificial para negocios en Sevilla. Este archivo orienta hacia páginas públicas del sitio; no garantiza indexación, posicionamiento, citación ni un tratamiento especial por parte de ningún crawler o asistente.
 
 ## Perfil y contacto
 - [Sobre mí](https://nuriaromero.dev/sobre-mi/): Perfil público de Nuria Romero Castillo y experiencia que ella misma describe.
@@ -9,6 +9,7 @@
 ## Servicios
 - [Diseño web en Sevilla](https://nuriaromero.dev/diseno-web-sevilla/): Páginas web rápidas y optimizadas para SEO local, pensadas para conseguir clientes. Desde 149 € (landing) o 399 € (web de hasta 5 páginas).
 - [SEO local en Sevilla](https://nuriaromero.dev/seo-local-sevilla/): SEO local y GEO para negocios de Sevilla: Google Maps, datos estructurados y FAQs para buscadores con IA. Dos planes mensuales: Local 300 €/mes + IVA y Local Pro 500 €/mes + IVA, facturados mes a mes y sin cuota de puesta en marcha aparte. Sin promesas de posiciones.
+- [SEO para IA](https://nuriaromero.dev/seo-para-ia/): Preparar la información de tu negocio para que asistentes de IA como ChatGPT o Gemini puedan entenderla y citarla: datos coherentes, respuestas directas, datos estructurados y acceso de rastreadores. Incluido en el plan Local Pro (500 €/mes + IVA). Sin garantía de mención ni de posición.
 - [Desarrollo de software a medida](https://nuriaromero.dev/desarrollo-software-medida/): Aplicaciones web para empresas en Sevilla: gestión interna, reservas, presupuestos y portales de cliente.
 - [Automatizaciones](https://nuriaromero.dev/automatizaciones/): Automatización de tareas repetitivas con n8n y Make.
 - [Inteligencia artificial](https://nuriaromero.dev/inteligencia-artificial/): Chatbots y agentes de IA para empresas de Sevilla: atienden clientes con la información del negocio y pasan la conversación a una persona. Piloto con tus datos antes de decidir. Desde 399 €.
@@ -28,6 +29,11 @@
 - [¿Cuánto cuesta una página web en Sevilla?](https://nuriaromero.dev/blog/cuanto-cuesta-una-pagina-web-en-sevilla/): Qué factores influyen en el precio de una web para un negocio en Sevilla y qué revisar antes de comparar presupuestos.
 - [Guía sobre GEO para negocios en Sevilla](https://nuriaromero.dev/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/): Definiciones y acciones prácticas, con límites explícitos sobre lo que el GEO puede garantizar.
 - [Portfolio](https://nuriaromero.dev/portfolio/): Proyectos publicados en el sitio.
+
+## Datos para asistentes de IA
+- [Resumen del negocio](https://nuriaromero.dev/ai/summary.json): Resumen en JSON del negocio, sus datos de contacto y sus servicios con precios, generado desde los datos de la web.
+- [Preguntas frecuentes](https://nuriaromero.dev/ai/faq.json): Preguntas frecuentes publicadas en las páginas de la web, en JSON, con el mismo texto que muestra cada página.
+- [Política para agentes de IA](https://nuriaromero.dev/.well-known/ai.txt): Reglas de acceso para rastreadores y agentes de IA, las mismas que robots.txt, con enlaces a estos recursos.
 
 ## Perfiles oficiales
 - [LinkedIn de Nuria Romero Castillo](https://linkedin.com/in/nuria-romero-castillo)

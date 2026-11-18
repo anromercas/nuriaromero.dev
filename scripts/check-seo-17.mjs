@@ -4,16 +4,18 @@
 import { readFile } from "node:fs/promises";
 import { isDeepStrictEqual } from "node:util";
 import {
+  directAnswer,
   faqPageQuestions,
   jsonLdEntities,
   mainWordCount,
+  termOccurrences,
   visibleFaqQuestions,
 } from "./lib/page-contract.mjs";
 import { templatePages } from "./lib/template-pages.mjs";
 
 const failures = [];
 
-for (const { route, service, words } of templatePages) {
+for (const { route, service, words, keySections, termCaps } of templatePages) {
   const file = new URL(`../dist${route}index.html`, import.meta.url);
   let html;
   try {
@@ -30,6 +32,34 @@ for (const { route, service, words } of templatePages) {
     if (count < words[0] || count > words[1])
       failures.push(
         `${route}: ${count} visible words, expected ${words[0]}-${words[1]}`,
+      );
+  }
+
+  for (const [term, max] of Object.entries(termCaps ?? {})) {
+    const count = termOccurrences(html, term);
+    if (count > max)
+      failures.push(
+        `${route}: "${term}" appears ${count} times in visible text, cap is ${max}`,
+      );
+  }
+
+  for (const id of keySections ?? []) {
+    const answer = directAnswer(html, id);
+    if (!answer) {
+      failures.push(`${route}: key section #${id} has no direct answer`);
+      continue;
+    }
+    if (answer.precededByBlock)
+      failures.push(
+        `${route}: key section #${id} has a list, card or FAQ item before its answer`,
+      );
+    if (answer.words < 15 || answer.words > 45)
+      failures.push(
+        `${route}: key section #${id} answer has ${answer.words} words, expected 15-45`,
+      );
+    if (answer.sentences > 2)
+      failures.push(
+        `${route}: key section #${id} answer has ${answer.sentences} sentences, expected at most 2`,
       );
   }
 

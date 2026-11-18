@@ -13,6 +13,7 @@ interface Props {
   steps: Step[]
   portrait?: boolean
   portraitAlt?: string
+  answer?: string
 }
 
 const {
@@ -23,11 +24,12 @@ const {
   steps,
   portrait = true,
   portraitAlt = "Nuria Romero, desarrolladora web freelance en Sevilla",
+  answer,
 } = Astro.props
 ---
 
 <section id={id} class:list={["process", { "scroll-m-20": id }]} aria-labelledby={headingId}>
-  <SectionHeading id={headingId} keyword={keyword} title={title} class="process-display" />
+  <SectionHeading id={headingId} keyword={keyword} title={title} class="process-display" answer={answer} />
   {Astro.slots.has("byline") && <p class="byline"><slot name="byline" /></p>}
 
   <div class:list={["process-grid", { "no-portrait": !portrait }]}>
@@ -72,6 +74,14 @@ const {
   .process :global(.process-display) {
     max-width: 20ch;
     margin: 0 0 2.25rem;
+  }
+
+  .process :global(.process-display:has(+ .tpl-answer)) {
+    margin-bottom: 1rem;
+  }
+
+  .process :global(.tpl-answer) {
+    margin-bottom: 2.25rem;
   }
 
   .byline {

@@ -9,9 +9,10 @@ interface Props {
   title: AccentTitle;
   level?: "h1" | "h2";
   class?: string;
+  answer?: string;
 }
 
-const { id, keyword, title, level = "h2", class: className } = Astro.props;
+const { id, keyword, title, level = "h2", class: className, answer } = Astro.props;
 const Heading = level;
 
 const { text, accent } = title;
@@ -20,7 +21,13 @@ const hasAccent = accentAt >= 0 && Boolean(accent);
 const before = accentAt >= 0 && accent ? text.slice(0, accentAt) : text;
 const after =
   accentAt >= 0 && accent ? text.slice(accentAt + accent.length) : "";
+
+// Blank answers count as absent; keep a price figure and its euro sign on one line.
+const answerText = answer?.trim() ?? "";
+const hasAnswer = answerText.length > 0;
+const answerHtml = answerText.replace(/(\d)\s+(€)/g, "$1\u00a0$2");
 ---
 
 <Heading id={id} class="tpl-kw">{keyword}</Heading>
 {hasAccent ? <p class:list={["tpl-display", className]}>{before}<em class="tpl-accent">{accent}</em>{after}</p> : <p class:list={["tpl-display", className]}>{text}</p>}
+{hasAnswer && <p class="tpl-answer" data-direct-answer>{answerHtml}</p>}

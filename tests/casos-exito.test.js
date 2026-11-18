@@ -34,7 +34,8 @@ test("case labels identify success stories while preserving the existing route",
     header,
     /title: "Casos de éxito",\s*label: "Casos de éxito",\s*url: "\/portfolio\/"/,
   );
-  assert.match(header, /aria-label=\{link\.label\}/);
+  // NRD-259: the visible title is the accessible name; no aria-label override.
+  assert.doesNotMatch(header, /aria-label=\{link\.label\}/);
   assert.match(portfolio, /\{ name: "Casos de éxito", url: "\/portfolio\/" \}/);
   assert.match(portfolio, /title="Casos de éxito —/);
   assert.match(portfolio, /<SeoLocalHero[^>]*keyword="Casos de éxito"/);

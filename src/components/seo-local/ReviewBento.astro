@@ -9,13 +9,14 @@ interface Props {
   keyword: string
   title: AccentTitle
   caption?: string
+  answer?: string
 }
 
-const { headingId = "revision-title", id, keyword, title, caption = "Ejemplo ilustrativo" } = Astro.props
+const { headingId = "revision-title", id, keyword, title, caption = "Ejemplo ilustrativo", answer } = Astro.props
 ---
 
 <section id={id} class:list={["bento-wrap", { "scroll-m-20": id }]} aria-labelledby={headingId}>
-  <SectionHeading id={headingId} keyword={keyword} title={title} class="bento-display" />
+  <SectionHeading id={headingId} keyword={keyword} title={title} class="bento-display" answer={answer} />
 
   <div class="bento">
     <slot />
@@ -31,6 +32,14 @@ const { headingId = "revision-title", id, keyword, title, caption = "Ejemplo ilu
   .bento-wrap :global(.bento-display) {
     max-width: 20ch;
     margin: 0 0 1.75rem;
+  }
+
+  .bento-wrap :global(.bento-display:has(+ .tpl-answer)) {
+    margin-bottom: 1rem;
+  }
+
+  .bento-wrap :global(.tpl-answer) {
+    margin-bottom: 1.75rem;
   }
 
   .bento-caption {

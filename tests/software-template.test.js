@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
+import { withoutWordBudgetExcluded } from "../scripts/lib/page-contract.mjs";
 
 const root = new URL("../", import.meta.url);
 const read = (path) => readFileSync(new URL(path, root), "utf8");
@@ -186,7 +187,7 @@ test("the single plan is built from desarrolloSoftware.pricing", () => {
       new RegExp(`desarrolloSoftware\\.pricing\\.${field}\\b`),
     );
   }
-  assert.match(page, /desde\s+\{desarrolloSoftware\.pricing\.from\}/);
+  assert.match(page, /desde\s+\$\{desarrolloSoftware\.pricing\.from\}/);
   assert.doesNotMatch(page, /€/, "no price literal in the page");
   assert.equal(desarrolloSoftware.pricing.tiers, undefined, "no tiers in data");
 });
@@ -280,7 +281,7 @@ const norm = (s) =>
 test("template-pages lists the software page with the word budget", () => {
   assert.match(
     read("scripts/lib/template-pages.mjs"),
-    /\{\s*route:\s*"\/desarrollo-software-medida\/",\s*words:\s*\[750,\s*850\],\s*service:\s*true\s*\}/,
+    /\{\s*route:\s*"\/desarrollo-software-medida\/",\s*words:\s*\[750,\s*850\],\s*service:\s*true,(\s*keySections:\s*\[[^\]]*\],)?\s*\}/,
   );
 });
 
@@ -340,7 +341,7 @@ const builtWords = () => {
     read("dist/desarrollo-software-medida/index.html").match(
       /<main\b[\s\S]*?<\/main>/,
     )?.[0] ?? "";
-  return main
+  return withoutWordBudgetExcluded(main)
     .replace(/<(script|style)\b[\s\S]*?<\/\1>/g, " ")
     .replace(/<[^>]+>/g, " ")
     .split(/\s+/)

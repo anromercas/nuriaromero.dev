@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
+import { withoutWordBudgetExcluded } from "../scripts/lib/page-contract.mjs";
 
 const root = new URL("../", import.meta.url);
 const read = (path) => readFileSync(new URL(path, root), "utf8");
@@ -263,8 +264,10 @@ test("comparison, plans and scope are built from the store source", () => {
     /storeOptions\.map\(\(o\)\s*=>\s*\(\{\s*lead:\s*o\.bestFor,\s*text:\s*o\.tradeOff,?\s*\}\)\)/,
   );
   assert.match(page, /tiers=\{storeTiers\}/);
-  assert.match(page, /storeOptions\.find\(\(o\)\s*=>\s*o\.id === "a-medida"\)/);
-  assert.match(page, /Desde \{STORE_FROM\}/);
+  assert.match(
+    page,
+    /answer=\{`Una tienda online cuesta desde \$\{STORE_FROM\}/,
+  );
   assert.match(page, /includes=\{storeIncludes\}/);
   assert.match(page, /quotedSeparately=\{storeQuotedSeparately\}/);
   assert.match(page, /note=\{STORE_FINAL_PRICE_NOTE\}/);
@@ -327,7 +330,7 @@ test("template-pages lists the store page with the word budget", () => {
   const source = read("scripts/lib/template-pages.mjs");
   assert.match(
     source,
-    /\{\s*route:\s*"\/tienda-online-sevilla\/",\s*words:\s*\[900,\s*1100\],\s*service:\s*true\s*\}/,
+    /\{\s*route:\s*"\/tienda-online-sevilla\/",\s*words:\s*\[900,\s*1100\],\s*service:\s*true,(\s*keySections:\s*\[[^\]]*\],)?\s*\}/,
   );
 });
 
@@ -393,7 +396,7 @@ test(
   () => {
     const html = read("dist/tienda-online-sevilla/index.html");
     const main = html.match(/<main\b[\s\S]*?<\/main>/)?.[0] ?? "";
-    const words = main
+    const words = withoutWordBudgetExcluded(main)
       .replace(/<(script|style)\b[\s\S]*?<\/\1>/g, " ")
       .replace(/<[^>]+>/g, " ")
       .split(/\s+/)

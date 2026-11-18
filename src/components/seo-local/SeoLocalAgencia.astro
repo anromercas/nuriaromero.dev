@@ -10,14 +10,15 @@ interface Props {
   title: AccentTitle
   items: ComparisonItem[]
   link?: TextLink
+  answer?: string
 }
 
-const { id = "agencia-o-consultora", headingId, keyword, title, items, link } = Astro.props
+const { id = "agencia-o-consultora", headingId, keyword, title, items, link, answer } = Astro.props
 ---
 
 <section id={id} class="agencia scroll-m-20" aria-labelledby={headingId}>
   <div class="agencia-intro">
-    <SectionHeading id={headingId} keyword={keyword} title={title} class="agencia-display" />
+    <SectionHeading id={headingId} keyword={keyword} title={title} class="agencia-display" answer={answer} />
   </div>
 
   <div class="agencia-body">
@@ -46,6 +47,10 @@ const { id = "agencia-o-consultora", headingId, keyword, title, items, link } = 
   .agencia :global(.agencia-display) {
     max-width: 20ch;
     margin: 0 0 1rem;
+  }
+
+  .agencia :global(.tpl-answer) {
+    margin-bottom: 1.5rem;
   }
 
   .agencia-list {
@@ -104,6 +109,10 @@ const { id = "agencia-o-consultora", headingId, keyword, title, items, link } = 
 
     .agencia :global(.agencia-display) {
       max-width: 14ch;
+    }
+
+    .agencia :global(.tpl-answer) {
+      margin-bottom: 0;
     }
   }
 </style>

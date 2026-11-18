@@ -9,10 +9,11 @@ export interface InternalLink {
 export const internalLinksBySource: Record<string, InternalLink[]> = {
   "/": [
     { path: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/", anchor: "qué son el SEO local y el GEO", kind: "contextual" },
+    { path: "/seo-para-ia/", anchor: "SEO para IA y GEO", kind: "contextual" },
     { path: "/blog/como-aparecer-en-google-maps-negocio-sevilla/", anchor: "guía para aparecer en Google Maps", kind: "contextual" },
     { path: "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/", anchor: "cómo calcular el precio de una web", kind: "contextual" },
     { path: "/recursos/", anchor: "recursos y herramientas para mejorar tu web", kind: "contextual" },
-    { path: "/portfolio/", anchor: "casos de éxito de webs para negocios en Sevilla", kind: "contextual" },
+    { path: "/portfolio/", anchor: "casos de éxito de webs para negocios locales", kind: "contextual" },
     { path: "/web-para-restaurantes-sevilla/", anchor: "web para restaurantes en Sevilla", kind: "contextual" },
     { path: "/web-para-clinicas-sevilla/", anchor: "web para clínicas y consultas", kind: "contextual" },
     { path: "/web-para-comercios-sevilla/", anchor: "web para comercios y tiendas", kind: "contextual" },
@@ -52,6 +53,7 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
     { path: "/seo-local-sevilla/", anchor: "SEO local y GEO en Sevilla", kind: "contextual" },
     { path: "/desarrollo-software-medida/", anchor: "desarrollo de software a medida para empresas", kind: "contextual" },
     { path: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/", anchor: "guía sobre cómo te encuentran las IA", kind: "contextual" },
+    { path: "/seo-para-ia/", anchor: "SEO para IA", kind: "contextual" },
     { path: "/contacto/", anchor: "cuéntame qué solución de IA necesitas", kind: "conversion" },
   ],
   "/seo-local-sevilla/": [
@@ -63,7 +65,15 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
     { path: "/web-para-abogados-gestorias-sevilla/", anchor: "SEO local para despachos y gestorías", kind: "contextual" },
     { path: "/blog/como-aparecer-en-google-maps-negocio-sevilla/", anchor: "guía para mejorar tu ficha de Google Maps", kind: "contextual" },
     { path: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/", anchor: "guía sobre SEO local y GEO", kind: "contextual" },
+    { path: "/seo-para-ia/", anchor: "SEO para IA y visibilidad en respuestas generativas", kind: "contextual" },
     { path: "/contacto/", anchor: "cuéntame cómo aparece hoy tu negocio", kind: "conversion" },
+  ],
+  "/seo-para-ia/": [
+    { path: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/", anchor: "guía sobre qué es el GEO", kind: "contextual" },
+    { path: "/seo-local-sevilla/", anchor: "SEO local para negocios en Sevilla", kind: "contextual" },
+    { path: "/sobre-mi/", anchor: "quién soy y cómo trabajo", kind: "contextual" },
+    { path: "/diseno-web-sevilla/", anchor: "una web bien construida", kind: "contextual" },
+    { path: "/contacto/", anchor: "cuéntame cómo te encuentran hoy", kind: "conversion" },
   ],
   "/seo-para-clinicas-capilares-sevilla/": [
     { path: "/seo-local-sevilla/", anchor: "servicio general de SEO local en Sevilla", kind: "contextual" },
@@ -118,6 +128,7 @@ export const internalLinksBySource: Record<string, InternalLink[]> = {
   ],
   "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/": [
     { path: "/seo-local-sevilla/", anchor: "servicio de SEO local y GEO en Sevilla", kind: "contextual" },
+    { path: "/seo-para-ia/", anchor: "servicio de SEO para IA", kind: "contextual" },
     { path: "/diseno-web-sevilla/", anchor: "web propia bien construida", kind: "contextual" },
     { path: "/blog/como-aparecer-en-google-maps-negocio-sevilla/", anchor: "guía para aparecer en Google Maps", kind: "contextual" },
     { path: "/", anchor: "consultor SEO en Sevilla", kind: "contextual" },

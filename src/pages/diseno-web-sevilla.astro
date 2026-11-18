@@ -88,6 +88,7 @@ const proofItems = [
           text: "Lo que lleva tu web desde el primer día",
           accent: "desde el primer día",
         }}
+        answer="Tu web incluye WhatsApp y formulario, diseño para móvil, SEO local básico, dominio y hosting a tu nombre y un mes de soporte; la web completa suma el alta en Google."
       >
         {disenoWeb.benefits.map((benefit, i) => (
           <BentoTile
@@ -113,11 +114,11 @@ const proofItems = [
             text: "Hablas con quien diseña tu web",
             accent: "quien diseña tu web",
           }}
+          answer="Trabajo en cuatro pasos: propuesta con precio cerrado, diseño que ves antes de programarlo, contenidos que me pasas y publicación con un mes de soporte."
           steps={disenoWeb.process}
         >
           <Fragment slot="byline">
-            Soy Nuria Romero, <a href="/">desarrolladora web en Sevilla</a>, y
-            hago tu web de principio a fin.
+            Soy Nuria Romero, <a href="/">desarrolladora web en Sevilla</a>.
           </Fragment>
         </SeoLocalProcess>
       </SectionContainer>
@@ -143,6 +144,7 @@ const proofItems = [
           text: "Tres maneras de encargar tu web",
           accent: "encargar tu web",
         }}
+        answer="Para una web clara y rápida suele bastar una freelance; un estudio o una agencia compensa si además necesitas campañas, redes o vídeo."
         items={agenciaItems}
         link={{ label: "Ver los planes y precios", href: "#precios" }}
       />
@@ -160,18 +162,8 @@ const proofItems = [
           }}
           tiers={disenoWeb.pricing.tiers ?? []}
           note={disenoWeb.pricing.note}
-        >
-          <Fragment slot="lede">
-            Una landing cuesta{" "}
-            <strong>
-              desde {tierFrom(disenoWeb, "Landing de una página")}
-            </strong>{" "}
-            y una web completa,{" "}
-            <strong>
-              desde {tierFrom(disenoWeb, "Web completa (hasta 5 páginas)")}
-            </strong>, con el precio cerrado.
-          </Fragment>
-        </SeoLocalPlans>
+          answer={`Una landing cuesta desde ${tierFrom(disenoWeb, "Landing de una página")} y una web completa, desde ${tierFrom(disenoWeb, "Web completa (hasta 5 páginas)")}, con el precio cerrado.`}
+        />
       </SectionContainer>
     </div>
   </Fragment>
@@ -184,7 +176,7 @@ const proofItems = [
           text: "Dudas antes de encargar tu web",
           accent: "antes de encargar",
         }}
-        lede="Si tu duda no está aquí, la vemos en la llamada."
+        answer="Una web de negocio suele estar lista en 2 a 4 semanas desde que tengo tus textos, fotos y logo."
         faqs={disenoWeb.faqs}
       />
     </SectionContainer>

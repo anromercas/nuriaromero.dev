@@ -14,6 +14,7 @@ const read = async (path) => {
 }
 
 const services = await read("src/data/services.ts")
+const navigation = await read("src/data/navigation.ts")
 const hub = await read("src/pages/seo-local-sevilla.astro")
 const landingPage = await read("src/pages/seo-para-clinicas-capilares-sevilla.astro")
 const intents = await read("src/data/seo-intents.ts")
@@ -41,7 +42,10 @@ for (const phrase of [
 expect(hub.includes("¿Este servicio encaja con una clínica capilar?"), "CAPILAR LOCAL: hub must bridge to the clinic landing")
 expect(hub.includes('href="/seo-para-clinicas-capilares-sevilla/"'), "CAPILAR LOCAL: hub must link to the clinic landing")
 expect(!hub.includes("reseña gestionada"), "CAPILAR LOCAL: hub must not claim review management in the initial project")
-expect(services.includes("  capilarLocal,\n"), "CAPILAR LOCAL: clinic landing must be present in shared services navigation")
+expect(
+  /sectorLinks[^=]*=\s*\[[^\]]*\bcapilarLocal\b/.test(navigation),
+  "CAPILAR LOCAL: clinic landing must be present in sector navigation links",
+)
 expect(intents.includes('url: "/seo-para-clinicas-capilares-sevilla/"'), "CAPILAR LOCAL: clinic landing must have a search-intent entry")
 expect(hub.includes("Desde 199 €/mes + IVA") && hub.includes("Desde 349 €/mes + IVA"), "CAPILAR LOCAL: hub comparison must show recurring prices with IVA")
 

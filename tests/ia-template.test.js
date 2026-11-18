@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
+import { withoutWordBudgetExcluded } from "../scripts/lib/page-contract.mjs";
 
 const root = new URL("../", import.meta.url);
 const read = (path) => readFileSync(new URL(path, root), "utf8");
@@ -194,7 +195,7 @@ test("the single plan is built from inteligenciaArtificial.pricing", () => {
       new RegExp(`inteligenciaArtificial\\.pricing\\.${field}\\b`),
     );
   }
-  assert.match(page, /desde \{inteligenciaArtificial\.pricing\.from\}/);
+  assert.match(page, /desde \$\{inteligenciaArtificial\.pricing\.from\}/);
   assert.doesNotMatch(page, /€/, "no price literal in the page");
   assert.equal(inteligenciaArtificial.pricing.tiers, undefined);
   assert.equal(inteligenciaArtificial.pricing.from, "399 €");
@@ -260,10 +261,10 @@ test("intent signals stay as they were", () => {
     sectionTitles.pricing,
     "Cuánto cuesta implementar IA en tu negocio",
   );
-  assert.equal(hero.h1, "Inteligencia artificial aplicada a tu negocio");
+  assert.equal(hero.h1, "Inteligencia artificial para empresas en Sevilla");
   assert.equal(
     seo.title,
-    "IA para negocios en Sevilla | Chatbots y asistentes con IA",
+    "Inteligencia artificial para empresas en Sevilla | Chatbots",
   );
   assert.ok(seo.description.includes("chatbots que atienden clientes"));
 });
@@ -319,7 +320,12 @@ test("related links add the GEO guide before the conversion link", () => {
   assert.equal(rows[geo].anchor, "guía sobre cómo te encuentran las IA");
   assert.equal(rows[geo].kind, "contextual");
   assert.ok(geo < conversion, "before the conversion row");
-  assert.equal(rows.length, 5);
+  assert.equal(rows.length, 6);
+  const page = rows.findIndex((r) => r.path === "/seo-para-ia/");
+  assert.ok(
+    page >= 0 && page < conversion,
+    "SEO para IA row before conversion",
+  );
 });
 
 // --- Task 2.2: FAQ and word budget (NRD-216) -----------------------------------
@@ -340,7 +346,7 @@ const { automatizaciones } = await import(
 test("template-pages lists the AI page with the word budget", () => {
   assert.match(
     read("scripts/lib/template-pages.mjs"),
-    /\{\s*route:\s*"\/inteligencia-artificial\/",\s*words:\s*\[750,\s*850\],\s*service:\s*true\s*\}/,
+    /\{\s*route:\s*"\/inteligencia-artificial\/",\s*words:\s*\[750,\s*850\],\s*service:\s*true,(\s*keySections:\s*\[[^\]]*\],)?\s*\}/,
   );
 });
 
@@ -426,7 +432,7 @@ test(
   () => {
     const html = read("dist/inteligencia-artificial/index.html");
     const main = html.match(/<main\b[\s\S]*?<\/main>/)?.[0] ?? "";
-    const words = main
+    const words = withoutWordBudgetExcluded(main)
       .replace(/<(script|style)\b[\s\S]*?<\/\1>/g, " ")
       .replace(/<[^>]+>/g, " ")
       .split(/\s+/)

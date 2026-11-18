@@ -330,27 +330,28 @@ test("home keeps Person, FAQPage and review JSON-LD with one reviews fetch", () 
   assert.equal((src.match(/getGoogleReviews\(\)/g) ?? []).length, 1);
   assert.match(
     src,
-    /portraitAlt="Nuria Romero, consultor SEO en Sevilla y desarrolladora web"/,
+    /portraitAlt="Nuria Romero, consultor SEO y desarrolladora web"/,
   );
 });
 
-test("home related links keep the five existing rows and add the four niche pages", () => {
+test("home related links keep the existing rows, the SEO para IA row at index 1, and add the four niche pages", () => {
   const src = read("src/data/internal-links.ts");
   const row = src.match(/^ {2}"\/": \[([\s\S]*?)^ {2}\],/m)?.[1] ?? "";
   const entries = [
     ...row.matchAll(/path: "([^"]+)", anchor: "([^"]+)", kind: "(\w+)"/g),
   ].map((m) => ({ path: m[1], anchor: m[2], kind: m[3] }));
   assert.deepEqual(
-    entries.slice(0, 5).map((e) => e.path),
+    entries.slice(0, 6).map((e) => e.path),
     [
       "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
+      "/seo-para-ia/",
       "/blog/como-aparecer-en-google-maps-negocio-sevilla/",
       "/blog/cuanto-cuesta-una-pagina-web-en-sevilla/",
       "/recursos/",
       "/portfolio/",
     ],
   );
-  assert.deepEqual(entries.slice(5), [
+  assert.deepEqual(entries.slice(6), [
     {
       path: "/web-para-restaurantes-sevilla/",
       anchor: "web para restaurantes en Sevilla",
@@ -377,7 +378,12 @@ test("home related links keep the five existing rows and add the four niche page
 // --- FAQ, copy and template contract (task 1.3) ----------------------------
 
 const faqBlock = () =>
-  home().match(/const homeFaqs: FaqItem\[\] = \[([\s\S]*?)\n\];/)?.[1] ?? "";
+  readFileSync(
+    new URL("../src/data/page-faqs.ts", import.meta.url),
+    "utf8",
+  ).match(
+    /export const homeFaqs: ServicePageData\["faqs"\] = \[([\s\S]*?)\n\];/,
+  )?.[1] ?? "";
 
 test("home FAQ has 6-8 questions and feeds both the component and FAQPage", () => {
   const questions = [...faqBlock().matchAll(/\bq:\s*"([^"]+)"/g)].map(
@@ -417,7 +423,10 @@ test("home never claims to be the best consultant", () => {
 
 test("home registers in the template-page contract with a word budget", () => {
   const pages = read("scripts/lib/template-pages.mjs");
-  assert.match(pages, /route: "\/",\s*words: \[900, 1100\],\s*service: false/);
+  assert.match(
+    pages,
+    /route: "\/",\s*words: \[900, 1100\],\s*termCaps: \{ sevilla: 14 \},\s*service: false/,
+  );
 });
 
 test("home mentions 'posicionamiento web' at most once", () => {

@@ -1,16 +1,12 @@
 // Constructores de JSON-LD (schema.org). Cada página inyecta los suyos
 // con <Schema slot="head" schema={...} />; el de negocio va global en Layout.
-import { SITE } from "@/data/site"
-import { localTrust } from "@/data/local-trust"
-import type { GoogleReviewsData } from "@/lib/google-reviews"
+import { SERVICE_AREA, SITE } from "../data/site.ts"
+import { localTrust } from "../data/local-trust.ts"
+import type { GoogleReviewsData } from "./google-reviews.ts"
 
 const BUSINESS_ID = `${SITE.url}/#business`
 const PERSON_ID = `${SITE.url}/#person`
 const WEBSITE_ID = `${SITE.url}/#website`
-const SERVICE_AREA = [
-  { "@type": "City", name: "Sevilla" },
-  { "@type": "AdministrativeArea", name: "Área metropolitana de Sevilla" },
-]
 
 export function localBusinessSchema() {
   return {
@@ -53,6 +49,8 @@ export function reviewsSchema(data: GoogleReviewsData) {
     "@context": "https://schema.org",
     "@type": ["ProfessionalService", "Organization"],
     "@id": BUSINESS_ID,
+    name: SITE.name,
+    url: SITE.url,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: data.rating,
@@ -117,14 +115,15 @@ export function serviceSchema(service: {
   serviceType: string
   // Precio de salida tal cual se muestra en la página (p. ej. "399 €"),
   // definido en src/data/services.ts o src/data/niches.ts.
-  price: string
+  // Omitido: no se emite Offer salvo que se pasen `tiers`.
+  price?: string
   // Opt-in: un Offer mensual por plan. Si no se pasa, el JSON-LD queda como siempre.
   tiers?: { name: string; from: string }[]
   // "monthly" (por defecto) emite UnitPriceSpecification mensual; "one-time" emite Offers simples.
   billing?: "monthly" | "one-time"
   id?: string
 }) {
-  const priceValue = service.price.replace(/[^\d,.]/g, "").replace(",", ".")
+  const priceValue = service.price?.replace(/[^\d,.]/g, "").replace(",", ".")
   const serviceUrl = new URL(service.url, SITE.url).href
 
   const parsePrice = (text: string) => text.replace(/[^\d,.]/g, "").replace(",", ".")
@@ -147,6 +146,17 @@ export function serviceSchema(service: {
         }),
   }))
 
+  const offers =
+    tierOffers ??
+    (priceValue !== undefined
+      ? {
+          "@type": "Offer",
+          url: serviceUrl,
+          price: priceValue,
+          priceCurrency: "EUR",
+        }
+      : undefined)
+
   return {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -157,12 +167,7 @@ export function serviceSchema(service: {
     serviceType: service.serviceType,
     provider: { "@id": BUSINESS_ID },
     areaServed: SERVICE_AREA,
-    offers: tierOffers ?? {
-      "@type": "Offer",
-      url: serviceUrl,
-      price: priceValue,
-      priceCurrency: "EUR",
-    },
+    ...(offers ? { offers } : {}),
   }
 }
 
@@ -177,6 +182,32 @@ export function websiteSchema() {
   }
 }
 
+/** Build-derived freshness node: only emitted when the date comes from the version history. */
+export function webPageSchema(page: {
+  url: string
+  name: string
+  dateModified: string
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${page.url}#webpage`,
+    url: page.url,
+    name: page.name,
+    dateModified: page.dateModified,
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": BUSINESS_ID },
+    inLanguage: "es",
+  }
+}
+
+// Answers may use \n\n paragraph breaks for visual scannability (SEO-20, see
+// FAQ.astro's splitAnswer). Collapse that whitespace convention so structured
+// data and the AI discovery files carry clean, continuous prose.
+export function faqAnswerText(answer: string): string {
+  return answer.replace(/\s+/g, " ").trim()
+}
+
 export function faqSchema(faqs: { q: string; a: string }[]) {
   return {
     "@context": "https://schema.org",
@@ -186,11 +217,7 @@ export function faqSchema(faqs: { q: string; a: string }[]) {
       name: faq.q,
       acceptedAnswer: {
         "@type": "Answer",
-        // Answers may use \n\n paragraph breaks for visual scannability
-        // (SEO-20, see FAQ.astro's splitAnswer). Collapse that whitespace
-        // convention here so structured-data text stays clean, continuous
-        // prose instead of leaking literal newlines (SEO-20 follow-up).
-        text: faq.a.replace(/\s+/g, " ").trim(),
+        text: faqAnswerText(faq.a),
       },
     })),
   }

@@ -1,0 +1,212 @@
+---
+import ServiceLayout from "@/layouts/ServiceLayout.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
+import ProofStrip from "@/components/seo-local/ProofStrip.astro";
+import ReviewBento from "@/components/seo-local/ReviewBento.astro";
+import BentoTile from "@/components/seo-local/BentoTile.astro";
+import SeoLocalProcess from "@/components/seo-local/SeoLocalProcess.astro";
+import SeoLocalAgencia from "@/components/seo-local/SeoLocalAgencia.astro";
+import SeoLocalPlans from "@/components/seo-local/SeoLocalPlans.astro";
+import SeoLocalFaq from "@/components/seo-local/SeoLocalFaq.astro";
+import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro";
+import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
+import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro";
+import AiAnswerMock from "@/components/seo-ia/AiAnswerMock.astro";
+import SeoIaTileArt from "@/components/seo-ia/SeoIaTileArt.astro";
+import { seoParaIa } from "@/data/services";
+import { internalLinksBySource } from "@/data/internal-links";
+import { SITE_PROOF } from "@/data/site";
+import { getGoogleReviews } from "@/lib/google-reviews";
+
+const reviewsData = await getGoogleReviews();
+
+// Tiles a-f in source order; seoParaIa.benefits holds them in the same order.
+const tiles = [
+  { area: "a", kind: "coherencia", layout: "stack" },
+  { area: "b", kind: "respuestas", layout: "stack" },
+  { area: "c", kind: "schema", layout: "stack" },
+  { area: "d", kind: "rastreadores", layout: "stack" },
+  { area: "e", kind: "llms", layout: "stack" },
+  { area: "f", kind: "senales", layout: "row" },
+] as const;
+
+// The only price is the Local Pro plan, read from the site data (no price of its own).
+const plan = {
+  name: "Local Pro",
+  from: seoParaIa.pricing.from,
+  includes: seoParaIa.pricing.includes ?? [],
+  note: seoParaIa.pricing.note,
+  ctaLabel: seoParaIa.hero.primaryCtaLabel,
+};
+
+// No result about this service is published, so the strip carries only the
+// experience cell and the live Google rating when it exists.
+const proofItems = [
+  SITE_PROOF[0],
+  ...(reviewsData
+    ? [
+        {
+          stat: `${reviewsData.rating.toFixed(1).replace(".", ",")} en Google`,
+          label: `${reviewsData.userRatingCount} ${reviewsData.userRatingCount === 1 ? "opinión" : "opiniones"}`,
+        },
+      ]
+    : []),
+];
+
+// Only what this build really does (assistant crawlers map to astro.config.mjs).
+const thisSiteItems = [
+  {
+    lead: "Preguntas con la respuesta primero.",
+    text: "Como las de esta página.",
+  },
+  {
+    lead: "Datos estructurados.",
+    text: "De negocio, servicio, preguntas y ruta.",
+  },
+  {
+    lead: "Un llms.txt público.",
+    text: "Con el índice de las páginas principales.",
+  },
+  {
+    lead: "Rastreadores de IA permitidos.",
+    text: "ChatGPT, Claude, Perplexity y Gemini pueden leer esta web.",
+  },
+];
+---
+
+<ServiceLayout page={seoParaIa} variant="template">
+  <Fragment slot="hero">
+    <SeoLocalHero
+      keyword={seoParaIa.hero.h1}
+      title={{
+        text: seoParaIa.hero.title ?? seoParaIa.hero.h1,
+        accent: seoParaIa.hero.titleAccent,
+      }}
+      subtitle={seoParaIa.hero.subtitle}
+      primaryCtaLabel={seoParaIa.hero.primaryCtaLabel}
+      secondaryLink={{
+        label: seoParaIa.hero.secondaryCta?.label ?? "Ver qué trabajo",
+        href: seoParaIa.hero.secondaryCta?.href ?? "#que-trabajo",
+      }}
+    >
+      <AiAnswerMock slot="visual" />
+    </SeoLocalHero>
+    <ProofStrip items={proofItems} />
+  </Fragment>
+  <Fragment slot="benefits">
+    <SectionContainer id="que-trabajo">
+      <ReviewBento
+        headingId="que-trabajo-title"
+        keyword={seoParaIa.sectionTitles?.benefits ?? ""}
+        title={{
+          text: "Lo que una IA lee de tu negocio",
+          accent: "de tu negocio",
+        }}
+        answer="Trabajo seis frentes para que una IA te entienda: datos coherentes, respuestas directas, datos estructurados, rastreadores, llms.txt y señales externas."
+      >
+        {seoParaIa.benefits.map((benefit, i) => (
+          <BentoTile
+            area={tiles[i].area}
+            layout={tiles[i].layout}
+            title={benefit.title}
+            text={benefit.text}
+          >
+            <SeoIaTileArt kind={tiles[i].kind} />
+          </BentoTile>
+        ))}
+      </ReviewBento>
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="process">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalProcess
+          id="proceso"
+          headingId="proceso-title"
+          keyword={seoParaIa.sectionTitles?.process ?? ""}
+          title={{
+            text: "Primero mirar, después corregir",
+            accent: "después corregir",
+          }}
+          answer="Trabajo en cuatro pasos: reviso cómo te ven hoy las IA, te propongo prioridades, lo implemento y hago seguimiento cada mes."
+          steps={seoParaIa.process}
+        >
+          <Fragment slot="byline">
+            Soy Nuria Romero, <a href="/">consultor SEO en Sevilla</a>.
+          </Fragment>
+        </SeoLocalProcess>
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="before-pricing">
+    <SectionContainer>
+      <SeoLocalAgencia
+        id="esta-web"
+        headingId="esta-web-title"
+        keyword="Esta web aplica lo que te propongo"
+        title={{
+          text: "Lo puedes comprobar en esta página",
+          accent: "en esta página",
+        }}
+        items={thisSiteItems}
+        link={{ label: "Ver el precio", href: "#precios" }}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="pricing">
+    <div class="band">
+      <SectionContainer>
+        <SeoLocalPlans
+          headingId="planes-title"
+          keyword={seoParaIa.sectionTitles?.pricing ?? ""}
+          title={{
+            text: "Va dentro del plan Local Pro",
+            accent: "Local Pro",
+          }}
+          tiers={[plan]}
+          answer={`El SEO para IA no tiene precio aparte: va dentro del plan Local Pro, ${seoParaIa.pricing.from}, que también cubre tu perfil de Google.`}
+        />
+      </SectionContainer>
+    </div>
+  </Fragment>
+  <Fragment slot="faq">
+    <SectionContainer>
+      <SeoLocalFaq
+        headingId="faq-title"
+        keyword={seoParaIa.sectionTitles?.faq ?? ""}
+        title={{
+          text: "Dudas antes de empezar",
+          accent: "antes de empezar",
+        }}
+        answer="El SEO para IA o GEO es preparar la información de tu negocio para que ChatGPT o Gemini la entiendan y puedan citarla."
+        faqs={seoParaIa.faqs}
+      />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="related">
+    <SectionContainer>
+      <SeoLocalRelated links={internalLinksBySource[seoParaIa.slug] ?? []} />
+    </SectionContainer>
+  </Fragment>
+  <Fragment slot="closing">
+    <SeoLocalClosing
+      headingId="cierre-title"
+      keyword="Reserva una llamada sobre SEO para IA"
+      title={{
+        text: seoParaIa.cta?.title ?? "",
+        accent: "qué sabe hoy",
+      }}
+      text={seoParaIa.cta?.text ?? ""}
+      meta="30 minutos · Sin compromiso · Directamente conmigo"
+    >
+      <AiAnswerMock slot="visual" animate={false} />
+    </SeoLocalClosing>
+    <SectionContainer>
+      <SeoLocalNap
+        headingId="nap-title"
+        keyword="SEO para IA desde La Rinconada, Sevilla"
+      />
+    </SectionContainer>
+  </Fragment>
+</ServiceLayout>

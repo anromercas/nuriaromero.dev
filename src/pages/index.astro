@@ -13,13 +13,15 @@ import SeoLocalFaq from "@/components/seo-local/SeoLocalFaq.astro";
 import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro";
 import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
 import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro";
+import PageUpdated from "@/components/PageUpdated.astro";
+import { getPageDateModified } from "@/data/page-freshness";
 import HomeHeroMock from "@/components/home/HomeHeroMock.astro";
 import ServiceTileArt from "@/components/home/ServiceTileArt.astro";
 import type {
   ComparisonItem,
-  FaqItem,
   Step,
 } from "@/components/seo-local/types";
+import { homeFaqs } from "@/data/page-faqs";
 import { internalLinksBySource } from "@/data/internal-links";
 import { SITE_PROOF } from "@/data/site";
 import { faqSchema, personSchema, reviewsSchema } from "@/lib/schema";
@@ -85,39 +87,11 @@ const comparison: ComparisonItem[] = [
   },
 ];
 
-const homeFaqs: FaqItem[] = [
-  {
-    q: "¿Qué hace un consultor SEO?",
-    a: "Revisa cómo apareces en Google y mejora lo que hace que te encuentren: tu ficha de Google, tu web y tus reseñas. En mi caso también hago la parte técnica de la web, así que no necesitas a otra persona para aplicar los cambios.",
-  },
-  {
-    q: "¿Cuánto cobra un SEO al mes?",
-    a: `Depende del alcance, y lo habitual es una cuota mensual. Yo publico mis precios: el Plan Local cuesta ${tierFrom(seoLocal, "Local")} y el Local Pro, ${tierFrom(seoLocal, "Local Pro")}, facturados mes a mes.`,
-    links: [
-      { label: "Ver los planes de SEO local", href: "/seo-local-sevilla/" },
-    ],
-  },
-  {
-    q: "¿Quién es el mejor consultor SEO?",
-    a: "No hay un mejor consultor SEO para todo el mundo: el adecuado es el que encaja con tu negocio y te explica lo que hace. Fíjate en que publique precios y alcance, en que hables con quien hace el trabajo, en que enseñe trabajos reales y en que no te prometa posiciones.",
-  },
-  {
-    q: "¿Qué es el SEO?",
-    a: "Es el trabajo para que tu negocio aparezca en Google cuando alguien busca lo que ofreces, sin pagar por cada clic. Incluye tu web, tu ficha de Google y, cada vez más, cómo te mencionan los asistentes de IA.",
-  },
-  {
-    q: "¿El SEO se paga?",
-    a: "Aparecer en los resultados normales de Google es gratis: no pagas por cada clic ni por cada visita. Lo que se paga es el trabajo para conseguirlo, lo hagas tú, una agencia o una consultora.",
-  },
-  {
-    q: "¿Qué diferencia hay entre SEO y SEM?",
-    a: "El SEO trabaja para que aparezcas en los resultados normales de Google; el SEM son anuncios que pagas por cada clic. El SEO tarda más en notarse, pero lo que consigues no depende de seguir pagando cada clic.",
-  },
-];
+const homeDateModified = getPageDateModified(Astro.url.pathname);
 ---
 
 <Layout
-  title="Consultor SEO en Sevilla | Nuria Romero, SEO local y para IA"
+  title="Consultor SEO en Sevilla, SEO local y para IA"
   description={homeDescription}
 >
   <Schema
@@ -153,16 +127,17 @@ const homeFaqs: FaqItem[] = [
       <SectionContainer id="que-hago">
         <ReviewBento
           headingId="que-hago-title"
-          keyword="Servicios para negocios locales en Sevilla"
+          keyword="Servicios para negocios locales"
           title={{
             text: "Lo que puedo hacer por tu negocio",
             accent: "por tu negocio",
           }}
+          answer="Ayudo a negocios de Sevilla con SEO local, diseño web, tienda online, software a medida, automatizaciones e inteligencia artificial, para que te encuentren más clientes y trabajes con menos tareas repetitivas."
         >
           <BentoTile
             area="a"
             title="Que te encuentren cerca"
-            text="Ordeno tu ficha de Google y tu web para que te encuentren en Google, en Maps y en las respuestas de IA."
+            text="Ordeno tu ficha de Google y tu web para que te encuentren en Google, Maps y la IA."
             link={{ label: seoLocal.breadcrumbName, href: seoLocal.slug }}
           >
             <ServiceTileArt kind="seo-local" />
@@ -170,7 +145,7 @@ const homeFaqs: FaqItem[] = [
           <BentoTile
             area="b"
             title="Una web que se entiende"
-            text="Webs claras y rápidas, pensadas para el móvil y preparadas para que te encuentren."
+            text="Webs claras y rápidas, pensadas para el móvil."
             link={{ label: disenoWeb.breadcrumbName, href: disenoWeb.slug }}
           >
             <ServiceTileArt kind="diseno-web" />
@@ -178,7 +153,7 @@ const homeFaqs: FaqItem[] = [
           <BentoTile
             area="c"
             title="Vender por internet"
-            text="Vende tus productos desde una tienda propia, fácil de gestionar en tu día a día."
+            text="Vende desde una tienda propia, fácil de gestionar."
             link={{
               label: tiendaOnline.breadcrumbName,
               href: tiendaOnline.slug,
@@ -189,7 +164,7 @@ const homeFaqs: FaqItem[] = [
           <BentoTile
             area="d"
             title="Herramientas a tu medida"
-            text="Programas hechos para tu negocio cuando las hojas de cálculo y el software genérico se quedan cortos."
+            text="Programas hechos para tu negocio cuando las hojas de cálculo se quedan cortas."
             link={{
               label: desarrolloSoftware.breadcrumbName,
               href: desarrolloSoftware.slug,
@@ -212,7 +187,7 @@ const homeFaqs: FaqItem[] = [
             area="f"
             layout="row"
             title="Respuestas a cualquier hora"
-            text="Asistentes con IA que responden las dudas frecuentes de tus clientes con la información de tu negocio."
+            text="Asistentes con IA que responden a tus clientes con la información de tu negocio."
             link={{
               label: inteligenciaArtificial.breadcrumbName,
               href: inteligenciaArtificial.slug,
@@ -232,12 +207,13 @@ const homeFaqs: FaqItem[] = [
               text: "Sin intermediarios, de principio a fin",
               accent: "de principio a fin",
             }}
+            answer="Trabajo en cuatro pasos: me cuentas tu caso, te envío una propuesta por escrito, ves los avances mientras trabajo y, al lanzar, te enseño a manejarlo y sigo disponible."
             steps={homeProcess}
-            portraitAlt="Nuria Romero, consultor SEO en Sevilla y desarrolladora web"
+            portraitAlt="Nuria Romero, consultor SEO y desarrolladora web"
           >
             <Fragment slot="byline">
               Soy Nuria Romero: llevo más de 10 años desarrollando software y
-              ahora trabajo con negocios de Sevilla.
+              ahora trabajo con negocios locales.
             </Fragment>
           </SeoLocalProcess>
         </SectionContainer>
@@ -246,10 +222,10 @@ const homeFaqs: FaqItem[] = [
       <SectionContainer id="trabajo-real">
         <RealProof
           headingId="prueba-title"
-          keyword="Opiniones y proyectos reales en Sevilla"
+          keyword="Opiniones y proyectos reales"
           title={{ text: "Trabajo que puedes ver", accent: "puedes ver" }}
           reviews={reviewsData}
-          note="Dos webs reales de negocios de Sevilla, hechas por mí. Visítalas y juzga el trabajo por ti."
+          note="Dos webs reales de negocios locales, hechas por mí. Visítalas y juzga el trabajo por ti."
           projects={["arkady", "adfsevilla"]}
         />
       </SectionContainer>
@@ -260,6 +236,7 @@ const homeFaqs: FaqItem[] = [
           headingId="consultor-title"
           keyword="¿Consultor SEO o agencia?"
           title={{ text: "Dos formas de llevar tu SEO", accent: "tu SEO" }}
+          answer="Te conviene un consultor si quieres hablar directamente con quien hace el trabajo; una agencia encaja si necesitas llevar a la vez campañas, redes sociales y diseño."
           items={comparison}
           link={{
             label: "Ver los planes de SEO local",
@@ -273,7 +250,7 @@ const homeFaqs: FaqItem[] = [
           headingId="faq-title"
           keyword="Preguntas frecuentes sobre SEO"
           title={{ text: "Dudas antes de llamar", accent: "antes de llamar" }}
-          lede="Si tu duda no está aquí, la resolvemos en la llamada."
+          answer="Un consultor SEO revisa cómo apareces en Google y mejora tu ficha, tu web y tus reseñas; en mi caso también aplico los cambios técnicos, así que no necesitas a otra persona."
           faqs={homeFaqs}
           ctaLabel="Reserva una primera sesión"
         />
@@ -299,9 +276,20 @@ const homeFaqs: FaqItem[] = [
       <SectionContainer>
         <SeoLocalNap
           headingId="nap-title"
-          keyword="Dónde trabajo: La Rinconada, Sevilla"
+          keyword="Dónde trabajo: La Rinconada"
         />
+        {homeDateModified && (
+          <div class="home-updated">
+            <PageUpdated date={homeDateModified} />
+          </div>
+        )}
       </SectionContainer>
     </div>
   </main>
 </Layout>
+
+<style>
+  .home-updated {
+    margin-top: 2.5rem;
+  }
+</style>

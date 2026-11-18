@@ -38,6 +38,20 @@ export const intentMatrix: SeoIntentRow[] = [
     ],
   },
   {
+    url: "/seo-para-ia/",
+    intent:
+      "Commercial: contract SEO for AI answers (GEO/AEO), national scope; does not target Seville-qualified queries",
+    topic: "servicio de SEO para IA y GEO",
+    cta: "Book a call",
+    titleSignal: "SEO para IA",
+    descriptionSignal: "ChatGPT, Gemini",
+    h1Signal: "SEO para IA",
+    contentSignals: [
+      "Qué trabajo para que una IA entienda tu negocio",
+      "Cómo trabajamos el SEO para IA",
+    ],
+  },
+  {
     url: "/seo-para-clinicas-capilares-sevilla/",
     intent: "Commercial: contract local SEO and conversion foundations for a hair-transplant clinic",
     topic: "SEO para clínicas capilares en Sevilla",
@@ -53,7 +67,7 @@ export const intentMatrix: SeoIntentRow[] = [
     topic: "cuánto cuesta una página web y qué revisar",
     cta: "Use the checklist and ask for a project assessment",
     titleSignal: "¿Cuánto cuesta una página web",
-    descriptionSignal: "Qué factores influyen en el precio",
+    descriptionSignal: "Cuánto cuesta una página web en Sevilla",
     h1Signal: "¿Cuánto cuesta una página web",
     contentSignals: ["Qué debo revisar en una propuesta económica", "Qué preguntas debo hacer antes de contratar"],
   },
@@ -122,9 +136,9 @@ export const intentMatrix: SeoIntentRow[] = [
     intent: "Commercial: contract AI chatbots and assistants for a business",
     topic: "inteligencia artificial para empresas en Sevilla",
     cta: "Request an AI solution proposal",
-    titleSignal: "IA para negocios en Sevilla",
+    titleSignal: "Inteligencia artificial para empresas en Sevilla",
     descriptionSignal: "chatbots que atienden clientes",
-    h1Signal: "Inteligencia artificial aplicada a tu negocio",
+    h1Signal: "Inteligencia artificial para empresas en Sevilla",
     contentSignals: [
       "Así es el proceso de implantar IA en tu negocio",
       "Cuánto cuesta implementar IA en tu negocio",
@@ -167,6 +181,8 @@ export const keywordOwners: KeywordOwner[] = [
     keyword: "inteligencia artificial para empresas sevilla",
     url: "/inteligencia-artificial/",
   },
+  { keyword: "posicionamiento en ia", url: "/seo-para-ia/" },
+  { keyword: "seo para ia", url: "/seo-para-ia/" },
   {
     keyword: "como aparecer en google maps",
     url: "/blog/como-aparecer-en-google-maps-negocio-sevilla/",
@@ -193,6 +209,7 @@ export const serviceRoutes = [
   "/automatizaciones/",
   "/inteligencia-artificial/",
   "/seo-local-sevilla/",
+  "/seo-para-ia/",
   "/seo-para-clinicas-capilares-sevilla/",
   "/tienda-online-sevilla/",
 ]
@@ -236,5 +253,17 @@ export const reciprocalLinks = [
     target: "/inteligencia-artificial/",
     sourceAnchor: "chatbots y soluciones con IA",
     targetAnchor: "automatizaciones conectadas con tu negocio",
+  },
+  {
+    source: "/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/",
+    target: "/seo-para-ia/",
+    sourceAnchor: "servicio de SEO para IA",
+    targetAnchor: "guía sobre qué es el GEO",
+  },
+  {
+    source: "/seo-local-sevilla/",
+    target: "/seo-para-ia/",
+    sourceAnchor: "SEO para IA y visibilidad en respuestas generativas",
+    targetAnchor: "SEO local para negocios en Sevilla",
   },
 ]

@@ -78,6 +78,8 @@ const VERIFIED_SAME_AS = [
   "https://linkedin.com/in/nuria-romero-castillo",
   "https://github.com/anromercas",
   "https://www.google.com/maps/place/?q=place_id:ChIJ8Uv-vM9f0CoR8J75dj4I0HM",
+  // Sortlist: public profile verified in a real browser by NRD-160 (2026-11-18), recorded in docs/seo-audit/local-signals-2026-11.md
+  "https://www.sortlist.es/agency/nuria-romero",
 ]
 if (!Array.isArray(business.sameAs) || business.sameAs.join("|") !== VERIFIED_SAME_AS.join("|")) {
     fail(`business sameAs is not limited to verified profiles in ${file}`)
@@ -98,11 +100,31 @@ if (!Array.isArray(business.sameAs) || business.sameAs.join("|") !== VERIFIED_SA
   if (html.includes('<meta property="og:site_name" content="nuriaromero.dev"')) {
     fail(`metadata uses the domain as the primary brand in ${file}`)
   }
+  const siteName = html.match(/<meta property="og:site_name" content="([^"]*)"/)?.[1]
+  if (siteName !== SITE.name) {
+    fail(`og:site_name "${siteName}" is not the canonical brand "${SITE.name}" in ${file}`)
+  }
+  // ADR 0016: every indexable page title ends with the canonical brand.
+  if (!/<meta name="robots" content="noindex/.test(html)) {
+    const pageTitle = html.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim()
+    if (!pageTitle?.endsWith(SITE.name)) {
+      fail(`title "${pageTitle}" does not end with the brand "${SITE.name}" in ${file}`)
+    }
+  }
   if (person) {
     if (person.name !== "Nuria Romero" || person.alternateName !== "Nuria Romero Castillo") {
       fail(`person naming is not canonical in ${file}`)
     }
     if (person.worksFor?.["@id"] !== business["@id"]) fail(`person is not linked to business in ${file}`)
+  }
+  // Every Organization-typed node (not only the first with the business @id,
+  // e.g. the reviews node) must carry the canonical name and the site url.
+  for (const schema of schemas) {
+    const types = Array.isArray(schema["@type"]) ? schema["@type"] : [schema["@type"]]
+    if (!types.some((type) => ["Organization", "ProfessionalService", "LocalBusiness"].includes(type))) continue
+    if (schema.name !== SITE.name || schema.url !== SITE.url) {
+      fail(`Organization node ${schema["@id"] ?? "(no @id)"} lacks canonical name or url in ${file}`)
+    }
   }
   for (const schema of schemas) {
     if (schema["@type"] === "Service") {
