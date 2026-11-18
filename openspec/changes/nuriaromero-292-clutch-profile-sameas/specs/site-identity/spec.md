@@ -2,7 +2,7 @@
 
 ### Requirement: Official profiles are verified and valid
 
-The site's official profile list SHALL contain only public profiles the brand owns, each as an absolute `https` URL, with no duplicates, and SHALL include the public Sortlist profile `https://www.sortlist.es/agency/nuria-romero` and the public Clutch profile `https://clutch.co/profile/nuria-romero`. A third-party directory profile SHALL enter the list only after it is recorded in the citation record (`docs/seo-audit/local-signals-2026-11.md`, "Citas de terceros") as read in a real browser with a name, city and phone that do not differ from `SITE`. Every JSON-LD node that carries `sameAs` and `/ai/summary.json` SHALL publish this same list.
+The site's official profile list SHALL contain only public profiles the brand owns, each as a unique absolute `https` URL, including the verified Sortlist and Clutch profiles. A directory profile SHALL enter the list only after its real-browser citation record matches `SITE`. Every JSON-LD node that carries `sameAs` and `/ai/summary.json` SHALL publish this same list.
 
 #### Scenario: Sortlist profile is published in structured data
 
@@ -12,7 +12,7 @@ The site's official profile list SHALL contain only public profiles the brand ow
 
 #### Scenario: Clutch profile is recorded as a citation
 
-- **WHEN** the "Citas de terceros" table of the citation record is read
+- **WHEN** the "Citas de terceros" table of the citation record (`docs/seo-audit/local-signals-2026-11.md`) is read
 - **THEN** the Clutch row has the URL "https://clutch.co/profile/nuria-romero", the name, address and phone as observed in a real browser (or "not shown publicly (observed)"), the reading date, and a status saying the outgoing link goes through the `r.clutch.co` redirect, so it is a citation and not a direct backlink
 - **AND** no row or line of the record still describes Clutch as pending review
 
