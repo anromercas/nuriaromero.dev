@@ -236,3 +236,36 @@ Medición de la subtarea 1.2 (NRD-127), 2026-11-18, `pnpm build && pnpm preview`
 Ejecuciones individuales después (1 / 2 / 3): LCP 1,804 / 1,952 / 1,952 s; CLS 0,0213 en las tres; TBT 0 ms en las tres; score 99 en las tres.
 
 Veredicto: sin cambio medible. El elemento LCP sigue siendo el primer párrafo del cuerpo (texto) y el CLS no se mueve (0,021, por debajo de 0,1). La producción no se vuelve a medir hasta que la rama se promocione.
+
+## Medición 2026-11-18 (NRD-128)
+
+Línea base del post `/blog/cuanto-cuesta-una-pagina-web-en-sevilla/` antes de editarlo (NRD-128, subtarea 1.1). La medición posterior a la edición (subtarea 1.2) se añade en este mismo apartado.
+
+### Condiciones
+
+- **Fecha:** 2026-11-18 (00:45-00:46 UTC).
+- **Herramienta:** Lighthouse CLI 12.8.2 (`npx -y lighthouse@12.8.2 <url> --form-factor=mobile --output=json --chrome-flags="--headless=new" --quiet`), modo navegación, el mismo comando que NRD-18; no se añade a `package.json`.
+- **Dispositivo / throttling:** móvil (Moto G Power por defecto), throttling simulado por defecto (RTT 150 ms, CPU x4, 1,6 Mbps).
+- **Muestra:** 3 ejecuciones secuenciales por URL; se registra la mediana.
+- **URLs:** producción (`https://nuriaromero.dev/...`, versión publicada) y `pnpm build && pnpm preview` de la rama `feat/NRD-128-prices-post-competitors` sin editar el post (`http://localhost:4322/...`; el puerto 4321 estaba ocupado por otro servidor local).
+- **Informes JSON:** guardados fuera del repo (no se commitean).
+
+### Antes de la edición (medianas de 3 ejecuciones, móvil)
+
+| URL                          | LCP     | CLS   | TBT  | Score | Elemento LCP                                     |
+| ---------------------------- | ------- | ----- | ---- | ----- | ------------------------------------------------ |
+| Producción                   | 1,498 s | 0,000 | 0 ms | 100   | `section.section > article > div.post-prose > p` |
+| `pnpm preview` (rama, antes) | 1,953 s | 0,083 | 0 ms | 97    | `section.section > article > div.post-prose > p` |
+
+Ejecuciones individuales (1 / 2 / 3):
+
+| URL                          | LCP (s)               | CLS                      | TBT (ms)  | Score           |
+| ---------------------------- | --------------------- | ------------------------ | --------- | --------------- |
+| Producción                   | 1,585 / 1,033 / 1,498 | 0,0000 / 0,0000 / 0,0000 | 0 / 0 / 0 | 100 / 100 / 100 |
+| `pnpm preview` (rama, antes) | 1,805 / 1,953 / 1,953 | 0,0834 / 0,0127 / 0,0834 | 0 / 0 / 0 | 97 / 99 / 97    |
+
+El elemento LCP es el primer párrafo del cuerpo (`p` de `div.post-prose`, el párrafo de introducción), texto, no una imagen. La diferencia entre producción y preview es de entorno (CDN y compresión frente a servidor local), no del contenido: ambos sirven el mismo post sin editar. El CLS de preview oscila entre 0,013 y 0,083 entre ejecuciones del mismo contenido (ruido de la medición local); la mediana 0,083 queda por debajo de 0,1.
+
+### Después de la edición
+
+Pendiente (subtarea 1.2, `pnpm preview` tras el commit de contenido).
