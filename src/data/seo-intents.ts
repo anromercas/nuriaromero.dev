@@ -67,7 +67,7 @@ export const intentMatrix: SeoIntentRow[] = [
     topic: "cuánto cuesta una página web y qué revisar",
     cta: "Use the checklist and ask for a project assessment",
     titleSignal: "¿Cuánto cuesta una página web",
-    descriptionSignal: "Qué factores influyen en el precio",
+    descriptionSignal: "Cuánto cuesta una página web en Sevilla",
     h1Signal: "¿Cuánto cuesta una página web",
     contentSignals: ["Qué debo revisar en una propuesta económica", "Qué preguntas debo hacer antes de contratar"],
   },

@@ -1,19 +1,32 @@
 ---
 title: "¿Cuánto cuesta una página web en Sevilla? Qué influye en el precio"
-description: "Qué factores influyen en el precio de una página web para un negocio en Sevilla y qué conviene revisar al comparar presupuestos."
+description: "Cuánto cuesta una página web en Sevilla: qué factores influyen en el precio, qué partidas comparar en cada presupuesto y qué preguntar antes de contratar."
 pubDate: 2026-07-07
+updatedDate: 2026-11-18
 tags: ["diseño web", "precios", "sevilla"]
 ---
 
-El precio de una página web puede variar mucho según el alcance, el contenido y el trabajo técnico incluido. Sin una muestra documentada de presupuestos locales no corresponde presentar cifras como si fueran un estudio del mercado sevillano. Estas son las partidas que conviene comparar antes de contratar.
+No hay una tarifa única para una web: el precio sale del trabajo que incluye. Por eso esta guía no da cifras de mercado y se centra en lo que sí puedes comparar entre presupuestos.
 
 ## Respuesta corta
 
-El precio de una web en Sevilla depende del alcance, el contenido y el trabajo técnico incluido; no existe una cifra única de mercado que se pueda dar como referencia fiable. Antes de comparar presupuestos conviene revisar qué incluye cada partida (rendimiento, SEO, contacto) y qué queda fuera.
+Una página web en Sevilla cuesta según su alcance, el contenido y el trabajo técnico incluido, así que no hay una cifra única fiable. Para comparar presupuestos, revisa qué incluye cada partida y qué se cobra aparte.
 
 ## ¿Qué hace variar el presupuesto de una web?
 
-Una web sencilla con una plantilla y contenido ya preparado no requiere el mismo trabajo que un proyecto con diseño a medida, tienda online, redacción, integraciones o soporte continuado. Dominio, alojamiento, mantenimiento y licencias también pueden cobrarse aparte; pide que cada partida y su renovación queden claras en la propuesta.
+Lo que más mueve el precio es el alcance: cuántas páginas, diseño a medida o plantilla, tienda online, redacción de textos, integraciones y soporte después del lanzamiento.
+
+## ¿Qué cambia entre una web sencilla, una corporativa y una tienda online?
+
+Una web sencilla de pocas páginas, una web corporativa con más secciones y una tienda online con pagos y catálogo no requieren el mismo trabajo, así que tampoco cuestan lo mismo.
+
+Si lo que necesitas es vender por internet, revisa qué incluye el [presupuesto de una tienda online](/tienda-online-sevilla/).
+
+## ¿Qué gastos se pagan cada año?
+
+Además del proyecto, una web suele tener costes que se repiten: la renovación del dominio, el alojamiento, el mantenimiento y, si las hay, las licencias de plantillas o plugins.
+
+Pide que la propuesta indique cada renovación, quién la paga y a nombre de quién queda.
 
 ## ¿Qué debo revisar en una propuesta económica?
 
@@ -24,6 +37,8 @@ El precio por sí solo no permite saber si una web resolverá las necesidades de
 3. **Contacto**: revisa si el diseño facilita las acciones que necesita tu negocio, como llamar, escribir o pedir presupuesto.
 
 ## ¿Qué debe incluir una web profesional para un negocio local?
+
+Una web profesional para un negocio local debe verse bien en el móvil, cargar rápido, facilitar el contacto y quedar dada de alta en Google, con el dominio y el hosting a tu nombre.
 
 Cuando compares presupuestos, comprueba que incluyan:
 
@@ -36,6 +51,8 @@ Cuando compares presupuestos, comprueba que incluyan:
 
 ## ¿Qué preguntas debo hacer antes de contratar una web?
 
+Antes de contratar, pregunta de quién serán el dominio y el hosting, qué resultados puede demostrar, si el precio es cerrado y qué soporte hay después del lanzamiento.
+
 1. ¿El dominio y el hosting quedan a mi nombre?
 2. ¿Puedo ver webs tuyas funcionando y cómo posicionan en Google?
 3. ¿Qué velocidad de carga tendrá? ¿Me lo demuestras con datos?
@@ -46,6 +63,8 @@ Si alguien no puede responderte con claridad a estas cinco, sigue buscando.
 
 ## ¿Cómo trabajo en cada proyecto?
 
-Soy [desarrolladora de software con más de 10 años de experiencia](/sobre-mi/). En cada propuesta detallo el alcance, el trabajo de SEO técnico previsto, los costes recurrentes y el soporte incluido. El rendimiento final depende del contenido, los recursos y el entorno de uso; si la medición es importante para tu proyecto, podemos acordar cómo comprobarlo.
+En cada propuesta detallo el alcance, el trabajo de SEO técnico previsto, los costes recurrentes y el soporte incluido, para que sepas qué pagas y qué queda fuera.
 
-Puedes consultar [mi servicio de diseño web y qué incluye](/diseno-web-sevilla/), o [escribirme](/contacto/) con los detalles de tu proyecto para valorar el alcance.
+Soy [desarrolladora de software con más de 10 años de experiencia](/sobre-mi/). El rendimiento final depende del contenido, los recursos y el entorno de uso; si la medición es importante para tu proyecto, podemos acordar cómo comprobarlo.
+
+Si buscas una referencia concreta, consulta [el precio cerrado de mi servicio de diseño web](/diseno-web-sevilla/) y qué incluye, o [escríbeme con los detalles de tu proyecto](/contacto/).
