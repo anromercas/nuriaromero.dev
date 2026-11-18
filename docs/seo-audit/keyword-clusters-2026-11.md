@@ -263,6 +263,33 @@ Search Console context (S7, window 2026-10-16 to 2026-11-12): `seo local sevilla
 
 **Dato observado, SL-4.** Labs volume 110 (S1); Google Business Profile guide queries won by a competitor are in S1 candidate 4, which the PO rejected on 2026-11-13 (single source, national informational intent); they are not clustered or proposed here.
 
+**Dato observado (NRD-127, 2026-11-18), SL-4 `como aparecer en google maps`.** Source: DataForSEO `serp/google/organic/live/advanced`, `Seville,Andalusia,Spain`, `es`, **desktop** (the design asked for mobile; the orchestrator ran desktop, recorded as a deviation), depth 10, run by the orchestrator on 2026-11-18; task id: sin dato (not carried in the hand-off). Calls used: 1 of 6 (no `on_page/content_parsing/live` call: the developer agent has no DataForSEO tools, so the sample was measured with `curl`, never simulated).
+
+- **Local pack:** none (no local pack item in the SERP). **AI Overview:** present (loaded asynchronously, text not read). **Paid:** 1 ad (Mytapstar).
+- **People Also Ask (literal):** "¿Cómo hacer para aparecer en Google Maps?", "¿Cómo marcar 3 puntos en Google Maps?", "¿Cómo llegar a Google?", "¿Cómo hacer para que Google Maps se vea en tiempo real?". Answers are async AI text, not read. Only the first is about listing a business; the other three are about using Maps and are not gaps.
+- **Organic domains in order** (URLs resolved from breadcrumbs; DataForSEO returns `google.com/goto` redirects), all generic Spanish guides whose titles repeat the query: 1 `leadmotiv.com/blog/como-aparecer-en-google-maps/`; 2 `qdq.com/blog/como-aparecer-en-google-maps` ("Posicionamiento ...", 2023-02-10); 3 `happyweb.es/blog/como-aparecer-primero-en-google-maps/` ("12 acciones", 2026-11-05, "Nadie puede garantizar el primer puesto"); 4 `getmudy.com/blog/como-aparecer-en-google-maps` (product-led: menu on Maps, 2026-10-22); 5 `webboost.es/blog/como-aparecer-en-google-maps/`; 6 `salvaigualada.com/blog/como-aparecer-en-google-maps/` (2026-04-20); 7 `marketingonlinemalaga.com` blog (2021-02-15); 8 `estrategikadigital.com/blog/como-aparecer-en-google-maps-guia-hacia-el-exito-asegurado/`; 9 `localo.com/es/blog/como-aparecer-en-google-maps` (2025-02-06). No video, forum or Google help page in the 9 organic items. `nuriaromero.dev` is not in the top 10 (the post is not indexed, S7).
+- **Main-content words, measured with `curl`** (not DataForSEO; HTML text of the article container, excluding `nav`, `header`, `footer`, `aside`, `script`, `style`, whitespace tokens, 2026-11-18). Sample = the first five ranking guides that could be read: 1 leadmotiv **1026**; 2 qdq **~1611** (approximate: the page has no article container, counted from the H1 to the "Últimos post" block, so it may include some boilerplate); 3 happyweb **1035**; 4 getmudy **237** (product-led, short); 6 salvaigualada **1284**. Position 5 `webboost.es` is **sin dato (the URL answers HTTP 410, the page was removed)**, so position 6 took its place. Extra read, not in the sample: estrategikadigital (#8) 697. **Median of the 5: 1035 words** (range 237 to 1611).
+- **Post body, built page** (`data-post-body`, visible whitespace tokens of `dist/`, before the edit): **662 words**. The inventory figure (786, row 5) used another counting basis; both are recorded and **no length target is derived**: the median is 1035 but the sample mixes a 237-word product page and an approximate 1611, and the story adds sections only for measured gaps, never to reach a count.
+- **Subtopic coverage** (judged on H2/H3 headings plus the section text read with `curl`; sí = own section or step, parcial = mentioned inside another section or a thin section, no = absent):
+
+| Subtopic                                         | leadmotiv | qdq     | happyweb | getmudy | salvaigualada | This post |
+| ------------------------------------------------ | --------- | ------- | -------- | ------- | ------------- | --------- |
+| Create or claim the listing and verify it        | sí        | sí      | sí       | sí      | sí            | sí        |
+| Complete the data (name, category, hours)        | sí        | sí      | sí       | parcial | sí            | sí        |
+| Photos, posts, questions                         | parcial   | sí      | sí       | no      | parcial       | sí        |
+| Reviews                                          | parcial   | no      | sí       | no      | sí            | sí        |
+| Connect with the website, NAP consistency        | no        | parcial | sí       | no      | sí            | sí        |
+| **Why the business does not appear**             | sí (thin) | no      | parcial  | no      | sí            | **no**    |
+| How long it takes                                | no        | sí      | sí       | no      | no            | sí        |
+| Appear vs rank (relevance, distance, prominence) | parcial   | sí      | sí       | no      | sí            | sí        |
+| What not to do (policies)                        | no        | no      | sí       | no      | parcial       | parcial   |
+| Measure progress                                 | no        | no      | sí       | no      | no            | parcial   |
+| Who is eligible, service-area businesses         | no        | no      | no       | no      | sí            | no        |
+| Cost of the listing                              | no        | no      | sí       | no      | no            | sí (free) |
+
+- **Inferencia: gap list (closed, used by task 1.2).** Rule: a subtopic covered by at least two measured competitors, or present in the PAA, that the post does not answer. **One gap: "why the business does not appear"** (leadmotiv has an H2 with a short lead-in; salvaigualada has a full section: unverified or inaccessible listing, eligibility, data, visibility for that query). Task 1.2 adds the single section `¿Por qué no aparece mi negocio en Google Maps?`, linking official Google pages. Not gaps: eligibility (salvaigualada only), measuring progress and what not to do (happyweb only; the post already links the performance report and warns against buying reviews), cost (happyweb only; the post already says the listing is free; no price figure is added, decision S-2026-11-13-1 is open), the three PAA questions about using Maps. No second section.
+- **Limits:** the sample is five pages of one SERP read once on desktop; word counts are curl text, not DataForSEO `content_parsing`; coverage marks are a reading of headings and sections, not a ranking-factor claim.
+
 ### GEO
 
 #### Tabla de consultas

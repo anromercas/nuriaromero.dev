@@ -143,3 +143,36 @@ Regla: regresión si CLS mediano > 0,1, o si LCP mediano menos baseline supera e
 - `/seo-local-sevilla/`: CLS 0,000 (<= 0,1); Δ LCP -0,297 s (no supera 0,01 s; el LCP mejora). Sin regresión. No procede la confirmación con 6 ejecuciones porque ninguna regla se activa.
 
 **No se requiere seguimiento.** Ninguna de las dos URLs supera CLS 0,1 ni empeora el LCP respecto al baseline de NRD-18; el CTA de reserva de la cabecera no introduce desplazamientos de diseño medibles en producción. Salvedad: el elemento LCP de `/seo-local-sevilla/` cambió de `p.hero-subtitle` a `p.display` por los cambios de texto de NRD-52, por lo que la comparación de LCP es entre elementos distintos; sigue siendo texto y mejora. INP y datos de campo siguen sin evaluarse.
+
+## Medición 2026-11-18 (NRD-127)
+
+Línea base del post `/blog/como-aparecer-en-google-maps-negocio-sevilla/` antes de editarlo (NRD-127, subtarea 1.1). La medición posterior a la edición (subtarea 1.2) se añade en este mismo apartado.
+
+### Condiciones
+
+- **Fecha:** 2026-11-18 (00:19-00:20 UTC).
+- **Herramienta:** Lighthouse CLI 12.8.2 (`npx -y lighthouse@12.8.2 <url> --form-factor=mobile --output=json --chrome-flags="--headless=new" --quiet`), modo navegación, el mismo comando que NRD-18; no se añade a `package.json`.
+- **Dispositivo / throttling:** móvil (Moto G Power por defecto), throttling simulado por defecto (RTT 150 ms, CPU x4, 1,6 Mbps).
+- **Muestra:** 3 ejecuciones secuenciales por URL; se registra la mediana.
+- **URLs:** producción (`https://nuriaromero.dev/...`, versión publicada) y `pnpm build && pnpm preview` de la rama `feat/NRD-127-maps-post-competitors` sin editar el post (`http://localhost:4321/...`).
+- **Informes JSON:** guardados fuera del repo (no se commitean).
+
+### Antes de la edición (medianas de 3 ejecuciones, móvil)
+
+| URL                          | LCP     | CLS   | TBT  | Score | Elemento LCP                                     |
+| ---------------------------- | ------- | ----- | ---- | ----- | ------------------------------------------------ |
+| Producción                   | 1,488 s | 0,010 | 0 ms | 100   | `section.section > article > div.post-prose > p` |
+| `pnpm preview` (rama, antes) | 1,953 s | 0,021 | 0 ms | 99    | `section.section > article > div.post-prose > p` |
+
+Ejecuciones individuales (1 / 2 / 3):
+
+| URL                          | LCP (s)               | CLS                      | TBT (ms)  | Score          |
+| ---------------------------- | --------------------- | ------------------------ | --------- | -------------- |
+| Producción                   | 1,883 / 1,488 / 0,928 | 0,0000 / 0,0104 / 0,0111 | 0 / 0 / 0 | 99 / 100 / 100 |
+| `pnpm preview` (rama, antes) | 1,955 / 1,953 / 1,802 | 0,0213 / 0,0213 / 0,0213 | 0 / 0 / 0 | 99 / 99 / 99   |
+
+El elemento LCP es el primer párrafo del cuerpo (`p` de `div.post-prose`, el párrafo de introducción), texto, no una imagen. La diferencia entre producción y preview es de entorno (CDN y compresión frente a servidor local), no del contenido: ambos sirven el mismo post sin editar.
+
+### Después de la edición
+
+Pendiente (subtarea 1.2, `pnpm preview` tras el commit de contenido).
