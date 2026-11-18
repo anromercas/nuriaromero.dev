@@ -2,12 +2,18 @@
 
 ### Requirement: The page keeps its intent placement
 
-`/inteligencia-artificial/` SHALL carry the title, the meta description and the single H1 of its intent row ("Inteligencia artificial para empresas en Sevilla" in title and H1, "chatbots que atienden clientes" in the description), so that title, H1 and description each work the registered term `inteligencia artificial para empresas sevilla` (each contains "inteligencia artificial", "empresas" and "Sevilla"), with a title of at most 65 characters and a description of at most 160 characters that keeps "años de experiencia". It SHALL keep the process and pricing keyword headings ("Así es el proceso de implantar IA en tu negocio", "Cuánto cuesta implementar IA en tu negocio"), and MUST NOT use a term owned by another page, nor "posicionamiento en IA" or "GEO", in the title, H1 or any H2. The page copy MUST NOT promise that Google or an AI assistant will rank or recommend the business.
+`/inteligencia-artificial/` SHALL make its title, meta description and single H1 work the registered term `inteligencia artificial para empresas sevilla` within its length limits, SHALL keep its process and pricing keyword headings, and MUST NOT use a term owned by another page, nor "posicionamiento en IA" or "GEO", in the title, H1 or any H2. The page copy MUST NOT promise that Google or an AI assistant will rank or recommend the business.
 
 #### Scenario: Intent signals kept
 
 - **WHEN** the page is built
 - **THEN** the title, description, only H1 and the process and pricing H2 contain their intent signals
+
+#### Scenario: Intent copy strings
+
+- **WHEN** the site data of the page is read
+- **THEN** the title and the H1 contain "Inteligencia artificial para empresas en Sevilla" and the description contains "chatbots que atienden clientes"
+- **AND** the process H2 is "Así es el proceso de implantar IA en tu negocio" and the pricing H2 is "Cuánto cuesta implementar IA en tu negocio"
 
 #### Scenario: Title, H1 and description work the registered term
 
@@ -29,6 +35,11 @@
 
 - **WHEN** the intent test reads the internal-link map and the reciprocal pairs
 - **THEN** `/inteligencia-artificial/` links to `/desarrollo-software-medida/` and the pair with `/automatizaciones/` exists in both directions
+
+#### Scenario: No ranking promise
+
+- **WHEN** the visible copy of the built page is read
+- **THEN** it contains no promise that Google or an AI assistant will rank or recommend the business
 
 ## ADDED Requirements
 
