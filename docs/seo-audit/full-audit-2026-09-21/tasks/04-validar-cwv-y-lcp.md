@@ -194,3 +194,45 @@ Misma máquina, mismo Chrome 157.0.8103.79, mismo comando y condiciones que el a
 Ejecuciones individuales después (1 / 2 / 3): LCP 2,103 / 2,103 / 1,953 s, CLS 0,1987 / 0,1985 / 0,1985, TBT 0 / 0 / 0 ms, score 89 / 89 / 89.
 
 Veredicto: sin regresión. Δ LCP -0,001 s, Δ CLS -0,0088; el elemento LCP sigue siendo el mismo texto. El CLS del preview (~0,2) ya estaba por encima de 0,1 antes de editar y no cambia con el copy; no se investiga aquí (el desplazamiento no tiene nodo asociado y producción mide 0,000), queda como observación para el seguimiento de CWV si se reproduce en producción tras la promoción.
+
+## Medición 2026-11-18 (NRD-127)
+
+Línea base del post `/blog/como-aparecer-en-google-maps-negocio-sevilla/` antes de editarlo (NRD-127, subtarea 1.1). La medición posterior a la edición (subtarea 1.2) se añade en este mismo apartado.
+
+### Condiciones
+
+- **Fecha:** 2026-11-18 (00:19-00:20 UTC).
+- **Herramienta:** Lighthouse CLI 12.8.2 (`npx -y lighthouse@12.8.2 <url> --form-factor=mobile --output=json --chrome-flags="--headless=new" --quiet`), modo navegación, el mismo comando que NRD-18; no se añade a `package.json`.
+- **Dispositivo / throttling:** móvil (Moto G Power por defecto), throttling simulado por defecto (RTT 150 ms, CPU x4, 1,6 Mbps).
+- **Muestra:** 3 ejecuciones secuenciales por URL; se registra la mediana.
+- **URLs:** producción (`https://nuriaromero.dev/...`, versión publicada) y `pnpm build && pnpm preview` de la rama `feat/NRD-127-maps-post-competitors` sin editar el post (`http://localhost:4321/...`).
+- **Informes JSON:** guardados fuera del repo (no se commitean).
+
+### Antes de la edición (medianas de 3 ejecuciones, móvil)
+
+| URL                          | LCP     | CLS   | TBT  | Score | Elemento LCP                                     |
+| ---------------------------- | ------- | ----- | ---- | ----- | ------------------------------------------------ |
+| Producción                   | 1,488 s | 0,010 | 0 ms | 100   | `section.section > article > div.post-prose > p` |
+| `pnpm preview` (rama, antes) | 1,953 s | 0,021 | 0 ms | 99    | `section.section > article > div.post-prose > p` |
+
+Ejecuciones individuales (1 / 2 / 3):
+
+| URL                          | LCP (s)               | CLS                      | TBT (ms)  | Score          |
+| ---------------------------- | --------------------- | ------------------------ | --------- | -------------- |
+| Producción                   | 1,883 / 1,488 / 0,928 | 0,0000 / 0,0104 / 0,0111 | 0 / 0 / 0 | 99 / 100 / 100 |
+| `pnpm preview` (rama, antes) | 1,955 / 1,953 / 1,802 | 0,0213 / 0,0213 / 0,0213 | 0 / 0 / 0 | 99 / 99 / 99   |
+
+El elemento LCP es el primer párrafo del cuerpo (`p` de `div.post-prose`, el párrafo de introducción), texto, no una imagen. La diferencia entre producción y preview es de entorno (CDN y compresión frente a servidor local), no del contenido: ambos sirven el mismo post sin editar.
+
+### Después de la edición
+
+Medición de la subtarea 1.2 (NRD-127), 2026-11-18, `pnpm build && pnpm preview` con el post editado (nueva sección, párrafos de entrada, enlace al hub). Mismas condiciones y mismo comando; mediana de 3 ejecuciones, móvil.
+
+| URL                          | LCP     | CLS   | TBT  | Score | Elemento LCP                                     |
+| ---------------------------- | ------- | ----- | ---- | ----- | ------------------------------------------------ |
+| `pnpm preview` (rama, antes)  | 1,953 s | 0,021 | 0 ms | 99    | `section.section > article > div.post-prose > p` |
+| `pnpm preview` (rama, después) | 1,952 s | 0,021 | 0 ms | 99    | `section.section > article > div.post-prose > p` |
+
+Ejecuciones individuales después (1 / 2 / 3): LCP 1,804 / 1,952 / 1,952 s; CLS 0,0213 en las tres; TBT 0 ms en las tres; score 99 en las tres.
+
+Veredicto: sin cambio medible. El elemento LCP sigue siendo el primer párrafo del cuerpo (texto) y el CLS no se mueve (0,021, por debajo de 0,1). La producción no se vuelve a medir hasta que la rama se promocione.
