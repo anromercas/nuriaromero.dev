@@ -162,7 +162,7 @@ test("FAQ answers link to the owner pages", () => {
 
 test("NAP block plus email and LinkedIn routes are present", () => {
   assert.match(page, /mailto:\$\{SITE\.email\}/);
-  assert.match(page, /SITE\.sameAs\[0\]/);
+  assert.match(page, /profileUrl\("linkedin"\)/);
   assert.match(page, /target="_blank" rel="noopener noreferrer"/);
 });
 

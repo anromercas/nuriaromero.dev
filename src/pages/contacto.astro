@@ -9,7 +9,7 @@ import SeoLocalFaq from "@/components/seo-local/SeoLocalFaq.astro";
 import SeoLocalNap from "@/components/seo-local/SeoLocalNap.astro";
 import { breadcrumbSchema, faqSchema } from "@/lib/schema";
 import { contactFaqs } from "@/data/page-faqs";
-import { SITE } from "@/data/site";
+import { SITE, profileUrl } from "@/data/site";
 
 const breadcrumbs = [
   { name: "Inicio", url: "/" },
@@ -65,7 +65,7 @@ const textLink =
           keyword="Datos de contacto"
         />
         <p class="mt-4 max-w-[65ch] text-base leading-relaxed text-slate-300">
-          También puedes escribirme a <a href={`mailto:${SITE.email}`} class={textLink}>{SITE.email}</a> o encontrarme en <a href={SITE.sameAs[0]} target="_blank" rel="noopener noreferrer" class={textLink}>LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>. Trabajo con negocios de Sevilla y su área metropolitana, y en remoto para el resto de España.
+          También puedes escribirme a <a href={`mailto:${SITE.email}`} class={textLink}>{SITE.email}</a> o encontrarme en <a href={profileUrl("linkedin")} target="_blank" rel="noopener noreferrer" class={textLink}>LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>. Trabajo con negocios de Sevilla y su área metropolitana, y en remoto para el resto de España.
         </p>
       </SectionContainer>
     </div>
