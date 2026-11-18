@@ -54,3 +54,35 @@ test("every sameAs entry is a valid, unique https URL", async () => {
   }
   assert.equal(new Set(SITE.sameAs.map(normalize)).size, SITE.sameAs.length);
 });
+
+// --- Task 1.2: Sortlist in sameAs (NRD-295) ---------------------------------
+
+const SORTLIST = "https://www.sortlist.es/agency/nuria-romero";
+
+test("SITE.sameAs contains the Sortlist profile exactly once, as the last entry", async () => {
+  const { SITE } = await import("../src/data/site.ts");
+  assert.equal(SITE.sameAs.filter((u) => u === SORTLIST).length, 1);
+  assert.equal(SITE.sameAs.at(-1), SORTLIST);
+});
+
+test("business and person JSON-LD publish the Sortlist profile", async () => {
+  const { localBusinessSchema, personSchema } =
+    await import("../src/lib/schema.ts");
+  assert.ok(localBusinessSchema().sameAs.includes(SORTLIST));
+  assert.ok(personSchema().sameAs.includes(SORTLIST));
+});
+
+test("sameAs has no profile without a real listing", async () => {
+  const { SITE } = await import("../src/data/site.ts");
+  for (const url of SITE.sameAs) {
+    const host = new URL(url).hostname;
+    for (const banned of [
+      "clutch.co",
+      "crunchbase.com",
+      "wikipedia.org",
+      "wikidata.org",
+    ]) {
+      assert.ok(!host.endsWith(banned), `${url} is not a verified profile`);
+    }
+  }
+});

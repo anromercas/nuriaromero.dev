@@ -44,6 +44,7 @@ export const SITE = {
     "https://linkedin.com/in/nuria-romero-castillo",
     "https://github.com/anromercas",
     "https://www.google.com/maps/place/?q=place_id:ChIJ8Uv-vM9f0CoR8J75dj4I0HM",
+    "https://www.sortlist.es/agency/nuria-romero",
   ],
   defaultOgImage: "/og/og-default.png",
   logo: "/logo.jpg",
