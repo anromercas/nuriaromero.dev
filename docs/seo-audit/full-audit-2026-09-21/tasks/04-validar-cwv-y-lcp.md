@@ -181,3 +181,16 @@ Ejecuciones individuales (1 / 2 / 3): producción LCP 1,615 / 1,483 / 1,608 s, C
 
 - El elemento LCP es texto (`p.hero-subtitle`) en ambos entornos, como en NRD-18 (`p.text-xl`); no hay recurso de imagen que priorizar.
 - **El preview ya supera CLS 0,1 antes de editar** (0,207 estable en las 3 ejecuciones; el informe de Lighthouse lista el desplazamiento sin nodo asociado), mientras que producción da 0,000. Diferencias conocidas entre ambos: `pnpm preview` sirve `dist/` sin `public/_headers` ni la compresión/caché de Netlify, y la medición de producción puede reflejar un despliegue anterior al HEAD actual. No se investiga la causa en esta historia (alcance: copy). Es el valor de partida del par antes/después en preview; la regla de regresión de la tarea NRD-287 compara el preview editado con este 0,2073, no con producción.
+
+### Resultados después de la edición (NRD-287, preview, medianas de 3 ejecuciones, móvil)
+
+Misma máquina, mismo Chrome 157.0.8103.79, mismo comando y condiciones que el antes. `pnpm build && pnpm preview` de la rama con el copy nuevo (title, H1 y description de `/inteligencia-artificial/`), 2026-11-18.
+
+| URL                         | Entorno                   | Momento | LCP     | CLS    | TBT  | Score | Elemento LCP              |
+| --------------------------- | ------------------------- | ------- | ------- | ------ | ---- | ----- | ------------------------- |
+| `/inteligencia-artificial/` | preview (rama sin editar) | antes   | 2,104 s | 0,2073 | 0 ms | 88    | `p.hero-subtitle` (texto) |
+| `/inteligencia-artificial/` | preview (copy nuevo)      | después | 2,103 s | 0,1985 | 0 ms | 89    | `p.hero-subtitle` (texto) |
+
+Ejecuciones individuales después (1 / 2 / 3): LCP 2,103 / 2,103 / 1,953 s, CLS 0,1987 / 0,1985 / 0,1985, TBT 0 / 0 / 0 ms, score 89 / 89 / 89.
+
+Veredicto: sin regresión. Δ LCP -0,001 s, Δ CLS -0,0088; el elemento LCP sigue siendo el mismo texto. El CLS del preview (~0,2) ya estaba por encima de 0,1 antes de editar y no cambia con el copy; no se investiga aquí (el desplazamiento no tiene nodo asociado y producción mide 0,000), queda como observación para el seguimiento de CWV si se reproduce en producción tras la promoción.
