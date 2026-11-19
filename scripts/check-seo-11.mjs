@@ -80,6 +80,8 @@ const VERIFIED_SAME_AS = [
   "https://www.google.com/maps/place/?q=place_id:ChIJ8Uv-vM9f0CoR8J75dj4I0HM",
   // Sortlist: public profile verified in a real browser by NRD-160 (2026-11-18), recorded in docs/seo-audit/local-signals-2026-11.md
   "https://www.sortlist.es/agency/nuria-romero",
+  // Clutch: public profile verified in a real browser by NRD-292 (2026-11-18), recorded in docs/seo-audit/local-signals-2026-11.md
+  "https://clutch.co/profile/nuria-romero",
 ]
 if (!Array.isArray(business.sameAs) || business.sameAs.join("|") !== VERIFIED_SAME_AS.join("|")) {
     fail(`business sameAs is not limited to verified profiles in ${file}`)
