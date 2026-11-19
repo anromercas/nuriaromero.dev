@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { untrackedOwners } from "../scripts/lib/keyword-ownership.mjs";
 
 const config = JSON.parse(
   await readFile(new URL("../.claude/harness.json", import.meta.url), "utf8"),
@@ -30,15 +31,38 @@ test('"posicionamiento en ia" and "seo para ia" are tracked for /seo-para-ia/ in
   }
 });
 
-test("every keywordOwners term owned by /seo-para-ia/ is tracked for that page", async () => {
+test("untrackedOwners returns nothing when the owner term is tracked for its page", () => {
+  assert.deepEqual(
+    untrackedOwners(
+      [{ keyword: "a", url: "/x/" }],
+      [{ keyword: "a", page: "/x/" }],
+    ),
+    [],
+  );
+});
+
+test("untrackedOwners reports an owner term absent from the tracked rows", () => {
+  assert.deepEqual(untrackedOwners([{ keyword: "a", url: "/x/" }], []), [
+    { keyword: "a", url: "/x/", trackedPage: null },
+  ]);
+});
+
+test("untrackedOwners reports an owner term tracked for another page", () => {
+  assert.deepEqual(
+    untrackedOwners(
+      [{ keyword: "a", url: "/x/" }],
+      [{ keyword: "a", page: "/y/" }],
+    ),
+    [{ keyword: "a", url: "/x/", trackedPage: "/y/" }],
+  );
+});
+
+test("every keywordOwners term is tracked for its owner page", async () => {
   const { keywordOwners } = await import(
     new URL("../src/data/seo-intents.ts", import.meta.url)
   );
-  const owned = keywordOwners.filter((o) => o.url === "/seo-para-ia/");
-  assert.ok(owned.length >= 2);
-  for (const { keyword } of owned) {
-    assert.equal(find(keyword)?.page, "/seo-para-ia/", keyword);
-  }
+  assert.ok(keywordOwners.length > 0);
+  assert.deepEqual(untrackedOwners(keywordOwners, keywords), []);
 });
 
 test("keywords are unique and within maxCallsPerRun", () => {

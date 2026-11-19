@@ -77,3 +77,20 @@ export function findOwnershipViolations(pages, owners) {
   }
   return violations;
 }
+
+/**
+ * Owner terms not tracked for their owner page.
+ * @param {{ keyword: string, url: string }[]} owners - keywordOwners
+ * @param {{ keyword: string, page: string }[]} trackedRows - seo.rankTracking.keywords
+ * @returns {{ keyword: string, url: string, trackedPage: string | null }[]}
+ */
+export function untrackedOwners(owners, trackedRows) {
+  const pageByKeyword = new Map(trackedRows.map((r) => [r.keyword, r.page]));
+  return owners
+    .filter(({ keyword, url }) => pageByKeyword.get(keyword) !== url)
+    .map(({ keyword, url }) => ({
+      keyword,
+      url,
+      trackedPage: pageByKeyword.get(keyword) ?? null,
+    }));
+}
