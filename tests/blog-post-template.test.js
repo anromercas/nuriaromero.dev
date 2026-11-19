@@ -141,6 +141,15 @@ test("table cell borders use the hairline-strong token", () => {
   assert.match(rule, /border:\s*1px solid var\(--hairline-strong\)/);
 });
 
+test("right-aligned table cells never wrap (NRD-298)", () => {
+  const css = layout.slice(layout.indexOf("<style"));
+  const rule = css.match(
+    /\.post-prose :global\(th\[align="right"\]\),\s*\.post-prose :global\(td\[align="right"\]\)\s*\{[^}]*\}/,
+  )?.[0];
+  assert.ok(rule, 'rule for td[align="right"] not found');
+  assert.match(rule, /white-space:\s*nowrap/);
+});
+
 test("hairline-strong reaches 3:1 on ground and card surfaces", () => {
   const strong = token("hairline-strong");
   assert.ok(strong, "--hairline-strong missing in template.css");

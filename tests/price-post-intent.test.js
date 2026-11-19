@@ -3,8 +3,12 @@ import assert from "node:assert/strict";
 import { normaliseTerm } from "../scripts/lib/keyword-ownership.mjs";
 import {
   isDirectAnswer,
+  firstParagraph,
+  markdownTable,
+  markdownTableHead,
   plainText,
   readPost,
+  sectionText,
   sections,
   sentences,
 } from "./helpers/post-sections.js";
@@ -21,19 +25,25 @@ const { internalLinksBySource } = await import(
   new URL("../src/data/internal-links.ts", import.meta.url)
 );
 
+const { disenoWeb } = await import(
+  new URL("../src/data/services.ts", import.meta.url)
+);
+
 const { data, body } = readPost(SLUG);
 const row = intentMatrix.find((r) => r.url === POST_PATH);
 
-// Numbers the post carried before NRD-128 (LCP threshold, percentile, years).
-// While decision S-2026-11-13-1 (prices in the blog post) is open, no other
-// figure may enter the post.
-const ALLOWED_NUMBERS = new Set(["2", "5", "75", "10"]);
+const tiers = disenoWeb.pricing.tiers;
+const tierAmounts = new Set(tiers.map((t) => t.from.replace(/\s?€$/, "")));
+const rateDate = new Intl.DateTimeFormat("es-ES", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+}).format(new Date(data.updatedDate));
+const rateYear = String(new Date(data.updatedDate).getUTCFullYear());
+const SHORT_ANSWER = "Respuesta corta";
 
-const numbersOf = (markdown) =>
-  markdown
-    .replace(/\]\([^)]*\)/g, "]")
-    .replace(/^\s*\d+\.\s/gm, "")
-    .match(/\d+/g) ?? [];
+const withoutLinkUrls = (markdown) => markdown.replace(/\]\([^)]*\)/g, "]");
 
 const worksTerm = (text) => {
   const normalised = normaliseTerm(text);
@@ -76,13 +86,81 @@ test("at most two H2 sections are added to the six existing ones", () => {
   assert.ok(sections(body).length <= 8);
 });
 
-test("the body holds no number outside today's set", () => {
-  const extra = numbersOf(body).filter((n) => !ALLOWED_NUMBERS.has(n));
-  assert.deepEqual(extra, []);
+test("the opening paragraph and the short answer give my published rates", () => {
+  const blocks = {
+    opening: firstParagraph(body),
+    "short answer lead": sections(body).find((s) => s.heading === SHORT_ANSWER)
+      ?.lead,
+  };
+  for (const [name, text] of Object.entries(blocks)) {
+    assert.ok(text, `${name} not found`);
+    assert.ok(text.includes("mis tarifas"), `${name} lacks "mis tarifas"`);
+    for (const tier of tiers) {
+      assert.ok(text.includes(tier.from), `${name} lacks ${tier.from}`);
+    }
+    assert.ok(text.includes(rateDate), `${name} lacks the date "${rateDate}"`);
+  }
 });
 
-test("the body holds no euro sign or currency word", () => {
-  assert.doesNotMatch(body, /€|\beuros?\b|\bEUR\b/i);
+test("the short answer table equals disenoWeb.pricing.tiers", () => {
+  const section = sectionText(body, SHORT_ANSWER);
+  const rows = markdownTable(section);
+  const expected = tiers.map((t) => [
+    t.name,
+    `Desde ${t.from}`,
+    t.includes.join("; "),
+  ]);
+  assert.equal(rows.length, expected.length, "one data row per tier");
+  expected.forEach((cells, i) => {
+    assert.deepEqual(
+      rows[i],
+      cells,
+      `table differs from tier "${tiers[i].name}"`,
+    );
+  });
+  const alignment = markdownTableHead(section).delimiter.map((cell) =>
+    cell.endsWith(":") ? "right" : "default",
+  );
+  assert.deepEqual(alignment, ["default", "right", "default"]);
+  const lead = section.split(/\r?\n[ \t]*\r?\n/);
+  assert.ok(
+    !lead[0].startsWith("|"),
+    "the lead paragraph comes before the table",
+  );
+});
+
+test("every euro amount and long number comes from the tiers", () => {
+  const text = withoutLinkUrls(body).replace(/^\s*\d+\.\s/gm, "");
+  const foreignEuros = [...text.matchAll(/(\d{1,3}(?:\.\d{3})*|\d+)\s?€/g)]
+    .map((m) => m[1])
+    .filter((n) => !tierAmounts.has(n));
+  assert.deepEqual(foreignEuros, [], "euro amounts outside the tiers");
+  assert.doesNotMatch(text, /\beuros?\b|\bEUR\b/i);
+  const foreignLong = (text.match(/\d+(?:\.\d{3})*/g) ?? []).filter(
+    (n) =>
+      n.replace(/\./g, "").length >= 3 && !tierAmounts.has(n) && n !== rateYear,
+  );
+  assert.deepEqual(
+    foreignLong,
+    [],
+    "numbers of three or more digits outside the tiers",
+  );
+});
+
+test("the rate date in the text equals the update date", () => {
+  assert.ok(
+    plainText(body).includes(rateDate),
+    `body lacks "${rateDate}" (updatedDate ${data.updatedDate})`,
+  );
+});
+
+test("no sentence claims the post gives no figures", () => {
+  const offenders = sentences(plainText(body)).filter(
+    (s) =>
+      /\bno (?:da|doy|hay)\b[^.]*\bcifras?\b/i.test(s) &&
+      !s.includes("de mercado"),
+  );
+  assert.deepEqual(offenders, []);
 });
 
 test("the body points to the published price page with the trailing slash", () => {
