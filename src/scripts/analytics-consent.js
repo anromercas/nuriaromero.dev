@@ -154,6 +154,23 @@ export function isObscured(rect, panelRect) {
   )
 }
 
+export const CONSENT_OFFSET_TOP_PROPERTY = '--consent-offset-top'
+
+// Decides where the fixed panel goes. It sits at the bottom unless that covers
+// an element marked data-consent-avoid and the top placement (just below the
+// fixed header) covers none of them.
+export function consentPanelPosition({ panelRect, avoidRects = [], viewportHeight, headerBottom = 0, gap = 0 }) {
+  const bottom = { position: 'bottom' }
+  if (!panelRect || panelRect.height <= 0 || !avoidRects.length) return bottom
+  const coveredAtBottom = avoidRects.some((rect) => isObscured(rect, panelRect))
+  if (!coveredAtBottom) return bottom
+  const top = Math.ceil(headerBottom + gap)
+  if (top + panelRect.height > viewportHeight) return bottom
+  const topRect = { ...panelRect, top, bottom: top + panelRect.height }
+  if (avoidRects.some((rect) => isObscured(rect, topRect))) return bottom
+  return { position: 'top', top }
+}
+
 export function createConsentPanel({ doc, storage, controller }) {
   // Elements are resolved on every call: View Transitions replaces <body>,
   // so any reference captured earlier would point at detached nodes.
@@ -176,12 +193,41 @@ export function createConsentPanel({ doc, storage, controller }) {
     if (!style) return
     const panel = el('analytics-consent')
     const viewport = doc.defaultView?.innerHeight
-    const offset =
+    const measurable =
       panel && !panel.hidden && typeof panel.getBoundingClientRect === 'function' && viewport
-        ? consentOffset(panel.getBoundingClientRect(), viewport)
-        : 0
+    if (measurable) position(panel, viewport)
+    const onTop = Boolean(measurable) && panel.getAttribute?.('data-position') === 'top'
+    const rect = measurable ? panel.getBoundingClientRect() : null
+    const offset = measurable && !onTop ? consentOffset(rect, viewport) : 0
+    const offsetTop = onTop ? Math.max(0, Math.ceil(rect.bottom)) : 0
     if (offset > 0) style.setProperty(CONSENT_OFFSET_PROPERTY, `${offset}px`)
     else style.removeProperty(CONSENT_OFFSET_PROPERTY)
+    if (offsetTop > 0) style.setProperty(CONSENT_OFFSET_TOP_PROPERTY, `${offsetTop}px`)
+    else style.removeProperty(CONSENT_OFFSET_TOP_PROPERTY)
+  }
+
+  // Anchors the panel under the fixed header when, at the bottom, it would
+  // cover an element marked data-consent-avoid (the hero booking button).
+  // Measures the bottom placement first, so it runs in the same task that
+  // removes `hidden`, before the first paint.
+  function position(panel, viewport) {
+    if (panel.getAttribute?.('data-position') === 'top') {
+      panel.removeAttribute?.('data-position')
+      if (panel.style) panel.style.top = ''
+    }
+    const avoid = doc.querySelectorAll?.('[data-consent-avoid]')
+    if (!avoid || !avoid.length) return
+    const header = doc.querySelector?.('header.fixed')
+    const result = consentPanelPosition({
+      panelRect: panel.getBoundingClientRect(),
+      avoidRects: Array.from(avoid, (node) => node.getBoundingClientRect()),
+      viewportHeight: viewport,
+      headerBottom: header ? header.getBoundingClientRect().bottom : 0,
+      gap: 8,
+    })
+    if (result.position !== 'top') return
+    panel.setAttribute('data-position', 'top')
+    if (panel.style) panel.style.top = `${result.top}px`
   }
 
   function hide() {

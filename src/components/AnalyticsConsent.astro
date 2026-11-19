@@ -103,13 +103,14 @@
 </script>
 
 <style is:global>
-  html { scroll-padding-bottom: var(--consent-offset, 0px); }
+  html { scroll-padding-bottom: var(--consent-offset, 0px); scroll-padding-top: var(--consent-offset-top, 0px); }
   body { padding-bottom: var(--consent-offset, 0px); }
 </style>
 
 <style>
   .consent-panel { position: fixed; z-index: 100; inset: auto 1rem 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; max-width: 64rem; margin-inline: auto; padding: 1rem; border: 1px solid #9ca3af; border-radius: .75rem; background: #fff; color: #111827; box-shadow: 0 10px 30px #0003; }
   .consent-panel[hidden] { display: none; }
+  .consent-panel[data-position="top"] { bottom: auto; }
   .consent-panel h2 { margin: 0 0 .35rem; font-size: 1.1rem; }
   .consent-panel p { max-width: 42rem; margin: 0; font-size: .9rem; }
   .consent-panel a { text-decoration: underline; }

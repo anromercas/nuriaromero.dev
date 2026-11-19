@@ -7,6 +7,7 @@ import {
   createConsentController,
   createConsentPanel,
   consentOffset,
+  consentPanelPosition,
   createGtag,
   isObscured,
   placementFor,
@@ -835,3 +836,137 @@ for (const vp of consentViewports) {
     assert.equal(isObscured(buttonRect(vp, buttonBottomPx(mutated, offset)), panel), true)
   })
 }
+
+// NRD-305: the panel must not cover the hero booking button on short viewports.
+const bugMeasures = (overrides = {}) => ({
+  panelRect: rect(447, 659, 8, 367),
+  avoidRects: [rect(548, 592, 20, 200)],
+  viewportHeight: 667,
+  headerBottom: 64,
+  gap: 8,
+  ...overrides,
+});
+
+test("consentPanelPosition anchors the panel on top when the bottom placement covers the CTA (375x667)", () => {
+  assert.deepEqual(consentPanelPosition(bugMeasures()), {
+    position: "top",
+    top: 72,
+  });
+});
+
+test("consentPanelPosition keeps the panel at the bottom when nothing is covered (390x844)", () => {
+  const result = consentPanelPosition(
+    bugMeasures({
+      panelRect: rect(632, 836, 8, 382),
+      avoidRects: [rect(548, 592, 20, 200)],
+      viewportHeight: 844,
+    }),
+  );
+  assert.deepEqual(result, { position: "bottom" });
+});
+
+test("consentPanelPosition keeps the bottom when the top placement would also cover an element", () => {
+  const result = consentPanelPosition(
+    bugMeasures({
+      avoidRects: [rect(548, 592, 20, 200), rect(80, 120, 20, 200)],
+    }),
+  );
+  assert.deepEqual(result, { position: "bottom" });
+});
+
+test("consentPanelPosition keeps the bottom without avoid rects", () => {
+  assert.deepEqual(consentPanelPosition(bugMeasures({ avoidRects: [] })), {
+    position: "bottom",
+  });
+});
+
+function positionSetup(stored, avoid) {
+  const ctx = offsetSetup(stored, rect(447, 659, 8, 367));
+  ctx.world.doc.defaultView = { innerHeight: 667 };
+  const styles = {};
+  for (const nodes of [ctx.a, ctx.b]) {
+    const panelNode = nodes["analytics-consent"];
+    panelNode.style = styles;
+    panelNode.getBoundingClientRect = () => {
+      const onTop = panelNode.attrs["data-position"] === "top";
+      const top = onTop ? Number.parseFloat(styles.top) : 447;
+      return rect(top, top + 212, 8, 367);
+    };
+    panelNode.getAttribute = function (name) {
+      return this.attrs[name] ?? null;
+    };
+    panelNode.removeAttribute = function (name) {
+      delete this.attrs[name];
+    };
+  }
+  ctx.world.doc.querySelector = (selector) =>
+    selector.includes("header")
+      ? { getBoundingClientRect: () => rect(8, 64, 0, 375) }
+      : null;
+  ctx.world.doc.querySelectorAll = (selector) =>
+    selector === "[data-consent-avoid]"
+      ? avoid.map((r) => ({ getBoundingClientRect: () => r }))
+      : [];
+  return { ...ctx, styles };
+}
+
+test("panel: sync with the CTA covered anchors the panel on top and publishes --consent-offset-top", () => {
+  const { world, b, panel, props, styles } = positionSetup(null, [
+    rect(548, 592, 20, 200),
+  ]);
+  world.current = b;
+  panel.sync();
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+  assert.equal(styles.top, "72px");
+  assert.equal(props.has("--consent-offset"), false);
+  assert.equal(props.get("--consent-offset-top"), "284px");
+});
+
+test("panel: sync without overlap keeps the NRD-80 bottom behavior", () => {
+  const { world, b, panel, props, styles } = positionSetup(null, [
+    rect(300, 340, 20, 200),
+  ]);
+  world.current = b;
+  panel.sync();
+  assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
+  assert.equal(styles.top, undefined);
+  assert.equal(props.get("--consent-offset"), "220px");
+  assert.equal(props.has("--consent-offset-top"), false);
+});
+
+test("panel: reopening from cookie-settings places the panel on top too", () => {
+  const { world, b, panel, props } = positionSetup("accepted", [
+    rect(548, 592, 20, 200),
+  ]);
+  world.current = b;
+  panel.handleClick(b["cookie-settings"]);
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+  assert.equal(props.has("--consent-offset"), false);
+});
+
+test("panel: handleFocus scrolls an element hidden behind a top-anchored panel", () => {
+  const { world, b, panel, scrolled, target } = positionSetup(null, [
+    rect(548, 592, 20, 200),
+  ]);
+  world.current = b;
+  panel.sync();
+  panel.handleFocus(target(rect(100, 140, 20, 200)));
+  assert.deepEqual(scrolled, [{ block: "nearest" }]);
+  panel.handleFocus(target(rect(500, 540, 20, 200)));
+  assert.equal(scrolled.length, 1);
+});
+
+test("NRD-305 sources: the hero actions opt in and the layout reserves scroll-padding-top", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const hero = await readFile(
+    new URL("../src/components/seo-local/SeoLocalHero.astro", import.meta.url),
+    "utf8",
+  );
+  const consent = await readFile(
+    new URL("../src/components/AnalyticsConsent.astro", import.meta.url),
+    "utf8",
+  );
+  assert.match(hero, /<div class="hero-actions"[^>]*data-consent-avoid/);
+  assert.match(consent, /scroll-padding-top:\s*var\(--consent-offset-top/);
+  assert.match(consent, /\[data-position="top"\]/);
+});
