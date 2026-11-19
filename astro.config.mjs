@@ -7,6 +7,7 @@ import sitemap from "@astrojs/sitemap"
 import robotsTxt from "astro-robots-txt"
 
 import { CRAWLER_POLICY } from "./src/data/crawler-policy.ts"
+import rehypeTableScroll from "./src/lib/rehype-table-scroll.mjs"
 
 // Lee `pubDate`/`updatedDate` del frontmatter de los posts del blog para poder
 // asignar un `lastmod` real por URL en el sitemap (no la fecha de build).
@@ -72,5 +73,6 @@ export default defineConfig({
   site: 'https://nuriaromero.dev/',
   markdown: {
     shikiConfig: { theme: "github-dark-dimmed" },
+    rehypePlugins: [rehypeTableScroll],
   },
 })
