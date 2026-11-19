@@ -33,7 +33,7 @@ const hasVisual = Astro.slots.has("visual");
       class="hero-display"
     />
     <p class="hero-subtitle">{subtitle}</p>
-    <div class="hero-actions" {...actionsAttrs}>
+    <div class="hero-actions" data-consent-avoid {...actionsAttrs}>
       <BookingButton label={primaryCtaLabel} />
       {secondaryLink && <a class="hero-link" href={secondaryLink.href}>{secondaryLink.label}</a>}
     </div>
