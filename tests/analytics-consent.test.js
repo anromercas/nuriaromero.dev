@@ -9,6 +9,7 @@ import {
   consentOffset,
   consentPanelPosition,
   createGtag,
+  focusRemedy,
   isObscured,
   pendingFonts,
   placementFor,
@@ -950,11 +951,72 @@ test("panel: handleFocus scrolls an element hidden behind a top-anchored panel",
     rect(548, 592, 20, 200),
   ]);
   world.current = b;
+  world.doc.defaultView.scrollY = 400;
   panel.sync();
   panel.handleFocus(target(rect(100, 140, 20, 200)));
   assert.deepEqual(scrolled, [{ block: "nearest" }]);
   panel.handleFocus(target(rect(500, 540, 20, 200)));
   assert.equal(scrolled.length, 1);
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+});
+
+// NRD-309: with the panel on top and no scroll travel, it returns to the bottom.
+const focusMeasures = (overrides = {}) => ({
+  rect: rect(102, 134, 20, 200),
+  panelRect: rect(72, 284, 8, 367),
+  position: "top",
+  scrollY: 0,
+  ...overrides,
+});
+
+test("focusRemedy: none without overlap", () => {
+  assert.equal(focusRemedy(focusMeasures({ rect: rect(300, 340, 20, 200) })), "none");
+});
+
+test("focusRemedy: scroll when the panel is at the bottom", () => {
+  assert.equal(
+    focusRemedy(
+      focusMeasures({
+        position: "bottom",
+        panelRect: rect(447, 659, 8, 367),
+        rect: rect(500, 540, 20, 200),
+      }),
+    ),
+    "scroll",
+  );
+});
+
+test("focusRemedy: flip when the panel is on top and scrollY is 0 (NRD-309 QA case)", () => {
+  assert.equal(focusRemedy(focusMeasures()), "flip");
+});
+
+test("focusRemedy: scroll when the panel is on top and scrollY is 400", () => {
+  assert.equal(focusRemedy(focusMeasures({ scrollY: 400 })), "scroll");
+});
+
+test("focusRemedy: boundary scrollY = ceil(panel bottom) - top scrolls, one less flips", () => {
+  assert.equal(focusRemedy(focusMeasures({ scrollY: 182 })), "scroll");
+  assert.equal(focusRemedy(focusMeasures({ scrollY: 181 })), "flip");
+});
+
+test("panel: focus under the top panel at scrollY 0 returns the panel to the bottom without scrolling", () => {
+  const { world, b, panel, props, styles, scrolled, target } = positionSetup(null, [
+    rect(548, 592, 20, 200),
+  ]);
+  world.current = b;
+  world.doc.defaultView.scrollY = 0;
+  panel.sync();
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+  panel.handleFocus(target(rect(102, 134, 20, 200)));
+  assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
+  assert.equal(styles.top, "");
+  assert.equal(props.get("--consent-offset"), "220px");
+  assert.equal(props.has("--consent-offset-top"), false);
+  assert.equal(scrolled.length, 0);
+  // The booking button is now under the bottom panel: scroll as usual, stay at the bottom.
+  panel.handleFocus(target(rect(548, 592, 20, 200)));
+  assert.deepEqual(scrolled, [{ block: "nearest" }]);
+  assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
 });
 
 test("NRD-305 sources: the hero actions opt in and the layout reserves scroll-padding-top", async () => {

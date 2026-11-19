@@ -171,6 +171,17 @@ export function consentPanelPosition({ panelRect, avoidRects = [], viewportHeigh
   return { position: 'top', top }
 }
 
+// What to do when a focused element sits under the panel. At the bottom the
+// reserved body padding always leaves scroll travel, so scrolling works. On
+// top there is no such travel: it only works when the current scroll is enough
+// to lift the element below the panel; otherwise the panel returns to the
+// bottom (no reserved padding on top: it would shift the page, see NRD-307).
+export function focusRemedy({ rect, panelRect, position, scrollY = 0 }) {
+  if (!isObscured(rect, panelRect)) return 'none'
+  if (position !== 'top') return 'scroll'
+  return scrollY >= Math.ceil(panelRect.bottom) - rect.top ? 'scroll' : 'flip'
+}
+
 export const CONSENT_FONT_WAIT_MS = 3000
 
 // Forces a layout, which starts downloading the fonts the page uses, and
@@ -232,6 +243,14 @@ export function createConsentPanel({ doc, storage, controller }) {
   let placedWidth
   let pendingNode = null
 
+  // Returns the panel to its default position at the bottom.
+  function resetToBottom(panel) {
+    if (panel.getAttribute?.('data-position') === 'top') {
+      panel.removeAttribute?.('data-position')
+      if (panel.style) panel.style.top = ''
+    }
+  }
+
   // Anchors the panel under the fixed header when, at the bottom, it would
   // cover an element marked data-consent-avoid (the hero booking button).
   // Clears any earlier placement and measures the bottom one first, so it runs
@@ -240,10 +259,7 @@ export function createConsentPanel({ doc, storage, controller }) {
     const viewport = doc.defaultView?.innerHeight
     placedNode = panel
     placedWidth = doc.defaultView?.innerWidth
-    if (panel.getAttribute?.('data-position') === 'top') {
-      panel.removeAttribute?.('data-position')
-      if (panel.style) panel.style.top = ''
-    }
+    resetToBottom(panel)
     if (!viewport || typeof panel.getBoundingClientRect !== 'function') return
     const avoid = doc.querySelectorAll?.('[data-consent-avoid]')
     if (!avoid || !avoid.length) return
@@ -281,9 +297,20 @@ export function createConsentPanel({ doc, storage, controller }) {
     if (!panel || panel.hidden || typeof panel.getBoundingClientRect !== 'function') return
     if (target.closest('#analytics-consent')) return
     if (typeof target.getBoundingClientRect !== 'function') return
-    if (isObscured(target.getBoundingClientRect(), panel.getBoundingClientRect())) {
-      target.scrollIntoView?.({ block: 'nearest' })
+    const rect = target.getBoundingClientRect()
+    const remedy = focusRemedy({
+      rect,
+      panelRect: panel.getBoundingClientRect(),
+      position: panel.getAttribute?.('data-position') === 'top' ? 'top' : 'bottom',
+      scrollY: doc.defaultView?.scrollY ?? 0,
+    })
+    if (remedy === 'none') return
+    if (remedy === 'flip') {
+      resetToBottom(panel)
+      update()
+      if (!isObscured(target.getBoundingClientRect(), panel.getBoundingClientRect())) return
     }
+    target.scrollIntoView?.({ block: 'nearest' })
   }
 
   function sync() {
