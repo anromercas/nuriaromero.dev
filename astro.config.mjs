@@ -8,6 +8,7 @@ import robotsTxt from "astro-robots-txt"
 
 import { CRAWLER_POLICY } from "./src/data/crawler-policy.ts"
 import rehypeTableScroll from "./src/lib/rehype-table-scroll.mjs"
+import { assetsInlineLimit } from "./src/lib/asset-inline-limit.mjs"
 
 // Lee `pubDate`/`updatedDate` del frontmatter de los posts del blog para poder
 // asignar un `lastmod` real por URL en el sitemap (no la fecha de build).
@@ -73,10 +74,8 @@ export default defineConfig({
   site: 'https://nuriaromero.dev/',
   vite: {
     build: {
-      // Las fuentes nunca se incrustan como data URI: la CSP usa font-src 'self'.
-      // Para el resto de assets se mantiene el límite por defecto de Vite.
-      assetsInlineLimit: (filePath) =>
-        /\.(woff2?|ttf|otf|eot)$/i.test(filePath) ? false : undefined,
+      // Las fuentes nunca se incrustan como data URI (CSP font-src 'self').
+      assetsInlineLimit,
     },
   },
   markdown: {
