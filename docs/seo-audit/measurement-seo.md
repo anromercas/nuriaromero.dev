@@ -7,12 +7,12 @@
 
 ## Fuentes, permisos y límites
 
-| Fuente | Propiedad o configuración | Permiso mínimo | Estado local | Pendiente |
-| --- | --- | --- | --- | --- |
-| Google Search Console | Dominio `nuriaromero.dev` o propiedad URL-prefix `https://nuriaromero.dev/` | Propietaria o usuaria completa para inspección, sitemap y exportes | No se guardan tokens ni exportes en el repositorio | Verificar propiedad, sitemap y permisos humanos |
-| Google Analytics 4 | Stream web de `https://nuriaromero.dev/` | Editora para configuración; lectora para informes | Código consent-gated y eventos allowlisted | Confirmar stream, retención y recepción en producción |
-| GTM | No habilitado por defecto | Solo tras decisión y container autorizado | No se incluye `GTM-*` ni script de Tag Manager | Decidir si hace falta; documentar container y consentimiento antes de instalarlo |
-| PSI / CrUX | URLs públicas y origen | Sin credenciales para PSI web; CrUX depende de disponibilidad de campo | Se puede ejecutar manualmente fuera del repo | Capturar fecha, estrategia, URL y disponibilidad real |
+| Fuente                | Propiedad o configuración                                                   | Permiso mínimo                                                         | Estado local                                       | Pendiente                                                                        |
+| --------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Google Search Console | Dominio `nuriaromero.dev` o propiedad URL-prefix `https://nuriaromero.dev/` | Propietaria o usuaria completa para inspección, sitemap y exportes     | No se guardan tokens ni exportes en el repositorio | Verificar propiedad, sitemap y permisos humanos                                  |
+| Google Analytics 4    | Stream web de `https://nuriaromero.dev/`                                    | Editora para configuración; lectora para informes                      | Código consent-gated y eventos allowlisted         | Confirmar stream, retención y recepción en producción                            |
+| GTM                   | No habilitado por defecto                                                   | Solo tras decisión y container autorizado                              | No se incluye `GTM-*` ni script de Tag Manager     | Decidir si hace falta; documentar container y consentimiento antes de instalarlo |
+| PSI / CrUX            | URLs públicas y origen                                                      | Sin credenciales para PSI web; CrUX depende de disponibilidad de campo | Se puede ejecutar manualmente fuera del repo       | Capturar fecha, estrategia, URL y disponibilidad real                            |
 
 No se almacenan credenciales, tokens, cookies exportadas, datos personales, consultas identificables ni capturas de cuentas en el repositorio. Un ID de medición GA4 es un identificador público de configuración, no una credencial; el despliegue puede sobrescribirlo con `PUBLIC_GA4_MEASUREMENT_ID` sin modificar el código.
 
@@ -29,14 +29,14 @@ No se almacenan credenciales, tokens, cookies exportadas, datos personales, cons
 
 Los nombres son lower_snake_case y no se crean eventos ad hoc desde componentes.
 
-| Evento | Cuándo | Parámetros permitidos | KPI relacionado |
-| --- | --- | --- | --- |
-| `page_view` | Cambio de ruta tras `astro:page-load` y consentimiento | `page_path` | Sesiones y páginas vistas |
-| `contact_click` | Click en el CTA de reserva, en un enlace `tel:` o en un enlace `mailto:` | `contact_method` (`booking`, `phone` o `email`), `placement`, `service_slug` | Intención de contacto |
-| `whatsapp_click` | Click en el CTA de WhatsApp | `placement` | Intención de contacto |
-| `form_submit` | Respuesta exitosa de Formspree | `placement` (`contact_form`) | Lead enviado |
-| `form_error` | Error de validación, red o proveedor | `placement`, `error_type` genérico | Salud del formulario |
-| `generate_lead` | Solo si se decide usar una conversión GA4 separada | `placement`, `service_slug` | Lead atribuido |
+| Evento           | Cuándo                                                                   | Parámetros permitidos                                                        | KPI relacionado           |
+| ---------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------- | ------------------------- |
+| `page_view`      | Cambio de ruta tras `astro:page-load` y consentimiento                   | `page_path`                                                                  | Sesiones y páginas vistas |
+| `contact_click`  | Click en el CTA de reserva, en un enlace `tel:` o en un enlace `mailto:` | `contact_method` (`booking`, `phone` o `email`), `placement`, `service_slug` | Intención de contacto     |
+| `whatsapp_click` | Click en el CTA de WhatsApp                                              | `placement`                                                                  | Intención de contacto     |
+| `form_submit`    | Respuesta exitosa de Formspree                                           | `placement` (`contact_form`)                                                 | Lead enviado              |
+| `form_error`     | Error de validación, red o proveedor                                     | `placement`, `error_type` genérico                                           | Salud del formulario      |
+| `generate_lead`  | Solo si se decide usar una conversión GA4 separada                       | `placement`, `service_slug`                                                  | Lead atribuido            |
 
 `form_submit` y `generate_lead` no deben dispararse juntos para el mismo envío salvo que se documente explícitamente la deduplicación en GA4. La implementación local mantiene la lista de eventos permitidos en `src/scripts/analytics-consent.js`; el cableado (NRD-82) es un único listener delegado en `AnalyticsConsent.astro` que traduce los enlaces de reserva, `tel:`, `mailto:` y `https://wa.me/` a estos eventos, más un evento DOM `site:analytics` que emite el formulario al enviarse correctamente. `placement` es el landmark más externo del enlace (`header`, `nav`, `main`, `footer`, `aside`) o `page`. Nunca se envían el teléfono, el email, el `href` ni campos del formulario.
 
@@ -44,14 +44,14 @@ Los nombres son lower_snake_case y no se crean eventos ad hoc desde componentes.
 
 La primera captura debe usar una ventana fija, fecha/hora, zona horaria, filtros, segmentos, propiedad y fuente. Hasta disponer del exporte correspondiente, cada celda permanece como **N/D**, no como cero.
 
-| Área | KPI | Fuente | Ventana inicial | Frecuencia | Estado |
-| --- | --- | --- | --- | --- | --- |
-| Visibilidad | Clicks, impresiones, CTR, posición media | Search Console | 28 días antes de cada cambio | Semanal; comparativa mensual | Líneas base 2026-11-14 y 2026-11-15 (ver abajo) |
-| Cobertura | Páginas indexadas, excluidas y motivos | Search Console | Fecha de captura | Semanal tras cambios técnicos | Parcial 2026-11-15: sitemap y URLs `/servicios/` (ver abajo) |
-| Demanda | Consultas, páginas y dispositivos | Search Console | Misma ventana que visibilidad | Mensual | Líneas base 2026-11-14 y 2026-11-15 (ver abajo) |
-| Experiencia | Core Web Vitals: LCP, INP, CLS y disponibilidad de CrUX | CrUX / PSI | Fecha, URL y estrategia documentadas | Tras cambios de plantilla; mensual si hay campo | N/D: ejecución externa pendiente |
-| Adquisición | Usuarios/sesiones consentidas y landing pages | GA4 | 28 días antes/después | Mensual | GA4 recibe `page_view` desde la publicación de NRD-67 (2026-11-15); sin ventana de 28 días todavía (ver verificación) |
-| Conversión | `contact_click`, `whatsapp_click`, `form_submit`, leads confirmados | GA4 + Formspree | Misma ventana y atribución declarada | Semanal para alertas; mensual | N/D: eventos cableados en la rama, sin ventana en producción (ver abajo) |
+| Área        | KPI                                                                 | Fuente          | Ventana inicial                      | Frecuencia                                      | Estado                                                                                                                |
+| ----------- | ------------------------------------------------------------------- | --------------- | ------------------------------------ | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Visibilidad | Clicks, impresiones, CTR, posición media                            | Search Console  | 28 días antes de cada cambio         | Semanal; comparativa mensual                    | Líneas base 2026-11-14 y 2026-11-15 (ver abajo)                                                                       |
+| Cobertura   | Páginas indexadas, excluidas y motivos                              | Search Console  | Fecha de captura                     | Semanal tras cambios técnicos                   | Parcial 2026-11-15: sitemap y URLs `/servicios/` (ver abajo)                                                          |
+| Demanda     | Consultas, páginas y dispositivos                                   | Search Console  | Misma ventana que visibilidad        | Mensual                                         | Líneas base 2026-11-14 y 2026-11-15 (ver abajo)                                                                       |
+| Experiencia | Core Web Vitals: LCP, INP, CLS y disponibilidad de CrUX             | CrUX / PSI      | Fecha, URL y estrategia documentadas | Tras cambios de plantilla; mensual si hay campo | N/D: ejecución externa pendiente                                                                                      |
+| Adquisición | Usuarios/sesiones consentidas y landing pages                       | GA4             | 28 días antes/después                | Mensual                                         | GA4 recibe `page_view` desde la publicación de NRD-67 (2026-11-15); sin ventana de 28 días todavía (ver verificación) |
+| Conversión  | `contact_click`, `whatsapp_click`, `form_submit`, leads confirmados | GA4 + Formspree | Misma ventana y atribución declarada | Semanal para alertas; mensual                   | N/D: eventos cableados en la rama, sin ventana en producción (ver abajo)                                              |
 
 La posición media nunca se usa como KPI único. Los informes distinguen **dato observado**, **estimación**, **limitación** y **decisión**; no se atribuye causalidad a un deploy sin comparación temporal y contexto suficiente.
 
@@ -64,20 +64,20 @@ Ventana pedida: 28 días; la API devolvió datos del 2026-10-17 al 2026-11-11 (2
 
 **Total del sitio:** 1.199 impresiones, 2 clics.
 
-| Página | Clics | Impresiones | CTR | Posición media |
-| --- | --- | --- | --- | --- |
-| `/diseno-web-sevilla/` | 1 | 570 | 0,18 % | 60,8 |
-| `/seo-local-sevilla/` | 0 | 459 | 0 % | 47,6 |
-| `/automatizaciones/` | 0 | 41 | 0 % | 27,3 |
-| `/sobre-mi/` | 0 | 31 | 0 % | 10,5 |
-| `/` | 0 | 30 | 0 % | 27,5 |
-| `/desarrollo-software-medida/` | 0 | 16 | 0 % | 28,8 |
-| `/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/` | 1 | 13 | 7,69 % | 12,5 |
-| `/web-para-restaurantes-sevilla/` | 0 | 8 | 0 % | 8,2 |
-| `/web-para-abogados-gestorias-sevilla/` | 0 | 5 | 0 % | 10,6 |
-| `/contacto/` | 0 | 5 | 0 % | 5,0 |
-| `/web-para-clinicas-sevilla/` | 0 | 1 | 0 % | 7,0 |
-| `/inteligencia-artificial/`, `/tienda-online-sevilla/` | 0 | 0 | N/D | N/D: sin impresiones en la ventana |
+| Página                                                  | Clics | Impresiones | CTR    | Posición media                     |
+| ------------------------------------------------------- | ----- | ----------- | ------ | ---------------------------------- |
+| `/diseno-web-sevilla/`                                  | 1     | 570         | 0,18 % | 60,8                               |
+| `/seo-local-sevilla/`                                   | 0     | 459         | 0 %    | 47,6                               |
+| `/automatizaciones/`                                    | 0     | 41          | 0 %    | 27,3                               |
+| `/sobre-mi/`                                            | 0     | 31          | 0 %    | 10,5                               |
+| `/`                                                     | 0     | 30          | 0 %    | 27,5                               |
+| `/desarrollo-software-medida/`                          | 0     | 16          | 0 %    | 28,8                               |
+| `/blog/que-es-geo-posicionamiento-ia-negocios-sevilla/` | 1     | 13          | 7,69 % | 12,5                               |
+| `/web-para-restaurantes-sevilla/`                       | 0     | 8           | 0 %    | 8,2                                |
+| `/web-para-abogados-gestorias-sevilla/`                 | 0     | 5           | 0 %    | 10,6                               |
+| `/contacto/`                                            | 0     | 5           | 0 %    | 5,0                                |
+| `/web-para-clinicas-sevilla/`                           | 0     | 1           | 0 %    | 7,0                                |
+| `/inteligencia-artificial/`, `/tienda-online-sevilla/`  | 0     | 0           | N/D    | N/D: sin impresiones en la ventana |
 
 Otras URLs con impresiones: `/aviso-legal/` (9), `/servicios/automatizaciones/` (4), `/servicios/` (3), `https://n8n.nuriaromero.dev/` (3), `http://nuriaromero.dev/` (1).
 
@@ -96,23 +96,23 @@ Fecha de captura: 2026-11-15
 
 **Producción, tras carga completa de `/` (el arreglo NRD-67 está publicado desde la promoción del 2026-11-15):**
 
-| Estado | Resultado observado |
-| --- | --- |
-| Rechazar | Ninguna petición a `googletagmanager.com` ni a `google-analytics.com`. |
-| Aceptar (estado limpio) | Carga `www.googletagmanager.com/gtag/js`; `POST region1.google-analytics.com/g/collect` con `en=page_view` responde 204. |
+| Estado                                                                  | Resultado observado                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Rechazar                                                                | Ninguna petición a `googletagmanager.com` ni a `google-analytics.com`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| Aceptar (estado limpio)                                                 | Carga `www.googletagmanager.com/gtag/js`; `POST region1.google-analytics.com/g/collect` con `en=page_view` responde 204.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | Aceptar y revocar desde el pie (`#cookie-settings`, desmarcar, guardar) | **Producción, 2026-11-15 (solo `page_view`):** tras revocar no salió ninguna petición de páginas vistas y, al recargar con la preferencia guardada como rechazada, ninguna petición a Google. **Fuga detectada por QA el 2026-11-15 (NRD-94):** tras revocar, la medición mejorada de gtag.js (clic saliente) seguía enviando `POST region1.google-analytics.com/g/collect` con `en=click` y `ep.link_url` (URL completa del enlace saliente, incluido el teléfono y el texto en el botón de WhatsApp). Producción mantiene esta fuga hasta la próxima promoción de `develop` a `main`. **Rama con NRD-95, 2026-11-15, navegador automatizado sobre `pnpm preview`:** aceptar envía `page_view` y crea `_ga` y `_ga_NCV98R3HW7`; con consentimiento, un desplazamiento envía `scroll` (antes de revocar); tras revocar desde el pie no sale ninguna petición a `google-analytics.com` ni a `googletagmanager.com` al hacer clic en el enlace de LinkedIn y en el botón de WhatsApp, `window['ga-disable-G-NCV98R3HW7']` es `true`, no quedan cookies `_ga*` y `localStorage` guarda `rejected`; recargar con `rejected` y hacer clic en WhatsApp, navegar a un enlace interno y desplazarse tampoco envía nada. Volver a aceptar en la misma página envía un único `page_view`, restablece la marca a `false` y los eventos vuelven a salir (`whatsapp_click`, y el clic saliente de la medición mejorada, ya con consentimiento). Eventos de prueba desde `127.0.0.1`: excluir de la línea base. |
 
 **Eventos de conversión (build de la rama, no en producción todavía):** el cableado de NRD-82 llega a producción con la próxima promoción de `develop` a `main`. Hasta entonces se verificó con `pnpm preview` en localhost enviando a la propiedad real. **Eventos de prueba (2026-11-15, origen `127.0.0.1`): excluir de la línea base.** Cada clic con consentimiento generó un único evento en `/g/collect` (204); sin consentimiento no salió ninguna petición.
 
-| Clic con consentimiento | `en` observado | Parámetros `ep.*` observados |
-| --- | --- | --- |
-| CTA de reserva (zona de contenido) | `contact_click` | `contact_method=booking`, `placement=main` (valor observado por QA el 2026-11-15) |
-| CTA de reserva (cabecera) | `contact_click` | `contact_method=booking`, `placement=header` (valor observado por QA el 2026-11-15) |
-| Teléfono del pie | `contact_click` | `contact_method=phone`, `placement=footer` |
-| Email del pie | `contact_click` | `contact_method=email`, `placement=footer` |
-| Botón flotante de WhatsApp | `whatsapp_click` | `placement=page` |
-| Formulario de contacto (respuesta simulada `ok` de Formspree) | `form_submit` | `placement=contact_form` |
-| Reserva tras navegar con View Transitions | `contact_click` | `contact_method=booking` (un solo evento; `placement` no reverificado en esta fila) |
+| Clic con consentimiento                                       | `en` observado   | Parámetros `ep.*` observados                                                        |
+| ------------------------------------------------------------- | ---------------- | ----------------------------------------------------------------------------------- |
+| CTA de reserva (zona de contenido)                            | `contact_click`  | `contact_method=booking`, `placement=main` (valor observado por QA el 2026-11-15)   |
+| CTA de reserva (cabecera)                                     | `contact_click`  | `contact_method=booking`, `placement=header` (valor observado por QA el 2026-11-15) |
+| Teléfono del pie                                              | `contact_click`  | `contact_method=phone`, `placement=footer`                                          |
+| Email del pie                                                 | `contact_click`  | `contact_method=email`, `placement=footer`                                          |
+| Botón flotante de WhatsApp                                    | `whatsapp_click` | `placement=page`                                                                    |
+| Formulario de contacto (respuesta simulada `ok` de Formspree) | `form_submit`    | `placement=contact_form`                                                            |
+| Reserva tras navegar con View Transitions                     | `contact_click`  | `contact_method=booking` (un solo evento; `placement` no reverificado en esta fila) |
 
 Observaciones: no aparece ningún teléfono, email, `href` ni campo del formulario en `ep.*`. Un enlace interno no genera evento de conversión. La medición mejorada de GA4 envía además `scroll` y `form_start`; `form_start` incluye `form_id` y el identificador y nombre del primer campo (no sus valores), ver "Pendientes de la usuaria". `ep.page_path` no aparece en las peticiones observadas (el diseño lo esperaba); no se ha investigado el motivo y la ruta de página no se ha verificado como parámetro del evento.
 
@@ -127,15 +127,15 @@ Ventana pedida: 28 días. La API devolvió datos del 2026-10-18 al 2026-11-12 (2
 
 **Total del sitio:** 1.155 impresiones, 2 clics, CTR 0,17 %, posición media 51,2.
 
-| Página | Clics | Impresiones | CTR | Posición media |
-| --- | --- | --- | --- | --- |
-| `/` | 0 | 29 | 0 % | 27,8 |
-| `/seo-local-sevilla/` | 0 | 457 | 0 % | 47,2 |
-| `/diseno-web-sevilla/` | 1 | 574 | 0,17 % | 61,0 |
-| `/tienda-online-sevilla/` | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana |
-| `/desarrollo-software-medida/` | 0 | 15 | 0 % | 27,1 |
-| `/automatizaciones/` | 0 | 40 | 0 % | 26,1 |
-| `/inteligencia-artificial/` | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana |
+| Página                         | Clics                              | Impresiones                        | CTR                                | Posición media                     |
+| ------------------------------ | ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- |
+| `/`                            | 0                                  | 29                                 | 0 %                                | 27,8                               |
+| `/seo-local-sevilla/`          | 0                                  | 457                                | 0 %                                | 47,2                               |
+| `/diseno-web-sevilla/`         | 1                                  | 574                                | 0,17 %                             | 61,0                               |
+| `/tienda-online-sevilla/`      | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana |
+| `/desarrollo-software-medida/` | 0                                  | 15                                 | 0 %                                | 27,1                               |
+| `/automatizaciones/`           | 0                                  | 40                                 | 0 %                                | 26,1                               |
+| `/inteligencia-artificial/`    | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana | N/D: sin impresiones en la ventana |
 
 **Consultas principales por página** (impresiones, posición media; ninguna con clics salvo que se indique):
 
@@ -163,33 +163,33 @@ Llamadas: 12 a `serp/google/organic/live/advanced` (una por palabra clave, ningu
 
 Hechos observados, sin previsión de citas futuras. nuriaromero.dev no aparece en el AI Overview de ninguna de las 12 consultas, y su dominio no figura en ningún resultado de ninguna de las 12 respuestas (top 10 consultado).
 
-| Palabra clave | ¿AI Overview? | ¿Cita nuriaromero.dev? | Dominios referenciados |
-| --- | --- | --- | --- |
-| seo local sevilla | Sí | No | inventtatte.com, grupodiasan.com |
-| agencia seo sevilla | Sí | No | bringconnections.com, seowolf.es, posicionatuwebsevilla.com, citysem.es |
-| posicionamiento web sevilla | Sí | No | posicionatuwebsevilla.com, balboamedia.es, momoycia.com, citysem.es, seranking.com |
-| consultor seo sevilla | Sí | No | emprenderycrecer.emprenemjunts.es, dobuss.es, dobleo.com |
-| como aparecer en google maps | Sí | No | business.google.com, youtube.com, blog.hubspot.es, m.youtube.com |
-| posicionamiento en ia | Sí | No | bbva.com, promentconsulting.com, digital-nature.com, youtube.com |
-| inteligencia artificial para empresas sevilla | Sí | No | sevillaemprendedora.org, 10code.es, aslan.es |
-| diseño web sevilla | Sí | No | bassali.es, saulsanchez.agency |
-| cuanto cuesta una pagina web en sevilla | Sí | No | lourdesblanco.com, adrianpozo.es, bierzoseo.com |
-| tienda online sevilla | No | No aplica: sin AI Overview | No aplica |
-| diseño tienda online sevilla | Sí | No | sergiogarciamonge.es, estudiotipo.com, dondigital.es |
-| desarrollo de software a medida sevilla | Sí | No | q2bstudio.com, vidasoft.es, grupodiasan.com |
+| Palabra clave                                 | ¿AI Overview? | ¿Cita nuriaromero.dev?     | Dominios referenciados                                                             |
+| --------------------------------------------- | ------------- | -------------------------- | ---------------------------------------------------------------------------------- |
+| seo local sevilla                             | Sí            | No                         | inventtatte.com, grupodiasan.com                                                   |
+| agencia seo sevilla                           | Sí            | No                         | bringconnections.com, seowolf.es, posicionatuwebsevilla.com, citysem.es            |
+| posicionamiento web sevilla                   | Sí            | No                         | posicionatuwebsevilla.com, balboamedia.es, momoycia.com, citysem.es, seranking.com |
+| consultor seo sevilla                         | Sí            | No                         | emprenderycrecer.emprenemjunts.es, dobuss.es, dobleo.com                           |
+| como aparecer en google maps                  | Sí            | No                         | business.google.com, youtube.com, blog.hubspot.es, m.youtube.com                   |
+| posicionamiento en ia                         | Sí            | No                         | bbva.com, promentconsulting.com, digital-nature.com, youtube.com                   |
+| inteligencia artificial para empresas sevilla | Sí            | No                         | sevillaemprendedora.org, 10code.es, aslan.es                                       |
+| diseño web sevilla                            | Sí            | No                         | bassali.es, saulsanchez.agency                                                     |
+| cuanto cuesta una pagina web en sevilla       | Sí            | No                         | lourdesblanco.com, adrianpozo.es, bierzoseo.com                                    |
+| tienda online sevilla                         | No            | No aplica: sin AI Overview | No aplica                                                                          |
+| diseño tienda online sevilla                  | Sí            | No                         | sergiogarciamonge.es, estudiotipo.com, dondigital.es                               |
+| desarrollo de software a medida sevilla       | Sí            | No                         | q2bstudio.com, vidasoft.es, grupodiasan.com                                        |
 
 Resumen observado: 11 de las 12 consultas muestran AI Overview en Sevilla (móvil) el 2026-11-15; nuriaromero.dev no es referencia en ninguno.
 
 **Prompts en ChatGPT y Perplexity (comprobación manual):** ningún agente de esta ejecución puede consultar ChatGPT ni Perplexity. Los resultados quedan pendientes de la usuaria (ver "Pendientes de la usuaria"); al rellenar la tabla, anotar fecha, herramienta y dominios citados, y solo hechos (citado / no citado).
 
-| Prompt | Fecha | Herramienta | Dominios citados |
-| --- | --- | --- | --- |
-| "¿Qué agencia o consultor de SEO local recomiendas en Sevilla?" | Pendiente: usuaria | ChatGPT | Pendiente: usuaria |
-| "¿Qué agencia o consultor de SEO local recomiendas en Sevilla?" | Pendiente: usuaria | Perplexity | Pendiente: usuaria |
-| "¿Cuánto cuesta una página web para un negocio en Sevilla?" | Pendiente: usuaria | ChatGPT | Pendiente: usuaria |
-| "¿Cuánto cuesta una página web para un negocio en Sevilla?" | Pendiente: usuaria | Perplexity | Pendiente: usuaria |
-| "¿Qué es el posicionamiento en IA (GEO) y quién lo ofrece en Sevilla?" | Pendiente: usuaria | ChatGPT | Pendiente: usuaria |
-| "¿Qué es el posicionamiento en IA (GEO) y quién lo ofrece en Sevilla?" | Pendiente: usuaria | Perplexity | Pendiente: usuaria |
+| Prompt                                                                 | Fecha              | Herramienta | Dominios citados   |
+| ---------------------------------------------------------------------- | ------------------ | ----------- | ------------------ |
+| "¿Qué agencia o consultor de SEO local recomiendas en Sevilla?"        | Pendiente: usuaria | ChatGPT     | Pendiente: usuaria |
+| "¿Qué agencia o consultor de SEO local recomiendas en Sevilla?"        | Pendiente: usuaria | Perplexity  | Pendiente: usuaria |
+| "¿Cuánto cuesta una página web para un negocio en Sevilla?"            | Pendiente: usuaria | ChatGPT     | Pendiente: usuaria |
+| "¿Cuánto cuesta una página web para un negocio en Sevilla?"            | Pendiente: usuaria | Perplexity  | Pendiente: usuaria |
+| "¿Qué es el posicionamiento en IA (GEO) y quién lo ofrece en Sevilla?" | Pendiente: usuaria | ChatGPT     | Pendiente: usuaria |
+| "¿Qué es el posicionamiento en IA (GEO) y quién lo ofrece en Sevilla?" | Pendiente: usuaria | Perplexity  | Pendiente: usuaria |
 
 ## Cadencia y registro de cambios
 
@@ -212,6 +212,63 @@ Estimación (si aplica):
 Limitación:
 Decisión / siguiente revisión:
 ```
+
+## Revisión de iteración
+
+Rutina para revisar, página a página, el efecto de los cambios sobre las páginas propietarias de keywords. Es una rutina, no una captura: aquí no se anotan cifras; las que salgan de una revisión van a una sección nueva `## Línea base AAAA-MM-DD (...)` con `Fuente:` y `Fecha de captura:`.
+
+### Cadencia
+
+- Cada 2 a 4 semanas.
+- La primera revisión de una página, no antes de 28 días tras la promoción a producción del cambio revisado (fecha de la promoción de `develop` a `main`).
+
+### Páginas propietarias
+
+| Página propietaria                                    | Keywords propietarias                                               |
+| ----------------------------------------------------- | ------------------------------------------------------------------- |
+| `/`                                                   | consultor seo sevilla                                               |
+| `/seo-local-sevilla/`                                 | seo local sevilla, agencia seo sevilla, posicionamiento web sevilla |
+| `/tienda-online-sevilla/`                             | diseño tienda online sevilla                                        |
+| `/diseno-web-sevilla/`                                | diseño web sevilla                                                  |
+| `/desarrollo-software-medida/`                        | desarrollo de software a medida sevilla                             |
+| `/inteligencia-artificial/`                           | inteligencia artificial para empresas sevilla                       |
+| `/seo-para-ia/`                                       | posicionamiento en ia, seo para ia                                  |
+| `/blog/como-aparecer-en-google-maps-negocio-sevilla/` | como aparecer en google maps                                        |
+| `/blog/cuanto-cuesta-una-pagina-web-en-sevilla/`      | cuanto cuesta una pagina web en sevilla                             |
+
+### Qué se compara por página
+
+Cada página se compara con las líneas base de NRD-17 ("Línea base 2026-11-14 (Search Console)", "Línea base 2026-11-15 (Search Console, 28 días)", "Línea base 2026-11-15 (verificación de GA4)" y "Línea base 2026-11-15 (citación en IA)"):
+
+- **Search Console:** impresiones, clics, CTR y posición media en ventanas de 28 días, con filtro por página.
+- **Posición de sus keywords:** histórico en `seo/ranks/history.jsonl`.
+- **GA4:** clics de reserva (`contact_click` con `contact_method=booking`), filtrados por página.
+- **Citación en IA:** presencia en citas de IA con el mismo método que "Línea base 2026-11-15 (citación en IA)".
+
+### Registro por revisión
+
+Extiende la "Plantilla mínima de anotación". Una copia por página y revisión, con los campos vacíos hasta tener el dato:
+
+```text
+Fecha:
+Página:
+Ventana (baseline / revisión):
+Fuente y filtros:
+Dato observado:
+Hueco:
+Decisión:
+```
+
+### Cierre obligatorio
+
+- Una decisión por página: **mantener**, **ajustar** (historia nueva o refinada en NRD-4 con la evidencia) o **escalar** al PO.
+- Solo cifras observadas, fechadas y con fuente.
+- Los huecos se marcan como "N/D" con su motivo.
+- Ninguna nota promete posiciones.
+
+### Paso de control
+
+Comprobar que `seo.rankTracking.keywords` sigue coincidiendo con `keywordOwners` (lo guarda `tests/rank-tracking-keywords.test.js`). Si una página nueva gana una keyword propietaria, se propone al PO; el PO no edita la configuración, la cambia una historia.
 
 ## Validación reproducible
 
