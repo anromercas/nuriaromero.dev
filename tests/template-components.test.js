@@ -70,7 +70,10 @@ test("template.css carries today's ground, band and heading rules", () => {
   const accent = ruleBody(".tpl-accent");
   assert.ok(accent, ".tpl-accent exists");
   assert.match(accent, /color:\s*var\(--sky-accent\)/);
-  assert.match(accent, /"Instrument Serif", Georgia, serif/);
+  assert.match(
+    accent,
+    /"Instrument Serif", "Instrument Serif Fallback", Georgia, serif/,
+  );
   assert.match(accent, /font-style:\s*italic/);
   assert.match(accent, /font-size:\s*var\(--accent-size\)/);
 
