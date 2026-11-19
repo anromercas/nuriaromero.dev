@@ -123,10 +123,16 @@ Directly after its lead paragraph, the "Respuesta corta" section SHALL hold a Ma
 - **THEN** the rates table is readable without horizontal page overflow and the "Respuesta corta" heading, lead and table appear in that order
 - **AND** each price cell ("Desde 149 €", "Desde 399 €") stays on one line while the name and "Qué incluye" cells wrap
 
+#### Scenario: Table never overflows the page
+
+- **WHEN** QA opens the built post at 320 px with text at 200 %
+- **THEN** the page has no horizontal scroll caused by the table; the table scrolls horizontally inside a keyboard-focusable region named after its section, and each price cell stays on one line
+
 #### Scenario: Right-aligned table cells do not wrap
 
 - **WHEN** a post table has a right-aligned column (`---:`), rendered as `th`/`td` with `align="right"`
 - **THEN** `src/layouts/BlogPostLayout.astro` applies `white-space: nowrap` to those cells only, so tables without aligned columns keep wrapping in every cell
+- **AND** such a table is wrapped in a horizontally scrollable `div.table-scroll` region; tables without aligned columns are not wrapped
 
 ### Requirement: Published rates come from the single price source
 
