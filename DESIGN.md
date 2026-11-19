@@ -28,41 +28,41 @@ colors:
   status-success: "#86efac"
 typography:
   display:
-    fontFamily: "Onest Variable, system-ui, sans-serif"
+    fontFamily: '"Onest Variable", "Onest Fallback", system-ui, sans-serif'
     fontSize: "clamp(2.25rem, 6vw, 3.5rem)"
     fontWeight: 700
     lineHeight: 1.04
     letterSpacing: "-0.03em"
   headline:
-    fontFamily: "Onest Variable, system-ui, sans-serif"
+    fontFamily: '"Onest Variable", "Onest Fallback", system-ui, sans-serif'
     fontSize: "clamp(1.9rem, 4.5vw, 3rem)"
     fontWeight: 700
     lineHeight: 1.06
     letterSpacing: "-0.03em"
   accent:
-    fontFamily: "Instrument Serif, Georgia, serif"
+    fontFamily: '"Instrument Serif", "Instrument Serif Fallback", Georgia, serif'
     fontSize: "1.12em"
     fontWeight: 400
     lineHeight: 1
     letterSpacing: "-0.01em"
   title:
-    fontFamily: "Onest Variable, system-ui, sans-serif"
+    fontFamily: '"Onest Variable", "Onest Fallback", system-ui, sans-serif'
     fontSize: "1.125rem"
     fontWeight: 650
     lineHeight: 1.25
   stat:
-    fontFamily: "Onest Variable, system-ui, sans-serif"
+    fontFamily: '"Onest Variable", "Onest Fallback", system-ui, sans-serif'
     fontSize: "1.375rem"
     fontWeight: 650
     lineHeight: 1.2
     letterSpacing: "-0.01em"
   body:
-    fontFamily: "Onest Variable, system-ui, sans-serif"
+    fontFamily: '"Onest Variable", "Onest Fallback", system-ui, sans-serif'
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.6
   label:
-    fontFamily: "Onest Variable, system-ui, sans-serif"
+    fontFamily: '"Onest Variable", "Onest Fallback", system-ui, sans-serif'
     fontSize: "0.8rem"
     fontWeight: 400
     lineHeight: 1.5
@@ -157,8 +157,10 @@ Near-black navy grounds, slate text steps, one cool signal hue and one warm rese
 
 ## Typography
 
-**Display / Body Font:** Onest Variable (fallback system-ui, sans-serif), set globally in Layout at 106.25% root size.
-**Accent Font:** Instrument Serif, italic 400 only (fallback Georgia, serif), imported where used.
+**Display / Body Font:** Onest Variable, stack `"Onest Variable", "Onest Fallback", system-ui, sans-serif`, set globally in Layout at 106.25% root size.
+**Accent Font:** Instrument Serif, italic 400 only, stack `"Instrument Serif", "Instrument Serif Fallback", Georgia, serif`, imported where used.
+
+The fallback faces "Onest Fallback" and "Instrument Serif Fallback" are metric-matched local fonts defined in `src/styles/fonts.css`: they keep text the same size while the web font loads, so the swap causes no layout shift (CLS, NRD-310). Keep them in the stack whenever either font is used on another page.
 
 **Character:** a confident geometric sans with tight tracking for headlines, and one editorial italic voice that makes the key phrase feel spoken.
 

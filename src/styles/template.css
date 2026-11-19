@@ -89,7 +89,7 @@
 /* The single serif phrase of a heading. */
 .tpl-accent {
   color: var(--sky-accent);
-  font-family: "Instrument Serif", Georgia, serif;
+  font-family: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
   font-style: italic;
   font-weight: 400;
   font-size: var(--accent-size);

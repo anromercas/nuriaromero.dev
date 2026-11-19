@@ -80,7 +80,7 @@ test("prose rules use template tokens, not hardcoded palettes", () => {
   );
 });
 
-// --- Built pages (skipped without dist/, as in CI before the build) ----------
+// --- Built pages (skipped without dist/; CI builds first, NRD-311) ----------
 
 const dist = new URL("dist/blog/", root);
 const slugs = existsSync(dist)
@@ -114,6 +114,24 @@ for (const slug of slugs) {
   });
 }
 
+const builtPost = (slug) => {
+  const file = new URL(`${slug}/index.html`, dist);
+  return existsSync(file) ? readFileSync(file, "utf8") : null;
+};
+
+test("built price post wraps its rates table in a scroll region (NRD-304)", (t) => {
+  const html = builtPost("cuanto-cuesta-una-pagina-web-en-sevilla");
+  if (!html) return t.skip("dist/ not built");
+  assert.match(html, /<div class="table-scroll"[^>]*>\s*<table/);
+});
+
+test("built GEO post keeps its table unwrapped (NRD-304)", (t) => {
+  const html = builtPost("que-es-geo-posicionamiento-ia-negocios-sevilla");
+  if (!html) return t.skip("dist/ not built");
+  assert.ok(html.includes("<table"), "GEO post table missing");
+  assert.ok(!html.includes('class="table-scroll"'));
+});
+
 // --- Table borders (NRD-232) ---------------------------------------------------
 
 const luminance = (hex) => {
@@ -139,6 +157,31 @@ test("table cell borders use the hairline-strong token", () => {
   )?.[0];
   assert.ok(rule, "th/td rule not found");
   assert.match(rule, /border:\s*1px solid var\(--hairline-strong\)/);
+});
+
+test("right-aligned table cells never wrap (NRD-298)", () => {
+  const css = layout.slice(layout.indexOf("<style"));
+  const rule = css.match(
+    /\.post-prose :global\(th\[align="right"\]\),\s*\.post-prose :global\(td\[align="right"\]\)\s*\{[^}]*\}/,
+  )?.[0];
+  assert.ok(rule, 'rule for td[align="right"] not found');
+  assert.match(rule, /white-space:\s*nowrap/);
+});
+
+test("tables with right-aligned cells scroll inside a focusable region (NRD-304)", () => {
+  const css = layout.slice(layout.indexOf("<style"));
+  const rule = css.match(
+    /\.post-prose :global\(\.table-scroll\)\s*\{[^}]*\}/,
+  )?.[0];
+  assert.ok(rule, ".table-scroll rule not found");
+  assert.match(rule, /overflow-x:\s*auto/);
+  assert.match(rule, /max-width:\s*100%/);
+  const focus = css.match(
+    /\.post-prose :global\(\.table-scroll:focus-visible\)\s*\{[^}]*\}/,
+  )?.[0];
+  assert.ok(focus, ".table-scroll:focus-visible rule not found");
+  assert.match(focus, /outline:\s*2px solid var\(--sky-signal\)/);
+  assert.doesNotMatch(css, /\.table-scroll[^{]*\{[^}]*min-width/);
 });
 
 test("hairline-strong reaches 3:1 on ground and card surfaces", () => {

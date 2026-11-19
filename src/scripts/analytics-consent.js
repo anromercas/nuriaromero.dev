@@ -154,6 +154,53 @@ export function isObscured(rect, panelRect) {
   )
 }
 
+export const CONSENT_OFFSET_TOP_PROPERTY = '--consent-offset-top'
+
+// Decides where the fixed panel goes. It sits at the bottom unless that covers
+// an element marked data-consent-avoid and the top placement (just below the
+// fixed header) covers none of them.
+export function consentPanelPosition({ panelRect, avoidRects = [], viewportHeight, headerBottom = 0, gap = 0 }) {
+  const bottom = { position: 'bottom' }
+  if (!panelRect || panelRect.height <= 0 || !avoidRects.length) return bottom
+  const coveredAtBottom = avoidRects.some((rect) => isObscured(rect, panelRect))
+  if (!coveredAtBottom) return bottom
+  const top = Math.ceil(headerBottom + gap)
+  if (top + panelRect.height > viewportHeight) return bottom
+  const topRect = { ...panelRect, top, bottom: top + panelRect.height }
+  if (avoidRects.some((rect) => isObscured(rect, topRect))) return bottom
+  return { position: 'top', top }
+}
+
+// What to do when a focused element sits under the panel. At the bottom the
+// reserved body padding always leaves scroll travel, so scrolling works. On
+// top there is no such travel: it only works when the current scroll is enough
+// to lift the element below the panel; otherwise the panel returns to the
+// bottom (no reserved padding on top: it would shift the page, see NRD-307).
+export function focusRemedy({ rect, panelRect, position, scrollY = 0 }) {
+  if (!isObscured(rect, panelRect)) return 'none'
+  if (position !== 'top') return 'scroll'
+  return scrollY >= Math.ceil(panelRect.bottom) - rect.top ? 'scroll' : 'flip'
+}
+
+export const CONSENT_FONT_WAIT_MS = 3000
+
+// Forces a layout, which starts downloading the fonts the page uses, and
+// returns a promise that settles when they are ready or after timeoutMs. Null
+// when there is nothing to wait for.
+export function pendingFonts(doc, timeoutMs = CONSENT_FONT_WAIT_MS) {
+  const fonts = doc.fonts
+  if (!fonts) return null
+  doc.documentElement?.getBoundingClientRect?.()
+  if (fonts.status === 'loaded') return null
+  const view = doc.defaultView
+  let timer
+  const timeout = new Promise((resolve) => {
+    timer = view.setTimeout(resolve, timeoutMs)
+  })
+  const ready = Promise.resolve(fonts.ready).catch(() => {})
+  return Promise.race([ready, timeout]).then(() => view.clearTimeout?.(timer))
+}
+
 export function createConsentPanel({ doc, storage, controller }) {
   // Elements are resolved on every call: View Transitions replaces <body>,
   // so any reference captured earlier would point at detached nodes.
@@ -170,18 +217,71 @@ export function createConsentPanel({ doc, storage, controller }) {
 
   // Publishes the panel height on <html> so the page can reserve it (scroll
   // padding, body padding, WhatsApp button). Astro resets <html> attributes on
-  // navigation, so this runs on every sync, show, hide and resize.
+  // navigation, so this runs on every sync, show, hide and resize. It only
+  // measures: where the panel sits is decided by place(), never here.
   function update() {
     const style = doc.documentElement?.style
     if (!style) return
     const panel = el('analytics-consent')
     const viewport = doc.defaultView?.innerHeight
-    const offset =
+    const measurable =
       panel && !panel.hidden && typeof panel.getBoundingClientRect === 'function' && viewport
-        ? consentOffset(panel.getBoundingClientRect(), viewport)
-        : 0
+    const onTop = Boolean(measurable) && panel.getAttribute?.('data-position') === 'top'
+    const rect = measurable ? panel.getBoundingClientRect() : null
+    const offset = measurable && !onTop ? consentOffset(rect, viewport) : 0
+    const offsetTop = onTop ? Math.max(0, Math.ceil(rect.bottom)) : 0
     if (offset > 0) style.setProperty(CONSENT_OFFSET_PROPERTY, `${offset}px`)
     else style.removeProperty(CONSENT_OFFSET_PROPERTY)
+    if (offsetTop > 0) style.setProperty(CONSENT_OFFSET_TOP_PROPERTY, `${offsetTop}px`)
+    else style.removeProperty(CONSENT_OFFSET_TOP_PROPERTY)
+  }
+
+  // The placement is decided once per page view (see reveal) and only redone
+  // for a new panel node, a reopen or a width change, so a visible panel never
+  // jumps. These remember the node and the width the decision was made at.
+  let placedNode = null
+  let placedWidth
+  let pendingNode = null
+
+  // Returns the panel to its default position at the bottom.
+  function resetToBottom(panel) {
+    if (panel.getAttribute?.('data-position') === 'top') {
+      panel.removeAttribute?.('data-position')
+      if (panel.style) panel.style.top = ''
+    }
+  }
+
+  // Anchors the panel under the fixed header when, at the bottom, it would
+  // cover an element marked data-consent-avoid (the hero booking button).
+  // Clears any earlier placement and measures the bottom one first, so it runs
+  // in the same task that removes `hidden`, before the first paint.
+  function place(panel) {
+    const viewport = doc.defaultView?.innerHeight
+    placedNode = panel
+    placedWidth = doc.defaultView?.innerWidth
+    resetToBottom(panel)
+    if (!viewport || typeof panel.getBoundingClientRect !== 'function') return
+    const avoid = doc.querySelectorAll?.('[data-consent-avoid]')
+    if (!avoid || !avoid.length) return
+    const header = doc.querySelector?.('header.fixed')
+    const result = consentPanelPosition({
+      panelRect: panel.getBoundingClientRect(),
+      avoidRects: Array.from(avoid, (node) => node.getBoundingClientRect()),
+      viewportHeight: viewport,
+      headerBottom: header ? header.getBoundingClientRect().bottom : 0,
+      gap: 8,
+    })
+    if (result.position !== 'top') return
+    panel.setAttribute('data-position', 'top')
+    if (panel.style) panel.style.top = `${result.top}px`
+  }
+
+  // Shows the panel, decides its placement and publishes the offsets in one
+  // synchronous task, so nothing is painted in between.
+  function reveal(panel) {
+    panel.hidden = false
+    place(panel)
+    update()
   }
 
   function hide() {
@@ -197,16 +297,62 @@ export function createConsentPanel({ doc, storage, controller }) {
     if (!panel || panel.hidden || typeof panel.getBoundingClientRect !== 'function') return
     if (target.closest('#analytics-consent')) return
     if (typeof target.getBoundingClientRect !== 'function') return
-    if (isObscured(target.getBoundingClientRect(), panel.getBoundingClientRect())) {
-      target.scrollIntoView?.({ block: 'nearest' })
+    const rect = target.getBoundingClientRect()
+    const remedy = focusRemedy({
+      rect,
+      panelRect: panel.getBoundingClientRect(),
+      position: panel.getAttribute?.('data-position') === 'top' ? 'top' : 'bottom',
+      scrollY: doc.defaultView?.scrollY ?? 0,
+    })
+    if (remedy === 'none') return
+    if (remedy === 'flip') {
+      resetToBottom(panel)
+      update()
+      if (!isObscured(target.getBoundingClientRect(), panel.getBoundingClientRect())) return
     }
+    target.scrollIntoView?.({ block: 'nearest' })
   }
 
   function sync() {
     const panel = el('analytics-consent')
     if (!panel) return
+    if (storage.getItem(CONSENT_KEY)) {
+      collapse()
+      panel.hidden = true
+      update()
+      return
+    }
+    // Same visible panel (second sync of a page load): only re-measure.
+    if (panel === placedNode && !panel.hidden) {
+      update()
+      return
+    }
+    if (panel === pendingNode) return
     collapse()
-    panel.hidden = Boolean(storage.getItem(CONSENT_KEY))
+    // Reveal after the web fonts, so the panel is born with its final size.
+    const wait = pendingFonts(doc)
+    if (!wait) {
+      reveal(panel)
+      return
+    }
+    panel.hidden = true
+    pendingNode = panel
+    update()
+    wait.then(() => {
+      if (pendingNode !== panel) return
+      pendingNode = null
+      if (el('analytics-consent') !== panel || storage.getItem(CONSENT_KEY)) return
+      reveal(panel)
+    })
+  }
+
+  // Re-places the panel only when the width changed (device rotation); a
+  // height-only change (mobile URL bar) must not flip a visible panel.
+  function resize() {
+    const panel = el('analytics-consent')
+    if (panel && !panel.hidden && panel === placedNode && doc.defaultView?.innerWidth !== placedWidth) {
+      place(panel)
+    }
     update()
   }
 
@@ -243,9 +389,10 @@ export function createConsentPanel({ doc, storage, controller }) {
       if (toggle) toggle.checked = storage.getItem(CONSENT_KEY) === 'accepted'
       if (save) save.hidden = false
       if (customize) customize.setAttribute('aria-expanded', 'true')
+      place(panel)
       update()
     }
   }
 
-  return { sync, handleClick, handleFocus, update }
+  return { sync, handleClick, handleFocus, update, resize }
 }

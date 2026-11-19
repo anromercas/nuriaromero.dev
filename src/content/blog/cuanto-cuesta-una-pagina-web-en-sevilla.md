@@ -2,15 +2,22 @@
 title: "¿Cuánto cuesta una página web en Sevilla? Qué influye en el precio"
 description: "Cuánto cuesta una página web en Sevilla: qué factores influyen en el precio, qué partidas comparar en cada presupuesto y qué preguntar antes de contratar."
 pubDate: 2026-07-07
-updatedDate: 2026-11-18
+updatedDate: 2026-11-19
 tags: ["diseño web", "precios", "sevilla"]
 ---
 
-No hay una tarifa única para una web: el precio sale del trabajo que incluye. Por eso esta guía no da cifras de mercado y se centra en lo que sí puedes comparar entre presupuestos.
+No hay un precio de mercado único para una web, así que aquí no doy cifras de mercado, solo mis tarifas: a 19 de noviembre de 2026, una landing de una página cuesta desde 149 € y una web completa de hasta 5 páginas, desde 399 €. El resto de la guía te ayuda a comparar lo que incluye cada presupuesto.
 
 ## Respuesta corta
 
-Una página web en Sevilla cuesta según su alcance, el contenido y el trabajo técnico incluido, así que no hay una cifra única fiable. Para comparar presupuestos, revisa qué incluye cada partida y qué se cobra aparte.
+Con mis tarifas, vigentes a 19 de noviembre de 2026, una landing de una página cuesta desde 149 € y una web completa de hasta 5 páginas, desde 399 €.
+
+| Tarifa                         |      Precio | Qué incluye                                                                                                                                                                                                               |
+| ------------------------------ | ----------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Landing de una página          | Desde 149 € | Diseño a medida adaptado a móvil; Textos optimizados para SEO local en Sevilla; Botón de WhatsApp y formulario de contacto; Creación y configuración del dominio y hosting; Un mes de soporte tras el lanzamiento         |
+| Web completa (hasta 5 páginas) | Desde 399 € | Todo lo de la landing, más estructura completa por secciones; Hasta 5 páginas (inicio, servicios, sobre mí, contacto…); Alta en Google Search Console y en Google Business Profile; Un mes de soporte tras el lanzamiento |
+
+El dominio y el hosting los pagas tú directamente, a tu nombre. Para comparar con otros presupuestos, revisa qué incluye cada partida y qué se cobra aparte.
 
 ## ¿Qué hace variar el presupuesto de una web?
 

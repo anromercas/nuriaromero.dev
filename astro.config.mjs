@@ -7,6 +7,8 @@ import sitemap from "@astrojs/sitemap"
 import robotsTxt from "astro-robots-txt"
 
 import { CRAWLER_POLICY } from "./src/data/crawler-policy.ts"
+import rehypeTableScroll from "./src/lib/rehype-table-scroll.mjs"
+import { assetsInlineLimit } from "./src/lib/asset-inline-limit.mjs"
 
 // Lee `pubDate`/`updatedDate` del frontmatter de los posts del blog para poder
 // asignar un `lastmod` real por URL en el sitemap (no la fecha de build).
@@ -70,7 +72,14 @@ export default defineConfig({
     robotsTxt({ policy: CRAWLER_POLICY }),
   ],
   site: 'https://nuriaromero.dev/',
+  vite: {
+    build: {
+      // Las fuentes nunca se incrustan como data URI (CSP font-src 'self').
+      assetsInlineLimit,
+    },
+  },
   markdown: {
     shikiConfig: { theme: "github-dark-dimmed" },
+    rehypePlugins: [rehypeTableScroll],
   },
 })

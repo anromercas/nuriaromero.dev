@@ -7,8 +7,11 @@ import {
   createConsentController,
   createConsentPanel,
   consentOffset,
+  consentPanelPosition,
   createGtag,
+  focusRemedy,
   isObscured,
+  pendingFonts,
   placementFor,
 } from '../src/scripts/analytics-consent.js'
 
@@ -835,3 +838,388 @@ for (const vp of consentViewports) {
     assert.equal(isObscured(buttonRect(vp, buttonBottomPx(mutated, offset)), panel), true)
   })
 }
+
+// NRD-305: the panel must not cover the hero booking button on short viewports.
+const bugMeasures = (overrides = {}) => ({
+  panelRect: rect(447, 659, 8, 367),
+  avoidRects: [rect(548, 592, 20, 200)],
+  viewportHeight: 667,
+  headerBottom: 64,
+  gap: 8,
+  ...overrides,
+});
+
+test("consentPanelPosition anchors the panel on top when the bottom placement covers the CTA (375x667)", () => {
+  assert.deepEqual(consentPanelPosition(bugMeasures()), {
+    position: "top",
+    top: 72,
+  });
+});
+
+test("consentPanelPosition keeps the panel at the bottom when nothing is covered (390x844)", () => {
+  const result = consentPanelPosition(
+    bugMeasures({
+      panelRect: rect(632, 836, 8, 382),
+      avoidRects: [rect(548, 592, 20, 200)],
+      viewportHeight: 844,
+    }),
+  );
+  assert.deepEqual(result, { position: "bottom" });
+});
+
+test("consentPanelPosition keeps the bottom when the top placement would also cover an element", () => {
+  const result = consentPanelPosition(
+    bugMeasures({
+      avoidRects: [rect(548, 592, 20, 200), rect(80, 120, 20, 200)],
+    }),
+  );
+  assert.deepEqual(result, { position: "bottom" });
+});
+
+test("consentPanelPosition keeps the bottom without avoid rects", () => {
+  assert.deepEqual(consentPanelPosition(bugMeasures({ avoidRects: [] })), {
+    position: "bottom",
+  });
+});
+
+function positionSetup(stored, avoid) {
+  const ctx = offsetSetup(stored, rect(447, 659, 8, 367));
+  ctx.world.doc.defaultView = { innerHeight: 667 };
+  const styles = {};
+  for (const nodes of [ctx.a, ctx.b]) {
+    const panelNode = nodes["analytics-consent"];
+    panelNode.style = styles;
+    panelNode.getBoundingClientRect = () => {
+      const onTop = panelNode.attrs["data-position"] === "top";
+      const top = onTop ? Number.parseFloat(styles.top) : 447;
+      return rect(top, top + 212, 8, 367);
+    };
+    panelNode.getAttribute = function (name) {
+      return this.attrs[name] ?? null;
+    };
+    panelNode.removeAttribute = function (name) {
+      delete this.attrs[name];
+    };
+  }
+  ctx.world.doc.querySelector = (selector) =>
+    selector.includes("header")
+      ? { getBoundingClientRect: () => rect(8, 64, 0, 375) }
+      : null;
+  ctx.world.doc.querySelectorAll = (selector) =>
+    selector === "[data-consent-avoid]"
+      ? avoid.map((r) => ({ getBoundingClientRect: () => r }))
+      : [];
+  return { ...ctx, styles };
+}
+
+test("panel: sync with the CTA covered anchors the panel on top and publishes --consent-offset-top", () => {
+  const { world, b, panel, props, styles } = positionSetup(null, [
+    rect(548, 592, 20, 200),
+  ]);
+  world.current = b;
+  panel.sync();
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+  assert.equal(styles.top, "72px");
+  assert.equal(props.has("--consent-offset"), false);
+  assert.equal(props.get("--consent-offset-top"), "284px");
+});
+
+test("panel: sync without overlap keeps the NRD-80 bottom behavior", () => {
+  const { world, b, panel, props, styles } = positionSetup(null, [
+    rect(300, 340, 20, 200),
+  ]);
+  world.current = b;
+  panel.sync();
+  assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
+  assert.equal(styles.top, undefined);
+  assert.equal(props.get("--consent-offset"), "220px");
+  assert.equal(props.has("--consent-offset-top"), false);
+});
+
+test("panel: reopening from cookie-settings places the panel on top too", () => {
+  const { world, b, panel, props } = positionSetup("accepted", [
+    rect(548, 592, 20, 200),
+  ]);
+  world.current = b;
+  panel.handleClick(b["cookie-settings"]);
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+  assert.equal(props.has("--consent-offset"), false);
+});
+
+test("panel: handleFocus scrolls an element hidden behind a top-anchored panel", () => {
+  const { world, b, panel, scrolled, target } = positionSetup(null, [
+    rect(548, 592, 20, 200),
+  ]);
+  world.current = b;
+  world.doc.defaultView.scrollY = 400;
+  panel.sync();
+  panel.handleFocus(target(rect(100, 140, 20, 200)));
+  assert.deepEqual(scrolled, [{ block: "nearest" }]);
+  panel.handleFocus(target(rect(500, 540, 20, 200)));
+  assert.equal(scrolled.length, 1);
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+});
+
+// NRD-309: with the panel on top and no scroll travel, it returns to the bottom.
+const focusMeasures = (overrides = {}) => ({
+  rect: rect(102, 134, 20, 200),
+  panelRect: rect(72, 284, 8, 367),
+  position: "top",
+  scrollY: 0,
+  ...overrides,
+});
+
+test("focusRemedy: none without overlap", () => {
+  assert.equal(focusRemedy(focusMeasures({ rect: rect(300, 340, 20, 200) })), "none");
+});
+
+test("focusRemedy: scroll when the panel is at the bottom", () => {
+  assert.equal(
+    focusRemedy(
+      focusMeasures({
+        position: "bottom",
+        panelRect: rect(447, 659, 8, 367),
+        rect: rect(500, 540, 20, 200),
+      }),
+    ),
+    "scroll",
+  );
+});
+
+test("focusRemedy: flip when the panel is on top and scrollY is 0 (NRD-309 QA case)", () => {
+  assert.equal(focusRemedy(focusMeasures()), "flip");
+});
+
+test("focusRemedy: scroll when the panel is on top and scrollY is 400", () => {
+  assert.equal(focusRemedy(focusMeasures({ scrollY: 400 })), "scroll");
+});
+
+test("focusRemedy: boundary scrollY = ceil(panel bottom) - top scrolls, one less flips", () => {
+  assert.equal(focusRemedy(focusMeasures({ scrollY: 182 })), "scroll");
+  assert.equal(focusRemedy(focusMeasures({ scrollY: 181 })), "flip");
+});
+
+test("panel: focus under the top panel at scrollY 0 returns the panel to the bottom without scrolling", () => {
+  const { world, b, panel, props, styles, scrolled, target } = positionSetup(null, [
+    rect(548, 592, 20, 200),
+  ]);
+  world.current = b;
+  world.doc.defaultView.scrollY = 0;
+  panel.sync();
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+  panel.handleFocus(target(rect(102, 134, 20, 200)));
+  assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
+  assert.equal(styles.top, "");
+  assert.equal(props.get("--consent-offset"), "220px");
+  assert.equal(props.has("--consent-offset-top"), false);
+  assert.equal(scrolled.length, 0);
+  // The booking button is now under the bottom panel: scroll as usual, stay at the bottom.
+  panel.handleFocus(target(rect(548, 592, 20, 200)));
+  assert.deepEqual(scrolled, [{ block: "nearest" }]);
+  assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
+});
+
+test("NRD-305 sources: the hero actions opt in and the layout reserves scroll-padding-top", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const hero = await readFile(
+    new URL("../src/components/seo-local/SeoLocalHero.astro", import.meta.url),
+    "utf8",
+  );
+  const consent = await readFile(
+    new URL("../src/components/AnalyticsConsent.astro", import.meta.url),
+    "utf8",
+  );
+  assert.match(hero, /<div class="hero-actions"[^>]*data-consent-avoid/);
+  assert.match(consent, /scroll-padding-top:\s*var\(--consent-offset-top/);
+  assert.match(consent, /\[data-position="top"\]/);
+});
+
+// NRD-307: the placement is decided once per page view, after the web fonts.
+test("consentPanelPosition keeps the CTA uncovered at the NRD-305 viewports with post-font geometry", () => {
+  const viewports = [
+    { width: 360, height: 640 },
+    { width: 375, height: 667 },
+    { width: 375, height: 812 },
+    { width: 390, height: 844 },
+  ];
+  for (const { width, height } of viewports) {
+    const cta = rect(height - 120, height - 76, 20, 200);
+    const panelRect = rect(height - 220, height, 8, width - 8);
+    const result = consentPanelPosition({
+      panelRect,
+      avoidRects: [cta],
+      viewportHeight: height,
+      headerBottom: 64,
+      gap: 8,
+    });
+    const placed =
+      result.position === "top"
+        ? {
+            ...panelRect,
+            top: result.top,
+            bottom: result.top + panelRect.height,
+          }
+        : panelRect;
+    assert.equal(isObscured(cta, placed), false, `${width}x${height}`);
+  }
+});
+
+function fontsSetup(stored, avoid, status = "loading") {
+  const ctx = positionSetup(stored, avoid);
+  const timers = [];
+  let resolveReady;
+  const ready = new Promise((resolve) => {
+    resolveReady = resolve;
+  });
+  const layouts = [];
+  ctx.world.doc.fonts = { status, ready };
+  ctx.world.doc.documentElement.getBoundingClientRect = () => {
+    layouts.push("layout");
+    return rect(0, 667);
+  };
+  const view = ctx.world.doc.defaultView;
+  view.innerWidth = 375;
+  view.setTimeout = (fn, ms) => {
+    timers.push({ fn, ms });
+    return timers.length;
+  };
+  view.clearTimeout = () => {};
+  return { ...ctx, view, timers, layouts, resolveReady };
+}
+
+const COVERED = () => [rect(548, 592, 20, 200)];
+const CLEAR = () => [rect(300, 340, 20, 200)];
+
+test("panel: a second sync of the same visible panel keeps the bottom placement after the CTA moves under it", () => {
+  const avoid = CLEAR();
+  const { world, b, panel, props, styles } = positionSetup(null, avoid);
+  world.current = b;
+  panel.sync();
+  assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
+  avoid[0] = rect(548, 592, 20, 200);
+  panel.sync();
+  assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
+  assert.equal(styles.top, undefined);
+  assert.equal(props.has("--consent-offset"), true);
+});
+
+test("panel: a second sync keeps the top placement after the CTA moves away", () => {
+  const avoid = COVERED();
+  const { world, b, panel, props, styles } = positionSetup(null, avoid);
+  world.current = b;
+  panel.sync();
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+  avoid[0] = rect(300, 340, 20, 200);
+  panel.sync();
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+  assert.equal(styles.top, "72px");
+  assert.equal(props.has("--consent-offset"), false);
+  assert.equal(props.has("--consent-offset-top"), true);
+});
+
+test("panel: the first reveal waits for document.fonts.ready and decides with the post-font geometry", async () => {
+  const avoid = CLEAR();
+  const { world, b, panel, props, resolveReady } = fontsSetup(null, avoid);
+  world.current = b;
+  panel.sync();
+  assert.equal(b["analytics-consent"].hidden, true);
+  assert.equal(props.size, 0);
+  avoid[0] = rect(548, 592, 20, 200);
+  resolveReady();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(b["analytics-consent"].hidden, false);
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+  assert.equal(props.has("--consent-offset-top"), true);
+});
+
+test("panel: repeated sync while fonts are pending reveals and places once", async () => {
+  const { world, b, panel, timers, resolveReady } = fontsSetup(null, COVERED());
+  world.current = b;
+  let placements = 0;
+  const original = b["analytics-consent"].setAttribute;
+  b["analytics-consent"].setAttribute = function (name, value) {
+    if (name === "data-position") placements += 1;
+    return original.call(this, name, value);
+  };
+  panel.sync();
+  panel.sync();
+  assert.equal(timers.length, 1);
+  resolveReady();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(b["analytics-consent"].hidden, false);
+  assert.equal(placements, 1);
+});
+
+test("panel: the font wait is capped", async () => {
+  const { world, b, panel, timers } = fontsSetup(null, COVERED());
+  world.current = b;
+  panel.sync();
+  assert.equal(b["analytics-consent"].hidden, true);
+  assert.equal(timers.length, 1);
+  assert.equal(timers[0].ms, 3000);
+  timers[0].fn();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(b["analytics-consent"].hidden, false);
+});
+
+test("panel: resize that only changes the height keeps the placement; a width change re-places it", () => {
+  const avoid = COVERED();
+  const { world, b, panel, view } = fontsSetup(null, avoid, "loaded");
+  world.current = b;
+  panel.sync();
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+  avoid[0] = rect(300, 340, 20, 200);
+  view.innerHeight = 600;
+  panel.resize();
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+  view.innerWidth = 667;
+  panel.resize();
+  assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
+});
+
+test("panel: a swapped panel node (View Transitions) gets a fresh placement", () => {
+  const avoid = COVERED();
+  const { world, a, b, panel } = fontsSetup(null, avoid, "loaded");
+  world.current = a;
+  panel.sync();
+  assert.equal(a["analytics-consent"].attrs["data-position"], "top");
+  avoid[0] = rect(300, 340, 20, 200);
+  world.current = b;
+  panel.sync();
+  assert.equal(b["analytics-consent"].hidden, false);
+  assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
+});
+
+test("pendingFonts returns null without document.fonts or when status is loaded and forces a layout first", () => {
+  assert.equal(pendingFonts({}), null);
+  const layouts = [];
+  const doc = {
+    fonts: { status: "loaded", ready: Promise.resolve() },
+    documentElement: { getBoundingClientRect: () => layouts.push(1) },
+    defaultView: { setTimeout: () => 1 },
+  };
+  assert.equal(pendingFonts(doc), null);
+  assert.equal(layouts.length, 1);
+  const loading = {
+    ...doc,
+    fonts: { status: "loading", ready: new Promise(() => {}) },
+    defaultView: { setTimeout: (fn) => fn() },
+  };
+  assert.ok(pendingFonts(loading, 5) instanceof Promise);
+});
+
+test("AnalyticsConsent.astro routes resize to panel.resize()", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(
+    new URL("../src/components/AnalyticsConsent.astro", import.meta.url),
+    "utf8",
+  );
+  assert.match(
+    source,
+    /addEventListener\("resize",\s*\(\)\s*=>\s*panel\.resize\(\)\)/,
+  );
+  assert.doesNotMatch(
+    source,
+    /addEventListener\("resize",\s*\(\)\s*=>\s*panel\.update\(\)\)/,
+  );
+});

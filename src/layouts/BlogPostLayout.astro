@@ -282,6 +282,27 @@ const relatedLinks = internalLinksBySource[url] ?? [];
     font-weight: 600;
   }
 
+  .post-prose :global(th[align="right"]),
+  .post-prose :global(td[align="right"]) {
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+
+  .post-prose :global(.table-scroll) {
+    max-width: 100%;
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+
+  .post-prose :global(.table-scroll > table) {
+    margin: 0;
+  }
+
+  .post-prose :global(.table-scroll:focus-visible) {
+    outline: 2px solid var(--sky-signal);
+    outline-offset: 4px;
+  }
+
   .post-prose :global(blockquote) {
     max-width: 68ch;
     margin: 2rem 0;

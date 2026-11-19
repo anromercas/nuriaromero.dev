@@ -28,7 +28,7 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: node --test tests/*.test.js
       - run: pnpm build
+      - run: node --test tests/*.test.js
       - name: SEO build checks
         run: pnpm check:seo:dist
