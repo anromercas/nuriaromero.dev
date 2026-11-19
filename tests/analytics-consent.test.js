@@ -10,6 +10,7 @@ import {
   consentPanelPosition,
   createGtag,
   focusRemedy,
+  focusScrollDelta,
   isObscured,
   pendingFonts,
   placementFor,
@@ -707,16 +708,32 @@ function offsetSetup(stored, panelRect = rect(600, 792, 8, 392)) {
       removeProperty: (name) => props.delete(name),
     },
   }
-  world.doc.defaultView = { innerHeight: 800 }
+  // NRD-316: the focus remedy runs in the next frame (after the UA focus
+  // scroll), so the view queues animation frames and records scrollBy calls.
+  const frames = []
+  const scrolls = []
+  world.doc.defaultView = {
+    innerHeight: 800,
+    requestAnimationFrame: (cb) => frames.push(cb),
+    scrollBy: (arg) => scrolls.push(arg),
+  }
+  const flushFrames = () => {
+    while (frames.length) frames.shift()()
+  }
   const scrolled = []
   for (const nodes of [a, b]) nodes['analytics-consent'].getBoundingClientRect = () => panelRect
-  const target = (r, extra = {}) => ({
-    getBoundingClientRect: () => r,
-    scrollIntoView: (opts) => scrolled.push(opts),
-    closest: () => null,
-    ...extra,
-  })
-  return { world, a, b, panel, calls, props, scrolled, target }
+  // Building a target focuses it, like the browser does before focusin.
+  const target = (r, extra = {}) => {
+    const node = {
+      getBoundingClientRect: () => r,
+      scrollIntoView: (opts) => scrolled.push(opts),
+      closest: () => null,
+      ...extra,
+    }
+    world.doc.activeElement = node
+    return node
+  }
+  return { world, a, b, panel, calls, props, scrolled, scrolls, frames, flushFrames, target }
 }
 
 test('panel: sync publishes --consent-offset while visible and removes it when answered', () => {
@@ -751,26 +768,36 @@ test('panel: opening and customizing re-measure the offset, update() follows res
   assert.equal(props.get('--consent-offset'), '350px')
 })
 
-test('panel: handleFocus scrolls only an obscured element outside the panel', () => {
-  const { world, b, panel, scrolled, target } = offsetSetup(null)
+test('panel: handleFocus scrolls only an obscured element outside the panel, after the next frame', () => {
+  const { world, b, panel, scrolled, scrolls, flushFrames, target } = offsetSetup(null)
   world.current = b
   panel.sync()
   panel.handleFocus(target(rect(700, 740, 20, 200)))
-  assert.deepEqual(scrolled, [{ block: 'nearest' }])
+  assert.deepEqual(scrolls, [])
+  flushFrames()
+  assert.deepEqual(scrolls, [{ top: 148, behavior: 'instant' }])
   panel.handleFocus(target(rect(100, 140, 20, 200)))
-  assert.equal(scrolled.length, 1)
+  flushFrames()
+  assert.equal(scrolls.length, 1)
   panel.handleFocus(target(rect(700, 740, 20, 200), { closest: (s) => (s === '#analytics-consent' ? b['analytics-consent'] : null) }))
-  assert.equal(scrolled.length, 1)
+  flushFrames()
+  assert.equal(scrolls.length, 1)
   panel.handleFocus(null)
   panel.handleFocus({})
+  flushFrames()
+  assert.equal(scrolls.length, 1)
+  assert.equal(scrolled.length, 0)
 })
 
 test('panel: handleFocus does nothing while the panel is hidden', () => {
-  const { world, b, panel, scrolled, target } = offsetSetup('accepted')
+  const { world, b, panel, scrolled, scrolls, frames, flushFrames, target } = offsetSetup('accepted')
   world.current = b
   panel.sync()
   panel.handleFocus(target(rect(700, 740, 20, 200)))
+  flushFrames()
+  assert.equal(frames.length, 0)
   assert.equal(scrolled.length, 0)
+  assert.equal(scrolls.length, 0)
 })
 
 test('layout reserves the consent offset: scroll-padding, body padding, WhatsApp button, focusin and resize', async () => {
@@ -884,7 +911,7 @@ test("consentPanelPosition keeps the bottom without avoid rects", () => {
 
 function positionSetup(stored, avoid) {
   const ctx = offsetSetup(stored, rect(447, 659, 8, 367));
-  ctx.world.doc.defaultView = { innerHeight: 667 };
+  ctx.world.doc.defaultView.innerHeight = 667;
   const styles = {};
   for (const nodes of [ctx.a, ctx.b]) {
     const panelNode = nodes["analytics-consent"];
@@ -947,16 +974,18 @@ test("panel: reopening from cookie-settings places the panel on top too", () => 
 });
 
 test("panel: handleFocus scrolls an element hidden behind a top-anchored panel", () => {
-  const { world, b, panel, scrolled, target } = positionSetup(null, [
+  const { world, b, panel, scrolls, flushFrames, target } = positionSetup(null, [
     rect(548, 592, 20, 200),
   ]);
   world.current = b;
   world.doc.defaultView.scrollY = 400;
   panel.sync();
   panel.handleFocus(target(rect(100, 140, 20, 200)));
-  assert.deepEqual(scrolled, [{ block: "nearest" }]);
+  flushFrames();
+  assert.deepEqual(scrolls, [{ top: -192, behavior: "instant" }]);
   panel.handleFocus(target(rect(500, 540, 20, 200)));
-  assert.equal(scrolled.length, 1);
+  flushFrames();
+  assert.equal(scrolls.length, 1);
   assert.equal(b["analytics-consent"].attrs["data-position"], "top");
 });
 
@@ -1000,7 +1029,7 @@ test("focusRemedy: boundary scrollY = ceil(panel bottom) - top scrolls, one less
 });
 
 test("panel: focus under the top panel at scrollY 0 returns the panel to the bottom without scrolling", () => {
-  const { world, b, panel, props, styles, scrolled, target } = positionSetup(null, [
+  const { world, b, panel, props, styles, scrolled, scrolls, flushFrames, target } = positionSetup(null, [
     rect(548, 592, 20, 200),
   ]);
   world.current = b;
@@ -1008,15 +1037,127 @@ test("panel: focus under the top panel at scrollY 0 returns the panel to the bot
   panel.sync();
   assert.equal(b["analytics-consent"].attrs["data-position"], "top");
   panel.handleFocus(target(rect(102, 134, 20, 200)));
+  flushFrames();
   assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
   assert.equal(styles.top, "");
   assert.equal(props.get("--consent-offset"), "220px");
   assert.equal(props.has("--consent-offset-top"), false);
-  assert.equal(scrolled.length, 0);
+  assert.equal(scrolls.length, 0);
   // The booking button is now under the bottom panel: scroll as usual, stay at the bottom.
   panel.handleFocus(target(rect(548, 592, 20, 200)));
-  assert.deepEqual(scrolled, [{ block: "nearest" }]);
+  flushFrames();
+  assert.deepEqual(scrolls, [{ top: 153, behavior: "instant" }]);
+  assert.equal(scrolled.length, 0);
   assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
+});
+
+// NRD-316: after the flip the focused hero button (600-644) sat under the
+// bottom panel (447-659) and the synchronous scrollIntoView never moved it.
+test("panel: NRD-316 sequence, breadcrumb flips the panel, then the CTA is scrolled above it after the frame", () => {
+  const { world, b, panel, scrolled, scrolls, frames, flushFrames, target } = positionSetup(null, [
+    rect(548, 592, 20, 200),
+  ]);
+  world.current = b;
+  world.doc.defaultView.scrollY = 0;
+  panel.sync();
+  assert.equal(b["analytics-consent"].attrs["data-position"], "top");
+  panel.handleFocus(target(rect(102, 134, 20, 200)));
+  flushFrames();
+  assert.equal(b["analytics-consent"].attrs["data-position"], undefined);
+  assert.equal(scrolls.length, 0);
+  panel.handleFocus(target(rect(600, 644, 20, 200)));
+  assert.equal(scrolls.length, 0);
+  assert.equal(frames.length, 1);
+  flushFrames();
+  assert.deepEqual(scrolls, [{ top: 205, behavior: "instant" }]);
+  assert.equal(scrolled.length, 0);
+});
+
+test("panel: no scroll when focus moved elsewhere or the panel was hidden before the frame", () => {
+  const { world, b, panel, scrolls, flushFrames, target } = positionSetup(null, [
+    rect(548, 592, 20, 200),
+  ]);
+  world.current = b;
+  panel.sync();
+  panel.handleFocus(target(rect(102, 134, 20, 200)));
+  flushFrames();
+  panel.handleFocus(target(rect(600, 644, 20, 200)));
+  world.doc.activeElement = {};
+  flushFrames();
+  assert.equal(scrolls.length, 0);
+  panel.handleFocus(target(rect(600, 644, 20, 200)));
+  b["analytics-consent"].hidden = true;
+  flushFrames();
+  assert.equal(scrolls.length, 0);
+});
+
+test("panel: the frame remedy falls back to scrollBy(0, delta) when the options form throws, and runs at once without requestAnimationFrame", () => {
+  const { world, b, panel, flushFrames, target } = positionSetup(null, [
+    rect(548, 592, 20, 200),
+  ]);
+  world.current = b;
+  panel.sync();
+  panel.handleFocus(target(rect(102, 134, 20, 200)));
+  flushFrames();
+  const calls = [];
+  world.doc.defaultView.scrollBy = (...args) => {
+    calls.push(args);
+    if (typeof args[0] === "object") throw new TypeError("unsupported");
+  };
+  panel.handleFocus(target(rect(600, 644, 20, 200)));
+  flushFrames();
+  assert.deepEqual(calls, [[{ top: 205, behavior: "instant" }], [0, 205]]);
+  calls.length = 0;
+  world.doc.defaultView.requestAnimationFrame = undefined;
+  panel.handleFocus(target(rect(600, 644, 20, 200)));
+  assert.deepEqual(calls, [[{ top: 205, behavior: "instant" }], [0, 205]]);
+});
+
+test("focusScrollDelta: bottom panel lifts the hero button above it (NRD-316 QA case)", () => {
+  assert.equal(
+    focusScrollDelta({
+      rect: rect(600, 644, 20, 200),
+      panelRect: rect(447, 659, 8, 367),
+      position: "bottom",
+      headerBottom: 60,
+    }),
+    205,
+  );
+});
+
+test("focusScrollDelta: 0 when the element is not obscured", () => {
+  assert.equal(
+    focusScrollDelta({
+      rect: rect(300, 340, 20, 200),
+      panelRect: rect(447, 659, 8, 367),
+      position: "bottom",
+      headerBottom: 60,
+    }),
+    0,
+  );
+});
+
+test("focusScrollDelta: top panel moves the element below it", () => {
+  assert.equal(
+    focusScrollDelta({
+      rect: rect(102, 134, 20, 200),
+      panelRect: rect(72, 284, 8, 367),
+      position: "top",
+    }),
+    -190,
+  );
+});
+
+test("focusScrollDelta: an element taller than the clear band aligns its top to the band top", () => {
+  assert.equal(
+    focusScrollDelta({
+      rect: rect(300, 700, 20, 200),
+      panelRect: rect(447, 659, 8, 367),
+      position: "bottom",
+      headerBottom: 60,
+    }),
+    232,
+  );
 });
 
 test("NRD-305 sources: the hero actions opt in and the layout reserves scroll-padding-top", async () => {

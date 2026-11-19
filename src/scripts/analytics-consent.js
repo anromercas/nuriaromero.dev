@@ -176,10 +176,26 @@ export function consentPanelPosition({ panelRect, avoidRects = [], viewportHeigh
 // top there is no such travel: it only works when the current scroll is enough
 // to lift the element below the panel; otherwise the panel returns to the
 // bottom (no reserved padding on top: it would shift the page, see NRD-307).
+// The scroll itself is done by focusScrollDelta after the browser's own focus
+// scroll (NRD-316); CSS scroll-padding is not relied on for focus, because the
+// browser's focus visibility check ignores it.
 export function focusRemedy({ rect, panelRect, position, scrollY = 0 }) {
   if (!isObscured(rect, panelRect)) return 'none'
   if (position !== 'top') return 'scroll'
   return scrollY >= Math.ceil(panelRect.bottom) - rect.top ? 'scroll' : 'flip'
+}
+
+// Signed px to scroll so a focused element ends fully inside the band the panel
+// leaves clear: between the fixed header and the panel at the bottom, below the
+// panel on top. 0 when it is not obscured. An element taller than the band
+// aligns its top to the band top.
+export function focusScrollDelta({ rect, panelRect, position, headerBottom = 0, margin = 8 }) {
+  if (!isObscured(rect, panelRect)) return 0
+  if (position === 'top') return Math.round(rect.top - (panelRect.bottom + margin))
+  const bandTop = headerBottom + margin
+  const bandBottom = panelRect.top - margin
+  if (rect.height > bandBottom - bandTop || rect.top < bandTop) return Math.round(rect.top - bandTop)
+  return Math.round(rect.bottom - bandBottom)
 }
 
 export const CONSENT_FONT_WAIT_MS = 3000
@@ -310,7 +326,34 @@ export function createConsentPanel({ doc, storage, controller }) {
       update()
       if (!isObscured(target.getBoundingClientRect(), panel.getBoundingClientRect())) return
     }
-    target.scrollIntoView?.({ block: 'nearest' })
+    scheduleFocusScroll(target)
+  }
+
+  // NRD-316: the browser scrolls a focused element into view after focusin and
+  // cancels any scroll started inside it (and its own check ignores the
+  // reserved padding), so the remedy waits one frame, re-measures and scrolls
+  // instantly (CSS smooth scrolling cannot cancel it).
+  function scheduleFocusScroll(target) {
+    const view = doc.defaultView
+    const run = () => {
+      const panel = el('analytics-consent')
+      if (!panel || panel.hidden || doc.activeElement !== target) return
+      const header = doc.querySelector?.('header.fixed')
+      const delta = focusScrollDelta({
+        rect: target.getBoundingClientRect(),
+        panelRect: panel.getBoundingClientRect(),
+        position: panel.getAttribute?.('data-position') === 'top' ? 'top' : 'bottom',
+        headerBottom: header ? header.getBoundingClientRect().bottom : 0,
+      })
+      if (!delta || typeof view?.scrollBy !== 'function') return
+      try {
+        view.scrollBy({ top: delta, behavior: 'instant' })
+      } catch {
+        view.scrollBy(0, delta)
+      }
+    }
+    if (typeof view?.requestAnimationFrame === 'function') view.requestAnimationFrame(run)
+    else run()
   }
 
   function sync() {
