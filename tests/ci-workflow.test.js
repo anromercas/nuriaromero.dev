@@ -35,8 +35,8 @@ test("verify steps run in the required order", async () => {
     "node-version: 24",
     "cache: pnpm",
     "pnpm install --frozen-lockfile",
-    "node --test tests/*.test.js",
     "pnpm build",
+    "node --test tests/*.test.js",
     "pnpm check:seo:dist",
   ];
   const positions = markers.map((marker) => {
@@ -46,6 +46,19 @@ test("verify steps run in the required order", async () => {
   });
   const sorted = [...positions].sort((a, b) => a - b);
   assert.deepEqual(positions, sorted, "steps are out of order");
+});
+
+test("runs the unit tests once, after the single build", async () => {
+  const yml = await readSource(workflowPath);
+  const builds = yml.match(/^\s+(?:- )?run: pnpm build$/gm) ?? [];
+  const tests = yml.match(/^\s+(?:- )?run: node --test\b.*$/gm) ?? [];
+  assert.equal(builds.length, 1, "expected exactly one `pnpm build` step");
+  assert.equal(tests.length, 1, "expected exactly one `node --test` step");
+  assert.ok(
+    yml.indexOf("run: node --test tests/*.test.js") >
+      yml.indexOf("run: pnpm build"),
+    "unit tests must run after pnpm build so dist/ cases execute (NRD-311)",
+  );
 });
 
 test("runs the SEO build checks once, right after the build", async () => {

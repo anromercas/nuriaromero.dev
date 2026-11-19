@@ -31,3 +31,13 @@ The toolchain has two version constraints: `pnpm-workspace.yaml` uses `allowBuil
 - `.github/workflows/ci.yml`, `tests/ci-workflow.test.js` (NRD-6).
 - `pnpm-workspace.yaml` (`allowBuilds`), `pnpm-lock.yaml` (`lockfileVersion: '9.0'`), `package.json` `build` script.
 - `.claude/harness.json` `ci` block.
+
+## Amendment (2026-11-19, NRD-311)
+
+Context: with the unit tests before the build, every test case that reads `dist/` (the NRD-306 and NRD-310 font guards, built-page checks) was skipped in CI.
+
+- Step order is now: install, `pnpm build`, `node --test tests/*.test.js`, `pnpm check:seo:dist` (NRD-112 added the last step). One build and one unit-test run per job; the suite runs on the build of the same job.
+- `tests/ci-dist-guard.test.js` fails the suite when `CI=true` and `dist/` is not built, so a build-dependent case can never skip silently in CI; locally (no `CI`) it is skipped.
+- `ci.yml` and its contract test `tests/ci-workflow.test.js` change in the same commit, made by the subtask that owns `ci.yml` (infra). The contract test pins the step order, so editing either file alone leaves a red commit. This is the only `tests/` file an infra subtask edits.
+
+Evidence: `.github/workflows/ci.yml`, `tests/ci-workflow.test.js`, `tests/ci-dist-guard.test.js`, `openspec/changes/nuriaromero-311-ci-dist-tests/design.md`.

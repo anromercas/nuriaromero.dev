@@ -80,7 +80,7 @@ test("prose rules use template tokens, not hardcoded palettes", () => {
   );
 });
 
-// --- Built pages (skipped without dist/, as in CI before the build) ----------
+// --- Built pages (skipped without dist/; CI builds first, NRD-311) ----------
 
 const dist = new URL("dist/blog/", root);
 const slugs = existsSync(dist)
