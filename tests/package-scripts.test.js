@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 
 const root = new URL("../", import.meta.url);
 const scripts = JSON.parse(
@@ -58,5 +58,12 @@ test("check:seo scripts are ordered, each followed by its :dist", () => {
     `check:seo-${nn}:dist`,
   ]);
   assert.deepEqual(seo, expected);
-  assert.equal(keys[keys.length - 1], "check:capilar-local");
+});
+
+test("the retired check:capilar-local guard does not come back", () => {
+  assert.ok(!("check:capilar-local" in scripts));
+  for (const value of Object.values(scripts)) {
+    assert.ok(!value.includes("check-capilar-local"), value);
+  }
+  assert.ok(!existsSync(new URL("scripts/check-capilar-local.mjs", root)));
 });

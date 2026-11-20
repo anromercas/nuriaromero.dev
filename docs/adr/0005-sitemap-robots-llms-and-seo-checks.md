@@ -25,4 +25,4 @@ Crawlers (search and AI) must find every public page, with real `lastmod` where 
 
 - `astro.config.mjs`: `getBlogLastmodBySlug`, `sitemap({ filter, serialize })`, `robotsTxt({ policy })`, `site`.
 - `public/llms.txt`; `public/_headers` (`/informes/*`).
-- `scripts/check-seo-02.mjs` ... `check-seo-15.mjs`, `scripts/check-capilar-local.mjs`; `package.json` `check:seo-*` scripts.
+- `scripts/check-seo-02.mjs` ... `check-seo-15.mjs`; `package.json` `check:seo-*` scripts.
