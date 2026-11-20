@@ -198,6 +198,11 @@ export function focusScrollDelta({ rect, panelRect, position, headerBottom = 0, 
   return Math.round(rect.bottom - bandBottom)
 }
 
+// NRD-318: consecutive frames with an unchanged scrollY that count as the
+// browser focus scroll having settled, and the cap on frames waited.
+export const FOCUS_SETTLE_FRAMES = 4
+export const FOCUS_SETTLE_MAX_FRAMES = 60
+
 export const CONSENT_FONT_WAIT_MS = 3000
 
 // Forces a layout, which starts downloading the fonts the page uses, and
@@ -320,40 +325,83 @@ export function createConsentPanel({ doc, storage, controller }) {
       position: panel.getAttribute?.('data-position') === 'top' ? 'top' : 'bottom',
       scrollY: doc.defaultView?.scrollY ?? 0,
     })
-    if (remedy === 'none') return
+    // NRD-309: an element already under a top panel with no scroll travel left
+    // flips it at once. Whatever was decided here, the element is checked again
+    // after the browser focus scroll (it may move it under the panel).
     if (remedy === 'flip') {
       resetToBottom(panel)
       update()
-      if (!isObscured(target.getBoundingClientRect(), panel.getBoundingClientRect())) return
     }
     scheduleFocusScroll(target)
   }
 
-  // NRD-316: the browser scrolls a focused element into view after focusin and
-  // cancels any scroll started inside it (and its own check ignores the
-  // reserved padding), so the remedy waits one frame, re-measures and scrolls
-  // instantly (CSS smooth scrolling cannot cancel it).
+  // NRD-316/318: the browser scrolls a focused element into view after focusin,
+  // cancels any scroll started inside it and its own check ignores the reserved
+  // padding. That scroll is smooth (scroll-behavior: smooth) and can take many
+  // frames, so the element is only checked again once scrollY has been stable
+  // for FOCUS_SETTLE_FRAMES frames (or after FOCUS_SETTLE_MAX_FRAMES). Whatever
+  // focusin decided, the element is then flipped or scrolled instantly (CSS
+  // smooth scrolling cannot cancel it) out from under the panel.
   function scheduleFocusScroll(target) {
     const view = doc.defaultView
-    const run = () => {
+    if (typeof view?.requestAnimationFrame !== 'function') {
+      remedyFocus(target)
+      return
+    }
+    let lastY = view.scrollY ?? 0
+    let stable = 0
+    let frames = 0
+    const tick = () => {
       const panel = el('analytics-consent')
       if (!panel || panel.hidden || doc.activeElement !== target) return
-      const header = doc.querySelector?.('header.fixed')
-      const delta = focusScrollDelta({
-        rect: target.getBoundingClientRect(),
-        panelRect: panel.getBoundingClientRect(),
-        position: panel.getAttribute?.('data-position') === 'top' ? 'top' : 'bottom',
-        headerBottom: header ? header.getBoundingClientRect().bottom : 0,
-      })
-      if (!delta || typeof view?.scrollBy !== 'function') return
-      try {
-        view.scrollBy({ top: delta, behavior: 'instant' })
-      } catch {
-        view.scrollBy(0, delta)
+      frames += 1
+      const y = view.scrollY ?? 0
+      if (y === lastY) stable += 1
+      else {
+        stable = 0
+        lastY = y
       }
+      if (stable >= FOCUS_SETTLE_FRAMES || frames >= FOCUS_SETTLE_MAX_FRAMES) {
+        remedyFocus(target)
+        return
+      }
+      view.requestAnimationFrame(tick)
     }
-    if (typeof view?.requestAnimationFrame === 'function') view.requestAnimationFrame(run)
-    else run()
+    view.requestAnimationFrame(tick)
+  }
+
+  // Measures everything again and moves a still obscured element out from under
+  // the panel: back to the bottom when a top panel has no scroll travel left,
+  // then an instant scroll by the remaining distance.
+  function remedyFocus(target) {
+    const panel = el('analytics-consent')
+    if (!panel || panel.hidden || doc.activeElement !== target) return
+    const view = doc.defaultView
+    const position = () => (panel.getAttribute?.('data-position') === 'top' ? 'top' : 'bottom')
+    const remedy = focusRemedy({
+      rect: target.getBoundingClientRect(),
+      panelRect: panel.getBoundingClientRect(),
+      position: position(),
+      scrollY: view?.scrollY ?? 0,
+    })
+    if (remedy === 'none') return
+    if (remedy === 'flip') {
+      resetToBottom(panel)
+      update()
+    }
+    const header = doc.querySelector?.('header.fixed')
+    const delta = focusScrollDelta({
+      rect: target.getBoundingClientRect(),
+      panelRect: panel.getBoundingClientRect(),
+      position: position(),
+      headerBottom: header ? header.getBoundingClientRect().bottom : 0,
+    })
+    if (!delta || typeof view?.scrollBy !== 'function') return
+    try {
+      view.scrollBy({ top: delta, behavior: 'instant' })
+    } catch {
+      view.scrollBy(0, delta)
+    }
   }
 
   function sync() {
