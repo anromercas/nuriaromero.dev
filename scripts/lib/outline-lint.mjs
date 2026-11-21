@@ -86,3 +86,8 @@ export function lintOutline(markdown) {
   if (!o.directAnswer) errors.push("'## Respuesta directa' is empty");
   return { ok: errors.length === 0, errors };
 }
+
+/** True when the outline `Estado` is `aprobado`, optionally followed by a date. */
+export function isApproved(outline) {
+  return /^aprobado(\s+\(\d{4}-\d{2}-\d{2}\))?$/.test(outline?.status ?? "");
+}

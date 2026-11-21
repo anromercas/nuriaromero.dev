@@ -135,15 +135,71 @@ test("CLI without --write prints the frontmatter and writes nothing", () => {
   assert.equal(existsSync(postPath()), false);
 });
 
-test("CLI --write fails when the cover is missing", () => {
+const outlineFixture = readFileSync(
+  new URL("./fixtures/blog-pipeline/esquema-ok.md", import.meta.url),
+  "utf8",
+);
+const approved = outlineFixture.replace(
+  "pendiente de aprobación",
+  "aprobado (2026-11-24)",
+);
+const writeOutline = async (text, name = "esquema.md") => {
+  await mkdir(join(root, "seo/contenido", input.slug), { recursive: true });
+  await writeFile(join(root, "seo/contenido", input.slug, name), text);
+  return `seo/contenido/${input.slug}/${name}`;
+};
+
+test("CLI --write without --outline fails and writes nothing", async () => {
+  await writeFile(join(root, "src/assets/blog", input.cover.file), "x");
   const r = cli(["--write"]);
+  assert.equal(r.status, 1);
+  assert.match(r.stderr.toString(), /--write needs --outline/);
+  assert.equal(existsSync(postPath()), false);
+});
+
+test("CLI --write with a pending outline fails and writes nothing", async () => {
+  const outline = await writeOutline(outlineFixture);
+  const r = cli(["--write", "--outline", outline]);
+  assert.equal(r.status, 1);
+  assert.match(
+    r.stderr.toString(),
+    /outline is not approved \(Estado: pendiente de aprobación\)/,
+  );
+  assert.equal(existsSync(postPath()), false);
+});
+
+test("CLI --write with a lint-failing outline fails and writes nothing", async () => {
+  const outline = await writeOutline(
+    approved.replace(/^## Fuentes[\s\S]*$/m, ""),
+  );
+  const r = cli(["--write", "--outline", outline]);
+  assert.equal(r.status, 1);
+  assert.match(r.stderr.toString(), /Fuentes/);
+  assert.equal(existsSync(postPath()), false);
+});
+
+test("CLI --write with a different slug in the outline fails", async () => {
+  const outline = await writeOutline(
+    approved.replace(`Slug: ${input.slug}`, "Slug: otro-slug"),
+  );
+  const r = cli(["--write", "--outline", outline]);
+  assert.equal(r.status, 1);
+  assert.match(r.stderr.toString(), /differs from --slug/);
+  assert.equal(existsSync(postPath()), false);
+});
+
+test("CLI --write fails when the cover is missing", async () => {
+  const outline = await writeOutline(approved);
+  await rm(join(root, "src/assets/blog", input.cover.file), { force: true });
+  const r = cli(["--write", "--outline", outline]);
   assert.equal(r.status, 1);
   assert.equal(existsSync(postPath()), false);
 });
 
 test("CLI --write creates the post, then refuses to overwrite it", async () => {
+  const outline = await writeOutline(approved);
   await writeFile(join(root, "src/assets/blog", input.cover.file), "x");
-  const first = cli(["--write"]);
+  const first = cli(["--write", "--outline", outline]);
   assert.equal(first.status, 0);
   assert.equal(
     first.stdout.toString().trim(),
@@ -151,7 +207,8 @@ test("CLI --write creates the post, then refuses to overwrite it", async () => {
   );
   const written = readFileSync(postPath(), "utf8");
   assert.equal(written, buildPostFrontmatter(input).text + "\n");
-  const second = cli(["--write"]);
+  assert.match(written, /^draft: true$/m);
+  const second = cli(["--write", "--outline", outline]);
   assert.equal(second.status, 1);
   assert.equal(readFileSync(postPath(), "utf8"), written);
 });
