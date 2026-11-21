@@ -68,6 +68,20 @@ test("schema calls and url are kept", () => {
   assert.ok(layout.includes("const url = `/blog/${post.slug}/`"));
 });
 
+test("the cover renders through astro:assets, only when set (NRD-328)", () => {
+  assert.match(layout, /import \{[^}]*\bPicture\b[^}]*\} from "astro:assets"/);
+  assert.match(layout, /import \{[^}]*\bgetImage\b[^}]*\} from "astro:assets"/);
+  assert.match(markup, /\{cover && \(/);
+  assert.match(markup, /formats=\{\["avif", "webp"\]\}/);
+  assert.match(markup, /loading="eager"/);
+  assert.match(markup, /fetchpriority="high"/);
+  assert.match(markup, /data-post-cover/);
+  const header = markup.indexOf("</header>");
+  const figure = markup.indexOf('<figure class="post-cover"');
+  assert.ok(header > -1 && figure > header);
+  assert.ok(figure < markup.indexOf("data-post-body"));
+});
+
 test("prose rules use template tokens, not hardcoded palettes", () => {
   const css = layout.slice(layout.indexOf("<style"));
   assert.match(css, /\.post-prose :global\(h2\)/);
