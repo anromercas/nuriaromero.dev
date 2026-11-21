@@ -21,6 +21,7 @@ Answer engines favour pages with a verifiable update date, and the GEO rules of 
 - An edit to a shared data module (`src/data/services.ts`) refreshes every page that reads it.
 - New indexable pages must be registered in `src/data/page-freshness.ts`.
 - Sitemap `lastmod` stays blog-only; extending it to pages would read the same function.
+- Amendment (NRD-344): `/blog/` is dated by the most recent of the newest published post's `updatedDate ?? pubDate` (frontmatter) and the last commit of `src/pages/blog/index.astro`; `src/content/blog` is not a source, so draft commits never move it (`newestPublishedPostDate`, `latestDate` in `src/lib/freshness.ts`).
 
 ## Evidence
 

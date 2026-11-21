@@ -32,7 +32,12 @@ before(
       posts: [
         {
           slug: DRAFT,
-          frontmatter: { ...base, title: "Borrador de prueba", draft: true },
+          frontmatter: {
+            ...base,
+            title: "Borrador de prueba",
+            pubDate: "2026-11-21",
+            draft: true,
+          },
           body: BODY,
         },
         {
@@ -95,6 +100,19 @@ describe("published control reaches the outputs", () => {
   });
   test("in the blog listing", () => {
     assert.ok(listing.includes(`href="${url(CONTROL)}"`));
+  });
+});
+
+describe("/blog/ dateModified (NRD-344)", () => {
+  test("is the newest published post, never a draft", () => {
+    const ld = [
+      ...listing.matchAll(
+        /<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
+      ),
+    ].map((m) => JSON.parse(m[1]));
+    const nodes = ld.flatMap((d) => d["@graph"] ?? [d]);
+    const page = nodes.find((n) => n["@type"] === "WebPage");
+    assert.equal(page?.dateModified, new Date("2026-11-20").toISOString());
   });
 });
 

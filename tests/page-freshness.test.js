@@ -48,6 +48,10 @@ test("every listed source exists", () => {
   }
 });
 
+test("/blog/ is not dated by the content folder", () => {
+  assert.ok(!pageSources["/blog/"].includes("src/content/blog"));
+});
+
 test("pathname is normalized to a trailing slash", () => {
   assert.equal(
     getPageDateModified("/diseno-web-sevilla"),

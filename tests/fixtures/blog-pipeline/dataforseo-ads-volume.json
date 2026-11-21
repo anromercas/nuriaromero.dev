@@ -1,0 +1,20 @@
+{
+  "version": "0.1.20240801",
+  "status_code": 20000,
+  "tasks": [
+    {
+      "id": "11210000-0000-0000-0000-000000000001",
+      "status_code": 20000,
+      "data": {
+        "api": "keywords_data",
+        "function": "google_ads/search_volume/live",
+        "location_name": "Seville,Andalusia,Spain",
+        "language_code": "es"
+      },
+      "result": [
+        { "keyword": "cuanto cuesta una tienda online", "search_volume": 110 },
+        { "keyword": "tienda online sevilla", "search_volume": 500 }
+      ]
+    }
+  ]
+}

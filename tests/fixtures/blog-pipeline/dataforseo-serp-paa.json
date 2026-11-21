@@ -1,0 +1,29 @@
+{
+  "version": "0.1.20240801",
+  "status_code": 20000,
+  "tasks": [
+    {
+      "status_code": 20000,
+      "data": {
+        "api": "serp",
+        "function": "google/organic/live/advanced",
+        "keyword": "seo local sevilla"
+      },
+      "result": [
+        {
+          "keyword": "seo local sevilla",
+          "datetime": "2026-11-17 08:00:00 +00:00",
+          "items": [
+            { "type": "organic", "title": "Un resultado orgánico" },
+            {
+              "type": "people_also_ask",
+              "items": [
+                { "type": "people_also_ask_element", "title": "¿Qué es el SEO local?" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -6,8 +6,12 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 
-const { getLastModified, formatMonthYear } =
-  await import("../src/lib/freshness.ts");
+const {
+  getLastModified,
+  formatMonthYear,
+  newestPublishedPostDate,
+  latestDate,
+} = await import("../src/lib/freshness.ts");
 
 const run = (cwd, args, env = {}) =>
   execFileSync("git", args, {
@@ -86,4 +90,49 @@ test("formatMonthYear writes the Spanish month in Europe/Madrid", () => {
     "noviembre de 2026",
   );
   assert.equal(formatMonthYear("2026-09-30T23:30:00Z"), "octubre de 2026");
+});
+
+const post = (pubDate, extra = {}) => ({
+  data: { pubDate: new Date(pubDate), ...extra },
+});
+
+test("newestPublishedPostDate ignores a newer draft", () => {
+  assert.equal(
+    newestPublishedPostDate([
+      post("2026-11-10"),
+      post("2026-11-21", { draft: true }),
+    ]),
+    new Date("2026-11-10").toISOString(),
+  );
+});
+
+test("newestPublishedPostDate prefers updatedDate over pubDate", () => {
+  assert.equal(
+    newestPublishedPostDate([
+      post("2026-11-10", { updatedDate: new Date("2026-11-19") }),
+      post("2026-11-15"),
+    ]),
+    new Date("2026-11-19").toISOString(),
+  );
+});
+
+test("newestPublishedPostDate returns undefined without published posts", () => {
+  assert.equal(newestPublishedPostDate([]), undefined);
+  assert.equal(
+    newestPublishedPostDate([post("2026-11-21", { draft: true })]),
+    undefined,
+  );
+});
+
+test("latestDate returns the newest ISO date and ignores undefined", () => {
+  assert.equal(
+    latestDate("2026-11-10T09:30:00+01:00", "2026-11-10T09:00:00Z", undefined),
+    "2026-11-10T09:00:00Z",
+  );
+  assert.equal(
+    latestDate(undefined, "2026-11-12T10:00:00Z"),
+    "2026-11-12T10:00:00Z",
+  );
+  assert.equal(latestDate(undefined, undefined), undefined);
+  assert.equal(latestDate(), undefined);
 });
