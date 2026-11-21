@@ -6,7 +6,7 @@ Audit of the published FAQs against the questions people search for. Analysis in
 
 - **Published FAQ inventory:** 91 entries on 14 pages (home, contact, 7 services, 5 niche pages), read from `faqPages()` in `src/lib/ai-discovery.ts`. It is the same list `/ai/faq.json` publishes.
 - **Question table:** 89 questions from recorded search data, each with source, source date, volume when known, coverage (yes / partial / no) and the covering entry (section 3). Coverage is judged by intent: "yes" means an existing entry answers the question directly, "partial" means the answer is incomplete or sits on another page, "no" means no entry answers it.
-- **Result of the comparison:** 58 questions are covered, 18 are partial and 13 are not covered. Of the 31 partial or uncovered questions, 8 are recurring (two or more sources, or a known monthly volume of 10 or more: 4 on in-focus pages, 4 on parked niche pages) and 23 are one-off (listed, no proposal). Proposals and rejections are in section 4 (filled in by subtask NRD-337).
+- **Result of the comparison:** 58 questions are covered, 18 are partial and 13 are not covered. Of the 31 partial or uncovered questions, 8 are recurring (two or more sources, or a known monthly volume of 10 or more: 4 on in-focus pages, 4 on parked niche pages) and 23 are one-off (listed, no proposal). Section 4 settles the 8 recurring ones: **3 proposals** (L1, L5, L8, all for `/seo-local-sevilla/`) and **5 rejections** (D4: already answered by a visible section and no room in the budget; N1, N13, N15, N19: parked niche pages).
 - **Data sources:** no DataForSEO call was made for this report (0 by design). All questions come from recorded, earlier SEO-strategist runs (2026-11-13 to 2026-11-16) and the repo study `docs/seo-audit/keyword-clusters-2026-11.md`. The optional story data step (`.claude/state/seo/<date>-NRD-323-calls.md`) did not run in this cycle, so `/contacto/` has no recorded question data and `/seo-para-ia/` only has the GEO block of 2026-11-16 (section 3.1).
 - **What the report does not contain:** owner questions (section 6 is empty on purpose), estimated volumes, or any claim that a question is asked "in Seville" when the volume is Spain-level.
 
@@ -301,7 +301,40 @@ The recorded cross-page themes map to entries that already exist; no new row is 
 
 ## 4. Proposals and rejections
 
-Filled in by subtask NRD-337 (task 1.2): a Spanish answer, target page, word budget and data used for each recurring partial or uncovered question, or a rejection with reason.
+Scope: the 8 recurring partial or uncovered questions of section 3 (L1, L5, L8, D4, N1, N13, N15, N19). The 23 one-off questions are listed in 3.4 and get no proposal. Every proposed answer uses only data already in `src/data`, states no result or ranking, and follows the first-sentence rule (direct answer first). Nothing under `src/` is changed by this story: additions are follow-up stories (section 7).
+
+Word counts: measured on 2026-11-21 with a local `pnpm build` and `mainWordCount` from `scripts/lib/page-contract.mjs` (ADR 0015: owner-controlled visible text of `<main>`, `data-word-budget="exclude"` blocks removed). The "after" figure is current count plus the words of the added question and answer counted with the same function; it is an estimate until the page is rebuilt.
+
+### 4.1 Proposals
+
+All three target `/seo-local-sevilla/`, which owns `seo local sevilla`, `agencia seo sevilla` and `posicionamiento web sevilla` (`keywordOwners`, `src/data/seo-intents.ts`; ADR 0012, ADR 0013), so none targets a term owned by another page.
+
+Budget of the page: **no declared maximum.** The `/seo-local-sevilla/` entry of `scripts/lib/template-pages.mjs` has no `words` range, `openspec/specs/` has no spec for the page and `docs/designs/NRD-120-seo-local-sevilla.md` sets none; ADR 0013 only records "1,236 words, inside the competitor estimate" (NRD-22). Current count: **1,496 words** (build of 2026-11-21). The three additions together add 123 words (about 1,619). Because there is no declared limit, no existing sentence has to give way; the PO decides whether to declare one in the story.
+
+| ID | Question | Proposed answer (Spanish) | Target | Budget (source) | Count now | Count after | Data used |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| L1 | ¿Cuánto cuesta el SEO local? | El plan Local cuesta 300 €/mes + IVA y el Local Pro, 500 €/mes + IVA. Se facturan mes a mes y no hay cuota de puesta en marcha aparte. | `/seo-local-sevilla/` FAQ, new entry | none declared (`scripts/lib/template-pages.mjs`, ADR 0013 note) | 1,496 | 1,531 (+35) | Prices: `seoLocal.pricing.tiers[].from` in `src/data/services.ts` (Local, Local Pro), read through `tierFrom(seoLocal, ...)` as `contactFaqs` does in `src/data/page-faqs.ts:39`, never typed (NRD-10). Billing: `seoLocal.pricing.note` ("Se factura mes a mes y no hay cuota de puesta en marcha aparte") and FAQ #7 of the page. |
+| L5 | ¿Qué es el SEO local? | Es el trabajo para que tu negocio aparezca en Google y en Google Maps cuando alguien cerca de ti busca lo que ofreces. Incluye tu ficha de Google, tu web y tus reseñas. | `/seo-local-sevilla/` FAQ, new entry | none declared | 1,496 | 1,534 (+38; 1,569 if L1 is also added) | No figures. Wording follows `homeFaqs` #4 and #1 (`src/data/page-faqs.ts`) and FAQ #2 of the page (ficha, reseñas, web). |
+| L8 | ¿Cómo influye la ficha de Google en el SEO local? | La ficha de Google Business Profile es la base del SEO local: es lo que Google muestra en el mapa cuando alguien busca cerca. El plan Local la mantiene al día y Local Pro suma el trabajo en la web. | `/seo-local-sevilla/` FAQ, new entry | none declared | 1,496 | 1,546 (+50; 1,619 with L1 and L5) | No figures. Plan names and scope from `seoLocal.pricing.tiers` (`src/data/services.ts`) and FAQ #3 of the page. |
+
+Notes for the follow-up story:
+
+- L8 overlaps FAQ #2 (Google Maps) and #3 (Local vs Local Pro). If the PO prefers not to add another entry (the page has 9 today), L8 can be merged into #2 by adding its second sentence there; the gap would then close with 0 new entries.
+- L5 is the only proposal with a known volume of its own (`que es el seo local` 90, KW-Labs, Spain, 2026-11-16); L8 has `seo local google my business` 70 (KW-Labs, Spain, same date); L1 rests on a PAA and two keywords with 10 searches each (`precio seo local`, `presupuesto seo sevilla`, Spain). None of these is a Seville volume.
+- Adding entries to the page changes `seoLocal.faqs`, which feeds the FAQPage JSON-LD and `/ai/faq.json`; `tests/ai-discovery*.test.js` keep them equal, and any test that pins the FAQ count or the entry list of the page must be updated in the same story (not checked here, since no test is run against a change).
+- No answer promises a result, a position, a citation by an AI assistant or a timeline.
+
+### 4.2 Rejections
+
+| ID | Question | Page | Reason |
+| --- | --- | --- | --- |
+| D4 | ¿Freelance, estudio o agencia para mi web? | `/diseno-web-sevilla/` | (a) **Already answered on the page**: the visible key section `freelance-title` ("¿Freelance, estudio o agencia?") opens with a direct answer, "Para una web clara y rápida suele bastar una freelance; un estudio o una agencia compensa si además necesitas campañas, redes o vídeo" (`src/pages/diseno-web-sevilla.astro`), and `/contacto/` #4 and `/seo-local-sevilla/` #9 answer it in FAQ form; a FAQ entry would repeat that text. (b) **No room in the budget**: range 1,000 to 1,200 words (`openspec/specs/diseno-web-page/spec.md`, requirement "The page stays within its text budget"; `scripts/lib/template-pages.mjs`), current count 1,198 (build of 2026-11-21), so an entry of about 30 words would take it to roughly 1,228 unless an existing sentence gives way. Table row D4 stays "partial" because the FAQ block itself has no such entry. |
+| N1 | ¿Qué debe tener la web de un despacho de abogados? | `/web-para-abogados-gestorias-sevilla/` | Parked page: reopening parked pages is a user decision (PRD section 9; stories for parked pages stay parked, PRD milestones table). Not proposed. |
+| N13 | ¿Cómo crear una tienda online para mi comercio? | `/web-para-comercios-sevilla/` | Parked page (same rule). It is also answered for the intent by `/tienda-online-sevilla/` #2, the page that owns the shop terms (ADR 0012, ADR 0013 notes the overlap). |
+| N15 | ¿Shopify o WooCommerce? | `/web-para-comercios-sevilla/` | Parked page (same rule). Covered for the intent by `/tienda-online-sevilla/` #3. |
+| N19 | ¿Qué debe tener la página web de un restaurante? | `/web-para-restaurantes-sevilla/` | Parked page (same rule). |
+
+Also checked and not proposed (data absence, not part of the 8 recurring): T7 "¿Cuánto se tarda en montar una tienda?" has one source (the web-design AI Overview, 8 to 12 weeks, a competitor figure) and `src/data` has no shop timeline, so an answer would need an invented figure; N9 (clinic timeline) is the same case.
 
 ## 5. Data sources and calls
 
@@ -315,6 +348,8 @@ DataForSEO calls made by the developer for this report: **0** (by design: the de
 | 4 | recorded report | `.claude/state/seo/2026-11-15.md` (S3) | Delta SERPs for `diseño web sevilla` and `posicionamiento en ia` (AI Overview defines GEO/AEO; PAA 4, none GEO-specific) | `posicionamiento en ia` | 2026-11-15 | not returned |
 | 5 | recorded report | `.claude/state/seo/2026-11-15-NRD-97-calls.md` (N97) | 22 calls (2 failed), 15 live SERPs; English PAA "How to GEO-optimize?" | `geo generative engine optimization` and others | 2026-11-15 | not returned |
 | 6 | data step (optional) | `.claude/state/seo/<date>-NRD-323-calls.md` | **not run in this cycle**: would cover `/contacto/` and `/seo-para-ia/` (at most 6 calls) | n/a | n/a | n/a |
+
+Log closed on 2026-11-21 (NRD-337). Totals: developer DataForSEO calls 0; reused recorded calls listed above, not re-charged; data-step calls 0 (not run in this cycle). Word counts in section 4 come from a local `pnpm build` of 2026-11-21 and `scripts/lib/page-contract.mjs` (no external call). Budgets come from `scripts/lib/template-pages.mjs` and `openspec/specs/diseno-web-page/spec.md`.
 
 Files read and not used: `seo/estudios/2026-11-21-municipios-sevilla-demanda.md` and `seo/estudios/2026-11-21-palo-seco-estructura.md` (owner main checkout, untracked) are about municipality pages, not about the FAQs, and contain no question data used here.
 
@@ -330,4 +365,25 @@ Para que la dueña añada preguntas reales de clientes (correo, WhatsApp, llamad
 
 ## 7. For the PO
 
-Filled in by subtask NRD-337 (task 1.2): additions grouped by page, ready to file as stories.
+Additions grouped by page, ready to file as stories. The developer does not create issues.
+
+### `/seo-local-sevilla/` (one story, 3 FAQ entries)
+
+- Add FAQ entries L1 (price of local SEO), L5 (what local SEO is) and L8 (how the Google profile feeds local SEO), with the Spanish answers of 4.1. Prices read with `tierFrom(seoLocal, "Local")` and `tierFrom(seoLocal, "Local Pro")`, not typed (NRD-10).
+- Page budget: none declared; current 1,496 words (2026-11-21), about 1,619 after the three entries. Decide in the story whether to declare a maximum for the page.
+- Optional: merge L8 into FAQ #2 instead of adding an entry.
+- Update any test that pins the page's FAQ count or list; `/ai/faq.json` and the FAQPage JSON-LD follow `seoLocal.faqs` automatically.
+- Evidence to cite in the story: R16 (PAA, KW-Labs, 2026-11-16), KC S1 (2026-11-13) and S10 (2026-11-15); all volumes are Spain-level.
+
+### `/diseno-web-sevilla/`
+
+- No addition. D4 (freelance, studio or agency) is answered by the visible section `freelance-title`; the page sits at 1,198 of 1,200 words. If the PO still wants the FAQ entry, the story must name the sentence that gives way.
+
+### Parked niche pages
+
+- No proposal (N1, N13, N15, N19). Reopening parked pages is a user decision. The recorded questions for the five niche pages are in 3.2 for the day the user reopens them.
+
+### Data gaps for a later data step
+
+- `/contacto/` and `/seo-para-ia/` have no question data of their own; the optional data step (at most 6 calls: PAA for `seo para ia`, `geo posicionamiento ia`, `presupuesto pagina web sevilla`, `contratar diseñador web sevilla`, and 1 to 2 Labs question-form suggestions for `seo para ia`) has not run. Until it does, no new entry for those two pages is justified by data.
+- Section 6 (owner questions) is empty: real customer questions from the owner's inbox, WhatsApp or calls would be the strongest evidence and can change any coverage row above.
