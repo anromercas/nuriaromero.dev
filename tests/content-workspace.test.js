@@ -35,3 +35,11 @@ test("NRD-327 design records the storage decision", () => {
   assert.match(line, /seo\/contenido\//);
   assert.match(line, /NRD-345/);
 });
+
+test("README and CLAUDE.md point to the blog-pipeline skill", () => {
+  assert.match(
+    read("seo/contenido/README.md"),
+    /\.claude\/skills\/blog-pipeline\//,
+  );
+  assert.match(read("CLAUDE.md"), /\.claude\/skills\/blog-pipeline\//);
+});

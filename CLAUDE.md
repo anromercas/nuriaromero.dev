@@ -18,6 +18,7 @@ Portfolio y web de servicios SEO local de Nuria Romero (nuriaromero.dev). Sitio 
 - `odd/tasks/<feature>.md`: documentos de tareas por feature. Son la fuente de verdad del trabajo en curso.
 - `DESIGN.md` y `PRODUCT.md`: dirección de diseño y de producto.
 - `scripts/check-seo-*.mjs`: validaciones SEO sobre el build en `dist/`.
+- `.claude/skills/blog-pipeline/`: pipeline del blog con aprobación de la dueña en cada paso.
 
 ## Proceso
 
