@@ -19,6 +19,9 @@ const childScript = fileURLToPath(
   new URL("./isolated-build-child.mjs", import.meta.url),
 );
 
+// Below the 240 s before-hook timeout of the callers, so a hang fails clearly.
+const BUILD_TIMEOUT_MS = 220_000;
+
 // Explicit allow-list: never .env*, .git or dist.
 const COPIED = [
   "src",
@@ -82,7 +85,14 @@ export async function isolatedBuild({ posts = [], files = [] } = {}) {
       cwd: root,
       env,
       encoding: "utf8",
+      timeout: BUILD_TIMEOUT_MS,
+      killSignal: "SIGKILL",
     });
+    if (run.error?.code === "ETIMEDOUT") {
+      throw new Error(
+        `isolated build timed out after ${BUILD_TIMEOUT_MS} ms:\n${run.stderr || run.stdout}`,
+      );
+    }
     if (run.status !== 0) {
       throw new Error(
         `isolated build failed (exit ${run.status}):\n${run.stderr || run.stdout}`,
