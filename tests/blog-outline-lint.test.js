@@ -2,7 +2,11 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
-import { parseOutline, lintOutline } from "../scripts/lib/outline-lint.mjs";
+import {
+  parseOutline,
+  lintOutline,
+  isApproved,
+} from "../scripts/lib/outline-lint.mjs";
 
 const dir = new URL("./fixtures/blog-pipeline/", import.meta.url);
 const fixture = (name) => readFileSync(new URL(name, dir), "utf8");
@@ -96,4 +100,23 @@ test("CLI exits 1 and lists every error", () => {
 test("CLI exits 2 on usage errors", () => {
   const r = spawnSync(process.execPath, ["scripts/blog-outline-lint.mjs"]);
   assert.equal(r.status, 2);
+});
+
+test("isApproved accepts aprobado with or without a date", () => {
+  const out = (status) => ({ status });
+  assert.equal(isApproved(out("aprobado")), true);
+  assert.equal(isApproved(out("aprobado (2026-11-24)")), true);
+});
+
+test("isApproved rejects pending, other wording and null", () => {
+  const out = (status) => ({ status });
+  for (const status of [
+    "pendiente de aprobación",
+    "aprobada",
+    "aprobado 2026-11-24",
+    "",
+    null,
+  ]) {
+    assert.equal(isApproved(out(status)), false, String(status));
+  }
 });

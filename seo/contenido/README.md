@@ -14,6 +14,10 @@ Aquí viven los ficheros de trabajo del pipeline de contenido del blog (ideas, t
 - `<slug>/tema.md`: tema elegido, pregunta que responde, datos de demanda con fuente y fecha, intención, página destino y `Estado`.
 - `<slug>/esquema.md`: H1, lista de H2, palabras clave secundarias, respuesta directa, objetivo de palabras, fuentes y `Estado`. El formato lo valida `scripts/blog-outline-lint.mjs` (NRD-346).
 
+## Cómo se usa
+
+Se trabaja con la skill `.claude/skills/blog-pipeline/`: tema, esquema, portada, borrador y publicación, con una aprobación de la dueña después de cada paso. El estado de cada aprobación queda en `Estado` de `tema.md` y `esquema.md`; `scripts/blog-scaffold.mjs --write` no crea el borrador hasta que el esquema está aprobado.
+
 ## Qué no va aquí
 
 - Los borradores van a `src/content/blog/<slug>.md` con `draft: true`.
