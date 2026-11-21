@@ -1,16 +1,7 @@
 // Builds a temporary copy of the site with extra posts and files, so tests can
 // render fixture content without ever touching src/content or dist/ (ADR 0019).
 import { spawnSync } from "node:child_process";
-import {
-  cp,
-  mkdir,
-  mkdtemp,
-  realpath,
-  rm,
-  symlink,
-  writeFile,
-} from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { cp, mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -45,22 +36,19 @@ const toFrontmatter = (value) =>
  * @returns {Promise<{ root: string, dist: string, cleanup: () => Promise<void> }>}
  */
 export async function isolatedBuild({ posts = [], files = [] } = {}) {
-  // realpath: on macOS tmpdir() is a /var -> /private/var symlink, and Vite
-  // breaks when the same file is reached through both spellings.
-  const root = await mkdtemp(
-    join(await realpath(tmpdir()), "nrd-isolated-build-"),
-  );
+  // The root lives inside the repo (under .astro/, which is gitignored) so
+  // module resolution walks up to the repo's own node_modules and follows
+  // pnpm's real paths. A temp dir outside the repo needs a symlinked
+  // node_modules, which hides pnpm's nested siblings (astro -> zod) on CI.
+  const parent = join(repo, ".astro");
+  await mkdir(parent, { recursive: true });
+  const root = await mkdtemp(join(parent, "nrd-isolated-build-"));
   const cleanup = () => rm(root, { recursive: true, force: true });
 
   try {
     for (const entry of COPIED) {
       await cp(join(repo, entry), join(root, entry), { recursive: true });
     }
-    await symlink(
-      join(repo, "node_modules"),
-      join(root, "node_modules"),
-      "dir",
-    );
 
     for (const post of posts) {
       const file = join(root, "src", "content", "blog", `${post.slug}.md`);

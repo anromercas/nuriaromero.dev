@@ -12,5 +12,4 @@ await build({
   root,
   cacheDir: join(root, ".astro-cache"),
   logLevel: "error",
-  vite: { resolve: { preserveSymlinks: true } },
 });
