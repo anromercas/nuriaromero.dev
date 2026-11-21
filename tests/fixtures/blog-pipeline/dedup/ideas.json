@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "ideas": [
+    {
+      "id": "idea-001",
+      "question": "¿Cuánto cobra un SEO al mes?",
+      "keyword": "cuanto cobra un seo al mes",
+      "status": "rechazada"
+    },
+    {
+      "id": "idea-002",
+      "question": "¿Qué es un chatbot para una clínica?",
+      "keyword": "chatbot para una clinica",
+      "status": "aprobada"
+    }
+  ]
+}

@@ -7,7 +7,7 @@ Publish truthful freshness signals for the site's pages. Each page's modificatio
 
 ### Requirement: Page modification dates come from the content history
 
-The build SHALL derive a page's modification date from the most recent commit that changed the page's own source file or the site-data modules that hold its copy. The date SHALL NOT be the build time or a hand-written value. When the version history cannot prove that date (no repository, an untracked or uncommitted file, or a most recent commit that is the boundary of a shallow clone), the build SHALL omit the date instead of approximating it, and SHALL NOT fail.
+Except for the blog index, the build SHALL derive a page's modification date from the most recent commit that changed the page's own source file or the site-data modules that hold its copy. The date SHALL NOT be the build time or a hand-written value. When the version history cannot prove that date (no repository, an untracked or uncommitted file, or a most recent commit that is the boundary of a shallow clone), the build SHALL omit the date instead of approximating it, and SHALL NOT fail.
 
 #### Scenario: Page changed in an earlier commit
 
@@ -28,6 +28,20 @@ The build SHALL derive a page's modification date from the most recent commit th
 
 - **WHEN** the build runs where `git` or the repository history is unavailable
 - **THEN** no page publishes a modification date and the build succeeds
+
+### Requirement: The blog index is dated by its newest published post
+
+The modification date of the blog index `/blog/` SHALL be the most recent of the newest `updatedDate` (or, when absent, `pubDate`) among published blog posts and the last commit of `src/pages/blog/index.astro`. Draft posts and commits under `src/content/blog` SHALL NOT move it. When the history cannot prove the template date, the newest published post date alone SHALL date the page.
+
+#### Scenario: /blog/ is dated by the newest published post; a draft commit does not move it
+
+- **WHEN** the newest published post has `updatedDate` 2026-11-12, `src/pages/blog/index.astro` was last committed on 2026-10-01, and a draft post is committed under `src/content/blog` on 2026-11-20
+- **THEN** the `/blog/` `WebPage` `dateModified` is the 2026-11-12 post date, not the draft's commit date
+
+#### Scenario: /blog/ template changed after the newest post
+
+- **WHEN** `src/pages/blog/index.astro` was last committed after the newest published post's `updatedDate` (or `pubDate`)
+- **THEN** the `/blog/` modification date is that commit date
 
 ### Requirement: Indexable pages publish dateModified in JSON-LD
 

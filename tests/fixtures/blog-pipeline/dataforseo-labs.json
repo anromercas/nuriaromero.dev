@@ -1,0 +1,39 @@
+{
+  "version": "0.1.20240801",
+  "status_code": 20000,
+  "tasks": [
+    {
+      "status_code": 20000,
+      "data": {
+        "api": "dataforseo_labs",
+        "function": "google/keyword_suggestions/live"
+      },
+      "result": [
+        {
+          "seed_keyword": "chatgpt",
+          "datetime": "2026-11-16 10:00:00 +00:00",
+          "items": [
+            {
+              "keyword": "como hago que chatgpt recomiende mi negocio",
+              "keyword_info": { "search_volume": 40 },
+              "keyword_properties": { "keyword_difficulty": 20 },
+              "search_intent_info": { "main_intent": "informational" }
+            },
+            {
+              "keyword": "que tiempo hace en sevilla",
+              "keyword_info": { "search_volume": 5000 },
+              "keyword_properties": { "keyword_difficulty": 10 },
+              "search_intent_info": { "main_intent": "informational" }
+            },
+            {
+              "keyword": "diseno web sevilla",
+              "keyword_info": { "search_volume": 800 },
+              "keyword_properties": { "keyword_difficulty": 40 },
+              "search_intent_info": { "main_intent": "commercial" }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

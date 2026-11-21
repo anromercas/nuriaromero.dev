@@ -1,0 +1,38 @@
+{
+  "source": "fixture:dedup",
+  "date": "2026-11-21",
+  "items": [
+    {
+      "kind": "client-question",
+      "keyword": "cuanto cuesta el seo local en sevilla",
+      "question": "¿Cuánto cuesta el SEO local en Sevilla?",
+      "volume": 100,
+      "difficulty": 20,
+      "intent": null
+    },
+    {
+      "kind": "client-question",
+      "keyword": "cuanto cuesta mantener una web al ano",
+      "question": "¿Cuánto cuesta mantener una web al año?",
+      "volume": 90,
+      "difficulty": 20,
+      "intent": null
+    },
+    {
+      "kind": "client-question",
+      "keyword": "cuanto cobra un seo al mes",
+      "question": "¿Cuánto cobra un SEO al mes?",
+      "volume": 80,
+      "difficulty": 20,
+      "intent": null
+    },
+    {
+      "kind": "client-question",
+      "keyword": "que es un chatbot para una clinica",
+      "question": "¿Qué es un chatbot para una clínica?",
+      "volume": 70,
+      "difficulty": 20,
+      "intent": null
+    }
+  ]
+}
