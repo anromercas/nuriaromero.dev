@@ -611,16 +611,27 @@ export const seoLocal: ServicePageData = {
   },
   faqs: [
     {
+      q: "¿Qué es el SEO local?",
+      a: "Es el trabajo para que tu negocio aparezca en Google y en Google Maps cuando alguien cerca de ti busca lo que ofreces. Incluye tu ficha de Google, tus reseñas y, según el plan, tu web.",
+    },
+    {
       q: "¿Para qué tipo de negocio encaja este servicio?",
       a: "Está pensado para negocios de Sevilla donde cada cliente cuenta y la información local debe ser clara. En la llamada vemos si el alcance encaja con tu situación.",
     },
     {
       q: "¿Cómo puede aparecer mi negocio en Google Maps?",
-      a: "Con una ficha de Google Business Profile completa y coherente: categoría correcta, servicios y horarios al día, reseñas auténticas y datos que coinciden en directorios y en la web. También influye la distancia entre quien busca y tu negocio, así que nadie puede prometer la primera posición.",
+      a: "Con una ficha de Google Business Profile completa y coherente: categoría correcta, servicios y horarios al día, reseñas auténticas y datos que coinciden en directorios y en la web. Esa ficha es la base del SEO local: el plan Local la mantiene al día y Local Pro suma el trabajo en la web. También influye la distancia entre quien busca y tu negocio, así que nadie puede prometer la primera posición.",
     },
     {
       q: "¿Qué diferencia hay entre Local y Local Pro?",
       a: "Local se centra en la ficha de Google y su mantenimiento. Local Pro incorpora además el trabajo necesario en la web para que ficha y web funcionen como un mismo sistema.",
+    },
+    {
+      q: "¿Cuánto cuesta el SEO local?",
+      // Read at access time: seoLocal is not initialized while this literal is evaluated.
+      get a() {
+        return `El plan Local cuesta ${tierFrom(seoLocal, "Local")} y el Local Pro, ${tierFrom(seoLocal, "Local Pro")}. Se facturan mes a mes y no hay cuota de puesta en marcha aparte.`
+      },
     },
     {
       q: "¿Qué ocurre en la llamada?",

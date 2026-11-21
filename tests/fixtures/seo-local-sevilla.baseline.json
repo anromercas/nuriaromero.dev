@@ -1,7 +1,10 @@
 {
   "jsonld": [
     {
-      "@type": ["ProfessionalService", "Organization"],
+      "@type": [
+        "ProfessionalService",
+        "Organization"
+      ],
       "@id": "https://nuriaromero.dev/#business",
       "name": "Nuria Romero",
       "alternateName": "nuriaromero.dev",
@@ -107,6 +110,14 @@
       "mainEntity": [
         {
           "@type": "Question",
+          "name": "¿Qué es el SEO local?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Es el trabajo para que tu negocio aparezca en Google y en Google Maps cuando alguien cerca de ti busca lo que ofreces. Incluye tu ficha de Google, tus reseñas y, según el plan, tu web."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "¿Para qué tipo de negocio encaja este servicio?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -118,7 +129,7 @@
           "name": "¿Cómo puede aparecer mi negocio en Google Maps?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Con una ficha de Google Business Profile completa y coherente: categoría correcta, servicios y horarios al día, reseñas auténticas y datos que coinciden en directorios y en la web. También influye la distancia entre quien busca y tu negocio, así que nadie puede prometer la primera posición."
+            "text": "Con una ficha de Google Business Profile completa y coherente: categoría correcta, servicios y horarios al día, reseñas auténticas y datos que coinciden en directorios y en la web. Esa ficha es la base del SEO local: el plan Local la mantiene al día y Local Pro suma el trabajo en la web. También influye la distancia entre quien busca y tu negocio, así que nadie puede prometer la primera posición."
           }
         },
         {
@@ -127,6 +138,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Local se centra en la ficha de Google y su mantenimiento. Local Pro incorpora además el trabajo necesario en la web para que ficha y web funcionen como un mismo sistema."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto cuesta el SEO local?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "El plan Local cuesta 300 €/mes + IVA y el Local Pro, 500 €/mes + IVA. Se facturan mes a mes y no hay cuota de puesta en marcha aparte."
           }
         },
         {
