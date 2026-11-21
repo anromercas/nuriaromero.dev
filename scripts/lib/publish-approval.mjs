@@ -1,6 +1,6 @@
 // Pure core of the publish approval guard (ADR 0021): which blog posts a PR
 // makes published, and whether the owner's label is present.
-import { isDraft } from "./blog-posts.mjs";
+import { isDraft, wasDraft } from "./blog-posts.mjs";
 
 export const PUBLISH_LABEL = "publish-approved";
 
@@ -24,7 +24,7 @@ export function publishedPosts(changes) {
     }
     if (!isBlogPost(path) || after === null) continue;
     if (isDraft(after)) continue;
-    if (before !== null && !isDraft(before)) continue;
+    if (before !== null && !wasDraft(before)) continue;
     const reason =
       before === null
         ? "new"

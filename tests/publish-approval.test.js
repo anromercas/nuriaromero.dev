@@ -100,6 +100,37 @@ test("publishedPosts is fail-closed for nested paths, other extensions and speci
   );
 });
 
+test("before side treats ambiguous draft values as draft", () => {
+  const fm = (line) => `---\ntitle: A\n${line}\n---\nBody\n`;
+  for (const line of ["draft: yes", "draft: True", 'draft: "true"']) {
+    assert.deepEqual(
+      publishedPosts([{ path: A, before: fm(line), after: flipped }]),
+      [{ path: A, reason: "flipped" }],
+      line,
+    );
+    assert.deepEqual(
+      publishedPosts([{ path: A, before: fm(line), after: removed }]),
+      [{ path: A, reason: "draft-removed" }],
+      line,
+    );
+  }
+  // strict published before stays published; absent key is published
+  assert.deepEqual(
+    publishedPosts([{ path: A, before: flipped, after: flipped }]),
+    [],
+  );
+  assert.deepEqual(
+    publishedPosts([{ path: A, before: removed, after: removed }]),
+    [],
+  );
+  assert.deepEqual(
+    publishedPosts([
+      { path: A, before: fm("draft: false # x"), after: removed },
+    ]),
+    [],
+  );
+});
+
 test("parseLabels handles JSON, empty and null", () => {
   assert.deepEqual(parseLabels('["a","publish-approved"]'), [
     "a",
@@ -258,6 +289,35 @@ for (const kind of ["symlink", "gitlink", "nested"]) {
     }
   });
 }
+
+test("CLI: renamed draft inside the blog folder stays a draft", () => {
+  const { dir, base } = setupRepo(draft + "more\n");
+  try {
+    git(dir, "mv", A, "src/content/blog/renamed.md");
+    git(dir, "commit", "-q", "-m", "rename");
+    const head = git(dir, "rev-parse", "HEAD");
+    const r = runCli(dir, { BASE_SHA: base, HEAD_SHA: head, PR_LABELS: "[]" });
+    assert.equal(r.status, 0, r.stderr);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("CLI: renaming a draft and publishing it in one commit needs the label", () => {
+  const { dir, base } = setupRepo(draft + "more\n");
+  try {
+    git(dir, "mv", A, "src/content/blog/renamed.md");
+    writeFileSync(join(dir, "src/content/blog/renamed.md"), flipped + "more\n");
+    git(dir, "add", "-A");
+    git(dir, "commit", "-q", "-m", "rename and publish");
+    const head = git(dir, "rev-parse", "HEAD");
+    const r = runCli(dir, { BASE_SHA: base, HEAD_SHA: head, PR_LABELS: "[]" });
+    assert.equal(r.status, 1, r.stdout + r.stderr);
+    assert.match(r.stderr, /renamed\.md goes from draft to published/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
 
 test("CLI: missing BASE_SHA exits 2 with usage message", () => {
   const { dir, head } = setupRepo(flipped);

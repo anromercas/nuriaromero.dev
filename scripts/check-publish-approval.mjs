@@ -1,7 +1,11 @@
 // CLI of the publish approval guard (ADR 0021).
 // Env: BASE_SHA, HEAD_SHA, PR_LABELS (JSON array). Exit: 0 ok, 1 blocked, 2 usage/git error.
 import { execFileSync } from "node:child_process";
-import { checkPublishApproval, parseLabels } from "./lib/publish-approval.mjs";
+import {
+  checkPublishApproval,
+  isBlogPost,
+  parseLabels,
+} from "./lib/publish-approval.mjs";
 
 class GitError extends Error {}
 
@@ -50,7 +54,8 @@ try {
   // (two paths for renames and copies).
   const changes = [];
   for (let i = 0; i < tokens.length;) {
-    const [, dstMode, , , status] = tokens[i++].split(/\s+/);
+    const [rawSrcMode, dstMode, , , status] = tokens[i++].split(/\s+/);
+    const srcMode = rawSrcMode.replace(/^:/, "");
     const twoPaths = status.startsWith("R") || status.startsWith("C");
     const oldPath = twoPaths ? tokens[i++] : null;
     const path = tokens[i++];
@@ -59,9 +64,16 @@ try {
       continue;
     }
     const sourcePath = oldPath ?? path;
+    // Trust the previous content only when the source is a regular blog post;
+    // anything else (A, T, other folders, symlinks) reads as a new file.
+    const trusted =
+      status !== "A" &&
+      !status.startsWith("T") &&
+      isBlogPost(sourcePath) &&
+      (srcMode === "100644" || srcMode === "100755");
     changes.push({
       path,
-      before: status === "A" ? null : git("show", `${mergeBase}:${sourcePath}`),
+      before: trusted ? git("show", `${mergeBase}:${sourcePath}`) : null,
       after: git("show", `${head}:${path}`),
     });
   }
