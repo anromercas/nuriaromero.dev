@@ -52,21 +52,9 @@ When a post sets `cover`, `BlogPostLayout` SHALL render one `figure.post-cover` 
 - **WHEN** no built post has a cover
 - **THEN** `check-seo-25` exits 0 and reports 0 covers checked
 
-## MODIFIED Requirements
+### Requirement: The cover drives the post share image
 
-### Requirement: Search signals and structured data are unchanged
-
-Each post SHALL keep its title, meta description, canonical, Article and BreadcrumbList JSON-LD identical to the post baseline unless a story edits that post on purpose and regenerates its baseline entry in the same commit, SHALL have exactly one H1 and SHALL use trailing-slash internal links. When a post sets `cover`, its `og:image`, `twitter:image` and Article `image` SHALL be the same absolute URL of a 1200 px wide JPEG generated from the cover under `/_astro/`; when it sets no `cover`, they SHALL stay the absolute URL of `SITE.defaultOgImage`.
-
-#### Scenario: Metadata and JSON-LD match the baseline
-
-- **WHEN** the post contract check compares each built post with the baseline
-- **THEN** title, meta description, canonical and the Article and BreadcrumbList entities are identical
-
-#### Scenario: Ownership and link checks pass
-
-- **WHEN** the SEO build checks run
-- **THEN** each post has one H1, no internal href without trailing slash and no title, H1 or H2 targeting a term owned by another page
+When a post sets `cover`, its `og:image`, `twitter:image` and Article `image` SHALL be the same absolute URL of a 1200 px wide JPEG generated from the cover under `/_astro/`. When it sets no `cover`, they SHALL stay the absolute URL of `SITE.defaultOgImage`.
 
 #### Scenario: Cover drives the share image
 
