@@ -7,6 +7,7 @@ import SeoLocalRelated from "@/components/seo-local/SeoLocalRelated.astro";
 import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
 import { internalLinksBySource } from "@/data/internal-links";
 import { articleSchema, breadcrumbSchema } from "@/lib/schema";
+import { Picture, getImage } from "astro:assets";
 import "@/styles/template.css";
 import type { CollectionEntry } from "astro:content";
 
@@ -15,8 +16,13 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, updatedDate } = post.data;
-const image: string | undefined = undefined;
+const { title, description, pubDate, updatedDate, cover } = post.data;
+// One 1200 px JPEG for og:image, twitter:image and the Article image: not every
+// social preview supports AVIF/WebP.
+const shareImage = cover
+  ? await getImage({ src: cover.src, format: "jpg", width: 1200, quality: 75 })
+  : undefined;
+const image = shareImage?.src;
 const url = `/blog/${post.slug}/`;
 
 const breadcrumbs = [
@@ -80,6 +86,22 @@ const relatedLinks = internalLinksBySource[url] ?? [];
               )}
             </p>
           </header>
+          {cover && (
+            <figure class="post-cover">
+              <Picture
+                src={cover.src}
+                alt={cover.alt}
+                formats={["avif", "webp"]}
+                fallbackFormat="jpg"
+                widths={[640, 960, 1280]}
+                sizes="(min-width: 1024px) 896px, (min-width: 768px) 672px, (min-width: 640px) 640px, calc(100vw - 2rem)"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                data-post-cover
+              />
+            </figure>
+          )}
           <div class="post-prose" data-post-body>
             <slot />
           </div>
@@ -113,6 +135,23 @@ const relatedLinks = internalLinksBySource[url] ?? [];
     padding-bottom: 2rem;
     margin-bottom: 2.5rem;
     border-bottom: 1px solid var(--hairline);
+  }
+
+  .post-cover {
+    margin: 0 0 2.5rem;
+  }
+
+  .post-cover :global(picture) {
+    display: block;
+  }
+
+  .post-cover :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--hairline);
+    border-radius: 0.9rem;
+    background: var(--card-surface);
   }
 
   .post-title {
