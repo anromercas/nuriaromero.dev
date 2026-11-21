@@ -4,9 +4,9 @@ Audit of the published FAQs against the questions people search for. Analysis in
 
 ## 1. Summary
 
-- **Published FAQ inventory:** 91 entries on 14 pages (home, contact, 7 services, 5 niche pages), read from `faqPages()` in `src/lib/ai-discovery.ts`. It is the same list `/ai/faq.json` publishes.
+- **Published FAQ inventory:** 91 entries on 14 pages (home, contact, 8 entries of `services` in `src/data/services.ts`, 4 entries of `niches` in `src/data/niches.ts`), read from `faqPages()` in `src/lib/ai-discovery.ts`. It is the same list `/ai/faq.json` publishes.
 - **Question table:** 89 questions from recorded search data, each with source, source date, volume when known, coverage (yes / partial / no) and the covering entry (section 3). Coverage is judged by intent: "yes" means an existing entry answers the question directly, "partial" means the answer is incomplete or sits on another page, "no" means no entry answers it.
-- **Result of the comparison:** 58 questions are covered, 18 are partial and 13 are not covered. Of the 31 partial or uncovered questions, 8 are recurring (two or more sources, or a known monthly volume of 10 or more: 4 on in-focus pages, 4 on parked niche pages) and 23 are one-off (listed, no proposal). Section 4 settles the 8 recurring ones: **3 proposals** (L1, L5, L8, all for `/seo-local-sevilla/`) and **5 rejections** (D4: already answered by a visible section and no room in the budget; N1, N13, N15, N19: parked niche pages).
+- **Result of the comparison:** 59 questions are covered, 17 are partial and 13 are not covered. Of the 30 partial or uncovered questions, 7 are recurring (two or more sources, or a known monthly volume of 10 or more: 3 on in-focus pages, 4 on parked niche pages) and 23 are one-off (listed, no proposal). Section 4 settles the 7 recurring ones: **3 proposals** (L1, L5, L8, all for `/seo-local-sevilla/`) and **4 rejections** (N1, N13, N15, N19: parked niche pages). D4 is classified as covered (visible section), with a budget note in 4.3.
 - **Data sources:** no DataForSEO call was made for this report (0 by design). All questions come from recorded, earlier SEO-strategist runs (2026-11-13 to 2026-11-16) and the repo study `docs/seo-audit/keyword-clusters-2026-11.md`. The optional story data step (`.claude/state/seo/<date>-NRD-323-calls.md`) did not run in this cycle, so `/contacto/` has no recorded question data and `/seo-para-ia/` only has the GEO block of 2026-11-16 (section 3.1).
 - **What the report does not contain:** owner questions (section 6 is empty on purpose), estimated volumes, or any claim that a question is asked "in Seville" when the volume is Spain-level.
 
@@ -117,7 +117,7 @@ Generated on 2026-11-21 by reading `faqPages()` (a throwaway script, nothing com
 
 Entries per page: `/` 6, `/contacto/` 4, `/seo-local-sevilla/` 9, `/seo-para-ia/` 6, `/seo-para-clinicas-capilares-sevilla/` 6, `/diseno-web-sevilla/` 6, `/desarrollo-software-medida/` 5, `/automatizaciones/` 6, `/inteligencia-artificial/` 6, `/tienda-online-sevilla/` 5, `/web-para-restaurantes-sevilla/` 8, `/web-para-clinicas-sevilla/` 8, `/web-para-comercios-sevilla/` 8, `/web-para-abogados-gestorias-sevilla/` 8.
 
-Page status (ADR 0013, PRD section 5): the five niche pages (`/web-para-restaurantes-sevilla/`, `/web-para-clinicas-sevilla/`, `/web-para-comercios-sevilla/`, `/web-para-abogados-gestorias-sevilla/`, `/seo-para-clinicas-capilares-sevilla/`) are **parked**: public but out of focus, and reopening them is a user decision.
+Page status (ADR 0013, PRD section 5): the five parked pages: four `niches` entries and the `capilarLocal` entry of `services` (`/web-para-restaurantes-sevilla/`, `/web-para-clinicas-sevilla/`, `/web-para-comercios-sevilla/`, `/web-para-abogados-gestorias-sevilla/`, `/seo-para-clinicas-capilares-sevilla/`) are **parked**: public but out of focus, and reopening them is a user decision.
 
 ## 3. Question table
 
@@ -189,7 +189,7 @@ Keyword context for the GEO page, KC, S1 2026-11-13: `posicionamiento en ia` 70,
 | D1 | ¿Cuánto cuesta hacer una página web? | R16, KW-Labs `cuanto cuesta hacer una pagina web` 320, `precio pagina web` 320, `cuanto cuesta crear pagina web` 260, KW-Ads `cuanto cuesta una pagina web` 210, 2026-11-16; S1, PAA "¿Cuánto cuesta el diseño de una web?", 2026-11-13 | 320 / 320 / 260 / 210 (Spain) | yes | `/diseno-web-sevilla/` #1, `/contacto/` #2 | n/a |
 | D2 | ¿Cuánto cobra un diseñador para hacer una página web? | S1, PAA, 2026-11-13 | - | yes | `/diseno-web-sevilla/` #1 | n/a |
 | D3 | ¿Cuánto se tarda en hacer una web? | R16, AIO (gives timelines), 2026-11-16; KW-Ads `cuanto tarda en hacerse una pagina web` sin dato | sin dato | yes | `/diseno-web-sevilla/` #2, `/contacto/` #3 | n/a |
-| D4 | ¿Freelance, estudio o agencia para mi web? | R16, AIO, 2026-11-16; R16, KW-Ads `diseñador web freelance`, 2026-11-16 | 260 (Spain, keyword) | partial (answered on `/contacto/` #4 and `/seo-local-sevilla/` #9, not on the design page whose AI Overview raises it) | `/contacto/` #4 | yes (2 sources, volume 260) |
+| D4 | ¿Freelance, estudio o agencia para mi web? | R16, AIO, 2026-11-16; R16, KW-Ads `diseñador web freelance`, 2026-11-16 | 260 (Spain, keyword) | yes (answered by the visible key section `freelance-title` of the page, not by an FAQ entry; also `/contacto/` #4 and `/seo-local-sevilla/` #9) | `/diseno-web-sevilla/` section `freelance-title` (visible section, not an FAQ entry); `/contacto/` #4 | n/a (an FAQ entry would exceed the 1,000-1,200 word budget, 4.3) |
 | D5 | ¿Puedo hacer yo mismo la web gratis? | R16, KW-Labs `como hacer una pagina web gratis` 1.000, `como crear una pagina web` 2.400, 2026-11-16 | 1.000 / 2.400 (Spain) | yes | `/diseno-web-sevilla/` #3 | n/a |
 | D6 | ¿WordPress o web a medida? | R16, AIO, 2026-11-16 | - | yes | `/diseno-web-sevilla/` #4 | n/a |
 | D7 | ¿La web incluye SEO? | R16, AIO and ads, 2026-11-16 | - | yes | `/diseno-web-sevilla/` #5 | n/a |
@@ -287,7 +287,7 @@ The recorded cross-page themes map to entries that already exist; no new row is 
 - Price of SEO per month: H1, L3, N26; covered at `/` #2 and `/contacto/` #1.
 - Price of a web: D1, D2; covered at `/diseno-web-sevilla/` #1 and `/contacto/` #2.
 - Timelines ("¿Cuánto se tarda?"): no measured volume; covered for webs (D3, `/contacto/` #3) and AI (I7); not covered for shops (T7) or clinics (N9).
-- Freelance or agency: D4 (partial).
+- Freelance or agency: D4 (covered by the visible section `freelance-title`).
 - DIY or hire: D5 (covered).
 - Which AI to use: I1, I2, G3, G4, A2.
 - "Results" (what a SEO does, when results come): L2; the R16 note says no AI Overview consulted gives a result timeline for SEO. No literal question with a source was recorded, so no row is invented here.
@@ -295,13 +295,13 @@ The recorded cross-page themes map to entries that already exist; no new row is 
 ### 3.4 Tally
 
 - Questions analysed: 89 (home 8, SEO local 9, GEO 8, diseño web 8, tienda 7, automatizaciones 8, software 6, IA 7, niche pages 28). A question that appears under two pages in the source file is listed once per page it was read for.
-- Coverage: 58 yes, 18 partial, 13 no.
-- Partial or uncovered: 31. Recurring: 8 (L1, L5, L8, D4 on in-focus pages; N1, N13, N15, N19 on parked niche pages). One-off: 23 (L2, L6, L9, G2, G3, G4, T7, A4, A7, S5, I2, N2, N9, N10, N11, N18, N20, N21, N22, N23, N24, N25, N28).
+- Coverage: 59 yes, 17 partial, 13 no.
+- Partial or uncovered: 30. Recurring: 7 (L1, L5, L8 on in-focus pages; N1, N13, N15, N19 on parked niche pages). One-off: 23 (L2, L6, L9, G2, G3, G4, T7, A4, A7, S5, I2, N2, N9, N10, N11, N18, N20, N21, N22, N23, N24, N25, N28).
 - `/contacto/` has no recorded question data (3.1), so none of the 89 rows is attributed to it as a source page.
 
 ## 4. Proposals and rejections
 
-Scope: the 8 recurring partial or uncovered questions of section 3 (L1, L5, L8, D4, N1, N13, N15, N19). The 23 one-off questions are listed in 3.4 and get no proposal. Every proposed answer uses only data already in `src/data`, states no result or ranking, and follows the first-sentence rule (direct answer first). Nothing under `src/` is changed by this story: additions are follow-up stories (section 7).
+Scope: the 7 recurring partial or uncovered questions of section 3 (L1, L5, L8, N1, N13, N15, N19). The 23 one-off questions are listed in 3.4 and get no proposal. Every proposed answer uses only data already in `src/data`, states no result or ranking, and follows the first-sentence rule (direct answer first). Nothing under `src/` is changed by this story: additions are follow-up stories (section 7).
 
 Word counts: measured on 2026-11-21 with a local `pnpm build` and `mainWordCount` from `scripts/lib/page-contract.mjs` (ADR 0015: owner-controlled visible text of `<main>`, `data-word-budget="exclude"` blocks removed). The "after" figure is current count plus the words of the added question and answer counted with the same function; it is an estimate until the page is rebuilt.
 
@@ -309,13 +309,13 @@ Word counts: measured on 2026-11-21 with a local `pnpm build` and `mainWordCount
 
 All three target `/seo-local-sevilla/`, which owns `seo local sevilla`, `agencia seo sevilla` and `posicionamiento web sevilla` (`keywordOwners`, `src/data/seo-intents.ts`; ADR 0012, ADR 0013), so none targets a term owned by another page.
 
-Budget of the page: **no declared maximum.** The `/seo-local-sevilla/` entry of `scripts/lib/template-pages.mjs` has no `words` range, `openspec/specs/` has no spec for the page and `docs/designs/NRD-120-seo-local-sevilla.md` sets none; ADR 0013 only records "1,236 words, inside the competitor estimate" (NRD-22). Current count: **1,496 words** (build of 2026-11-21). The three additions together add 123 words (about 1,619). Because there is no declared limit, no existing sentence has to give way; the PO decides whether to declare one in the story.
+Budget of the page: **no declared maximum.** The `/seo-local-sevilla/` entry of `scripts/lib/template-pages.mjs` has no `words` range, `openspec/specs/` has no spec for the page and `docs/designs/NRD-120-seo-local-sevilla.md` sets none; ADR 0013 only records "1,236 words, inside the competitor estimate" (NRD-22). Current count: **1,496 words** (build of 2026-11-21). The three additions together add 126 words (about 1,622). Because there is no declared limit, no existing sentence has to give way; the PO decides whether to declare one in the story.
 
 | ID | Question | Proposed answer (Spanish) | Target | Budget (source) | Count now | Count after | Data used |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | L1 | ¿Cuánto cuesta el SEO local? | El plan Local cuesta 300 €/mes + IVA y el Local Pro, 500 €/mes + IVA. Se facturan mes a mes y no hay cuota de puesta en marcha aparte. | `/seo-local-sevilla/` FAQ, new entry | none declared (`scripts/lib/template-pages.mjs`, ADR 0013 note) | 1,496 | 1,531 (+35) | Prices: `seoLocal.pricing.tiers[].from` in `src/data/services.ts` (Local, Local Pro), read through `tierFrom(seoLocal, ...)` as `contactFaqs` does in `src/data/page-faqs.ts:39`, never typed (NRD-10). Billing: `seoLocal.pricing.note` ("Se factura mes a mes y no hay cuota de puesta en marcha aparte") and FAQ #7 of the page. |
-| L5 | ¿Qué es el SEO local? | Es el trabajo para que tu negocio aparezca en Google y en Google Maps cuando alguien cerca de ti busca lo que ofreces. Incluye tu ficha de Google, tu web y tus reseñas. | `/seo-local-sevilla/` FAQ, new entry | none declared | 1,496 | 1,534 (+38; 1,569 if L1 is also added) | No figures. Wording follows `homeFaqs` #4 and #1 (`src/data/page-faqs.ts`) and FAQ #2 of the page (ficha, reseñas, web). |
-| L8 | ¿Cómo influye la ficha de Google en el SEO local? | La ficha de Google Business Profile es la base del SEO local: es lo que Google muestra en el mapa cuando alguien busca cerca. El plan Local la mantiene al día y Local Pro suma el trabajo en la web. | `/seo-local-sevilla/` FAQ, new entry | none declared | 1,496 | 1,546 (+50; 1,619 with L1 and L5) | No figures. Plan names and scope from `seoLocal.pricing.tiers` (`src/data/services.ts`) and FAQ #3 of the page. |
+| L5 | ¿Qué es el SEO local? | Es el trabajo para que tu negocio aparezca en Google y en Google Maps cuando alguien cerca de ti busca lo que ofreces. Incluye tu ficha de Google, tus reseñas y, según el plan, tu web. | `/seo-local-sevilla/` FAQ, new entry | none declared | 1,496 | 1,537 (+41; 1,572 if L1 is also added) | No figures. Wording follows `homeFaqs` #4 and #1 (`src/data/page-faqs.ts`) and FAQ #2 of the page (ficha, reseñas, web). |
+| L8 | ¿Cómo influye la ficha de Google en el SEO local? | La ficha de Google Business Profile es la base del SEO local: es lo que Google muestra en el mapa cuando alguien busca cerca. El plan Local la mantiene al día y Local Pro suma el trabajo en la web. | `/seo-local-sevilla/` FAQ, new entry | none declared | 1,496 | 1,546 (+50; 1,622 with L1 and L5) | No figures. Plan names and scope from `seoLocal.pricing.tiers` (`src/data/services.ts`) and FAQ #3 of the page. |
 
 Notes for the follow-up story:
 
@@ -328,13 +328,16 @@ Notes for the follow-up story:
 
 | ID | Question | Page | Reason |
 | --- | --- | --- | --- |
-| D4 | ¿Freelance, estudio o agencia para mi web? | `/diseno-web-sevilla/` | (a) **Already answered on the page**: the visible key section `freelance-title` ("¿Freelance, estudio o agencia?") opens with a direct answer, "Para una web clara y rápida suele bastar una freelance; un estudio o una agencia compensa si además necesitas campañas, redes o vídeo" (`src/pages/diseno-web-sevilla.astro`), and `/contacto/` #4 and `/seo-local-sevilla/` #9 answer it in FAQ form; a FAQ entry would repeat that text. (b) **No room in the budget**: range 1,000 to 1,200 words (`openspec/specs/diseno-web-page/spec.md`, requirement "The page stays within its text budget"; `scripts/lib/template-pages.mjs`), current count 1,198 (build of 2026-11-21), so an entry of about 30 words would take it to roughly 1,228 unless an existing sentence gives way. Table row D4 stays "partial" because the FAQ block itself has no such entry. |
 | N1 | ¿Qué debe tener la web de un despacho de abogados? | `/web-para-abogados-gestorias-sevilla/` | Parked page: reopening parked pages is a user decision (PRD section 9; stories for parked pages stay parked, PRD milestones table). Not proposed. |
 | N13 | ¿Cómo crear una tienda online para mi comercio? | `/web-para-comercios-sevilla/` | Parked page (same rule). It is also answered for the intent by `/tienda-online-sevilla/` #2, the page that owns the shop terms (ADR 0012, ADR 0013 notes the overlap). |
 | N15 | ¿Shopify o WooCommerce? | `/web-para-comercios-sevilla/` | Parked page (same rule). Covered for the intent by `/tienda-online-sevilla/` #3. |
 | N19 | ¿Qué debe tener la página web de un restaurante? | `/web-para-restaurantes-sevilla/` | Parked page (same rule). |
 
-Also checked and not proposed (data absence, not part of the 8 recurring): T7 "¿Cuánto se tarda en montar una tienda?" has one source (the web-design AI Overview, 8 to 12 weeks, a competitor figure) and `src/data` has no shop timeline, so an answer would need an invented figure; N9 (clinic timeline) is the same case.
+### 4.3 Covered, no proposal: D4 and the budget
+
+D4 (¿Freelance, estudio o agencia para mi web?, `/diseno-web-sevilla/`) is **covered**, not rejected: the visible key section `freelance-title` ("¿Freelance, estudio o agencia?", `src/pages/diseno-web-sevilla.astro`) opens with a direct answer ("Para una web clara y rápida suele bastar una freelance; un estudio o una agencia compensa si además necesitas campañas, redes o vídeo"), and `/contacto/` #4 and `/seo-local-sevilla/` #9 answer it as FAQ entries. A new FAQ entry would repeat that text and would exceed the page budget: range 1,000 to 1,200 words (`openspec/specs/diseno-web-page/spec.md:38`; `scripts/lib/template-pages.mjs`), current count 1,198 (build of 2026-11-21), so an entry of about 30 words would take it to roughly 1,228 unless an existing sentence gives way.
+
+Also checked and not proposed (data absence, not part of the 7 recurring): T7 "¿Cuánto se tarda en montar una tienda?" has one source (the web-design AI Overview, 8 to 12 weeks, a competitor figure) and `src/data` has no shop timeline, so an answer would need an invented figure; N9 (clinic timeline) is the same case.
 
 ## 5. Data sources and calls
 
@@ -370,18 +373,18 @@ Additions grouped by page, ready to file as stories. The developer does not crea
 ### `/seo-local-sevilla/` (one story, 3 FAQ entries)
 
 - Add FAQ entries L1 (price of local SEO), L5 (what local SEO is) and L8 (how the Google profile feeds local SEO), with the Spanish answers of 4.1. Prices read with `tierFrom(seoLocal, "Local")` and `tierFrom(seoLocal, "Local Pro")`, not typed (NRD-10).
-- Page budget: none declared; current 1,496 words (2026-11-21), about 1,619 after the three entries. Decide in the story whether to declare a maximum for the page.
+- Page budget: none declared; current 1,496 words (2026-11-21), about 1,622 after the three entries. Decide in the story whether to declare a maximum for the page.
 - Optional: merge L8 into FAQ #2 instead of adding an entry.
 - Update any test that pins the page's FAQ count or list; `/ai/faq.json` and the FAQPage JSON-LD follow `seoLocal.faqs` automatically.
 - Evidence to cite in the story: R16 (PAA, KW-Labs, 2026-11-16), KC S1 (2026-11-13) and S10 (2026-11-15); all volumes are Spain-level.
 
 ### `/diseno-web-sevilla/`
 
-- No addition. D4 (freelance, studio or agency) is answered by the visible section `freelance-title`; the page sits at 1,198 of 1,200 words. If the PO still wants the FAQ entry, the story must name the sentence that gives way.
+- No addition. D4 (freelance, studio or agency) is covered by the visible section `freelance-title`; the page sits at 1,198 of 1,200 words. If the PO still wants the FAQ entry, the story must name the sentence that gives way.
 
 ### Parked niche pages
 
-- No proposal (N1, N13, N15, N19). Reopening parked pages is a user decision. The recorded questions for the five niche pages are in 3.2 for the day the user reopens them.
+- No proposal (N1, N13, N15, N19). Reopening parked pages is a user decision. The recorded questions for the five parked pages are in 3.2 for the day the user reopens them.
 
 ### Data gaps for a later data step
 
