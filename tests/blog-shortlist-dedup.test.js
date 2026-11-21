@@ -188,3 +188,14 @@ test("CLI exits non-zero naming the entry of a malformed queue", () => {
   assert.notEqual(out.status, 0);
   assert.match(out.stderr, /entry 0/);
 });
+
+test("CLI applies --limit after de-duplication", () => {
+  const out = run("--json", "--limit", "1");
+  assert.equal(out.status, 0, out.stderr);
+  const result = JSON.parse(out.stdout);
+  assert.equal(result.dropped.length, 3);
+  assert.deepEqual(
+    result.candidates.map((c) => c.question),
+    ["¿Qué es un chatbot para una clínica?"],
+  );
+});
