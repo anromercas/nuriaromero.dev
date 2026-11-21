@@ -4,10 +4,19 @@ import { join } from "node:path";
 
 const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---/;
 
-/** True when the frontmatter block has the line `draft: true`. */
+/**
+ * True only when the frontmatter has exactly one `draft` key and it is the
+ * literal `true` (optionally followed by a comment). Anything else (no
+ * frontmatter, `True`, quoted values, duplicate keys) reads as published, so
+ * callers that guard publication fail closed.
+ */
 export function isDraft(source) {
-  const frontmatter = FRONTMATTER.exec(source)?.[1] ?? "";
-  return /^draft:\s*true\s*$/m.test(frontmatter);
+  const frontmatter = FRONTMATTER.exec(source)?.[1];
+  if (frontmatter === undefined) return false;
+  const lines = frontmatter
+    .split(/\r?\n/)
+    .filter((line) => /^draft\s*:/.test(line));
+  return lines.length === 1 && /^draft:[ \t]*true[ \t]*(#.*)?$/.test(lines[0]);
 }
 
 export async function readPosts(dir) {

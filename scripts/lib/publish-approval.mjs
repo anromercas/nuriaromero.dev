@@ -4,14 +4,24 @@ import { isDraft } from "./blog-posts.mjs";
 
 export const PUBLISH_LABEL = "publish-approved";
 
+// Fail-closed: the collection loads subdirectories and several markdown
+// extensions, so every path under the blog folder counts except plain images.
 export function isBlogPost(path) {
-  return /^src\/content\/blog\/[^/]+\.mdx?$/.test(path);
+  return (
+    path.startsWith("src/content/blog/") &&
+    !/\.(png|jpe?g|webp|avif|gif|svg)$/i.test(path)
+  );
 }
 
-/** changes: [{ path, before: string | null, after: string | null }] */
+/** changes: [{ path, before: string | null, after: string | null, special?: boolean }] */
 export function publishedPosts(changes) {
   const posts = [];
-  for (const { path, before, after } of changes) {
+  for (const { path, before, after, special } of changes) {
+    if (special) {
+      // Symlinks and gitlinks cannot be read as a draft: always need the label.
+      posts.push({ path, reason: "special-file" });
+      continue;
+    }
     if (!isBlogPost(path) || after === null) continue;
     if (isDraft(after)) continue;
     if (before !== null && !isDraft(before)) continue;

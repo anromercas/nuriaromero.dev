@@ -34,10 +34,10 @@ try {
   const mergeBase = git("merge-base", base, head).trim();
   const tokens = git(
     "diff",
-    "--name-status",
+    "--raw",
     "-z",
     "-M",
-    "--diff-filter=AMR",
+    "--diff-filter=d",
     mergeBase,
     head,
     "--",
@@ -46,25 +46,24 @@ try {
     .split("\0")
     .filter((token) => token !== "");
 
+  // Entries: ":<srcmode> <dstmode> <srcsha> <dstsha> <status>", then the path
+  // (two paths for renames and copies).
   const changes = [];
   for (let i = 0; i < tokens.length;) {
-    const status = tokens[i++];
-    if (status.startsWith("R")) {
-      const oldPath = tokens[i++];
-      const path = tokens[i++];
-      changes.push({
-        path,
-        before: git("show", `${mergeBase}:${oldPath}`),
-        after: git("show", `${head}:${path}`),
-      });
-    } else {
-      const path = tokens[i++];
-      changes.push({
-        path,
-        before: status === "A" ? null : git("show", `${mergeBase}:${path}`),
-        after: git("show", `${head}:${path}`),
-      });
+    const [, dstMode, , , status] = tokens[i++].split(/\s+/);
+    const twoPaths = status.startsWith("R") || status.startsWith("C");
+    const oldPath = twoPaths ? tokens[i++] : null;
+    const path = tokens[i++];
+    if (dstMode !== "100644" && dstMode !== "100755") {
+      changes.push({ path, before: null, after: null, special: true });
+      continue;
     }
+    const sourcePath = oldPath ?? path;
+    changes.push({
+      path,
+      before: status === "A" ? null : git("show", `${mergeBase}:${sourcePath}`),
+      after: git("show", `${head}:${path}`),
+    });
   }
 
   const result = checkPublishApproval({

@@ -1,7 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import {
+  mkdtempSync,
+  mkdirSync,
+  writeFileSync,
+  rmSync,
+  symlinkSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { isDraft } from "../scripts/lib/blog-posts.mjs";
@@ -26,10 +32,25 @@ test("isDraft reads the frontmatter flag only", () => {
   assert.equal(isDraft("---\ntitle: A\n---\ndraft: true\n"), false);
 });
 
+test("isDraft fails closed on ambiguous frontmatter", () => {
+  const fm = (line) => `---\ntitle: A\n${line}\n---\nBody\n`;
+  assert.equal(isDraft(fm("draft: true # keep hidden")), true);
+  assert.equal(isDraft(fm("draft: True")), false);
+  assert.equal(isDraft(fm('draft: "true"')), false);
+  assert.equal(isDraft(fm("draft: 'true'")), false);
+  assert.equal(isDraft(fm("draft: yes")), false);
+  assert.equal(isDraft(fm("draft: true\ndraft: false")), false);
+  assert.equal(isDraft(fm("draft: false\ndraft: true")), false);
+  assert.equal(isDraft("draft: true\nBody"), false);
+});
+
 test("isBlogPost matches flat md/mdx posts only", () => {
   assert.equal(isBlogPost(A), true);
   assert.equal(isBlogPost("src/content/blog/a.mdx"), true);
-  assert.equal(isBlogPost("src/content/blog/sub/a.md"), false);
+  assert.equal(isBlogPost("src/content/blog/sub/a.md"), true);
+  assert.equal(isBlogPost("src/content/blog/a.markdown"), true);
+  assert.equal(isBlogPost("src/content/blog/a/cover.png"), false);
+  assert.equal(isBlogPost("src/content/blogger/a.md"), false);
   assert.equal(isBlogPost("src/pages/a.md"), false);
 });
 
@@ -58,6 +79,25 @@ test("publishedPosts ignores changes that do not publish", () => {
     { path: "src/pages/x.md", before: null, after: removed },
   ];
   assert.deepEqual(publishedPosts(none), []);
+});
+
+test("publishedPosts is fail-closed for nested paths, other extensions and special files", () => {
+  for (const path of [
+    "src/content/blog/x/post.md",
+    "src/content/blog/post.markdown",
+  ]) {
+    assert.deepEqual(publishedPosts([{ path, before: null, after: removed }]), [
+      { path, reason: "new" },
+    ]);
+    assert.deepEqual(
+      publishedPosts([{ path, before: draft, after: flipped }]),
+      [{ path, reason: "flipped" }],
+    );
+  }
+  assert.deepEqual(
+    publishedPosts([{ path: A, before: draft, after: null, special: true }]),
+    [{ path: A, reason: "special-file" }],
+  );
 });
 
 test("parseLabels handles JSON, empty and null", () => {
@@ -168,6 +208,56 @@ test("CLI: body-only edit of a draft exits 0", () => {
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+function setupSpecial(kind) {
+  const dir = mkdtempSync(join(tmpdir(), "publish-guard-"));
+  git(dir, "init", "-q", "-b", "main");
+  mkdirSync(join(dir, "src/content/blog/x"), { recursive: true });
+  writeFileSync(join(dir, "README.md"), "x");
+  git(dir, "add", "-A");
+  git(dir, "commit", "-q", "-m", "base");
+  const base = git(dir, "rev-parse", "HEAD");
+  git(dir, "checkout", "-q", "-b", "feature");
+  if (kind === "symlink") {
+    symlinkSync("../../../README.md", join(dir, "src/content/blog/link.md"));
+  } else if (kind === "nested") {
+    writeFileSync(join(dir, "src/content/blog/x/post.markdown"), removed);
+  } else {
+    git(
+      dir,
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      `160000,${base},src/content/blog/mod`,
+    );
+  }
+  if (kind !== "gitlink") git(dir, "add", "-A");
+  git(dir, "commit", "-q", "-m", "change");
+  return { dir, base, head: git(dir, "rev-parse", "HEAD") };
+}
+
+for (const kind of ["symlink", "gitlink", "nested"]) {
+  test(`CLI: ${kind} under the blog folder needs the label`, () => {
+    const { dir, base, head } = setupSpecial(kind);
+    try {
+      const r = runCli(dir, {
+        BASE_SHA: base,
+        HEAD_SHA: head,
+        PR_LABELS: "[]",
+      });
+      assert.equal(r.status, 1, r.stdout + r.stderr);
+      assert.match(r.stderr, /publish-approved/);
+      const ok = runCli(dir, {
+        BASE_SHA: base,
+        HEAD_SHA: head,
+        PR_LABELS: '["publish-approved"]',
+      });
+      assert.equal(ok.status, 0, ok.stderr);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+}
 
 test("CLI: missing BASE_SHA exits 2 with usage message", () => {
   const { dir, head } = setupRepo(flipped);
