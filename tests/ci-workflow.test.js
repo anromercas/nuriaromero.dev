@@ -150,3 +150,29 @@ test("publish approval guard runs before install and the build (NRD-370)", async
   assert.ok(guard < yml.indexOf("pnpm install --frozen-lockfile"));
   assert.ok(guard < yml.indexOf("run: pnpm build"));
 });
+
+test("bootstrap fallback fails closed once the base workflow has the guard (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  const step = yml.match(
+    /- name: Publish approval guard\n((?: {8,}.*\n)+)/,
+  )?.[1];
+  assert.ok(step, "missing `Publish approval guard` step");
+  const run = step.slice(step.indexOf("run:"));
+  assert.match(
+    run,
+    /git show "\$BASE_SHA:\.github\/workflows\/ci\.yml" \| grep -q check-publish-approval/,
+  );
+  assert.match(run, /exit 1/);
+  assert.ok(
+    run.indexOf("exit 1") <
+      run.lastIndexOf("node scripts/check-publish-approval.mjs"),
+    "fail-closed branch must precede the head-copy fallback",
+  );
+});
+
+test("guard comment does not overclaim protection (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  assert.match(yml, /can still edit this workflow/);
+  assert.match(yml, /CODEOWNERS/);
+  assert.doesNotMatch(yml, /cannot rewrite the guard that judges it/);
+});

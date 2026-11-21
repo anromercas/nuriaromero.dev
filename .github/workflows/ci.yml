@@ -30,11 +30,13 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
-      # Runs the guard from the trusted BASE commit (extracted to a temp dir),
-      # so a PR cannot rewrite the guard that judges it. The PR head is only
-      # data (HEAD_SHA). Bootstrap: while the base has no guard script yet (the
-      # PR that introduces it), fall back to the head copy and say so; once
-      # merged, every later PR runs the base copy. Needs no dependencies.
+      # The guard script and its libs come from the trusted BASE commit
+      # (extracted to a temp dir), so a PR cannot change them; the PR head is
+      # only data (HEAD_SHA). A PR can still edit this workflow, which only
+      # owner-only branch protection/rulesets or CODEOWNERS on .github/workflows/
+      # closes. Bootstrap: fall back to the head copy ONLY while the base
+      # workflow does not yet contain this guard (the PR that introduces it);
+      # afterwards a missing base script fails closed. Needs no dependencies.
       - name: Publish approval guard
         if: github.event_name == 'pull_request'
         env:
@@ -48,8 +50,11 @@ jobs:
             mkdir -p "$guard"
             git archive "$BASE_SHA" scripts | tar -x -C "$guard"
             node "$guard/scripts/check-publish-approval.mjs"
+          elif git show "$BASE_SHA:.github/workflows/ci.yml" | grep -q check-publish-approval; then
+            echo "Base workflow has the guard but scripts/check-publish-approval.mjs is missing at $BASE_SHA: failing closed."
+            exit 1
           else
-            echo "Bootstrap: guard script absent at base $BASE_SHA; running the head copy."
+            echo "Bootstrap: base workflow has no guard yet ($BASE_SHA); running the head copy."
             node scripts/check-publish-approval.mjs
           fi
       - run: pnpm install --frozen-lockfile
