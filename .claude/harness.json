@@ -362,6 +362,94 @@
       }
     }
   },
+  "social": {
+    "enabled": true,
+    "brand": "nuriaromero.dev",
+    "networks": ["instagram", "tiktok", "youtube", "facebook"],
+    "dir": "social",
+    "piecesDir": "social/piezas",
+    "libraryDir": "social/mediateca",
+    "cadence": {
+      "perWeek": 5,
+      "overrides": [
+        {
+          "from": "2026-11-19",
+          "to": "2026-11-30",
+          "perWeek": 7,
+          "reason": "unused monthly quota in November 2026"
+        }
+      ]
+    },
+    "production": {
+      "carouselCommand": "node social/plantillas/carrusel/render.mjs {piece}/carrusel.json",
+      "videoCommand": "node social/plantillas/video/render.mjs {piece}/video.json"
+    },
+    "publishing": {
+      "tool": "metricool",
+      "monthlyQuota": 20,
+      "quotaCountsPer": "post",
+      "timezone": "Europe/Madrid",
+      "mediaVia": "web-upload",
+      "audio": {
+        "tiktok": {
+          "autoAddMusic": true,
+          "autoAddMusicFor": {
+            "carousel": true,
+            "video": false,
+            "voiceOverVideo": false
+          }
+        },
+        "instagram": {
+          "reelAudio": "none"
+        }
+      }
+    },
+    "approval": {
+      "batchDay": "friday",
+      "videoTwoStep": true
+    },
+    "unattended": {
+      "enabled": false,
+      "planDay": "monday",
+      "measureDay": "monday"
+    },
+    "library": {
+      "enabled": true,
+      "source": "flow",
+      "dailyPoints": 50,
+      "resetTime": "19:48",
+      "maxAttemptsPerDay": 6,
+      "themes": [
+        {
+          "id": "navidad-sevilla",
+          "description": "Christmas lights, decorated streets and shop windows in Seville at dusk, no readable signs, no recognisable faces",
+          "until": "2027-01-06"
+        },
+        {
+          "id": "negocio-local",
+          "description": "Generic local-business settings: counters, shutters, open or closed signs, no brands or logos"
+        },
+        {
+          "id": "busqueda-movil",
+          "description": "A person seen from behind or hands holding a phone while searching, screen not readable"
+        }
+      ]
+    },
+    "downloadsDir": "/Users/nuria/Downloads",
+    "files": {
+      "copy": "textos.md",
+      "script": "guion.md",
+      "credits": "creditos.json"
+    },
+    "headings": {
+      "cards": "Tarjetas",
+      "script": "Guion",
+      "ownerNotes": "Notas para la dueña"
+    },
+    "paths": {
+      "strategy": "social/estrategia-redes.md"
+    }
+  },
   "infra": {
     "ownedPaths": [
       ".github/workflows/**",
