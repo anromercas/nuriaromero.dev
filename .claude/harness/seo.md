@@ -30,3 +30,14 @@ Win local organic visibility in Seville (Google, Google Maps and AI answers) for
 ## Pending checks
 
 - Check whether ChatGPT and Perplexity cite nuriaromero.dev (or the Sortlist profile `https://www.sortlist.es/agency/nuria-romero`) when answering `aplicaciones web a medida sevilla` and `desarrollo de software a medida sevilla`. Baseline 2026-11-15: not cited (NRD-124). The Sortlist profile was confirmed public in a real browser on 2026-11-18 (NRD-160 QA). Origin: NRD-160 and the Sortlist citation of 2026-11-18. Report the result once, without promising any, and remove this entry.
+
+## Weekly blog idea refresh
+
+Feeds the blog idea queue `seo/contenido/ideas.json` with real questions (NRD-350). Target: 4 posts a month, minimum 2, across the pillars SEO (local and GEO), web design and online stores, AI, and other services.
+
+1. Do it once a week, on the first run on or after Monday (Europe/Madrid), and only then.
+2. Budget: at most 6 of the run's `seo.dataforseo.maxCallsPerRun` calls: up to 4 live SERP calls (one seed question per pillar, Seville, es) for People Also Ask, and up to 2 Labs keyword-suggestion calls filtered to question keywords. Report these calls in the run's call table. No paid service beyond DataForSEO.
+3. Save each response, unedited, as JSON under `.claude/state/seo/ideas/<date>/`. Save the Search Console queries of the last 28 days (configured service account, when available) as `gsc-<date>.json`. Save the recorded client questions of `docs/research/NRD-323-faq-gap-report.md` as the normalized file `.claude/state/seo/ideas/nrd-323-questions.json` (`kind: "client-question"`); create it once and reuse it.
+4. Run `node scripts/blog-ideas-refresh.mjs --date <today> .claude/state/seo/ideas/<date>/*.json .claude/state/seo/ideas/nrd-323-questions.json [gsc file]`.
+5. Copy its "Ideas para el blog" section into the report and summarise it in `latest.md` for the owner to approve or reject (she replies in a session with "aprueba idea <id>" or "rechaza idea <id>").
+6. The run does not commit: `seo/contenido/ideas.json` stays modified in the checkout until the blog-pipeline skill's step 0 commits it on the next post branch.
