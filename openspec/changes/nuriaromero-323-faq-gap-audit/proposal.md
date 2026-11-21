@@ -6,7 +6,7 @@ AI assistants cite pages that answer concrete questions directly, so the publish
 
 ## What Changes
 
-- New report `docs/research/NRD-323-faq-gap-report.md`: inventory of every published FAQ (from `faqPages()`), a question table (question, source with call date, monthly volume when known, covered yes/no, page and FAQ entry), a proposed 1-2 sentence Spanish answer with target page and word budget for each uncovered recurring question (or an explicit rejection with reason), a DataForSEO call log (at most 30 calls), an empty "Preguntas de clientes reales (dueña)" section and a per-page list for the PO.
+- New report `docs/research/NRD-323-faq-gap-report.md`: inventory of every published FAQ (from `faqPages()`), a question table (question, source with call date, monthly volume when known, covered yes/no, page and FAQ entry), a proposed 1-2 sentence Spanish answer with target page and word budget for each uncovered recurring question (or an explicit rejection with reason), a data-source log, an empty "Preguntas de clientes reales (dueña)" section and a per-page list for the PO.
 
 ## Out of scope
 
@@ -27,5 +27,6 @@ AI assistants cite pages that answer concrete questions directly, so the publish
 ## Impact
 
 - One new file `docs/research/NRD-323-faq-gap-report.md` (layer `app`, `docs/**`).
-- DataForSEO spend within `seo.dataforseo.maxCallsPerRun` (30 calls).
+- No DataForSEO spend by the developer: question data is reused from recorded SEO-strategist outputs (`docs/seo-audit/`, `.claude/state/seo/questions/2026-11-16.md`); the optional data step (at most 6 calls) runs as an SEO-strategist run within `seo.dataforseo.maxCallsPerRun` (30).
+- `docs/research/` is ignored by the infra-owned `.gitignore`; the file is force-added on its exact path until infra adds `!docs/research/`.
 - No dependency, URL, copy, schema or data change; nothing radical.
