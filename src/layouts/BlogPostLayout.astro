@@ -15,7 +15,8 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, updatedDate, image } = post.data;
+const { title, description, pubDate, updatedDate } = post.data;
+const image: string | undefined = undefined;
 const url = `/blog/${post.slug}/`;
 
 const breadcrumbs = [
@@ -65,7 +66,9 @@ const relatedLinks = internalLinksBySource[url] ?? [];
               {" · "}
               <span>
                 Publicado el{" "}
-                <time datetime={pubDate.toISOString()} data-post-published>{formattedPubDate}</time>
+                <time datetime={pubDate.toISOString()} data-post-published>
+                  {formattedPubDate}
+                </time>
               </span>
               {updatedDate && formattedUpdatedDate && (
                 <span>
