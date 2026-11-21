@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "ideas": [
+    {
+      "id": "cuanto-cobra-un-seo-al-mes",
+      "question": "¿Cuánto cobra un SEO al mes?",
+      "keyword": "cuanto cobra un seo al mes",
+      "intent": "comercial",
+      "volume": 70,
+      "difficulty": 20,
+      "target": "/seo-local-sevilla/",
+      "pillar": "seo",
+      "score": 0.7,
+      "source": { "name": "paa", "date": "2026-11-09" },
+      "status": "rechazada",
+      "added": "2026-11-09"
+    },
+    {
+      "id": "que-es-un-chatbot-clinica",
+      "question": "¿Qué es un chatbot para una clínica?",
+      "keyword": "que es un chatbot clinica",
+      "intent": "informacional",
+      "volume": null,
+      "difficulty": null,
+      "target": "/inteligencia-artificial/",
+      "pillar": "ia",
+      "score": 0.5,
+      "source": { "name": "nrd-323-questions", "date": "2026-11-16" },
+      "status": "propuesta",
+      "added": "2026-11-16"
+    }
+  ]
+}
