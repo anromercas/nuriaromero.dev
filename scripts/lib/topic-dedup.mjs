@@ -9,6 +9,8 @@ export const STOPWORDS = new Set(
   ),
 );
 
+export const BLOCKING_STATUSES = ["rechazada", "en curso", "publicada"];
+
 const MIN_CONTAINED_TOKENS = 2;
 
 export function topicTokens(text) {
@@ -31,7 +33,10 @@ const covers = (candidate, reference) =>
   coveredBy(candidate.question, reference) ||
   coveredBy(candidate.keyword, reference);
 
-function firstReason(candidate, { owners, intents, posts }) {
+function firstReason(
+  candidate,
+  { owners, intents, posts, queue, blockingStatuses = BLOCKING_STATUSES },
+) {
   for (const owner of owners) {
     if (covers(candidate, owner.keyword))
       return { kind: "owned-intent", ref: owner.url, detail: owner.keyword };
@@ -48,7 +53,22 @@ function firstReason(candidate, { owners, intents, posts }) {
         detail: post.title,
       };
   }
+  for (const idea of queue?.ideas ?? []) {
+    if (
+      blockingStatuses.includes(idea.status) &&
+      (covers(candidate, idea.question) || covers(candidate, idea.keyword))
+    )
+      return { kind: "queued-idea", ref: idea.id, detail: idea.status };
+  }
   return null;
+}
+
+export function describeReason(reason) {
+  if (reason.kind === "owned-intent")
+    return `Intención con página propietaria: ${reason.ref} («${reason.detail}»)`;
+  if (reason.kind === "published-post")
+    return `Ya respondida por el post publicado ${reason.ref}`;
+  return `Ya en la cola como «${reason.detail}» (${reason.ref})`;
 }
 
 export function dedupeCandidates(candidates, context) {
