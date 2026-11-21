@@ -88,3 +88,47 @@ test("does not reference secrets, netlify or deploy", async () => {
   assert.doesNotMatch(yml, /netlify/i);
   assert.doesNotMatch(yml, /deploy/i);
 });
+
+test("pull_request types include labeled and unlabeled (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  assert.match(
+    yml,
+    /pull_request:\s*\n\s+branches: \[develop\]\s*\n\s+types: \[opened, synchronize, reopened, labeled, unlabeled\]/,
+  );
+});
+
+test("checkout fetches full history for the merge base (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  assert.match(yml, /actions\/checkout@v4\s*\n\s+with:\s*\n\s+fetch-depth: 0/);
+});
+
+test("publish approval guard runs on pull requests only, with env inputs (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  const step = yml.match(
+    /- name: Publish approval guard\n((?: {8,}.*\n)+)/,
+  )?.[1];
+  assert.ok(step, "missing `Publish approval guard` step");
+  assert.match(step, /if: github\.event_name == 'pull_request'/);
+  assert.match(step, /run: node scripts\/check-publish-approval\.mjs/);
+  assert.match(
+    step,
+    /BASE_SHA: \$\{\{ github\.event\.pull_request\.base\.sha \}\}/,
+  );
+  assert.match(
+    step,
+    /HEAD_SHA: \$\{\{ github\.event\.pull_request\.head\.sha \}\}/,
+  );
+  assert.match(
+    step,
+    /PR_LABELS: \$\{\{ toJSON\(github\.event\.pull_request\.labels\.\*\.name\) \}\}/,
+  );
+  const run = step.match(/^\s+run: (.*)$/m)[1];
+  assert.doesNotMatch(run, /\$\{\{/, "no expression interpolation in run");
+});
+
+test("publish approval guard runs after install and before the build (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  const guard = yml.indexOf("node scripts/check-publish-approval.mjs");
+  assert.ok(guard > yml.indexOf("pnpm install --frozen-lockfile"));
+  assert.ok(guard < yml.indexOf("run: pnpm build"));
+});
