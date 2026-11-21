@@ -7,11 +7,19 @@ import SeoLocalHero from "@/components/seo-local/SeoLocalHero.astro";
 import SectionHeading from "@/components/seo-local/SectionHeading.astro";
 import SeoLocalClosing from "@/components/seo-local/SeoLocalClosing.astro";
 import { breadcrumbSchema } from "@/lib/schema";
+import { latestDate, newestPublishedPostDate } from "@/lib/freshness";
+import { getPageDateModified } from "@/data/page-freshness";
 import { getCollection } from "astro:content";
 import "@/styles/template.css";
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// Dated by the newest published post (frontmatter) or the template commit.
+const dateModified = latestDate(
+  newestPublishedPostDate(posts),
+  getPageDateModified("/blog/"),
 );
 
 const breadcrumbs = [
@@ -30,6 +38,7 @@ const formatDate = (date: Date) =>
 <Layout
   title="Blog — Webs, SEO local y automatización para negocios de Sevilla"
   description="Guías prácticas para dueños de negocio: cuánto cuesta una web, cómo salir en Google Maps, automatizaciones que ahorran tiempo y más."
+  dateModified={dateModified}
 >
   <Schema slot="head" schema={breadcrumbSchema(breadcrumbs)} />
   <main class="template-ground px-4 pt-24">
