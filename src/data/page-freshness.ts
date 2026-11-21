@@ -4,7 +4,9 @@ const SERVICES = "src/data/services.ts";
 
 /**
  * Repo-relative sources whose last commit dates each indexable route.
- * Blog posts are not listed: their dates come from frontmatter.
+ * Blog posts are not listed: their dates come from frontmatter. The same goes
+ * for /blog/: its page dates the template only, and blog/index.astro adds the
+ * newest published post date from frontmatter (drafts must not move it).
  */
 export const pageSources: Readonly<Record<string, readonly string[]>> = {
   "/": ["src/pages/index.astro", SERVICES],
@@ -52,7 +54,7 @@ export const pageSources: Readonly<Record<string, readonly string[]>> = {
   "/aviso-legal/": ["src/pages/aviso-legal.astro"],
   "/privacidad/": ["src/pages/privacidad.astro"],
   "/cookies/": ["src/pages/cookies.astro"],
-  "/blog/": ["src/pages/blog/index.astro", "src/content/blog"],
+  "/blog/": ["src/pages/blog/index.astro"],
 };
 
 /** Normalizes to a trailing slash, looks up pageSources, returns the last commit date or undefined. */

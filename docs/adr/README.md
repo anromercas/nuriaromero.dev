@@ -54,3 +54,4 @@ Paths and symbols in the repository that show or enforce the decision.
 | [0017](0017-build-derived-freshness.md)            | Build-derived page freshness from git history                             | Accepted               |
 | [0018](0018-build-time-endpoints.md)               | Prerendered endpoints for build-time files                                | Accepted               |
 | [0019](0019-blog-covers-and-isolated-fixture-builds.md) | Blog covers through astro:assets, tested with isolated fixture builds | Accepted               |
+| [0020](0020-blog-content-pipeline.md)              | Blog content pipeline: tracked working folder, deterministic scripts, project skill, owner gates | Accepted               |

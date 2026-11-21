@@ -62,3 +62,32 @@ export function formatMonthYear(iso: string): string {
     timeZone: "Europe/Madrid",
   }).format(new Date(iso));
 }
+
+interface PostDates {
+  data: { pubDate: Date; updatedDate?: Date; draft?: boolean };
+}
+
+/** ISO date of the newest `updatedDate ?? pubDate` among published posts; drafts never count. */
+export function newestPublishedPostDate(
+  posts: readonly PostDates[],
+): string | undefined {
+  let newest: Date | undefined;
+  for (const { data } of posts) {
+    if (data.draft === true) continue;
+    const date = data.updatedDate ?? data.pubDate;
+    if (!newest || date.valueOf() > newest.valueOf()) newest = date;
+  }
+  return newest?.toISOString();
+}
+
+/** The most recent of the given ISO dates (by instant); undefined entries are ignored. */
+export function latestDate(
+  ...isoDates: (string | undefined)[]
+): string | undefined {
+  let best: string | undefined;
+  for (const iso of isoDates) {
+    if (iso === undefined) continue;
+    if (best === undefined || Date.parse(iso) > Date.parse(best)) best = iso;
+  }
+  return best;
+}
