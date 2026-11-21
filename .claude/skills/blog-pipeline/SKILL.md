@@ -81,4 +81,6 @@ The idea becomes `publicada` in the owner's merge commit: after the merge, run `
 
 The skill never changes `draft`: only the owner flips `draft`, when she approves and merges.
 
+CI `verify` fails on a PR that publishes a post (a `draft` flag flipped to false, removed, or a new post without `draft: true`) until the PR carries the GitHub label `publish-approved`. Only the owner applies `publish-approved`; the skill never adds it.
+
 Stop: **Aprobación 5 (publicación)** is the owner's merge.
