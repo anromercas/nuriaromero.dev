@@ -17,12 +17,19 @@ Five steps, each ending at a named owner approval point. At every approval point
 
 Find the folder `seo/contenido/<slug>/`. The first artifact without `Estado: aprobado` (or the outline without an approved `- Portada:` field, or a missing draft) is the current step. Approval state lives in the files, not in memory.
 
+## Step 0. Ideas
+
+The idea queue is `seo/contenido/ideas.json` (fields in `seo/contenido/README.md`). The scheduled SEO run refreshes it weekly and leaves it modified in the checkout.
+
+1. Apply the owner's decisions: `node scripts/blog-idea-status.mjs <id> <aprobada|rechazada>` for each idea she approved or rejected.
+2. If no idea is `aprobada`, show the latest four proposals (`node scripts/blog-ideas-refresh.mjs --dry-run --date <today>` with no exports prints them) and stop; there is nothing to write yet.
+
 ## Step 1. Topic
 
-1. Input: the saved keyword exports in `.claude/state/seo/`.
-2. Run `node scripts/blog-shortlist.mjs <exports...> --limit 5`.
-3. Show the owner the candidates and the reasons in "Descartadas".
-4. When the owner picks one, write `seo/contenido/<slug>/tema.md` from `templates/tema.md` (question, keyword, intent, volume with source and date, pillar, target page) with `Estado: pendiente de aprobación`.
+1. Input: an `aprobada` idea of `seo/contenido/ideas.json`. The saved keyword exports in `.claude/state/seo/` with `node scripts/blog-shortlist.mjs <exports...> --limit 5` remain a fallback; show the owner the candidates and the reasons in "Descartadas".
+2. Set the chosen idea to `en curso`: `node scripts/blog-idea-status.mjs <id> "en curso"`.
+3. Write `seo/contenido/<slug>/tema.md` from `templates/tema.md` (question, keyword, intent, volume with source and date, pillar, target page, all taken from the idea) with `Estado: pendiente de aprobación`.
+4. Commit `seo/contenido/ideas.json` together with `tema.md` on the post branch.
 
 Stop: **Aprobación 1 (tema)**. On approval set `Estado: aprobado (<fecha>)`.
 
@@ -69,6 +76,8 @@ Stop: **Aprobación 4 (borrador)**.
 ## Step 5. Publish
 
 Hand the branch to the team-harness PR flow (`/team-harness:dev`, PR into `develop`, CI `verify`, ADR 0009). The PR body must say the post is a draft, list what happens when the owner flips `draft` (page, sitemap, RSS, blog listing) and the follow-ups that go in that same owner-approved commit (`intentMatrix` row, internal links, `public/llms.txt` if it lists posts).
+
+The idea becomes `publicada` in the owner's merge commit: after the merge, run `node scripts/blog-idea-status.mjs <id> publicada` and commit the queue with the next post branch if the merge did not include it.
 
 The skill never changes `draft`: only the owner flips `draft`, when she approves and merges.
 

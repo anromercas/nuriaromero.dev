@@ -1,0 +1,14 @@
+{
+  "source": "week1",
+  "date": "2026-11-23",
+  "items": [
+    { "kind": "paa", "keyword": "como saber si mi web sale en google", "question": "¿Cómo saber si mi web sale en Google?", "volume": 880, "difficulty": 25, "intent": "informational" },
+    { "kind": "keyword", "keyword": "cuanto cuesta una tienda online", "question": "¿Cuánto cuesta una tienda online?", "volume": 90, "difficulty": 30, "intent": "commercial" },
+    { "kind": "client-question", "keyword": "como automatizar facturas con n8n", "question": "¿Cómo automatizar las facturas con n8n?", "volume": null, "difficulty": null, "intent": null },
+    { "kind": "paa", "keyword": "chatbot para clinica", "question": "¿Qué es un chatbot para clínica?", "volume": 320, "difficulty": 40, "intent": null },
+    { "kind": "paa", "keyword": "cuanto cobra un seo al mes", "question": "¿Cuánto cobra un SEO al mes?", "volume": 70, "difficulty": 20, "intent": "commercial" },
+    { "kind": "paa", "keyword": "que es un agente de ia para un negocio", "question": "¿Qué es un agente de IA para un negocio?", "volume": 210, "difficulty": 35, "intent": null },
+    { "kind": "paa", "keyword": "como aparecer en chatgpt", "question": "¿Cómo aparecer en ChatGPT?", "volume": 140, "difficulty": 45, "intent": null },
+    { "kind": "paa", "keyword": "cuantos dias tiene un mes", "question": "¿Cuántos días tiene un mes?", "volume": 9000, "difficulty": 5, "intent": null }
+  ]
+}

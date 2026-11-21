@@ -158,3 +158,17 @@ test("scaffold block writes nothing with a pending outline", async () => {
     await rm(root, { recursive: true, force: true });
   }
 });
+
+test("step 0 records the owner's decisions and the topic step starts from the queue", () => {
+  const text = skill();
+  const step0 = text.indexOf("## Step 0");
+  const step1 = text.indexOf("## Step 1");
+  assert.ok(step0 >= 0 && step0 < step1, "## Step 0 must come before step 1");
+  const zero = text.slice(step0, step1);
+  const topic = text.slice(step1, text.indexOf("## Step 2"));
+  assert.ok(zero.includes("scripts/blog-idea-status.mjs"));
+  assert.ok(zero.includes("seo/contenido/ideas.json"));
+  assert.ok(topic.includes("aprobada"));
+  assert.ok(topic.includes("en curso"));
+  assert.ok(text.includes("publicada"));
+});
