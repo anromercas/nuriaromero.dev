@@ -30,12 +30,12 @@ The build MUST NOT request Place Details unless `process.env.CONTEXT` equals `pr
 
 ### Requirement: The production build still renders the reviews
 
-A build with `CONTEXT=production` and Places credentials SHALL request the reviews and render them on every page that showed them before this change: the home, `/seo-local-sevilla/`, `/diseno-web-sevilla/`, `/tienda-online-sevilla/`, `/desarrollo-software-medida/`, `/automatizaciones/`, `/inteligencia-artificial/`, `/seo-para-ia/`, `/sobre-mi/` and `/portfolio/`. The home SHALL keep its reviews JSON-LD consistent with the visible section.
+A build with `CONTEXT=production` and Places credentials SHALL request the reviews and render them on every page that showed them before this change: the home, `/seo-local-sevilla/`, `/diseno-web-sevilla/`, `/tienda-online-sevilla/`, `/desarrollo-software-medida/`, `/automatizaciones/`, `/inteligencia-artificial/`, `/seo-para-ia/`, `/sobre-mi/` and `/portfolio/`. The home SHALL keep emitting its reviews JSON-LD (its alignment with the visible home is NRD-376).
 
 #### Scenario: Production build with credentials and reviews
 
 - **WHEN** the build runs with `CONTEXT=production`, Places credentials and a Place Details response that contains reviews
-- **THEN** every listed page contains the review data it rendered before (the review quote or reviews section, or the "X,X en Google" stat), the home contains the reviews JSON-LD, and `scripts/check-google-reviews.mjs` passes on the home
+- **THEN** every listed page contains the review data it rendered before (the review quote or reviews section, or the "X,X en Google" stat), and the home contains the reviews JSON-LD with an `aggregateRating`
 
 ### Requirement: Null paths stay unchanged
 

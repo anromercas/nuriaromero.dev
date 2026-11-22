@@ -78,7 +78,7 @@ const { getGoogleReviews } = await import("../src/lib/google-reviews.ts")
 3. Task 1.3, `tests/google-reviews-production-build.test.js` (scenarios "Several pages need the reviews in one build", "Production build with credentials and reviews"): `before()` (timeout 240 s) runs `isolatedBuild({ env: { CONTEXT: "production", GOOGLE_PLACES_API_KEY: "test-key", GOOGLE_PLACE_ID: "test-place-id", PLACES_STUB_LOG: <tmp file> }, preload: [<places-fetch-stub.mjs>] })`; `after()` calls `cleanup()` and removes the log. Assertions:
    - the stub log has exactly 1 line (one request for the whole build);
    - each of the ten pages' `dist/**/index.html` contains `Reseña de prueba NRD-372` or `4,8 en Google`; `portfolio/index.html` contains the review text (it only has the quote);
-   - `dist/index.html` JSON-LD contains an `aggregateRating`, and `node scripts/check-google-reviews.mjs <dist>/index.html` exits 0;
+   - `dist/index.html` JSON-LD contains an `aggregateRating`. Do NOT run `scripts/check-google-reviews.mjs` here: it fails on any production build with reviews because the home emits `reviewsSchema()` (`src/pages/index.astro:102`) but renders `RealProof` instead of `GoogleReviews.astro` (the only emitter of `id="resenas-google"`, now unused). That mismatch predates this fix and is bug NRD-376, which adds the check assertion to this test file when it is fixed;
    - no output file contains `test-key` (the key never reaches the HTML).
    Extend `tests/isolated-build-layout.test.js` only if needed to keep it passing; its current assertions are unaffected.
 4. Full suite `node --test tests/*.test.js` and `pnpm build` green (`pnpm build` locally runs without `CONTEXT`, so it renders without reviews and makes no request).
@@ -98,6 +98,7 @@ const { getGoogleReviews } = await import("../src/lib/google-reviews.ts")
 - [Module-level promise lives for the whole process: in `astro dev` a cached result would persist until restart] -> dev never runs with `CONTEXT=production`, so the cached value is `null` and no request is made.
 - [A failed request is cached for the build, so pages do not retry] -> intended: one failure means one warning and no reviews for that deploy, not N billed retries.
 - [Unit suite gets one more isolated build (about 1-2 min)] -> accepted; ADR 0019 allows one isolated build per test file, and this one cannot be merged into an existing build file without giving those builds credentials.
+- [Home reviews JSON-LD does not match the visible home (pre-existing, NRD-376)] -> out of scope here; `check-google-reviews.mjs` runs neither in CI (`check:seo:dist` chains only `check-seo-NN`) nor in the Netlify build (`astro check && astro build`), so it cannot fail a deploy.
 - [The stub relies on Astro prerendering in the process that ran `--import`] -> true for Astro 4 static output; if the test ever sees 0 stub calls with reviews missing, the stub did not load and the test fails loudly rather than calling the real API (the key is fake).
 
 ## UI spec
