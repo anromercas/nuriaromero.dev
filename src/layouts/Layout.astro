@@ -26,13 +26,15 @@ interface Props {
   ogImage?: string;
   ogType?: "website" | "article";
   noindex?: boolean;
+  dateModified?: string;
 }
 
 const { title, description, canonical, ogImage, ogType, noindex } = Astro.props;
 
 // Build-derived freshness (ADR 0017): the WebPage node exists only for
 // indexable pages whose last change the version history can prove.
-const dateModified = getPageDateModified(Astro.url.pathname);
+const dateModified =
+  Astro.props.dateModified ?? getPageDateModified(Astro.url.pathname);
 const schemas = [
   localBusinessSchema(),
   websiteSchema(),

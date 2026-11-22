@@ -1,0 +1,8 @@
+{
+  "source": "few",
+  "date": "2026-11-23",
+  "items": [
+    { "kind": "paa", "keyword": "como saber si mi web sale en google", "question": "¿Cómo saber si mi web sale en Google?", "volume": 880, "difficulty": 25, "intent": "informational" },
+    { "kind": "paa", "keyword": "cuanto cuesta una tienda online", "question": "¿Cuánto cuesta una tienda online?", "volume": 90, "difficulty": 30, "intent": "commercial" }
+  ]
+}

@@ -11,7 +11,7 @@
     "format": "prettier --write",
     "seo:inventory": "node scripts/seo-inventory.mjs",
     "check:seo": "pnpm build && pnpm check:seo:dist",
-    "check:seo:dist": "node scripts/check-seo-02.mjs && node scripts/check-seo-05.mjs && node scripts/check-seo-06.mjs && node scripts/check-seo-07.mjs && node scripts/check-seo-08.mjs && node scripts/check-seo-09.mjs && node scripts/check-seo-10.mjs && node scripts/check-seo-11.mjs && node scripts/check-seo-12.mjs && node scripts/check-seo-13.mjs && node scripts/check-seo-14.mjs && node scripts/check-seo-15.mjs && node scripts/check-seo-16.mjs && node scripts/check-seo-17.mjs && node scripts/check-seo-18.mjs && node scripts/check-seo-19.mjs && node scripts/check-seo-20.mjs && node scripts/check-seo-21.mjs && node scripts/check-seo-22.mjs && node scripts/check-seo-23.mjs && node scripts/check-seo-24.mjs",
+    "check:seo:dist": "node scripts/check-seo-02.mjs && node scripts/check-seo-05.mjs && node scripts/check-seo-06.mjs && node scripts/check-seo-07.mjs && node scripts/check-seo-08.mjs && node scripts/check-seo-09.mjs && node scripts/check-seo-10.mjs && node scripts/check-seo-11.mjs && node scripts/check-seo-12.mjs && node scripts/check-seo-13.mjs && node scripts/check-seo-14.mjs && node scripts/check-seo-15.mjs && node scripts/check-seo-16.mjs && node scripts/check-seo-17.mjs && node scripts/check-seo-18.mjs && node scripts/check-seo-19.mjs && node scripts/check-seo-20.mjs && node scripts/check-seo-21.mjs && node scripts/check-seo-22.mjs && node scripts/check-seo-23.mjs && node scripts/check-seo-24.mjs && node scripts/check-seo-25.mjs",
     "check:seo-02": "pnpm build && node scripts/check-seo-02.mjs",
     "check:seo-02:dist": "node scripts/check-seo-02.mjs",
     "check:seo-05": "pnpm build && node scripts/check-seo-05.mjs",
@@ -54,6 +54,8 @@
     "check:seo-23:dist": "node scripts/check-seo-23.mjs",
     "check:seo-24": "pnpm build && node scripts/check-seo-24.mjs",
     "check:seo-24:dist": "node scripts/check-seo-24.mjs",
+    "check:seo-25": "pnpm build && node scripts/check-seo-25.mjs",
+    "check:seo-25:dist": "node scripts/check-seo-25.mjs",
     "check:google-reviews": "pnpm build && node scripts/check-google-reviews.mjs",
     "check:google-reviews:dist": "node scripts/check-google-reviews.mjs"
   },

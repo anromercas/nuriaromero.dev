@@ -1,0 +1,30 @@
+{
+  "source": "dataforseo:keyword-ideas",
+  "date": "2026-11-16",
+  "items": [
+    {
+      "kind": "keyword",
+      "keyword": "cuanto cuesta una tienda online",
+      "question": "¿Cuánto cuesta una tienda online?",
+      "volume": 90,
+      "difficulty": 30,
+      "intent": "commercial"
+    },
+    {
+      "kind": "keyword",
+      "keyword": "tienda online sevilla",
+      "question": null,
+      "volume": 500,
+      "difficulty": null,
+      "intent": null
+    },
+    {
+      "kind": "client-question",
+      "keyword": "como se si mi web sale en google",
+      "question": "¿Cómo sé si mi web sale en Google?",
+      "volume": null,
+      "difficulty": null,
+      "intent": null
+    }
+  ]
+}
