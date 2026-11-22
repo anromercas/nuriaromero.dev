@@ -88,3 +88,91 @@ test("does not reference secrets, netlify or deploy", async () => {
   assert.doesNotMatch(yml, /netlify/i);
   assert.doesNotMatch(yml, /deploy/i);
 });
+
+test("pull_request types include labeled and unlabeled (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  assert.match(
+    yml,
+    /pull_request:\s*\n\s+branches: \[develop\]\s*\n\s+types: \[opened, synchronize, reopened, labeled, unlabeled\]/,
+  );
+});
+
+test("checkout fetches full history for the merge base (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  assert.match(yml, /actions\/checkout@v4\s*\n\s+with:\s*\n\s+fetch-depth: 0/);
+});
+
+test("publish approval guard runs on pull requests only, with env inputs (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  const step = yml.match(
+    /- name: Publish approval guard\n((?: {8,}.*\n)+)/,
+  )?.[1];
+  assert.ok(step, "missing `Publish approval guard` step");
+  assert.match(step, /if: github\.event_name == 'pull_request'/);
+  assert.match(
+    step,
+    /BASE_SHA: \$\{\{ github\.event\.pull_request\.base\.sha \}\}/,
+  );
+  assert.match(
+    step,
+    /HEAD_SHA: \$\{\{ github\.event\.pull_request\.head\.sha \}\}/,
+  );
+  assert.match(
+    step,
+    /PR_LABELS: \$\{\{ toJSON\(github\.event\.pull_request\.labels\.\*\.name\) \}\}/,
+  );
+  const run = step.slice(step.indexOf("run:"));
+  assert.doesNotMatch(run, /\$\{\{/, "no expression interpolation in run");
+});
+
+test("publish approval guard runs the trusted BASE copy, not the PR head (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  const step = yml.match(
+    /- name: Publish approval guard\n((?: {8,}.*\n)+)/,
+  )?.[1];
+  assert.ok(step, "missing `Publish approval guard` step");
+  const run = step.slice(step.indexOf("run:"));
+  assert.match(run, /git archive "\$BASE_SHA" scripts/);
+  assert.match(run, /RUNNER_TEMP/);
+  assert.match(run, /node "\$guard\/scripts\/check-publish-approval\.mjs"/);
+  assert.match(
+    run,
+    /git cat-file -e "\$BASE_SHA:scripts\/check-publish-approval\.mjs"/,
+  );
+  assert.match(run, /bootstrap/i, "bootstrap fallback must be explained");
+  assert.match(run, /node scripts\/check-publish-approval\.mjs/);
+});
+
+test("publish approval guard runs before install and the build (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  const guard = yml.indexOf("- name: Publish approval guard");
+  assert.ok(guard > yml.indexOf("actions/setup-node@v4"));
+  assert.ok(guard < yml.indexOf("pnpm install --frozen-lockfile"));
+  assert.ok(guard < yml.indexOf("run: pnpm build"));
+});
+
+test("bootstrap fallback fails closed once the base workflow has the guard (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  const step = yml.match(
+    /- name: Publish approval guard\n((?: {8,}.*\n)+)/,
+  )?.[1];
+  assert.ok(step, "missing `Publish approval guard` step");
+  const run = step.slice(step.indexOf("run:"));
+  assert.match(
+    run,
+    /git show "\$BASE_SHA:\.github\/workflows\/ci\.yml" \| grep -q check-publish-approval/,
+  );
+  assert.match(run, /exit 1/);
+  assert.ok(
+    run.indexOf("exit 1") <
+      run.lastIndexOf("node scripts/check-publish-approval.mjs"),
+    "fail-closed branch must precede the head-copy fallback",
+  );
+});
+
+test("guard comment does not overclaim protection (NRD-370)", async () => {
+  const yml = await readSource(workflowPath);
+  assert.match(yml, /can still edit this workflow/);
+  assert.match(yml, /CODEOWNERS/);
+  assert.doesNotMatch(yml, /cannot rewrite the guard that judges it/);
+});

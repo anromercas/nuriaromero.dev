@@ -21,7 +21,7 @@ Principles:
 | 2 Outline     | Approved `tema.md`                                                          | Skills `claude-seo:seo-content-brief`, `claude-seo:seo-sxo`, `claude-seo:seo-geo`                              | `seo/contenido/<slug>/esquema.md`: title, H1/H2, secondary keywords, sources, direct-answer opening, word target | Owner approves the outline before any prose is written | No outline lint script (one H1, H2 list, word target, sources present); no post voice guide           |
 | 3 Cover image | Approved `esquema.md`                                                       | Cover flow of NRD-328 / NRD-331, possibly fed by the social image library (`social.library`)                   | `src/assets/blog/<slug>.<ext>` plus `cover.alt` in the frontmatter, under the 100 KB guard                       | Owner approves the image and its alt text              | Image source and generation flow are NRD-331; accessible alt text needs a human check                 |
 | 4 Draft       | Approved outline and cover                                                  | A copywriting skill, then `seo-page-pipeline` checks                                                           | `src/content/blog/<slug>.md` with `draft: true`, committed on branch `feat/NRD-<n>-post-<slug>`                  | Owner reviews the draft in the PR                      | No brand-voice guide for posts; word count and frontmatter scaffold are done by hand                  |
-| 5 Publish     | Reviewed draft PR                                                           | team-harness PR flow with CI `verify` (unit tests, `check:seo`)                                                | The owner flips `draft: false` (or approves the commit that does) and merges                                     | The owner's merge is the only publish action           | Nothing prevents an agent from flipping `draft` itself; the process relies on the PR approval         |
+| 5 Publish     | Reviewed draft PR                                                           | team-harness PR flow with CI `verify` (unit tests, `check:seo`)                                                | The owner flips `draft: false` (or approves the commit that does) and merges                                     | The owner's merge is the only publish action           | Closed by NRD-351: CI guard, label `publish-approved`, ADR 0021                                       |
 
 Storage decision (PO, 2026-11-21, NRD-345): `seo/contenido/` is tracked (only that folder; the rest of `seo/` stays untracked). Reason: `seo/` was untracked in the main checkout, so `seo/contenido/<slug>/` artifacts would not reach a PR or survive a clean clone, and tracking only this folder keeps the SEO working files together while the rest of `seo/` stays private.
 
@@ -51,7 +51,7 @@ Reported gap (not one of the five paths): committing a draft under `src/content/
 | Outline | `claude-seo:seo-content-brief`, `claude-seo:seo-sxo`, `claude-seo:seo-geo` | Outline lint script; brand-voice guide for posts                                                |
 | Cover   | NRD-328 schema and render, NRD-331 flow, `social.library`                  | Source and alt-text convention (NRD-331)                                                        |
 | Draft   | Copywriting skill, `seo-page-pipeline`                                     | Frontmatter scaffold script; word-count script                                                  |
-| Publish | team-harness PO/TL/dev/QA flow, PR with CI `verify`, `check:seo`           | A guard that a PR flipping `draft: false` is approved by the owner (today a convention)         |
+| Publish | team-harness PO/TL/dev/QA flow, PR with CI `verify`, `check:seo`           | Done by NRD-351: CI guard requires the owner's GitHub label `publish-approved` (ADR 0021)       |
 
 ## 5. Recommendation: project skill or team-harness command
 
@@ -76,7 +76,7 @@ Deterministic steps that become scripts (not model steps): topic shortlist from 
 4. **Brand-voice guide for posts (S, 2 points).** A short guide the copywriting step reads. Acceptance: it lives in `docs/`, is referenced by the skill, and a review checks a sample draft against it.
 5. **`/blog/` freshness bug (S, 2 points).** Date `/blog/` from the newest published post, not from the folder commit date. Acceptance: a test proves that committing a `draft: true` post does not change the `/blog/` `dateModified` (uses the isolated build helper).
 6. **Track or relocate the content working folder (XS, 1 point).** Decide `seo/contenido/` tracked or `docs/content/`. Acceptance: the chosen path is tracked and the skill writes there.
-7. **Draft-flip guard (S, 2 points).** A CI check that a PR changing a post from `draft: true` to `false` carries the owner's approval label. Acceptance: a script test covers the flip and the no-flip cases.
+7. **Draft-flip guard (S, 2 points). Done by NRD-351 (label `publish-approved`, ADR 0021).** A CI check that a PR changing a post from `draft: true` to `false` carries the owner's approval label. Acceptance: a script test covers the flip and the no-flip cases.
 
 ## ADRs relied on
 
