@@ -58,7 +58,23 @@ export function formatRelativeTimeEs(publishTime?: string, now: Date = new Date(
 
 const PLACE_DETAILS_BASE_URL = "https://places.googleapis.com/v1/places"
 
-export async function getGoogleReviews(): Promise<GoogleReviewsData | null> {
+// Place Details is billed per request and every page that shows reviews calls
+// getGoogleReviews() during the build. One shared promise per build process
+// keeps it at a single request per build instead of one per page.
+let cachedReviews: Promise<GoogleReviewsData | null> | undefined
+
+export function getGoogleReviews(): Promise<GoogleReviewsData | null> {
+  cachedReviews ??= fetchGoogleReviews()
+  return cachedReviews
+}
+
+async function fetchGoogleReviews(): Promise<GoogleReviewsData | null> {
+  // Only the Netlify production build pays for the request. Local builds,
+  // CI, deploy previews and branch deploys render the page without reviews.
+  if (process.env.CONTEXT !== "production") {
+    return null
+  }
+
   const apiKey = import.meta.env.GOOGLE_PLACES_API_KEY
   const placeId = import.meta.env.GOOGLE_PLACE_ID
 

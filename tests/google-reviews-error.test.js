@@ -84,3 +84,19 @@ test('check-google-reviews fails when the page has no JSON-LD at all', async () 
   assert.equal(result.status, 1)
   assert.match(result.stderr, /GOOGLE-REVIEWS: no JSON-LD found/)
 })
+
+test('calls Place Details only in the Netlify production build', async () => {
+  const source = await readSource('../src/lib/google-reviews.ts')
+  const guard = source.search(/if \(process\.env\.CONTEXT !== "production"\) \{\s*return null\s*\}/)
+
+  assert.notEqual(guard, -1)
+  assert.ok(guard < source.indexOf('fetch('))
+})
+
+test('shares one Place Details request across every page of a build', async () => {
+  const source = await readSource('../src/lib/google-reviews.ts')
+
+  assert.match(source, /let cachedReviews: Promise<GoogleReviewsData \| null> \| undefined/)
+  assert.match(source, /cachedReviews \?\?= fetchGoogleReviews\(\)/)
+  assert.equal(source.match(/fetch\(/g)?.length, 1)
+})

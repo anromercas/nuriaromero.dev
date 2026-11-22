@@ -28,3 +28,9 @@ Testing the post layout with a cover needs a built page that has a cover. Commit
 - `src/content/blog-schema.ts`, `src/content/config.ts`, `src/layouts/BlogPostLayout.astro`, `scripts/lib/blog-cover-contract.mjs`, `scripts/check-seo-25.mjs` (NRD-328).
 - `tests/helpers/isolated-build.mjs`, `tests/blog-cover-render.test.js` (NRD-328), `tests/blog-drafts.test.js` (NRD-327).
 - Design: `openspec/changes/nuriaromero-328-blog-cover-images/design.md`.
+
+## Amendment (2026-11-22, NRD-372)
+
+- `isolatedBuild()` accepts two opt-in options: `env` (merged after the inherited Google credentials are deleted) and `preload` (modules passed to the build child with `node --import`). Defaults are unchanged: no credentials, no preload.
+- A test may pass fake Google Places credentials and `CONTEXT=production` only together with the `fetch` stub `tests/helpers/places-fetch-stub.mjs`, which answers Place Details from a fixture. Real credentials never reach an isolated build, and tests never call the real Places API.
+- Evidence: `tests/google-reviews-production-build.test.js`; design `openspec/changes/nuriaromero-372-google-reviews-build-cost/design.md`.

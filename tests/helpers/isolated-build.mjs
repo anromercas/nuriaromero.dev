@@ -3,7 +3,7 @@
 import { spawnSync } from "node:child_process";
 import { cp, mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const repo = fileURLToPath(new URL("../../", import.meta.url));
 const childScript = fileURLToPath(
@@ -32,10 +32,19 @@ const toFrontmatter = (value) =>
 
 /**
  * @param {{ posts?: { slug: string, frontmatter: Record<string, unknown> | string, body: string }[],
- *           files?: { path: string, contents: string | Buffer }[] }} input
+ *           files?: { path: string, contents: string | Buffer }[],
+ *           env?: Record<string, string>,
+ *           preload?: string[] }} input
+ *   env is merged after the GOOGLE_* deletion below; preload holds absolute
+ *   paths, each passed to the build child as `--import <file URL>`.
  * @returns {Promise<{ root: string, dist: string, cleanup: () => Promise<void> }>}
  */
-export async function isolatedBuild({ posts = [], files = [] } = {}) {
+export async function isolatedBuild({
+  posts = [],
+  files = [],
+  env: extraEnv = {},
+  preload = [],
+} = {}) {
   // The root lives inside the repo (under .astro/, which is gitignored) so
   // module resolution walks up to the repo's own node_modules and follows
   // pnpm's real paths. A temp dir outside the repo needs a symlinked
@@ -69,7 +78,12 @@ export async function isolatedBuild({ posts = [], files = [] } = {}) {
     const env = { ...process.env };
     delete env.GOOGLE_PLACES_API_KEY;
     delete env.GOOGLE_PLACE_ID;
-    const run = spawnSync(process.execPath, [childScript, root], {
+    Object.assign(env, extraEnv);
+    const imports = preload.flatMap((file) => [
+      "--import",
+      pathToFileURL(file).href,
+    ]);
+    const run = spawnSync(process.execPath, [...imports, childScript, root], {
       cwd: root,
       env,
       encoding: "utf8",
