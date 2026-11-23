@@ -34,9 +34,21 @@ export function withUtm(url, { network, campaign }) {
   return u.toString();
 }
 
+/** True when the first comment is switched off for a network (config or --no-comment), as opposed to missing a link. */
+export function commentDisabled(network, { config, disabled = [] }) {
+  const cfg = config ?? {};
+  return (
+    cfg.enabled === false ||
+    disabled.includes(network) ||
+    cfg.networks?.[network]?.enabled === false
+  );
+}
+
 /**
  * Text of the first comment (Postiz: the second item of `value`) for one network, or null for none.
  * config: { enabled?, text: "... {url} ...", url, networks: { <network>: { enabled?, text?, url? } } }
+ * Default (owner-approved): without configured text the comment is just the piece link with its UTM tags. The link
+ * is `url` (--comment-url), else the network's url, else config.url; with no link a "{url}" text gives null.
  * `url` and `disabled` are command-line overrides. Cost note: on X the comment is a reply billed as a post,
  * about 0.20 USD with a URL (owner accepted); STRIP_LINKS_FROM_X_POSTS must stay unset in Postiz, since it also
  * strips links from comments.
@@ -45,17 +57,13 @@ export function firstComment(
   network,
   { config, campaign, url, disabled = [] },
 ) {
+  if (commentDisabled(network, { config, disabled })) return null;
   const cfg = config ?? {};
-  if (cfg.enabled === false || disabled.includes(network)) return null;
   const own = cfg.networks?.[network] ?? {};
-  if (own.enabled === false) return null;
-  // Without configured text, a command-line link alone is commented as the bare tagged link.
-  const text = own.text ?? cfg.text ?? (url ? "{url}" : null);
+  const text = own.text ?? cfg.text ?? "{url}";
   const link = url ?? own.url ?? cfg.url;
-  if (!text) return null;
-  return link
-    ? text.replaceAll("{url}", withUtm(link, { network, campaign }))
-    : text;
+  if (!link) return text.includes("{url}") ? null : text;
+  return text.replaceAll("{url}", withUtm(link, { network, campaign }));
 }
 
 /** Postiz provider identifiers accepted for each network (GET /integrations `identifier`). */
@@ -216,11 +224,21 @@ const placeholder = (rel) => ({
   path: `<upload ${rel}>`,
 });
 
+/** social.publishing.postiz.rateLimitPerHour when it is a positive integer, else DEFAULT_RATE_LIMIT. */
+export function rateLimitOf(postiz) {
+  const n = postiz?.rateLimitPerHour;
+  return Number.isInteger(n) && n > 0 ? n : DEFAULT_RATE_LIMIT;
+}
+
+const passThrough = { run: (fn) => fn(), plan: () => null };
+
 /**
  * Publishes one piece through its routes. Inputs are plain data computed by the CLI from the team-harness gate
  * (scripts/social-gate.mjs checkGate: allow, reasons, files per network, audio) and the piece captions; `client`
- * is the Postiz adapter (null in a dry run). Returns one JSON-able result; never throws for a network failure.
- * A denied gate, an exceeded request budget or a failed upload stops the run before any post is created.
+ * is the Postiz adapter (null in a dry run). Every Postiz request goes through `limiter.run` (scripts/lib/
+ * rate-limit.mjs), which waits for the hourly window instead of refusing, so nothing is dropped; `limiter.plan`
+ * reports the budget in the result. Returns one JSON-able result; never throws for a network failure.
+ * A denied gate or a failed upload stops the run before any post is created.
  */
 export async function publishPiece({
   piece,
@@ -237,6 +255,7 @@ export async function publishPiece({
   dryRun = true,
   commentUrl,
   noComment = [],
+  limiter = passThrough,
 }) {
   const result = { piece, at, dryRun, ok: false, networks: {} };
   if (!gate?.allow)
@@ -280,20 +299,23 @@ export async function publishPiece({
         continue;
       }
     }
-    plan[network] = {
-      route,
-      files,
-      text,
-      comment:
-        route === "postiz"
-          ? firstComment(network, {
-              config: postiz.firstComment,
-              campaign: piece,
-              url: commentUrl,
-              disabled: noComment,
-            })
-          : null,
+    const commentOpts = {
+      config: postiz.firstComment,
+      campaign: piece,
+      url: commentUrl,
+      disabled: noComment,
     };
+    const comment =
+      route === "postiz" ? firstComment(network, commentOpts) : null;
+    if (
+      route === "postiz" &&
+      comment === null &&
+      !commentDisabled(network, commentOpts)
+    )
+      entry.warnings = [
+        `no link for the first comment of ${network} (set --comment-url or social.publishing.postiz.firstComment.url); publishing without a comment`,
+      ];
+    plan[network] = { route, files, text, comment };
   }
 
   const planned = Object.keys(plan);
@@ -306,20 +328,8 @@ export async function publishPiece({
   };
   requests.total = requests.integrations + requests.uploads + requests.posts;
   result.requests = requests;
-  const limit = Number.isInteger(postiz.rateLimitPerHour)
-    ? postiz.rateLimitPerHour
-    : DEFAULT_RATE_LIMIT;
-  if (!dryRun && requests.total > limit)
-    return {
-      ...result,
-      refused: true,
-      reasons: [
-        {
-          code: "rate-limit",
-          message: `this run needs ${requests.total} Postiz requests, over the limit of ${limit} per hour; split the networks across runs`,
-        },
-      ],
-    };
+  const budget = limiter.plan?.(requests.total);
+  if (budget) result.rateLimit = budget;
 
   // Channels and media: placeholders in a dry run, real calls otherwise.
   let channels = Object.fromEntries(
@@ -332,15 +342,14 @@ export async function publishPiece({
       if (postCount)
         channels = mapChannels(
           planned.filter((n) => plan[n].route === "postiz"),
-          await client.listIntegrations(),
+          await limiter.run(() => client.listIntegrations()),
           postiz.channels ?? {},
         );
       for (const rel of uniqueFiles) {
-        const uploaded = await client.upload({
-          name: baseName(rel),
-          bytes: await readFile(rel),
-          type: mimeOf(rel),
-        });
+        const bytes = await readFile(rel);
+        const uploaded = await limiter.run(() =>
+          client.upload({ name: baseName(rel), bytes, type: mimeOf(rel) }),
+        );
         media[rel] = { id: uploaded.id, path: uploaded.path };
       }
     } catch (error) {
@@ -394,7 +403,7 @@ export async function publishPiece({
       continue;
     }
     try {
-      const created = await client.createPost(entry.payload);
+      const created = await limiter.run(() => client.createPost(entry.payload));
       Object.assign(entry, {
         status: "scheduled",
         postId: created?.[0]?.postId ?? null,

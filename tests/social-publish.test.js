@@ -19,7 +19,13 @@ import {
   harnessDirFromConfig,
 } from "../scripts/lib/social-publish.mjs";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import {
+  existsSync,
+  mkdtempSync,
+  mkdirSync,
+  writeFileSync,
+  rmSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -409,21 +415,129 @@ test("publishPiece uploads each file once, schedules per network and reports par
   assert.equal(out.ok, false);
 });
 
-test("publishPiece refuses before any call when the run would exceed the hourly request budget", async () => {
-  const client = fakeClient();
+/** A limiter double: counts every request that goes through run() and returns a fixed plan. */
+function fakeLimiter({ plan = null } = {}) {
+  const seen = { runs: 0 };
+  return {
+    seen,
+    plan: (count) => plan ?? { count },
+    run: async (fn) => {
+      seen.runs++;
+      return fn();
+    },
+  };
+}
+
+test("publishPiece sends every Postiz request through the limiter and never refuses for the hourly budget", async () => {
+  const client = fakeClient({
+    integrations: [
+      { id: "ig1", identifier: "instagram", disabled: false },
+      { id: "fb1", identifier: "facebook", disabled: false },
+      { id: "x1", identifier: "x", disabled: false },
+    ],
+  });
+  const limiter = fakeLimiter();
   const out = await publishPiece({
     ...baseInput(),
-    postiz: { rateLimitPerHour: 5 },
+    postiz: { ...baseInput().postiz, rateLimitPerHour: 5 },
     client,
+    limiter,
     dryRun: false,
   });
-  assert.equal(out.ok, false);
-  assert.equal(out.refused, true);
-  assert.match(
-    out.reasons[0].message,
-    /6 Postiz requests.*limit of 5 per hour/,
+  assert.equal(out.refused, undefined);
+  assert.equal(limiter.seen.runs, 1 + 2 + 3, "list + 2 uploads + 3 posts");
+  assert.deepEqual(client.calls.upload, ["01.jpg", "02.jpg"]);
+  assert.equal(client.calls.posts.length, 3);
+});
+
+test("a 429 retried by the limiter repeats only that request: uploads already done are not redone", async () => {
+  const client = fakeClient({
+    integrations: [
+      { id: "ig1", identifier: "instagram", disabled: false },
+      { id: "fb1", identifier: "facebook", disabled: false },
+      { id: "x1", identifier: "x", disabled: false },
+    ],
+  });
+  let failed = false;
+  const realUpload = client.upload;
+  client.upload = async (file) => {
+    if (file.name === "02.jpg" && !failed) {
+      failed = true;
+      throw Object.assign(new Error("POST /upload failed with HTTP 429"), {
+        status: 429,
+      });
+    }
+    return realUpload(file);
+  };
+  const limiter = {
+    plan: () => null,
+    run: async (fn) => {
+      try {
+        return await fn();
+      } catch (error) {
+        if (error.status === 429) return fn();
+        throw error;
+      }
+    },
+  };
+  const out = await publishPiece({
+    ...baseInput(),
+    client,
+    limiter,
+    dryRun: false,
+  });
+  assert.equal(out.ok, true, JSON.stringify(out));
+  assert.deepEqual(client.calls.upload, ["01.jpg", "02.jpg"]);
+  assert.equal(client.calls.posts.length, 3);
+});
+
+test("publishPiece dry run reports the limiter plan for the planned request count", async () => {
+  const plan = {
+    limit: 30,
+    used: 28,
+    remaining: 2,
+    count: 6,
+    batches: 2,
+    finishAt: 1,
+  };
+  const out = await publishPiece({
+    ...baseInput(),
+    client: null,
+    limiter: fakeLimiter({ plan }),
+    dryRun: true,
+  });
+  assert.deepEqual(out.rateLimit, plan);
+  assert.equal(out.requests.total, 6);
+});
+
+test("the first comment defaults to the bare tagged link; a piece without a link publishes without one and warns", async () => {
+  const withLink = await publishPiece({
+    ...baseInput(),
+    postiz: { firstComment: { url: "https://nuriaromero.dev/blog/" } },
+    client: null,
+    dryRun: true,
+  });
+  assert.equal(
+    withLink.networks.facebook.payload.posts[0].value[1].content,
+    "https://nuriaromero.dev/blog/?utm_source=facebook&utm_medium=social&utm_campaign=2026-11-24-carrusel-x",
   );
-  assert.deepEqual(client.calls, { upload: [], posts: [], list: 0 });
+  const noLink = await publishPiece({
+    ...baseInput(),
+    postiz: {},
+    client: null,
+    dryRun: true,
+  });
+  assert.equal(noLink.ok, true);
+  assert.equal(noLink.networks.facebook.payload.posts[0].value.length, 1);
+  assert.match(noLink.networks.facebook.warnings[0], /no link/);
+  const optedOut = await publishPiece({
+    ...baseInput(),
+    postiz: {},
+    noComment: ["facebook"],
+    client: null,
+    dryRun: true,
+  });
+  assert.equal(optedOut.networks.facebook.warnings, undefined);
 });
 
 test("publishPiece reports a network without caption or youtube title as an error and keeps the rest", async () => {
@@ -682,4 +796,58 @@ test("firstComment with only --comment-url and no configured text comments the b
     }),
     "https://nuriaromero.dev/?utm_source=facebook&utm_medium=social&utm_campaign=p",
   );
+});
+
+test("firstComment uses the configured link alone when no text is set, and skips a {url} text without a link", () => {
+  assert.equal(
+    firstComment("x", {
+      config: { url: "https://nuriaromero.dev/" },
+      campaign: "p",
+    }),
+    "https://nuriaromero.dev/?utm_source=x&utm_medium=social&utm_campaign=p",
+  );
+  assert.equal(
+    firstComment("x", { config: { text: "Más en {url}" }, campaign: "p" }),
+    null,
+  );
+  assert.equal(
+    firstComment("x", { config: { text: "Sin enlace" }, campaign: "p" }),
+    "Sin enlace",
+  );
+});
+
+test("CLI dry run prints the request plan and a warning for a piece without a link, and writes no request log", () => {
+  const { root, piece } = fixture();
+  try {
+    const r = run(root, [
+      "--piece",
+      piece,
+      "--at",
+      "2026-11-24T10:00:00+01:00",
+    ]);
+    assert.equal(r.status, 0, r.stderr);
+    assert.match(r.stderr, /Postiz requests planned: 3 \(0\/30 used/);
+    assert.match(r.stderr, /WARN instagram: no link/);
+    const out = JSON.parse(r.stdout);
+    assert.equal(out.rateLimit.remaining, 30);
+    assert.equal(
+      existsSync(join(root, ".claude/state/social/postiz-requests.json")),
+      false,
+    );
+    const linked = run(root, [
+      "--piece",
+      piece,
+      "--at",
+      "2026-11-24T10:00:00+01:00",
+      "--comment-url",
+      "https://nuriaromero.dev/",
+    ]);
+    assert.match(
+      JSON.parse(linked.stdout).networks.instagram.payload.posts[0].value[1]
+        .content,
+      /^https:\/\/nuriaromero\.dev\/\?utm_source=instagram/,
+    );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });

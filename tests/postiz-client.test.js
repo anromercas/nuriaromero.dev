@@ -16,6 +16,7 @@ function fakeFetch(responses) {
     return {
       ok: r.status >= 200 && r.status < 300,
       status: r.status,
+      headers: new Headers(r.headers ?? {}),
       text: async () =>
         typeof r.body === "string" ? r.body : JSON.stringify(r.body),
     };
@@ -125,4 +126,26 @@ test("the client refuses to start without an API key", () => {
     () => createPostizClient({ apiKey: "", fetch: async () => {} }),
     /Postiz API key is missing/,
   );
+});
+
+test("a failed call carries the Retry-After header for the rate limiter", async () => {
+  const { fetch } = fakeFetch([
+    {
+      status: 429,
+      body: "Too Many Requests",
+      headers: { "Retry-After": "120" },
+    },
+    { status: 500, body: "boom" },
+  ]);
+  const client = createPostizClient({ apiKey: KEY, fetch });
+  await assert.rejects(client.listIntegrations(), (error) => {
+    assert.ok(error instanceof PostizError);
+    assert.equal(error.status, 429);
+    assert.equal(error.retryAfter, "120");
+    return true;
+  });
+  await assert.rejects(client.listIntegrations(), (error) => {
+    assert.equal(error.retryAfter, null);
+    return true;
+  });
 });

@@ -1,15 +1,17 @@
 // HTTP adapter for the Postiz public API (self-hosted: https://<domain>/api/public/v1).
 // Docs: https://docs.postiz.com/public-api/introduction.md. Auth: the API key as the raw Authorization header.
-// Rate limit: the docs state 30 requests per hour for the public API, so every call is made once, never retried;
-// a failure carries the HTTP status and the caller decides. The key never appears in an error message.
+// Rate limit: the docs state 30 requests per hour for the public API. This adapter makes each call once; a failure
+// carries the HTTP status and the Retry-After header, and the caller's rate limiter (scripts/lib/rate-limit.mjs)
+// waits and retries on 429. The key never appears in an error message.
 
 export const DEFAULT_POSTIZ_URL = "https://postiz.nuriaromero.dev";
 
 export class PostizError extends Error {
-  constructor(message, status = null) {
+  constructor(message, status = null, retryAfter = null) {
     super(message);
     this.name = "PostizError";
     this.status = status;
+    this.retryAfter = retryAfter;
   }
 }
 
@@ -52,6 +54,7 @@ export function createPostizClient({
           apiKey,
         ),
         res.status,
+        res.headers?.get?.("retry-after") ?? null,
       );
     try {
       return JSON.parse(text);

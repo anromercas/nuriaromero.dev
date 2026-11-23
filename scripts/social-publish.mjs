@@ -18,9 +18,18 @@
 //   id), rateLimitPerHour (default 30, the documented public API limit), firstComment { text with {url}, url,
 //   networks: { <network>: { enabled, text, url } } }. These keys are optional and not yet in the team-harness
 //   schema, so built-in defaults apply until the schema allows them.
-// - First comment: the website link with utm_source=<network>&utm_medium=social&utm_campaign=<piece>. On X it is
-//   a reply billed as a post (about 0.20 USD with a URL, accepted by the owner); STRIP_LINKS_FROM_X_POSTS must
-//   stay unset in Postiz.
+// - Rate limit: every Postiz request (integrations list, each upload, each post) is logged with its time in
+//   .claude/state/social/postiz-requests.json (next to the config; shared by every run, entries older than an
+//   hour pruned). When the rolling hour is full the run waits until a slot frees and continues with the same
+//   request; on HTTP 429 it honours Retry-After and retries (3 times at most). Nothing is dropped and uploads
+//   already done are not redone. A run over the limit can therefore wait up to an hour per batch: run it in the
+//   background. The dry run prints the planned request count and, over the budget, the batches and finish time.
+// - First comment (default, owner-approved): just the piece link with
+//   utm_source=<network>&utm_medium=social&utm_campaign=<piece>, unless firstComment.text is configured. The link is
+//   --comment-url <url>, else firstComment.networks.<network>.url, else firstComment.url. Without a link the
+//   network is published with no comment and a WARN line. --no-comment <nets> switches it off per network. On X
+//   the comment is a reply billed as a post (about 0.20 USD with a URL, accepted by the owner);
+//   STRIP_LINKS_FROM_X_POSTS must stay unset in Postiz.
 // - API key: POSTIZ_API_KEY, else the macOS Keychain item postiz-api-key. Never printed or stored.
 // - Output: one JSON result on stdout (per network: route, status, payload, postId or metricool payload, error);
 //   human messages on stderr. Exit 0 all scheduled (or dry run ok), 1 refused or any network failed, 2 usage.
@@ -29,16 +38,23 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
-import { basename, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import {
   createPostizClient,
   DEFAULT_POSTIZ_URL,
 } from "./lib/postiz-client.mjs";
 import {
+  createFileStore,
+  createRateLimiter,
+  describePlan,
+  waitMessage,
+} from "./lib/rate-limit.mjs";
+import {
   harnessDirFromConfig,
   parseArgs,
   publishPiece,
+  rateLimitOf,
   resolveApiKey,
   resolveRoutes,
 } from "./lib/social-publish.mjs";
@@ -146,6 +162,15 @@ async function main(argv) {
     });
   }
 
+  // Read-only in a dry run (plan only); a real run records each request before making it.
+  const limiter = createRateLimiter({
+    limit: rateLimitOf(postiz),
+    store: createFileStore(
+      resolve(dirname(args.config), "state/social/postiz-requests.json"),
+    ),
+    onWait: (info) => say(waitMessage(info)),
+  });
+
   const result = await publishPiece({
     piece,
     networks,
@@ -161,14 +186,18 @@ async function main(argv) {
     dryRun: args.dryRun,
     commentUrl: args.commentUrl,
     noComment: args.noComment,
+    limiter,
   });
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
   if (args.dryRun && !result.refused)
     say(
       `Dry run: nothing uploaded or scheduled for ${piece}. Pass --confirm for real calls.`,
     );
-  for (const [n, e] of Object.entries(result.networks))
+  if (args.dryRun && result.rateLimit) say(describePlan(result.rateLimit));
+  for (const [n, e] of Object.entries(result.networks)) {
+    for (const w of e.warnings ?? []) say(`WARN ${n}: ${w}`);
     if (e.status === "error") say(`FAIL ${n}: ${e.error}`);
+  }
   if (result.error) say(`FAIL upload: ${result.error}`);
   return result.ok ? 0 : 1;
 }
