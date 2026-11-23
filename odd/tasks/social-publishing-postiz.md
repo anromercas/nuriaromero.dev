@@ -1,0 +1,174 @@
+# social-publishing-postiz
+
+## Objective
+
+Schedule and publish the owner's social pieces without browser-driven uploads and without spending the Metricool Free quota, using a self-hosted Postiz on the owner's VPS (EasyPanel), driven by scripts and its public API or MCP instead of model browser steps.
+
+## Problem and why
+
+- `social.publishing.mediaVia` is `web-upload`: pieces reach Metricool, TikTok Studio, YouTube Studio and Meta Business Suite through the owner's Chrome, driven by the model. It costs many tokens and breaks when those web apps change.
+- The Metricool MCP only accepts public media URLs. Its Google Drive import needs a paid plan.
+- Metricool Free allows 20 published posts per month counted per network (verified 2026-11-18); the cadence is 5 to 7 pieces per week on 4 networks.
+
+## Verified facts (2026-11-22)
+
+### Current setup
+
+- Metricool brand `nuriaromero.dev` (blogId 8195542) has Facebook, Instagram, TikTok and YouTube connected. `createScheduledPost.media` takes public image or video URLs; Drive and Dropbox are auto-imported only when linked in Metricool.
+- VPS (EasyPanel v2.37.0 dashboard, read with the owner's signed-in session): 3 cores, load 0.33; RAM 3.3 GB used of 7.8 GB (about 4.5 GB free); disk 25.4 GB used of 144.2 GB. Already running: evolution-api (+ postgres, redis), finanzas, hermes, n8n, pgadmin, postgres, registro-cinta backend and frontend, syncthing, odoo (+ db).
+
+### Postiz and EasyPanel (V1, V4)
+
+- The EasyPanel Postiz template moved to v2.25.3 on 2026-11-09 and now includes Temporal (auto-setup 1.28.4, its own Postgres 16 and Elasticsearch 7.17.28 with a 256 MB heap); the same change fixed persistence of `/uploads` and `/config`. Six services: postiz, postiz-db, postiz-redis, postiz-temporal-db, postiz-temporal-es, postiz-temporal. Sources: https://raw.githubusercontent.com/easypanel-io/templates/main/templates/postiz/meta.yaml, https://raw.githubusercontent.com/easypanel-io/templates/main/templates/postiz/index.ts
+- Template defaults: `STORAGE_PROVIDER=local`, uploads in `/uploads`, `DISABLE_REGISTRATION=false`, domain on port 5000. The template recommends at least 4 GB RAM for the stack. Postiz docs: minimum 2 vCPU, 2 GB RAM, 20 GB disk; recommended 4 vCPU, 8 GB RAM, 50 GB plus a persistent uploads volume: https://docs.postiz.com/installation/system-requirements.md
+- `/uploads` must be reachable over public HTTPS (TikTok and others pull media by URL): https://docs.postiz.com/configuration/uploads.md
+- MCP is built into the backend: streamable HTTP at `/mcp/<api-key>` (or Bearer header), API key from Settings → Developers → Public API. Tools include `integrationList`, `integrationSchedulePostTool`, `postsListTool`, `uploadFromUrlTool`, `mediaStatusTool`, analytics tools; no local file upload: https://docs.postiz.com/mcp/introduction.md, https://docs.postiz.com/mcp/tools.md
+- Local files upload through `POST https://{domain}/api/public/v1/upload` (multipart `file`, header `Authorization: <api-key>` without Bearer); response gives `id`, public `path` and `status`; JPEG, PNG, GIF, WebP, AVIF, BMP, TIFF, MP4: https://docs.postiz.com/public-api/uploads/upload-file.md
+- Create-post rate limit 90 per hour, configurable with `API_LIMIT`: https://docs.postiz.com/public-api/introduction.md
+
+### Meta (V2)
+
+- Standard Access needs no App Review and covers apps used only by people with a role on the app; Meta's own scenario "my app is only for a business I own or manage" → App Review not required: https://developers.facebook.com/docs/graph-api/overview/access-levels, https://developers.facebook.com/docs/instagram-platform/app-review
+- Risk: in Development mode, content is visible only to app roles; Postiz confirms Facebook posts in Development are hidden from the public and must switch the app to Live: https://developers.facebook.com/docs/development/build-and-test/app-modes, https://docs.postiz.com/providers/facebook.md
+- Instagram Graph publishing: public media URL, JPEG only for images, about 100 API posts per 24 h: https://developers.facebook.com/docs/instagram-platform/content-publishing/
+- Postiz setup: one Meta app of type "Other" in a business portfolio; `FACEBOOK_APP_ID`/`FACEBOOK_APP_SECRET`, callbacks `/integrations/social/instagram` and `/integrations/social/facebook`; or Instagram standalone with `INSTAGRAM_APP_ID`/`INSTAGRAM_APP_SECRET`: https://docs.postiz.com/providers/instagram.md
+- Client accounts need Advanced Access: Business Verification plus App Review per permission and a yearly Data Use Checkup.
+
+### YouTube and Google (V3)
+
+- Since the 2026-11-02 revision, videos uploaded with `videos.insert` from unverified API projects are no longer restricted to private (reverses the 2020 policy). An upload costs about 100 quota units since 2025-12-04: https://developers.google.com/youtube/v3/revision_history
+- External OAuth apps in "Testing" get refresh tokens that expire after 7 days: https://developers.google.com/identity/protocols/oauth2
+- Unverified apps in production are allowed under 100 users with a warning screen; verification of sensitive scopes needs a homepage and privacy policy on an owned domain verified in Search Console, a demo video and scope justification: https://support.google.com/cloud/answer/13464323, https://support.google.com/cloud/answer/13464321
+- Postiz setup: YouTube Data API v3, `YOUTUBE_CLIENT_ID`/`YOUTUBE_CLIENT_SECRET`, callback `/integrations/social/youtube`: https://docs.postiz.com/providers/youtube.md
+
+### TikTok (V5)
+
+- TikTok does not approve Direct Post audits for internal tools or agencies: explicitly unacceptable use is "a utility tool to help upload contents to the account(s) you or your team manages" (guidelines updated 2026-08-04): https://developers.tiktok.com/doc/content-sharing-guidelines
+- Unaudited: content forced to `SELF_ONLY`, at most 5 posting users per 24 h.
+- Alternative: upload to the creator's inbox (`video.upload`); she finishes posting in the TikTok app within 24 h. Postiz supports it as "Upload without posting": https://docs.postiz.com/self-host/providers/tiktok.md
+- Metricool is an audited app, so TikTok through Metricool publishes publicly.
+
+### Extra networks (D6 research, 2026-11-22)
+
+| Network                   | Free for own use                                            | Approval                                                                                                                         | Token renewal                                                       | Notes                                                                                                                                                                                                                                                                                    |
+| ------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Google Business Profile   | Yes                                                         | Yes: GBP API contact form, "Basic API Access"; profile verified and active 60+ days with a website; owner's own office qualifies | Refresh token, none                                                 | Text up to 1500 chars, max 1 photo, no video; STANDARD, EVENT, OFFER; action buttons. Env `GOOGLE_GMB_CLIENT_ID`/`SECRET` (defaults to YouTube's). Sources: https://developers.google.com/my-business/content/prereqs, https://docs.postiz.com/self-host/providers/google-my-business.md |
+| LinkedIn profile and page | Yes                                                         | Yes: Postiz requires organization scopes, so the Advertising API must be approved even for the personal profile                  | 60 days without refresh tokens (refresh only for approved partners) | Images, multi-image carousel converted to PDF, 1 video. Sources: https://docs.postiz.com/self-host/providers/linkedin.md, https://learn.microsoft.com/en-us/linkedin/shared/authentication/programmatic-refresh-tokens                                                                   |
+| X                         | No: pay per use, $0.015 per post, $0.20 per post with a URL | No                                                                                                                               | None (OAuth 1.0a)                                                   | `STRIP_LINKS_FROM_X_POSTS` avoids the URL fee; set a spend cap. Source: https://docs.x.com/x-api/getting-started/pricing                                                                                                                                                                 |
+| Threads                   | Yes                                                         | No (owner as tester)                                                                                                             | 60 days, auto refresh                                               | Meta app. https://docs.postiz.com/self-host/providers/threads.md                                                                                                                                                                                                                         |
+| Bluesky                   | Yes                                                         | No                                                                                                                               | Low                                                                 | No env vars                                                                                                                                                                                                                                                                              |
+| Mastodon                  | Yes                                                         | No                                                                                                                               | Low                                                                 | App registered with curl                                                                                                                                                                                                                                                                 |
+| Telegram channel          | Yes                                                         | No                                                                                                                               | None                                                                | One bot per instance                                                                                                                                                                                                                                                                     |
+| Pinterest                 | Yes                                                         | Yes: Standard tier needs an OAuth flow video; Trial pins invisible to others                                                     | Unverified                                                          |                                                                                                                                                                                                                                                                                          |
+| Reddit                    | Yes                                                         | Yes, hard since late 2025 (secondary sources)                                                                                    | Unverified                                                          | Discarded                                                                                                                                                                                                                                                                                |
+| WhatsApp                  | Not supported                                               |                                                                                                                                  |                                                                     |                                                                                                                                                                                                                                                                                          |
+
+- Postiz has no GA4 or Search Console integration and adds no UTM tags; its analytics cover network metrics (and GBP clicks, calls, directions, impressions). UTM tags go in the post links; GA4 and GSC are read with the existing service account (see memory google-seo-api-access).
+
+## Still unverified
+
+- [x] U1 (resolved 2026-11-23: with the owner's go-ahead the Meta app was published to Live with no App Review required; test post "(2)" from Postiz is visible on the page logged out. Posts made while in development stay admin-only. Earlier notes: a test post published from Postiz to the Facebook page with the app in development was visible only to the admin, not logged out, confirming it must go Live; still open: whether Live works without App Review) Whether a Meta Business app can go Live with Standard Access only, without App Review; whether Instagram posts made in Development mode are public. Resolve by testing in P1-T3.
+- [ ] U2 Whether the 7-day refresh token expiry disappears once the Google OAuth app is in production but unverified (under 100 users). Resolve by testing in P1-T4.
+- [ ] U3 Postiz max upload size; exact MCP path behind the template's proxy (`/mcp` or `/api/mcp`); upload directory variable name (`NEXT_PUBLIC_UPLOAD_DIRECTORY` in the template vs `NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY` in the docs).
+- [ ] U4 Whether TikTok's inbox route (`video.upload`) needs extra approval in practice.
+
+## Scope
+
+- In: Postiz on the VPS from the current EasyPanel template, one Meta app, one Google OAuth app, Postiz connections for Instagram, Facebook and YouTube, a publish script (upload then schedule), routing in `team-harness:social` schedule, Metricool kept for TikTok.
+- Later: managing client accounts (Meta Advanced Access, Google verification).
+- Out: TikTok Direct Post audit (not approvable for this use case); selling Postiz as a SaaS (AGPL obligations, per-client approvals); X and LinkedIn APIs.
+
+## Constraints
+
+- Free tools only unless the owner approves a cost.
+- Nothing is published without the owner's approval; the existing approval gate (sha256-bound piece state) stays the source of truth.
+- Secrets (Postiz API key, Meta app secret, Google client secret) never in the repo; macOS Keychain or EasyPanel env vars.
+- Remote work on the VPS needs the owner's explicit authorization per operation and credential.
+- Creating developer apps and accounts, accepting terms and switching apps to Live or production are done or confirmed by the owner.
+- Set `DISABLE_REGISTRATION=true` after creating the owner's Postiz account (the template defaults to open registration).
+- TDD: strict mode enabled (source: user global config). Runner: `node --test tests/*.test.js` for scripts in this repo.
+
+## Architecture
+
+- Publisher port in the social module; adapters: `postiz` (Instagram, Facebook, YouTube) and `metricool` (TikTok).
+- Routing by network in `.claude/harness.json` `social.publishing`, for example `routes: { instagram: "postiz", facebook: "postiz", youtube: "postiz", tiktok: "metricool" }`.
+- Media: the script uploads exports to Postiz (`/api/public/v1/upload`) and gets public URLs. Those same URLs feed Metricool for TikTok, so no separate bucket is needed (closes D3 if U3 confirms `/uploads` is public).
+- Deterministic steps (upload, build payload, call API, record result) live in a script; the model only decides and reports. The Postiz MCP stays optional for ad hoc queries.
+
+## Phases and tasks
+
+### Phase 0: verification
+
+- [x] P0-T1 Research V1 to V5 (route: delegated research, read-only; done 2026-11-22, results above)
+- [x] P0-T2 Read VPS resources from the EasyPanel dashboard (route: inline, owner's browser session, read-only)
+- [ ] P0-T3 Owner decides D2 and D4
+
+### Phase 1: Postiz for Instagram, Facebook and YouTube; Metricool for TikTok
+
+- [x] P1-T1 Install Postiz (done 2026-11-22 through "Create from schema" in project `nuri`, see Progress; owner account created; registration closed, `/api/auth/can-register` → `{"register":false}`). Original plan: from the current EasyPanel template (v2.25.3 with Temporal) on `postiz.nuriaromero.dev`, persistent `/uploads`, then disable registration (owner runs or authorizes)
+- [ ] P1-T2 Check RAM after deploy; the stack must fit in the about 4.5 GB free
+- [x] P1-T3 (done 2026-11-23: Facebook Page, Instagram via Facebook Business and Threads connected; app Live; public post verified on Facebook; Instagram and Threads public posting not yet exercised) Meta app, connect Instagram and Facebook, test public visibility in Development and whether Live works without App Review (resolves U1)
+- [ ] P1-T4 (YouTube connected in Postiz by the owner on 2026-11-22; still open until the connection is confirmed alive after 2026-11-29) Google OAuth app in production (unverified, under 100 users), connect YouTube, watch the token past 7 days (resolves U2)
+- [x] P1-T5 Publish script: upload piece exports to Postiz and schedule per network, Metricool for TikTok, with tests (route: delegated writer; trigger: 2+ new non-trivial files). Done 2026-11-23: `scripts/social-publish.mjs` + `scripts/lib/social-publish.mjs` + `scripts/lib/postiz-client.mjs`, 30 tests (`tests/social-publish.test.js`, `tests/postiz-client.test.js`), full suite 1186 pass / 0 fail / 1 skipped, strict TDD RED/GREEN recorded by the writer. Dry run by default, real calls only with `--confirm`; gate = team-harness `scripts/social-gate.mjs` `checkGate` (imported, not duplicated). Real scheduling blocked by the gate quota (see P1-T6).
+- [ ] P1-T6 Route `team-harness:social` schedule through the Publisher adapters and update `social.publishing` config (route: delegated writer, team-harness repo). Must also: (a) make the gate `monthlyQuota` (Metricool Free, 20/month) count only networks routed to Metricool, today it denies every piece (2026-11: 20 used); (b) allow `social.publishing.routes` and `social.publishing.postiz` (`url`, `channels`, `rateLimitPerHour`, `firstComment`) in the harness schema (`additionalProperties: false` today); (c) advance piece state to scheduled with the returned ids.
+- [ ] P1-T7 End-to-end check with one approved piece (scheduled, published, verified on each network)
+
+### Phase 2: only if needed
+
+- [ ] P2-T1 If U1 fails: Meta Business Verification and App Review for the needed permissions
+- [ ] P2-T2 If U2 fails or client accounts are added: Google verification of the `youtube.upload` scope
+- [ ] P2-T3 Decide whether to keep Metricool for analytics only (D2)
+
+## Open decisions
+
+- D1 Subdomain for Postiz: decided 2026-11-22, `postiz.nuriaromero.dev` (owner names apps by subdomain).
+- D2 Metricool: decided 2026-11-22, kept only for TikTok publishing and TikTok metrics (about 12 to 16 posts per month, within the 20 of the Free plan); metrics for the other networks come from Postiz.
+- D3 Media for Metricool: Postiz-hosted public URLs (proposed, pending U3).
+- D4 Client accounts: decided 2026-11-22, not for now; only the owner's accounts.
+- D5 TikTok route: decided 2026-11-22, Metricool MCP called by the publish script with the public media URLs returned by the Postiz upload.
+- D6 Extra networks: owner wants as many as possible, including those Metricool Free excludes; research done (table above). X decided 2026-11-22: yes, through the official API via Postiz with prepaid credits and a spend cap in the X developer console (browser automation of x.com rejected: forbidden by X automation rules). Closed 2026-11-22 with this list: Postiz from day one for Instagram, Facebook, YouTube, X and Threads (Threads activated from the owner's Instagram account); Metricool for TikTok; Google Business Profile and LinkedIn (personal profile as the main channel plus the nuriaromero.dev company page, same app) once their API approvals arrive; Bluesky, Mastodon, Telegram, Pinterest and Reddit out. LinkedIn content strategy note: the personal profile carries first-person, technically framed content adapted for LinkedIn (developer experience, what she builds, SEO and GEO as engineering), not copies of the Instagram pieces; target audience there is SMEs, professionals and marketing agencies that subcontract development.
+
+## Progress
+
+- 2026-11-22: exploration and verification of Metricool, Postiz and EasyPanel; owner agreed to Postiz self-hosted with a phased approach. Definition document created. No code, no infrastructure changes.
+- 2026-11-22: phase 0 research done. Changes to the plan: YouTube no longer locks unverified uploads to private, so YouTube moves to Postiz in phase 1; TikTok Direct Post audit is not approvable for personal or agency use, so TikTok stays on Metricool (or Postiz inbox mode). D1 decided. VPS resources recorded.
+
+- 2026-11-22: D4 (own accounts only) and D5 (TikTok through the Metricool MCP with Postiz URLs) decided. Extra networks researched: GBP is the priority and needs a Google API access application; LinkedIn needs the Advertising API approval; X is paid per post; Threads, Bluesky, Mastodon and Telegram are free without review.
+
+- 2026-11-22: D2 decided. P1-T1 blocked: the owner's EasyPanel (v2.37.0, update available) still serves the old Postiz template (`ghcr.io/gitroomhq/postiz-app:v2.21.7`, no Temporal, uploads not persisted). Dialog closed without creating anything. DNS: `nuriaromero.dev` is on Hostinger nameservers (dns-parking.com); `postiz.nuriaromero.dev` has no record yet and there is no wildcard, so an A record to 84.247.129.5 is needed.
+
+- 2026-11-22: owner chose to update EasyPanel; updated 2.37.0 → 2.38.1 (security release), all services back green, RAM 42.6 %. The 2.38.1 panel still serves the old Postiz template (v2.21.7, two fields only, no Temporal) even after a hard reload, so the template route is not usable yet. Owner asked to deploy in project `nuri`, reusing its existing `postgres` service where a database is needed. Nothing created.
+
+- 2026-11-22: deployment route: EasyPanel "Create from schema" in project `nuri` with four services mirroring the official v2.25.3 template (postiz-redis, postiz-temporal-es, postiz-temporal, postiz), reusing `nuri_postgres` (databases `postiz`, `postiz_temporal`, `postiz_temporal_visibility`, created on first start by Prisma and Temporal auto-setup). Elasticsearch kept: both official setups use it and dropping it is unverified with Postiz. The schema is built by a local script that generates the JWT and Redis secrets and asks the owner for the postgres password, copying the JSON to the clipboard without printing it; the owner pastes it, because entering secrets into the panel is hers to do.
+
+- 2026-11-22: owner pasted the schema; the four services were created in `nuri`. DNS `postiz.nuriaromero.dev` → 84.247.129.5 set by the owner (resolves). `postiz-temporal` loops on "Unable to create SQL database: template database template1 has a collation version mismatch": a pre-existing condition of `nuri_postgres` (collation library changed under an image upgrade), which also blocks creating any new database there. `postiz` image still pulling.
+
+- 2026-11-22: with the owner's go-ahead, ran `ALTER DATABASE template1 REFRESH COLLATION VERSION;` on `nuri_postgres` (PostgreSQL 17.11): 2.36 → 2.41. Temporal then created `postiz_temporal` and registered namespace `default` (running, about 420 MB). `postiz` still pulling `ghcr.io/gitroomhq/postiz-app:v2.25.3` after about 13 minutes. Follow-up (not done, needs reindex before refresh): databases `control_financiero`, `evolution`, `facturas`, `postgres` and `registro_cinta` still record collation 2.36 against 2.41.
+- 2026-11-22: postiz running (frontend, backend, orchestrator under pm2; about 1.3 to 2 GB RAM). Domain changed to `postiz.nuriaromero.dev` (HTTPS, port 5000, primary) and redeployed: `/` answers 307 to `/auth`, `/api/auth/can-register` answers `{"register":true}`.
+- Pending for P1-T1 (done items struck): ~~postiz running~~, add `postiz.nuriaromero.dev` as its primary domain (port 5000), owner creates her account, then `DISABLE_REGISTRATION=true` and redeploy.
+
+- 2026-11-22: Google Cloud project `Postiz` created (id `postiz-515522`, number 983603001971, no organization, no billing). Enabled: YouTube Data API v3, My Business Account Management API, My Business Business Information API, Business Profile Performance API (the Google My Business API only appears after GBP access approval). No earlier GBP API application found (project `gbp-audit` has no Business Profile APIs).
+
+- 2026-11-22: GBP API application blocked: the owner's Business Profile is not verified yet (Google asked for video verification of the location). Earliest application date = verification date + 60 days. Owner will report the verification date.
+
+- 2026-11-22: Google Auth Platform configured in `postiz-515522` (app "Postiz nuriaromero.dev", External, owner's support and contact email; owner approved accepting the Google API Services User Data Policy). OAuth web client "Postiz web" created: JS origin `https://postiz.nuriaromero.dev`, redirect URIs `/integrations/social/youtube` and `/integrations/social/gmb`. App still in Testing; switching to Production (to avoid 7-day refresh tokens) pending the owner's go-ahead. Client secret shown once to the owner; she adds `YOUTUBE_CLIENT_ID` and `YOUTUBE_CLIENT_SECRET` to the postiz env in EasyPanel.
+
+- 2026-11-22: owner added `YOUTUBE_CLIENT_ID`/`YOUTUBE_CLIENT_SECRET` (checked as set, values not read); Postiz redeployed and answering. Branding completed: homepage `https://nuriaromero.dev`, privacy `/privacidad`, terms `/aviso-legal`, authorized domain `nuriaromero.dev`. With the owner's go-ahead the app was switched to "In production" (unverified, under 100 users). Next: owner connects her YouTube channel in Postiz (Add channel → YouTube, accepting the unverified-app warning once); confirm the token survives past 7 days (U2).
+
+- 2026-11-22: owner signed in to Meta for Developers (no apps yet). App wizard filled, not created: name "Postiz nuriaromero.dev", contact `nuriaromero.dev@gmail.com`, use cases Threads API + Instagram content + Pages management, business portfolio "Nuria Romero" (unverified; other portfolios: Geek Tienda, Publicidad y Cia). Meta reports no publishing requirements for these use cases. Creating it accepts the Meta Platform Terms and Developer Policies: waiting for the owner.
+
+- 2026-11-23: Meta app created with the owner's approval of the Meta Platform Terms (app id 1832398364572273, portfolio "Nuria Romero", Threads app id 1194689909755525, still unpublished/development). Configured: Facebook Login for Business redirect URIs `/integrations/social/facebook` and `/integrations/social/instagram`; Threads redirect, uninstall and delete callbacks `/integrations/social/threads`; permissions ready for testing: Threads (basic, content_publish, manage_insights, manage_replies, read_replies), Pages (pages_show_list, business_management, pages_manage_posts, pages_manage_engagement, pages_read_engagement, read_insights), Instagram via Facebook login (instagram_basic, instagram_content_publish, instagram_manage_comments, instagram_manage_insights). Basic settings saved: app domain nuriaromero.dev, privacy `/privacidad`, terms `/aviso-legal`, data deletion `/privacidad`, category "Empresa y páginas". Pending: owner adds `FACEBOOK_APP_ID`, `FACEBOOK_APP_SECRET`, `THREADS_APP_ID`, `THREADS_APP_SECRET` in EasyPanel and redeploys; connects the three channels; then test public visibility and decide on publishing the app (U1).
+
+- 2026-11-23: owner pasted the four Meta credentials (checked as set). Connecting Facebook failed with Meta "Invalid Scopes: pages_read_user_content" (Postiz v2.25.3 does not request it; Meta adds it as a dependency of `pages_manage_engagement`). Added `pages_read_user_content` to the Pages API use case (ready for testing). Owner then connected Facebook Page (only the nuriaromero.dev page) and Instagram (Facebook Business) in Postiz. Threads failed with "The user has not accepted the invite to test the app" (error 1349245): added Threads profile `nuriaromero.dev` (created from her Instagram) as Threads tester, accepted at the owner's request on threads.com (Settings → More options → Website permissions → Invitations). Threads then connected. Connected in Postiz now: YouTube, Facebook Page, Instagram (Facebook Business), Threads. U1 test done on Facebook: post "Probando la nueva herramienta de publicación 👋" published via Postiz at 00:25, visible to the admin only (not logged out). The agent could not delete it from Business Suite without switching the owner's Facebook profile to the page; left for the owner (admin-only, invisible to the public). Next: publish the Meta app (owner's go-ahead), repeat the visibility test, then X and LinkedIn apps. Update 2026-11-23: both test posts deleted by the owner.
+- 2026-11-23: X. Developer account already existed (console.x.com, account nuriaromero.dev, default app 33376699, Pay Per Use, 0 credits, spend limit unlimited, billing cycle 30th to 30th). Postiz v2.25.3 X provider uses OAuth 1.0a (`X_API_KEY`/`X_API_SECRET`, `authAccessType: write`, callback `{FRONTEND_URL}/integrations/social/x`). Set the app user authentication: Read and write, Web App (confidential client), callback https://postiz.nuriaromero.dev/integrations/social/x, website/org URL https://nuriaromero.dev, terms /aviso-legal, privacy /privacidad. OAuth 2.0 client secret was generated by the save but is not used by Postiz and was not recorded. Pending owner: regenerate the OAuth 1.0a consumer key, paste it into the Postiz env in EasyPanel, buy credits. Spend limit set to 5 USD per billing cycle (owner's choice, X confirmed "Límite de gasto establecido en 5.00").
+- 2026-11-23: X billing done. Owner put the consumer key/secret in the Postiz env in EasyPanel and bought 10 USD of credits (plus 5 USD free credits expiring 2027-02-20). Auto-recharge enabled at the owner's request: 10 USD when balance reaches 1 USD (X minimum amount is 10 USD; 5 USD was rejected). Spend cap stays 5 USD per cycle. Pending: connect X in Postiz and test post.
+- 2026-11-23: Links to the website go in the first comment (owner's request), through Postiz comments. On X a comment is a reply billed as a post: with a URL it costs 0.20 USD (about 0.215 USD per post plus link comment). `STRIP_LINKS_FROM_X_POSTS` must stay unset, since it also strips links from comments. Free on Facebook and Threads. P1-T5 must support a first-comment field per network.
+- 2026-11-23: X connected in Postiz (channel "Nuria Romero", account @nuriaromerodev) via OAuth 1.0a authorize, owner approved. Postiz confirmed "Channel Updated". No test post on X yet.
+- 2026-11-23: X test post skipped (owner: not needed).
+- 2026-11-23: LinkedIn. Postiz v2.25.3 LinkedIn providers (personal and page) both request and check openid, profile, w_member_social, r_basicprofile, rw_organization_admin, w_organization_social, r_organization_social, so even the personal profile cannot connect until the Advertising API is approved. Env: LINKEDIN_CLIENT_ID / LINKEDIN_CLIENT_SECRET; callbacks {FRONTEND_URL}/integrations/social/linkedin and /linkedin-page. Owner approved creating the company page: linkedin.com/company/nuriaromerodev (id 147009431), industry Servicios de marketing (single field), 0-1 employees, self-employed, logo public/logo.jpg, 8 specialties (SEO local, Diseño web, Desarrollo de software a medida, Automatizaciones, Inteligencia artificial, SEO para IA, Tiendas online, Google Business Profile), owner-approved summary. Developer app "Postiz nuriaromero.dev" (app 266773259, client id 78ynamx3x1k2re) created after owner accepted the LinkedIn API Terms of Use; verified by the page; products added: Share on LinkedIn, Sign In with LinkedIn using OpenID Connect; redirect URLs set for /linkedin and /linkedin-page. Client secret not read or recorded. Pending: Advertising API request (needs owner OK on the Additional Terms for the LinkedIn Marketing API Program, then an access form within 21 days), owner pastes LINKEDIN_CLIENT_ID/SECRET into the Postiz env.
+- 2026-11-23: Owner accepted the Additional Terms for the LinkedIn Marketing API Program; Advertising API (Development Tier) requested and the Qualtrics access request form submitted after owner review (Direct Advertiser, Europe, direct customer, Reporting and ROI, partnerships Facebook/Instagram, private self-hosted Postiz for own profile and page, no ads). LinkedIn replied it will email the decision. Pending: approval email, then LINKEDIN_CLIENT_ID/SECRET into the Postiz env (owner copies the secret) and connect profile and page.
+- 2026-11-23: P1-T5 findings: Postiz public API limit is 30 requests/hour for the whole public API (docs), not 90 create-post/hour; the script defaults to 30. Create-post body verified at https://docs.postiz.com/public-api/posts/create.md; required settings: instagram post_type, x who_can_reply_post, youtube title + type. First comment as the second `value` item is documented only for X and Threads; Facebook, Instagram and LinkedIn are unverified until a real post. No default first-comment text yet (owner to decide copy). Metricool payload mapping to `createScheduledPost` not verified. U3 still open.
+
+## Next step
+
+P1-T2 (RAM check once settled), then the Google Cloud project for Postiz (YouTube OAuth app, then the GBP API access form with its project number), the Meta app (P1-T3), the X developer app with a spend cap, and the LinkedIn app with the Advertising API request. Follow-up outside this feature: reindex and refresh collation of the other `nuri_postgres` databases.
