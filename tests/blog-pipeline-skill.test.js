@@ -56,6 +56,20 @@ test("the skill never instructs draft: false and says only the owner flips it", 
   assert.match(text, /only the owner flips `draft`/);
 });
 
+test("the publish label is named, owner-only, and never added by the skill", () => {
+  const text = skill();
+  assert.match(
+    text,
+    /Only the owner applies `publish-approved`; the skill never adds it\./,
+  );
+  assert.doesNotMatch(text, /gh pr edit/);
+  assert.doesNotMatch(text, /draft:\s*false/);
+  assert.match(
+    read("docs/designs/NRD-327-blog-content-pipeline.md"),
+    /publish-approved/,
+  );
+});
+
 test("templates/esquema.md passes the outline lint", () => {
   const template = read(`${skillDir}/templates/esquema.md`);
   assert.deepEqual(lintOutline(template.replaceAll("<slug>", "mi-tema")), {
