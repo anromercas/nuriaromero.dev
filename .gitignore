@@ -44,3 +44,6 @@ artifacts/
 .impeccable/review/
 LEADS-clinica-capilar-sevilla.md
 prospeccion/
+
+# Postiz request log (rate limiter state)
+.claude/state/social/postiz-requests.json
