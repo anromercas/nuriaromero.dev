@@ -285,7 +285,7 @@ const baseInput = () => ({
   timezone: "Europe/Madrid",
   gate: allow,
   captions: { instagram: "Cap", facebook: "Cap", x: "Short", tiktok: "Cap" },
-  titles: {},
+  titles: { tiktok: "Título TikTok" },
   routes: resolveRoutes({}),
   postiz: {
     firstComment: { text: "Más en {url}", url: "https://nuriaromero.dev/" },
@@ -767,8 +767,8 @@ export function postGroups() {
     join(th, "scripts/lib/social-layout.mjs"),
     `
 export const socialLayout = () => ({ files: { copy: "textos.md", credits: "creditos.json" }, headings: {} });
-export const sectionOf = () => null;
-export const titleIn = () => "";
+export const sectionOf = (copy, network) => network;
+export const titleIn = (section) => (section === "tiktok" && !process.env.FAKE_NO_TIKTOK_TITLE ? "Copy TikTok title" : "");
 `,
   );
   const piece = join(root, "social/piezas/2026-11-24-carrusel-x");
@@ -920,6 +920,139 @@ test("CLI dry run prints the request plan and a warning for a piece without a li
         .content,
       /^https:\/\/nuriaromero\.dev\/\?utm_source=instagram/,
     );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("buildMetricoolPayload carries the TikTok title (Metricool tiktokData.title) when given", () => {
+  const payload = buildMetricoolPayload({
+    network: "tiktok",
+    text: "Caption",
+    date: "2026-11-24T10:00:00+01:00",
+    timezone: "Europe/Madrid",
+    mediaUrls: [],
+    title: "La foto de 2014",
+  });
+  assert.equal(payload.title, "La foto de 2014");
+  assert.equal(
+    "title" in
+      buildMetricoolPayload({
+        network: "instagram",
+        text: "C",
+        date: "2026-11-24T10:00:00Z",
+        mediaUrls: [],
+      }),
+    false,
+  );
+});
+
+test("publishPiece puts the copy TikTok title in the Metricool payload", async () => {
+  const out = await publishPiece({
+    ...baseInput(),
+    client: null,
+    dryRun: true,
+  });
+  assert.equal(out.networks.tiktok.metricool.title, "Título TikTok");
+  assert.equal(out.networks.tiktok.status, "dry-run");
+});
+
+test("a Metricool TikTok without a title is an error already in the dry run, and nothing is uploaded for it", async () => {
+  const input = {
+    ...baseInput(),
+    titles: {},
+    gate: {
+      ...allow,
+      files: { ...allow.files, tiktok: ["export/tiktok-only.jpg"] },
+    },
+  };
+  const dry = await publishPiece({ ...input, client: null, dryRun: true });
+  assert.equal(dry.networks.tiktok.status, "error");
+  assert.match(dry.networks.tiktok.error, /tiktok needs a title/);
+  assert.match(dry.networks.tiktok.error, /--tiktok-title/);
+  assert.equal(dry.networks.tiktok.metricool, undefined);
+  assert.equal(dry.networks.instagram.status, "dry-run");
+  assert.equal(dry.ok, false);
+  assert.equal(dry.requests.uploads, 2);
+  const client = fakeClient();
+  const real = await publishPiece({ ...input, client, dryRun: false });
+  assert.deepEqual(client.calls.upload, ["01.jpg", "02.jpg"]);
+  assert.equal(real.networks.tiktok.status, "error");
+  assert.equal(real.networks.tiktok.metricool, undefined);
+  assert.equal(real.networks.instagram.status, "scheduled");
+  assert.equal(real.ok, false);
+});
+
+test("a TikTok photo post title over 90 characters is an error; a video title is not held to 90", async () => {
+  const long = "a".repeat(91);
+  const photo = await publishPiece({
+    ...baseInput(),
+    titles: { tiktok: long },
+    client: null,
+    dryRun: true,
+  });
+  assert.equal(photo.networks.tiktok.status, "error");
+  assert.match(photo.networks.tiktok.error, /90 characters/);
+  const ninety = await publishPiece({
+    ...baseInput(),
+    titles: { tiktok: "ñ".repeat(90) },
+    client: null,
+    dryRun: true,
+  });
+  assert.equal(ninety.networks.tiktok.status, "dry-run");
+  const video = await publishPiece({
+    ...baseInput(),
+    titles: { tiktok: long },
+    gate: { ...allow, files: { ...allow.files, tiktok: ["export/v.mp4"] } },
+    client: null,
+    dryRun: true,
+  });
+  assert.equal(video.networks.tiktok.status, "dry-run");
+  assert.equal(video.networks.tiktok.metricool.title, long);
+});
+
+test("parseArgs takes --tiktok-title like --youtube-title", () => {
+  const a = parseArgs([
+    "--piece",
+    "p",
+    "--at",
+    "2026-11-24T10:00:00Z",
+    "--tiktok-title",
+    "Mi título",
+  ]);
+  assert.equal(a.tiktokTitle, "Mi título");
+});
+
+test("CLI sends the copy TikTok title, --tiktok-title overrides it, and a missing one fails the dry run", () => {
+  const { root, piece } = fixture();
+  try {
+    const at = "2026-11-24T10:00:00+01:00";
+    const fromCopy = run(root, ["--piece", piece, "--at", at]);
+    assert.equal(fromCopy.status, 0, fromCopy.stderr);
+    assert.equal(
+      JSON.parse(fromCopy.stdout).networks.tiktok.metricool.title,
+      "Copy TikTok title",
+    );
+    const flag = run(root, [
+      "--piece",
+      piece,
+      "--at",
+      at,
+      "--tiktok-title",
+      "Flag title",
+    ]);
+    assert.equal(
+      JSON.parse(flag.stdout).networks.tiktok.metricool.title,
+      "Flag title",
+    );
+    const missing = run(root, ["--piece", piece, "--at", at], {
+      FAKE_NO_TIKTOK_TITLE: "1",
+    });
+    assert.equal(missing.status, 1);
+    const out = JSON.parse(missing.stdout);
+    assert.equal(out.networks.tiktok.status, "error");
+    assert.equal(out.networks.instagram.status, "dry-run");
+    assert.match(missing.stderr, /FAIL tiktok: tiktok needs a title/);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

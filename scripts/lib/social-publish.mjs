@@ -182,7 +182,8 @@ export function buildPostizPost({
 
 /**
  * What the orchestrator passes to the Metricool MCP tool createScheduledPost (the script never calls it).
- * The exact argument names of that tool are mapped by the orchestrator.
+ * The exact argument names of that tool are mapped by the orchestrator; `title` maps to tiktokData.title
+ * (Metricool refuses a TikTok post without it: "TikTok title is required").
  */
 export function buildMetricoolPayload({
   network,
@@ -191,6 +192,7 @@ export function buildMetricoolPayload({
   timezone,
   mediaUrls,
   audio = {},
+  title,
 }) {
   return {
     tool: "createScheduledPost",
@@ -199,10 +201,33 @@ export function buildMetricoolPayload({
     date,
     timezone,
     media: [...mediaUrls],
+    ...(title ? { title } : {}),
     ...(typeof audio.autoAddMusic === "boolean"
       ? { autoAddMusic: audio.autoAddMusic }
       : {}),
   };
+}
+
+/** Longest title of a TikTok photo post (TikTok Content Posting API: photo post title, 90 UTF-16 runes). */
+export const TIKTOK_PHOTO_TITLE_MAX = 90;
+const isVideo = (rel) => /\.(mp4|mov|webm)$/i.test(rel);
+
+/**
+ * The title a Metricool-routed TikTok post carries, or throws with the message for the owner. Required (Metricool
+ * refuses TikTok without tiktokData.title); a photo post title is at most TIKTOK_PHOTO_TITLE_MAX characters.
+ */
+export function tiktokTitle({ title, files = [] }) {
+  const t = typeof title === "string" ? title.trim() : "";
+  if (!t)
+    throw new Error(
+      "tiktok needs a title for Metricool (a title above the caption block of the ## TikTok section of the copy, or --tiktok-title)",
+    );
+  const photo = files.length > 0 && !files.some(isVideo);
+  if (photo && t.length > TIKTOK_PHOTO_TITLE_MAX)
+    throw new Error(
+      `the tiktok title is ${t.length} characters; a TikTok photo post takes at most ${TIKTOK_PHOTO_TITLE_MAX} characters`,
+    );
+  return t;
 }
 
 /** Requests per hour the Postiz public API allows (docs: 30/hour; override with social.publishing.postiz.rateLimitPerHour). */
@@ -287,17 +312,19 @@ export async function publishPiece({
       fail(`no caption for ${network} in the copy file`);
       continue;
     }
-    if (route === "postiz") {
-      try {
+    let title;
+    try {
+      if (route === "postiz")
         providerSettings(network, {
           identifier: network,
           title: titles[network],
           imageCount: files.length,
         });
-      } catch (error) {
-        fail(error.message);
-        continue;
-      }
+      else if (network === "tiktok")
+        title = tiktokTitle({ title: titles[network], files });
+    } catch (error) {
+      fail(error.message);
+      continue;
     }
     const commentOpts = {
       config: postiz.firstComment,
@@ -316,7 +343,7 @@ export async function publishPiece({
       entry.warnings = [
         `no link for the first comment of ${network} (set --comment-url or social.publishing.postiz.firstComment.url); publishing without a comment`,
       ];
-    plan[network] = { route, files, text, comment };
+    plan[network] = { route, files, text, comment, title };
   }
 
   const planned = Object.keys(plan);
@@ -363,7 +390,7 @@ export async function publishPiece({
   }
 
   for (const network of planned) {
-    const { route, files, text, comment } = plan[network];
+    const { route, files, text, comment, title } = plan[network];
     const entry = result.networks[network];
     const items = files.map((rel) => media[rel]);
     if (route === "metricool") {
@@ -382,6 +409,7 @@ export async function publishPiece({
         timezone,
         mediaUrls,
         audio: gate.audio?.[network],
+        title,
       });
       entry.status = dryRun ? "dry-run" : "ready-for-metricool";
       continue;
@@ -444,6 +472,7 @@ const VALUE_FLAGS = [
   "comment-url",
   "no-comment",
   "youtube-title",
+  "tiktok-title",
   "networks",
 ];
 const list = (value) =>
@@ -479,6 +508,7 @@ export function parseArgs(argv) {
     commentUrl: flags["comment-url"],
     noComment: flags["no-comment"] ? list(flags["no-comment"]) : [],
     youtubeTitle: flags["youtube-title"],
+    tiktokTitle: flags["tiktok-title"],
     networks: flags.networks ? list(flags.networks) : null,
   };
 }

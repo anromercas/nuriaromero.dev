@@ -6,7 +6,7 @@
 // Usage:
 //   node scripts/social-publish.mjs --piece <dir> --at <ISO datetime with Z or offset> [--confirm]
 //        [--config .claude/harness.json] [--harness-dir <team-harness>] [--networks a,b]
-//        [--comment-url <url>] [--no-comment x,instagram] [--youtube-title <title>]
+//        [--comment-url <url>] [--no-comment x,instagram] [--youtube-title <title>] [--tiktok-title <title>]
 //
 // - Dry run by default: builds and prints every payload, no upload, no post, no API key needed.
 //   Real calls only with --confirm, after the owner confirmed the piece in the session.
@@ -30,6 +30,12 @@
 //   network is published with no comment and a WARN line. --no-comment <nets> switches it off per network. On X
 //   the comment is a reply billed as a post (about 0.20 USD with a URL, accepted by the owner);
 //   STRIP_LINKS_FROM_X_POSTS must stay unset in Postiz.
+// - Titles: a network's title is the text above the caption block of its own section of the copy file
+//   (e.g. "## TikTok", the title line, then the fenced caption). --youtube-title and --tiktok-title override it.
+//   YouTube (Postiz) needs 2 to 100 characters. TikTok on Metricool needs a title (sent as `title`, which maps to
+//   createScheduledPost tiktokData.title; Metricool refuses TikTok without it), at most 90 characters for a photo
+//   post. A missing or too long title marks that network `error` already in the dry run; the other networks go
+//   ahead, and nothing is uploaded for files only that network uses.
 // - API key: POSTIZ_API_KEY, else the macOS Keychain item postiz-api-key. Never printed or stored.
 // - Output: one JSON result on stdout { piece, at, dryRun, ok, requests, rateLimit?, networks, refused?, reasons?,
 //   error? }; human messages on stderr. Per network:
@@ -40,7 +46,8 @@
 //     payload    the Postiz create-post body (postiz route)
 //     postId     the Postiz post id (only when scheduled). A create-post answer without an id is an error: the
 //                post may exist in Postiz anyway, so the owner checks Postiz before retrying.
-//     metricool  the payload for the Metricool MCP tool createScheduledPost (metricool route), plus
+//     metricool  the payload for the Metricool MCP tool createScheduledPost (metricool route; for tiktok its
+//                `title` goes to tiktokData.title), plus
 //     mediaPublic true, mediaUrls and mediaNote: the media handed to Metricool are public URLs of the Postiz
 //                upload (in a dry run, placeholders that will be public URLs after the upload).
 //   Exit 0 all scheduled (or dry run ok), 1 refused or any network failed, 2 usage.
@@ -149,6 +156,7 @@ async function main(argv) {
     ]),
   );
   if (args.youtubeTitle) titles.youtube = args.youtubeTitle;
+  if (args.tiktokTitle) titles.tiktok = args.tiktokTitle;
 
   let client = null;
   if (gate.allow && !args.dryRun) {
