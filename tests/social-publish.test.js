@@ -574,6 +574,79 @@ test("an upload failure stops the run before any post is created", async () => {
   assert.equal(client.calls.posts.length, 0);
 });
 
+test("a Postiz post created without a post id is an error, never scheduled with a null id", async () => {
+  const client = fakeClient();
+  client.createPost = async (body) => {
+    client.calls.posts.push(body);
+    return body.posts[0].integration.id === "ig1"
+      ? [{ integration: "ig1" }]
+      : [{ postId: "post-fb1", integration: "fb1" }];
+  };
+  const out = await publishPiece({
+    ...baseInput(),
+    networks: ["instagram", "facebook"],
+    client,
+    dryRun: false,
+  });
+  assert.equal(out.networks.instagram.status, "error");
+  assert.equal(out.networks.instagram.postId, undefined);
+  assert.match(out.networks.instagram.error, /no post id/);
+  assert.match(out.networks.instagram.error, /check Postiz/);
+  assert.equal(out.networks.facebook.status, "scheduled");
+  assert.equal(out.networks.facebook.postId, "post-fb1");
+  assert.equal(out.ok, false);
+});
+
+test("each network shows its first comment at the top level, null when there is none", async () => {
+  const dry = await publishPiece({
+    ...baseInput(),
+    postiz: { firstComment: { url: "https://nuriaromero.dev/blog/" } },
+    noComment: ["x"],
+    client: null,
+    dryRun: true,
+  });
+  assert.equal(
+    dry.networks.instagram.comment,
+    "https://nuriaromero.dev/blog/?utm_source=instagram&utm_medium=social&utm_campaign=2026-11-24-carrusel-x",
+  );
+  assert.equal(dry.networks.x.comment, null);
+  assert.equal(dry.networks.tiktok.comment, null);
+  const noLink = await publishPiece({
+    ...baseInput(),
+    postiz: {},
+    client: null,
+    dryRun: true,
+  });
+  assert.equal(noLink.networks.facebook.comment, null);
+  assert.match(noLink.networks.facebook.warnings[0], /no link/);
+});
+
+test("Metricool networks state that their media are public Postiz upload URLs", async () => {
+  const dry = await publishPiece({
+    ...baseInput(),
+    client: null,
+    dryRun: true,
+  });
+  assert.equal(dry.networks.tiktok.mediaPublic, true);
+  assert.deepEqual(dry.networks.tiktok.mediaUrls, [
+    "<upload export/01.jpg>",
+    "<upload export/02.jpg>",
+  ]);
+  assert.match(dry.networks.tiktok.mediaNote, /will be public URLs/);
+  assert.equal(dry.networks.instagram.mediaPublic, undefined);
+  const real = await publishPiece({
+    ...baseInput(),
+    client: fakeClient(),
+    dryRun: false,
+  });
+  assert.equal(real.networks.tiktok.mediaPublic, true);
+  assert.deepEqual(real.networks.tiktok.mediaUrls, [
+    "https://postiz.nuriaromero.dev/uploads/01.jpg",
+    "https://postiz.nuriaromero.dev/uploads/02.jpg",
+  ]);
+  assert.match(real.networks.tiktok.mediaNote, /are public URLs/);
+});
+
 test("parseArgs defaults to a dry run and needs --confirm for real calls", () => {
   const a = parseArgs([
     "--piece",

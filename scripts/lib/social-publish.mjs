@@ -307,6 +307,7 @@ export async function publishPiece({
     };
     const comment =
       route === "postiz" ? firstComment(network, commentOpts) : null;
+    entry.comment = comment;
     if (
       route === "postiz" &&
       comment === null &&
@@ -366,12 +367,20 @@ export async function publishPiece({
     const entry = result.networks[network];
     const items = files.map((rel) => media[rel]);
     if (route === "metricool") {
+      const mediaUrls = items.map((m) => m.path);
+      Object.assign(entry, {
+        mediaPublic: true,
+        mediaUrls,
+        mediaNote: dryRun
+          ? "the media will be public URLs of the Postiz upload once uploaded (placeholders in this dry run): anyone with the link can open them"
+          : "the media are public URLs of the Postiz upload: anyone with the link can open them",
+      });
       entry.metricool = buildMetricoolPayload({
         network,
         text,
         date: at,
         timezone,
-        mediaUrls: items.map((m) => m.path),
+        mediaUrls,
         audio: gate.audio?.[network],
       });
       entry.status = dryRun ? "dry-run" : "ready-for-metricool";
@@ -404,10 +413,13 @@ export async function publishPiece({
     }
     try {
       const created = await limiter.run(() => client.createPost(entry.payload));
-      Object.assign(entry, {
-        status: "scheduled",
-        postId: created?.[0]?.postId ?? null,
-      });
+      const postId = created?.[0]?.postId;
+      if (postId) Object.assign(entry, { status: "scheduled", postId });
+      else
+        Object.assign(entry, {
+          status: "error",
+          error: `Postiz answered the create-post request for ${network} with no post id; the post may exist in Postiz without an id here, so check Postiz before retrying`,
+        });
     } catch (error) {
       Object.assign(entry, {
         status: "error",

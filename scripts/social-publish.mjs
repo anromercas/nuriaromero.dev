@@ -31,8 +31,19 @@
 //   the comment is a reply billed as a post (about 0.20 USD with a URL, accepted by the owner);
 //   STRIP_LINKS_FROM_X_POSTS must stay unset in Postiz.
 // - API key: POSTIZ_API_KEY, else the macOS Keychain item postiz-api-key. Never printed or stored.
-// - Output: one JSON result on stdout (per network: route, status, payload, postId or metricool payload, error);
-//   human messages on stderr. Exit 0 all scheduled (or dry run ok), 1 refused or any network failed, 2 usage.
+// - Output: one JSON result on stdout { piece, at, dryRun, ok, requests, rateLimit?, networks, refused?, reasons?,
+//   error? }; human messages on stderr. Per network:
+//     route      postiz | metricool
+//     status     dry-run | scheduled (postiz, with postId) | ready-for-metricool | error (with error, httpStatus?)
+//     comment    the first comment text, or null (none, switched off, or no link: then warnings says so)
+//     warnings   optional list of WARN lines
+//     payload    the Postiz create-post body (postiz route)
+//     postId     the Postiz post id (only when scheduled). A create-post answer without an id is an error: the
+//                post may exist in Postiz anyway, so the owner checks Postiz before retrying.
+//     metricool  the payload for the Metricool MCP tool createScheduledPost (metricool route), plus
+//     mediaPublic true, mediaUrls and mediaNote: the media handed to Metricool are public URLs of the Postiz
+//                upload (in a dry run, placeholders that will be public URLs after the upload).
+//   Exit 0 all scheduled (or dry run ok), 1 refused or any network failed, 2 usage.
 // - After a real run, record the post ids with the team-harness social-state.mjs advance --to scheduled.
 
 import { execFileSync } from "node:child_process";
