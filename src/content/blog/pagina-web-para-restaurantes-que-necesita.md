@@ -3,6 +3,9 @@ title: "Página web para tu restaurante: qué necesita de verdad (y qué no)"
 description: "Qué puede aportar la web de un restaurante o bar en Sevilla: carta digital, opciones de reserva, información local y fotos; y qué conviene priorizar."
 pubDate: 2026-06-24
 tags: ["restaurantes", "diseño web", "sevilla"]
+cover:
+  src: "../../assets/blog/pagina-web-para-restaurantes-que-necesita.jpg"
+  alt: "Barra de mármol de una cafetería de barrio con la cafetera humeante y bollería bajo una campana de cristal"
 ---
 
 Muchos comensales consultan información online antes de elegir dónde comer, pero el peso de cada canal depende del público y del restaurante. Una web clara y fácil de usar puede ayudar a mostrar la carta, los horarios y las opciones de contacto; no garantiza más reservas por sí sola.

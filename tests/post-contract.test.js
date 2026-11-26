@@ -127,3 +127,21 @@ test("postContract accepts an explicit bookingUrl", () => {
     "Mi post | Nuria",
   );
 });
+
+test("postContract ignores Astro asset hashes in JSON-LD URLs, not file names", () => {
+  const withImage = (image) =>
+    page.replace(
+      '{"@type":"Article","headline":"Mi post"}',
+      JSON.stringify({ "@type": "Article", headline: "Mi post", image }),
+    );
+  const url = (file) => `https://nuriaromero.dev/_astro/${file}`;
+  const a = postContract(withImage(url("portada.CL3Osw9o_Z1dAley.jpg"))).jsonld;
+  const b = postContract(withImage(url("portada.CL3Osw9o_2v8aU5.jpg"))).jsonld;
+  const c = postContract(withImage(url("portada.XXXXXXXX.jpg"))).jsonld;
+  const other = postContract(
+    withImage(url("otra.CL3Osw9o_Z1dAley.jpg")),
+  ).jsonld;
+  assert.deepEqual(a, b);
+  assert.deepEqual(a, c);
+  assert.notDeepEqual(a, other);
+});
