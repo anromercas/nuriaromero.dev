@@ -18,9 +18,16 @@ interface Props {
 const { post } = Astro.props;
 const { title, description, pubDate, updatedDate, cover } = post.data;
 // One 1200 px JPEG for og:image, twitter:image and the Article image: not every
-// social preview supports AVIF/WebP.
+// social preview supports AVIF/WebP. Quality 60, like the cover Picture, keeps
+// every cover within the 100 KB guard of check-seo-25.
 const shareImage = cover
-  ? await getImage({ src: cover.src, format: "jpg", width: 1200, quality: 75 })
+  ? await getImage({ src: cover.src, format: "jpg", width: 1200, quality: 60 })
+  : undefined;
+// The fallback <img> is the source file unless width/height are set: cap it at
+// the largest generated width (1280) so a 1536 px source stays within the guard.
+const coverWidth = cover ? Math.min(cover.src.width, 1280) : undefined;
+const coverHeight = cover
+  ? Math.round((cover.src.height * coverWidth!) / cover.src.width)
   : undefined;
 const image = shareImage?.src;
 const url = `/blog/${post.slug}/`;
@@ -91,7 +98,10 @@ const relatedLinks = internalLinksBySource[url] ?? [];
                 alt={cover.alt}
                 formats={["avif", "webp"]}
                 fallbackFormat="jpg"
+                width={coverWidth}
+                height={coverHeight}
                 widths={[640, 960, 1280]}
+                quality={60}
                 sizes="(min-width: 1024px) 896px, (min-width: 768px) 672px, (min-width: 640px) 640px, calc(100vw - 2rem)"
                 loading="eager"
                 fetchpriority="high"

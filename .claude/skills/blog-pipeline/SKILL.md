@@ -45,7 +45,7 @@ Stop: **Aprobación 2 (esquema)**. On approval set `Estado: aprobado (<fecha>)`.
 Only after the outline is approved.
 
 1. Get the image from the owner, or from `social/mediateca` or `team-harness:flow-media`. Never use a stock image with an unclear license or a recognisable person without consent.
-2. Save it as `src/assets/blog/<slug>.<jpg|png|webp>`, at least 1600 px wide and within the weight guard of `scripts/check-seo-25.mjs`.
+2. Save it as `src/assets/blog/<slug>.<jpg|png|webp>`, cropped to 16:9, at least 1280 px wide (the largest generated width) and within the weight guard of `scripts/check-seo-25.mjs`.
 3. Write the alt text in Spanish, describing the image.
 4. Record `- Portada: <file> | alt: <texto>` in `esquema.md`.
 
