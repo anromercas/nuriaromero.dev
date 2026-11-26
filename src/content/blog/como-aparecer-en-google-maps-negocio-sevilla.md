@@ -4,6 +4,9 @@ description: "Pasos para aparecer en Google Maps con tu negocio en Sevilla: crea
 pubDate: 2026-07-01
 updatedDate: 2026-11-18
 tags: ["seo local", "google maps", "sevilla"]
+cover:
+  src: "../../assets/blog/como-aparecer-en-google-maps-negocio-sevilla.jpg"
+  alt: "Mano que sostiene un móvil con la pantalla encendida en una calle estrecha de casas blancas al anochecer"
 ---
 
 Cuando alguien busca "cerrajero cerca de mí" o "cafetería en Nervión", Google puede mostrar resultados locales en Maps y en la Búsqueda. La posición depende de varios factores y no se puede garantizar; esta guía explica cómo mantener útil y completa la ficha de tu negocio.

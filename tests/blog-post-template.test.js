@@ -89,6 +89,14 @@ test("the cover is encoded at quality 60, Picture and share image (NRD-380)", ()
   assert.match(call.slice(0, call.indexOf("})")), /quality: 60\b/);
 });
 
+test("the fallback img is capped at the largest generated width (NRD-381)", () => {
+  const picture = markup.slice(markup.indexOf("<Picture"));
+  const props = picture.slice(0, picture.indexOf("/>"));
+  assert.match(props, /width=\{coverWidth\}/);
+  assert.match(props, /height=\{coverHeight\}/);
+  assert.match(layout, /Math\.min\(cover\.src\.width, 1280\)/);
+});
+
 test("prose rules use template tokens, not hardcoded palettes", () => {
   const css = layout.slice(layout.indexOf("<style"));
   assert.match(css, /\.post-prose :global\(h2\)/);
