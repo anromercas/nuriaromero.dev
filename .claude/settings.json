@@ -131,7 +131,12 @@
       "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/sprint-run.mjs start *)",
       "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/social-cadence.mjs plan *)",
       "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/social-library.mjs verify *)",
-      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/social-copy.mjs lint *)"
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/social-copy.mjs lint *)",
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/daily-report.mjs send *)",
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/owner-alerts.mjs collect *)",
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/owner-alerts.mjs send *)",
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/owner-alerts.mjs record *)",
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/sprint-panel.mjs render *)"
     ],
     "deny": [
       "Bash(* --plugin*)",
