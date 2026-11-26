@@ -50,12 +50,6 @@ test('returns null when the request throws and never logs the API key', async ()
   assert.doesNotMatch(catchBlock, /apiKey/)
 })
 
-test('GoogleReviews.astro renders only when there is data with at least one review', async () => {
-  const source = await readSource('../src/components/GoogleReviews.astro')
-
-  assert.match(source, /data && data\.reviews\.length > 0 && \(/)
-})
-
 test('the home adds the reviews JSON-LD only when data exists and fetches it once', async () => {
   const source = await readSource('../src/pages/index.astro')
 

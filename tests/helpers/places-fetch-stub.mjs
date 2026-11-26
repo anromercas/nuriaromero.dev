@@ -17,6 +17,12 @@ const fixture = {
       originalText: { text: "Reseña de prueba NRD-372" },
       publishTime: "2026-11-01T10:00:00Z",
     },
+    {
+      rating: 4,
+      authorAttribution: { displayName: "Segunda clienta de prueba" },
+      originalText: { text: "Segunda reseña NRD-376 que no se cita" },
+      publishTime: "2026-10-20T10:00:00Z",
+    },
   ],
 };
 

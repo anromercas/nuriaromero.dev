@@ -2,7 +2,7 @@
 // con <Schema slot="head" schema={...} />; el de negocio va global en Layout.
 import { SERVICE_AREA, SITE } from "../data/site.ts"
 import { localTrust } from "../data/local-trust.ts"
-import type { GoogleReviewsData } from "./google-reviews.ts"
+import { quotedReview, type GoogleReviewsData } from "./google-reviews.ts"
 
 const BUSINESS_ID = `${SITE.url}/#business`
 const PERSON_ID = `${SITE.url}/#person`
@@ -45,6 +45,7 @@ export function localBusinessSchema() {
 // ya declarada en localBusinessSchema(). Solo se llama cuando
 // getGoogleReviews() devolvió datos reales — nunca con reseñas inventadas.
 export function reviewsSchema(data: GoogleReviewsData) {
+  const quote = quotedReview(data)
   return {
     "@context": "https://schema.org",
     "@type": ["ProfessionalService", "Organization"],
@@ -58,17 +59,23 @@ export function reviewsSchema(data: GoogleReviewsData) {
       bestRating: 5,
       worstRating: 1,
     },
-    review: data.reviews.map((review) => ({
-      "@type": "Review",
-      author: { "@type": "Person", name: review.author },
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: review.rating,
-        bestRating: 5,
-        worstRating: 1,
-      },
-      reviewBody: review.text,
-    })),
+    ...(quote
+      ? {
+          review: [
+            {
+              "@type": "Review",
+              author: { "@type": "Person", name: quote.author },
+              reviewRating: {
+                "@type": "Rating",
+                ratingValue: quote.rating,
+                bestRating: 5,
+                worstRating: 1,
+              },
+              reviewBody: quote.text,
+            },
+          ],
+        }
+      : {}),
   }
 }
 

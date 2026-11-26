@@ -35,6 +35,11 @@ export interface GoogleReviewsData {
   placeId: string
 }
 
+/** La reseña que cita el sitio (RealProof) y declara reviewsSchema(): la primera que devuelve Place Details. */
+export function quotedReview(data: GoogleReviewsData | null): GoogleReview | null {
+  return data?.reviews[0] ?? null
+}
+
 /** Fecha relativa en español a partir de publishTime (ISO); "" si no es válida. */
 export function formatRelativeTimeEs(publishTime?: string, now: Date = new Date()): string {
   if (!publishTime) return ""
