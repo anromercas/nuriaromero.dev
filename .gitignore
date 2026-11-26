@@ -44,3 +44,12 @@ artifacts/
 .impeccable/review/
 LEADS-clinica-capilar-sevilla.md
 prospeccion/
+
+# Local harness runtime state (reports, snapshots, queues, Postiz rate log)
+.claude/state/
+
+# Social media pieces: videos, audio, renders and their texts live on the owner's machine
+social/
+
+# GEO rank audit PDFs, kept locally
+docs/seo-audit/GEO Rank /

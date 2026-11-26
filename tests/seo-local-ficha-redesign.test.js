@@ -146,7 +146,7 @@ test("T5: real proof section reuses reviews and the two client sites, with no KP
   ])
 
   assert.match(route, /text: "Trabajo que puedes ver", accent: "puedes ver"/)
-  assert.match(proof, /reviews\.reviews\[0\]/)
+  assert.match(proof, /quotedReview\(reviews\)/)
   assert.match(proof, /<Projects only=\{projects\}/)
   assert.match(route, /projects=\{\["arkady", "adfsevilla"\]\}/)
   assert.match(proof, /aria-labelledby=\{headingId\}/)
@@ -269,7 +269,7 @@ test("finish review: real proof renders one pull-quote and the proof strip is a 
   ])
 
   assert.match(proof, /<blockquote/)
-  assert.match(proof, /reviews\.reviews\[0\]|reviews\?\.reviews/)
+  assert.match(proof, /quotedReview\(reviews\)/)
   assert.doesNotMatch(proof, /import GoogleReviews/)
   assert.match(proof, /Projects only=\{projects\}/)
   assert.match(site, /stat: "\+10 años", label: "de experiencia"/)

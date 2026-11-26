@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "files": {
+    "como-aparecer-en-google-maps-negocio-sevilla.jpg": [
+      {
+        "origin": "Imagen generada con Google Flow (Nano Banana 2.1) para la mediateca de nuriaromero.dev, recortada a 16:9",
+        "libraryId": "busqueda-movil-mano-calle-v-20261119-02",
+        "libraryFile": "social/mediateca/busqueda-movil/busqueda-movil-mano-calle-v-20261119-02.jpg",
+        "source": "flow",
+        "model": "Nano Banana 2.1",
+        "generatedAt": "2026-11-19",
+        "crop": {
+          "left": 0,
+          "top": 1150,
+          "width": 1536,
+          "height": 864
+        },
+        "licence": "Imagen generada con IA para nuriaromero.dev"
+      }
+    ],
+    "cuanto-cuesta-una-pagina-web-en-sevilla.jpg": [
+      {
+        "origin": "Imagen generada con Google Flow (Nano Banana 2.1) para la mediateca de nuriaromero.dev, recortada a 16:9",
+        "libraryId": "busqueda-movil-manos-cafe-v-20261119-01",
+        "libraryFile": "social/mediateca/busqueda-movil/busqueda-movil-manos-cafe-v-20261119-01.jpg",
+        "source": "flow",
+        "model": "Nano Banana 2.1",
+        "generatedAt": "2026-11-19",
+        "crop": {
+          "left": 0,
+          "top": 560,
+          "width": 1536,
+          "height": 864
+        },
+        "licence": "Imagen generada con IA para nuriaromero.dev"
+      }
+    ],
+    "pagina-web-para-restaurantes-que-necesita.jpg": [
+      {
+        "origin": "Imagen generada con Google Flow (Nano Banana 2.1) para la mediateca de nuriaromero.dev, recortada a 16:9",
+        "libraryId": "negocio-local-barra-cafe-v-20261119-03",
+        "libraryFile": "social/mediateca/negocio-local/negocio-local-barra-cafe-v-20261119-03.jpg",
+        "source": "flow",
+        "model": "Nano Banana 2.1",
+        "generatedAt": "2026-11-19",
+        "crop": {
+          "left": 0,
+          "top": 1130,
+          "width": 1536,
+          "height": 864
+        },
+        "licence": "Imagen generada con IA para nuriaromero.dev"
+      }
+    ],
+    "que-es-geo-posicionamiento-ia-negocios-sevilla.jpg": [
+      {
+        "origin": "Imagen generada con Google Flow (Nano Banana 2.1) para la mediateca de nuriaromero.dev, recortada a 16:9",
+        "libraryId": "negocio-local-peluqueria-v-20261119-02",
+        "libraryFile": "social/mediateca/negocio-local/negocio-local-peluqueria-v-20261119-02.jpg",
+        "source": "flow",
+        "model": "Nano Banana 2.1",
+        "generatedAt": "2026-11-19",
+        "crop": {
+          "left": 0,
+          "top": 1270,
+          "width": 1536,
+          "height": 864
+        },
+        "licence": "Imagen generada con IA para nuriaromero.dev"
+      }
+    ]
+  }
+}
