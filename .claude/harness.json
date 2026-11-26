@@ -84,7 +84,11 @@
       "size-L": "size-L",
       "size-XL": "size-XL"
     },
-    "blockingLabels": ["needs-human", "qa-failed", "pr-changes"]
+    "blockingLabels": [
+      "needs-human",
+      "qa-failed",
+      "pr-changes"
+    ]
   },
   "process": {
     "tdd": true,
@@ -102,12 +106,19 @@
     "formatCheck": null,
     "format": "pnpm format {file}",
     "build": "pnpm build",
-    "preShip": ["node --test tests/*.test.js", "pnpm build"],
-    "preCommit": ["node --test tests/*.test.js"]
+    "preShip": [
+      "node --test tests/*.test.js",
+      "pnpm build"
+    ],
+    "preCommit": [
+      "node --test tests/*.test.js"
+    ]
   },
   "ci": {
     "workflowFile": "ci.yml",
-    "requiredChecks": ["verify"],
+    "requiredChecks": [
+      "verify"
+    ],
     "checkApp": "github-actions",
     "mainHealthWorkflow": "ci.yml"
   },
@@ -148,7 +159,9 @@
     "ux": {
       "enabled": true,
       "skill": "impeccable:impeccable",
-      "uiLayers": ["app"]
+      "uiLayers": [
+        "app"
+      ]
     }
   },
   "review": {
@@ -237,7 +250,10 @@
       "enabled": true,
       "reportEmail": "nuriaromero.dev@gmail.com",
       "reportHour": 7,
-      "reportSubjectPrefix": "[nuriaromero.dev]"
+      "reportSubjectPrefix": "[nuriaromero.dev]",
+      "alerts": {
+        "enabled": true
+      }
     },
     "research": {
       "enabled": false,
@@ -365,7 +381,12 @@
   "social": {
     "enabled": true,
     "brand": "nuriaromero.dev",
-    "networks": ["instagram", "tiktok", "youtube", "facebook"],
+    "networks": [
+      "instagram",
+      "tiktok",
+      "youtube",
+      "facebook"
+    ],
     "dir": "social",
     "piecesDir": "social/piezas",
     "libraryDir": "social/mediateca",
@@ -388,6 +409,16 @@
       "tool": "metricool",
       "monthlyQuota": 20,
       "quotaCountsPer": "post",
+      "routes": {
+        "instagram": "postiz",
+        "facebook": "postiz",
+        "youtube": "postiz",
+        "x": "postiz",
+        "threads": "postiz",
+        "linkedin": "postiz",
+        "linkedin-page": "postiz",
+        "tiktok": "metricool"
+      },
       "timezone": "Europe/Madrid",
       "mediaVia": "web-upload",
       "audio": {
@@ -402,7 +433,13 @@
         "instagram": {
           "reelAudio": "none"
         }
-      }
+      },
+      "postiz": {
+        "firstComment": {
+          "url": "https://nuriaromero.dev/"
+        }
+      },
+      "scheduleCommand": "node scripts/social-publish.mjs --piece {piece} --at {when}"
     },
     "approval": {
       "batchDay": "friday",
@@ -467,7 +504,12 @@
     "agentsMd": null,
     "invariants": ".claude/harness/invariants.md",
     "qaRegression": ".claude/harness/qa-regression.md",
-    "architecture": ["PRODUCT.md", "DESIGN.md"],
-    "standards": ["docs/seo-checklist-65-factores.md"]
+    "architecture": [
+      "PRODUCT.md",
+      "DESIGN.md"
+    ],
+    "standards": [
+      "docs/seo-checklist-65-factores.md"
+    ]
   }
 }
