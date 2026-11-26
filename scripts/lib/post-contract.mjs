@@ -81,6 +81,25 @@ export function assertPostStructure(html, bookingUrl) {
   }
 }
 
+// Astro names built assets `/_astro/<name>.<hash>.<ext>` (hash `<a>` or
+// `<a>_<b>`). The transform part differs between platforms, so the contract
+// keeps the file name and drops the hash.
+const ASTRO_ASSET_HASH =
+  /(\/_astro\/[^/"'\s]+?)\.[A-Za-z0-9-]+(?:_[A-Za-z0-9-]+)?(\.[a-z0-9]+)(?=$|[?#"'\s])/g;
+
+function stripAssetHashes(value) {
+  if (typeof value === "string") {
+    return value.replace(ASTRO_ASSET_HASH, "$1$2");
+  }
+  if (Array.isArray(value)) return value.map(stripAssetHashes);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([k, v]) => [k, stripAssetHashes(v)]),
+    );
+  }
+  return value;
+}
+
 /** Frozen contract of a built post page. */
 export function postContract(html, { bookingUrl = siteBookingUrl } = {}) {
   const body = postBodyHtml(html);
@@ -90,8 +109,10 @@ export function postContract(html, { bookingUrl = siteBookingUrl } = {}) {
     title: page.title,
     description: metaDescription(html),
     canonical: page.canonical,
-    jsonld: jsonLdEntities(html).filter((entity) =>
-      CONTRACT_TYPES.has(entity["@type"]),
+    jsonld: stripAssetHashes(
+      jsonLdEntities(html).filter((entity) =>
+        CONTRACT_TYPES.has(entity["@type"]),
+      ),
     ),
     bodyText: visibleText(body),
     bodyLinks: anchorsIn(body),
