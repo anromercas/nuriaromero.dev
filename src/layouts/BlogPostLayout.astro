@@ -18,9 +18,10 @@ interface Props {
 const { post } = Astro.props;
 const { title, description, pubDate, updatedDate, cover } = post.data;
 // One 1200 px JPEG for og:image, twitter:image and the Article image: not every
-// social preview supports AVIF/WebP.
+// social preview supports AVIF/WebP. Quality 60, like the cover Picture, keeps
+// every cover within the 100 KB guard of check-seo-25.
 const shareImage = cover
-  ? await getImage({ src: cover.src, format: "jpg", width: 1200, quality: 75 })
+  ? await getImage({ src: cover.src, format: "jpg", width: 1200, quality: 60 })
   : undefined;
 const image = shareImage?.src;
 const url = `/blog/${post.slug}/`;
@@ -92,6 +93,7 @@ const relatedLinks = internalLinksBySource[url] ?? [];
                 formats={["avif", "webp"]}
                 fallbackFormat="jpg"
                 widths={[640, 960, 1280]}
+                quality={60}
                 sizes="(min-width: 1024px) 896px, (min-width: 768px) 672px, (min-width: 640px) 640px, calc(100vw - 2rem)"
                 loading="eager"
                 fetchpriority="high"
