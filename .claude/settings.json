@@ -136,7 +136,8 @@
       "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/owner-alerts.mjs collect *)",
       "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/owner-alerts.mjs send *)",
       "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/owner-alerts.mjs record *)",
-      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/sprint-panel.mjs render *)"
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/sprint-panel.mjs render *)",
+      "Bash(node /Users/nuria/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/team-harness/scripts/client-report.mjs *)"
     ],
     "deny": [
       "Bash(* --plugin*)",

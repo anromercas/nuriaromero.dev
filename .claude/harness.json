@@ -253,7 +253,10 @@
       "reportSubjectPrefix": "[nuriaromero.dev]",
       "alerts": {
         "enabled": true
-      }
+      },
+      "browserExceptions": [
+        "gbp-insights"
+      ]
     },
     "research": {
       "enabled": false,
@@ -374,7 +377,31 @@
       "historyDir": "seo/ranks",
       "unattended": {
         "enabled": true,
-        "everyDays": 14
+        "everyDays": 7
+      }
+    },
+    "clientReport": {
+      "enabled": true,
+      "dir": "docs/client-reports",
+      "clientName": "nuriaromero.dev",
+      "language": "es",
+      "metricsCommand": [
+        "node",
+        "scripts/client-report-web.mjs"
+      ],
+      "gbp": {
+        "enabled": true,
+        "profileUrl": null
+      },
+      "brand": {
+        "name": "Nuria Romero · nuriaromero.dev",
+        "logo": "docs/client-reports/logo.svg",
+        "accent": "#3b82f6",
+        "contact": "nuriaromero.dev"
+      },
+      "unattended": {
+        "enabled": true,
+        "day": 1
       }
     }
   },
@@ -391,7 +418,7 @@
     "piecesDir": "social/piezas",
     "libraryDir": "social/mediateca",
     "cadence": {
-      "perWeek": 5,
+      "perWeek": 3,
       "overrides": [
         {
           "from": "2026-11-19",
@@ -485,6 +512,39 @@
     },
     "paths": {
       "strategy": "social/estrategia-redes.md"
+    },
+    "copy": {
+      "limits": {
+        "instagram": {
+          "hashtags": 5,
+          "emoji": 2,
+          "visible": 125
+        },
+        "tiktok": {
+          "hashtags": 5,
+          "emoji": 2
+        },
+        "facebook": {
+          "emoji": 2
+        }
+      },
+      "cards": {
+        "min": 5,
+        "max": 10
+      },
+      "bannedPhrases": [
+        "en el mundo actual",
+        "en la era digital",
+        "sumérgete",
+        "desbloquea",
+        "lleva tu negocio al siguiente nivel",
+        "sin más preámbulos",
+        "lee eso otra vez",
+        "cambia las reglas del juego",
+        "en este vídeo te voy a enseñar",
+        "hoy os traigo",
+        "el secreto que nadie te cuenta"
+      ]
     }
   },
   "infra": {
