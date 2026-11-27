@@ -10,8 +10,8 @@ The owner publishes rarely and by hand. She wants constant, mostly automated con
 
 ## Scope
 
-- In: strategy, competitor research, editorial calendar, copy in the brand voice, carousels, faceless video (reuse `~/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/reels-pipeline`, repo nuriaromerodev/reels-pipeline, moved there on 2026-11-26), scheduling and analytics through the Metricool connector (Instagram, TikTok, YouTube connected on 2026-11-18).
-- Later: LinkedIn and Facebook page connectors, face-video editing.
+- In: strategy, competitor research, editorial calendar, copy in the brand voice, carousels, faceless video (reuse `~/Desktop/code/nuriaromerodev/proyectos internos nuriaromero.dev/reels-pipeline`, repo nuriaromerodev/reels-pipeline, moved there on 2026-11-26), scheduling and analytics. Since 2026-11-25 scheduling goes through self-hosted Postiz for Instagram, Facebook and YouTube and through the Metricool connector for TikTok only (feature `odd/tasks/social-publishing-postiz.md`).
+- Later: LinkedIn (through Postiz, waiting for the LinkedIn app approval), face-video editing. Facebook is connected through Postiz since 2026-11-23.
 - Out: paid ads, influencer management.
 
 ## Constraints
@@ -24,12 +24,20 @@ The owner publishes rarely and by hand. She wants constant, mostly automated con
 
 ## Phases and tasks
 
-- [ ] P1-T1 Competitor and sector research on social (route: delegated, research) -> `social/competidores.md`
-- [ ] P1-T2 Social media strategy for nuriaromero.dev (route: delegated, writer) -> `social/estrategia-redes.md`
-- [ ] P1-T3 Owner reviews and approves the strategy
-- [ ] P2 Design the agent team (roles, skills, tools, config section `social`) as an optional team-harness module; the P1 process becomes the `social-strategist` template
-- [ ] P3 Production: carousels and finish the faceless video pipeline
-- [ ] P4 Publishing and measurement with Metricool; research LinkedIn and Facebook connectors
+Status audited against the repositories on 2026-11-26.
+
+- [x] P1-T1 Competitor and sector research on social (route: delegated, research) -> `social/competidores.md` (2026-11-18, redone with the owner's session; refreshed in `social/investigacion-competencia-2026-11-20.md`)
+- [x] P1-T2 Social media strategy for nuriaromero.dev (route: delegated, writer) -> `social/estrategia-redes.md` (version 2, 2026-11-18)
+- [x] P1-T3 Owner reviews and approves the strategy (direction approved 2026-11-18; decision 2 below still open)
+- [x] P2 Design the agent team as an optional team-harness module (five agents approved 2026-11-19: strategist, copywriter, producer, analyst, media librarian; skill `/team-harness:social`, `social-state.mjs`, `social-cadence.mjs`, `social-library.mjs`, `social-gate.mjs`, `social-copy.mjs`; shipped from team-harness 0.10.0, current 0.16.0)
+  - [ ] P2-T1 Turn on unattended social runs (`social.unattended.enabled` is false; owner decision)
+- [x] P3 Production: carousel template (`social/plantillas/carrusel/`), video template (`odd/tasks/social-video-template.md`, all tasks done) and the faceless pipeline (repo nuriaromerodev/reels-pipeline 0.1.0: recorded voice, still image and graphic scenes, music bed)
+  - [ ] P3-T1 Owner's production preference of 2026-11-19: several Flow stills per script line with zoom in and out, alongside generated clips (not checked against the pipeline yet)
+- [ ] P4 Publishing and measurement
+  - [x] P4-T1 Publishing: Postiz for Instagram, Facebook and YouTube, Metricool for TikTok, routed by network in team-harness 0.16.0
+  - [ ] P4-T2 End-to-end check of the Postiz route: piece `2026-11-26-video-categoria-principal` scheduled for 2026-11-26 10:00 (P1-T7 of the Postiz feature) (confirmed published by the owner at 10:30); the 18:00 photo strip piece is a Metricool post scheduled earlier, not a Postiz check
+  - [ ] P4-T3 Measurement: no `social measure` run recorded yet (no metrics history); metrics for Instagram, Facebook and YouTube should come from Postiz and TikTok from Metricool (Postiz D2), so the analyst flow needs a Postiz source
+  - [ ] P4-T4 LinkedIn through Postiz once the LinkedIn app is approved (owner enters the client ID and secret)
 - [ ] P5 Face-video editing (future)
 
 P2 to P5 get their own design before implementation.
@@ -72,17 +80,17 @@ social-strategist, content-planner, social-copywriter, carousel-designer, video-
 
 ## Open owner decisions (from P1)
 
-1. Frequency: two pieces per week (carousel on Instagram on Tuesdays, video on three networks on Thursdays) or three with YouTube uploaded outside Metricool.
-2. The five fixed Metricool competitors (cannot be changed on Free).
-3. Main call to action: keyword comment or booking link.
-4. Emojis and questions in written captions.
-5. Whether plan prices may appear in posts.
-6. LinkedIn: new personal profile or company page, and when.
-7. Validate the calendar hooks that paraphrase her own observations.
+1. Frequency: decided. `social.cadence.perWeek` 5, with 7 per week from 2026-11-19 to 2026-11-30 (unused November quota).
+2. Open: the five fixed Metricool competitors (cannot be changed on Free). Possibly moot now that Metricool only handles TikTok.
+3. Main call to action: decided. Booking link in the profile, plus the site link in the first comment through Postiz.
+4. Decided 2026-11-26: captions may carry questions and the odd emoji (one or two at most, none is fine); spoken text stays without them. Recorded in `social/estrategia-redes.md`.
+5. Decided 2026-11-26: no prices in any piece; prices live only on the website so nothing goes stale on social. Recorded in `social/estrategia-redes.md`.
+6. LinkedIn: in progress through Postiz (personal profile and company page both routed); waiting for the LinkedIn app approval.
+7. Hooks: covered by the per-piece approval of every script and copy.
 
 ## Next step
 
-Owner reviews the strategy (P1-T3), starting with the frequency decision. First two pieces need approval by 2026-11-20 to publish on 2026-11-24 and 2026-11-26.
+After 10:00 on 2026-11-26, verify the Postiz end-to-end publication (P4-T2), then decide the open items: unattended runs (P2-T1), measurement source (P4-T3), decision 2 and the cadence and formats from December.
 
 ### 2026-11-19 — Decisiones de la dueña sobre el equipo de agentes
 
@@ -115,3 +123,5 @@ Owner reviews the strategy (P1-T3), starting with the frequency decision. First 
 - 2026-11-19: la dueña subió la 0.10.0 de team-harness al remoto (main 5750c1b..56d862b y etiqueta v0.10.0). Carpeta de descargas confirmada por la dueña: siempre ~/Downloads; fijada en social.downloadsDir.
 - 2026-11-19: unidad de correcciones tras la prueba real (ruta: delegada, un escritor) en la rama local fix/social-pilot-findings de team-harness: commits 1a0a22a, df294fd, ea8c081, b76b40d; suite completa 859/859 verificada por el orquestador; sin subir. Nombres de fichero y secciones configurables (social.files, social.headings, social.paths), saldo y renovación leídos en pantalla, varias publicaciones por pieza, manifiesto de entregables, créditos generados por comando, ayuda en los scripts. Parciales: nombres por proyecto y no por formato; sin manifiesto cuentan todos los ficheros de export/. En curso: alinear el piloto con esos valores y registrar el vídeo del 20.
 - 2026-11-19: piloto alineado con el módulo corregido (ruta: delegada). Config: social.files (textos.md, guion.md, creditos.json), headings en español, paths.strategy, quotaCountsPer post. Vídeo del 20 registrado como scheduled con sus tres publicaciones, con textos.md extraído del guion, manifiesto y créditos. Carrusel del 24 approved con manifiesto y créditos; la puerta lo permite. Los carruseles del 19, 21 y 22 (ya publicados o programados) quedan sin manifiesto ni créditos y con aprobación marcada como obsoleta por el cambio de nombres: el script se niega a modificarlos, es solo contabilidad y no afecta a lo programado en Metricool. Las aprobaciones re-registradas llevan la hora de hoy (approve no admite nota). Pendiente en el plugin: comando de migración para piezas ya programadas, nota en approve, saldo inicial en observaciones tardías, títulos de sección por pieza, ruta única del registro.
+- 2026-11-26: owner asked to bring this document up to date. Audited against the repositories: P1, P2 and P3 marked done with evidence; open items listed as P2-T1 (unattended runs), P3-T1 (several Flow stills per line), P4-T2 (Postiz end-to-end check today), P4-T3 (measurement, no metrics history yet, Postiz source needed), P4-T4 (LinkedIn) and owner decisions 2, 4 and 5. Pipeline moved to proyectos internos nuriaromero.dev/reels-pipeline (repo nuriaromerodev/reels-pipeline, 0.1.0).
+- 2026-11-26 10:30: owner confirms the 10:00 video went out through Postiz. Pieces already scheduled in Metricool keep running there until the end of November (the owner said "the 31st"; November has 30 days) (the 18:00 photo strip today included); every piece scheduled from now on goes through Postiz (TikTok through Metricool). Owner decisions: questions and the odd emoji allowed in captions, no prices in pieces. Open: weekly cadence and formats from December.
