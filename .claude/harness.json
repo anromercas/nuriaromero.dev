@@ -253,7 +253,10 @@
       "reportSubjectPrefix": "[nuriaromero.dev]",
       "alerts": {
         "enabled": true
-      }
+      },
+      "browserExceptions": [
+        "gbp-insights"
+      ]
     },
     "research": {
       "enabled": false,
@@ -375,6 +378,30 @@
       "unattended": {
         "enabled": true,
         "everyDays": 7
+      }
+    },
+    "clientReport": {
+      "enabled": true,
+      "dir": "docs/client-reports",
+      "clientName": "nuriaromero.dev",
+      "language": "es",
+      "metricsCommand": [
+        "node",
+        "scripts/client-report-web.mjs"
+      ],
+      "gbp": {
+        "enabled": true,
+        "profileUrl": null
+      },
+      "brand": {
+        "name": "Nuria Romero · nuriaromero.dev",
+        "logo": "docs/client-reports/logo.svg",
+        "accent": "#3b82f6",
+        "contact": "nuriaromero.dev"
+      },
+      "unattended": {
+        "enabled": true,
+        "day": 1
       }
     }
   },
