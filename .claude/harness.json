@@ -374,7 +374,7 @@
       "historyDir": "seo/ranks",
       "unattended": {
         "enabled": true,
-        "everyDays": 14
+        "everyDays": 7
       }
     }
   },
